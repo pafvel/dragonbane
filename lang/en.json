@@ -1,0 +1,29 @@
+{
+    "DoD": {
+        "gear": {
+            "encumbrance": "Encumbrance",
+            "worn": "Worn"
+        },
+        "weapon": {
+            "grip": "Grip",
+            "range": "Range",
+            "damage": "Damage",
+            "durability": "Durability",
+            "features": "Features"
+        },
+        "armor": {
+            "rating": "Armor Rating"
+        },
+        "helmet": {
+            "rating": "Armor Rating"
+        },
+        "shield": {
+            "durability": "Durability"
+        },
+        "gripTypes": {
+            "none": "",
+            "grip1h": "1h",
+            "grip2h": "2h"
+        }
+    }
+}

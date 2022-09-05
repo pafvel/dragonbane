@@ -1,0 +1,43 @@
+{
+    "id": "dragonbane",
+    "name": "dragonbane",
+    "title": "Dragonbane",
+    "description": "System for playing Dragonbane",
+    "version": "0.0.1",
+    "compatibility": {
+      "minimum": "10",
+      "verified": "10",
+      "maximum": "10"
+    },
+    "authors": [
+      {
+        "name": "patrikp",
+        "url": "YOUR WEBSITE ADDRESS HERE",
+        "email": "YOUR EMAIL ADDRESS HERE",
+        "discord": "YOUR DISCORD USERNAME HERE"
+      }
+    ],
+    "esmodules": [
+      "dragonbane.js"
+    ],
+    "styles": [
+      "dragonbane.css"
+    ],
+    "languages": [
+      {
+        "lang": "en",
+        "name": "English",
+        "path": "lang/en.json"
+      },
+      {
+        "lang": "se",
+        "name": "Svenska",
+        "path": "lang/se.json"
+      }
+    ],
+    "initiative": "1d20",
+    "gridDistance": 2,
+    "gridUnits": "m",
+    "primaryTokenAttribute": "health",
+    "secondaryTokenAttribute": "power"
+  }

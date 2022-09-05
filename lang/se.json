@@ -1,0 +1,30 @@
+{
+    "DoD": {
+        "gear": {
+            "encumbrance": "Belastning",
+            "worn": "Till hands"
+        },
+        "weapon": {
+            "grip": "Grepp",
+            "range": "Räckvidd",
+            "damage": "Skada",
+            "durability": "Brytvärde",
+            "features": "Egenskaper"
+        },
+        "armor": {
+            "rating": "Skyddsvärde"
+        },
+        "helmet": {
+            "rating": "Skyddsvärde"
+        },
+        "shield": {
+            "durability": "Brytvärde"
+        },
+
+        "gripTypes": {
+            "none": "",
+            "grip1h": "1h",
+            "grip2h": "2h"
+        }
+    }
+}

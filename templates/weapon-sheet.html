@@ -1,0 +1,45 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+        <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+    </header>
+    <div class="sheet-content">
+        <table>
+            <tr>
+                <th>{{localize "DoD.weapon.grip"}}</th>
+                <th>{{localize "DoD.weapon.range"}}</th>
+                <th>{{localize "DoD.weapon.damage"}}</th>
+                <th>{{localize "DoD.weapon.durability"}}</th>
+                <th>{{localize "DoD.gear.encumbrance"}}</th>
+                <th>{{localize "DoD.gear.worn"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <select name="data.grip">
+                        {{#select data.grip}}
+                        {{#each config.gripTypes as |name type|}}
+                        <option value="{{type}}">{{localize name}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+                <td>
+                    <input name="data.range" type="text" value="{{data.range}}" data-dtype="Number" />
+                </td>
+                <td>
+                    <input name="data.damage" type="text" value="{{data.damage}}" />
+                </td>
+                <td>
+                    <input name="data.durability" type="text" value="{{data.durability}}" data-dtype="Number" />
+                </td>
+                <td>
+                    <input name="data.encumbrance" type="text" value="{{data.encumbrance}}" data-dtype="Number" />
+                </td>
+                <td>
+                    <input name="data.worn" type="checkbox" {{checked data.worn}} />
+                </td>
+            </tr>
+        </table>
+        {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+    </div>
+</form>

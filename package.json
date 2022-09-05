@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "gulp-less": "^5.0.0"
+  }
+}
