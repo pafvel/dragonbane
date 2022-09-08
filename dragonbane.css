@@ -12,11 +12,107 @@
   display: flex;
   flex-direction: column;
 }
+.DoD.sheet.item .window-content {
+  background: url(art/ui/item-sheet-bg.webp) repeat;
+  background-position: top center;
+  padding: 0px;
+}
+.DoD.sheet.item .sheet-header {
+  padding: 8px;
+}
+.DoD.sheet.item .sheet-header h1 {
+  background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/title-bar.webp");
+  background-position: left center, right center, center center;
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  background-size: contain, contain, contain;
+  background-clip: border-box, border-box, content-box;
+  padding-left: 48px;
+  padding-right: 48px;
+}
+.DoD.sheet.item .sheet-header input {
+  color: whitesmoke;
+  text-align: center;
+  border: 0px;
+}
 .DoD.sheet.item .sheet-content {
+  padding: 8px;
   height: 100%;
   display: flex;
   flex-direction: column;
+  background-image: url("art/ui/separator-horizontal.webp"), none;
+  background-position: center top, center bottom;
+  background-repeat: repeat-x, repeat-x;
+  background-size: auto 12px, auto 12px;
+  padding-bottom: 0px;
+}
+.DoD.sheet.item .sheet-content table {
+  border: 0px;
+  background: none;
+}
+.DoD.sheet.item .sheet-content table th {
+  text-align: center;
+  padding-left: 12px;
+  padding-right: 0px;
+}
+.DoD.sheet.item .sheet-content table th:last-child {
+  padding-right: 20px;
+}
+.DoD.sheet.item .sheet-content table tr:nth-child(1n+2) {
+  background-image: url("art/ui/table-row-left.webp"), url("art/ui/table-row-right.webp"), url("art/ui/table-row-banner.webp");
+  background-position: left center, right center, center center;
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  background-size: contain, contain, contain;
+  background-clip: border-box, border-box, padding-box;
+  border-left: 8px transparent;
+  border-right: 8px transparent;
+}
+.DoD.sheet.item .sheet-content table tr:nth-child(1n+2) td {
+  text-align: center;
+  padding-left: 16px;
+  padding-right: 0px;
+}
+.DoD.sheet.item .sheet-content table tr:nth-child(1n+2) td input {
+  border: 0px;
+  background: transparent;
+}
+.DoD.sheet.item .sheet-content table tr:nth-child(1n+2) td:nth-child(1n+2) {
+  background-image: url("art/ui/table-row-separator.webp");
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.DoD.sheet.item .sheet-content table tr:nth-child(1n+2) td:last-child {
+  padding-right: 20px;
+}
+.DoD.sheet.item .sheet-content table tr:nth-child(1n+2) select {
+  border: 0px;
 }
 .DoD.sheet.item .sheet-content .editor {
   height: 100%;
+  width: 100%;
+  align-self: center;
+  background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/parchment-vertical.webp");
+  background-position: left -16px bottom, right -16px bottom, center bottom 4px, left -16px top, right -16px top, center top 4px, center center;
+  background-clip: border-box, border-box, padding-box, border-box, border-box, padding-box, content-box;
+  background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y;
+  background-size: auto 24px, auto 24px, auto 16px, auto 24px, auto 24px, auto 16px, 100% auto;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 16px;
+}
+.DoD.sheet.item .sheet-content .editor-content {
+  border-left: 12px;
+  border-right: 12px;
+  border-style: solid;
+  border-color: transparent;
+}
+.DoD.sheet.item .sheet-content .editor-edit {
+  top: 21px;
+  right: 12px;
+}
+.DoD.sheet.item .sheet-content .tox.tox-tinymce {
+  padding-left: 12px;
+  padding-right: 12px;
 }

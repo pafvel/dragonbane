@@ -13,8 +13,6 @@ export default class DoDItemSheet extends ItemSheet {
     }
 
     getData() {
-        console.log("get DoDItemSheet data");
-
         const baseData = super.getData();
    
         let sheetData = {
@@ -24,7 +22,6 @@ export default class DoDItemSheet extends ItemSheet {
             data: baseData.data.data,
             config: CONFIG.DoD
         };
-
         return sheetData;
     }
 }

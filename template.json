@@ -1,16 +1,102 @@
 {
-    "Actor": {},
-    "Item": {
-        "types": ["weapon", "armor", "helmet", "shield", "item"],
+    "Actor": {
+        "types": ["character", "npc", "monster"],
         "templates": {
+            "actorDescripton": {
+                "description": ""
+            },
+            "characterDescription": {
+                "kin": "",
+                "age": "",
+                "profession": "",
+                "motivation": ""
+            },
+            "attributes": {
+                "str": { "value": 11 },
+                "con": { "value": 11 },
+                "agl": { "value": 11 },
+                "int": { "value": 11 },
+                "wil": { "value": 11 },
+                "cha": { "value": 11 }
+            },
+            "conditions": {
+                "dazed": {
+                    "value": false,
+                    "attribute": "str"
+                },
+                "sickly": {
+                    "value": false,
+                    "attribute": "con"
+                },
+                "exhausted": {
+                    "value": false,
+                    "attribute": "agi"
+                },
+                "angry": {
+                    "value": false,
+                    "attribute": "int"
+                },
+                "scared": {
+                    "value": false,
+                    "attribute": "wil"
+                },
+                "dirty": {
+                    "value": false,
+                    "attribute": "cha"
+                }
+            },
+            "actorStats": {
+                "movement": 0,
+                "hitPoints": 0
+            },
+            "characterStats": {
+                "damageBonusStr": "",
+                "damageBonusAgi": "",
+                "willPoints": 0
+            }
+        },
+        "character": {
+            "templates": [
+                "actorDescripton", 
+                "characterDescripton",
+                "attributes",
+                "conditions",
+                "actorStats",
+                "characterStats"
+            ]
+        },
+        "npc": {
+            "templates": [
+                "actorDescripton",
+                "characterDescripton",
+                "attributes",
+                "conditions",
+                "actorStats",
+                "characterStats"
+            ]
+        },
+        "monster": {
+            "templates": [
+                "actorDescripton",
+                "actorStats"
+            ],
+            "speed": 0,
+            "armor": 0
+        }
+    },
+    "Item": {
+        "types": ["weapon", "armor", "helmet", "shield", "item", "skill", "ability", "spell"],
+        "templates": {
+            "itemDescripton": {
+                "description": ""
+            },
             "gear": {
                 "encumbrance": 1,
-                "worn": false,
-                "description": ""
+                "worn": false
             }
         },
         "weapon": {
-            "templates": ["gear"],
+            "templates": ["gear", "itemDescripton"],
             "grip": "1h",
             "range": 0,
             "damage": "",
@@ -18,20 +104,43 @@
             "features": []
         },
         "armor": {
-            "templates": ["gear"],
+            "templates": ["gear", "itemDescripton"],
             "rating": 0
         },
         "helmet": {
-            "templates": ["gear"],
+            "templates": ["gear", "itemDescripton"],
             "rating": 0
         },
         "shield": {
-            "templates": ["gear"],
+            "templates": ["gear", "itemDescripton"],
             "durability": 0
         },
         "item": {
-            "templates": ["gear"],
+            "templates": ["gear", "itemDescripton"],
             "durability": 0
+        },
+        "skill": {
+            "templates": ["itemDescripton"],
+            "name": "",
+            "type": "",
+            "char": "",
+            "value": 0
+        },
+        "ability": {
+            "templates": ["itemDescripton"],
+            "name": "",
+            "type": ""
+        },
+        "spell": {
+            "templates": ["itemDescripton"],
+            "name": "",
+            "skill": "",
+            "trick": false,
+            "requirement": "",
+            "time": "",
+            "range": 0,
+            "area": "",
+            "duration": ""
         }
     }
 }
