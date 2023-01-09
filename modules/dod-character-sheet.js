@@ -4,12 +4,12 @@ export default class DoDItemSheet extends ItemSheet {
         return mergeObject(super.defaultOptions,  {
             width: 530,
             height: 340,
-            classes: ["DoD", "sheet", "item"]
+            classes: ["DoD", "sheet", "character"]
         });
     }
 
     get template() {
-        return `systems/dragonbane/templates/${this.item.type}-sheet.html`;
+        return `systems/dragonbane/templates/character-sheet.html`;
     }
 
     getData() {

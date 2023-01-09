@@ -24,6 +24,22 @@
             "none": "",
             "grip1h": "1h",
             "grip2h": "2h"
+        },
+        "conditions": {
+            "dazed": "Dazed",
+            "sickly": "Sickly",
+            "exhausted": "Exhausted",
+            "angry": "Angry",
+            "scared": "Scared",
+            "disheartened": "Disheartened"
+        },
+        "attributes": {
+            "str": "STR",
+            "con": "CON",
+            "agl": "AGL",
+            "int": "INT",
+            "wil": "WIL",
+            "cha": "CHA"
         }
     }
 }

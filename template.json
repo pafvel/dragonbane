@@ -12,47 +12,59 @@
                 "motivation": ""
             },
             "attributes": {
-                "str": { "value": 11 },
-                "con": { "value": 11 },
-                "agl": { "value": 11 },
-                "int": { "value": 11 },
-                "wil": { "value": 11 },
-                "cha": { "value": 11 }
+                "attributes": {
+                    "str": { "value": 11 },
+                    "con": { "value": 11 },
+                    "agl": { "value": 11 },
+                    "int": { "value": 11 },
+                    "wil": { "value": 11 },
+                    "cha": { "value": 11 }
+                }
             },
             "conditions": {
-                "dazed": {
-                    "value": false,
-                    "attribute": "str"
-                },
-                "sickly": {
-                    "value": false,
-                    "attribute": "con"
-                },
-                "exhausted": {
-                    "value": false,
-                    "attribute": "agi"
-                },
-                "angry": {
-                    "value": false,
-                    "attribute": "int"
-                },
-                "scared": {
-                    "value": false,
-                    "attribute": "wil"
-                },
-                "dirty": {
-                    "value": false,
-                    "attribute": "cha"
+                "conditions": {
+                    "dazed": {
+                        "value": false,
+                        "attribute": "str"
+                    },
+                    "sickly": {
+                        "value": false,
+                        "attribute": "con"
+                    },
+                    "exhausted": {
+                        "value": false,
+                        "attribute": "agi"
+                    },
+                    "angry": {
+                        "value": false,
+                        "attribute": "int"
+                    },
+                    "scared": {
+                        "value": false,
+                        "attribute": "wil"
+                    },
+                    "disheartened": {
+                        "value": false,
+                        "attribute": "cha"
+                    }
                 }
             },
             "actorStats": {
                 "movement": 0,
-                "hitPoints": 0
+                "hitPoints": {
+                    "value": 0,
+                    "max": 0
+                }
             },
             "characterStats": {
-                "damageBonusStr": "",
-                "damageBonusAgi": "",
-                "willPoints": 0
+                "willPoints": {
+                    "value": 0,
+                    "max": 0
+                },
+                "damageBonus": {
+                    "agi": "",
+                    "str": ""
+                }
             }
         },
         "character": {
@@ -69,8 +81,6 @@
             "templates": [
                 "actorDescripton",
                 "characterDescripton",
-                "attributes",
-                "conditions",
                 "actorStats",
                 "characterStats"
             ]
@@ -80,8 +90,9 @@
                 "actorDescripton",
                 "actorStats"
             ],
-            "speed": 0,
-            "armor": 0
+            "armor": 0,
+            "ferocity": 0,
+            "size": ""
         }
     },
     "Item": {

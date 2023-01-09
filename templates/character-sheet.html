@@ -1,0 +1,66 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <div>
+            <img src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+            <div class="image-border"></div>
+        </div>
+        <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+    </header>
+    <div class="sheet-content">
+        <div class="attributes-container">
+            <div class="attributes">
+                <div class="attribute-panel attribute1">
+                    <label class="attribute-label">{{localize "DoD.attributes.str"}}</label>
+                    <input class="attribute-input" name="data.attributes.str.value" type="text" value="{{data.attributes.str.value}}" data-dtype="Number" />
+                </div>
+                <div class="attribute-panel attribute2">
+                    <label class="attribute-label">{{localize "DoD.attributes.con"}}</label>
+                    <input class="attribute-input" name="data.attributes.con.value" type="text" value="{{data.attributes.con.value}}" data-dtype="Number" />
+                </div>
+                <div class="attribute-panel attribute3">
+                    <label class="attribute-label">{{localize "DoD.attributes.agl"}}</label>
+                    <input class="attribute-input" name="data.attributes.agl.value" type="text" value="{{data.attributes.agl.value}}" data-dtype="Number" />
+                </div>
+                <div class="attribute-panel attribute4">
+                    <label class="attribute-label">{{localize "DoD.attributes.int"}}</label>
+                    <input class="attribute-input" name="data.attributes.int.value" type="text" value="{{data.attributes.int.value}}" data-dtype="Number" />
+                </div>
+                <div class="attribute-panel attribute5">
+                    <label class="attribute-label">{{localize "DoD.attributes.wil"}}</label>
+                    <input class="attribute-input" name="data.attributes.wil.value" type="text" value="{{data.attributes.wil.value}}" data-dtype="Number" />
+                </div>
+                <div class="attribute-panel attribute6">
+                    <label class="attribute-label">{{localize "DoD.attributes.cha"}}</label>
+                    <input class="attribute-input" name="data.attributes.cha.value" type="text" value="{{data.attributes.cha.value}}" data-dtype="Number" />
+                </div>
+
+                <div class="conditions">
+                    <div class="condition-panel condition1">
+                        <input class="condition-input" name="data.conditions.dazed.value" type="checkbox" {{checked data.conditions.dazed.value}} />
+                        <label class="condition-label">{{localize "DoD.conditions.dazed"}}</label>
+                    </div>
+                    <div class="condition-panel condition2">
+                        <input class="condition-input" name="data.conditions.sickly.value" type="checkbox" {{checked data.conditions.sickly.value}} />
+                        <label class="condition-label">{{localize "DoD.conditions.sickly"}}</label>
+                    </div>
+                    <div class="condition-panel condition3">
+                        <input class="condition-input" name="data.conditions.exhausted.value" type="checkbox" {{checked data.conditions.exhausted.value}} />
+                        <label class="condition-label">{{localize "DoD.conditions.exhausted"}}</label>
+                    </div>
+                    <div class="condition-panel condition4">
+                        <input class="condition-input" name="data.conditions.angry.value" type="checkbox" {{checked data.conditions.angry.value}} />
+                        <label class="condition-label">{{localize "DoD.conditions.angry"}}</label>
+                    </div>
+                    <div class="condition-panel condition5">
+                        <input class="condition-input" name="data.conditions.scared.value" type="checkbox" {{checked data.conditions.scared.value}} />
+                        <label class="condition-label">{{localize "DoD.conditions.scared"}}</label>
+                    </div>
+                    <div class="condition-panel condition6">
+                        <input class="condition-input" name="data.conditions.disheartened.value" type="checkbox" {{checked data.conditions.disheartened.value}} />
+                        <label class="condition-label">{{localize "DoD.conditions.disheartened"}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

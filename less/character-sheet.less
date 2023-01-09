@@ -1,0 +1,212 @@
+.DoD.sheet.character {
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    .window-content {
+        background:url(art/ui/item-sheet-bg.webp) repeat;
+        background-position: top center;
+        padding: 0px;
+    }
+    .sheet-header {
+        top: 4px;
+        padding: 8px;
+        flex-direction: column;
+        position: relative;
+        img {
+            flex: 0 0 128px;
+            flex-grow: 0;
+            flex-shrink: 0;
+            flex-basis: 64px;
+            height: 128px;
+            left: center;
+            border: 12px transparent;
+        }
+        div {
+            .image-border {
+                position: absolute;
+                top: 8px;
+                left: center;
+                width: 128px;
+                height: 128px;
+                border: 8px solid;
+                border-image: url("art/ui/border.webp");
+                border-image-slice: 160;
+                border-image-width: 48px;    
+                border-image-outset: 8px;
+                pointer-events: none;
+            }
+        }
+        h1 {
+            position: absolute;
+            top: 96px;
+            background-image: url("art/ui/banner-name.webp");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-clip: border-box;
+            font-size: 1.5em;
+            input {
+                color: black;
+                text-align: center;
+                border: 0px;
+                background: transparent;
+                padding-top: 20px;
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+    }
+    .sheet-content {
+        padding: 8px;
+        height: 100%;
+        display: flex;    
+        flex-direction: column;
+        align-items: center;
+
+        //background-image: url("art/ui/separator-horizontal.webp");
+        background-position: center top;
+        background-repeat: repeat-x;
+        background-size: auto 12px;
+        padding-bottom: 0px;
+    
+        .attributes-container {
+            display: flex;    
+            flex-direction: column;
+            align-items: center;
+
+            width: 100%;
+            left: center;
+
+            .attributes {
+                position: relative;
+                width: 530px;
+                height: 128px;
+                background-image:  url("art/ui/attributes-panel.webp"); // 1060x256
+                background-position: center top;    
+                background-size: contain;
+                background-repeat: no-repeat;      
+                
+                .attribute-panel {
+                    position: absolute;
+                    top: 0px;
+                    width: 48px;
+                    height: 100%;
+                    
+                    .attribute-label {
+                        position: absolute;
+                        top: 26px;
+                        left: 9px;
+                        width: 28px;
+                        font-size: 12px;
+                        font-weight: bold;
+                        text-align: center;
+                        background-color: rgb(219, 208, 191);
+                        border-radius: 5px;
+                        border: solid 1px black;
+                    }
+                    .attribute-input {
+                        position: absolute;
+                        top: 40%;
+                        left: -2px;
+                        width: 100%;
+                        font-size: 1.25em;
+                        font-weight: bold;
+                        text-align: center;
+                        border: none;
+                        background-color: transparent;
+                    }
+                }
+                .attribute-input {
+                    position: absolute;
+                    top: 40%;
+                    width: 8%;
+                    font-size: 1.25em;
+                    font-weight: bold;
+                    text-align: center;
+                    border: none;
+                    background-color: transparent;
+                }
+                .attribute1 {
+                    left: 18%;
+                }
+                .attribute2 {
+                    left: 29.5%;
+                }
+                .attribute3 {
+                    left: 41%;
+                }
+                .attribute4 {
+                    left: 52.5%;
+                }
+                .attribute5 {
+                    left: 63.75%;
+                }
+                .attribute6 {
+                    left: 75.25%;
+                }
+
+                .conditions {
+                    input[type="checkbox"] {
+                        width: 8px;
+                        height: 8px;
+                        transform: rotate(45deg);
+                        appearance: none;
+                        -webkit-appearance: none;
+                    }  
+                    input[type="checkbox"]:checked {
+                        background-color: red;
+                        -webkit-filter: none;
+                        filter: none;
+                    }                                    
+                    .condition-panel {
+                        position: absolute;
+                        top: 65%;
+                        width: 56px;
+                        height: 30px;
+                        background-image: url("art/ui/condition-panel.webp");
+                        background-position: center top;    
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                        background-clip: border-box;
+                        .condition-input {
+                            position: absolute;
+                            top: 5px;
+                            left: 19px;
+                            size: 12px;
+                        }
+                    }
+                    .condition-label {
+                        position: absolute;
+                        top: 14px;
+                        left: 4px;
+                        width: 48px;
+                        color: whitesmoke;
+                        font-size: 10px;
+                        text-align: center;
+                        //border: solid 1px white;
+                        pointer-events: none;
+                    }
+                    .condition1 {
+                        left: 17%;
+                    }
+                    .condition2 {
+                        left: 28.5%;
+                    }
+                    .condition3 {
+                        left: 40%;
+                    }
+                    .condition4 {
+                        left: 51.5%;
+                    }
+                    .condition5 {
+                        left: 62.75%;
+                    }
+                    .condition6 {
+                        left: 74.25%;
+                    }        
+                }
+            }
+        }
+    }
+}

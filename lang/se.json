@@ -20,11 +20,28 @@
         "shield": {
             "durability": "Brytvärde"
         },
-
         "gripTypes": {
             "none": "",
             "grip1h": "1h",
             "grip2h": "2h"
+        },
+        "conditions": {
+            "dazed": "Omtöcknad",
+            "sickly": "Krasslig",
+            "exhausted": "Utmattad",
+            "angry": "Arg",
+            "scared": "Rädd",
+            "disheartened": "Uppgiven"
+        },
+        "attributes": {
+            "str": "STY",
+            "con": "FYS",
+            "agl": "SMI",
+            "int": "INT",
+            "wil": "PSY",
+            "cha": "KAR"
         }
+
+
     }
 }

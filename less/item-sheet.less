@@ -1,0 +1,120 @@
+.DoD.sheet.item {
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+    .window-content {
+        background:url(art/ui/item-sheet-bg.webp) repeat;
+        background-position: top center;
+        padding: 0px;
+    }
+    .sheet-header {
+        padding: 8px;
+
+        h1 {
+            background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/title-bar.webp");
+            background-position: left center, right center, center center;
+            background-repeat: no-repeat, no-repeat, repeat-x;
+            background-size: contain, contain, contain;
+            background-clip: border-box, border-box, content-box;
+            padding-left: 48px;
+            padding-right: 48px;
+        }
+        input {
+            color: whitesmoke;
+            text-align: center;
+            border: 0px;
+        }
+    }
+    .sheet-content {
+        padding: 8px;
+        height: 100%;
+        display: flex;    
+        flex-direction: column;
+
+        background-image: url("art/ui/separator-horizontal.webp"), none;
+        background-position: center top, center bottom;
+        background-repeat: repeat-x, repeat-x;
+        background-size: auto 12px, auto 12px;
+        padding-bottom: 0px;
+    
+        table {
+            border: 0px;
+            background: none;
+
+            th {
+                text-align: center;
+                padding-left: 12px;
+                padding-right: 0px;
+            }
+            th:last-child {
+                padding-right: 20px;
+            }
+
+            tr:nth-child(1n+2) {
+                background-image: url("art/ui/table-row-left.webp"), url("art/ui/table-row-right.webp"), url("art/ui/table-row-banner.webp");
+                background-position: left center, right center, center center;
+                background-repeat: no-repeat, no-repeat, repeat-x;
+                background-size: contain, contain, contain;
+                background-clip: border-box, border-box, padding-box;
+                border-left: 8px transparent;
+                border-right: 8px transparent;
+
+                td {
+                    text-align: center;
+                        input {
+                        border: 0px;
+                        background: transparent;
+                    }
+                    padding-left: 16px;
+                    padding-right: 0px;
+                }
+                td:nth-child(1n+2) {
+                    background-image: url("art/ui/table-row-separator.webp");
+                    background-position: left center;
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                }
+                td:last-child {
+                    padding-right: 20px;
+                }
+
+                select {
+                    border: 0px;
+                }
+
+            }
+        }
+
+        .editor {
+            height: 100%;
+            width: 100%;
+            align-self: center;
+            background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/parchment-vertical.webp");
+            background-position: left -16px bottom, right -16px bottom, center bottom 4px, left -16px top, right -16px top, center top 4px, center center;
+            background-clip: border-box, border-box, padding-box, border-box, border-box, padding-box, content-box;
+            background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y;
+            background-size: auto 24px, auto 24px, auto 16px, auto 24px, auto 24px, auto 16px, 100% auto;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            border-style: solid;
+            border-color: transparent;
+            border-width: 16px;
+        }
+
+        .editor-content {
+            border-left: 12px;
+            border-right: 12px;
+            border-style: solid;
+            border-color: transparent;
+        }
+        .editor-edit {
+            top: 21px;
+            right: 12px;
+        }
+        .tox.tox-tinymce {
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+    }
+}
