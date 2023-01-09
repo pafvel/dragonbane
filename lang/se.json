@@ -1,11 +1,14 @@
 {
     "DoD": {
         "gear": {
-            "encumbrance": "Belastning",
+            "weight": "Vikt",
+            "cost": "Pris",
+            "supply": "Tillgång",
             "worn": "Bär"
         },
         "weapon": {
             "grip": "Grepp",
+            "str": "STY",
             "range": "Räckvidd",
             "damage": "Skada",
             "durability": "Brytvärde",
@@ -21,10 +24,29 @@
             "durability": "Brytvärde"
         },
         "gripTypes": {
-            "none": "",
+            "none": "-",
             "grip1h": "1h",
             "grip2h": "2h"
         },
+        "supplyTypes": {
+            "common": "Vanlig",
+            "uncommon": "Ovanlig",
+            "rare": "Sällsynt",
+            "unique": "Unik"
+        },
+        "weaponFeatureTypes": {
+            "bludgeoning": "Krossande",
+            "long": "Lång",
+            "mounted": "Kräver stridstränat riddjur",
+            "noparry": "Kan ej användas till parering",
+            "piercing": "Stickande",
+            "slashing": "Huggande",
+            "subtle": "Smidig",
+            "thrown": "Kan kastas",
+            "toppling": "Fällande",
+            "shield": "Sköld"
+    
+        },    
         "conditions": {
             "dazed": "Omtöcknad",
             "sickly": "Krasslig",

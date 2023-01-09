@@ -7,10 +7,13 @@
         <table>
             <tr>
                 <th>{{localize "DoD.weapon.grip"}}</th>
+                <th>{{localize "DoD.weapon.str"}}</th>
                 <th>{{localize "DoD.weapon.range"}}</th>
                 <th>{{localize "DoD.weapon.damage"}}</th>
                 <th>{{localize "DoD.weapon.durability"}}</th>
-                <th>{{localize "DoD.gear.encumbrance"}}</th>
+                <th>{{localize "DoD.gear.cost"}}</th>
+                <th>{{localize "DoD.gear.supply"}}</th>
+                <th>{{localize "DoD.gear.weight"}}</th>
                 <th>{{localize "DoD.gear.worn"}}</th>
             </tr>
             <tr>
@@ -24,6 +27,9 @@
                     </select>
                 </td>
                 <td>
+                    <input name="data.str" type="text" value="{{data.str}}" data-dtype="Number" />
+                </td>
+                <td>
                     <input name="data.range" type="text" value="{{data.range}}" data-dtype="Number" />
                 </td>
                 <td>
@@ -33,7 +39,19 @@
                     <input name="data.durability" type="text" value="{{data.durability}}" data-dtype="Number" />
                 </td>
                 <td>
-                    <input name="data.encumbrance" type="text" value="{{data.encumbrance}}" data-dtype="Number" />
+                    <input name="data.cost" type="text" value="{{data.cost}}" />
+                </td>
+                <td>
+                    <select name="data.supply">
+                        {{#select data.supply}}
+                        {{#each config.supplyTypes as |name type|}}
+                        <option value="{{type}}">{{localize name}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+                <td>
+                    <input name="data.weight" type="text" value="{{data.weight}}" data-dtype="Number" />
                 </td>
                 <td>
                     <input name="data.worn" type="checkbox" {{checked data.worn}} />

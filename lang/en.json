@@ -1,11 +1,14 @@
 {
     "DoD": {
         "gear": {
-            "encumbrance": "Encumbrance",
+            "weight": "Weight",
+            "cost": "Cost",
+            "supply": "Supply",
             "worn": "Worn"
         },
         "weapon": {
             "grip": "Grip",
+            "str": "STR",
             "range": "Range",
             "damage": "Damage",
             "durability": "Durability",
@@ -21,10 +24,29 @@
             "durability": "Durability"
         },
         "gripTypes": {
-            "none": "",
+            "none": "-",
             "grip1h": "1h",
             "grip2h": "2h"
         },
+        "supplyTypes": {
+            "common": "Common",
+            "uncommon": "Uncommon",
+            "rare": "Rare",
+            "unique": "Unique"
+        },
+        "weaponFeatureTypes": {
+            "bludgeoning": "Bludgeoning",
+            "long": "Long",
+            "mounted": "Requires combat trained mount",
+            "noparry": "Cannot be used for parrying",
+            "piercing": "Piercing",
+            "slashing": "Slashing",
+            "subtle": "Subtle",
+            "thrown": "Can be thrown",
+            "toppling": "Toppling",
+            "shield": "Shield"
+    
+        },    
         "conditions": {
             "dazed": "Dazed",
             "sickly": "Sickly",

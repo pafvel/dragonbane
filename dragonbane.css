@@ -1,6 +1,7 @@
 .DoD.sheet.item form {
   display: flex;
   flex-direction: column;
+  font-family: QTFrizQuad;
 }
 .DoD.sheet.item .window-content {
   background: url(art/ui/item-sheet-bg.webp) repeat;
@@ -97,6 +98,8 @@
   border-right: 12px;
   border-style: solid;
   border-color: transparent;
+  font-family: Caveat;
+  font-size: 1.5em;
 }
 .DoD.sheet.item .sheet-content .editor-edit {
   top: 21px;
@@ -109,6 +112,7 @@
 .DoD.sheet.character form {
   display: flex;
   flex-direction: column;
+  font-family: QTFrizQuad;
 }
 .DoD.sheet.character .window-content {
   background: url(art/ui/item-sheet-bg.webp) repeat;
@@ -151,7 +155,9 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-clip: border-box;
-  font-size: 1.5em;
+  font-size: 2em;
+  font-family: Caveat;
+  font-weight: bold;
 }
 .DoD.sheet.character .sheet-header h1 input {
   color: black;
@@ -161,6 +167,7 @@
   padding-top: 20px;
   padding-left: 20px;
   padding-right: 20px;
+  font-weight: bold;
 }
 .DoD.sheet.character .sheet-content {
   padding: 8px;
@@ -198,8 +205,8 @@
 .DoD.sheet.character .sheet-content .attributes-container .attributes .attribute-panel .attribute-label {
   position: absolute;
   top: 26px;
-  left: 9px;
-  width: 28px;
+  left: 8px;
+  width: 30px;
   font-size: 12px;
   font-weight: bold;
   text-align: center;
@@ -209,20 +216,11 @@
 }
 .DoD.sheet.character .sheet-content .attributes-container .attributes .attribute-panel .attribute-input {
   position: absolute;
-  top: 40%;
-  left: -2px;
+  top: 38%;
+  left: -6px;
   width: 100%;
-  font-size: 1.25em;
-  font-weight: bold;
-  text-align: center;
-  border: none;
-  background-color: transparent;
-}
-.DoD.sheet.character .sheet-content .attributes-container .attributes .attribute-input {
-  position: absolute;
-  top: 40%;
-  width: 8%;
-  font-size: 1.25em;
+  font-family: Caveat;
+  font-size: 2em;
   font-weight: bold;
   text-align: center;
   border: none;
@@ -315,4 +313,22 @@
 }
 .system-dragonbane {
   background-image: url(art/ui/dragonbane.jpg);
+}
+@font-face {
+  font-family: "QTFritzQuad";
+  src: url('fonts/QTFritzQuad.otf');
+}
+@font-face {
+  font-family: "QTFritzQuad";
+  src: url('fonts/QTFritzQuad-Bold.otf');
+  font-weight: bold;
+}
+@font-face {
+  font-family: "Caveat";
+  src: url('fonts/Caveat/static/Caveat-Regular.ttf');
+}
+@font-face {
+  font-family: "Caveat";
+  src: url('fonts/Caveat/static/Caveat-Bold.ttf');
+  font-weight: bold;
 }

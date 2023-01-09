@@ -102,16 +102,20 @@
                 "description": ""
             },
             "gear": {
-                "encumbrance": 1,
+                "weight": 1,
+                "cost": "",
+                "supply": "",
                 "worn": false
             }
         },
         "weapon": {
             "templates": ["gear", "itemDescripton"],
-            "grip": "1h",
+            "grip": "",
+            "str": 0,
             "range": 0,
             "damage": "",
             "durability": 0,
+            "skill": "",
             "features": []
         },
         "armor": {
@@ -128,7 +132,7 @@
         },
         "item": {
             "templates": ["gear", "itemDescripton"],
-            "durability": 0
+            "type": ""
         },
         "skill": {
             "templates": ["itemDescripton"],
