@@ -28,6 +28,15 @@
             "grip1h": "1h",
             "grip2h": "2h"
         },
+        "skill": {
+            "type": "Typ",
+            "attribute": "Grundegenskap"
+        },
+        "skillTypes": {
+            "core": "Grundfärdighet",
+            "weapon": "Vapenfärdighet",
+            "secondary": "Sekundär färdighet"
+        },
         "supplyTypes": {
             "common": "Vanlig",
             "uncommon": "Ovanlig",
@@ -62,8 +71,21 @@
             "int": "INT",
             "wil": "PSY",
             "cha": "KAR"
+        },
+        "ui": {
+            "character-sheet": {
+                "main": "Översikt",
+                "skills": "Färdigheter",
+                "abilities": "Förmågor",
+                "combat": "Strid",
+                "spells": "Besvärjelser",
+                "inventory": "Packning",
+                "coreSkills": "Grundfärdigheter",
+                "secondarySkills": "Sekundära färdigheter",
+                "weaponSkills": "Vapenfärdigheter",
+                "skillValue": ""
+
+            }
         }
-
-
     }
 }

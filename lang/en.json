@@ -28,6 +28,15 @@
             "grip1h": "1h",
             "grip2h": "2h"
         },
+        "skill": {
+            "type": "Type",
+            "attribute": "Attribute"
+        },
+        "skillTypes": {
+            "core": "Core skill",
+            "weapon": "Weapon skill",
+            "secondary": "Secondary skill"
+        },
         "supplyTypes": {
             "common": "Common",
             "uncommon": "Uncommon",
@@ -62,6 +71,20 @@
             "int": "INT",
             "wil": "WIL",
             "cha": "CHA"
+        },
+        "ui": {
+            "character-sheet": {
+                "main": "Main",
+                "skills": "Skills",
+                "abilities": "Abilities",
+                "combat": "Combat",
+                "spells": "Spells",
+                "inventory": "Inventory",
+                "coreSkills": "Core Skills",
+                "secondarySkills": "Secondary Skills",
+                "weaponSkills": "Weapon Skills",
+                "skillValue": ""
+            }
         }
     }
 }

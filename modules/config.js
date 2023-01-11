@@ -6,6 +6,12 @@ DoD.gripTypes = {
     grip2h: "DoD.gripTypes.grip2h"
 };
 
+DoD.skillTypes = {
+    core: "DoD.skillTypes.core",
+    weapon: "DoD.skillTypes.weapon",
+    secondary: "DoD.skillTypes.secondary"
+};
+
 DoD.supplyTypes = {
     common: "DoD.supplyTypes.common",
     uncommon: "DoD.supplyTypes.uncommon",
@@ -24,4 +30,13 @@ DoD.weaponFeatureTypes = {
     thrown: "DoD.weaponFeatureTypes.thrown",
     toppling: "DoD.weaponFeatureTypes.toppling",
     shield: "DoD.weaponFeatureTypes.shield"
+};
+
+DoD.attributes = {
+    "str": "DoD.attributes.str",
+    "con": "DoD.attributes.con",
+    "agl": "DoD.attributes.agl",
+    "int": "DoD.attributes.int",
+    "wil": "DoD.attributes.wil",
+    "cha": "DoD.attributes.cha"
 };

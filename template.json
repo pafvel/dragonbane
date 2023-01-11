@@ -136,19 +136,16 @@
         },
         "skill": {
             "templates": ["itemDescripton"],
-            "name": "",
-            "type": "",
+            "skillType": "",
             "char": "",
             "value": 0
         },
         "ability": {
             "templates": ["itemDescripton"],
-            "name": "",
             "type": ""
         },
         "spell": {
             "templates": ["itemDescripton"],
-            "name": "",
             "skill": "",
             "trick": false,
             "requirement": "",

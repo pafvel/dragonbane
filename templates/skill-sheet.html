@@ -4,6 +4,33 @@
         <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
     </header>
     <div class="sheet-content">
+        <table>
+            <tr>
+                <th>{{localize "DoD.skill.type"}}</th>
+                <th>{{localize "DoD.skill.attribute"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <select name="data.skillType">
+                        {{#select data.skillType}}
+                        {{#each config.skillTypes as |name skillType|}}
+                        <option value="{{skillType}}">{{localize name}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+                <td>
+                    <select name="data.attribute">
+                        {{#select data.attribute}}
+                        {{#each config.attributes as |name attribute|}}
+                        <option value="{{attribute}}">{{localize name}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+            </tr>
+        </table>
+
         {{editor data.description target="system.description" button=true owner=owner editable=editable}}
     </div>
 </form>
