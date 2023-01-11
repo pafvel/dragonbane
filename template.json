@@ -137,7 +137,7 @@
         "skill": {
             "templates": ["itemDescripton"],
             "skillType": "",
-            "char": "",
+            "attribute": "",
             "value": 0
         },
         "ability": {

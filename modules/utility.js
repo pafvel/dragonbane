@@ -9,4 +9,13 @@ export default class DoD_Utility {
             return 1;
         return 0;
     }
+
+    static calculateBaseChance(attribute) {
+        if (attribute <=0) return 0;
+        if (attribute <=5) return 3;
+        if (attribute <= 8) return 4;
+        if (attribute <= 12) return 5;
+        if (attribute <= 15) return 6;
+        return 7;
+    }
 }
