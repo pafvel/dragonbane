@@ -1,6 +1,6 @@
 import { DoD } from "./modules/config.js";
-import DoDItemSheet from "./modules/dod-item-sheet.js";
-import DoDCharacterSheet from "./modules/dod-character-sheet.js";
+import DoDItemSheet from "./modules/item-sheet.js";
+import DoDCharacterSheet from "./modules/character-sheet.js";
 
 Hooks.once("init", function() {
     console.log("DoD | Initializing Dragonbane System");
