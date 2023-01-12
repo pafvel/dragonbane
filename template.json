@@ -33,7 +33,7 @@
                     },
                     "exhausted": {
                         "value": false,
-                        "attribute": "agi"
+                        "attribute": "agl"
                     },
                     "angry": {
                         "value": false,

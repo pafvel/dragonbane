@@ -86,6 +86,14 @@
                 "skillValue": ""
 
             }
+        },
+        "roll": {
+            "dragon": "lyckades med ett Drakslag!",
+            "demon": "misslyckades med ett Demonslag!",
+            "success": "lyckades.",
+            "failure": "misslyckades.",
+            "attributeRoll": "Grundegenskapsslag för <b>{attribute}</b> <b>{result}</b>",
+            "skillRoll": "Färdighetsslag för <b>{skill}</b> <b>{result}</b>"
         }
     }
 }

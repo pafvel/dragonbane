@@ -18,4 +18,14 @@ export default class DoD_Utility {
         if (attribute <= 15) return 6;
         return 7;
     }
+
+    static getConditionByAttributeName(actor, attributeName) {
+        for (const [key, condition] of Object.entries(actor.system.conditions)) {
+            if (condition.attribute == attributeName) {
+                return condition;
+            }
+        }
+        return null;
+    }
+
 }
