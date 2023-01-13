@@ -37,9 +37,12 @@ export default class DoDCharacterSheet extends ActorSheet {
         const secondarySkills = [];
         const weaponSkills = [];
         const trainedSkills = [];
+        const heroicAbilities = [];
+        const kinAbilities = [];
+        const professionAbilities = [];
         
         for (let item of sheetData.actor.items.contents) {
-            if (item.type === 'skill') {
+            if (item.type == 'skill') {
                 let skill = item;
                 
                 if (skill.system.skillType == 'core') {
@@ -50,12 +53,26 @@ export default class DoDCharacterSheet extends ActorSheet {
                     weaponSkills.push(skill);
                 }
             }
+            else if (item.type == 'ability') {
+                let ability = item;
+
+                if (ability.system.abilityType == 'kin') {
+                    kinAbilities.push(ability);
+                } else if (ability.system.abilityType == 'profession') {
+                    professionAbilities.push(ability);
+                } else {
+                    heroicAbilities.push(ability);
+                }
+            }
         }
 
         sheetData.coreSkills = coreSkills; 
         sheetData.secondarySkills = secondarySkills; 
         sheetData.weaponSkills = weaponSkills; 
         
+        sheetData.heroicAbilities = heroicAbilities;
+        sheetData.kinAbilities = kinAbilities;
+        sheetData.professionAbilities = professionAbilities;
     }  
 
     activateListeners(html) {

@@ -1,32 +1,58 @@
 {
     "DoD": {
+        "ability": {
+            "requirement": "Requirement",
+            "type": "Type",
+            "wp": "Willpower Points"
+        },
+        "abilityTypes": {
+            "kin": "Kin",
+            "profession": "Profession",
+            "heroic": "Heroic"
+        },
+        "armor": {
+            "rating": "Armor Rating"
+        },
+        "attributes": {
+            "str": "STR",
+            "con": "CON",
+            "agl": "AGL",
+            "int": "INT",
+            "wil": "WIL",
+            "cha": "CHA"
+        },
+        "conditions": {
+            "dazed": "Dazed",
+            "sickly": "Sickly",
+            "exhausted": "Exhausted",
+            "angry": "Angry",
+            "scared": "Scared",
+            "disheartened": "Disheartened"
+        },
         "gear": {
             "weight": "Weight",
             "cost": "Cost",
             "supply": "Supply",
             "worn": "Worn"
         },
-        "weapon": {
-            "grip": "Grip",
-            "str": "STR",
-            "range": "Range",
-            "damage": "Damage",
-            "durability": "Durability",
-            "features": "Features"
-        },
-        "armor": {
-            "rating": "Armor Rating"
-        },
-        "helmet": {
-            "rating": "Armor Rating"
-        },
-        "shield": {
-            "durability": "Durability"
-        },
         "gripTypes": {
             "none": "-",
             "grip1h": "1h",
             "grip2h": "2h"
+        },
+        "helmet": {
+            "rating": "Armor Rating"
+        },
+        "roll": {
+            "dragon": "succeded with a Dragon roll!",
+            "demon": "failed with a Demon roll!",
+            "success": "succeeded.",
+            "failure": "failed.",
+            "attributeRoll": "Attribute roll for <b>{attribute}</b> <b>{result}</b>",
+            "skillRoll": "Skill roll for <b>{skill}</b> <b>{result}</b>"
+        },
+        "shield": {
+            "durability": "Durability"
         },
         "skill": {
             "type": "Type",
@@ -43,6 +69,14 @@
             "rare": "Rare",
             "unique": "Unique"
         },
+        "weapon": {
+            "grip": "Grip",
+            "str": "STR",
+            "range": "Range",
+            "damage": "Damage",
+            "durability": "Durability",
+            "features": "Features"
+        },
         "weaponFeatureTypes": {
             "bludgeoning": "Bludgeoning",
             "long": "Long",
@@ -56,22 +90,6 @@
             "shield": "Shield"
     
         },    
-        "conditions": {
-            "dazed": "Dazed",
-            "sickly": "Sickly",
-            "exhausted": "Exhausted",
-            "angry": "Angry",
-            "scared": "Scared",
-            "disheartened": "Disheartened"
-        },
-        "attributes": {
-            "str": "STR",
-            "con": "CON",
-            "agl": "AGL",
-            "int": "INT",
-            "wil": "WIL",
-            "cha": "CHA"
-        },
         "ui": {
             "character-sheet": {
                 "main": "Main",
@@ -83,16 +101,11 @@
                 "coreSkills": "Core Skills",
                 "secondarySkills": "Secondary Skills",
                 "weaponSkills": "Weapon Skills",
-                "skillValue": ""
+                "skillValue": "",
+                "heroicAbilities": "Heroic Abilities",
+                "kinAbilities": "Kin Abilities",
+                "professionAbilities": "Profession Abilities"
             }
-        },
-        "roll": {
-            "dragon": "succeded with a Dragon roll!",
-            "demon": "failed with a Demon roll!",
-            "success": "succeeded.",
-            "failure": "failed.",
-            "attributeRoll": "Attribute roll for <b>{attribute}</b> <b>{result}</b>",
-            "skillRoll": "Skill roll for <b>{skill}</b> <b>{result}</b>"
         }
     }
 }

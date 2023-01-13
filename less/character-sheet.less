@@ -218,6 +218,12 @@
             //margin-left: 8px;
             //margin-right: 8px;
         }
+        .table-row {
+            display: flex;
+            flex-direction: row;    
+            //margin-left: 8px;
+            //margin-right: 8px;
+        }
         .sheet-table {
             font-family: QTFrizQuad;
             font-weight: normal;
@@ -281,19 +287,16 @@
                 padding-right: 0em;
                 text-align: right;
             };
-            td:nth-child(2) {
+            td:last-child {
                 text-align: left;
                 padding-left: 1em;
-                padding-right: 1em;
+                padding-right: 3em;
                 width: 100%;    
                 a {
                     &:hover, &:focus {
                         color: white;
                     };  
                 }
-            };
-            td:last-child {
-                padding-right: 3em;
             };
 
             input {

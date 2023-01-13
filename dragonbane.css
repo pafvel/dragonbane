@@ -98,8 +98,6 @@
   border-right: 12px;
   border-style: solid;
   border-color: transparent;
-  font-family: Caveat;
-  font-size: 1.5em;
 }
 .DoD.sheet.item .sheet-content .editor-edit {
   top: 21px;
@@ -312,6 +310,10 @@
   display: flex;
   flex-direction: column;
 }
+.DoD.sheet.character .sheet-content .table-row {
+  display: flex;
+  flex-direction: row;
+}
 .DoD.sheet.character .sheet-content .sheet-table {
   font-family: QTFrizQuad;
   font-weight: normal;
@@ -371,18 +373,15 @@
   padding-right: 0em;
   text-align: right;
 }
-.DoD.sheet.character .sheet-content .sheet-table-data td:nth-child(2) {
+.DoD.sheet.character .sheet-content .sheet-table-data td:last-child {
   text-align: left;
   padding-left: 1em;
-  padding-right: 1em;
+  padding-right: 3em;
   width: 100%;
 }
-.DoD.sheet.character .sheet-content .sheet-table-data td:nth-child(2) a:hover,
-.DoD.sheet.character .sheet-content .sheet-table-data td:nth-child(2) a:focus {
+.DoD.sheet.character .sheet-content .sheet-table-data td:last-child a:hover,
+.DoD.sheet.character .sheet-content .sheet-table-data td:last-child a:focus {
   color: white;
-}
-.DoD.sheet.character .sheet-content .sheet-table-data td:last-child {
-  padding-right: 3em;
 }
 .DoD.sheet.character .sheet-content .sheet-table-data input {
   border: 0px;

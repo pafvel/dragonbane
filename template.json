@@ -142,7 +142,9 @@
         },
         "ability": {
             "templates": ["itemDescripton"],
-            "type": ""
+            "type": "",
+            "requirement": "",
+            "wp": ""
         },
         "spell": {
             "templates": ["itemDescripton"],

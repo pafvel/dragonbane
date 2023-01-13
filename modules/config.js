@@ -6,6 +6,12 @@ DoD.gripTypes = {
     grip2h: "DoD.gripTypes.grip2h"
 };
 
+DoD.abilityTypes = {
+    heroic: "DoD.abilityTypes.heroic",
+    kin: "DoD.abilityTypes.kin",
+    profession: "DoD.abilityTypes.profession"
+};
+
 DoD.skillTypes = {
     core: "DoD.skillTypes.core",
     weapon: "DoD.skillTypes.weapon",

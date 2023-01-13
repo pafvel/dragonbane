@@ -4,6 +4,32 @@
         <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
     </header>
     <div class="sheet-content">
-        {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+
+        <table>
+            <tr>
+                <th>{{localize "DoD.ability.requirement"}}</th>
+                <th>{{localize "DoD.ability.wp"}}</th>
+                <th>{{localize "DoD.ability.type"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <input name="data.requirement" type="text" value="{{data.requirement}}" />
+                </td>
+                <td>
+                    <input name="data.wp" type="text" value="{{data.wp}}" />
+                </td>
+                <td>
+                    <select name="data.abilityType">
+                        {{#select data.abilityType}}
+                        {{#each config.abilityTypes as |name abilityType|}}
+                        <option value="{{abilityType}}">{{localize name}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+            </tr>
+        </table>
+
+        {{editor data.description target="system.description" button=true owner=owner editable=editable}}
     </div>
 </form>
