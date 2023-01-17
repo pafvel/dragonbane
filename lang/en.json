@@ -10,6 +10,11 @@
             "profession": "Profession",
             "heroic": "Heroic"
         },
+        "areaOfEffectTypes": {
+            "none": "-",
+            "cone": "Cone",
+            "sphere": "Sphere"
+        },
         "armor": {
             "rating": "Armor Rating"
         },
@@ -21,13 +26,19 @@
             "wil": "WIL",
             "cha": "CHA"
         },
+        "castingTimeTypes": {
+            "action": "Action",
+            "reaction": "Reaction",
+            "stretch": "Stretch",
+            "shift": "Shift"
+        },
         "conditions": {
             "dazed": "Dazed",
             "sickly": "Sickly",
             "exhausted": "Exhausted",
             "angry": "Angry",
             "scared": "Scared",
-            "disheartened": "Disheartened"
+            "disheartened": "Disheart."
         },
         "gear": {
             "weight": "Weight",
@@ -61,7 +72,27 @@
         "skillTypes": {
             "core": "Core skill",
             "weapon": "Weapon skill",
-            "secondary": "Secondary skill"
+            "secondary": "Secondary skill",
+            "magic": "School of magic"
+        },
+        "spell": {
+            "school": "School of Magic",
+            "rank": "Rank",
+            "prerequisite": "Prerequisite",
+            "requirement": "Requirement",
+            "castingTime": "Casting Time",
+            "range": "Range",
+            "areaOfEffect": "Area",
+            "duration": "Duration",
+            "memorized": "Memorized",
+            "general": "General"
+        },
+        "spellDurationTypes": {
+            "instant": "Instant",
+            "round": "Round",
+            "stretch": "Stretch",
+            "shift": "Shift",
+            "concentration": "Concentration"
         },
         "supplyTypes": {
             "common": "Common",
@@ -96,7 +127,10 @@
                 "skills": "Skills",
                 "abilities": "Abilities",
                 "combat": "Combat",
+                "spell": "Spell",
                 "spells": "Spells",
+                "school": "School of Magic",
+                "memorized": "M",
                 "inventory": "Inventory",
                 "coreSkills": "Core Skills",
                 "secondarySkills": "Secondary Skills",

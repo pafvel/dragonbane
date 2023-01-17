@@ -24,4 +24,26 @@ export default class DoDItemSheet extends ItemSheet {
         };
         return sheetData;
     }
+
+    activateListeners(html) {
+        html.find(".edit-school").change(this._onSchoolEdit.bind(this));
+
+        super.activateListeners(html);
+    }
+
+    _onSchoolEdit(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let field = element.dataset.field;
+        let item = this.item;
+
+        // replace input with localized string if it matches general school name
+        let generalSchool = game.i18n.localize("DoD.spell.general");
+        if (generalSchool == element.value) {
+            element.value = "DoD.spell.general";
+        }
+
+        return item.update({ [field]: element.value});
+    }
+
 }

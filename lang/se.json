@@ -10,6 +10,11 @@
             "profession": "Yrkesförmåga",
             "heroic": "Hjälteförmåga"
         },
+        "areaOfEffectTypes": {
+            "none": "-",
+            "cone": "Kon",
+            "sphere": "Sfär"
+        },
         "armor": {
             "rating": "Skyddsvärde"
         },
@@ -20,6 +25,12 @@
             "int": "INT",
             "wil": "PSY",
             "cha": "KAR"
+        },
+        "castingTimeTypes": {
+            "action": "Handling",
+            "reaction": "Reaktiv",
+            "stretch": "Kvart",
+            "shift": "Skift"
         },
          "conditions": {
             "dazed": "Omtöcknad",
@@ -61,7 +72,27 @@
         "skillTypes": {
             "core": "Grundfärdighet",
             "weapon": "Vapenfärdighet",
-            "secondary": "Sekundär färdighet"
+            "secondary": "Sekundär färdighet",
+            "magic:": "Magiskola"
+        },
+        "spell": {
+            "school": "Magiskola",
+            "rank": "Nivå",
+            "prerequisite": "Krav",
+            "requirement": "Rekvisit",
+            "castingTime": "Tidsåtgång",
+            "range": "Räckvidd",
+            "areaOfEffect": "Area",
+            "duration": "Varaktighet",
+            "memorized": "Memorerad",
+            "general": "Allmän"
+        },
+        "spellDurationTypes": {
+            "instant": "Omedelbar",
+            "round": "Runda",
+            "stretch": "Kvart",
+            "shift": "Skift",
+            "concentration": "Koncentration"
         },
         "supplyTypes": {
             "common": "Vanlig",
@@ -96,7 +127,10 @@
                 "skills": "Färdigheter",
                 "abilities": "Förmågor",
                 "combat": "Strid",
+                "spell": "Besvärjelse",
                 "spells": "Besvärjelser",
+                "school": "Magiskola",
+                "memorized": "M",
                 "inventory": "Packning",
                 "coreSkills": "Grundfärdigheter",
                 "secondarySkills": "Sekundära färdigheter",

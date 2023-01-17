@@ -148,13 +148,15 @@
         },
         "spell": {
             "templates": ["itemDescripton"],
-            "skill": "",
-            "trick": false,
+            "school": "",
+            "rank": 0,
+            "prerequisite": "",
             "requirement": "",
-            "time": "",
+            "castingTime": "",
             "range": 0,
-            "area": "",
-            "duration": ""
+            "areaOfEffect": "",
+            "duration": "",
+            "memorized": false
         }
     }
 }

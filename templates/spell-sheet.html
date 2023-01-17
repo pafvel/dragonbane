@@ -4,6 +4,74 @@
         <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
     </header>
     <div class="sheet-content">
+        <table>
+            <tr>
+                <th>{{localize "DoD.spell.school"}}</th>
+                <th>{{localize "DoD.spell.rank"}}</th>
+                <th>{{localize "DoD.spell.prerequisite"}}</th>
+                <th>{{localize "DoD.spell.memorized"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <input class="edit-school" name="data.school" type="text" value="{{localize data.school}}" />
+                </td>
+                <td>
+                    <input name="data.rank" type="text" value="{{data.rank}}" data-dtype="Number" />
+                </td>
+                <td>
+                    <input name="data.prerequisite" type="text" value="{{data.prerequisite}}" />
+                </td>
+                <td>
+                    <input name="data.memorized" type="checkbox" {{checked data.memorized}} />
+                </td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <th>{{localize "DoD.spell.castingTime"}}</th>
+                <th>{{localize "DoD.spell.range"}}</th>
+                <th>{{localize "DoD.spell.areaOfEffect"}}</th>
+                <th>{{localize "DoD.spell.duration"}}</th>
+                <th>{{localize "DoD.spell.requirement"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <select name="data.castingTime">
+                        {{#select data.castingTime}}
+                        {{#each config.castingTimeTypes as |name castingTime|}}
+                        <option value="{{castingTime}}">{{localize name}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+                <td>
+                    <input name="data.range" type="text" value="{{data.range}}" data-dtype="Number" />
+                </td>
+                <td>
+                    <select name="data.areaOfEffect">
+                        {{#select data.areaOfEffect}}
+                        {{#each config.areaOfEffectTypes as |name areaOfEffect|}}
+                        <option value="{{areaOfEffect}}">{{localize name}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+                <td>
+                    <select name="data.duration">
+                        {{#select data.duration}}
+                        {{#each config.spellDurationTypes as |name duration|}}
+                        <option value="{{duration}}">{{localize name}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+                <td>
+                    <input name="data.requirement" type="text" value="{{data.requirement}}" />
+                </td>
+            </tr>
+        </table>
+
         {{editor data.description target="system.description" button=true owner=owner editable=editable}}
     </div>
 </form>

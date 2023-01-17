@@ -4,7 +4,7 @@ export default class DoDCharacterSheet extends ActorSheet {
     
     static get defaultOptions() {
         return mergeObject(super.defaultOptions,  {
-            width: 600,
+            width: 680,
             height: 640,
             classes: ["DoD", "sheet", "character"],
             tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "main" }]
@@ -36,10 +36,13 @@ export default class DoDCharacterSheet extends ActorSheet {
         const coreSkills = [];
         const secondarySkills = [];
         const weaponSkills = [];
+        const magicSkills = [];
         const trainedSkills = [];
         const heroicAbilities = [];
         const kinAbilities = [];
         const professionAbilities = [];
+        const spells = [];
+        const schools = {};
         
         for (let item of sheetData.actor.items.contents) {
             if (item.type == 'skill') {
@@ -47,10 +50,14 @@ export default class DoDCharacterSheet extends ActorSheet {
                 
                 if (skill.system.skillType == 'core') {
                     coreSkills.push(skill);
-                } else if (skill.system.skillType == 'secondary') {
-                    secondarySkills.push(skill);
-                } else if (skill.system.skillType == 'weapon') {
+                }  else if (skill.system.skillType == 'weapon') {
                     weaponSkills.push(skill);
+                } else if (skill.system.skillType == 'magic') {
+                    // schools of magic are secondary skills
+                    magicSkills.push(skill);
+                    secondarySkills.push(skill);
+                } else {
+                    secondarySkills.push(skill);
                 }
             }
             else if (item.type == 'ability') {
@@ -64,15 +71,29 @@ export default class DoDCharacterSheet extends ActorSheet {
                     heroicAbilities.push(ability);
                 }
             }
+            else if (item.type == 'spell')
+            {
+                let spell = item;
+
+                spells.push(spell);
+                
+                if (!schools[spell.system.school]) {
+                    schools[spell.system.school] = [];
+                }
+                schools[spell.system.school].push(spell);
+            }
         }
 
-        sheetData.coreSkills = coreSkills; 
-        sheetData.secondarySkills = secondarySkills; 
-        sheetData.weaponSkills = weaponSkills; 
-        
-        sheetData.heroicAbilities = heroicAbilities;
-        sheetData.kinAbilities = kinAbilities;
-        sheetData.professionAbilities = professionAbilities;
+        sheetData.coreSkills = coreSkills.sort(DoD_Utility.nameSorter);
+        sheetData.magicSkills = magicSkills.sort(DoD_Utility.nameSorter); 
+        sheetData.secondarySkills = secondarySkills.sort(DoD_Utility.nameSorter); 
+        sheetData.weaponSkills = weaponSkills.sort(DoD_Utility.nameSorter);
+
+        sheetData.heroicAbilities = heroicAbilities.sort(DoD_Utility.nameSorter);
+        sheetData.kinAbilities = kinAbilities.sort(DoD_Utility.nameSorter);
+        sheetData.professionAbilities = professionAbilities.sort(DoD_Utility.nameSorter);
+
+        sheetData.spells = spells.sort(DoD_Utility.nameSorter);
     }  
 
     activateListeners(html) {
@@ -92,9 +113,11 @@ export default class DoDCharacterSheet extends ActorSheet {
         let itemId = element.closest(".sheet-table-data").dataset.itemId;
         let item = this.actor.items.get(itemId);
         let field = element.dataset.field;
-        let value = Number(element.value);
 
-        return item.update({ [field]: value});
+        if (element.type == "checkbox"){
+            return item.update({ [field]: element.checked});
+        }        
+        return item.update({ [field]: Number(element.value)});
     }
     _onItemDelete(event) {
         event.preventDefault();       
@@ -135,13 +158,13 @@ export default class DoDCharacterSheet extends ActorSheet {
         return result;
     }
 
-    _onSkillRoll(event) {
+    async _onSkillRoll(event) {
         event.preventDefault();
 
         let itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
         let skill = this.actor.items.get(itemId);
         let rollString = this._getRollString(skill.system.attribute);
-        let roll = new Roll(rollString).roll({async: false});
+        let roll = await new Roll(rollString).roll({async: true});
         let result = this._getRollResult(roll, skill.system.value);      
         let label = game.i18n.format(game.i18n.localize("DoD.roll.skillRoll"), {skill: skill.name, result: result});
 

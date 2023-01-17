@@ -1,21 +1,43 @@
 export const DoD = {};
 
-DoD.gripTypes = {
-    none: "DoD.gripTypes.none",
-    grip1h: "DoD.gripTypes.grip1h",
-    grip2h: "DoD.gripTypes.grip2h"
-};
-
 DoD.abilityTypes = {
     heroic: "DoD.abilityTypes.heroic",
     kin: "DoD.abilityTypes.kin",
     profession: "DoD.abilityTypes.profession"
 };
 
+DoD.areaOfEffectTypes = {
+    none: "DoD.areaOfEffectTypes.none",
+    cone: "DoD.areaOfEffectTypes.cone",
+    sphere: "DoD.areaOfEffectTypes.sphere"
+};
+
+DoD.castingTimeTypes = {
+    action: "DoD.castingTimeTypes.action",
+    reaction: "DoD.castingTimeTypes.reaction",
+    stretch: "DoD.castingTimeTypes.stretch",
+    shift: "DoD.castingTimeTypes.shift"
+};
+
+DoD.gripTypes = {
+    none: "DoD.gripTypes.none",
+    grip1h: "DoD.gripTypes.grip1h",
+    grip2h: "DoD.gripTypes.grip2h"
+};
+
 DoD.skillTypes = {
     core: "DoD.skillTypes.core",
     weapon: "DoD.skillTypes.weapon",
-    secondary: "DoD.skillTypes.secondary"
+    secondary: "DoD.skillTypes.secondary",
+    magic: "DoD.skillTypes.magic"
+};
+
+DoD.spellDurationTypes = {
+    instant: "DoD.spellDurationTypes.instant",
+    round: "DoD.spellDurationTypes.round",
+    stretch: "DoD.spellDurationTypes.stretch",
+    shift: "DoD.spellDurationTypes.shift",
+    concentration: "DoD.spellDurationTypes.concentration",
 };
 
 DoD.supplyTypes = {
