@@ -84,6 +84,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
         }
 
+        // Items (skills, abilities, spells)
         sheetData.coreSkills = coreSkills.sort(DoD_Utility.nameSorter);
         sheetData.magicSkills = magicSkills.sort(DoD_Utility.nameSorter); 
         sheetData.secondarySkills = secondarySkills.sort(DoD_Utility.nameSorter); 
@@ -94,6 +95,18 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.professionAbilities = professionAbilities.sort(DoD_Utility.nameSorter);
 
         sheetData.spells = spells.sort(DoD_Utility.nameSorter);
+
+        // HP widget data
+        sheetData.maxHP = sheetData.actor.system.hitPoints.max;
+        sheetData.currentHP = sheetData.actor.system.hitPoints.value;
+        sheetData.lostHP = sheetData.maxHP - sheetData.currentHP;
+        sheetData.fillHP = sheetData.maxHP < 11 ? 11 - sheetData.maxHP : 0;
+
+        // WP widget data
+        sheetData.maxWP = sheetData.actor.system.willPoints.max;
+        sheetData.currentWP = sheetData.actor.system.willPoints.value;
+        sheetData.lostWP = sheetData.maxWP - sheetData.currentWP;
+        sheetData.fillWP = sheetData.maxWP < 11 ? 11 - sheetData.maxWP : 0;
     }  
 
     activateListeners(html) {
@@ -104,7 +117,40 @@ export default class DoDCharacterSheet extends ActorSheet {
         html.find(".rollable-attribute").click(this._onAttributeRoll.bind(this));
         html.find(".rollable-skill").click(this._onSkillRoll.bind(this));
 
+        html.find(".hit-points-box").on("click contextmenu", this._onHitPointClick.bind(this));
+        html.find(".will-points-box").on("click contextmenu", this._onWillPointClick.bind(this));
+
         super.activateListeners(html);
+    }
+
+    _onHitPointClick(event) {
+        event.preventDefault();
+
+        let hp = this.actor.system.hitPoints; 
+        if (event.type == "click") { // left click
+            if (hp.value < hp.max) {
+                return this.actor.update({ ["system.hitPoints.value"]: hp.value+1});
+            }
+        } else { // right click
+            if (hp.value > 0) {
+                return this.actor.update({ ["system.hitPoints.value"]: hp.value-1});
+            }
+        }
+    }
+
+    _onWillPointClick(event) {
+        event.preventDefault();
+
+        let wp = this.actor.system.willPoints; 
+        if (event.type == "click") { // left click
+            if (wp.value < wp.max) {
+                return this.actor.update({ ["system.willPoints.value"]: wp.value+1});
+            }
+        } else { // right click
+            if (wp.value > 0) {
+                return this.actor.update({ ["system.willPoints.value"]: wp.value-1});
+            }
+        }
     }
 
     _onInlineEdit(event) {

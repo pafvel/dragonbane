@@ -78,7 +78,46 @@
         <section class="sheet-body">
             {{!-- Main Tab --}}
             <div class="tab main" data-group="primary" data-tab="main">
-                <p>{{localize "DoD.ui.character-sheet.main"}}</p>
+                <div class="main-tab">
+                    <div class="hit-points">
+                        <div class="hit-points-text-label">
+                            <label>HP</label>
+                        </div>
+                        <div class="hit-points-max-box">
+                            <label class="hit-points-max-label">{{maxHP}}</label>
+                        </div>
+                        <div class="hit-points-box">
+                            {{#times currentHP}}
+                            <img class="hit-point" src="./systems/dragonbane/art/ui/point-unchecked.webp"/>
+                            {{/times}}
+                            {{#times lostHP}}
+                            <img class="hit-point" src="./systems/dragonbane/art/ui/point-checked.webp"/>
+                            {{/times}}
+                            {{#times fillHP}}
+                            <img class="hit-point" src=""/>
+                            {{/times}}
+                        </div>
+                    </div>
+                    <div class="will-points">
+                        <div class="will-points-text-label">
+                            <label>WP</label>
+                        </div>
+                        <div class="will-points-max-box">
+                            <label class="will-points-max-label">{{maxWP}}</label>
+                        </div>
+                        <div class="will-points-box">
+                            {{#times currentWP}}
+                            <img class="will-point" src="./systems/dragonbane/art/ui/point-unchecked.webp"/>
+                            {{/times}}
+                            {{#times lostWP}}
+                            <img class="will-point" src="./systems/dragonbane/art/ui/point-checked.webp"/>
+                            {{/times}}
+                            {{#times fillWP}}
+                            <img class="will-point" src=""/>
+                            {{/times}}
+                        </div>
+                    </div>    
+                </div>
             </div>
             {{!-- Skills Tab --}}
             <div class="tab" data-group="primary" data-tab="skills">

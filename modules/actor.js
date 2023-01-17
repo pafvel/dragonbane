@@ -20,6 +20,8 @@ export class DoDActor extends Actor {
     */
 
     /** @override */
+    
+    /** @override */
     prepareData() {
         // Prepare data for the actor. Calling the super version of this executes
         // the following, in order: data reset (to clear active effects),
@@ -55,6 +57,8 @@ export class DoDActor extends Actor {
 
     _prepareCharacterData() {
         if (this.type !== 'character') return;
+        this._prepareActorStats();
+        this._prepareCharacterStats();
         this._prepareBaseChances();
         this._prepareSpellValues();
     }
@@ -65,6 +69,40 @@ export class DoDActor extends Actor {
 
     _prepareMonsterData() {
         if (this.type !== 'monster') return;
+    }
+
+    _prepareCharacterStats() {
+        // Damage Bonus
+
+        // Will Points
+        let maxWillPoints = this.system.attributes.wil.value;
+        if (this.system.willPoints.max != maxWillPoints) {
+            let damage = this.system.willPoints.max - this.system.willPoints.value;
+            if (damage < 0) {
+                damage = 0;
+            } else if (damage > maxWillPoints) {
+                damage = maxWillPoints;
+            }
+            this.update({ ["system.willPoints.max"]: maxWillPoints});
+            this.update({ ["system.willPoints.value"]: maxWillPoints - damage});
+        }
+    }
+
+    _prepareActorStats() {
+        // Movement
+
+        // Hit Points
+        let maxHitPoints = this.system.attributes.con.value;
+        if (this.system.hitPoints.max != maxHitPoints) {
+            let damage = this.system.hitPoints.max - this.system.hitPoints.value;
+            if (damage < 0) {
+                damage = 0;
+            } else if (damage > maxHitPoints) {
+                damage = maxHitPoints;
+            }
+            this.update({ ["system.hitPoints.max"]: maxHitPoints});
+            this.update({ ["system.hitPoints.value"]: maxHitPoints - damage});
+        }
     }
 
     _getAttributeValueFromName(name) {

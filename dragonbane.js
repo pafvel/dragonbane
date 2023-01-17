@@ -16,4 +16,12 @@ Hooks.once("init", function() {
 
     Items.unregisterSheet("core", ItemSheet);
     Items.registerSheet("DoD", DoDItemSheet, {makeDefault: true});
+
+    Handlebars.registerHelper("times", function(n, block) {
+        var result = "";
+        for(let i = 0; i < n; ++i) {
+            result += block.fn(i);
+        }
+        return result;
+    });    
 });

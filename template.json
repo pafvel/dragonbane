@@ -13,12 +13,12 @@
             },
             "attributes": {
                 "attributes": {
-                    "str": { "value": 11 },
-                    "con": { "value": 11 },
-                    "agl": { "value": 11 },
-                    "int": { "value": 11 },
-                    "wil": { "value": 11 },
-                    "cha": { "value": 11 }
+                    "str": { "value": 10 },
+                    "con": { "value": 10 },
+                    "agl": { "value": 10 },
+                    "int": { "value": 10 },
+                    "wil": { "value": 10 },
+                    "cha": { "value": 10 }
                 }
             },
             "conditions": {
@@ -52,14 +52,14 @@
             "actorStats": {
                 "movement": 0,
                 "hitPoints": {
-                    "value": 0,
-                    "max": 0
+                    "value": 10,
+                    "max": 10
                 }
             },
             "characterStats": {
                 "willPoints": {
-                    "value": 0,
-                    "max": 0
+                    "value": 10,
+                    "max": 10
                 },
                 "damageBonus": {
                     "agi": "",
