@@ -40,11 +40,18 @@
             "scared": "Rädd",
             "disheartened": "Uppgiven"
         },
+        "currency": {
+            "gold": "Guld",
+            "silver": "Silver",
+            "copper": "Koppar"
+        },
         "gear": {
             "weight": "Vikt",
+            "quantity": "Antal",
             "cost": "Pris",
             "supply": "Tillgång",
-            "worn": "Bär"
+            "worn": "Bär",
+            "memento": "Memento"
         },
         "gripTypes": {
             "none": "-",
@@ -138,8 +145,19 @@
                 "skillValue": "",
                 "heroicAbilities": "Hjälteförmågor",
                 "kinAbilities": "Släktesförmågor",
-                "professionAbilities": "Yrkesförmågor"
-
+                "professionAbilities": "Yrkesförmågor",
+                "hitPoints": "Kroppspoäng",
+                "willPoints": "Viljepoäng",
+                "hp": "KP",
+                "wp": "VP",
+                "equipped-weapon": "Vapen till hands",
+                "equipped-armor": "Rustning",
+                "equipped-helmet": "Hjälm",
+                "currency": "Mynt",
+                "max-encumbrance": "Bärförmåga",
+                "encumbrance": "Belastning",
+                "memento": "Minnessak",
+                "tiny-items": "Småsaker"
             }
         }
     }

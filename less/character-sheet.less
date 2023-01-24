@@ -192,7 +192,6 @@
         flex-direction: column;
         align-items: center;
 
-        //background-image: url("art/ui/separator-horizontal.webp");
         background-position: center top;
         background-repeat: repeat-x;
         background-size: auto 12px;
@@ -206,25 +205,25 @@
                 display: flex;
                 flex-direction: row;
             }
+            .abilities-tab {
+                display: flex;
+                flex-direction: row;
+            }
         }
         .table-column {
             display: flex;
             flex-direction: column;    
-            //margin-left: 8px;
-            //margin-right: 8px;
         }
         .table-row {
             display: flex;
             flex-direction: row;    
-            //margin-left: 8px;
-            //margin-right: 8px;
         }
         .sheet-table {
             font-family: QTFrizQuad;
             font-weight: normal;
             background-image: url("art/ui/parchment-column.webp");
             background-repeat:  no-repeat;
-            background-size:  85% auto;
+            background-size:  calc(100% - 2em) auto;
             background-clip: border-box;
             background-position-x: center;
             background-position-y: 2em;
@@ -237,9 +236,9 @@
                 float:right;
                 color: rgb(80, 80, 80);
               };                 
-          };                
-       
-          .sheet-table-header {
+        };                
+   
+        .sheet-table-header {
             color: whitesmoke;            
             background-image: url("art/ui/title-bar.webp");
             background-size: contain;
@@ -249,7 +248,8 @@
             height: 2.5em;
             th {
                 text-align: left;
-                text-indent: 2em;
+                text-indent: 1em;
+                white-space: nowrap;
             };
             th:first-child {
                 background-image: url("art/ui/arrow-left.webp");
@@ -259,7 +259,7 @@
                 background-clip: border-box;
                 text-align: right;
                 padding-left: 2em;
-                min-width: 4em;
+                min-width: 3em;
             };
             th:last-child {
                 background-image: url("art/ui/arrow-right.webp");
@@ -269,25 +269,37 @@
                 background-clip: border-box;
                 padding-right: 2em;
                 text-indent: 1em;
-                min-width: 15em;
             };
+            .narrow {
+                padding-left: 0px;
+                padding-right: 0px;
+                text-align: center;
+                text-indent: 0px;
+            }
+            .center {
+                text-align: center;
+                text-indent: 1em;
+            }
         }
         .sheet-table-data {
             td {
-                text-align: center;
-                padding-left: 2em;
+                text-align: left;
+                padding-left: 1em;
                 padding-right: 1em;
             };
             td:first-child {
-                padding-left: 3.5em;
+                padding-left: 2em;
                 padding-right: 0em;
                 text-align: right;
+            };
+            td:nth-child(2) {
+                width: 100%;
             };
             td:last-child {
                 text-align: left;
                 padding-left: 1em;
                 padding-right: 3em;
-                width: 100%;    
+                min-width: 6em;
                 a {
                     &:hover, &:focus {
                         color: white;
@@ -299,8 +311,75 @@
                 border: 0px;
                 height: 100%;
                 padding: 0px 0px;
-              };              
-        };          
+            };
+            
+            .thumbnail {
+                text-align: center;
+                padding-top: 0px;            
+                padding-bottom: 0px;
+                vertical-align: middle;
+            img {
+                    width: 36px;
+                    height: 36px;
+                    min-width: 36px;
+                    min-height: 36px;
+                    border: 0px solid transparent;         
+                }
+            }
+                   
+            .narrow {
+                padding-left: 0px;
+                padding-right: 0px;
+                text-align: center;
+                text-indent: 1em;
+            }
+
+            .center {
+                text-align: center;
+                text-indent: 1em;
+            }
+                   
+            .number {
+                text-align: right;
+            }
+        };
+        
+        .derived-stat {
+            border-bottom: 0px;
+            border-top: 0px;
+            th {
+                text-align: center;
+                color: whitesmoke;            
+                background-image: url("art/ui/table-row-right.webp"), url("art/ui/arrow-left.webp"), url("art/ui/title-bar.webp");
+                background-size: contain, contain, contain;
+                background-clip: border-box, border-box, content-box;
+                background-repeat: no-repeat, no-repeat, repeat-x;
+                background-position: right -8px center, left center, center center;
+                height: 2.5em;
+                width: 60%;
+                padding-left: 2em;
+                min-width: 3em;
+            }
+            td {
+                text-align: center;
+                color: black;
+                background-image: url("art/ui/table-row-right.webp"), url("art/ui/arrow-right.webp"), url("art/ui/table-row-banner.webp");
+                background-size: contain, contain, contain;
+                background-clip: border-box, border-box, content-box;
+                background-repeat: no-repeat, no-repeat, repeat-x;
+                background-position: left -8px center, right center, center center;
+                height: 2.5em;
+                width: 40%;
+                padding-right: 2em;
+                min-width: 3em;
+            }
+            .warning {
+                color:red;
+            }
+            input {
+                border-color: transparent;
+            }
+    };
     }
 
     .hit-points {
@@ -312,13 +391,11 @@
         .hit-points-text-label {
             position: absolute;
             top: 14px;
-            //left: 18px;
             left: 24px;
-            width: 34px;
             text-align: center;
             font-size: 12px;
             color: white;
-            //text-transform: uppercase;
+            text-transform: uppercase;
         }
         .hit-points-max-box {
             position: absolute;
@@ -370,13 +447,11 @@
         .will-points-text-label {
             position: absolute;
             top: 14px;
-            //left: 18px;
             left: 24px;
-            width: 34px;
             text-align: center;
             font-size: 12px;
             color: white;
-            //text-transform: uppercase;
+            text-transform: uppercase;
         }
         .will-points-max-box {
             position: absolute;

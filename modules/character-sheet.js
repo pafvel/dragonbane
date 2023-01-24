@@ -5,8 +5,9 @@ export default class DoDCharacterSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions,  {
             width: 680,
-            height: 640,
+            height: 750,
             classes: ["DoD", "sheet", "character"],
+            dragDrop: [{ dragSelector: ".item-list .item", dropSelector: null}],
             tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "main" }]
         });
     }
@@ -43,8 +44,26 @@ export default class DoDCharacterSheet extends ActorSheet {
         const professionAbilities = [];
         const spells = [];
         const schools = {};
+        const inventory = [];
+        const equippedWeapons = [];
+        let equippedArmor = null;
+        let equippedHelmet = null;
+        let memento = null;
+        let smallItems = [];
         
         for (let item of sheetData.actor.items.contents) {
+
+            // any item can be a memento
+            if (item.system.memento) {
+                if(!memento) {
+                    memento = item;
+                    continue;
+                } else {
+                    // Memento slot busy. Clear flag and process as normal item
+                    item.update({ ["system.memento"]: false}); 
+                }
+            }
+
             if (item.type == 'skill') {
                 let skill = item;
                 
@@ -59,8 +78,10 @@ export default class DoDCharacterSheet extends ActorSheet {
                 } else {
                     secondarySkills.push(skill);
                 }
+                continue;
             }
-            else if (item.type == 'ability') {
+
+            if (item.type == 'ability') {
                 let ability = item;
 
                 if (ability.system.abilityType == 'kin') {
@@ -70,8 +91,10 @@ export default class DoDCharacterSheet extends ActorSheet {
                 } else {
                     heroicAbilities.push(ability);
                 }
+                continue;
             }
-            else if (item.type == 'spell')
+
+            if (item.type == 'spell')
             {
                 let spell = item;
 
@@ -81,6 +104,65 @@ export default class DoDCharacterSheet extends ActorSheet {
                     schools[spell.system.school] = [];
                 }
                 schools[spell.system.school].push(spell);
+                continue;
+            }
+            
+            if (item.type == "weapon" || item.type == "shield") {
+                if (item.system.worn) {
+                    // TODO limit 3
+                    equippedWeapons.push(item);
+                } else {
+                    inventory.push(item);
+                }
+                // weapons can be mementos
+                if (item.system.memento) {
+                    if(!memento) {
+                        memento = item;
+                    } else {
+                        // Memento slot busy. Clear flag and process as normal item
+                        item.update({ ["system.memento"]: false}); 
+                    }
+                }
+
+                continue;
+            }
+            
+            if (item.type == "armor") {
+                if (item.system.worn) {
+                    if (equippedArmor) {
+                        // can't equip more than one armor - unequip current armor and puit it in inventory
+                        equippedArmor.update({ ["system.worn"]: false});
+                        inventory.push(equippedArmor);
+                    }
+                    equippedArmor = item;
+                } else {
+                    inventory.push(item);
+                }
+                continue;
+            }
+
+            if (item.type == "helmet") {
+                if (item.system.worn) {
+                    if (equippedHelmet) {
+                        // can't equip more than one helmet - unequip helmet armor and puit it in inventory
+                        equippedHelmet.update({ ["system.worn"]: false});
+                        inventory.push(equippedHelmet);
+                    }
+                    equippedHelmet = item;
+                } else {
+                    inventory.push(item);
+                }
+                continue;
+            }
+            
+            if (item.type == "item") {
+                if (item.system.weight == 0)
+                {
+                    smallItems.push(item);
+                    continue;
+                }
+                inventory.push(item);
+                continue;
             }
         }
 
@@ -90,24 +172,45 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.secondarySkills = secondarySkills.sort(DoD_Utility.nameSorter); 
         sheetData.weaponSkills = weaponSkills.sort(DoD_Utility.nameSorter);
 
-        sheetData.heroicAbilities = heroicAbilities.sort(DoD_Utility.nameSorter);
-        sheetData.kinAbilities = kinAbilities.sort(DoD_Utility.nameSorter);
-        sheetData.professionAbilities = professionAbilities.sort(DoD_Utility.nameSorter);
+        sheetData.heroicAbilities = heroicAbilities.sort(DoD_Utility.itemSorter);
+        sheetData.kinAbilities = kinAbilities.sort(DoD_Utility.itemSorter);
+        sheetData.professionAbilities = professionAbilities.sort(DoD_Utility.itemSorter);
 
-        sheetData.spells = spells.sort(DoD_Utility.nameSorter);
+        sheetData.spells = spells.sort(DoD_Utility.itemSorter);
+
+        sheetData.inventory = inventory.sort(DoD_Utility.itemSorter);
+        sheetData.equippedWeapons = equippedWeapons.sort(DoD_Utility.itemSorter);
+        sheetData.equippedArmor = equippedArmor;
+        sheetData.equippedHelmet = equippedHelmet;
+        sheetData.smallItems = smallItems.sort(DoD_Utility.itemSorter);
+        sheetData.memento = memento;
+
+        this._updateEncumbrance(sheetData);
 
         // HP widget data
         sheetData.maxHP = sheetData.actor.system.hitPoints.max;
         sheetData.currentHP = sheetData.actor.system.hitPoints.value;
         sheetData.lostHP = sheetData.maxHP - sheetData.currentHP;
-        sheetData.fillHP = sheetData.maxHP < 11 ? 11 - sheetData.maxHP : 0;
+        sheetData.fillHP = sheetData.maxHP < 11 ? 11 - sheetData.maxHP : 0; // needed for layout
 
         // WP widget data
         sheetData.maxWP = sheetData.actor.system.willPoints.max;
         sheetData.currentWP = sheetData.actor.system.willPoints.value;
         sheetData.lostWP = sheetData.maxWP - sheetData.currentWP;
-        sheetData.fillWP = sheetData.maxWP < 11 ? 11 - sheetData.maxWP : 0;
+        sheetData.fillWP = sheetData.maxWP < 11 ? 11 - sheetData.maxWP : 0; // needed for layout
     }  
+
+    _updateEncumbrance(sheetData) {
+        sheetData.maxEncumbrance = Math.ceil(0.5 * this.actor.system.attributes.str.value);
+        sheetData.encumbrance = 0;
+        if (sheetData.inventory) {
+            sheetData.inventory.forEach(item => sheetData.encumbrance += item.totalWeight);
+        }
+        let coins = sheetData.actor.system.currency.gc + sheetData.actor.system.currency.sc + sheetData.actor.system.currency.cc;
+        sheetData.encumbrance += Math.floor(coins/100);
+        
+        sheetData.overEncumbered = sheetData.encumbrance > sheetData.maxEncumbrance;
+    }
 
     activateListeners(html) {
         html.find(".inline-edit").change(this._onInlineEdit.bind(this));
@@ -235,6 +338,55 @@ export default class DoDCharacterSheet extends ActorSheet {
           speaker: ChatMessage.getSpeaker({ actor: this.actor }),
           flavor: label
         });        
-
     }
+
+    async _onDropItem(event, data)
+    {
+        if ( !this.actor.isOwner ) return false;
+        const item = await Item.implementation.fromDropData(data);
+        const itemData = item.toObject();
+    
+        // Handle item sorting within the same Actor
+        if ( this.actor.uuid === item.parent?.uuid ) {
+            let result =  this._onSortItem(event, itemData);
+            let dropTarget = event.target.closest(".item-list").dataset.droptarget;
+
+            if (dropTarget) {
+                if (dropTarget == "weapon")
+                {
+                    item.update({
+                        ["system.worn"]: true,
+                        ["system.memento"]: false
+                    });
+                }
+                else if (dropTarget == "armor") {
+                    this.getData().equippedArmor?.update({ ["system.worn"]: false});
+                    item.update({
+                        ["system.worn"]: true,
+                        ["system.memento"]: false
+                    });
+                }
+                else if (dropTarget == "helmet") {
+                    this.getData().equippedHelmet?.update({ ["system.worn"]: false});
+                    item.update({
+                        ["system.worn"]: true,
+                        ["system.memento"]: false
+                    });
+                }
+                else if (dropTarget == "memento") {
+                    this.getData().memento?.update({ ["system.memento"]: false });
+                    item.update({ ["system.memento"]: true});
+                }
+                else if (dropTarget == "inventory" || dropTarget == "tiny") {
+                    item.update({
+                        ["system.worn"]: false,
+                        ["system.memento"]: false
+                    });
+                }
+            }
+            return result;
+        }
+            // Create the owned item
+            return this._onDropItemCreate(itemData);
+        }
 }

@@ -65,6 +65,11 @@
                     "agi": "",
                     "str": ""
                 }
+            },
+            "currency": {
+                "gc": 0,
+                "sc": 0,
+                "cc": 0
             }
         },
         "character": {
@@ -74,7 +79,8 @@
                 "attributes",
                 "conditions",
                 "actorStats",
-                "characterStats"
+                "characterStats",
+                "currency"
             ]
         },
         "npc": {
@@ -96,16 +102,18 @@
         }
     },
     "Item": {
-        "types": ["weapon", "armor", "helmet", "shield", "item", "skill", "ability", "spell"],
+        "types": ["ability", "armor", "helmet", "item", "shield", "skill", "spell", "weapon"],
         "templates": {
             "itemDescripton": {
                 "description": ""
             },
             "gear": {
                 "weight": 1,
+                "quantity": 1,
                 "cost": "",
                 "supply": "",
-                "worn": false
+                "worn": false,
+                "memento": false
             }
         },
         "weapon": {

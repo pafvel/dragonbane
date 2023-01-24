@@ -40,11 +40,18 @@
             "scared": "Scared",
             "disheartened": "Disheart."
         },
+        "currency": {
+            "gold": "Gold",
+            "silver": "Silver",
+            "copper": "Copper"
+        },
         "gear": {
             "weight": "Weight",
+            "quantity": "Count",
             "cost": "Cost",
             "supply": "Supply",
-            "worn": "Worn"
+            "worn": "Worn",
+            "memento": "Memento"
         },
         "gripTypes": {
             "none": "-",
@@ -138,7 +145,19 @@
                 "skillValue": "",
                 "heroicAbilities": "Heroic Abilities",
                 "kinAbilities": "Kin Abilities",
-                "professionAbilities": "Profession Abilities"
+                "professionAbilities": "Profession Abilities",
+                "hitPoints": "Hit Points",
+                "willPoints": "Willpower Points",
+                "hp": "HP",
+                "wp": "WP",
+                "equipped-weapon": "Equipped Weapons",
+                "equipped-armor": "Equipped Armor",
+                "equipped-helmet": "Equipped Helm",
+                "currency": "Coin",
+                "max-encumbrance": "Max Encumbrance",
+                "encumbrance": "Encumbrance",
+                "memento": "Memento",
+                "tiny-items": "Tiny Items"
             }
         }
     }

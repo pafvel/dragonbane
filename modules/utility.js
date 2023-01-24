@@ -10,6 +10,10 @@ export default class DoD_Utility {
         return 0;
     }
 
+    static itemSorter(a, b) {
+        return a.sort - b.sort;
+    }
+
     static calculateBaseChance(attribute) {
         if (attribute <=0) return 0;
         if (attribute <=5) return 3;

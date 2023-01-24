@@ -1,0 +1,21 @@
+<section>
+    <div class="hit-points">
+        <div class="hit-points-text-label">
+            <label>{{localize "DoD.ui.character-sheet.hitPoints"}}</label>
+        </div>
+        <div class="hit-points-max-box">
+            <label class="hit-points-max-label">{{maxHP}}</label>
+        </div>
+        <div class="hit-points-box">
+            {{#times currentHP}}
+            <img class="hit-point" src="./systems/dragonbane/art/ui/point-unchecked.webp"/>
+            {{/times}}
+            {{#times lostHP}}
+            <img class="hit-point" src="./systems/dragonbane/art/ui/point-checked.webp"/>
+            {{/times}}
+            {{#times fillHP}}
+            <img class="hit-point invisible" src=""/>
+            {{/times}}
+        </div>
+    </div>
+</section>
