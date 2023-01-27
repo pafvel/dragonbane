@@ -343,7 +343,18 @@
                 text-align: right;
             }
         };
-        
+
+        .derived-stat-box {
+            table {
+                margin: 0px;
+            }
+            table:first-child {
+                margin-top: 7px;
+            }
+            table:last-child {
+                margin-bottom: 7px;
+            }
+        }
         .derived-stat {
             border-bottom: 0px;
             border-top: 0px;
@@ -491,6 +502,62 @@
             .invisible {
                 visibility: hidden;
             }
+        }
+    }
+
+    .armor {
+        font-family: QTFritzQuad;
+        background-image: url("art/ui/banner-right.webp");
+        background-size: 221px 61px;
+        background-repeat: no-repeat;
+        background-position: 42px center;
+        min-width: 266px;
+        border: 0px solid transparent;
+        td {
+            border: 0px solid transparent;
+        }
+        tr {
+            height: 40px;
+        }
+        .armor-value {
+            background-image: url("art/ui/armor.webp");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center center;
+            width: 95px;
+            height: 98px;           
+            min-width: 95px;
+            min-height: 98px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .helmet-value {
+            background-image: url("art/ui/helmet-small.webp");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center center;
+            width: 95px;
+            height: 98px;           
+            min-width: 95px;
+            min-height: 98px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .armor-label {
+            text-transform: uppercase;
+            font-size: smaller;
+            font-weight: bold;
+            vertical-align: bottom;
+        }
+        .armor-name {
+            font-weight: bold;
+        }
+        .armor-banes {
+            font-size: small;
+            vertical-align: top;
+            font-weight: normal;
         }
     }
 }
