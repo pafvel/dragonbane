@@ -1,0 +1,234 @@
+<div class="tab inventory" data-group="primary" data-tab="inventory">
+    <div class="table-row">
+        <div>
+            <table class="sheet-table item-list" data-droptarget="weapon">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th>{{localize "DoD.ui.character-sheet.equipped-weapon"}}</th>
+                    <th>&nbsp</th>
+                </tr>
+                {{#if equippedWeapons}}
+                {{#each equippedWeapons as |weapon weaponId|}}
+                <tr class="sheet-table-data item" data-item-id="{{weapon.id}}">
+                    <td class="thumbnail">
+                        <img src="{{weapon.img}}" title="{{weapon.name}}"/>
+                    </td>
+                    <td><a class="item-edit">{{weapon.displayName}}</a></td>
+                    <td>
+                        <a class="item-delete" data-type="weapon">
+                            <i class="fas fa-trash"></i>
+                        </a>    
+                    </td>
+                </tr>
+                {{/each}}
+                {{else}}
+                <tr class="sheet-table-data">
+                    <td></td>
+                    <td><a>&nbsp</a></td>
+                    <td></td>
+                </tr>
+                {{/if}}                  
+            </table>
+
+            <table class="sheet-table item-list" data-droptarget="armor">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th>
+                        {{localize "DoD.ui.character-sheet.equipped-armor"}}
+                    </th>
+                    <th></th>
+                </tr>
+                {{#if equippedArmor}}
+                <tr class="sheet-table-data item" data-item-id="{{equippedArmor.id}}">
+                    <td class="thumbnail">
+                        <img src="{{equippedArmor.img}}" title="{{equippedArmor.name}}"/>
+                    </td>
+                    <td><a class="item-edit">{{equippedArmor.displayName}}</a></td>
+                    <td>
+                        <a class="item-delete" data-type="armor">
+                            <i class="fas fa-trash"></i>
+                        </a>    
+                    </td>
+                </tr>
+                {{else}}
+                <tr class="sheet-table-data">
+                    <td></td>
+                    <td><a>&nbsp</a></td>
+                    <td></td>
+                </tr>
+                {{/if}}
+            </table>
+
+            <table class="sheet-table item-list" data-droptarget="helmet">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th>
+                        {{localize "DoD.ui.character-sheet.equipped-helmet"}}
+                    </th>
+                    <th></th>
+                </tr>
+                {{#if equippedHelmet}}
+                <tr class="sheet-table-data item" data-item-id="{{equippedHelmet.id}}">
+                    <td class="thumbnail">
+                        <img src="{{equippedHelmet.img}}" title="{{equippedHelmet.name}}"/>
+                    </td>
+                    <td><a class="item-edit">{{equippedHelmet.displayName}}</a></td>
+                    <td>
+                        <a class="item-delete" data-type="helmet">
+                            <i class="fas fa-trash"></i>
+                        </a>    
+                    </td>
+                </tr>
+                {{else}}
+                <tr class="sheet-table-data">
+                    <td></td>
+                    <td><a>&nbsp</a></td>
+                    <td></td>
+                </tr>
+                {{/if}}
+            </table>
+
+            <div class="derived-stat-box">
+                <table class="derived-stat">
+                    <tr>
+                        <th>{{localize "DoD.currency.gold"}}</th>
+                        <td><input class="currency-input" name="data.currency.gc" type="text" value="{{data.currency.gc}}" data-dtype="Number" /></td>
+                    </tr>
+                </table>    
+                <table class="derived-stat">
+                    <tr>
+                        <th>{{localize "DoD.currency.silver"}}</th>
+                        <td><input class="currency-input" name="data.currency.sc" type="text" value="{{data.currency.sc}}" data-dtype="Number" /></td>
+                    </tr>
+                </table>    
+                <table class="derived-stat">
+                    <tr>
+                        <th>{{localize "DoD.currency.copper"}}</th>
+                        <td><input class="currency-input" name="data.currency.cc" type="text" value="{{data.currency.cc}}" data-dtype="Number" /></td>
+                    </tr>
+                </table>    
+            </div>
+        </div>
+        <div class="derived-stat-box">
+            <table class="derived-stat">
+                <tr>
+                    <th>{{localize "DoD.ui.character-sheet.max-encumbrance"}}</th>
+                    <td>{{maxEncumbrance}}</td>
+                </tr>
+            </table>
+            <table class="derived-stat">
+                <tr>
+                    <th>{{localize "DoD.ui.character-sheet.encumbrance"}}</th>
+                    {{#if overEncumbered}}
+                    <td class="warning">{{encumbrance}}</td>
+                    {{else}}
+                    <td>{{encumbrance}}</td>
+                    {{/if}}
+                </tr>
+            </table>
+
+            <table class="sheet-table item-list" data-droptarget="inventory">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th>
+                        {{localize "DoD.ui.character-sheet.inventory"}}
+                    </th>
+                    <th>
+                        {{localize "DoD.gear.weight"}}
+                    </th>
+                    <th>&nbsp</th>
+                </tr>
+                {{#if inventory}}
+                {{#each inventory as |item itemId|}}
+                <tr class="sheet-table-data item" data-item-id="{{item.id}}">
+                    <td class="thumbnail">
+                        <img src="{{item.img}}" title="{{item.name}}"/>
+                    </td>
+                    <td>
+                        <a class="item-edit">{{item.displayName}}</a>
+                    </td>
+                    <td class="number">
+                        <a>{{item.totalWeight}}</a>
+                    </td>
+                    <td>
+                        <a class="item-delete" data-type="spell">
+                            <i class="fas fa-trash"></i>
+                        </a>    
+                    </td>
+                </tr>
+                {{/each}}
+                {{else}}
+                <tr class="sheet-table-data">
+                    <td></td>
+                    <td><a>&nbsp</a></td>
+                    <td></td>
+                </tr>
+                {{/if}}
+
+            </table>
+
+            <table class="sheet-table item-list" data-droptarget="memento">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th>
+                        {{localize "DoD.ui.character-sheet.memento"}}
+                    </th>
+                    <th></th>
+                </tr>
+                {{#if memento}}
+                <tr class="sheet-table-data item" data-item-id="{{memento.id}}">
+                    <td class="thumbnail">
+                        <img src="{{memento.img}}" title="{{memento.name}}"/>
+                    </td>
+                    <td><a class="item-edit">{{memento.displayName}}</a></td>
+                    <td>
+                        <a class="item-delete" data-type="helmet">
+                            <i class="fas fa-trash"></i>
+                        </a>    
+                    </td>
+                </tr>
+                {{else}}
+                <tr class="sheet-table-data">
+                    <td></td>
+                    <td><a>&nbsp</a></td>
+                    <td></td>
+                </tr>
+                {{/if}}
+
+            </table>
+
+            <table class="sheet-table item-list" data-droptarget="tiny">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th>
+                        {{localize "DoD.ui.character-sheet.tiny-items"}}
+                    </th>
+                    <th></th>
+                </tr>
+                {{#if smallItems}}
+                {{#each smallItems as |item itemId|}}
+                <tr class="sheet-table-data item" data-item-id="{{item.id}}">
+                    <td>
+                    </td>
+                    <td>
+                        <a class="item-edit">{{item.displayName}}</a>
+                    </td>
+                    <td>
+                        <a class="item-delete" data-type="spell">
+                            <i class="fas fa-trash"></i>
+                        </a>            
+                    </td>
+                </tr>
+                {{/each}}
+                {{else}}
+                <tr class="sheet-table-data">
+                    <td></td>
+                    <td><a>&nbsp</a></td>
+                    <td></td>
+                </tr>
+                {{/if}}
+
+            </table>
+        </div>
+    </div>
+</div>

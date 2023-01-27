@@ -19,7 +19,14 @@ function registerHandlebarsHelpers() {
 async function preloadHandlebarsTemplates() {
     const templatePaths = [
         "systems/dragonbane/templates/partials/hp-widget.hbs",
-        "systems/dragonbane/templates/partials/wp-widget.hbs"
+        "systems/dragonbane/templates/partials/wp-widget.hbs",
+        "systems/dragonbane/templates/partials/character-sheet-main.hbs",
+        "systems/dragonbane/templates/partials/character-sheet-skills.hbs",
+        "systems/dragonbane/templates/partials/character-sheet-abilities.hbs",
+        "systems/dragonbane/templates/partials/character-sheet-spells.hbs",
+        "systems/dragonbane/templates/partials/character-sheet-combat.hbs",
+        "systems/dragonbane/templates/partials/character-sheet-inventory.hbs",
+        "systems/dragonbane/templates/partials/character-sheet-background.hbs"
     ];
 
     return loadTemplates(templatePaths);

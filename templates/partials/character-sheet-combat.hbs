@@ -1,0 +1,119 @@
+<div class="tab combat" data-group="primary" data-tab="combat">
+    <div class="flexcol">
+        <table class="sheet-table">
+            <tr class="sheet-table-header">
+                <th>&nbsp</th>
+                <th>{{localize "DoD.ui.character-sheet.weapons"}}</th>
+                <th>{{localize "DoD.weapon.skillValue"}}</th>
+                <th>{{localize "DoD.weapon.grip"}}</th>
+                <th>{{localize "DoD.weapon.str"}}</th>
+                <th>{{localize "DoD.weapon.rangeShort"}}</th>
+                <th>{{localize "DoD.weapon.damageShort"}}</th>
+                <th>{{localize "DoD.weapon.durabilityShort"}}</th>
+            </tr>
+            {{#if equippedWeapons}}
+            {{#each equippedWeapons as |weapon weaponId|}}
+            <tr class="sheet-table-data item" data-item-id="{{weapon.id}}">
+                <td class="thumbnail">
+                    <img src="{{weapon.img}}" title="{{weapon.name}}"/>
+                </td>
+                <td><a class="item-edit">{{weapon.name}}</a></td>
+                <td class="number">{{weapon.system.skill.value}}</td>
+                <td class="center">{{localize weapon.system.grip.label}}</td>
+                <td class="number">{{weapon.system.str}}</td>
+                <td class="number">{{weapon.system.range}}</td>
+                <td class="center">{{weapon.system.damage}}</td>
+                <td class="number">{{weapon.system.durability}}</td>
+            </tr>
+            {{/each}}
+            {{else}}
+            <tr class="sheet-table-data">
+                <td></td>
+                <td><a>&nbsp</a></td>
+                <td></td>
+            </tr>
+            {{/if}}                  
+        </table>
+
+        <div class="flexrow">
+            {{!-- Hit Points --}}
+            <div class="flexcol">
+                {{> "systems/dragonbane/templates/partials/hp-widget.hbs" }}
+                <div>
+                    Death rolls
+                </div>
+            </div>
+
+            {{!-- Derived combat stats --}}
+            <div class="flexcol derived-stat-box">
+                <table class="derived-stat">
+                    <tr>
+                        <th>{{localize "DoD.ui.character-sheet.damageBonusSTR"}}</th>
+                        <td>{{data.damageBonus.str}}</td>
+                    </tr>
+                </table>    
+                <table class="derived-stat">
+                    <tr>
+                        <th>{{localize "DoD.ui.character-sheet.damageBonusAGL"}}</th>
+                        <td>{{data.damageBonus.agl}}</td>
+                    </tr>
+                </table>    
+                <table class="derived-stat">
+                    <tr>
+                        <th>{{localize "DoD.ui.character-sheet.movement"}}</th>
+                        <td>{{data.movement}}</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+        {{!-- Armor --}}
+        <div class="flexrow">
+            <table class="armor">
+                <tr>
+                    <td class="armor-value" rowspan="3">
+                        {{#if equippedArmor}}
+                        <a>{{equippedArmor.system.rating}}</a>
+                        {{/if}}
+                    </td>
+                    <td class="armor-label">&nbsp</td>
+                </tr>
+                <tr>
+                    <td class="armor-name">
+                        {{#if equippedArmor}}
+                        <a class="item-edit  sheet-table-data" data-item-id="{{equippedArmor.id}}">{{equippedArmor.name}}</a>
+                        {{/if}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="armor-banes">
+                        {{localize "DoD.ui.character-sheet.banes"}}: {{equippedArmor.system.banes}}
+                    </td>
+                </tr>
+            </table>
+            <table class="armor">
+                <tr>
+                    <td class="helmet-value" rowspan="3">
+                        {{#if equippedHelmet}}
+                        <a>{{equippedHelmet.system.rating}}</a>
+                        {{/if}}
+                    </td>
+                    <td class="armor-label">&nbsp</td>
+                </tr>
+                <tr>
+                    <td class="armor-name">
+                        {{#if equippedHelmet}}
+                        <a class="item-edit sheet-table-data" data-item-id="{{equippedHelmet.id}}">{{equippedHelmet.name}}</a>
+                        {{/if}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="armor-banes">
+                        {{localize "DoD.ui.character-sheet.banes"}}: {{equippedHelmet.system.banes}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,109 @@
+<div class="tab" data-group="primary" data-tab="skills">
+    <div class="skills-tab">
+        {{!-- Core Skills --}}
+        <div class="table-column">
+            <table class="sheet-table core-skills">
+                <tr class="sheet-table-header">
+                    <th>
+                        {{localize "DoD.ui.character-sheet.skillValue"}}
+                    </th>
+                    <th>
+                        {{localize "DoD.ui.character-sheet.coreSkills"}}
+                    </th>
+                    <th>
+                        {{!-- column for icons --}}
+                        &nbsp
+                    </th>
+                </tr>
+                {{#each coreSkills as |skill skillId|}}
+                <tr class="sheet-table-data" data-item-id="{{skill.id}}">
+                    <td>
+                        <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
+                    </td>
+                    <td>
+                        <a class="rollable-skill">{{skill.name}}</a>
+                    </td>
+                    <td>
+                        <a class="item-delete" data-type="skill">
+                            <i class="fas fa-trash"></i>
+                        </a>    
+                        <a class="item-edit" data-type="skill">
+                            <i class="fas fa-edit"></i>
+                        </a>                                                
+                    </td>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+        
+        <div>
+            {{!-- Weapon Skills --}}
+            <table class="sheet-table weapon-skills">
+                <tr class="sheet-table-header">
+                    <th>
+                        {{localize "DoD.ui.character-sheet.skillValue"}}
+                    </th>
+                    <th>
+                        {{localize "DoD.ui.character-sheet.weaponSkills"}}
+                    </th>
+                    <th>
+                        {{!-- column for icons --}}
+                        &nbsp
+                    </th>
+                </tr>
+                {{#each weaponSkills as |skill skillId|}}
+                <tr class="sheet-table-data" data-item-id="{{skill.id}}">
+                    <td>
+                        <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
+                    </td>
+                    <td>
+                        <a class="rollable-skill">{{skill.name}}</a>
+                    </td>
+                    <td>
+                        <a class="item-delete" data-type="skill">
+                            <i class="fas fa-trash"></i>
+                        </a>    
+                        <a class="item-edit" data-type="skill">
+                            <i class="fas fa-edit"></i>
+                        </a>            
+                    </td>
+                </tr>
+                {{/each}}
+            </table>
+            {{!-- Secondary Skills --}}
+            {{#if secondarySkills }}
+            <table class="sheet-table secondary-skills">
+                <tr class="sheet-table-header">
+                    <th>
+                        {{localize "DoD.ui.character-sheet.skillValue"}}
+                    </th>
+                    <th>
+                        {{localize "DoD.ui.character-sheet.secondarySkills"}}
+                    </th>
+                    <th>
+                        {{!-- column for icons --}}
+                    </th>
+                </tr>
+                {{#each secondarySkills as |skill skillId|}}
+                <tr class="sheet-table-data" data-item-id="{{skill.id}}">
+                    <td>
+                        <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
+                    </td>
+                    <td>
+                        <a class="rollable-skill">{{skill.name}}</a>
+                    </td>
+                    <td>
+                        <a class="item-delete" data-type="skill">
+                            <i class="fas fa-trash"></i>
+                        </a>    
+                        <a class="item-edit" data-type="skill">
+                            <i class="fas fa-edit"></i>
+                        </a>            
+                    </td>
+                </tr>
+                {{/each}}
+            </table>
+            {{/if}}
+        </div>
+    </div>
+</div>
