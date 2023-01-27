@@ -7,14 +7,24 @@
         <table>
             <tr>
                 <th>{{localize "DoD.armor.rating"}}</th>
-                <th>{{localize "DoD.gear.weight"}}</th>
-                <th>{{localize "DoD.gear.quantity"}}</th>
-                <th>{{localize "DoD.gear.worn"}}</th>
+                <th>{{localize "DoD.armor.banes"}}</th>
             </tr>
             <tr>
                 <td>
                     <input name="data.rating" type="text" value="{{data.rating}}" data-dtype="Number" />
                 </td>
+                <td>
+                    <input name="data.banes" type="text" value="{{data.banes}}" />
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th>{{localize "DoD.gear.weight"}}</th>
+                <th>{{localize "DoD.gear.quantity"}}</th>
+                <th>{{localize "DoD.gear.worn"}}</th>
+            </tr>
+            <tr>
                 <td>
                     <input name="data.weight" type="text" value="{{data.weight}}" data-dtype="Number" />
                 </td>

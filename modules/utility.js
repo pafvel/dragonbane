@@ -23,6 +23,20 @@ export default class DoD_Utility {
         return 7;
     }
 
+    static calculateDamageBonus(attribute) {
+        if (attribute <=12) return "0";
+        if (attribute <=16) return "+" + game.i18n.localize("DoD.dice.d4");
+        return "+" + game.i18n.localize("DoD.dice.d6");
+    }
+
+    static calculateMovement(attribute) {
+        if (attribute <=6) return 6;
+        if (attribute <=9) return 8;
+        if (attribute <= 12) return 10;
+        if (attribute <= 15) return 12;
+        return 14;
+    }
+
     static getConditionByAttributeName(actor, attributeName) {
         for (const [key, condition] of Object.entries(actor.system.conditions)) {
             if (condition.attribute == attributeName) {

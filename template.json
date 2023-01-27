@@ -62,7 +62,7 @@
                     "max": 10
                 },
                 "damageBonus": {
-                    "agi": "",
+                    "agl": "",
                     "str": ""
                 }
             },
@@ -118,17 +118,24 @@
         },
         "weapon": {
             "templates": ["gear", "itemDescripton"],
-            "grip": "",
+            "grip": {
+                "label": "",
+                "value": ""
+            },
             "str": 0,
             "range": 0,
             "damage": "",
             "durability": 0,
-            "skill": "",
+            "skill": {
+                "name": "",
+                "value": 0
+            },
             "features": []
         },
         "armor": {
             "templates": ["gear", "itemDescripton"],
-            "rating": 0
+            "rating": 0,
+            "banes": []
         },
         "helmet": {
             "templates": ["gear", "itemDescripton"],

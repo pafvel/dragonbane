@@ -45,5 +45,4 @@ export default class DoDItemSheet extends ItemSheet {
 
         return item.update({ [field]: element.value});
     }
-
 }

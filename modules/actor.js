@@ -1,4 +1,4 @@
-import DoDE_Utility from "./utility.js";
+import DoD_Utility from "./utility.js";
 import { DoD } from "./config.js";
 
 export class DoDActor extends Actor {
@@ -32,19 +32,9 @@ export class DoDActor extends Actor {
 
     /** @override */
     prepareBaseData() {
-        // add localization support for characteristics
-        /*
-        for (let [key, ch] of Object.entries(this.data.data.characteristics)) {
-            ch.name = "dode.characteristics." + key;
-            ch.shortName = "dode.char." + key;
-        }
-        */
-
         // prepare skills
-        /*
-        this.data.data.skills = this.data.items.filter(i => i.type == "skill");
-        this.data.data.skills.sort(DoDE_Utility.nameSorter);
-        */
+        this._prepareSkills();
+        this._prepareBaseChances();
     }
 
     prepareDerivedData() {
@@ -55,11 +45,15 @@ export class DoDActor extends Actor {
         this._prepareMonsterData();
     }
 
+    getSkill(name) {
+        let a = name.toLowerCase();
+        return this.system.skills?.find(skill => skill.name.toLowerCase() === a);
+    }
+
     _prepareCharacterData() {
         if (this.type !== 'character') return;
         this._prepareActorStats();
         this._prepareCharacterStats();
-        this._prepareBaseChances();
         this._prepareSpellValues();
     }
 
@@ -71,38 +65,79 @@ export class DoDActor extends Actor {
         if (this.type !== 'monster') return;
     }
 
+    _prepareSkills() {
+
+        this.system.skills = [];
+        this.system.coreSkills = [];
+        this.system.weaponSkills = [];
+        this.system.magicSkills = [];
+        this.system.secondarySkills = [];
+        
+        for (let item of this.items.contents) {
+            if (item.type == 'skill') {
+                let skill = item;
+                this.system.skills.push(skill);
+                if (skill.system.skillType == 'core') {
+                    this.system.coreSkills.push(skill);
+                }  else if (skill.system.skillType == 'weapon') {
+                    this.system.weaponSkills.push(skill);
+                } else if (skill.system.skillType == 'magic') {
+                    // schools of magic are secondary skills
+                    this.system.magicSkills.push(skill);
+                    this.system.secondarySkills.push(skill);
+                } else {
+                    this.system.secondarySkills.push(skill);
+                }
+            }
+        }
+    }
+
     _prepareCharacterStats() {
         // Damage Bonus
+        let damageBonusAGL = DoD_Utility.calculateDamageBonus(this.system.attributes.agl.value);
+        let damageBonusSTR = DoD_Utility.calculateDamageBonus(this.system.attributes.str.value);
+        this.update({ 
+            ["system.damageBonus.agl"]: damageBonusAGL,
+            ["system.damageBonus.str"]: damageBonusSTR });
 
         // Will Points
         let maxWillPoints = this.system.attributes.wil.value;
         if (this.system.willPoints.max != maxWillPoints) {
+            // Attribute changed - keep spent amount (damage) and update max value
             let damage = this.system.willPoints.max - this.system.willPoints.value;
             if (damage < 0) {
                 damage = 0;
             } else if (damage > maxWillPoints) {
                 damage = maxWillPoints;
             }
-            this.update({ ["system.willPoints.max"]: maxWillPoints});
-            this.update({ ["system.willPoints.value"]: maxWillPoints - damage});
+            this.update({ 
+                ["system.willPoints.max"]: maxWillPoints,
+                ["system.willPoints.value"]: maxWillPoints - damage });
         }
-    }
-
-    _prepareActorStats() {
-        // Movement
-
+        
         // Hit Points
         let maxHitPoints = this.system.attributes.con.value;
         if (this.system.hitPoints.max != maxHitPoints) {
+            // Attribute changed - keep damage and update max value
             let damage = this.system.hitPoints.max - this.system.hitPoints.value;
             if (damage < 0) {
                 damage = 0;
             } else if (damage > maxHitPoints) {
                 damage = maxHitPoints;
             }
-            this.update({ ["system.hitPoints.max"]: maxHitPoints});
-            this.update({ ["system.hitPoints.value"]: maxHitPoints - damage});
+            this.update({
+                ["system.hitPoints.max"]: maxHitPoints,
+                ["system.hitPoints.value"]: maxHitPoints - damage });
         }
+
+        // Movement
+        let movement =  DoD_Utility.calculateMovement(this.system.attributes.agl.value);
+        // TODO - Kin modifier
+        this.update({ ["system.movement"]: movement });
+    }
+
+    _prepareActorStats() {
+
     }
 
     _getAttributeValueFromName(name) {
@@ -117,7 +152,7 @@ export class DoDActor extends Actor {
                 let skill = item;
                 let name = skill.system.attribute;
                 let value = this._getAttributeValueFromName(name);
-                skill.baseChance = DoDE_Utility.calculateBaseChance(value);
+                skill.baseChance = DoD_Utility.calculateBaseChance(value);
                 if ((skill.system.skillType == "core" || skill.system.skillType == "weapon") && skill.system.value < skill.baseChance) {
                     skill.system.value = skill.baseChance;
                 }

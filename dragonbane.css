@@ -432,6 +432,15 @@
 .DoD.sheet.character .sheet-content .sheet-table-data .number {
   text-align: right;
 }
+.DoD.sheet.character .sheet-content .derived-stat-box table {
+  margin: 0px;
+}
+.DoD.sheet.character .sheet-content .derived-stat-box table:first-child {
+  margin-top: 7px;
+}
+.DoD.sheet.character .sheet-content .derived-stat-box table:last-child {
+  margin-bottom: 7px;
+}
 .DoD.sheet.character .sheet-content .derived-stat {
   border-bottom: 0px;
   border-top: 0px;
@@ -578,6 +587,61 @@
 .DoD.sheet.character .will-points .will-points-box .invisible {
   visibility: hidden;
 }
+.DoD.sheet.character .armor {
+  font-family: QTFritzQuad;
+  background-image: url("art/ui/banner-right.webp");
+  background-size: 221px 61px;
+  background-repeat: no-repeat;
+  background-position: 42px center;
+  min-width: 266px;
+  border: 0px solid transparent;
+}
+.DoD.sheet.character .armor td {
+  border: 0px solid transparent;
+}
+.DoD.sheet.character .armor tr {
+  height: 40px;
+}
+.DoD.sheet.character .armor .armor-value {
+  background-image: url("art/ui/armor.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 95px;
+  height: 98px;
+  min-width: 95px;
+  min-height: 98px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+.DoD.sheet.character .armor .helmet-value {
+  background-image: url("art/ui/helmet-small.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 95px;
+  height: 98px;
+  min-width: 95px;
+  min-height: 98px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+.DoD.sheet.character .armor .armor-label {
+  text-transform: uppercase;
+  font-size: smaller;
+  font-weight: bold;
+  vertical-align: bottom;
+}
+.DoD.sheet.character .armor .armor-name {
+  font-weight: bold;
+}
+.DoD.sheet.character .armor .armor-banes {
+  font-size: small;
+  vertical-align: top;
+  font-weight: normal;
+}
 #logo:lang(en) {
   content: url("art/ui/logo-en.webp");
   width: 120px;
@@ -592,12 +656,12 @@
   background-image: url(art/ui/dragonbane.jpg);
 }
 @font-face {
-  font-family: "QTFritzQuad";
-  src: url('fonts/QTFritzQuad.otf');
+  font-family: "QTFrizQuad";
+  src: url('fonts/QTFrizQuad/QTFrizQuad.otf');
 }
 @font-face {
   font-family: "QTFritzQuad";
-  src: url('fonts/QTFritzQuad-Bold.otf');
+  src: url('fonts/QTFrizQuad/QTFrizQuad-Bold.otf');
   font-weight: bold;
 }
 @font-face {

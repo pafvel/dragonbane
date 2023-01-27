@@ -34,10 +34,6 @@ export default class DoDCharacterSheet extends ActorSheet {
 
     _prepareItems(sheetData) {
 
-        const coreSkills = [];
-        const secondarySkills = [];
-        const weaponSkills = [];
-        const magicSkills = [];
         const trainedSkills = [];
         const heroicAbilities = [];
         const kinAbilities = [];
@@ -65,19 +61,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
 
             if (item.type == 'skill') {
-                let skill = item;
-                
-                if (skill.system.skillType == 'core') {
-                    coreSkills.push(skill);
-                }  else if (skill.system.skillType == 'weapon') {
-                    weaponSkills.push(skill);
-                } else if (skill.system.skillType == 'magic') {
-                    // schools of magic are secondary skills
-                    magicSkills.push(skill);
-                    secondarySkills.push(skill);
-                } else {
-                    secondarySkills.push(skill);
-                }
+                // moved to actor
                 continue;
             }
 
@@ -167,11 +151,16 @@ export default class DoDCharacterSheet extends ActorSheet {
         }
 
         // Items (skills, abilities, spells)
+        sheetData.coreSkills = sheetData.actor.system.coreSkills.sort(DoD_Utility.nameSorter);;
+        sheetData.magicSkills = sheetData.actor.system.magicSkills.sort(DoD_Utility.nameSorter); 
+        sheetData.secondarySkills = sheetData.actor.system.secondarySkills.sort(DoD_Utility.nameSorter); 
+        sheetData.weaponSkills = sheetData.actor.system.weaponSkills.sort(DoD_Utility.nameSorter);
+        /*
         sheetData.coreSkills = coreSkills.sort(DoD_Utility.nameSorter);
         sheetData.magicSkills = magicSkills.sort(DoD_Utility.nameSorter); 
         sheetData.secondarySkills = secondarySkills.sort(DoD_Utility.nameSorter); 
         sheetData.weaponSkills = weaponSkills.sort(DoD_Utility.nameSorter);
-
+        */
         sheetData.heroicAbilities = heroicAbilities.sort(DoD_Utility.itemSorter);
         sheetData.kinAbilities = kinAbilities.sort(DoD_Utility.itemSorter);
         sheetData.professionAbilities = professionAbilities.sort(DoD_Utility.itemSorter);

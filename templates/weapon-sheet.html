@@ -14,8 +14,8 @@
             </tr>
             <tr>
                 <td>
-                    <select name="data.grip">
-                        {{#select data.grip}}
+                    <select name="data.grip.value">
+                        {{#select data.grip.value}}
                         {{#each config.gripTypes as |name type|}}
                         <option value="{{type}}">{{localize name}}</option>
                         {{/each}}
@@ -29,10 +29,23 @@
                     <input name="data.range" type="text" value="{{data.range}}" data-dtype="Number" />
                 </td>
                 <td>
-                    <input name="data.damage" type="text" value="{{data.damage}}" />
+                    <input data-field="system.damage" name="data.damage" type="text" value="{{data.damage}}" />
                 </td>
                 <td>
                     <input name="data.durability" type="text" value="{{data.durability}}" data-dtype="Number" />
+                </td>
+        </table>
+        <table>
+            <tr>
+                <th>{{localize "DoD.weapon.skill"}}</th>
+                <th>{{localize "DoD.weapon.features"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <input name="data.skill.name" type="text" value="{{data.skill.name}}" />
+                </td>
+                <td>
+                    <input name="data.features" type="text" value="{{data.features}}" />
                 </td>
         </table>
         <table>
