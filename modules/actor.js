@@ -45,17 +45,25 @@ export class DoDActor extends Actor {
 
     /** @override */
     prepareBaseData() {
+        super.prepareBaseData();
+
         // prepare skills
         this._prepareSkills();
         this._prepareBaseChances();
     }
 
+    prepareEmbeddedDocuments() {
+        super.prepareEmbeddedDocuments();
+        
+        if (this.type == 'character') return this._prepareEquippedItems();
+    }
+
     prepareDerivedData() {
-        // Make separate methods for each Actor type (character, npc, etc.) to keep
-        // things organized.
-        this._prepareCharacterData();
-        this._prepareNpcData();
-        this._prepareMonsterData();
+        super.prepareDerivedData();
+
+        if (this.type == 'character') return this._prepareCharacterData();
+        if (this.type == 'npc') return this._prepareNpcData();
+        if (this.type === 'monster') return this._prepareMonsterData();
     }
 
     getSkill(name) {
@@ -64,18 +72,41 @@ export class DoDActor extends Actor {
     }
 
     _prepareCharacterData() {
-        if (this.type != 'character') return;
         this._prepareActorStats();
         this._prepareCharacterStats();
         this._prepareSpellValues();
     }
 
     _prepareNpcData() {
-        if (this.type !== 'npc') return;
     }
 
     _prepareMonsterData() {
-        if (this.type !== 'monster') return;
+    }
+
+    _prepareEquippedItems() {
+        let armor = null;
+        let helmet = null;
+
+        for (let item of this.items.contents) {
+            if (item.type == 'armor' && item.system.worn) {
+                if (armor) {
+                    // Already wearing armor
+                    item.update({ ["system.worn"]: false });
+                } else {
+                    armor = item;
+                }
+            }
+            if (item.type == 'helmet' && item.system.worn) {
+                if (helmet) {
+                    // Already wearing helmet
+                    item.update({ ["system.worn"]: false });
+                } else {
+                    helmet = item;
+                }
+            }
+        }
+        this.system.equippedArmor = armor;
+        this.system.equippedHelmet = helmet;        
     }
 
     _prepareSkills() {

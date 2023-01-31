@@ -45,8 +45,8 @@ export default class DoDCharacterSheet extends ActorSheet {
         const schools = {};
         const inventory = [];
         const equippedWeapons = [];
-        let equippedArmor = null;
-        let equippedHelmet = null;
+        let equippedArmor = sheetData.actor.system.equippedArmor;
+        let equippedHelmet = sheetData.actor.system.equippedHelmet;
         let memento = null;
         let smallItems = [];
         
@@ -115,28 +115,14 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
             
             if (item.type == "armor") {
-                if (item.system.worn) {
-                    if (equippedArmor) {
-                        // can't equip more than one armor - unequip current armor and puit it in inventory
-                        equippedArmor.update({ ["system.worn"]: false});
-                        inventory.push(equippedArmor);
-                    }
-                    equippedArmor = item;
-                } else {
+                if (!item.system.worn) {
                     inventory.push(item);
                 }
                 continue;
             }
 
             if (item.type == "helmet") {
-                if (item.system.worn) {
-                    if (equippedHelmet) {
-                        // can't equip more than one helmet - unequip helmet armor and puit it in inventory
-                        equippedHelmet.update({ ["system.worn"]: false});
-                        inventory.push(equippedHelmet);
-                    }
-                    equippedHelmet = item;
-                } else {
+                if (!item.system.worn) {
                     inventory.push(item);
                 }
                 continue;
@@ -158,12 +144,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.magicSkills = sheetData.actor.system.magicSkills.sort(DoD_Utility.nameSorter); 
         sheetData.secondarySkills = sheetData.actor.system.secondarySkills.sort(DoD_Utility.nameSorter); 
         sheetData.weaponSkills = sheetData.actor.system.weaponSkills.sort(DoD_Utility.nameSorter);
-        /*
-        sheetData.coreSkills = coreSkills.sort(DoD_Utility.nameSorter);
-        sheetData.magicSkills = magicSkills.sort(DoD_Utility.nameSorter); 
-        sheetData.secondarySkills = secondarySkills.sort(DoD_Utility.nameSorter); 
-        sheetData.weaponSkills = weaponSkills.sort(DoD_Utility.nameSorter);
-        */
+
         sheetData.heroicAbilities = heroicAbilities.sort(DoD_Utility.itemSorter);
         sheetData.kinAbilities = kinAbilities.sort(DoD_Utility.itemSorter);
         sheetData.professionAbilities = professionAbilities.sort(DoD_Utility.itemSorter);
