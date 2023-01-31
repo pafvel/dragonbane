@@ -46,4 +46,18 @@ export default class DoD_Utility {
         return null;
     }
 
+    static async getBaseSkills() {
+        let baseSkills = [];
+    
+        let packName = "world.fardigheter-drakar-och-demoner";
+        let pack = game.packs.get(packName);
+        if (pack) {
+            let docs = await pack.getDocuments();
+            if (docs) {
+                docs = docs.filter(doc => doc.system.skillType == "core" || doc.system.skillType == "weapon");
+                docs.forEach(doc => baseSkills.push(doc.toObject()));
+            }
+        }
+        return baseSkills;
+    }
 }

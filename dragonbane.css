@@ -302,6 +302,9 @@
 .DoD.sheet.character .sheet-content .sheet-tabs {
   width: 100%;
 }
+.DoD.sheet.character .sheet-content .sheet-body {
+  width: 100%;
+}
 .DoD.sheet.character .sheet-content .sheet-body .skills-tab {
   display: flex;
   flex-direction: row;
@@ -309,6 +312,10 @@
 .DoD.sheet.character .sheet-content .sheet-body .abilities-tab {
   display: flex;
   flex-direction: row;
+}
+.DoD.sheet.character .sheet-content .sheet-body .background-tab {
+  display: flex;
+  flex-direction: column;
 }
 .DoD.sheet.character .sheet-content .table-column {
   display: flex;
@@ -431,6 +438,9 @@
 }
 .DoD.sheet.character .sheet-content .sheet-table-data .number {
   text-align: right;
+}
+.DoD.sheet.character .sheet-content .derived-stat-box {
+  width: 100%;
 }
 .DoD.sheet.character .sheet-content .derived-stat-box table {
   margin: 0px;
@@ -641,6 +651,37 @@
   font-size: small;
   vertical-align: top;
   font-weight: normal;
+}
+.DoD.sheet.character .editor {
+  height: 100%;
+  width: 100%;
+  align-self: center;
+  background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/parchment-vertical.webp");
+  background-position: left -16px bottom, right -16px bottom, center bottom 4px, left -16px top, right -16px top, center top 4px, center center;
+  background-clip: border-box, border-box, padding-box, border-box, border-box, padding-box, content-box;
+  background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y;
+  background-size: auto 24px, auto 24px, auto 16px, auto 24px, auto 24px, auto 16px, 100% auto;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 16px;
+  border-top: 0px;
+}
+.DoD.sheet.character .editor-content {
+  border-left: 12px;
+  border-right: 12px;
+  border-style: solid;
+  border-color: transparent;
+  min-height: 80px;
+}
+.DoD.sheet.character .editor-edit {
+  top: 21px;
+  right: 12px;
+}
+.DoD.sheet.character .tox.tox-tinymce {
+  padding-left: 12px;
+  padding-right: 12px;
 }
 #logo:lang(en) {
   content: url("art/ui/logo-en.webp");

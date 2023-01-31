@@ -1,0 +1,44 @@
+<div class="tab background flexcol" data-group="primary" data-tab="background">
+
+    <div class="background-tab flexcol">
+        <div>
+            <table class="derived-stat">
+                <tr>
+                    <th>{{localize "DoD.ui.character-sheet.kin"}}</th>
+                    <td>Kin name</td>
+                </tr>
+                <tr>
+                    <th>{{localize "DoD.ui.character-sheet.profession"}}</th>
+                    <td>Profession name</td>
+                </tr>
+                <tr>
+                    <th>{{localize "DoD.ui.character-sheet.age"}}</th>
+                    <td>
+                        <select name="data.age">
+                            {{#select data.age}}
+                            {{#each config.ageTypes as |name type|}}
+                            <option value="{{type}}">{{localize name}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="flexrow">
+            <div>
+                <a>{{localize "DoD.ui.character-sheet.motivation"}}</a>
+                {{editor data.motivation target="system.motivation" button=true engine="prosemirror" owner=owner editable=editable}}
+            </div>
+            <div>
+                <a>{{localize "DoD.ui.character-sheet.appearance"}}</a>
+                {{editor data.appearance target="system.appearance" engine="prosemirror" button=true owner=owner editable=editable}}
+            </div>
+        </div>
+        <div>
+            <a>{{localize "DoD.ui.character-sheet.notes"}}</a>
+            {{editor data.notes target="system.notes" engine="prosemirror" button=true owner=owner editable=editable}}
+        </div>
+    </div>
+    <hr>
+</div>

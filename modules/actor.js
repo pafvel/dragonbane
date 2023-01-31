@@ -20,6 +20,19 @@ export class DoDActor extends Actor {
     */
 
     /** @override */
+    async _preCreate(data, options, user) {
+
+        await super._preCreate(data, options, user);
+    
+        // If the created actor has items (only applicable to duplicated actors) bypass the new actor creation logic
+        if (!data.items?.length)
+        {
+            let baseSkills = await DoD_Utility.getBaseSkills();
+            if (baseSkills) {}
+                data.items = baseSkills;
+                this.updateSource(data);
+        }
+    }
     
     /** @override */
     prepareData() {
@@ -51,7 +64,7 @@ export class DoDActor extends Actor {
     }
 
     _prepareCharacterData() {
-        if (this.type !== 'character') return;
+        if (this.type != 'character') return;
         this._prepareActorStats();
         this._prepareCharacterStats();
         this._prepareSpellValues();

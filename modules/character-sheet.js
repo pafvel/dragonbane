@@ -20,8 +20,11 @@ export default class DoDCharacterSheet extends ActorSheet {
         const baseData = super.getData();
 
         let sheetData = {
+            owner: true,
+            editable: this.isEditable,
             actor: baseData.actor,
             data: baseData.data.system,
+            config: CONFIG.DoD
         };
 
         // Prepare character data and items.

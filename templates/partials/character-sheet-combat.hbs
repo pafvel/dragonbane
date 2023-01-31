@@ -1,5 +1,40 @@
 <div class="tab combat" data-group="primary" data-tab="combat">
     <div class="flexcol">
+        {{!-- Stats --}}
+        <div class="flexrow">
+            {{!-- Hit Points --}}
+            <div class="flexcol">
+                {{> "systems/dragonbane/templates/partials/hp-widget.hbs" }}
+                <div>
+                    Death rolls
+                </div>
+            </div>
+
+            {{!-- Derived combat stats --}}
+            <div class="flexcol derived-stat-box">
+                <table class="derived-stat">
+                    <tr>
+                        <th>{{localize "DoD.ui.character-sheet.damageBonusSTR"}}</th>
+                        <td>{{data.damageBonus.str}}</td>
+                    </tr>
+                </table>    
+                <table class="derived-stat">
+                    <tr>
+                        <th>{{localize "DoD.ui.character-sheet.damageBonusAGL"}}</th>
+                        <td>{{data.damageBonus.agl}}</td>
+                    </tr>
+                </table>    
+                <table class="derived-stat">
+                    <tr>
+                        <th>{{localize "DoD.ui.character-sheet.movement"}}</th>
+                        <td>{{data.movement}}</td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+        {{!-- Weapons --}}
         <table class="sheet-table">
             <tr class="sheet-table-header">
                 <th>&nbsp</th>
@@ -35,38 +70,6 @@
             {{/if}}                  
         </table>
 
-        <div class="flexrow">
-            {{!-- Hit Points --}}
-            <div class="flexcol">
-                {{> "systems/dragonbane/templates/partials/hp-widget.hbs" }}
-                <div>
-                    Death rolls
-                </div>
-            </div>
-
-            {{!-- Derived combat stats --}}
-            <div class="flexcol derived-stat-box">
-                <table class="derived-stat">
-                    <tr>
-                        <th>{{localize "DoD.ui.character-sheet.damageBonusSTR"}}</th>
-                        <td>{{data.damageBonus.str}}</td>
-                    </tr>
-                </table>    
-                <table class="derived-stat">
-                    <tr>
-                        <th>{{localize "DoD.ui.character-sheet.damageBonusAGL"}}</th>
-                        <td>{{data.damageBonus.agl}}</td>
-                    </tr>
-                </table>    
-                <table class="derived-stat">
-                    <tr>
-                        <th>{{localize "DoD.ui.character-sheet.movement"}}</th>
-                        <td>{{data.movement}}</td>
-                    </tr>
-                </table>
-            </div>
-
-        </div>
         {{!-- Armor --}}
         <div class="flexrow">
             <table class="armor">

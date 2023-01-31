@@ -1,5 +1,5 @@
 <div class="tab abilities" data-group="primary" data-tab="abilities">
-    <div class="abilities-tab">
+    <div class="abilities-tab flexrow">
         {{!-- Will Power --}}
         <div>
             {{> "systems/dragonbane/templates/partials/wp-widget.hbs" }}
@@ -90,6 +90,48 @@
                 </tr>
                 {{/each}}
             </table>
+        </div>
+        <div>
+        <table class="sheet-table spells">
+            <tr class="sheet-table-header">
+                <th>&nbsp</th>
+                <th>
+                    {{localize "DoD.ui.character-sheet.spell"}}
+                </th>
+                <th class="center">
+                    {{localize "DoD.ui.character-sheet.memorized"}}
+                </th>
+                <th>
+                    {{localize "DoD.ui.character-sheet.school"}}
+                </th>
+                <th>&nbsp</th>
+            </tr>
+            {{#each spells as |spell spellId|}}
+            <tr class="sheet-table-data" data-item-id="{{spell.id}}">
+                <td>
+                    <a>{{spell.value}}</a>
+                </td>
+                <td>
+                    <a class="rollable-skill">{{spell.name}}</a>
+                </td>
+                <td class="narrow">
+                    <input class="inline-edit" data-field="system.memorized"  type="checkbox" {{checked spell.system.memorized}} />
+                </td>
+                <td>
+                    <a>{{localize spell.system.school}}</a>
+                </td>
+                <td>
+                    <a class="item-delete" data-type="spell">
+                        <i class="fas fa-trash"></i>
+                    </a>    
+                    <a class="item-edit" data-type="spell">
+                        <i class="fas fa-edit"></i>
+                    </a>            
+                </td>
+            </tr>
+            {{/each}}
+        </table>
+
         </div>
     </div>
 </div>

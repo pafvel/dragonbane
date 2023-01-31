@@ -94,14 +94,10 @@
                         <th>{{localize "DoD.currency.gold"}}</th>
                         <td><input class="currency-input" name="data.currency.gc" type="text" value="{{data.currency.gc}}" data-dtype="Number" /></td>
                     </tr>
-                </table>    
-                <table class="derived-stat">
                     <tr>
                         <th>{{localize "DoD.currency.silver"}}</th>
                         <td><input class="currency-input" name="data.currency.sc" type="text" value="{{data.currency.sc}}" data-dtype="Number" /></td>
                     </tr>
-                </table>    
-                <table class="derived-stat">
                     <tr>
                         <th>{{localize "DoD.currency.copper"}}</th>
                         <td><input class="currency-input" name="data.currency.cc" type="text" value="{{data.currency.cc}}" data-dtype="Number" /></td>
@@ -109,14 +105,13 @@
                 </table>    
             </div>
         </div>
-        <div class="derived-stat-box">
+
+        <div>
             <table class="derived-stat">
                 <tr>
                     <th>{{localize "DoD.ui.character-sheet.max-encumbrance"}}</th>
                     <td>{{maxEncumbrance}}</td>
                 </tr>
-            </table>
-            <table class="derived-stat">
                 <tr>
                     <th>{{localize "DoD.ui.character-sheet.encumbrance"}}</th>
                     {{#if overEncumbered}}

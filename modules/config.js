@@ -6,6 +6,12 @@ DoD.abilityTypes = {
     profession: "DoD.abilityTypes.profession"
 };
 
+DoD.ageTypes = {
+    young: "DoD.ageTypes.young",
+    adult: "DoD.ageTypes.adult",
+    old: "DoD.ageTypes.old"
+};
+
 DoD.areaOfEffectTypes = {
     none: "DoD.areaOfEffectTypes.none",
     cone: "DoD.areaOfEffectTypes.cone",

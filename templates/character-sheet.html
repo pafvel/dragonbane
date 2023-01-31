@@ -69,9 +69,12 @@
           <a class="item" data-tab="main">{{localize "DoD.ui.character-sheet.main"}}</a>
           <a class="item" data-tab="skills">{{localize "DoD.ui.character-sheet.skills"}}</a>
           <a class="item" data-tab="abilities">{{localize "DoD.ui.character-sheet.abilities"}}</a>
+          <!--
           <a class="item" data-tab="spells">{{localize "DoD.ui.character-sheet.spells"}}</a>
+          -->
           <a class="item" data-tab="combat">{{localize "DoD.ui.character-sheet.combat"}}</a>
           <a class="item" data-tab="inventory">{{localize "DoD.ui.character-sheet.inventory"}}</a>
+          <a class="item" data-tab="background">{{localize "DoD.ui.character-sheet.background"}}</a>
         </nav>
 
         {{!-- Sheet Body --}}
@@ -85,14 +88,19 @@
             {{!-- Abilities Tab --}}
             {{> "systems/dragonbane/templates/partials/character-sheet-abilities.hbs" }}
 
+            <!--
             {{!-- Spells Tab --}}
             {{> "systems/dragonbane/templates/partials/character-sheet-spells.hbs" }}
+            -->
 
             {{!-- Combat Tab --}}
             {{> "systems/dragonbane/templates/partials/character-sheet-combat.hbs" }}
 
             {{!-- Inventory Tab --}}
             {{> "systems/dragonbane/templates/partials/character-sheet-inventory.hbs" }}
+
+            {{!-- Background Tab --}}
+            {{> "systems/dragonbane/templates/partials/character-sheet-background.hbs" }}
         </section>
     </div>
 </form>

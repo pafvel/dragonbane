@@ -10,12 +10,18 @@
             "profession": "Profession",
             "heroic": "Heroic"
         },
+        "ageTypes": {
+            "young": "Young",
+            "adult": "Adult",
+            "old": "Old"
+        },
         "areaOfEffectTypes": {
             "none": "-",
             "cone": "Cone",
             "sphere": "Sphere"
         },
         "armor": {
+            "banes": "Banes",
             "rating": "Armor Rating"
         },
         "attributes": {
@@ -89,7 +95,7 @@
             "core": "Core skill",
             "weapon": "Weapon skill",
             "secondary": "Secondary skill",
-            "magic": "School of magic"
+            "magic": "School of magic"  
         },
         "spell": {
             "school": "School of Magic",
@@ -145,6 +151,9 @@
         "ui": {
             "character-sheet": {
                 "abilities": "Abilities",
+                "age": "Age",
+                "appearance": "Appearance",
+                "background": "Background",
                 "banes": "Bane on",
                 "combat": "Combat",
                 "coreSkills": "Core Skills",
@@ -159,12 +168,16 @@
                 "hitPoints": "Hit Points",
                 "hp": "HP",
                 "inventory": "Inventory",
+                "kin": "Kin",
                 "kinAbilities": "Kin Abilities",
                 "main": "Main",
                 "max-encumbrance": "Max Encumbrance",
                 "memento": "Memento",
                 "memorized": "M",
                 "movement": "Movement",
+                "motivation": "Motivation",
+                "notes": "Notes",
+                "profession": "Profession",
                 "professionAbilities": "Profession Abilities",
                 "school": "School of Magic",
                 "secondarySkills": "Secondary Skills",

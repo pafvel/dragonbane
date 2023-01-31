@@ -10,12 +10,18 @@
             "profession": "Yrkesförmåga",
             "heroic": "Hjälteförmåga"
         },
+        "ageTypes": {
+            "young": "Ung",
+            "adult": "Medelålders",
+            "old": "Gammal"
+        },
         "areaOfEffectTypes": {
             "none": "-",
             "cone": "Kon",
             "sphere": "Sfär"
         },
         "armor": {
+            "banes": "Nackdelar",
             "rating": "Skyddsvärde"
         },
         "attributes": {
@@ -89,7 +95,7 @@
             "core": "Grundfärdighet",
             "weapon": "Vapenfärdighet",
             "secondary": "Sekundär färdighet",
-            "magic:": "Magiskola"
+            "magic": "Magiskola"
         },
         "spell": {
             "school": "Magiskola",
@@ -145,6 +151,9 @@
         "ui": {
             "character-sheet": {
                 "abilities": "Förmågor",
+                "age": "Ålder",
+                "appearance": "Utseende",
+                "background": "Bakgrund",
                 "banes": "Nackdel på",
                 "combat": "Strid",
                 "coreSkills": "Grundfärdigheter",
@@ -159,12 +168,16 @@
                 "hitPoints": "Kroppspoäng",
                 "hp": "KP",
                 "inventory": "Packning",
+                "kin": "Släkte",
                 "kinAbilities": "Släktesförmågor",
                 "main": "Översikt",
                 "max-encumbrance": "Bärförmåga",
                 "memento": "Minnessak",
                 "memorized": "M",
+                "motivation": "Motivation",
                 "movement": "Förflyttning",
+                "notes": "Anteckningar",
+                "profession": "Yrke",
                 "professionAbilities": "Yrkesförmågor",
                 "school": "Magiskola",
                 "secondarySkills": "Sekundära färdigheter",

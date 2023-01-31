@@ -2,7 +2,7 @@ export default class DoDItemSheet extends ItemSheet {
     
     static get defaultOptions() {
         return mergeObject(super.defaultOptions,  {
-            width: 530,
+            width: 560,
             height: 340,
             classes: ["DoD", "sheet", "item"]
         });

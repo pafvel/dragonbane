@@ -67,9 +67,17 @@
                 }
             },
             "currency": {
-                "gc": 0,
-                "sc": 0,
-                "cc": 0
+                "currency": {
+                    "gc": 0,
+                    "sc": 0,
+                    "cc": 0
+                }
+            },
+            "characterBio": {
+                "age": "",
+                "appearance": "",
+                "motivation": "",
+                "notes": ""
             }
         },
         "character": {
@@ -80,7 +88,8 @@
                 "conditions",
                 "actorStats",
                 "characterStats",
-                "currency"
+                "currency",
+                "characterBio"
             ]
         },
         "npc": {
