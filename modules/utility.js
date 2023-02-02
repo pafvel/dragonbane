@@ -67,6 +67,12 @@ export default class DoD_Utility {
         return ability;
     }
 
+    static async findKin(kinName) {
+        // Prio 1: World items
+        let kin = this.findItem(kinName, "kin", game.items);
+        return kin;
+    }
+
     static async findItem(itemName, itemType, collection) {
         let name = itemName.toLowerCase();
         let item = collection.find(i => i.type == itemType && i.name.toLowerCase() == name);

@@ -193,7 +193,8 @@
             }
         },
         "WARNING": {
-            "kinAbility": "Could not find Kin Ability: {ability}"
+            "kinAbility": "Could not find Kin Ability: {ability}",
+            "kin": "Could not find Kin: {kin}"
         }
     }
 }

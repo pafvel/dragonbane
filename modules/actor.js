@@ -148,11 +148,8 @@ export class DoDActor extends Actor {
 
     _prepareCharacterStats() {
         // Damage Bonus
-        let damageBonusAGL = DoD_Utility.calculateDamageBonus(this.system.attributes.agl.value);
-        let damageBonusSTR = DoD_Utility.calculateDamageBonus(this.system.attributes.str.value);
-        this.update({ 
-            ["system.damageBonus.agl"]: damageBonusAGL,
-            ["system.damageBonus.str"]: damageBonusSTR });
+        this.system.damageBonus.agl = DoD_Utility.calculateDamageBonus(this.system.attributes.agl.value);
+        this.system.damageBonus.str = DoD_Utility.calculateDamageBonus(this.system.attributes.str.value);
 
         // Will Points
         let maxWillPoints = this.system.attributes.wil.value;
@@ -187,7 +184,7 @@ export class DoDActor extends Actor {
         // Movement
         let baseMovement = Number(this.system.kin ? this.system.kin.system.movement : 10);
         let movementModifier =  DoD_Utility.calculateMovementModifier(this.system.attributes.agl.value);
-        this.update({ ["system.movement"]: baseMovement + movementModifier });
+        this.system.movement = baseMovement + movementModifier;
     }
 
     _prepareActorStats() {

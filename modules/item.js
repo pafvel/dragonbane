@@ -19,7 +19,7 @@ export class DoDItem extends Item {
         }
     }
     _prepareSkill() {
-        this.system.attribute = this.system.attribute.toUpperCase();
+        this.system.attributeShort = game.i18n.localize("DoD.attributes." + this.system.attribute);
     }
 
     _prepareWeapon() {

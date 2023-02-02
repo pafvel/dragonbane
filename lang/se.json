@@ -193,7 +193,8 @@
             }
         },
         "WARNING": {
-            "kinAbility": "Kan ej hitta Släktesförmågan: {ability}"
+            "kinAbility": "Kan ej hitta Släktesförmåga: {ability}",
+            "kin": "Kan ej hitta Släkte: {kin}"
         }
     }
 }

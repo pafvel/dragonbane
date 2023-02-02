@@ -191,6 +191,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
     activateListeners(html) {
         html.find(".inline-edit").change(this._onInlineEdit.bind(this));
+        html.find(".kin-edit").change(this._onKinEdit.bind(this));
         html.find(".item-edit").click(this._onItemEdit.bind(this));
         html.find(".item-delete").click(this._onItemDelete.bind(this));
 
@@ -245,6 +246,21 @@ export default class DoDCharacterSheet extends ActorSheet {
         }        
         return item.update({ [field]: Number(element.value)});
     }
+
+    async _onKinEdit(event) {
+        event.preventDefault();
+        let kinName = event.currentTarget.value;
+        let kin = await DoD_Utility.findKin(kinName);
+        if (!kin) {
+            await this.actor.removeKin();
+            DoD_Utility.WARNING("DoD.WARNING.kin", {kin: kinName});
+        } else {
+            await this.actor.removeKin();
+            await this.actor.createEmbeddedDocuments("Item", [kin.toObject()]);
+            await this.actor.addKinAbilities();
+        }
+    }
+
     _onItemDelete(event) {
         event.preventDefault();       
         let element = event.currentTarget;
