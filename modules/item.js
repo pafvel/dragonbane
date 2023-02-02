@@ -9,12 +9,21 @@ export class DoDItem extends Item {
     }
 
     prepareDerivedData() {
-        if (this.type === "weapon") {
-            this._prepareWeapon();
+        switch (this.type) {
+            case "weapon":
+                this._prepareWeapon();
+                break;
+            case "skill":
+                this._prepareSkill();
+                break;
         }
     }
+    _prepareSkill() {
+        this.system.attribute = this.system.attribute.toUpperCase();
+    }
+
     _prepareWeapon() {
-        // Grip label
+            // Grip label
         if (this.system.grip.value) {
             this.system.grip.label = "DoD.gripTypes." + this.system.grip.value;
         } else {

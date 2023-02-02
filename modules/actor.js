@@ -50,6 +50,7 @@ export class DoDActor extends Actor {
         // prepare skills
         this._prepareSkills();
         this._prepareBaseChances();
+        this._prepareKin();
     }
 
     prepareEmbeddedDocuments() {
@@ -61,9 +62,18 @@ export class DoDActor extends Actor {
     prepareDerivedData() {
         super.prepareDerivedData();
 
-        if (this.type == 'character') return this._prepareCharacterData();
-        if (this.type == 'npc') return this._prepareNpcData();
-        if (this.type === 'monster') return this._prepareMonsterData();
+        switch(this.type)
+        {
+            case "character":
+                this._prepareCharacterData();
+                break;
+            case "npc":
+                this._prepareNpcData();
+                break;
+            case "monster":
+                this._prepareMonsterData();
+                break;
+        }
     }
 
     getSkill(name) {
@@ -175,9 +185,9 @@ export class DoDActor extends Actor {
         }
 
         // Movement
-        let movement =  DoD_Utility.calculateMovement(this.system.attributes.agl.value);
-        // TODO - Kin modifier
-        this.update({ ["system.movement"]: movement });
+        let baseMovement = Number(this.system.kin ? this.system.kin.system.movement : 10);
+        let movementModifier =  DoD_Utility.calculateMovementModifier(this.system.attributes.agl.value);
+        this.update({ ["system.movement"]: baseMovement + movementModifier });
     }
 
     _prepareActorStats() {
@@ -202,6 +212,53 @@ export class DoDActor extends Actor {
                 }
             }
         }
+    }
+
+    findAbility(abilityName) {
+        let name = abilityName.toLowerCase();
+        return this.items.find(item => item.type == "ability" && item.name.toLowerCase() == name);
+    }
+
+    async removeKin() {
+        let ids = [];
+        //  kin items
+        this.items.contents.forEach(i => {
+            if (i.type == "kin") ids.push(i.id)
+        });
+        //  kin ability items
+        this.items.contents.forEach(i => {
+            if (i.type == "ability" && i.system.abilityType == "kin") ids.push(i.id)
+        });
+        // delete items and clear kin
+        await this.deleteEmbeddedDocuments("Item", ids);
+        this.system.kin = null;
+    }
+
+    async addKinAbilities() {
+        let kin = this.system.kin;
+
+        if (kin && kin.system.abilities.length) {
+            let abilities = DoD_Utility.splitAndTrimString(kin.system.abilities);
+            let itemData = [];
+
+            for(const abilityName of abilities) {
+                // Make sure kin ability exist
+                let kinAbility = this.findAbility(abilityName);
+                if (!kinAbility) {
+                    kinAbility = await DoD_Utility.findAbility(abilityName);
+                    if (kinAbility) {
+                        itemData.push(kinAbility.toObject());
+                    } else {
+                        DoD_Utility.WARNING("DoD.WARNING.kinAbility", {ability: abilityName});
+                    }
+                }
+            }
+            await this.createEmbeddedDocuments("Item", itemData);
+        }
+    }
+
+    _prepareKin() {
+        this.system.kin = this.items.find(item => item.type == "kin");
     }
 
     _prepareSpellValues() {

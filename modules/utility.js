@@ -29,12 +29,12 @@ export default class DoD_Utility {
         return "+" + game.i18n.localize("DoD.dice.d6");
     }
 
-    static calculateMovement(attribute) {
-        if (attribute <=6) return 6;
-        if (attribute <=9) return 8;
-        if (attribute <= 12) return 10;
-        if (attribute <= 15) return 12;
-        return 14;
+    static calculateMovementModifier(attribute) {
+        if (attribute <=6) return -4;
+        if (attribute <=9) return -2;
+        if (attribute <= 12) return 0;
+        if (attribute <= 15) return 2;
+        return 4;
     }
 
     static getConditionByAttributeName(actor, attributeName) {
@@ -59,5 +59,33 @@ export default class DoD_Utility {
             }
         }
         return baseSkills;
+    }
+
+    static async findAbility(abilityName) {
+        // Prio 1: World items
+        let ability = this.findItem(abilityName, "ability", game.items);
+        return ability;
+    }
+
+    static async findItem(itemName, itemType, collection) {
+        let name = itemName.toLowerCase();
+        let item = collection.find(i => i.type == itemType && i.name.toLowerCase() == name);
+        return item?.clone();
+    }
+
+    static splitAndTrimString(str) {
+        let result = str?.split(',');
+        for (var i = 0; i < result.length; i++) {
+            result[i] = result[i].replace(/^\s+|\s+$/gm,'');
+        }
+        return result;
+    }
+
+    static WARNING(msg, params) {
+        if (!params) {
+            return ui.notifications.warn(game.i18n.localize(msg));
+        } else {
+            return ui.notifications.warn(game.i18n.format(game.i18n.localize(msg), params));
+        }
     }
 }

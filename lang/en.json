@@ -191,6 +191,9 @@
                 "willPoints": "Willpower Points",
                 "wp": "WP"
             }
+        },
+        "WARNING": {
+            "kinAbility": "Could not find Kin Ability: {ability}"
         }
     }
 }

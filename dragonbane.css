@@ -311,7 +311,6 @@
 }
 .DoD.sheet.character .sheet-content .sheet-body .abilities-tab {
   display: flex;
-  flex-direction: row;
 }
 .DoD.sheet.character .sheet-content .sheet-body .background-tab {
   display: flex;

@@ -139,6 +139,9 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
         }
 
+        // Kin and Profession
+        sheetData.kinName = sheetData.actor.system.kin?.name;
+
         // Items (skills, abilities, spells)
         sheetData.coreSkills = sheetData.actor.system.coreSkills.sort(DoD_Utility.nameSorter);;
         sheetData.magicSkills = sheetData.actor.system.magicSkills.sort(DoD_Utility.nameSorter); 
@@ -150,6 +153,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.professionAbilities = professionAbilities.sort(DoD_Utility.itemSorter);
 
         sheetData.spells = spells.sort(DoD_Utility.itemSorter);
+        sheetData.hasSpells = spells.length > 0;
 
         sheetData.inventory = inventory.sort(DoD_Utility.itemSorter);
         sheetData.equippedWeapons = equippedWeapons.sort(DoD_Utility.itemSorter);
@@ -359,7 +363,20 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
             return result;
         }
-            // Create the owned item
-            return this._onDropItemCreate(itemData);
+
+        // Remove kin and kin abilities
+        if (itemData.type == "kin") {
+            await this.actor.removeKin();
         }
+
+        // Create the owned item
+        let returnValue = await this._onDropItemCreate(itemData);
+
+        // Add new Kin abilities
+        if (itemData.type == "kin") {
+            await this.actor.addKinAbilities();
+        }
+
+        return returnValue;
+    }
 }

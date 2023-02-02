@@ -4,6 +4,7 @@ export default class DoDItemSheet extends ItemSheet {
         return mergeObject(super.defaultOptions,  {
             width: 560,
             height: 340,
+            dragDrop: [{ dragSelector: null, dropSelector: null}],
             classes: ["DoD", "sheet", "item"]
         });
     }
@@ -44,5 +45,17 @@ export default class DoDItemSheet extends ItemSheet {
         }
 
         return item.update({ [field]: element.value});
+    }
+
+    async _onDrop(event) {
+
+        if (this.item.type == "kin")
+        {
+            const data = TextEditor.getDragEventData(event);
+            const item = await Item.implementation.fromDropData(data);
+            let itemData = item.toObject();
+            itemData = itemData instanceof Array ? itemData : [itemData];
+            return this.item.createEmbeddedDocuments("Item", itemData);
+        }
     }
 }
