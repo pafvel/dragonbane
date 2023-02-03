@@ -285,7 +285,6 @@
 }
 .DoD.sheet.character .main-tab {
   display: flex;
-  flex-direction: row;
 }
 .DoD.sheet.character .sheet-content {
   padding: 8px;
@@ -463,9 +462,8 @@
   background-repeat: no-repeat, no-repeat, repeat-x;
   background-position: right -8px center, left center, center center;
   height: 2.5em;
-  width: 60%;
-  padding-left: 2em;
-  min-width: 3em;
+  padding-left: 30px;
+  min-width: 160px;
 }
 .DoD.sheet.character .sheet-content .derived-stat td {
   text-align: center;
@@ -476,9 +474,8 @@
   background-repeat: no-repeat, no-repeat, repeat-x;
   background-position: left -8px center, right center, center center;
   height: 2.5em;
-  width: 40%;
-  padding-right: 2em;
-  min-width: 3em;
+  padding-right: 30px;
+  min-width: 6em;
 }
 .DoD.sheet.character .sheet-content .derived-stat .warning {
   color: red;
@@ -681,6 +678,33 @@
 .DoD.sheet.character .tox.tox-tinymce {
   padding-left: 12px;
   padding-right: 12px;
+}
+.DoD.sheet.character .text-box {
+  height: 100%;
+  width: 100%;
+  align-self: center;
+  background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/parchment-vertical.webp");
+  background-position: left -16px bottom, right -16px bottom, center bottom 4px, left -16px top, right -16px top, center top 4px, center center;
+  background-clip: border-box, border-box, padding-box, border-box, border-box, padding-box, content-box;
+  background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y;
+  background-size: auto 24px, auto 24px, auto 16px, auto 24px, auto 24px, auto 16px, 100% auto;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  border-style: solid;
+  border-color: transparent;
+  border-width: 0px 16px 0px 16px;
+}
+.DoD.sheet.character .text-box table {
+  border-color: transparent;
+}
+.DoD.sheet.character .text-box th {
+  padding-left: 1em;
+  text-align: left;
+}
+.DoD.sheet.character .text-box td {
+  padding-left: 1em;
+  text-align: left;
+  padding-right: 1em;
 }
 #logo:lang(en) {
   content: url("art/ui/logo-en.webp");

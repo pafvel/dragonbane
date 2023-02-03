@@ -37,7 +37,6 @@ export default class DoDCharacterSheet extends ActorSheet {
 
     _prepareItems(sheetData) {
 
-        const trainedSkills = [];
         const heroicAbilities = [];
         const kinAbilities = [];
         const professionAbilities = [];
@@ -141,25 +140,28 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         // Kin and Profession
         sheetData.kinName = sheetData.actor.system.kin?.name;
+        sheetData.professionName = sheetData.actor.system.profession?.name;
 
         // Items (skills, abilities, spells)
-        sheetData.coreSkills = sheetData.actor.system.coreSkills.sort(DoD_Utility.nameSorter);;
-        sheetData.magicSkills = sheetData.actor.system.magicSkills.sort(DoD_Utility.nameSorter); 
-        sheetData.secondarySkills = sheetData.actor.system.secondarySkills.sort(DoD_Utility.nameSorter); 
-        sheetData.weaponSkills = sheetData.actor.system.weaponSkills.sort(DoD_Utility.nameSorter);
+        sheetData.coreSkills = sheetData.actor.system.coreSkills?.sort(DoD_Utility.nameSorter);;
+        sheetData.magicSkills = sheetData.actor.system.magicSkills?.sort(DoD_Utility.nameSorter); 
+        sheetData.secondarySkills = sheetData.actor.system.secondarySkills?.sort(DoD_Utility.nameSorter); 
+        sheetData.weaponSkills = sheetData.actor.system.weaponSkills?.sort(DoD_Utility.nameSorter);
+        sheetData.trainedSkills = sheetData.actor.system.trainedSkills?.sort(DoD_Utility.nameSorter);
 
-        sheetData.heroicAbilities = heroicAbilities.sort(DoD_Utility.itemSorter);
-        sheetData.kinAbilities = kinAbilities.sort(DoD_Utility.itemSorter);
-        sheetData.professionAbilities = professionAbilities.sort(DoD_Utility.itemSorter);
+        sheetData.heroicAbilities = heroicAbilities.sort(DoD_Utility.nameSorter);
+        sheetData.kinAbilities = kinAbilities.sort(DoD_Utility.nameSorter);
+        sheetData.professionAbilities = professionAbilities.sort(DoD_Utility.nameSorter);
+        sheetData.abilities = heroicAbilities.concat(kinAbilities, professionAbilities).sort(DoD_Utility.nameSorter);
 
-        sheetData.spells = spells.sort(DoD_Utility.itemSorter);
+        sheetData.spells = spells?.sort(DoD_Utility.nameSorter);
         sheetData.hasSpells = spells.length > 0;
 
-        sheetData.inventory = inventory.sort(DoD_Utility.itemSorter);
-        sheetData.equippedWeapons = equippedWeapons.sort(DoD_Utility.itemSorter);
+        sheetData.inventory = inventory?.sort(DoD_Utility.itemSorter);
+        sheetData.equippedWeapons = equippedWeapons?.sort(DoD_Utility.itemSorter);
         sheetData.equippedArmor = equippedArmor;
         sheetData.equippedHelmet = equippedHelmet;
-        sheetData.smallItems = smallItems.sort(DoD_Utility.itemSorter);
+        sheetData.smallItems = smallItems?.sort(DoD_Utility.itemSorter);
         sheetData.memento = memento;
 
         this._updateEncumbrance(sheetData);
@@ -192,6 +194,7 @@ export default class DoDCharacterSheet extends ActorSheet {
     activateListeners(html) {
         html.find(".inline-edit").change(this._onInlineEdit.bind(this));
         html.find(".kin-edit").change(this._onKinEdit.bind(this));
+        html.find(".profession-edit").change(this._onProfessionEdit.bind(this));
         html.find(".item-edit").click(this._onItemEdit.bind(this));
         html.find(".item-delete").click(this._onItemDelete.bind(this));
 
@@ -258,6 +261,24 @@ export default class DoDCharacterSheet extends ActorSheet {
             await this.actor.removeKin();
             await this.actor.createEmbeddedDocuments("Item", [kin.toObject()]);
             await this.actor.addKinAbilities();
+        }
+    }
+
+    async _onProfessionEdit(event) {
+        event.preventDefault();
+        let professionName = event.currentTarget.value;
+        let profession = await DoD_Utility.findProfession(professionName);
+        if (!profession) {
+            await this.actor.removeProfession();
+            DoD_Utility.WARNING("DoD.WARNING.profession", {profession: professionName});
+        } else {
+            await this.actor.removeProfession();
+            await this.actor.createEmbeddedDocuments("Item", [profession.toObject()]);
+
+            let missingSkills = this.actor.updateProfession();
+            for (const skillName of missingSkills) {
+                DoD_Utility.WARNING("DoD.WARNING.professionSkill", {skill: skillName});
+            }
         }
     }
 
@@ -385,12 +406,26 @@ export default class DoDCharacterSheet extends ActorSheet {
             await this.actor.removeKin();
         }
 
+        // Remove profession
+        if (itemData.type == "profession") {
+            await this.actor.removeProfession();
+        }
+        
+
         // Create the owned item
         let returnValue = await this._onDropItemCreate(itemData);
 
         // Add new Kin abilities
         if (itemData.type == "kin") {
             await this.actor.addKinAbilities();
+        }
+
+        // Update profession
+        if (itemData.type == "profession") {
+            let missingSkills = this.actor.updateProfession();
+            for (const skillName of missingSkills) {
+                DoD_Utility.WARNING("DoD.WARNING.professionSkill", {skill: skillName});
+            }
         }
 
         return returnValue;

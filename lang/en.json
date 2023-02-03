@@ -76,8 +76,12 @@
         "helmet": {
             "rating": "Armor Rating"
         },
+        "profession": {
+            "key-attribute": "Key Attribute",
+            "skills": "Skills"
+        },
         "roll": {
-            "dragon": "succeded with a Dragon roll!",
+            "dragon": "succeded with a Dragon rol!",
             "demon": "failed with a Demon roll!",
             "success": "succeeded.",
             "failure": "failed.",
@@ -186,6 +190,7 @@
                 "spell": "Spell",
                 "spells": "Spells",
                 "tiny-items": "Tiny Items",
+                "trained-skills": "Trained Skills",
                 "weapons": "Weapons",
                 "weaponSkills": "Weapon Skills",
                 "willPoints": "Willpower Points",
@@ -194,7 +199,9 @@
         },
         "WARNING": {
             "kinAbility": "Could not find Kin Ability: {ability}",
-            "kin": "Could not find Kin: {kin}"
+            "kin": "Could not find Kin: {kin}",
+            "profession": "Could not find Profession: {profession}",
+            "professionSkill": "Could not find Profession Skill: {skill}"
         }
     }
 }

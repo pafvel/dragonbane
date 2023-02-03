@@ -7,8 +7,8 @@ DoD.abilityTypes = {
 };
 
 DoD.ageTypes = {
-    young: "DoD.ageTypes.young",
     adult: "DoD.ageTypes.adult",
+    young: "DoD.ageTypes.young",
     old: "DoD.ageTypes.old"
 };
 

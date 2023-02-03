@@ -76,6 +76,10 @@
         "helmet": {
             "rating": "Skyddsvärde"
         },
+        "profession": {
+            "key-attribute": "Viktigaste Grundegenskap",
+            "skills": "Färdigheter"
+        },
         "roll": {
             "dragon": "lyckades med ett Drakslag!",
             "demon": "misslyckades med ett Demonslag!",
@@ -186,6 +190,7 @@
                 "spell": "Besvärjelse",
                 "spells": "Besvärjelser",
                 "tiny-items": "Småsaker",
+                "trained-skills": "Tränade färdigheter",
                 "weapons": "Vapen",
                 "weaponSkills": "Vapenfärdigheter",
                 "willPoints": "Viljepoäng",
@@ -194,7 +199,9 @@
         },
         "WARNING": {
             "kinAbility": "Kan ej hitta Släktesförmåga: {ability}",
-            "kin": "Kan ej hitta Släkte: {kin}"
+            "kin": "Kan ej hitta Släkte: {kin}",
+            "profession": "Kan ej hitta Yrke: {profession}",
+            "professionSkill": "Kan ej hitta Yrkesfärdighet: {skill}"
         }
     }
 }

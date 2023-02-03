@@ -1,6 +1,172 @@
 <div class="tab main" data-group="primary" data-tab="main">
-    <div class="main-tab">
-        {{> "systems/dragonbane/templates/partials/hp-widget.hbs" }}
-        {{> "systems/dragonbane/templates/partials/wp-widget.hbs" }}
+    <div class="main-tab flexcol">
+        {{!-- Kin & Profession --}}
+        <div class="flexrow">
+            <table class="derived-stat">
+                <tr>
+                    <th>{{localize "DoD.ui.character-sheet.kin"}}</th>
+                    <!-- <td>{{ kinName }}</td> -->
+                    <td><input class="kin-edit" name="kinName" type="text" value="{{kinName}}" /></td>
+                </tr>
+            </table>
+            <table class="derived-stat">
+                <tr>
+                    <th>{{localize "DoD.ui.character-sheet.profession"}}</th>
+                    <td><input class="profession-edit" name="professionName" type="text" value="{{professionName}}" /></td>
+                </tr>
+            </table>
+        </div>
+
+
+        {{!-- HP, WP & Derived stats --}}
+        <div class="flexrow">
+            {{> "systems/dragonbane/templates/partials/hp-widget.hbs" }}
+            {{> "systems/dragonbane/templates/partials/wp-widget.hbs" }}
+            <table class="derived-stat">
+                <tr>
+                    <th>{{localize "DoD.ui.character-sheet.damageBonusSTR"}}</th>
+                    <td>{{data.damageBonus.str}}</td>
+                </tr>
+                <tr>
+                    <th>{{localize "DoD.ui.character-sheet.damageBonusAGL"}}</th>
+                    <td>{{data.damageBonus.agl}}</td>
+                </tr>
+                <tr>
+                    <th>{{localize "DoD.ui.character-sheet.movement"}}</th>
+                    <td>{{data.movement}}</td>
+                </tr>
+            </table>
+        </div>
+
+        {{!-- Trained Skills & Abilities --}}
+        <div class="text-box">
+            <table>
+                <tr>
+                    <th><b>{{localize "DoD.ui.character-sheet.trained-skills"}}</b></th>
+                    <td>
+                        {{#each trainedSkills as |skill skillId|}}
+                        <a class="rollable-skill sheet-table-data" data-item-id="{{skill.id}}">{{skill.name}} {{skill.system.value}},  </a>
+                        {{/each}}
+                    </td>
+                </tr>
+                {{#if spells}}
+                <tr>
+                    <th><b>{{localize "DoD.ui.character-sheet.spells"}}</b></th>
+                    <td>
+                        {{#each spells as |spell spellId|}}
+                        <a class="sheet-table-data" data-item-id="{{spell.id}}">
+                            {{spell.name}} {{spell.value}}, 
+                        </a>
+                        {{/each}}
+                    </td>
+                </tr>
+                {{/if}}
+                <tr>
+                    <th><b>{{localize "DoD.ui.character-sheet.abilities"}}</b></th>
+                    <td>
+                        {{#each abilities as |ability abilityId|}}
+                        <a class="sheet-table-data item-edit" data-item-id="{{ability.id}}">{{ability.name}}, </a>
+                        {{/each}}
+                    </td>
+                </tr>
+                <!--
+                <tr>
+                    <th><b>{{localize "DoD.ui.character-sheet.weapons"}}</b></th>
+                    <td>
+                        {{#each equippedWeapons as |weapon weaponId|}}
+                        <a class="sheet-table-data" data-item-id="{{weapon.id}}">
+                            {{weapon.name}} {{weapon.system.skill.value}} ({{weapon.system.damage}}), 
+                        </a>
+                        {{/each}}
+                    </td>
+                </tr>
+                -->
+            </table>
+        </div>
+        
+        {{!-- Weapons --}}
+        <table class="sheet-table">
+            <tr class="sheet-table-header">
+                <th>&nbsp</th>
+                <th>{{localize "DoD.ui.character-sheet.weapons"}}</th>
+                <th>{{localize "DoD.weapon.skillValue"}}</th>
+                <th>{{localize "DoD.weapon.grip"}}</th>
+                <th>{{localize "DoD.weapon.str"}}</th>
+                <th>{{localize "DoD.weapon.rangeShort"}}</th>
+                <th>{{localize "DoD.weapon.damageShort"}}</th>
+                <th>{{localize "DoD.weapon.durabilityShort"}}</th>
+            </tr>
+            {{#if equippedWeapons}}
+            {{#each equippedWeapons as |weapon weaponId|}}
+            <tr class="sheet-table-data item" data-item-id="{{weapon.id}}">
+                <td class="thumbnail">
+                    <img src="{{weapon.img}}" title="{{weapon.name}}"/>
+                </td>
+                <td><a class="item-edit">{{weapon.name}}</a></td>
+                <td class="number">{{weapon.system.skill.value}}</td>
+                <td class="center">{{localize weapon.system.grip.label}}</td>
+                <td class="number">{{weapon.system.str}}</td>
+                <td class="number">{{weapon.system.range}}</td>
+                <td class="center">{{weapon.system.damage}}</td>
+                <td class="number">{{weapon.system.durability}}</td>
+            </tr>
+            {{/each}}
+            {{else}}
+            <tr class="sheet-table-data">
+                <td></td>
+                <td><a>&nbsp</a></td>
+                <td></td>
+            </tr>
+            {{/if}}                  
+        </table>
+
+
+        {{!-- Armor --}}
+        <div class="flexrow">
+            <table class="armor">
+                <tr>
+                    <td class="armor-value" rowspan="3">
+                        {{#if equippedArmor}}
+                        <a>{{equippedArmor.system.rating}}</a>
+                        {{/if}}
+                    </td>
+                    <td class="armor-label">&nbsp</td>
+                </tr>
+                <tr>
+                    <td class="armor-name">
+                        {{#if equippedArmor}}
+                        <a class="item-edit  sheet-table-data" data-item-id="{{equippedArmor.id}}">{{equippedArmor.name}}</a>
+                        {{/if}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="armor-banes">
+                        {{localize "DoD.ui.character-sheet.banes"}}: {{equippedArmor.system.banes}}
+                    </td>
+                </tr>
+            </table>
+            <table class="armor">
+                <tr>
+                    <td class="helmet-value" rowspan="3">
+                        {{#if equippedHelmet}}
+                        <a>{{equippedHelmet.system.rating}}</a>
+                        {{/if}}
+                    </td>
+                    <td class="armor-label">&nbsp</td>
+                </tr>
+                <tr>
+                    <td class="armor-name">
+                        {{#if equippedHelmet}}
+                        <a class="item-edit sheet-table-data" data-item-id="{{equippedHelmet.id}}">{{equippedHelmet.name}}</a>
+                        {{/if}}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="armor-banes">
+                        {{localize "DoD.ui.character-sheet.banes"}}: {{equippedHelmet.system.banes}}
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>

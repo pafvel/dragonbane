@@ -51,6 +51,7 @@ export class DoDActor extends Actor {
         this._prepareSkills();
         this._prepareBaseChances();
         this._prepareKin();
+        this._prepareProfession();
     }
 
     prepareEmbeddedDocuments() {
@@ -126,21 +127,31 @@ export class DoDActor extends Actor {
         this.system.weaponSkills = [];
         this.system.magicSkills = [];
         this.system.secondarySkills = [];
+        this.system.trainedSkills = [];
         
         for (let item of this.items.contents) {
             if (item.type == 'skill') {
                 let skill = item;
+                skill.system.isProfessionSkill = false;
                 this.system.skills.push(skill);
                 if (skill.system.skillType == 'core') {
                     this.system.coreSkills.push(skill);
+                    if(skill.system.value > DoD_Utility.calculateBaseChance(skill.attribute)) {
+                        this.system.trainedSkills.push(skill);
+                    }
                 }  else if (skill.system.skillType == 'weapon') {
                     this.system.weaponSkills.push(skill);
+                    if(skill.system.value > DoD_Utility.calculateBaseChance(skill.attribute)) {
+                        this.system.trainedSkills.push(skill);
+                    }
                 } else if (skill.system.skillType == 'magic') {
                     // schools of magic are secondary skills
                     this.system.magicSkills.push(skill);
                     this.system.secondarySkills.push(skill);
+                    this.system.trainedSkills.push(skill);
                 } else {
                     this.system.secondarySkills.push(skill);
+                    this.system.trainedSkills.push(skill);
                 }
             }
         }
@@ -216,6 +227,11 @@ export class DoDActor extends Actor {
         return this.items.find(item => item.type == "ability" && item.name.toLowerCase() == name);
     }
 
+    findSkill(skillName) {
+        let name = skillName.toLowerCase();
+        return this.items.find(item => item.type == "skill" && item.name.toLowerCase() == name);
+    }
+
     async removeKin() {
         let ids = [];
         //  kin items
@@ -229,6 +245,17 @@ export class DoDActor extends Actor {
         // delete items and clear kin
         await this.deleteEmbeddedDocuments("Item", ids);
         this.system.kin = null;
+    }
+
+    async removeProfession() {
+        let ids = [];
+        //  profession items
+        this.items.contents.forEach(i => {
+            if (i.type == "profession") ids.push(i.id)
+        });
+        // delete items and clear profession
+        await this.deleteEmbeddedDocuments("Item", ids);
+        this.system.profession = null;
     }
 
     async addKinAbilities() {
@@ -254,8 +281,32 @@ export class DoDActor extends Actor {
         }
     }
 
+    updateProfession()
+    {
+        this.system.profession = this.items.find(item => item.type == "profession");
+        this.system.professionSkills = [];
+        let missingSkills = [];
+
+        if (this.system.profession) {
+            let professionSkillNames = DoD_Utility.splitAndTrimString(this.system.profession.system.skills);
+            for (const skillName of professionSkillNames) {
+                let skill = this.findSkill(skillName);
+                if (skill) {
+                    skill.system.isProfessionSkill = true;
+                } else {
+                    missingSkills.push(skillName);
+                }
+            }
+        }
+        return missingSkills;
+    }
+
     _prepareKin() {
         this.system.kin = this.items.find(item => item.type == "kin");
+    }
+
+    _prepareProfession() {
+        this.updateProfession();
     }
 
     _prepareSpellValues() {
