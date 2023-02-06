@@ -1,4 +1,23 @@
 {
+    "ACTOR": {
+        "TypeCharacter": "Player Character",
+        "TypeNpc": "Non-Player Character",
+        "TypeMonster": "Monster"
+    },
+    
+    "ITEM": {
+        "TypeAbility": "Ability",
+        "TypeArmor": "Armor",
+        "TypeHelmet": "Helmet",
+        "TypeItem": "Item",
+        "TypeKin": "Kin",
+        "TypeProfession": "Profession",
+        "TypeShield": "Shield",
+        "TypeSkill": "Skill",
+        "TypeSpell": "Spell",
+        "TypeWeapon": "Weapon"
+    },
+
     "DoD": {
         "ability": {
             "requirement": "Requirement",

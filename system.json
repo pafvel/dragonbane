@@ -30,9 +30,9 @@
         "path": "lang/en.json"
       },
       {
-        "lang": "se",
+        "lang": "sv",
         "name": "Svenska",
-        "path": "lang/se.json"
+        "path": "lang/sv.json"
       }
     ],
     "initiative": "1d20",
