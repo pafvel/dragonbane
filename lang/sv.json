@@ -111,8 +111,9 @@
             "durability": "Brytvärde"
         },
         "skill": {
-            "type": "Typ",
-            "attribute": "Grundegenskap"
+            "advance": "Förbättra",
+            "attribute": "Grundegenskap",
+            "type": "Typ"
         },
         "skillTypes": {
             "core": "Grundfärdighet",
@@ -183,10 +184,12 @@
                 "currency": "Mynt",
                 "damageBonusAGL": "Skadebonus SMI",
                 "damageBonusSTR": "Skadebonus STY",
+                "deathRolls": "Döds-\nslag",
                 "encumbrance": "Belastning",
                 "equipped-armor": "Rustning",
                 "equipped-helmet": "Hjälm",
                 "equipped-weapon": "Vapen till hands",
+                "failures": "Misslyckade",
                 "heroicAbilities": "Hjälteförmågor",
                 "hitPoints": "Kroppspoäng",
                 "hp": "KP",
@@ -208,6 +211,7 @@
                 "skillValue": "",
                 "spell": "Besvärjelse",
                 "spells": "Besvärjelser",
+                "successes": "Lyckade",
                 "tiny-items": "Småsaker",
                 "trained-skills": "Tränade färdigheter",
                 "weapons": "Vapen",

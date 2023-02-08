@@ -277,7 +277,7 @@
                 background-size: contain;
                 background-repeat: no-repeat;
                 background-clip: border-box;
-                padding-right: 2em;
+                padding-right: 1em;
                 text-indent: 1em;
             };
             .narrow {
@@ -302,14 +302,17 @@
                 padding-right: 0em;
                 text-align: right;
             };
-            td:nth-child(2) {
+           
+            .skill-name {
                 width: 100%;
-            };
+                padding-left: 0px;
+            }
+            
             td:last-child {
                 text-align: left;
                 padding-left: 1em;
-                padding-right: 3em;
-                min-width: 6em;
+                padding-right: 2em;
+                min-width: 5em;
                 a {
                     &:hover, &:focus {
                         color: white;
@@ -321,8 +324,12 @@
                 border: 0px;
                 height: 100%;
                 padding: 0px 0px;
+                text-align: right;
             };
-            
+
+            .checkbox {
+                margin: 0px 0px 0px 0px;
+            }
             .thumbnail {
                 text-align: center;
                 padding-top: 0px;            
@@ -405,12 +412,16 @@
     };
     }
 
+    
     .hit-points {
-        background-image: url("art/ui/hp-panel.webp");
-        background-size: contain;
+        background-image: url("art/ui/hp-panel.webp"), url("art/ui/death-rolls-bg.webp");
+        background-size: contain, 200px auto;
+        background-repeat: no-repeat, no-repeat;
+        background-position: left top, center bottom;
+
         position: relative;
         width: 200px;
-        height: 75px;
+        height: 110px;
         .hit-points-text-label {
             position: absolute;
             top: 14px;
@@ -457,6 +468,41 @@
             }
             .invisible {
                 visibility: hidden;
+            }
+        }
+        .death-rolls-box {
+            position: absolute;
+            top: 60px;
+            left: 10px;
+            width: 180px;
+            height: 60px;
+            font-size: 12px;
+            table {
+                border: 0px solid transparent;
+                background-color: transparent;
+            }
+            tr {
+                background-color: transparent;
+            }
+            th {
+                padding-left: 4px;   
+                padding-right: 8px;   
+                font-weight: bold; 
+                padding-bottom: 0px;   
+                border: 0px solid transparent;
+            }
+            td {
+                padding-left: 4px;   
+                padding-right: 8px;   
+                padding-top: 0px;   
+                padding-bottom: 0px;   
+                border: 0px solid transparent;
+                text-align: center;
+            }
+            .hit-point {
+                width: 10px;
+                height: 10px;    
+                border: 0 solid transparent;
             }
         }
     }

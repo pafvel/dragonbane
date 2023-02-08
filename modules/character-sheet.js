@@ -172,11 +172,18 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.lostHP = sheetData.maxHP - sheetData.currentHP;
         sheetData.fillHP = sheetData.maxHP < 11 ? 11 - sheetData.maxHP : 0; // needed for layout
 
+        // Death rolls widget data
+        sheetData.deathRollsSuccesses = sheetData.actor.system.deathRolls.successes;
+        sheetData.deathRollsSuccessesRemaining = 3 - sheetData.deathRollsSuccesses;
+        sheetData.deathRollsFailures = sheetData.actor.system.deathRolls.failures;
+        sheetData.deathRollsFailuresRemaining = 3 - sheetData.deathRollsFailures;
+
         // WP widget data
         sheetData.maxWP = sheetData.actor.system.willPoints.max;
         sheetData.currentWP = sheetData.actor.system.willPoints.value;
         sheetData.lostWP = sheetData.maxWP - sheetData.currentWP;
         sheetData.fillWP = sheetData.maxWP < 11 ? 11 - sheetData.maxWP : 0; // needed for layout
+
     }  
 
     _updateEncumbrance(sheetData) {
@@ -204,6 +211,11 @@ export default class DoDCharacterSheet extends ActorSheet {
         html.find(".hit-points-box").on("click contextmenu", this._onHitPointClick.bind(this));
         html.find(".will-points-box").on("click contextmenu", this._onWillPointClick.bind(this));
 
+        html.find(".death-rolls-success").on("click contextmenu", this._onDeathRollsSuccessClick.bind(this));
+        html.find(".death-rolls-success-label").on("click contextmenu", this._onDeathRollsSuccessClick.bind(this));
+        html.find(".death-rolls-failure").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
+        html.find(".death-rolls-failure-label").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
+
         super.activateListeners(html);
     }
 
@@ -212,12 +224,12 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         let hp = this.actor.system.hitPoints; 
         if (event.type == "click") { // left click
-            if (hp.value < hp.max) {
-                return this.actor.update({ ["system.hitPoints.value"]: hp.value+1});
-            }
-        } else { // right click
             if (hp.value > 0) {
                 return this.actor.update({ ["system.hitPoints.value"]: hp.value-1});
+            }
+        } else { // right click
+            if (hp.value < hp.max) {
+                return this.actor.update({ ["system.hitPoints.value"]: hp.value+1});
             }
         }
     }
@@ -227,15 +239,46 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         let wp = this.actor.system.willPoints; 
         if (event.type == "click") { // left click
-            if (wp.value < wp.max) {
-                return this.actor.update({ ["system.willPoints.value"]: wp.value+1});
-            }
-        } else { // right click
             if (wp.value > 0) {
                 return this.actor.update({ ["system.willPoints.value"]: wp.value-1});
             }
+        } else { // right click
+            if (wp.value < wp.max) {
+                return this.actor.update({ ["system.willPoints.value"]: wp.value+1});
+            }
         }
     }
+
+    _onDeathRollsSuccessClick(event) {
+        event.preventDefault();
+
+        let successes = this.actor.system.deathRolls.successes; 
+        if (event.type == "click") { // left click
+            if (successes < 3) {
+                return this.actor.update({ ["system.deathRolls.successes"]: successes+1});
+            }
+        } else { // right click
+            if (successes > 0) {
+                return this.actor.update({ ["system.deathRolls.successes"]: successes-1});
+            }
+        }
+    }
+
+    _onDeathRollsFailureClick(event) {
+        event.preventDefault();
+
+        let failures = this.actor.system.deathRolls.failures; 
+        if (event.type == "click") { // left click
+            if (failures < 3) {
+                return this.actor.update({ ["system.deathRolls.failures"]: failures+1});
+            }
+        } else { // right click
+            if (failures > 0) {
+                return this.actor.update({ ["system.deathRolls.failures"]: failures-1});
+            }
+        }
+    }
+
 
     _onInlineEdit(event) {
         event.preventDefault();

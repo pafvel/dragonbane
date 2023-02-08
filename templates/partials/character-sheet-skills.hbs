@@ -4,6 +4,7 @@
         <div class="table-column">
             <table class="sheet-table core-skills">
                 <tr class="sheet-table-header">
+                    <th></th>
                     <th>
                         {{localize "DoD.ui.character-sheet.skillValue"}}
                     </th>
@@ -18,9 +19,12 @@
                 {{#each coreSkills as |skill skillId|}}
                 <tr class="sheet-table-data" data-item-id="{{skill.id}}">
                     <td>
-                        <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
+                        <input class="inline-edit checkbox" name="system.advance" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
                     </td>
                     <td>
+                        <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
+                    </td>
+                    <td class="skill-name">
                         {{#if skill.system.isProfessionSkill}}
                         <a class="rollable-skill"><b>{{skill.name}}</b> ({{localize skill.system.attributeShort}})</a>
                         {{else}}
@@ -44,6 +48,7 @@
             {{!-- Weapon Skills --}}
             <table class="sheet-table weapon-skills">
                 <tr class="sheet-table-header">
+                    <th></th>
                     <th>
                         {{localize "DoD.ui.character-sheet.skillValue"}}
                     </th>
@@ -58,9 +63,12 @@
                 {{#each weaponSkills as |skill skillId|}}
                 <tr class="sheet-table-data" data-item-id="{{skill.id}}">
                     <td>
-                        <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
+                        <input class="inline-edit checkbox" name="system.advance" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
                     </td>
                     <td>
+                        <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
+                    </td>
+                    <td class="skill-name">
                         {{#if skill.system.isProfessionSkill}}
                         <a class="rollable-skill"><b>{{skill.name}}</b> ({{localize skill.system.attributeShort}})</a>
                         {{else}}
@@ -82,6 +90,7 @@
             {{#if secondarySkills }}
             <table class="sheet-table secondary-skills">
                 <tr class="sheet-table-header">
+                    <th></th>
                     <th>
                         {{localize "DoD.ui.character-sheet.skillValue"}}
                     </th>
@@ -95,9 +104,12 @@
                 {{#each secondarySkills as |skill skillId|}}
                 <tr class="sheet-table-data" data-item-id="{{skill.id}}">
                     <td>
-                        <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
+                        <input class="inline-edit checkbox" name="system.advance" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
                     </td>
                     <td>
+                        <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
+                    </td>
+                    <td class="skill-name">
                         {{#if skill.system.isProfessionSkill}}
                         <a class="rollable-skill"><b>{{skill.name}}</b> ({{localize skill.system.attributeShort}})</a>
                         {{else}}

@@ -7,13 +7,13 @@
             <label class="will-points-max-label">{{maxWP}}</label>
         </div>
         <div class="will-points-box">
-            {{#times currentWP}}
-            <img class="will-point" src="./systems/dragonbane/art/ui/point-unchecked.webp"/>
-            {{/times}}
             {{#times lostWP}}
             <img class="will-point" src="./systems/dragonbane/art/ui/point-checked.webp"/>
             {{/times}}
-            {{#times fillWP}}
+             {{#times currentWP}}
+            <img class="will-point" src="./systems/dragonbane/art/ui/point-unchecked.webp"/>
+            {{/times}}
+           {{#times fillWP}}
             <img class="will-point invisible" src=""/>
             {{/times}}
         </div>

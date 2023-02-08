@@ -375,7 +375,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-clip: border-box;
-  padding-right: 2em;
+  padding-right: 1em;
   text-indent: 1em;
 }
 .DoD.sheet.character .sheet-content .sheet-table-header .narrow {
@@ -398,14 +398,15 @@
   padding-right: 0em;
   text-align: right;
 }
-.DoD.sheet.character .sheet-content .sheet-table-data td:nth-child(2) {
+.DoD.sheet.character .sheet-content .sheet-table-data .skill-name {
   width: 100%;
+  padding-left: 0px;
 }
 .DoD.sheet.character .sheet-content .sheet-table-data td:last-child {
   text-align: left;
   padding-left: 1em;
-  padding-right: 3em;
-  min-width: 6em;
+  padding-right: 2em;
+  min-width: 5em;
 }
 .DoD.sheet.character .sheet-content .sheet-table-data td:last-child a:hover,
 .DoD.sheet.character .sheet-content .sheet-table-data td:last-child a:focus {
@@ -415,6 +416,10 @@
   border: 0px;
   height: 100%;
   padding: 0px 0px;
+  text-align: right;
+}
+.DoD.sheet.character .sheet-content .sheet-table-data .checkbox {
+  margin: 0px 0px 0px 0px;
 }
 .DoD.sheet.character .sheet-content .sheet-table-data .thumbnail {
   text-align: center;
@@ -489,11 +494,13 @@
   border-color: transparent;
 }
 .DoD.sheet.character .hit-points {
-  background-image: url("art/ui/hp-panel.webp");
-  background-size: contain;
+  background-image: url("art/ui/hp-panel.webp"), url("art/ui/death-rolls-bg.webp");
+  background-size: contain, 200px auto;
+  background-repeat: no-repeat, no-repeat;
+  background-position: left top, center bottom;
   position: relative;
   width: 200px;
-  height: 75px;
+  height: 110px;
 }
 .DoD.sheet.character .hit-points .hit-points-text-label {
   position: absolute;
@@ -542,6 +549,41 @@
 }
 .DoD.sheet.character .hit-points .hit-points-box .invisible {
   visibility: hidden;
+}
+.DoD.sheet.character .hit-points .death-rolls-box {
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  width: 180px;
+  height: 60px;
+  font-size: 12px;
+}
+.DoD.sheet.character .hit-points .death-rolls-box table {
+  border: 0px solid transparent;
+  background-color: transparent;
+}
+.DoD.sheet.character .hit-points .death-rolls-box tr {
+  background-color: transparent;
+}
+.DoD.sheet.character .hit-points .death-rolls-box th {
+  padding-left: 4px;
+  padding-right: 8px;
+  font-weight: bold;
+  padding-bottom: 0px;
+  border: 0px solid transparent;
+}
+.DoD.sheet.character .hit-points .death-rolls-box td {
+  padding-left: 4px;
+  padding-right: 8px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  border: 0px solid transparent;
+  text-align: center;
+}
+.DoD.sheet.character .hit-points .death-rolls-box .hit-point {
+  width: 10px;
+  height: 10px;
+  border: 0 solid transparent;
 }
 .DoD.sheet.character .will-points {
   background-image: url("art/ui/wp-panel.webp");

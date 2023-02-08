@@ -20,8 +20,12 @@
 
         {{!-- HP, WP & Derived stats --}}
         <div class="flexrow">
-            {{> "systems/dragonbane/templates/partials/hp-widget.hbs" }}
-            {{> "systems/dragonbane/templates/partials/wp-widget.hbs" }}
+            <div class="flexcol">
+                {{> "systems/dragonbane/templates/partials/hp-widget.hbs" }}
+            </div>
+            <div class="flexrow">
+                {{> "systems/dragonbane/templates/partials/wp-widget.hbs" }}
+            </div>
             <table class="derived-stat">
                 <tr>
                     <th>{{localize "DoD.ui.character-sheet.damageBonusSTR"}}</th>

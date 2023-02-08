@@ -78,6 +78,12 @@
                 "appearance": "",
                 "motivation": "",
                 "notes": ""
+            },
+            "deathRolls": {
+                "deathRolls": {
+                    "successes": 0,
+                    "failures": 0
+                }
             }
         },
         "character": {
@@ -89,7 +95,8 @@
                 "actorStats",
                 "characterStats",
                 "currency",
-                "characterBio"
+                "characterBio",
+                "deathRolls"
             ]
         },
         "npc": {
@@ -173,7 +180,8 @@
             "templates": ["itemDescripton"],
             "skillType": "",
             "attribute": "",
-            "value": 0
+            "value": 0,
+            "advance": 0
         },
         "ability": {
             "templates": ["itemDescripton"],

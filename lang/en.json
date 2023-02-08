@@ -111,8 +111,9 @@
             "durability": "Durability"
         },
         "skill": {
-            "type": "Type",
-            "attribute": "Attribute"
+            "advance": "Advance",
+            "attribute": "Attribute",
+            "type": "Type"
         },
         "skillTypes": {
             "core": "Core skill",
@@ -183,10 +184,12 @@
                 "currency": "Coin",
                 "damageBonusAGL": "Dmg Bonus AGL",
                 "damageBonusSTR": "Dmg Bonus STR",
+                "deathRolls": "Death Rolls",
                 "encumbrance": "Encumbrance",
                 "equipped-armor": "Equipped Armor",
                 "equipped-helmet": "Equipped Helm",
                 "equipped-weapon": "Equipped Weapons",
+                "failures": "Failures",
                 "heroicAbilities": "Heroic Abilities",
                 "hitPoints": "Hit Points",
                 "hp": "HP",
@@ -208,6 +211,7 @@
                 "skillValue": "",
                 "spell": "Spell",
                 "spells": "Spells",
+                "successes": "Successes",
                 "tiny-items": "Tiny Items",
                 "trained-skills": "Trained Skills",
                 "weapons": "Weapons",

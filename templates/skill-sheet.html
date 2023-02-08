@@ -8,6 +8,7 @@
             <tr>
                 <th>{{localize "DoD.skill.type"}}</th>
                 <th>{{localize "DoD.skill.attribute"}}</th>
+                <th>{{localize "DoD.skill.advance"}}</th>
             </tr>
             <tr>
                 <td>
@@ -27,6 +28,9 @@
                         {{/each}}
                         {{/select}}
                     </select>
+                </td>
+                <td>
+                    <input class="inline-edit" name="data.advance" data-field="data.advance" type="checkbox" {{checked data.advance}} />
                 </td>
             </tr>
         </table>

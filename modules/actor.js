@@ -192,6 +192,16 @@ export class DoDActor extends Actor {
                 ["system.hitPoints.value"]: maxHitPoints - damage });
         }
 
+        // Death rolls
+        /*
+        if (this.system.hitPoints.value > 0)
+        {
+            this.update({
+                ["system.deathRolls.successes"]: 0,
+                ["system.deathRolls.failures"]: 0 });
+        }
+        */
+
         // Movement
         let baseMovement = Number(this.system.kin ? this.system.kin.system.movement : 10);
         let movementModifier =  DoD_Utility.calculateMovementModifier(this.system.attributes.agl.value);

@@ -7,15 +7,42 @@
             <label class="hit-points-max-label">{{maxHP}}</label>
         </div>
         <div class="hit-points-box">
-            {{#times currentHP}}
-            <img class="hit-point" src="./systems/dragonbane/art/ui/point-unchecked.webp"/>
-            {{/times}}
             {{#times lostHP}}
             <img class="hit-point" src="./systems/dragonbane/art/ui/point-checked.webp"/>
+            {{/times}}
+            {{#times currentHP}}
+            <img class="hit-point" src="./systems/dragonbane/art/ui/point-unchecked.webp"/>
             {{/times}}
             {{#times fillHP}}
             <img class="hit-point invisible" src=""/>
             {{/times}}
+        </div>
+        <div class="death-rolls-box">
+            <table>
+                <tr>
+                    <th rowspan="2">{{localize "DoD.ui.character-sheet.deathRolls"}}</th>
+                    <th class="death-rolls-success-label">{{localize "DoD.ui.character-sheet.successes"}}</th>
+                    <th class="death-rolls-failure-label">{{localize "DoD.ui.character-sheet.failures"}}</th>
+                </tr>
+                <tr>
+                    <td class="death-rolls-success">
+                        {{#times deathRollsSuccesses }}
+                        <img class="hit-point" src="./systems/dragonbane/art/ui/point-checked.webp"/>
+                        {{/times}}
+                        {{#times deathRollsSuccessesRemaining }}
+                        <img class="hit-point" src="./systems/dragonbane/art/ui/point-unchecked.webp"/>
+                        {{/times}}
+                    </td>
+                    <td class="death-rolls-failure">
+                        {{#times deathRollsFailures }}
+                        <img class="hit-point" src="./systems/dragonbane/art/ui/point-checked.webp"/>
+                        {{/times}}
+                        {{#times deathRollsFailuresRemaining }}
+                        <img class="hit-point" src="./systems/dragonbane/art/ui/point-unchecked.webp"/>
+                        {{/times}}
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </section>
