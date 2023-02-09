@@ -19,7 +19,7 @@
                 {{#each coreSkills as |skill skillId|}}
                 <tr class="sheet-table-data" data-item-id="{{skill.id}}">
                     <td>
-                        <input class="inline-edit checkbox" name="system.advance" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
+                        <input class="inline-edit checkbox" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
                     </td>
                     <td>
                         <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
@@ -63,7 +63,7 @@
                 {{#each weaponSkills as |skill skillId|}}
                 <tr class="sheet-table-data" data-item-id="{{skill.id}}">
                     <td>
-                        <input class="inline-edit checkbox" name="system.advance" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
+                        <input class="inline-edit checkbox" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
                     </td>
                     <td>
                         <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
@@ -104,7 +104,7 @@
                 {{#each secondarySkills as |skill skillId|}}
                 <tr class="sheet-table-data" data-item-id="{{skill.id}}">
                     <td>
-                        <input class="inline-edit checkbox" name="system.advance" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
+                        <input class="inline-edit checkbox" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
                     </td>
                     <td>
                         <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
