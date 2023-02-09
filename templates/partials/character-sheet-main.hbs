@@ -49,7 +49,7 @@
                     <th><b>{{localize "DoD.ui.character-sheet.trained-skills"}}</b></th>
                     <td>
                         {{#each trainedSkills as |skill skillId|}}
-                        <a class="rollable-skill sheet-table-data" data-item-id="{{skill.id}}">{{skill.name}} {{skill.system.value}},  </a>
+                        <a class="rollable-skill character-sheet-table-data" data-item-id="{{skill.id}}">{{skill.name}} {{skill.system.value}},  </a>
                         {{/each}}
                     </td>
                 </tr>
@@ -58,7 +58,7 @@
                     <th><b>{{localize "DoD.ui.character-sheet.spells"}}</b></th>
                     <td>
                         {{#each spells as |spell spellId|}}
-                        <a class="sheet-table-data" data-item-id="{{spell.id}}">
+                        <a class="character-sheet-table-data" data-item-id="{{spell.id}}">
                             {{spell.name}} {{spell.value}}, 
                         </a>
                         {{/each}}
@@ -69,54 +69,46 @@
                     <th><b>{{localize "DoD.ui.character-sheet.abilities"}}</b></th>
                     <td>
                         {{#each abilities as |ability abilityId|}}
-                        <a class="sheet-table-data item-edit" data-item-id="{{ability.id}}">{{ability.name}}, </a>
+                        <a class="character-sheet-table-data item-edit" data-item-id="{{ability.id}}">{{ability.name}}, </a>
                         {{/each}}
                     </td>
                 </tr>
-                <!--
-                <tr>
-                    <th><b>{{localize "DoD.ui.character-sheet.weapons"}}</b></th>
-                    <td>
-                        {{#each equippedWeapons as |weapon weaponId|}}
-                        <a class="sheet-table-data" data-item-id="{{weapon.id}}">
-                            {{weapon.name}} {{weapon.system.skill.value}} ({{weapon.system.damage}}), 
-                        </a>
-                        {{/each}}
-                    </td>
-                </tr>
-                -->
             </table>
         </div>
         
         {{!-- Weapons --}}
-        <table class="sheet-table">
-            <tr class="sheet-table-header">
+        <table class="weapon-table">
+            <tr class="character-sheet-table-header">
                 <th>&nbsp</th>
-                <th>{{localize "DoD.ui.character-sheet.weapons"}}</th>
-                <th>{{localize "DoD.weapon.skillValue"}}</th>
-                <th>{{localize "DoD.weapon.grip"}}</th>
-                <th>{{localize "DoD.weapon.str"}}</th>
-                <th>{{localize "DoD.weapon.rangeShort"}}</th>
-                <th>{{localize "DoD.weapon.damageShort"}}</th>
-                <th>{{localize "DoD.weapon.durabilityShort"}}</th>
+                <th>&nbsp</th>
+                <th class="text-header">{{localize "DoD.ui.character-sheet.weapons"}}</th>
+                <th class="number-header">{{localize "DoD.weapon.skillValue"}}</th>
+                <th class="number-header">{{localize "DoD.weapon.grip"}}</th>
+                <th class="number-header">{{localize "DoD.weapon.str"}}</th>
+                <th class="number-header">{{localize "DoD.weapon.rangeShort"}}</th>
+                <th class="number-header">{{localize "DoD.weapon.damageShort"}}</th>
+                <th class="number-header">{{localize "DoD.weapon.durabilityShort"}}</th>
+                <th></th>
             </tr>
             {{#if equippedWeapons}}
             {{#each equippedWeapons as |weapon weaponId|}}
-            <tr class="sheet-table-data item" data-item-id="{{weapon.id}}">
-                <td class="thumbnail">
+            <tr class="character-sheet-table-data item" data-item-id="{{weapon.id}}">
+                <td></td>
+                <td class="thumbnail-data">
                     <img src="{{weapon.img}}" title="{{weapon.name}}"/>
                 </td>
-                <td><a class="item-edit">{{weapon.name}}</a></td>
-                <td class="number">{{weapon.system.skill.value}}</td>
-                <td class="center">{{localize weapon.system.grip.label}}</td>
-                <td class="number">{{weapon.system.str}}</td>
-                <td class="number">{{weapon.system.range}}</td>
-                <td class="center">{{weapon.system.damage}}</td>
-                <td class="number">{{weapon.system.durability}}</td>
+                <td class="text-data"><a class="item-edit">{{weapon.name}}</a></td>
+                <td class="number-data">{{weapon.system.skill.value}}</td>
+                <td class="number-data">{{localize weapon.system.grip.label}}</td>
+                <td class="number-data">{{weapon.system.str}}</td>
+                <td class="number-data">{{weapon.system.range}}</td>
+                <td class="number-data">{{weapon.system.damage}}</td>
+                <td class="number-data">{{weapon.system.durability}}</td>
+                <td></td>
             </tr>
             {{/each}}
             {{else}}
-            <tr class="sheet-table-data">
+            <tr class="character-sheet-table-data">
                 <td></td>
                 <td><a>&nbsp</a></td>
                 <td></td>

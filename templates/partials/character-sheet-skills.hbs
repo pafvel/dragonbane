@@ -1,14 +1,14 @@
 <div class="tab" data-group="primary" data-tab="skills">
-    <div class="skills-tab">
+    <div class="flexrow">
         {{!-- Core Skills --}}
-        <div class="table-column">
-            <table class="sheet-table core-skills">
-                <tr class="sheet-table-header">
+        <div>
+            <table class="character-sheet-table core-skills">
+                <tr class="character-sheet-table-header">
                     <th></th>
-                    <th>
+                    <th class="number-header">
                         {{localize "DoD.ui.character-sheet.skillValue"}}
                     </th>
-                    <th>
+                    <th class="text-header">
                         {{localize "DoD.ui.character-sheet.coreSkills"}}
                     </th>
                     <th>
@@ -17,21 +17,21 @@
                     </th>
                 </tr>
                 {{#each coreSkills as |skill skillId|}}
-                <tr class="sheet-table-data" data-item-id="{{skill.id}}">
-                    <td>
-                        <input class="inline-edit checkbox" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
+                <tr class="character-sheet-table-data" data-item-id="{{skill.id}}">
+                    <td class="checkbox-data">
+                        <input class="inline-edit" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
                     </td>
-                    <td>
+                    <td class="number-data narrow">
                         <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
                     </td>
-                    <td class="skill-name">
+                    <td class="skill-name text-data">
                         {{#if skill.system.isProfessionSkill}}
                         <a class="rollable-skill"><b>{{skill.name}}</b> ({{localize skill.system.attributeShort}})</a>
                         {{else}}
                         <a class="rollable-skill">{{skill.name}} ({{localize skill.system.attributeShort}})</a>
                         {{/if}}
                     </td>
-                    <td>
+                    <td class="icon-data">
                         <a class="item-delete" data-type="skill">
                             <i class="fas fa-trash"></i>
                         </a>    
@@ -46,13 +46,13 @@
         
         <div>
             {{!-- Weapon Skills --}}
-            <table class="sheet-table weapon-skills">
-                <tr class="sheet-table-header">
+            <table class="character-sheet-table weapon-skills">
+                <tr class="character-sheet-table-header">
                     <th></th>
-                    <th>
+                    <th class="number-header">
                         {{localize "DoD.ui.character-sheet.skillValue"}}
                     </th>
-                    <th>
+                    <th class="text-header">
                         {{localize "DoD.ui.character-sheet.weaponSkills"}}
                     </th>
                     <th>
@@ -61,21 +61,21 @@
                     </th>
                 </tr>
                 {{#each weaponSkills as |skill skillId|}}
-                <tr class="sheet-table-data" data-item-id="{{skill.id}}">
-                    <td>
+                <tr class="character-sheet-table-data" data-item-id="{{skill.id}}">
+                    <td class="checkbox-data">
                         <input class="inline-edit checkbox" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
                     </td>
-                    <td>
+                    <td class="number-data narrow">
                         <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
                     </td>
-                    <td class="skill-name">
+                    <td class="skill-name text-data">
                         {{#if skill.system.isProfessionSkill}}
                         <a class="rollable-skill"><b>{{skill.name}}</b> ({{localize skill.system.attributeShort}})</a>
                         {{else}}
                         <a class="rollable-skill">{{skill.name}} ({{localize skill.system.attributeShort}})</a>
                         {{/if}}
                     </td>
-                    <td>
+                    <td class="icon-data">
                         <a class="item-delete" data-type="skill">
                             <i class="fas fa-trash"></i>
                         </a>    
@@ -88,13 +88,13 @@
             </table>
             {{!-- Secondary Skills --}}
             {{#if secondarySkills }}
-            <table class="sheet-table secondary-skills">
-                <tr class="sheet-table-header">
+            <table class="character-sheet-table secondary-skills">
+                <tr class="character-sheet-table-header">
                     <th></th>
-                    <th>
+                    <th class="number-header">
                         {{localize "DoD.ui.character-sheet.skillValue"}}
                     </th>
-                    <th>
+                    <th class="text-header">
                         {{localize "DoD.ui.character-sheet.secondarySkills"}}
                     </th>
                     <th>
@@ -102,21 +102,21 @@
                     </th>
                 </tr>
                 {{#each secondarySkills as |skill skillId|}}
-                <tr class="sheet-table-data" data-item-id="{{skill.id}}">
-                    <td>
+                <tr class="character-sheet-table-data" data-item-id="{{skill.id}}">
+                    <td class="checkbox-data">
                         <input class="inline-edit checkbox" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
                     </td>
-                    <td>
+                    <td class="number-data narrow">
                         <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
                     </td>
-                    <td class="skill-name">
+                    <td class="skill-name text-data">
                         {{#if skill.system.isProfessionSkill}}
                         <a class="rollable-skill"><b>{{skill.name}}</b> ({{localize skill.system.attributeShort}})</a>
                         {{else}}
                         <a class="rollable-skill">{{skill.name}} ({{localize skill.system.attributeShort}})</a>
                         {{/if}}
                     </td>
-                    <td>
+                    <td class="icon-data">
                         <a class="item-delete" data-type="skill">
                             <i class="fas fa-trash"></i>
                         </a>    

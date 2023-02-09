@@ -5,7 +5,7 @@ export default class DoDCharacterSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions,  {
             width: 680,
-            height: 750,
+            height: 775,
             classes: ["DoD", "sheet", "character"],
             dragDrop: [{ dragSelector: ".item-list .item", dropSelector: null}],
             tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "main" }]
@@ -283,7 +283,7 @@ export default class DoDCharacterSheet extends ActorSheet {
     _onInlineEdit(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let itemId = element.closest(".sheet-table-data").dataset.itemId;
+        let itemId = element.closest(".character-sheet-table-data").dataset.itemId;
         let item = this.actor.items.get(itemId);
         let field = element.dataset.field;
 
@@ -328,7 +328,7 @@ export default class DoDCharacterSheet extends ActorSheet {
     _onItemDelete(event) {
         event.preventDefault();       
         let element = event.currentTarget;
-        let itemId = element.closest(".sheet-table-data").dataset.itemId;
+        let itemId = element.closest(".character-sheet-table-data").dataset.itemId;
 
         return this.actor.deleteEmbeddedDocuments("Item", [itemId]);
     }
@@ -336,7 +336,7 @@ export default class DoDCharacterSheet extends ActorSheet {
     _onItemEdit(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let itemId = element.closest(".sheet-table-data").dataset.itemId;
+        let itemId = element.closest(".character-sheet-table-data").dataset.itemId;
         let item = this.actor.items.get(itemId);
 
         item.sheet.render(true);
@@ -367,7 +367,7 @@ export default class DoDCharacterSheet extends ActorSheet {
     async _onSkillRoll(event) {
         event.preventDefault();
 
-        let itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
+        let itemId = event.currentTarget.closest(".character-sheet-table-data").dataset.itemId;
         let skill = this.actor.items.get(itemId);
         let rollString = this._getRollString(skill.system.attribute);
         let roll = await new Roll(rollString).roll({async: true});

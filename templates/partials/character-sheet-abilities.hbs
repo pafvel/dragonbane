@@ -9,10 +9,10 @@
             {{!-- Abilities --}}
             <div>
                 {{!-- Kin Abilities --}}
-                <table class="sheet-table kin-abilities">
-                    <tr class="sheet-table-header">
+                <table class="character-sheet-table kin-abilities">
+                    <tr class="character-sheet-table-header">
                         <th></th>
-                        <th>
+                        <th class="text-header">
                             {{localize "DoD.ui.character-sheet.kinAbilities"}}
                         </th>
                         <th>
@@ -21,12 +21,12 @@
                         </th>
                     </tr>
                     {{#each kinAbilities as |ability abilityId|}}
-                    <tr class="sheet-table-data" data-item-id="{{ability.id}}">
+                    <tr class="character-sheet-table-data" data-item-id="{{ability.id}}">
                         <td></td>
-                        <td>
+                        <td class="text-data">
                             <a>{{ability.name}}</a>
                         </td>
-                        <td>
+                        <td class="item-data">
                             <a class="item-edit" data-type="ability">
                                 <i class="fas fa-edit"></i>
                             </a>            
@@ -36,10 +36,10 @@
                 </table>
                 {{!-- Profession Abilities --}}
                 {{#if professionAbilities }}
-                <table class="sheet-table profession-abilities">
-                    <tr class="sheet-table-header">
+                <table class="character-sheet-table profession-abilities">
+                    <tr class="character-sheet-table-header">
                         <th></th>
-                        <th>
+                        <th class="text-header">
                             {{localize "DoD.ui.character-sheet.professionAbilities"}}
                         </th>
                         <th>
@@ -48,12 +48,12 @@
                         </th>
                     </tr>
                     {{#each professionAbilities as |ability abilityId|}}
-                    <tr class="sheet-table-data" data-item-id="{{ability.id}}">
+                    <tr class="character-sheet-table-data" data-item-id="{{ability.id}}">
                         <td></td>
-                        <td>
+                        <td class="text-name">
                             <a>{{ability.name}}</a>
                         </td>
-                        <td>
+                        <td class="item-data">
                             <a class="item-edit" data-type="ability">
                                 <i class="fas fa-edit"></i>
                             </a>            
@@ -63,10 +63,10 @@
                 </table>
                 {{/if}}
                 {{!-- Heroic Abilities --}}
-                <table class="sheet-table heroic-abilities">
-                    <tr class="sheet-table-header">
+                <table class="character-sheet-table heroic-abilities">
+                    <tr class="character-sheet-table-header">
                         <th></th>
-                        <th>
+                        <th class="text-header">
                             {{localize "DoD.ui.character-sheet.heroicAbilities"}}
                         </th>
                         <th>
@@ -75,12 +75,12 @@
                         </th>
                     </tr>
                     {{#each heroicAbilities as |ability abilityId|}}
-                    <tr class="sheet-table-data" data-item-id="{{ability.id}}">
+                    <tr class="character-sheet-table-data" data-item-id="{{ability.id}}">
                         <td></td>
-                        <td>
+                        <td class="text-data">
                             <a class="rollable-skill">{{ability.name}}</a>
                         </td>
-                        <td>
+                        <td class="icon-data">
                             <a class="item-delete" data-type="ability">
                                 <i class="fas fa-trash"></i>
                             </a>    
@@ -96,35 +96,40 @@
         {{#if hasSpells }}
         <div>
             {{!-- Spells --}}
-            <table class="sheet-table spells">
-                <tr class="sheet-table-header">
-                    <th>&nbsp</th>
-                    <th>
+            <table class="character-sheet-table spells">
+                <tr class="character-sheet-table-header">
+                    <th></th>
+                    <th class="number-header">
+                        {{localize "DoD.ui.character-sheet.skillValue"}}
+                    </th>
+                    <th class="text-header">
                         {{localize "DoD.ui.character-sheet.spell"}}
                     </th>
-                    <th class="center">
+                    <th class="checkbox-header">
                         {{localize "DoD.ui.character-sheet.memorized"}}
                     </th>
-                    <th>
+                    <th class="text-header">
                         {{localize "DoD.ui.character-sheet.school"}}
                     </th>
-                    <th>&nbsp</th>
+                    <th></th>
+                    <th></th>
                 </tr>
                 {{#each spells as |spell spellId|}}
-                <tr class="sheet-table-data" data-item-id="{{spell.id}}">
-                    <td>
+                <tr class="character-sheet-table-data" data-item-id="{{spell.id}}">
+                    <td></td>
+                    <td class="number-data">
                         <a>{{spell.value}}</a>
                     </td>
-                    <td>
+                    <td class="text-data">
                         <a class="rollable-skill">{{spell.name}}</a>
                     </td>
-                    <td class="narrow">
+                    <td class="checkbox-data">
                         <input class="inline-edit" data-field="system.memorized"  type="checkbox" {{checked spell.system.memorized}} />
                     </td>
-                    <td>
+                    <td class="text-data">
                         <a>{{localize spell.system.school}}</a>
                     </td>
-                    <td>
+                    <td class="icon-data">
                         <a class="item-delete" data-type="spell">
                             <i class="fas fa-trash"></i>
                         </a>    
@@ -132,6 +137,7 @@
                             <i class="fas fa-edit"></i>
                         </a>            
                     </td>
+                    <td></td>
                 </tr>
                 {{/each}}
             </table>
