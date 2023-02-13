@@ -201,23 +201,26 @@ export default class DoDCharacterSheet extends ActorSheet {
     }
 
     activateListeners(html) {
-        html.find(".inline-edit").change(this._onInlineEdit.bind(this));
-        html.find(".kin-edit").change(this._onKinEdit.bind(this));
-        html.find(".profession-edit").change(this._onProfessionEdit.bind(this));
+
         html.find(".item-edit").click(this._onItemEdit.bind(this));
-        html.find(".item-delete").click(this._onItemDelete.bind(this));
 
-        html.find(".rollable-attribute").click(this._onAttributeRoll.bind(this));
-        html.find(".rollable-skill").click(this._onSkillRoll.bind(this));
+        if (this.object.isOwner) {
+            html.find(".inline-edit").change(this._onInlineEdit.bind(this));
+            html.find(".kin-edit").change(this._onKinEdit.bind(this));
+            html.find(".profession-edit").change(this._onProfessionEdit.bind(this));
+            html.find(".item-delete").click(this._onItemDelete.bind(this));
 
-        html.find(".hit-points-box").on("click contextmenu", this._onHitPointClick.bind(this));
-        html.find(".will-points-box").on("click contextmenu", this._onWillPointClick.bind(this));
+            html.find(".rollable-attribute").click(this._onAttributeRoll.bind(this));
+            html.find(".rollable-skill").click(this._onSkillRoll.bind(this));
 
-        html.find(".death-rolls-success").on("click contextmenu", this._onDeathRollsSuccessClick.bind(this));
-        html.find(".death-rolls-success-label").on("click contextmenu", this._onDeathRollsSuccessClick.bind(this));
-        html.find(".death-rolls-failure").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
-        html.find(".death-rolls-failure-label").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
+            html.find(".hit-points-box").on("click contextmenu", this._onHitPointClick.bind(this));
+            html.find(".will-points-box").on("click contextmenu", this._onWillPointClick.bind(this));
 
+            html.find(".death-rolls-success").on("click contextmenu", this._onDeathRollsSuccessClick.bind(this));
+            html.find(".death-rolls-success-label").on("click contextmenu", this._onDeathRollsSuccessClick.bind(this));
+            html.find(".death-rolls-failure").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
+            html.find(".death-rolls-failure-label").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
+        }
         super.activateListeners(html);
     }
 
