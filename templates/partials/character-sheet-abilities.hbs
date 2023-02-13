@@ -21,15 +21,12 @@
                         </th>
                     </tr>
                     {{#each kinAbilities as |ability abilityId|}}
-                    <tr class="character-sheet-table-data" data-item-id="{{ability.id}}">
+                    <tr class="character-sheet-table-data item-edit" data-item-id="{{ability.id}}">
                         <td></td>
                         <td class="text-data">
                             <a>{{ability.name}}</a>
                         </td>
                         <td class="item-data">
-                            <a class="item-edit" data-type="ability">
-                                <i class="fas fa-edit"></i>
-                            </a>            
                         </td>
                     </tr>
                     {{/each}}
@@ -75,7 +72,7 @@
                         </th>
                     </tr>
                     {{#each heroicAbilities as |ability abilityId|}}
-                    <tr class="character-sheet-table-data" data-item-id="{{ability.id}}">
+                    <tr class="character-sheet-table-data item-edit" data-item-id="{{ability.id}}">
                         <td></td>
                         <td class="text-data">
                             <a class="rollable-skill">{{ability.name}}</a>
@@ -83,10 +80,7 @@
                         <td class="icon-data">
                             <a class="item-delete" data-type="ability">
                                 <i class="fas fa-trash"></i>
-                            </a>    
-                            <a class="item-edit" data-type="ability">
-                                <i class="fas fa-edit"></i>
-                            </a>            
+                            </a>   
                         </td>
                     </tr>
                     {{/each}}

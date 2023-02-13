@@ -5,14 +5,17 @@
             <table class="derived-stat">
                 <tr>
                     <th>{{localize "DoD.ui.character-sheet.kin"}}</th>
-                    <!-- <td>{{ kinName }}</td> -->
-                    <td><input class="kin-edit" name="kinName" type="text" value="{{kinName}}" /></td>
+                    <td>
+                        <a class="character-sheet-table-data item-edit" data-item-id="{{kin.id}}">{{kin.name}}</a>
+                    </td>
                 </tr>
             </table>
             <table class="derived-stat">
                 <tr>
                     <th>{{localize "DoD.ui.character-sheet.profession"}}</th>
-                    <td><input class="profession-edit" name="professionName" type="text" value="{{professionName}}" /></td>
+                    <td>
+                        <a class="character-sheet-table-data item-edit" data-item-id="{{profession.id}}">{{profession.name}}</a>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -131,7 +134,7 @@
                 <tr>
                     <td class="armor-name">
                         {{#if equippedArmor}}
-                        <a class="item-edit  sheet-table-data" data-item-id="{{equippedArmor.id}}">{{equippedArmor.name}}</a>
+                        <a class="item-edit  character-sheet-table-data" data-item-id="{{equippedArmor.id}}">{{equippedArmor.name}}</a>
                         {{/if}}
                     </td>
                 </tr>
@@ -153,7 +156,7 @@
                 <tr>
                     <td class="armor-name">
                         {{#if equippedHelmet}}
-                        <a class="item-edit sheet-table-data" data-item-id="{{equippedHelmet.id}}">{{equippedHelmet.name}}</a>
+                        <a class="item-edit character-sheet-table-data" data-item-id="{{equippedHelmet.id}}">{{equippedHelmet.name}}</a>
                         {{/if}}
                     </td>
                 </tr>

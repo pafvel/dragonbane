@@ -139,8 +139,10 @@ export default class DoDCharacterSheet extends ActorSheet {
         }
 
         // Kin and Profession
-        sheetData.kinName = sheetData.actor.system.kin?.name;
-        sheetData.professionName = sheetData.actor.system.profession?.name;
+        sheetData.kin = sheetData.actor.system.kin;
+        sheetData.kinName = sheetData.kin?.name;
+        sheetData.profession = sheetData.actor.system.profession;
+        sheetData.professionName = sheetData.profession?.name;
 
         // Items (skills, abilities, spells)
         sheetData.coreSkills = sheetData.actor.system.coreSkills?.sort(DoD_Utility.nameSorter);;
@@ -409,21 +411,21 @@ export default class DoDCharacterSheet extends ActorSheet {
             let dropTarget = event.target.closest(".item-list").dataset.droptarget;
 
             if (dropTarget) {
-                if (dropTarget == "weapon")
+                if (dropTarget == "weapon" && itemData.type == "weapon" && this.getData().equippedWeapons.length < 3)
                 {
                     item.update({
                         ["system.worn"]: true,
                         ["system.memento"]: false
                     });
                 }
-                else if (dropTarget == "armor") {
+                else if (dropTarget == "armor" && itemData.type == "armor") {
                     this.getData().equippedArmor?.update({ ["system.worn"]: false});
                     item.update({
                         ["system.worn"]: true,
                         ["system.memento"]: false
                     });
                 }
-                else if (dropTarget == "helmet") {
+                else if (dropTarget == "helmet" && itemData.type == "helmet") {
                     this.getData().equippedHelmet?.update({ ["system.worn"]: false});
                     item.update({
                         ["system.worn"]: true,
@@ -471,6 +473,14 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
         }
 
+        // Equip weapons, armor and helmet
+        if (itemData.type == "weapon" && this.getData().equippedWeapons.length < 3 
+            || itemData.type == "armor" && !this.getData().equippedArmor
+            || itemData.type == "helmet" && !this.getData().equippedHelmet )
+        {
+            let equipItem = returnValue[0];
+            equipItem.update({ ["system.worn"]: true });
+        }
         return returnValue;
     }
 }

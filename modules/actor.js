@@ -136,12 +136,15 @@ export class DoDActor extends Actor {
                 this.system.skills.push(skill);
                 if (skill.system.skillType == 'core') {
                     this.system.coreSkills.push(skill);
-                    if(skill.system.value > DoD_Utility.calculateBaseChance(skill.attribute)) {
+                    
+                    let value = this._getAttributeValueFromName(skill.system.attribute);
+                    if(skill.system.value > DoD_Utility.calculateBaseChance(value)) {
                         this.system.trainedSkills.push(skill);
                     }
                 }  else if (skill.system.skillType == 'weapon') {
                     this.system.weaponSkills.push(skill);
-                    if(skill.system.value > DoD_Utility.calculateBaseChance(skill.attribute)) {
+                    let value = this._getAttributeValueFromName(skill.system.attribute);
+                    if(skill.system.value > DoD_Utility.calculateBaseChance(value)) {
                         this.system.trainedSkills.push(skill);
                     }
                 } else if (skill.system.skillType == 'magic') {

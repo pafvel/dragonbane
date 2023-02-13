@@ -343,6 +343,7 @@
 .DoD.sheet.character .sheet-content .derived-stat {
   border-bottom: 0px;
   border-top: 0px;
+  background-color: transparent;
 }
 .DoD.sheet.character .sheet-content .derived-stat th {
   text-align: center;
@@ -385,6 +386,7 @@
   background-position-y: 2em;
   border-top: transparent;
   color: black;
+  background-color: transparent;
 }
 .DoD.sheet.character .weapon-table i {
   margin-left: auto;
@@ -402,6 +404,7 @@
   background-position-y: 2em;
   border-top: transparent;
   color: black;
+  background-color: transparent;
 }
 .DoD.sheet.character .character-sheet-table i {
   margin-left: auto;
@@ -671,6 +674,7 @@
   background-position: 42px center;
   min-width: 266px;
   border: 0px solid transparent;
+  background-color: transparent;
 }
 .DoD.sheet.character .armor td {
   border: 0px solid transparent;
@@ -781,7 +785,7 @@
   width: 120px;
   height: auto;
 }
-#logo:lang(se) {
+#logo:lang(sv) {
   content: url("art/ui/logo-se.webp");
   width: 120px;
   height: auto;
