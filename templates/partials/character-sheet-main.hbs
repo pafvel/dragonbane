@@ -6,7 +6,7 @@
                 <tr>
                     <th>{{localize "DoD.ui.character-sheet.kin"}}</th>
                     <td>
-                        <a class="character-sheet-table-data item-edit" data-item-id="{{kin.id}}">{{kin.name}}</a>
+                        <a class="sheet-table-data item-edit" data-item-id="{{kin.id}}">{{kin.name}}</a>
                     </td>
                 </tr>
             </table>
@@ -14,7 +14,7 @@
                 <tr>
                     <th>{{localize "DoD.ui.character-sheet.profession"}}</th>
                     <td>
-                        <a class="character-sheet-table-data item-edit" data-item-id="{{profession.id}}">{{profession.name}}</a>
+                        <a class="sheet-table-data item-edit" data-item-id="{{profession.id}}">{{profession.name}}</a>
                     </td>
                 </tr>
             </table>
@@ -52,7 +52,7 @@
                     <th><b>{{localize "DoD.ui.character-sheet.trained-skills"}}</b></th>
                     <td>
                         {{#each trainedSkills as |skill skillId|}}
-                        <a class="rollable-skill character-sheet-table-data" data-item-id="{{skill.id}}">{{skill.name}} {{skill.system.value}},  </a>
+                        <a class="rollable-skill sheet-table-data" data-item-id="{{skill.id}}">{{skill.name}} {{skill.system.value}},  </a>
                         {{/each}}
                     </td>
                 </tr>
@@ -61,7 +61,7 @@
                     <th><b>{{localize "DoD.ui.character-sheet.spells"}}</b></th>
                     <td>
                         {{#each spells as |spell spellId|}}
-                        <a class="character-sheet-table-data" data-item-id="{{spell.id}}">
+                        <a class="sheet-table-data" data-item-id="{{spell.id}}">
                             {{spell.name}} {{spell.value}}, 
                         </a>
                         {{/each}}
@@ -72,7 +72,7 @@
                     <th><b>{{localize "DoD.ui.character-sheet.abilities"}}</b></th>
                     <td>
                         {{#each abilities as |ability abilityId|}}
-                        <a class="character-sheet-table-data item-edit" data-item-id="{{ability.id}}">{{ability.name}}, </a>
+                        <a class="sheet-table-data item-edit" data-item-id="{{ability.id}}">{{ability.name}}, </a>
                         {{/each}}
                     </td>
                 </tr>
@@ -81,7 +81,7 @@
         
         {{!-- Weapons --}}
         <table class="weapon-table">
-            <tr class="character-sheet-table-header">
+            <tr class="sheet-table-header">
                 <th>&nbsp</th>
                 <th>&nbsp</th>
                 <th class="text-header">{{localize "DoD.ui.character-sheet.weapons"}}</th>
@@ -95,7 +95,7 @@
             </tr>
             {{#if equippedWeapons}}
             {{#each equippedWeapons as |weapon weaponId|}}
-            <tr class="character-sheet-table-data item" data-item-id="{{weapon.id}}">
+            <tr class="sheet-table-data item" data-item-id="{{weapon.id}}">
                 <td></td>
                 <td class="thumbnail-data">
                     <img src="{{weapon.img}}" title="{{weapon.name}}"/>
@@ -111,7 +111,7 @@
             </tr>
             {{/each}}
             {{else}}
-            <tr class="character-sheet-table-data">
+            <tr class="sheet-table-data">
                 <td></td>
                 <td><a>&nbsp</a></td>
                 <td></td>
@@ -134,7 +134,7 @@
                 <tr>
                     <td class="armor-name">
                         {{#if equippedArmor}}
-                        <a class="item-edit  character-sheet-table-data" data-item-id="{{equippedArmor.id}}">{{equippedArmor.name}}</a>
+                        <a class="item-edit  sheet-table-data" data-item-id="{{equippedArmor.id}}">{{equippedArmor.name}}</a>
                         {{/if}}
                     </td>
                 </tr>
@@ -156,7 +156,7 @@
                 <tr>
                     <td class="armor-name">
                         {{#if equippedHelmet}}
-                        <a class="item-edit character-sheet-table-data" data-item-id="{{equippedHelmet.id}}">{{equippedHelmet.name}}</a>
+                        <a class="item-edit sheet-table-data" data-item-id="{{equippedHelmet.id}}">{{equippedHelmet.name}}</a>
                         {{/if}}
                     </td>
                 </tr>

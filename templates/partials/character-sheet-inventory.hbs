@@ -2,8 +2,8 @@
     <div class="flexrow">
         <div>
             {{!-- Weapons --}}
-            <table class="character-sheet-table item-list" data-droptarget="weapon">
-                <tr class="character-sheet-table-header">
+            <table class="sheet-table item-list" data-droptarget="weapon">
+                <tr class="sheet-table-header">
                     <th></th>
                     <th class="thumbnail-header"></th>
                     <th class="text-header">{{localize "DoD.ui.character-sheet.equipped-weapon"}}</th>
@@ -11,7 +11,7 @@
                 </tr>
                 {{#if equippedWeapons}}
                 {{#each equippedWeapons as |weapon weaponId|}}
-                <tr class="character-sheet-table-data item" data-item-id="{{weapon.id}}">
+                <tr class="sheet-table-data item" data-item-id="{{weapon.id}}">
                     <td></td>
                     <td class="thumbnail-data">
                         <img src="{{weapon.img}}" title="{{weapon.name}}"/>
@@ -37,8 +37,8 @@
             </table>
 
             {{!-- Armor --}}
-            <table class="character-sheet-table item-list" data-droptarget="armor">
-                <tr class="character-sheet-table-header">
+            <table class="sheet-table item-list" data-droptarget="armor">
+                <tr class="sheet-table-header">
                     <th></th>
                     <th class="thumbnail-header"></th>
                     <th class="text-header">
@@ -47,7 +47,7 @@
                     <th></th>
                 </tr>
                 {{#if equippedArmor}}
-                <tr class="character-sheet-table-data item" data-item-id="{{equippedArmor.id}}">
+                <tr class="sheet-table-data item" data-item-id="{{equippedArmor.id}}">
                     <td></td>
                     <td class="thumbnail-data">
                         <img src="{{equippedArmor.img}}" title="{{equippedArmor.name}}"/>
@@ -72,8 +72,8 @@
             </table>
 
             {{!-- Helmet --}}
-            <table class="character-sheet-table item-list" data-droptarget="helmet">
-                <tr class="character-sheet-table-header">
+            <table class="sheet-table item-list" data-droptarget="helmet">
+                <tr class="sheet-table-header">
                     <th></th>
                     <th class="thumbnail-header"></th>
                     <th class="text-header">
@@ -82,7 +82,7 @@
                     <th></th>
                 </tr>
                 {{#if equippedHelmet}}
-                <tr class="character-sheet-table-data item" data-item-id="{{equippedHelmet.id}}">
+                <tr class="sheet-table-data item" data-item-id="{{equippedHelmet.id}}">
                     <td></td>
                     <td class="thumbnail-data">
                         <img src="{{equippedHelmet.img}}" title="{{equippedHelmet.name}}"/>
@@ -143,8 +143,8 @@
             </table>
 
             {{!-- Inventory --}}
-            <table class="character-sheet-table item-list" data-droptarget="inventory">
-                <tr class="character-sheet-table-header">
+            <table class="sheet-table item-list" data-droptarget="inventory">
+                <tr class="sheet-table-header">
                     <th></th>
                     <th class="thumbnail-header"></th>
                     <th class="text-header">
@@ -157,7 +157,7 @@
                 </tr>
                 {{#if inventory}}
                 {{#each inventory as |item itemId|}}
-                <tr class="character-sheet-table-data item" data-item-id="{{item.id}}">
+                <tr class="sheet-table-data item" data-item-id="{{item.id}}">
                     <td></td>
                     <td class="thumbnail-data">
                         <img src="{{item.img}}" title="{{item.name}}"/>
@@ -187,8 +187,8 @@
             </table>
 
             {{!-- Memento --}}
-            <table class="character-sheet-table item-list" data-droptarget="memento">
-                <tr class="character-sheet-table-header">
+            <table class="sheet-table item-list" data-droptarget="memento">
+                <tr class="sheet-table-header">
                     <th></th>
                     <th class="thumbnail-header"></th>
                     <th class="text-header">
@@ -197,7 +197,7 @@
                     <th></th>
                 </tr>
                 {{#if memento}}
-                <tr class="character-sheet-table-data item" data-item-id="{{memento.id}}">
+                <tr class="sheet-table-data item" data-item-id="{{memento.id}}">
                     <td></td>
                     <td class="thumbnail-data">
                         <img src="{{memento.img}}" title="{{memento.name}}"/>
@@ -223,8 +223,8 @@
             </table>
 
             {{!-- Tiny Items --}}
-            <table class="character-sheet-table item-list" data-droptarget="tiny">
-                <tr class="character-sheet-table-header">
+            <table class="sheet-table item-list" data-droptarget="tiny">
+                <tr class="sheet-table-header">
                     <th></th>
                     <th class="thumbnail-header"></th>
                     <th class="text-header">
@@ -234,7 +234,7 @@
                 </tr>
                 {{#if smallItems}}
                 {{#each smallItems as |item itemId|}}
-                <tr class="character-sheet-table-data item" data-item-id="{{item.id}}">
+                <tr class="sheet-table-data item" data-item-id="{{item.id}}">
                     <td></td>
                     <td class="thumbnail-data">
                         <img src="{{item.img}}" title="{{item.name}}"/>

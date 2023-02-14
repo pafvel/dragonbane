@@ -68,6 +68,10 @@ export default class DoDSkillTest extends DoDTest  {
                 }
             }
         }
+
+        // Needed for dialog box layout
+        this.data.fillerBanes = Math.max(0, this.data.boons.length - this.data.banes.length);
+        this.data.fillerBoons = Math.max(0, this.data.banes.length - this.data.boons.length);;
     }
 
     async _getRollOptions(rollType) {
@@ -76,15 +80,18 @@ export default class DoDSkillTest extends DoDTest  {
         this._updateRollData();
         const html = await renderTemplate(template, this.data);
 
+        let label = game.i18n.localize("DoD.ui.dialog.skillRollLabel");
+        let title = game.i18n.localize("DoD.ui.dialog.skillRollTitle") + ": " + this.data.skill.name;
+
         return new Promise(
             resolve => {
                 const data = {
                     actor: this.data.actor,
-                    title: "Skill Roll: " + this.data.skill.name,
+                    title: title,
                     content: html,
                     buttons: {
                         ok: {
-                            label: "Roll",
+                            label: label,
                             callback: html => resolve(this._processRollOptions(html[0].querySelector("form")))
                         }
                         /*

@@ -218,7 +218,15 @@
                 "weaponSkills": "Weapon Skills",
                 "willPoints": "Willpower Points",
                 "wp": "WP"
+            },
+            "dialog": {
+                "banes": "Banes",
+                "boons": "Boons",
+                "extra": "Extra",
+                "skillRollTitle": "Skill Roll",
+                "skillRollLabel": "Roll"
             }
+
         },
         "WARNING": {
             "kinAbility": "Could not find Kin Ability: {ability}",

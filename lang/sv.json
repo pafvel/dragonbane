@@ -218,6 +218,13 @@
                 "weaponSkills": "Vapenfärdigheter",
                 "willPoints": "Viljepoäng",
                 "wp": "VP"
+            },
+            "dialog": {
+                "banes": "Nackdelar",
+                "boons": "Fördelar",
+                "extra": "Extra",
+                "skillRollTitle": "Färdighetsslag",
+                "skillRollLabel": "Slå färdighetsslag"
             }
         },
         "WARNING": {

@@ -2,8 +2,8 @@
     <div class="flexrow">
         {{!-- Core Skills --}}
         <div>
-            <table class="character-sheet-table core-skills">
-                <tr class="character-sheet-table-header">
+            <table class="sheet-table core-skills">
+                <tr class="sheet-table-header">
                     <th></th>
                     <th class="number-header">
                         {{localize "DoD.ui.character-sheet.skillValue"}}
@@ -17,7 +17,7 @@
                     </th>
                 </tr>
                 {{#each coreSkills as |skill skillId|}}
-                <tr class="character-sheet-table-data" data-item-id="{{skill.id}}">
+                <tr class="sheet-table-data" data-item-id="{{skill.id}}">
                     <td class="checkbox-data">
                         <input class="inline-edit" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
                     </td>
@@ -46,8 +46,8 @@
         
         <div>
             {{!-- Weapon Skills --}}
-            <table class="character-sheet-table weapon-skills">
-                <tr class="character-sheet-table-header">
+            <table class="sheet-table weapon-skills">
+                <tr class="sheet-table-header">
                     <th></th>
                     <th class="number-header">
                         {{localize "DoD.ui.character-sheet.skillValue"}}
@@ -61,7 +61,7 @@
                     </th>
                 </tr>
                 {{#each weaponSkills as |skill skillId|}}
-                <tr class="character-sheet-table-data" data-item-id="{{skill.id}}">
+                <tr class="sheet-table-data" data-item-id="{{skill.id}}">
                     <td class="checkbox-data">
                         <input class="inline-edit checkbox" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
                     </td>
@@ -88,8 +88,8 @@
             </table>
             {{!-- Secondary Skills --}}
             {{#if secondarySkills }}
-            <table class="character-sheet-table secondary-skills">
-                <tr class="character-sheet-table-header">
+            <table class="sheet-table secondary-skills">
+                <tr class="sheet-table-header">
                     <th></th>
                     <th class="number-header">
                         {{localize "DoD.ui.character-sheet.skillValue"}}
@@ -102,7 +102,7 @@
                     </th>
                 </tr>
                 {{#each secondarySkills as |skill skillId|}}
-                <tr class="character-sheet-table-data" data-item-id="{{skill.id}}">
+                <tr class="sheet-table-data" data-item-id="{{skill.id}}">
                     <td class="checkbox-data">
                         <input class="inline-edit checkbox" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
                     </td>

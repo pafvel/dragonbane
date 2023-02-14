@@ -9,8 +9,8 @@
             {{!-- Abilities --}}
             <div>
                 {{!-- Kin Abilities --}}
-                <table class="character-sheet-table kin-abilities">
-                    <tr class="character-sheet-table-header">
+                <table class="sheet-table kin-abilities">
+                    <tr class="sheet-table-header">
                         <th></th>
                         <th class="text-header">
                             {{localize "DoD.ui.character-sheet.kinAbilities"}}
@@ -21,7 +21,7 @@
                         </th>
                     </tr>
                     {{#each kinAbilities as |ability abilityId|}}
-                    <tr class="character-sheet-table-data item-edit" data-item-id="{{ability.id}}">
+                    <tr class="sheet-table-data item-edit" data-item-id="{{ability.id}}">
                         <td></td>
                         <td class="text-data">
                             <a>{{ability.name}}</a>
@@ -33,8 +33,8 @@
                 </table>
                 {{!-- Profession Abilities --}}
                 {{#if professionAbilities }}
-                <table class="character-sheet-table profession-abilities">
-                    <tr class="character-sheet-table-header">
+                <table class="sheet-table profession-abilities">
+                    <tr class="sheet-table-header">
                         <th></th>
                         <th class="text-header">
                             {{localize "DoD.ui.character-sheet.professionAbilities"}}
@@ -45,7 +45,7 @@
                         </th>
                     </tr>
                     {{#each professionAbilities as |ability abilityId|}}
-                    <tr class="character-sheet-table-data" data-item-id="{{ability.id}}">
+                    <tr class="sheet-table-data" data-item-id="{{ability.id}}">
                         <td></td>
                         <td class="text-name">
                             <a>{{ability.name}}</a>
@@ -60,8 +60,8 @@
                 </table>
                 {{/if}}
                 {{!-- Heroic Abilities --}}
-                <table class="character-sheet-table heroic-abilities">
-                    <tr class="character-sheet-table-header">
+                <table class="sheet-table heroic-abilities">
+                    <tr class="sheet-table-header">
                         <th></th>
                         <th class="text-header">
                             {{localize "DoD.ui.character-sheet.heroicAbilities"}}
@@ -72,7 +72,7 @@
                         </th>
                     </tr>
                     {{#each heroicAbilities as |ability abilityId|}}
-                    <tr class="character-sheet-table-data item-edit" data-item-id="{{ability.id}}">
+                    <tr class="sheet-table-data item-edit" data-item-id="{{ability.id}}">
                         <td></td>
                         <td class="text-data">
                             <a class="rollable-skill">{{ability.name}}</a>
@@ -90,8 +90,8 @@
         {{#if hasSpells }}
         <div>
             {{!-- Spells --}}
-            <table class="character-sheet-table spells">
-                <tr class="character-sheet-table-header">
+            <table class="sheet-table spells">
+                <tr class="sheet-table-header">
                     <th></th>
                     <th class="number-header">
                         {{localize "DoD.ui.character-sheet.skillValue"}}
@@ -109,7 +109,7 @@
                     <th></th>
                 </tr>
                 {{#each spells as |spell spellId|}}
-                <tr class="character-sheet-table-data" data-item-id="{{spell.id}}">
+                <tr class="sheet-table-data" data-item-id="{{spell.id}}">
                     <td></td>
                     <td class="number-data">
                         <a>{{spell.value}}</a>
