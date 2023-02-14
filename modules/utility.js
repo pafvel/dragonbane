@@ -38,12 +38,15 @@ export default class DoD_Utility {
     }
 
     static getConditionByAttributeName(actor, attributeName) {
+        return actor.system.conditions[attributeName];
+        /*
         for (const [key, condition] of Object.entries(actor.system.conditions)) {
             if (condition.attribute == attributeName) {
                 return condition;
             }
         }
         return null;
+        */
     }
 
     static async getBaseSkills() {

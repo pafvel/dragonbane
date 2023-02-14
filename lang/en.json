@@ -58,12 +58,12 @@
             "shift": "Shift"
         },
         "conditions": {
-            "dazed": "Dazed",
-            "sickly": "Sickly",
-            "exhausted": "Exhausted",
-            "angry": "Angry",
-            "scared": "Scared",
-            "disheartened": "Disheart."
+            "str": "Exhausted",
+            "con": "Sickly",
+            "agl": "Dazed",
+            "int": "Angry",
+            "wil": "Scared",
+            "cha": "Disheart."
         },
         "currency": {
             "gold": "Gold",

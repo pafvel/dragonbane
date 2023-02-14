@@ -1,4 +1,6 @@
 import DoD_Utility from "./utility.js";
+import DoDSkillTest from "./tests/skill-test.js";
+import DoDAttributeTest from "./tests/attribute-test.js";
 
 export default class DoDCharacterSheet extends ActorSheet {
     
@@ -348,7 +350,7 @@ export default class DoDCharacterSheet extends ActorSheet {
     }
 
     _getRollString(attributeName) {
-        let condition = DoD_Utility.getConditionByAttributeName(this.actor, attributeName);
+        let condition = this.actor.system.conditions[attributeName];
 
         if (condition.value) {
             return "2d20kh";
@@ -374,32 +376,18 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         let itemId = event.currentTarget.closest(".character-sheet-table-data").dataset.itemId;
         let skill = this.actor.items.get(itemId);
-        let rollString = this._getRollString(skill.system.attribute);
-        let roll = await new Roll(rollString).roll({async: true});
-        let result = this._getRollResult(roll, skill.system.value);      
-        let label = game.i18n.format(game.i18n.localize("DoD.roll.skillRoll"), {skill: skill.name, result: result});
 
-        roll.toMessage({
-          speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-          flavor: label
-        });                 
+        let test = new DoDSkillTest(this.actor, skill);
+        await test.roll();
+        
     }
 
-    _onAttributeRoll(event) {
+    async _onAttributeRoll(event) {
         event.preventDefault();
 
         let attributeName = event.currentTarget.dataset.attribute;
-        let attribute = this.actor.system.attributes[attributeName];
-        let rollString = this._getRollString(attributeName);
-        let roll = new Roll(rollString).roll({async: false});
-        let result = this._getRollResult(roll, attribute.value);      
-        let localizedName = game.i18n.localize("DoD.attributes." + attributeName);
-        let label = game.i18n.format(game.i18n.localize("DoD.roll.attributeRoll"), {attribute: localizedName, result: result});
-
-        roll.toMessage({
-          speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-          flavor: label
-        });        
+        let test = new DoDAttributeTest(this.actor, attributeName);
+        await test.roll();
     }
 
     async _onDropItem(event, data)

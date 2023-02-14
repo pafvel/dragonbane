@@ -1,0 +1,41 @@
+<form>
+    <div class="flexrow">
+        <table class="banes">
+            <tr>
+                <th></th>
+                <th>Banes</th>
+            </tr>
+            {{#each banes as |bane|}}
+            <tr>
+                <td><input type="checkbox" name="{{bane.source}}" {{checked bane.value}}/></td>
+                
+                <td>{{bane.source}}</td>
+            </tr>
+            {{/each}}
+            <tr>
+                <td>
+                    <input name="extraBanes" type="number" value="0"/>
+                </td>
+                <td>Extra</td>
+            </tr>
+        </table>
+        <table class="boons">
+            <tr>
+                <th></th>
+                <th>Boons</th>
+            </tr>
+            {{#each boons as |boon|}}
+            <tr>
+                <td><input type="checkbox" name="test"/></td>
+                <td>{{boon.source}}</td>
+            </tr>
+            {{/each}}
+            <tr>
+                <td>
+                    <input name="extraBoons" type="number" value="0"/>
+                </td>
+                <td>Extra</td>
+            </tr>
+        </table>
+    </div>
+</form>

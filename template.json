@@ -23,29 +23,29 @@
             },
             "conditions": {
                 "conditions": {
-                    "dazed": {
+                    "str": {
                         "value": false,
-                        "attribute": "str"
+                        "name": "dazed"
                     },
-                    "sickly": {
+                    "con": {
                         "value": false,
-                        "attribute": "con"
+                        "name": "sickly"
                     },
-                    "exhausted": {
+                    "agl": {
                         "value": false,
-                        "attribute": "agl"
+                        "name": "exhausted"
                     },
-                    "angry": {
+                    "int": {
                         "value": false,
-                        "attribute": "int"
+                        "name": "angry"
                     },
-                    "scared": {
+                    "wil": {
                         "value": false,
-                        "attribute": "wil"
+                        "name": "scared"
                     },
-                    "disheartened": {
+                    "cha": {
                         "value": false,
-                        "attribute": "cha"
+                        "name": "disheartened"
                     }
                 }
             },

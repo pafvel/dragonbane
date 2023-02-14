@@ -58,12 +58,12 @@
             "shift": "Skift"
         },
          "conditions": {
-            "dazed": "Omtöcknad",
-            "sickly": "Krasslig",
-            "exhausted": "Utmattad",
-            "angry": "Arg",
-            "scared": "Rädd",
-            "disheartened": "Uppgiven"
+            "str": "Utmattad",
+            "con": "Krasslig",
+            "agl": "Omtöcknad",
+            "int": "Arg",
+            "wil": "Rädd",
+            "cha": "Uppgiven"
         },
         "currency": {
             "gold": "Guld",
