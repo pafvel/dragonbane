@@ -224,7 +224,9 @@
                 "boons": "Fördelar",
                 "extra": "Extra",
                 "skillRollTitle": "Färdighetsslag",
-                "skillRollLabel": "Slå färdighetsslag"
+                "skillRollLabel": "Slå färdighetsslag",
+                "attributeRollTitle": "Grundegenskapsslag",
+                "attributeRollLabel": "Slå grundegenskapsslag"
             }
         },
         "WARNING": {

@@ -2,27 +2,167 @@ import DoD_Utility from "../utility.js";
 
 export default class DoDTest {
 
-    constructor() {}
-
-    _getRollString(attributeName) {
-        let condition = this.data.actor.system.conditions[attributeName];
-
-        if (condition.value) {
-            return "2d20kh";
-        }
-        return "d20";
+    constructor() {
+        this.data = {};
     }
 
-    _getRollResult(roll, target)
-    {
-        let result = "";
-        if (roll.result == 1) {
-            result = game.i18n.localize("DoD.roll.dragon");
-        } else if (roll.result == 20) {
-            result = game.i18n.localize("DoD.roll.demon");
-        } else {
-            result = roll.result <= target ? game.i18n.localize("DoD.roll.success") : game.i18n.localize("DoD.roll.failure");
+    async roll() {
+        this.updateRollData();
+
+        let options = await this.getRollOptions();
+        if (options.cancelled) return;
+
+        let formula = this.formatRollFormula(options);
+        let roll = await new Roll(formula).roll({async: true});
+        
+        let messageData = this.formatRollMessage(roll);
+        roll.toMessage(messageData);
+    }
+
+    // This method should be overridden to provide title and label
+    async getRollOptions() {
+        return this.getRollOptionsFromDialog("Roll", "Roll");
+    }
+
+    updateRollData() {
+        this.data.boons = [];
+        this.data.banes = [];
+
+        if (this.data.attribute) {
+            let condition = this.data.actor.system.conditions[this.data.attribute];
+
+            if (condition?.value) {
+                let name = game.i18n.localize("DoD.conditions." + this.data.attribute);
+                this.data.banes.push( {source: name, value: true});
+            }
         }
-        return result;
+
+        let rollTarget = this.data.skill ? this.data.skill.name.toLowerCase() : this.data.attribute;
+
+        for (let item of this.data.actor.items.contents) {
+            if (item.system.banes) {
+                let banes = DoD_Utility.splitAndTrimString(item.system.banes.toLowerCase());
+                if (banes.find(element => element.toLowerCase() == rollTarget)) {
+                    let value = item.system.worn ? true : false;
+                    this.data.banes.push( {source: item.name, value: value});    
+                }
+            }
+            if (item.system.boons) {
+                let boons = DoD_Utility.splitAndTrimString(item.system.boons.toLowerCase());
+                if (boons.find(element => element.toLowerCase() == rollTarget)) {
+                    let value = item.system.worn ? true : false;
+                    this.data.boons.push( {source: item.name, value: value});    
+                }
+            }
+        }
+
+        // Needed for dialog box layout
+        this.data.fillerBanes = Math.max(0, this.data.boons.length - this.data.banes.length);
+        this.data.fillerBoons = Math.max(0, this.data.banes.length - this.data.boons.length);;
+    }
+
+
+    async getRollOptionsFromDialog(title, label) {
+        const template = "systems/dragonbane/templates/partials/roll-dialog.hbs";
+        const html = await renderTemplate(template, this.data);
+
+        return new Promise(
+            resolve => {
+                const data = {
+                    actor: this.data.actor,
+                    title: title,
+                    content: html,
+                    buttons: {
+                        ok: {
+                            label: label,
+                            callback: html => resolve(this._processDialogOptions(html[0].querySelector("form")))
+                        }
+                        /*
+                        ,
+                        cancel: {
+                            label: "Cancel",
+                            callback: html => resolve({cancelled: true})
+                        }
+                        */
+                    },
+                    default: "ok",
+                    close: () => resolve({cancelled: true})
+                };
+                new Dialog(data, null).render(true);
+            }
+        );
+    }
+
+    _processDialogOptions(form) {
+        let banes = [];
+        let boons = [];
+        let extraBanes = 0;
+        let extraBoons = 0;
+
+        // Process banes
+        let elements = form.getElementsByClassName("banes");
+        let element = elements ? elements[0] : null;
+        let inputs = element?.getElementsByTagName("input");
+        for (let input of inputs) {
+            if (input.type == "checkbox" && input.checked) {
+                banes.push(input.name);
+            } else if (input.name == "extraBanes") {
+                extraBanes = Number(input.value);
+                extraBanes = isNaN(extraBanes) ? 0 : extraBanes;
+            }
+        }
+
+        // Process boons
+        elements = form.getElementsByClassName("boons");
+        element = elements ? elements[0] : null;
+        inputs = element?.getElementsByTagName("input");
+        for (let input of inputs) {
+            if (input.type == "checkbox" && input.checked) {
+                boons.push(input.name);
+            } else if (input.name == "extraBoons") {
+                extraBoons = Number(input.value);
+                extraBoons = isNaN(extraBoons) ? 0 : extraBoons;
+            }
+        }
+
+        return {
+            banes: banes,
+            boons: boons,
+            extraBanes: extraBanes,
+            extraBoons, extraBoons
+        }
+    }
+
+    formatRollFormula(options) {
+        let banes = (options.banes ? options.banes.length : 0) + (options.extraBanes ? options.extraBanes : 0);
+        let boons = (options.boons ? options.boons.length : 0) + (options.extraBoons ? options.extraBoons : 0);
+
+        if (banes > boons) {
+            return "" + (1 + banes - boons) + "d20kh";
+        } else if (banes < boons) {
+            return "" + (1 + boons - banes) + "d20kl";
+        } else {
+            return "d20";
+        }
+    }
+
+    formatRollResult(roll, target) {
+        if (roll.result == 1) {
+            return game.i18n.localize("DoD.roll.dragon");
+        } else if (roll.result == 20) {
+            return game.i18n.localize("DoD.roll.demon");
+        } else {
+            return roll.result <= target ? game.i18n.localize("DoD.roll.success") : game.i18n.localize("DoD.roll.failure");
+        }
+
+    }
+
+    // This method should be overridden
+    formatRollMessage(roll) {
+        return {
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this.data.actor }),
+            flavor: "unknown roll"
+        };
     }
 }
