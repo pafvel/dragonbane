@@ -44,5 +44,12 @@ export class DoDItem extends Item {
     get totalWeight() {
         return this.system.weight * this.system.quantity;
     }
+
+    getSpellCost(powerLevel)
+    {
+        if (this.type != "spell") return 0;
+        if (this.system.rank == 0) return 1; // Trick cost
+        return powerLevel * 2; // Spell cost
+    }
   }
   

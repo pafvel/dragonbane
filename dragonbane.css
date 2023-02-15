@@ -320,53 +320,6 @@
   display: flex;
   flex-direction: column;
 }
-.DoD.sheet.character .sheet-content .derived-stat-box {
-  width: 100%;
-}
-.DoD.sheet.character .sheet-content .derived-stat-box table {
-  margin: 0px;
-}
-.DoD.sheet.character .sheet-content .derived-stat-box table:first-child {
-  margin-top: 7px;
-}
-.DoD.sheet.character .sheet-content .derived-stat-box table:last-child {
-  margin-bottom: 7px;
-}
-.DoD.sheet.character .sheet-content .derived-stat {
-  border-bottom: 0px;
-  border-top: 0px;
-  background-color: transparent;
-}
-.DoD.sheet.character .sheet-content .derived-stat th {
-  text-align: center;
-  color: whitesmoke;
-  background-image: url("art/ui/table-row-right.webp"), url("art/ui/arrow-left.webp"), url("art/ui/title-bar.webp");
-  background-size: contain, contain, contain;
-  background-clip: border-box, border-box, content-box;
-  background-repeat: no-repeat, no-repeat, repeat-x;
-  background-position: right -8px center, left center, center center;
-  height: 2.5em;
-  padding-left: 30px;
-  min-width: 160px;
-}
-.DoD.sheet.character .sheet-content .derived-stat td {
-  text-align: center;
-  color: black;
-  background-image: url("art/ui/table-row-right.webp"), url("art/ui/arrow-right.webp"), url("art/ui/table-row-banner.webp");
-  background-size: contain, contain, contain;
-  background-clip: border-box, border-box, content-box;
-  background-repeat: no-repeat, no-repeat, repeat-x;
-  background-position: left -8px center, right center, center center;
-  height: 2.5em;
-  padding-right: 30px;
-  min-width: 6em;
-}
-.DoD.sheet.character .sheet-content .derived-stat .warning {
-  color: red;
-}
-.DoD.sheet.character .sheet-content .derived-stat input {
-  border-color: transparent;
-}
 .DoD.sheet.character .weapon-table {
   font-family: QTFrizQuad;
   font-weight: normal;
@@ -830,4 +783,51 @@
 }
 .system-dragonbane .sheet-table-data .wide {
   width: 100%;
+}
+.system-dragonbane .derived-stat-box {
+  width: 100%;
+}
+.system-dragonbane .derived-stat-box table {
+  margin: 0px;
+}
+.system-dragonbane .derived-stat-box table:first-child {
+  margin-top: 7px;
+}
+.system-dragonbane .derived-stat-box table:last-child {
+  margin-bottom: 7px;
+}
+.system-dragonbane .derived-stat {
+  border-bottom: 0px;
+  border-top: 0px;
+  background-color: transparent;
+}
+.system-dragonbane .derived-stat th {
+  text-align: center;
+  color: whitesmoke;
+  background-image: url("art/ui/table-row-right.webp"), url("art/ui/arrow-left.webp"), url("art/ui/title-bar.webp");
+  background-size: contain, contain, contain;
+  background-clip: border-box, border-box, content-box;
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  background-position: right -8px center, left center, center center;
+  height: 2.5em;
+  padding-left: 30px;
+  min-width: 160px;
+}
+.system-dragonbane .derived-stat td {
+  text-align: center;
+  color: black;
+  background-image: url("art/ui/table-row-right.webp"), url("art/ui/arrow-right.webp"), url("art/ui/table-row-banner.webp");
+  background-size: contain, contain, contain;
+  background-clip: border-box, border-box, content-box;
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  background-position: left -8px center, right center, center center;
+  height: 2.5em;
+  padding-right: 30px;
+  min-width: 6em;
+}
+.system-dragonbane .derived-stat .warning {
+  color: red;
+}
+.system-dragonbane .derived-stat input {
+  border-color: transparent;
 }

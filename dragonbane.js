@@ -7,6 +7,9 @@ import DoDCharacterSheet from "./modules/character-sheet.js";
 
 function registerHandlebarsHelpers() {
     
+    /*
+    * Repeat given markup with n times
+    */
     Handlebars.registerHelper("times", function(n, block) {
         var result = "";
         for(let i = 0; i < n; ++i) {
@@ -14,6 +17,28 @@ function registerHandlebarsHelpers() {
         }
         return result;
     });
+
+    /*
+    * Repeat given markup in the range: from <= @index <= to
+    * provides @index for the repeated iteraction
+    */
+    Handlebars.registerHelper("range", function (from, to, block) {
+        var result = "";
+        var i;
+        var data = {};
+
+        if ( from < to ) {
+            for ( i = from; i <= to; i += 1 ) {
+                data.index = i;
+                result += block.fn(this, {
+                    data: data
+                });
+            }
+        } else {
+            result = block.inverse(this);
+        }
+        return result;
+    });    
 }
 
 async function preloadHandlebarsTemplates() {

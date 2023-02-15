@@ -1,5 +1,6 @@
 import DoD_Utility from "./utility.js";
 import DoDSkillTest from "./tests/skill-test.js";
+import DoDSpellTest from "./tests/spell-test.js";
 import DoDAttributeTest from "./tests/attribute-test.js";
 
 export default class DoDCharacterSheet extends ActorSheet {
@@ -375,11 +376,15 @@ export default class DoDCharacterSheet extends ActorSheet {
         event.preventDefault();
 
         let itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
-        let skill = this.actor.items.get(itemId);
+        let item = this.actor.items.get(itemId);
 
-        let test = new DoDSkillTest(this.actor, skill);
-        await test.roll();
-        
+        if (item.type == "skill") {
+            let test = new DoDSkillTest(this.actor, item);
+            await test.roll();    
+        } else if (item.type == "spell") {
+            let test = new DoDSpellTest(this.actor, item);
+            await test.roll();    
+        }
     }
 
     async _onAttributeRoll(event) {

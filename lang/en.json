@@ -105,7 +105,8 @@
             "success": "succeeded.",
             "failure": "failed.",
             "attributeRoll": "Attribute roll for <b>{attribute}</b> <b>{result}</b>",
-            "skillRoll": "Skill roll for <b>{skill}</b> <b>{result}</b>"
+            "skillRoll": "Skill roll for <b>{skill}</b> <b>{result}</b>",
+            "spellRoll": "Skill roll for <b>{spell}</b> at Power Level <b>{powerLevel}</b> <b>{result}</b>"
         },
         "shield": {
             "durability": "Durability"
@@ -226,7 +227,8 @@
                 "skillRollTitle": "Skill Roll",
                 "skillRollLabel": "Roll",
                 "attributeRollTitle": "Attribute Roll",
-                "attributeRollLabel": "Roll"
+                "attributeRollLabel": "Roll",
+                "powerLevel": "Power Level"
             }
 
         },
@@ -234,7 +236,8 @@
             "kinAbility": "Could not find Kin Ability: {ability}",
             "kin": "Could not find Kin: {kin}",
             "profession": "Could not find Profession: {profession}",
-            "professionSkill": "Could not find Profession Skill: {skill}"
+            "professionSkill": "Could not find Profession Skill: {skill}",
+            "notEnoughWPForSpell": "Not enough Willpower Points to cast spell"
         }
     }
 }

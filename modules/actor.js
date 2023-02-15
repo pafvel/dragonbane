@@ -355,9 +355,9 @@ export class DoDActor extends Actor {
 
                 // set skill values for spell corresponding to school
                 if (magicSchools.has(spell.system.school)) {
-                    spell.value = magicSchools.get(spell.system.school);
+                    spell.system.skillValue = magicSchools.get(spell.system.school);
                 } else {
-                    spell.value = 0;
+                    spell.system.skillValue = 0;
                 }
             }
         }

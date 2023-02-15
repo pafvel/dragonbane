@@ -9,14 +9,16 @@ export default class DoDTest {
     async roll() {
         this.updateRollData();
 
-        let options = await this.getRollOptions();
-        if (options.cancelled) return;
+        this.options = await this.getRollOptions();
+        if (this.options.cancelled) return;
 
-        let formula = this.formatRollFormula(options);
-        let roll = await new Roll(formula).roll({async: true});
+        let formula = this.formatRollFormula(this.options);
+        this.roll = await new Roll(formula).roll({async: true});
         
-        let messageData = this.formatRollMessage(roll);
-        roll.toMessage(messageData);
+        this.postRoll();
+
+        let messageData = this.formatRollMessage(this.roll);
+        this.roll.toMessage(messageData);
     }
 
     // This method should be overridden to provide title and label
@@ -75,7 +77,7 @@ export default class DoDTest {
                     buttons: {
                         ok: {
                             label: label,
-                            callback: html => resolve(this._processDialogOptions(html[0].querySelector("form")))
+                            callback: html => resolve(this.processDialogOptions(html[0].querySelector("form")))
                         }
                         /*
                         ,
@@ -93,7 +95,7 @@ export default class DoDTest {
         );
     }
 
-    _processDialogOptions(form) {
+    processDialogOptions(form) {
         let banes = [];
         let boons = [];
         let extraBanes = 0;

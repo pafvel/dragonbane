@@ -20,7 +20,7 @@
             {{#each spells as |spell spellId|}}
             <tr class="sheet-table-data" data-item-id="{{spell.id}}">
                 <td>
-                    <a>{{spell.value}}</a>
+                    <a>{{spell.system.skillValue}}</a>
                 </td>
                 <td>
                     <a class="rollable-skill">{{spell.name}}</a>

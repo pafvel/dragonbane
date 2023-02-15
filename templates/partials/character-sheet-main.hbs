@@ -61,8 +61,8 @@
                     <th><b>{{localize "DoD.ui.character-sheet.spells"}}</b></th>
                     <td>
                         {{#each spells as |spell spellId|}}
-                        <a class="sheet-table-data" data-item-id="{{spell.id}}">
-                            {{spell.name}} {{spell.value}}, 
+                        <a class="rollable-skill sheet-table-data" data-item-id="{{spell.id}}">
+                            {{spell.name}} {{spell.system.skillValue}}, 
                         </a>
                         {{/each}}
                     </td>

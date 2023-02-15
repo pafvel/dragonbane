@@ -102,10 +102,11 @@
         "roll": {
             "dragon": "lyckades med ett Drakslag!",
             "demon": "misslyckades med ett Demonslag!",
-            "success": "lyckades.",
-            "failure": "misslyckades.",
-            "attributeRoll": "Grundegenskapsslag för <b>{attribute}</b> <b>{result}</b>",
-            "skillRoll": "Färdighetsslag för <b>{skill}</b> <b>{result}</b>"
+            "success": "lyckades",
+            "failure": "misslyckades",
+            "attributeRoll": "Grundegenskapsslag för <b>{attribute}</b> <b>{result}</b>.",
+            "skillRoll": "Färdighetsslag för <b>{skill}</b> <b>{result}</b>.",
+            "spellRoll": "Färdighetsslag för <b>{spell} effektgrad {powerLevel} {result}</b>."
         },
         "shield": {
             "durability": "Brytvärde"
@@ -226,14 +227,16 @@
                 "skillRollTitle": "Färdighetsslag",
                 "skillRollLabel": "Slå färdighetsslag",
                 "attributeRollTitle": "Grundegenskapsslag",
-                "attributeRollLabel": "Slå grundegenskapsslag"
+                "attributeRollLabel": "Slå grundegenskapsslag",
+                "powerLevel": "Effektgrad"
             }
         },
         "WARNING": {
             "kinAbility": "Kan ej hitta Släktesförmåga: {ability}",
             "kin": "Kan ej hitta Släkte: {kin}",
             "profession": "Kan ej hitta Yrke: {profession}",
-            "professionSkill": "Kan ej hitta Yrkesfärdighet: {skill}"
+            "professionSkill": "Kan ej hitta Yrkesfärdighet: {skill}",
+            "notEnoughWPForSpell": "För få Viljepoäng för att kasta besvärjelse"
         }
     }
 }
