@@ -163,15 +163,24 @@
         "weaponFeatureTypes": {
             "bludgeoning": "Bludgeoning",
             "long": "Long",
-            "mounted": "Requires combat trained mount",
-            "noparry": "Cannot be used for parrying",
+            "mounted": "Mounted",
+            "noparry": "No parry",
             "piercing": "Piercing",
             "slashing": "Slashing",
             "subtle": "Subtle",
-            "thrown": "Can be thrown",
+            "thrown": "Thrown",
             "toppling": "Toppling",
-            "shield": "Shield"
-    
+            "shield": "Shield",
+            "bludgeoningTooltip": "Bludgeoning",
+            "longTooltip": "Long",
+            "mountedTooltip": "Requires combat trained mount",
+            "noparryTooltip": "Cannot be used for parrying",
+            "piercingTooltip": "Piercing",
+            "slashingTooltip": "Slashing",
+            "subtleTooltip": "Subtle",
+            "thrownTooltip": "Can be thrown",
+            "topplingTooltip": "Toppling",
+            "shieldTooltip": "Shield"    
         },    
         "ui": {
             "character-sheet": {
@@ -228,7 +237,27 @@
                 "skillRollLabel": "Roll",
                 "attributeRollTitle": "Attribute Roll",
                 "attributeRollLabel": "Roll",
-                "powerLevel": "Power Level"
+                "powerLevel": "Power Level",
+                "attackParry": "Parry",
+                "attackParryTooltip": "Parry an attack",
+                "attackNormal": "Normal",
+                "attackNormalTooltip": "Perform a normal attack",
+                "attackStab": "Stab",
+                "attackStabTooltip": "Perform an attack inflicting piercing damage",
+                "attackSlash": "Slash",
+                "attackSlashTooltip": "Perform an attack inflicting slashing damage",
+                "attackWeakpoint": "Find weak point",
+                "attackWeakpointTooltip": "Stab and try to find a gap in the enemy's armor\nThis attack adds one Bane to the roll",
+                "attackDisarm": "Disarm",
+                "attackDisarmTooltip": "Disarm the enemy instead of inflicting damage",
+                "attackTopple": "Topple",
+                "attackToppleTooltip": "Topple the enemy to the ground instead of inflicting damage",
+                "attackThrow": "Throw",
+                "attackThrowTooltip": "Trown attack",
+                "labelCancel": "Cancel",
+                "labelOk": "Ok",
+                "chooseAction": "Choose action",
+                "weaponFeatures": "Weapon Features"
             }
 
         },

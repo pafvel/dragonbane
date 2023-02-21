@@ -50,19 +50,19 @@
             <table>
                 <tr>
                     <th><b>{{localize "DoD.ui.character-sheet.trained-skills"}}</b></th>
-                    <td>
+                    <td class="comma-list">
                         {{#each trainedSkills as |skill skillId|}}
-                        <a class="rollable-skill sheet-table-data" data-item-id="{{skill.id}}">{{skill.name}} {{skill.system.value}},  </a>
+                        <a class="rollable-skill sheet-table-data" data-item-id="{{skill.id}}">{{skill.name}} {{skill.system.value}}</a>
                         {{/each}}
                     </td>
                 </tr>
                 {{#if spells}}
                 <tr>
                     <th><b>{{localize "DoD.ui.character-sheet.spells"}}</b></th>
-                    <td>
+                    <td class="comma-list">
                         {{#each spells as |spell spellId|}}
                         <a class="rollable-skill sheet-table-data" data-item-id="{{spell.id}}">
-                            {{spell.name}} {{spell.system.skillValue}}, 
+                            {{spell.name}} {{spell.system.skillValue}}
                         </a>
                         {{/each}}
                     </td>
@@ -70,9 +70,9 @@
                 {{/if}}
                 <tr>
                     <th><b>{{localize "DoD.ui.character-sheet.abilities"}}</b></th>
-                    <td>
+                    <td class="comma-list">
                         {{#each abilities as |ability abilityId|}}
-                        <a class="sheet-table-data item-edit" data-item-id="{{ability.id}}">{{ability.name}}, </a>
+                        <a class="sheet-table-data item-edit" data-item-id="{{ability.id}}">{{ability.name}}</a>
                         {{/each}}
                     </td>
                 </tr>
@@ -100,7 +100,7 @@
                 <td class="thumbnail-data">
                     <img src="{{weapon.img}}" title="{{weapon.name}}"/>
                 </td>
-                <td class="text-data"><a class="item-edit">{{weapon.name}}</a></td>
+                <td class="text-data"><a class="rollable-skill">{{weapon.name}}</a></td>
                 <td class="number-data">{{weapon.system.skill.value}}</td>
                 <td class="number-data">{{localize weapon.system.grip.label}}</td>
                 <td class="number-data">{{weapon.system.str}}</td>

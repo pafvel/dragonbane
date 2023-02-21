@@ -21,6 +21,7 @@ export default class DoDSpellTest extends DoDTest  {
         let label = game.i18n.format(
             game.i18n.localize(locString), 
             {
+                skill: this.data.spell.name, 
                 spell: this.data.spell.name, 
                 powerLevel: powerLevel,
                 result: result

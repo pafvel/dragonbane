@@ -44,8 +44,10 @@
                 <td>
                     <input name="data.skill.name" type="text" value="{{data.skill.name}}" />
                 </td>
-                <td>
-                    <input name="data.features" type="text" value="{{data.features}}" />
+                <td class="edit-weapon-features comma-list">
+                    {{#each weaponFeatures as |feature|}}
+                    <a title="{{localize feature.tooltip}}">{{localize feature.name}}</a>
+                    {{/each}}
                 </td>
         </table>
         <table>

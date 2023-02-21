@@ -23,7 +23,12 @@ export class DoDItem extends Item {
     }
 
     _prepareWeapon() {
-            // Grip label
+        // Migrate data from pre-release
+        if (!Array.isArray(this.system.features)) {
+            this.system.features = [];
+        }
+    
+        // Grip label
         if (this.system.grip.value) {
             this.system.grip.label = "DoD.gripTypes." + this.system.grip.value;
         } else {
@@ -51,5 +56,9 @@ export class DoDItem extends Item {
         if (this.system.rank == 0) return 1; // Trick cost
         return powerLevel * 2; // Spell cost
     }
-  }
+
+    hasWeaponFeature(feature) {
+        return this.system.features.find(e => e == feature) ? true : false;
+    }
+}
   

@@ -163,15 +163,24 @@
         "weaponFeatureTypes": {
             "bludgeoning": "Krossande",
             "long": "Lång",
-            "mounted": "Kräver stridstränat riddjur",
-            "noparry": "Kan ej användas till parering",
+            "mounted": "Riddjur",
+            "noparry": "Ej parering",
             "piercing": "Stickande",
             "slashing": "Huggande",
             "subtle": "Smidig",
-            "thrown": "Kan kastas",
+            "thrown": "Kast",
             "toppling": "Fällande",
-            "shield": "Sköld"
-    
+            "shield": "Sköld",
+            "bludgeoningTooltip": "Krossande",
+            "longTooltip": "Lång",
+            "mountedTooltip": "Kräver stridstränat riddjur",
+            "noparryTooltip": "Kan ej användas till parering",
+            "piercingTooltip": "Stickande",
+            "slashingTooltip": "Huggande",
+            "subtleTooltip": "Smidig",
+            "thrownTooltip": "Kan kastas",
+            "topplingTooltip": "Fällande",
+            "shieldTooltip": "Sköld"    
         },    
         "ui": {
             "character-sheet": {
@@ -197,6 +206,8 @@
                 "inventory": "Packning",
                 "kin": "Släkte",
                 "kinAbilities": "Släktesförmågor",
+                "labelCancel": "Avbryt",
+                "labelOk": "Ok",
                 "main": "Översikt",
                 "max-encumbrance": "Bärförmåga",
                 "memento": "Minnessak",
@@ -216,6 +227,7 @@
                 "tiny-items": "Småsaker",
                 "trained-skills": "Tränade färdigheter",
                 "weapons": "Vapen",
+                "weaponFeatures": "Vapenegenskaper",
                 "weaponSkills": "Vapenfärdigheter",
                 "willPoints": "Viljepoäng",
                 "wp": "VP"
@@ -228,8 +240,28 @@
                 "skillRollLabel": "Slå färdighetsslag",
                 "attributeRollTitle": "Grundegenskapsslag",
                 "attributeRollLabel": "Slå grundegenskapsslag",
-                "powerLevel": "Effektgrad"
-            }
+                "powerLevel": "Effektgrad",
+                "attackParry": "Parera",
+                "attackParryTooltip": "Parera en attack",
+                "attackNormal": "Attackera",
+                "attackNormalTooltip": "Vanlig attack",
+                "attackStab": "Stick",
+                "attackStabTooltip": "Attack som gör stickskada",
+                "attackSlash": "Hugg",
+                "attackSlashTooltip": "Attack som gör huggskada",
+                "attackWeakpoint": "Hitta glipa",
+                "attackWeakpointTooltip": "Hitta en glipa i fiendens rustning\nGer en nackdel på angreppet, men om attacken lyckas får fienden inget skydd",
+                "attackDisarm": "Avväpna",
+                "attackDisarmTooltip": "Avväpna din fiende istället för att orsaka skada",
+                "attackTopple": "Fäll",
+                "attackToppleTooltip": "Fäll en fiende till marken i stället för att orsaka skada",
+                "attackThrow": "Kasta",
+                "attackThrowTooltip": "Använd som kastvapen",
+                "labelCancel": "Cancel",
+                "labelOk": "Ok",
+                "chooseAction": "Välj handling",
+                "weaponFeatures": "Vapenegenskaper"
+           }
         },
         "WARNING": {
             "kinAbility": "Kan ej hitta Släktesförmåga: {ability}",

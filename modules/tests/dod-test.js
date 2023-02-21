@@ -4,6 +4,8 @@ export default class DoDTest {
 
     constructor() {
         this.data = {};
+        this.data.boons = [];
+        this.data.banes = [];
     }
 
     async roll() {
@@ -12,6 +14,8 @@ export default class DoDTest {
         this.options = await this.getRollOptions();
         if (this.options.cancelled) return;
 
+        this.preRoll();
+        
         let formula = this.formatRollFormula(this.options);
         this.roll = await new Roll(formula).roll({async: true});
         
@@ -26,10 +30,11 @@ export default class DoDTest {
         return this.getRollOptionsFromDialog("Roll", "Roll");
     }
 
-    updateRollData() {
-        this.data.boons = [];
-        this.data.banes = [];
+    preRoll() {}
+    postRoll() {}
 
+    updateRollData() {
+        
         if (this.data.attribute) {
             let condition = this.data.actor.system.conditions[this.data.attribute];
 

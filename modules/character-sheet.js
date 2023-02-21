@@ -1,7 +1,8 @@
 import DoD_Utility from "./utility.js";
+import DoDAttributeTest from "./tests/attribute-test.js";
 import DoDSkillTest from "./tests/skill-test.js";
 import DoDSpellTest from "./tests/spell-test.js";
-import DoDAttributeTest from "./tests/attribute-test.js";
+import DoDWeaponTest from "./tests/weapon-test.js";
 
 export default class DoDCharacterSheet extends ActorSheet {
     
@@ -350,40 +351,23 @@ export default class DoDCharacterSheet extends ActorSheet {
         item.sheet.render(true);
     }
 
-    _getRollString(attributeName) {
-        let condition = this.actor.system.conditions[attributeName];
-
-        if (condition.value) {
-            return "2d20kh";
-        }
-        return "d20";
-    }
-
-    _getRollResult(roll, target)
-    {
-        let result = "";
-        if (roll.result == 1) {
-            result = game.i18n.localize("DoD.roll.dragon");
-        } else if (roll.result == 20) {
-            result = game.i18n.localize("DoD.roll.demon");
-        } else {
-            result = roll.result <= target ? game.i18n.localize("DoD.roll.success") : game.i18n.localize("DoD.roll.failure");
-        }
-        return result;
-    }
-
+ 
     async _onSkillRoll(event) {
         event.preventDefault();
 
         let itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
         let item = this.actor.items.get(itemId);
+        let test = null;
 
         if (item.type == "skill") {
-            let test = new DoDSkillTest(this.actor, item);
-            await test.roll();    
+            test = new DoDSkillTest(this.actor, item);
         } else if (item.type == "spell") {
-            let test = new DoDSpellTest(this.actor, item);
-            await test.roll();    
+            test = new DoDSpellTest(this.actor, item);
+        } else if (item.type == "weapon") {
+            test = new DoDWeaponTest(this.actor, item);
+        }
+        if (test) {
+            await test.roll();
         }
     }
 
