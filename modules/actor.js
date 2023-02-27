@@ -1,5 +1,4 @@
 import DoD_Utility from "./utility.js";
-import { DoD } from "./config.js";
 
 export class DoDActor extends Actor {
 
@@ -233,6 +232,23 @@ export class DoDActor extends Actor {
                 }
             }
         }
+    }
+
+    getArmorValue(damageType) {
+        let armorValue = 0;
+        if (this.system.equippedArmor) {
+            armorValue += this.system.equippedArmor.getArmorValue(damageType);
+        }
+        if (this.system.equippedHelmet) {
+            armorValue += this.system.equippedHelmet.getArmorValue(damageType);
+        }
+        return armorValue;
+    }
+
+    applyDamage(damage) {
+        let value = this.system.hitPoints.value;
+        let newValue = DoD_Utility.clamp(value - damage, 0, value);
+        this.update({["system.hitPoints.value"]: newValue});
     }
 
     findAbility(abilityName) {

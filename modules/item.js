@@ -60,5 +60,14 @@ export class DoDItem extends Item {
     hasWeaponFeature(feature) {
         return this.system.features.find(e => e == feature) ? true : false;
     }
+
+    hasDamageBonus(damageType) {
+        return this.system.bonuses?.find(e => e == damageType) ? true : false;
+    }
+
+    getArmorValue(damageType) {
+        let bonus = this.hasDamageBonus(damageType) ? 2 : 0;
+        return this.system.rating + bonus;
+    }
 }
   

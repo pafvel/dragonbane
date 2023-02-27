@@ -41,7 +41,26 @@
         },
         "armor": {
             "banes": "Nackdelar",
-            "rating": "Skyddsvärde"
+            "rating": "Skyddsvärde",
+            "bonuses": "Bonusskydd"
+        },
+        "attackTypes": {
+            "parry": "Parera",
+            "parryTooltip": "Parera en attack",
+            "normal": "Attackera",
+            "normalTooltip": "Vanlig attack",
+            "stab": "Stick",
+            "stabTooltip": "Attack som gör stickskada",
+            "slash": "Hugg",
+            "slashTooltip": "Attack som gör huggskada",
+            "weakpoint": "Hitta glipa",
+            "weakpointTooltip": "Hitta en glipa i fiendens rustning\nGer en nackdel på angreppet, men om attacken lyckas får fienden inget skydd",
+            "disarm": "Avväpna",
+            "disarmTooltip": "Avväpna din fiende istället för att orsaka skada",
+            "topple": "Fäll",
+            "toppleTooltip": "Fäll en fiende till marken i stället för att orsaka skada",
+            "throw": "Kasta",
+            "throwTooltip": "Använd som kastvapen"
         },
         "attributes": {
             "str": "STY",
@@ -69,6 +88,12 @@
             "gold": "Guld",
             "silver": "Silver",
             "copper": "Koppar"
+        },
+        "damageTypes": {
+            "none": "vanlig skada",
+            "bludgeoning": "krosskada",
+            "piercing": "stickskada",
+            "slashing": "huggskada"
         },
         "dice": {
             "d": "D",
@@ -106,7 +131,10 @@
             "failure": "misslyckades",
             "attributeRoll": "Grundegenskapsslag för <b>{attribute}</b> <b>{result}</b>.",
             "skillRoll": "Färdighetsslag för <b>{skill}</b> <b>{result}</b>.",
-            "spellRoll": "Färdighetsslag för <b>{spell} effektgrad {powerLevel} {result}</b>."
+            "spellRoll": "Färdighetsslag för <b>{spell} effektgrad {powerLevel} {result}</b>.",
+            "weaponRoll": "Färdighetsslag för <b>{action}</b> med <b>{skill}</b> <b>{result}</b>.",
+            "damage": "<b>{actor}</b> gör <b>{damage}</b> poäng <b>{damageType}</b> med <b>{weapon}</b>.",
+            "damageIgnoreArmor": "<b>{actor}</b> gör <b>{damage}</b> poäng <b>{damageType}</b> med <b>{weapon}</b>. Skadan <b>ignorerar rustning</b>."
         },
         "shield": {
             "durability": "Brytvärde"
@@ -232,6 +260,15 @@
                 "willPoints": "Viljepoäng",
                 "wp": "VP"
             },
+            "chat":{
+                "damageApplied": "<b>{actor}</b> tillfogades {damage} i skada.",
+                "damageAppliedDetails": "{damage} skada mot {armor} rustning.",
+                "damageAppliedMultiplier": "x{multiplier} i slutgiltig skada.",
+                "rollDamage": "Slå skada",
+                "dealDamage": "Tillfoga skada",
+                "dealHalfDamage": "Tillfoga halv skada",
+                "dealDoubleDamage": "Tillfoga dubbel skada"
+            },
             "dialog": {
                 "banes": "Nackdelar",
                 "boons": "Fördelar",
@@ -241,22 +278,6 @@
                 "attributeRollTitle": "Grundegenskapsslag",
                 "attributeRollLabel": "Slå grundegenskapsslag",
                 "powerLevel": "Effektgrad",
-                "attackParry": "Parera",
-                "attackParryTooltip": "Parera en attack",
-                "attackNormal": "Attackera",
-                "attackNormalTooltip": "Vanlig attack",
-                "attackStab": "Stick",
-                "attackStabTooltip": "Attack som gör stickskada",
-                "attackSlash": "Hugg",
-                "attackSlashTooltip": "Attack som gör huggskada",
-                "attackWeakpoint": "Hitta glipa",
-                "attackWeakpointTooltip": "Hitta en glipa i fiendens rustning\nGer en nackdel på angreppet, men om attacken lyckas får fienden inget skydd",
-                "attackDisarm": "Avväpna",
-                "attackDisarmTooltip": "Avväpna din fiende istället för att orsaka skada",
-                "attackTopple": "Fäll",
-                "attackToppleTooltip": "Fäll en fiende till marken i stället för att orsaka skada",
-                "attackThrow": "Kasta",
-                "attackThrowTooltip": "Använd som kastvapen",
                 "labelCancel": "Cancel",
                 "labelOk": "Ok",
                 "chooseAction": "Välj handling",

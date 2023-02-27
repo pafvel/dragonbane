@@ -151,7 +151,8 @@
         "armor": {
             "templates": ["gear", "itemDescripton"],
             "rating": 0,
-            "banes": []
+            "banes": [],
+            "bonuses": []
         },
         "helmet": {
             "templates": ["gear", "itemDescripton"],

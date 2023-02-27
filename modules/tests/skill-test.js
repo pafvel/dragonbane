@@ -1,14 +1,14 @@
-import DoD_Utility from "../utility.js";
 import DoDTest from "./dod-test.js";
 
 
 export default class DoDSkillTest extends DoDTest  {
 
-    constructor(actor, skill) {
-        super();
+    constructor(actor, skill, options) {
+        super(options);
         this.data.actor = actor;
         this.data.skill = skill;
-        this.data.attribute = skill.system.attribute;
+        this.data.attribute = skill?.system.attribute;
+        this.data.canPush = options ? options.canPush != false : true;
     }
    
     formatRollMessage(roll) {
@@ -30,4 +30,13 @@ export default class DoDSkillTest extends DoDTest  {
 
         return this.getRollOptionsFromDialog(title, label);
     }
+
+    postRoll() {
+        if (this.roll.result == 20) this.data.canPush = false;
+    }
+
+    getMessageTemplate() {
+        return "systems/dragonbane/templates/partials/skill-roll-message.hbs";
+    }
+
 }

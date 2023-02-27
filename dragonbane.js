@@ -1,7 +1,7 @@
 import { DoD } from "./modules/config.js";
 import { DoDActor } from "./modules/actor.js";
 import { DoDItem } from "./modules/item.js";
-
+import * as DoDChat from "./modules/chat.js";
 import DoDItemSheet from "./modules/item-sheet.js";
 import DoDCharacterSheet from "./modules/character-sheet.js";
 
@@ -52,7 +52,10 @@ async function preloadHandlebarsTemplates() {
         "systems/dragonbane/templates/partials/character-sheet-combat.hbs",
         "systems/dragonbane/templates/partials/character-sheet-inventory.hbs",
         "systems/dragonbane/templates/partials/character-sheet-background.hbs",
-        "systems/dragonbane/templates/partials/roll-dialog.hbs"
+        "systems/dragonbane/templates/partials/roll-dialog.hbs",
+        "systems/dragonbane/templates/partials/damage-roll-message.hbs",
+        "systems/dragonbane/templates/partials/skill-roll-message.hbs",
+        "templates/dice/roll.html"
     ];
 
     return loadTemplates(templatePaths);
@@ -75,3 +78,7 @@ Hooks.once("init", function() {
     registerHandlebarsHelpers();
     preloadHandlebarsTemplates();
 });
+
+Hooks.on("renderChatLog", DoDChat.addChatListeners);
+
+Hooks.on("getChatLogEntryContext", DoDChat.addChatMessageContextMenuOptions);

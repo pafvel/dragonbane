@@ -1,5 +1,15 @@
 export default class DoD_Utility {
     
+    static clamp(value, min, max) {
+        if(value < min) {
+            return min;
+        } else if (value > max) {
+            return max;
+        } else {
+            return value;
+        }
+    };
+
     static nameSorter(a, b) {
         let aa = a.name.toLowerCase();
         let bb = b.name.toLowerCase();
@@ -25,8 +35,8 @@ export default class DoD_Utility {
 
     static calculateDamageBonus(attribute) {
         if (attribute <=12) return "0";
-        if (attribute <=16) return "+" + game.i18n.localize("DoD.dice.d4");
-        return "+" + game.i18n.localize("DoD.dice.d6");
+        if (attribute <=16) return game.i18n.localize("DoD.dice.d4");
+        return game.i18n.localize("DoD.dice.d6");
     }
 
     static calculateMovementModifier(attribute) {

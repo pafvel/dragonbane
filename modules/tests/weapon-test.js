@@ -1,15 +1,12 @@
-import DoD_Utility from "../utility.js";
-import DoDTest from "./dod-test.js";
+import DoDSkillTest from "./skill-test.js";
+import { DoD } from "../config.js";
 
 
-export default class DoDWeaponTest extends DoDTest  {
+export default class DoDWeaponTest extends DoDSkillTest  {
 
-    constructor(actor, weapon) {
-        super();
-        this.data.actor = actor;
+    constructor(actor, weapon, options) {
+        super(actor, actor.findSkill(weapon.system.skill?.name), options);
         this.data.weapon = weapon;
-        this.data.skill = actor.findSkill(weapon.system.skill.name);
-        this.data.attribute = this.data.skill?.system.attribute;
     }
    
     updateRollData() {
@@ -26,61 +23,37 @@ export default class DoDWeaponTest extends DoDTest  {
 
         let actions = [];
 
-        if(hasNormalAttack) {
+        function pushAction(action) {
             actions.push({
-                id: "normal",
-                label: game.i18n.localize("DoD.ui.dialog.attackNormal"),
-                tooltip: game.i18n.localize("DoD.ui.dialog.attackNormalTooltip")
+                id: action,
+                label: game.i18n.localize("DoD.attackTypes." + action),
+                tooltip: game.i18n.localize("DoD.attackTypes." + action + "Tooltip")
             });
+        }
+
+        if(hasNormalAttack) {
+            pushAction("normal");
         }
         if(hasSlashAttack) {
-            actions.push({
-                id: "slash",
-                label: game.i18n.localize("DoD.ui.dialog.attackSlash"),
-                tooltip: game.i18n.localize("DoD.ui.dialog.attackSlashTooltip")
-            });
+            pushAction("slash");
         }
         if(hasStabAttack) {
-            actions.push({
-                id: "stab",
-                label: game.i18n.localize("DoD.ui.dialog.attackStab"),
-                tooltip: game.i18n.localize("DoD.ui.dialog.attackStabTooltip")
-            });
+            pushAction("stab");
         }
         if(hasWeakpointAttack) {
-            actions.push({
-                id: "weakpoint",
-                label: game.i18n.localize("DoD.ui.dialog.attackWeakpoint"),
-                tooltip: game.i18n.localize("DoD.ui.dialog.attackWeakpointTooltip")
-            });
+            pushAction("weakpoint");
         }
         if(hasToppleAttack) {
-            actions.push({
-                id: "topple",
-                label: game.i18n.localize("DoD.ui.dialog.attackTopple"),
-                tooltip: game.i18n.localize("DoD.ui.dialog.attackToppleTooltip")
-            });
+            pushAction("topple");
         }
         if(hasDisarmAttack) {
-            actions.push({
-                id: "disarm",
-                label: game.i18n.localize("DoD.ui.dialog.attackDisarm"),
-                tooltip: game.i18n.localize("DoD.ui.dialog.attackDisarmTooltip")
-            });
+            pushAction("disarm");
         }        
         if(hasThrowAttack) {
-            actions.push({
-                id: "throw",
-                label: game.i18n.localize("DoD.ui.dialog.attackThrow"),
-                tooltip: game.i18n.localize("DoD.ui.dialog.attackThrowTooltip")
-            });
+            pushAction("throw");
         }        
         if(hasParry) {
-            actions.push({
-                id: "parry",
-                label: game.i18n.localize("DoD.ui.dialog.attackParry"),
-                tooltip: game.i18n.localize("DoD.ui.dialog.attackParryTooltip")
-            });
+            pushAction("parry");
         }
 
         if (actions.length > 0) {
@@ -88,15 +61,15 @@ export default class DoDWeaponTest extends DoDTest  {
         }
 
         this.data.actions = actions;
-
     }   
 
     formatRollMessage(roll) {
-        let target = this.data.skill.system.value;
+        let target = this.data.skill?.system.value;
         let result = this.formatRollResult(roll, target);
-        let locString = "DoD.roll.skillRoll";
+        let locString = "DoD.roll.weaponRoll";
         let label = game.i18n.format(game.i18n.localize(locString), 
             {
+                action: game.i18n.localize("DoD.attackTypes." + this.data.action),
                 skill: this.data.weapon.name, 
                 result: result
             }
@@ -113,21 +86,73 @@ export default class DoDWeaponTest extends DoDTest  {
 
         let label = game.i18n.localize("DoD.ui.dialog.skillRollLabel");
         let title = game.i18n.localize("DoD.ui.dialog.skillRollTitle") + ": " + this.data.weapon.name;
-
-        return this.getRollOptionsFromDialog(title, label);
+        let options = await this.getRollOptionsFromDialog(title, label);
+        return options;
     }
 
-    /*
     processDialogOptions(form) {
         let options = super.processDialogOptions(form);
 
-        // Process power level
-        let elements = form.getElementsByClassName("power-level");
+        // Process input action
+        let elements = form.getElementsByClassName("weapon-action");
         let element = elements ? elements[0] : null;
         if (element) {
-            options.powerLevel = Number(element.value);
+            let inputs = element.getElementsByTagName("input");
+            for (let input of inputs) {
+                if (input.checked) {
+                    options.action = input.id;
+                    break;
+                }
+            }
         }
         return options;
     }
-    */
+
+    preRoll() {
+        super.preRoll();
+        if (this.options.action == "weakpoint") {
+            this.options.extraBanes++;
+        }
+    }
+
+    postRoll() {
+        super.postRoll();
+        this.data.action = this.options.action;
+        switch(this.data.action) {
+            case "slash":
+                this.data.damageType = DoD.damageTypes.slashing;
+                this.data.isDamaging = true;
+                break;
+
+            case "stab":
+                this.data.damageType = DoD.damageTypes.piercing;
+                this.data.isDamaging = true;
+                break;
+    
+            case "weakpoint":
+                this.data.damageType = DoD.damageTypes.piercing;
+                this.data.isDamaging = true;
+                this.data.ignoreArmor = true;
+                break;
+
+            case "topple":
+            case "disarm":
+            case "parry":
+                this.data.damageType = DoD.damageTypes.none;
+                this.data.isDamaging = false;
+                break;
+            
+            case "normal":
+                if (this.data.weapon.hasWeaponFeature("bludgeoning")) {
+                this.data.isDamaging = true;
+                    this.data.damageType = DoD.damageTypes.bludgeoning;
+                    this.data.isDamaging = true;
+                    break;
+                }
+
+            default:
+                this.data.damageType = DoD.damageTypes.none;
+                this.data.isDamaging = true;
+        }
+    }
 }

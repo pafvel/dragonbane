@@ -41,7 +41,9 @@
         },
         "armor": {
             "banes": "Banes",
-            "rating": "Armor Rating"
+            "rating": "Armor Rating",
+            "bonuses": "Bonus Armor"
+
         },
         "attributes": {
             "str": "STR",
@@ -69,6 +71,12 @@
             "gold": "Gold",
             "silver": "Silver",
             "copper": "Copper"
+        },
+        "damageTypes": {
+            "none": "Normal",
+            "bludgeoning": "Bludgeoning",
+            "piercing": "Piercing",
+            "slashing": "Slashing"
         },
         "dice": {
             "d": "D",
@@ -100,13 +108,16 @@
             "skills": "Skills"
         },
         "roll": {
-            "dragon": "succeded with a Dragon rol!",
-            "demon": "failed with a Demon roll!",
+            "dragon": "succeded with a Dragon!",
+            "demon": "failed with a Demon!",
             "success": "succeeded.",
             "failure": "failed.",
             "attributeRoll": "Attribute roll for <b>{attribute}</b> <b>{result}</b>",
             "skillRoll": "Skill roll for <b>{skill}</b> <b>{result}</b>",
-            "spellRoll": "Skill roll for <b>{spell}</b> at Power Level <b>{powerLevel}</b> <b>{result}</b>"
+            "spellRoll": "Skill roll for <b>{spell}</b> at Power Level <b>{powerLevel}</b> <b>{result}</b>",
+            "weaponRoll": "Skill roll for {action} with <b>{skill}</b> <b>{result}</b>",
+            "damage": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType} Damage</b> using <b>{weapon}</b>.",
+            "damageIgnoreArmor": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType} Damage ignoring armor</b> using <b>{weapon}</b>."
         },
         "shield": {
             "durability": "Durability"
@@ -228,6 +239,15 @@
                 "weaponSkills": "Weapon Skills",
                 "willPoints": "Willpower Points",
                 "wp": "WP"
+            },
+            "chat":{
+                "damageApplied": "<b>{damage} damage</b> applied to <b>{actor}</b>.",
+                "damageAppliedDetails": "{damage} damage vs {armor} armor rating.",
+                "damageAppliedMultiplier": "x{multiplier} multiplier.",
+                "rollDamage": "Roll Damage",
+                "dealDamage": "Deal damage",
+                "dealHalfDamage": "Deal half damage",
+                "dealDoubleDamage": "Deal double damage"
             },
             "dialog": {
                 "banes": "Banes",

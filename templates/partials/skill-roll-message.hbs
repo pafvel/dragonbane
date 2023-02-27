@@ -1,0 +1,10 @@
+{{#if success}}
+    {{#if isDamaging}}
+    <button class="chat-button weapon-roll" data-actor-id="{{actor.id}}" data-weapon-id="{{weapon.id}}" data-damage-type="{{damageType}}" data-ignore-armor="{{ignoreArmor}}">{{localize "DoD.ui.chat.rollDamage"}}</button>
+    {{/if}}
+{{else}}
+    {{#if canPush}}
+    <button class="chat-button push-roll">Push Roll</button>
+    {{/if}}
+{{/if}}
+{{> "templates/dice/roll.html"}}

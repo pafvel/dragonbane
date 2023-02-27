@@ -1,6 +1,5 @@
 @import "./item-sheet.less";
 @import "./character-sheet.less";
-@import "./dialog.less";
 
 #logo:lang(en) {
     content: url("art/ui/logo-en.webp");
@@ -28,7 +27,7 @@
 }
 
 @font-face {
-  font-family: "QTFritzQuad";
+  font-family: "QTFrizQuad";
   src: url('fonts/QTFrizQuad/QTFrizQuad-Bold.otf');
   font-weight: bold;
 }
@@ -48,97 +47,128 @@
 .system-dragonbane {
   background-image: url(art/ui/dragonbane.jpg);
 
-  .window-content {
-    background: url(art/ui/item-sheet-bg.webp) repeat;
+.chat-message {
     font-family: QTFrizQuad;
-    color: black;
-  }
-
-  .dialog-buttons {
-    background: url("art/ui/button-bg.webp");    
+    background-image: url(art/ui/chat-card-bg.webp);
+    background-size: cover;
+    background-position-x: center;
+}
+.chat-message.whisper {
+    font-family: QTFrizQuad;
+    background-image: url(art/ui/whisper-chat-card-bg.webp);
+    background-size: cover;
+    background-position-x: center;
+    border: 2px solid #3e7d63;
+}
+.chat-button {
+    background: url("art/ui/button-bg.webp");
     background-repeat: repeat-x;
     background-size: contain;
     background-clip: border-box;
-    .dialog-button {
-      color: whitesmoke;            
-      font-family: QTFrizQuad;
-      font-weight: normal;  
-    }
-  }
-
-  .sheet-table {
+    color: whitesmoke;            
     font-family: QTFrizQuad;
     font-weight: normal;
-    background-image: url("art/ui/parchment-column.webp");
-    background-repeat:  no-repeat;
-    background-size:  calc(100% - 2em) auto;
-    background-clip: border-box;
-    background-position-x: center;
-    background-position-y: 2em;
-    border-top: transparent;
-    color: black;
-    background-color: transparent;
+}
+.chat-button:disabled {
+    color: var(--color-text-dark-inactive);
+    box-shadow: none;
+}
 
-    i {
-        margin-left: auto;
-        float:right;
-        color: rgb(80, 80, 80);
-      };                 
-  };                
 
-  .sheet-table-header {
-      color: whitesmoke;            
-      background-image: url("art/ui/title-bar.webp");
-      background-size: contain;
-      background-clip: content-box;
-      background-repeat: repeat-x;
-      background-position: center center;
-      height: 36px;
-      th {
-          white-space: nowrap;
-      };
-      th:first-child {
-          background-image: url("art/ui/arrow-left.webp");
-          background-position-x: left;
-          background-size: contain;
-          background-repeat: no-repeat;
-          background-clip: border-box;
-          padding-left: 2em;
-          padding-right: 0em;
-          width: 3em;
-          min-width: 3em;
-          min-height: 2em;
-      };
-      th:last-child {
-          background-image: url("art/ui/arrow-right.webp");
-          background-position-x: right;
-          background-size: contain;
-          background-repeat: no-repeat;
-          background-clip: border-box;
-          padding-left: 0em;
-          padding-right: 2em;
-          width: 3em;
-          min-width: 3em;
-          min-height: 2em;
-      };
-      
-      .thumbnail-header {
-          padding: 0px;            
-          width: 36px;
-          height: 36px;
-          min-width: 36px;
-          min-height: 36px;
-      }
+.window-content {
+background: url(art/ui/item-sheet-bg.webp) repeat;
+background-position-x: center;
+font-family: QTFrizQuad;
+color: black;
+}
 
-      .text-header {
-          text-indent: 1em;
-          text-align: left;
-      }
+.dialog {
+    .dialog-buttons {
+        .dialog-button {
+            background: url("art/ui/button-bg.webp");
+            background-repeat: repeat-x;
+            background-size: contain;
+            background-clip: border-box;
+            color: whitesmoke;            
+            font-family: QTFrizQuad;
+            font-weight: normal;  
+        }
+    }
+}
 
-      .number-header {
-          text-align: center;
-      }
-  }
+.sheet-table {
+font-family: QTFrizQuad;
+font-weight: normal;
+background-image: url("art/ui/parchment-column.webp");
+background-repeat:  no-repeat;
+background-size:  calc(100% - 2em) auto;
+background-clip: border-box;
+background-position-x: center;
+background-position-y: 2em;
+border-top: transparent;
+color: black;
+background-color: transparent;
+
+i {
+    margin-left: auto;
+    float:right;
+    color: rgb(80, 80, 80);
+    };                 
+};                
+
+.sheet-table-header {
+    color: whitesmoke;            
+    background-image: url("art/ui/title-bar.webp");
+    background-size: contain;
+    background-clip: content-box;
+    background-repeat: repeat-x;
+    background-position: center center;
+    height: 36px;
+    th {
+        white-space: nowrap;
+    };
+    th:first-child {
+        background-image: url("art/ui/arrow-left.webp");
+        background-position-x: left;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-clip: border-box;
+        padding-left: 2em;
+        padding-right: 0em;
+        width: 3em;
+        min-width: 3em;
+        min-height: 2em;
+    };
+    th:last-child {
+        background-image: url("art/ui/arrow-right.webp");
+        background-position-x: right;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-clip: border-box;
+        padding-left: 0em;
+        padding-right: 2em;
+        width: 3em;
+        min-width: 3em;
+        min-height: 2em;
+    };
+    
+    .thumbnail-header {
+        padding: 0px;            
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        min-height: 36px;
+    }
+
+    .text-header {
+        text-indent: 1em;
+        text-align: left;
+    }
+
+    .number-header {
+        text-align: center;
+    }
+}
 
   .sheet-table-data {
     background-color: transparent;

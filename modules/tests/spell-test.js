@@ -1,20 +1,17 @@
 import DoD_Utility from "../utility.js";
-import DoDTest from "./dod-test.js";
+import DoDSkillTest from "./skill-test.js";
 
 
-export default class DoDSpellTest extends DoDTest  {
+export default class DoDSpellTest extends DoDSkillTest  {
 
-    constructor(actor, spell) {
-        super();
-        this.data.actor = actor;
+    constructor(actor, spell, options) {
+        super(actor, actor.findSkill(spell.system.school), options);
         this.data.spell = spell;
-        this.data.skill = actor.findSkill(spell.system.school);
-        this.data.attribute = this.data.skill?.system.attribute;
         this.data.hasPowerLevel = spell.system.rank > 0;
     }
    
     formatRollMessage(roll) {
-        let target = this.data.skill.system.value;
+        let target = this.data.skill?.system.value;
         let result = this.formatRollResult(roll, target);
         let locString = this.data.hasPowerLevel ? "DoD.roll.spellRoll" : "DoD.roll.skillRoll";
         let powerLevel = this.data.hasPowerLevel ? this.options.powerLevel : 0;
@@ -42,6 +39,9 @@ export default class DoDSpellTest extends DoDTest  {
 
         let options = await this.getRollOptionsFromDialog(title, label);
         if (options.cancelled) return options;
+       
+        // If dialog was skipped, set default value
+        options.powerLevel = options.powerLevel ? options.powerLevel : 1;
 
         let wpCost = this.data.spell.getSpellCost(options.powerLevel);
         let wp = this.data.actor.system.willPoints.value;
@@ -65,6 +65,7 @@ export default class DoDSpellTest extends DoDTest  {
     }
 
     postRoll() {
+        super.postRoll();
         let wpCost = this.data.spell.getSpellCost(this.options.powerLevel);
         let wp = this.data.actor.system.willPoints.value;
         this.data.actor.update({ ["system.willPoints.value"]: wp - wpCost});

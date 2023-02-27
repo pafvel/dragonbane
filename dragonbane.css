@@ -592,7 +592,7 @@
   src: url('fonts/QTFrizQuad/QTFrizQuad.otf');
 }
 @font-face {
-  font-family: "QTFritzQuad";
+  font-family: "QTFrizQuad";
   src: url('fonts/QTFrizQuad/QTFrizQuad-Bold.otf');
   font-weight: bold;
 }
@@ -608,18 +608,43 @@
 .system-dragonbane {
   background-image: url(art/ui/dragonbane.jpg);
 }
-.system-dragonbane .window-content {
-  background: url(art/ui/item-sheet-bg.webp) repeat;
+.system-dragonbane .chat-message {
   font-family: QTFrizQuad;
-  color: black;
+  background-image: url(art/ui/chat-card-bg.webp);
+  background-size: cover;
+  background-position-x: center;
 }
-.system-dragonbane .dialog-buttons {
+.system-dragonbane .chat-message.whisper {
+  font-family: QTFrizQuad;
+  background-image: url(art/ui/whisper-chat-card-bg.webp);
+  background-size: cover;
+  background-position-x: center;
+  border: 2px solid #3e7d63;
+}
+.system-dragonbane .chat-button {
   background: url("art/ui/button-bg.webp");
   background-repeat: repeat-x;
   background-size: contain;
   background-clip: border-box;
+  color: whitesmoke;
+  font-family: QTFrizQuad;
+  font-weight: normal;
 }
-.system-dragonbane .dialog-buttons .dialog-button {
+.system-dragonbane .chat-button:disabled {
+  color: var(--color-text-dark-inactive);
+  box-shadow: none;
+}
+.system-dragonbane .window-content {
+  background: url(art/ui/item-sheet-bg.webp) repeat;
+  background-position-x: center;
+  font-family: QTFrizQuad;
+  color: black;
+}
+.system-dragonbane .dialog .dialog-buttons .dialog-button {
+  background: url("art/ui/button-bg.webp");
+  background-repeat: repeat-x;
+  background-size: contain;
+  background-clip: border-box;
   color: whitesmoke;
   font-family: QTFrizQuad;
   font-weight: normal;

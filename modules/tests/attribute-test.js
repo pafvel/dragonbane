@@ -1,11 +1,9 @@
-//import DoD_Utility from "../utility.js";
 import DoDTest from "./dod-test.js";
 
 export default class DoDAttributeTest extends DoDTest {
 
-    constructor(actor, attribute) {
-        super();
-        this.data = {};
+    constructor(actor, attribute, options) {
+        super(options);
         this.data.actor = actor;
         this.data.attribute = attribute;
     }

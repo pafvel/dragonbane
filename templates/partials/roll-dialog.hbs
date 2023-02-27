@@ -79,17 +79,19 @@
     {{#if weapon}}
     <div class="text-box">
         <div class="text-box-title">{{localize "DoD.ui.dialog.chooseAction"}}</div>
-        <div class="flexrow">
-            {{#each actions as |action|}}
-            <div class="flex-nowrap">
-                {{#if action.checked}}
-                <input type="radio" id="{{action.id}}" name="action" value="{{action.id}}" checked>
-                {{else}}
-                <input type="radio" id="{{action.id}}" name="action" value="{{action.id}}">
-                {{/if}}
-                <label for="{{action.id}}" title="{{action.tooltip}}">{{action.label}}</label>
+        <div class="weapon-action">
+            <div class="flexrow">
+                {{#each actions as |action|}}
+                <div class="flex-nowrap">
+                    {{#if action.checked}}
+                    <input type="radio" id="{{action.id}}" name="action" value="{{action.id}}" checked>
+                    {{else}}
+                    <input type="radio" id="{{action.id}}" name="action" value="{{action.id}}">
+                    {{/if}}
+                    <label for="{{action.id}}" title="{{action.tooltip}}">{{action.label}}</label>
+                </div>
+                {{/each}}
             </div>
-            {{/each}}
         </div>
     </div>
     {{/if}}

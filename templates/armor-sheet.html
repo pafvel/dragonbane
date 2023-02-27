@@ -7,12 +7,19 @@
         <table>
             <tr>
                 <th>{{localize "DoD.armor.rating"}}</th>
+                <th>{{localize "DoD.armor.bonuses"}}</th>
                 <th>{{localize "DoD.armor.banes"}}</th>
             </tr>
             <tr>
                 <td>
                     <input name="data.rating" type="text" value="{{data.rating}}" data-dtype="Number" />
                 </td>
+                <td class="edit-armor-bonuses comma-list">
+                    {{#each armorBonuses as |bonus|}}
+                    <a title="{{localize bonus.tooltip}}" style="text-transform:capitalize;">{{localize bonus.name}}</a>
+                    {{/each}}
+                </td>
+
                 <td>
                     <input name="data.banes" type="text" value="{{data.banes}}" />
                 </td>

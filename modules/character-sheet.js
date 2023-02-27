@@ -3,6 +3,8 @@ import DoDAttributeTest from "./tests/attribute-test.js";
 import DoDSkillTest from "./tests/skill-test.js";
 import DoDSpellTest from "./tests/spell-test.js";
 import DoDWeaponTest from "./tests/weapon-test.js";
+import { DoD } from "./config.js";
+import * as DoDChat from "./chat.js";
 
 export default class DoDCharacterSheet extends ActorSheet {
     
@@ -216,6 +218,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
             html.find(".rollable-attribute").click(this._onAttributeRoll.bind(this));
             html.find(".rollable-skill").click(this._onSkillRoll.bind(this));
+            html.find(".rollable-damage").click(this._onDamageRoll.bind(this));
 
             html.find(".hit-points-box").on("click contextmenu", this._onHitPointClick.bind(this));
             html.find(".will-points-box").on("click contextmenu", this._onWillPointClick.bind(this));
@@ -359,23 +362,59 @@ export default class DoDCharacterSheet extends ActorSheet {
         let item = this.actor.items.get(itemId);
         let test = null;
 
+        let options = null;
+        if (event.shiftKey || event.ctrlKey) {
+            options = {
+                noBanesBoons: event.shiftKey,
+                defaultBanesBoons: event.ctrlKey
+            };
+        }
+
         if (item.type == "skill") {
-            test = new DoDSkillTest(this.actor, item);
+            test = new DoDSkillTest(this.actor, item, options);
         } else if (item.type == "spell") {
-            test = new DoDSpellTest(this.actor, item);
+            test = new DoDSpellTest(this.actor, item, options);
         } else if (item.type == "weapon") {
-            test = new DoDWeaponTest(this.actor, item);
+            test = new DoDWeaponTest(this.actor, item, options);
         }
         if (test) {
             await test.roll();
         }
     }
 
+    async _onDamageRoll(event) {
+        event.preventDefault();
+
+        let itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
+        let weapon = this.actor.items.get(itemId);
+        let weaponDamage = weapon.system.damage;
+        let skill = this.actor.findSkill(weapon.system.skill.name);
+        let attribute = skill?.system.attribute;
+        let damageBonus = attribute ? this.actor.system.damageBonus[attribute] : 0;
+        let damage = weaponDamage + "+" + damageBonus;
+
+        let damageData = {
+            actor: this.actor,
+            weapon: weapon,
+            damage: damage,
+            damageType: DoD.damageTypes.none
+        };
+
+        DoDChat.inflictDamageMessage(damageData);
+    }
+
     async _onAttributeRoll(event) {
         event.preventDefault();
 
+        let options = null;
+        if (event.shiftKey || event.ctrlKey) {
+            options = {
+                noBanesBoons: event.shiftKey,
+                defaultBanesBoons: event.ctrlKey
+            };
+        }
         let attributeName = event.currentTarget.dataset.attribute;
-        let test = new DoDAttributeTest(this.actor, attributeName);
+        let test = new DoDAttributeTest(this.actor, attributeName, options);
         await test.roll();
     }
 

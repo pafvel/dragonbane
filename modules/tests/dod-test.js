@@ -2,10 +2,18 @@ import DoD_Utility from "../utility.js";
 
 export default class DoDTest {
 
-    constructor() {
+    constructor(options) {
         this.data = {};
         this.data.boons = [];
         this.data.banes = [];
+        this.data.fillerBanes = 0; // Needed for dialog box layout
+        this.data.fillerBoons = 0; // Needed for dialog box layout
+        this.data.actor = null; // may be set by sub-classes
+        this.data.attribute = null; // may be set by sub-classes
+        this.data.skill = null; // may be set by sub-classes
+        this.noBanesBoons = options?.noBanesBoons;
+        this.defaultBanesBoons = options?.defaultBanesBoons;
+        this.skipDialog = this.noBanesBoons || this.defaultBanesBoons;
     }
 
     async roll() {
@@ -22,19 +30,28 @@ export default class DoDTest {
         this.postRoll();
 
         let messageData = this.formatRollMessage(this.roll);
+        let messageTemplate = this.getMessageTemplate();
+        if (messageTemplate) {
+            let renderedMessage = await this.renderRoll(this.roll, messageTemplate, this.data);
+            messageData.content = renderedMessage;
+        }
         this.roll.toMessage(messageData);
     }
 
     // This method should be overridden to provide title and label
     async getRollOptions() {
-        return this.getRollOptionsFromDialog("Roll", "Roll");
+        return this.getRollOptionsFromDialog("", "");
     }
 
     preRoll() {}
     postRoll() {}
 
     updateRollData() {
-        
+
+        if (this.noBanesBoons) {
+            return;
+        }
+
         if (this.data.attribute) {
             let condition = this.data.actor.system.conditions[this.data.attribute];
 
@@ -70,6 +87,11 @@ export default class DoDTest {
 
 
     async getRollOptionsFromDialog(title, label) {
+
+        if (this.skipDialog) {
+            return this.data;
+        }
+
         const template = "systems/dragonbane/templates/partials/roll-dialog.hbs";
         const html = await renderTemplate(template, this.data);
 
@@ -154,6 +176,7 @@ export default class DoDTest {
     }
 
     formatRollResult(roll, target) {
+        this.data.success = roll.result <= target;
         if (roll.result == 1) {
             return game.i18n.localize("DoD.roll.dragon");
         } else if (roll.result == 20) {
@@ -168,8 +191,23 @@ export default class DoDTest {
     formatRollMessage(roll) {
         return {
             user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: this.data.actor }),
-            flavor: "unknown roll"
+            speaker: ChatMessage.getSpeaker({ actor: this.data.actor })
         };
+    }
+
+    async renderRoll(roll, template, templateContext, isPrivate = false) {
+        if ( !roll._evaluated ) await roll.evaluate({async: true});
+
+        let context = templateContext ? templateContext : {};
+        context.formula = isPrivate ? "???" : roll.formula;
+        context.user = game.user.id;
+        context.tooltip = isPrivate ? "" : await roll.getTooltip();
+        context.total = isPrivate ? "?" : Math.round(roll.total * 100) / 100;
+
+        return await renderTemplate(template, context);
+    }
+
+    getMessageTemplate() {
+        return null;
     }
 }

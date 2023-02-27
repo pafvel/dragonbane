@@ -34,9 +34,20 @@ export default class DoDItemSheet extends ItemSheet {
                     name: "DoD.weaponFeatureTypes." + feature,
                     tooltip: "DoD.weaponFeatureTypes." + feature + "Tooltip"
                 })
-            });
-            
+            });            
             sheetData.weaponFeatures = weaponFeatures;
+        }
+
+        if (this.item.type == "armor") {
+            let armorBonuses = [];
+
+            this.item.system.bonuses.forEach( damageType => {
+                armorBonuses.push({
+                    name: "DoD.damageTypes." + damageType,
+                    tooltip: "DoD.damageTypes." + damageType + "Tooltip"
+                })
+            });            
+            sheetData.armorBonuses = armorBonuses;
         }
 
         return sheetData;
@@ -48,6 +59,9 @@ export default class DoDItemSheet extends ItemSheet {
 
         // Weapon items
         html.find(".edit-weapon-features").click(this._onEditWeaponFeatures.bind(this));
+
+        // Armor items
+        html.find(".edit-armor-bonuses").click(this._onEditArmorBonuses.bind(this));
 
         super.activateListeners(html);
     }
@@ -129,6 +143,72 @@ export default class DoDItemSheet extends ItemSheet {
             }
         }
         this.item.update({ ["system.features"]: features});
+    }
+
+    async _onEditArmorBonuses(event) {
+        event.preventDefault();
+
+        // prepare weapon feature data
+        let damageData = [];
+        for (let damageType in DoD.damageTypes)
+        {
+            if (damageType != "none") {
+                damageData.push( {
+                    name: "DoD.damageTypes." + damageType,
+                    tooltip: "DoD.damageTypes." + damageType + "Tooltip",
+                    id: damageType,
+                    value: this.item.hasDamageBonus(damageType)
+                });
+            }
+        }
+        console.log(damageData);
+
+        let dialogData = {bonuses: damageData};
+
+        const template = "systems/dragonbane/templates/partials/armor-bonuses-dialog.hbs";
+        const html = await renderTemplate(template, dialogData);
+        const labelOk = game.i18n.localize("DoD.ui.dialog.labelOk");
+        const labelCancel = game.i18n.localize("DoD.ui.dialog.labelCancel");
+
+
+        return new Promise(
+            resolve => {
+                const data = {
+                    item: this.item,
+                    title: "Title",
+                    content: html,
+                    buttons: {
+                        ok: {
+                            label: labelOk,
+                            callback: html => resolve(this._processDamageBonuses(html[0].querySelector("form")))
+                        },
+                        /*
+                        cancel: {
+                            label: labelCancel,
+                            callback: html => resolve({cancelled: true})
+                        }
+                        */
+                    },
+                    default: "ok",
+                    close: () => resolve({cancelled: true})
+                };
+                new Dialog(data, null).render(true);
+            }
+        );
+    }
+
+    _processDamageBonuses(form) {
+        let elements = form.getElementsByClassName("armor-bonuses");
+        let element = elements ? elements[0] : null;
+        let inputs = element?.getElementsByTagName("input");
+        let bonuses = [];
+
+        for (let input of inputs) {
+            if (input.type == "checkbox" && input.checked) {
+                bonuses.push(input.id);
+            }
+        }
+        this.item.update({ ["system.bonuses"]: bonuses});
     }
 
     async _onDrop(event) {

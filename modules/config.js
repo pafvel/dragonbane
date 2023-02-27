@@ -25,6 +25,13 @@ DoD.castingTimeTypes = {
     shift: "DoD.castingTimeTypes.shift"
 };
 
+DoD.damageTypes = {
+    none: "DoD.damageTypes.none",
+    bludgeoning: "DoD.damageTypes.bludgeoning",
+    piercing: "DoD.damageTypes.piercing",
+    slashing: "DoD.damageTypes.slashing"
+};
+
 DoD.gripTypes = {
     none: "DoD.gripTypes.none",
     grip1h: "DoD.gripTypes.grip1h",
