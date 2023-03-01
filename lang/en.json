@@ -45,6 +45,24 @@
             "bonuses": "Bonus Armor"
 
         },
+        "attackTypes": {
+            "parry": "Parry",
+            "parryTooltip": "Parry an attack",
+            "normal": "Normal",
+            "normalTooltip": "Perform a normal attack",
+            "stab": "Stab",
+            "stabTooltip": "Perform an attack inflicting piercing damage",
+            "slash": "Slash",
+            "slashTooltip": "Perform an attack inflicting slashing damage",
+            "weakpoint": "Find weak point",
+            "weakpointTooltip": "Stab and try to find a gap in the enemy's armor\nThis attack adds one Bane to the roll",
+            "disarm": "Disarm",
+            "disarmTooltip": "Disarm the enemy instead of inflicting damage",
+            "topple": "Topple",
+            "toppleTooltip": "Topple the enemy to the ground instead of inflicting damage",
+            "throw": "Throw",
+            "throwTooltip": "Trown attack"
+        },
         "attributes": {
             "str": "STR",
             "con": "CON",
@@ -103,6 +121,18 @@
         "helmet": {
             "rating": "Armor Rating"
         },
+        "magicCritChoices": {
+            "choiceLabel": "Critical effect",
+            "doubleDamage": "Double damage or range<br>",
+            "noCost": "The spell does not cost any WP<br>",
+            "extraSpell": "You can immediately cast another spell, but get a bane on the roll<br>"
+        },
+        "meleeCritChoices": {
+            "choiceLabel": "Critical effect",
+            "doubleWeaponDamage": "Double weapon damage<br>",
+            "extraAttack": "Free attack against another enemy<br>",
+            "ignoreArmor": "Armor has no effect against the attack<br>"
+        },
         "profession": {
             "key-attribute": "Key Attribute",
             "skills": "Skills"
@@ -114,8 +144,8 @@
             "failure": "failed.",
             "attributeRoll": "Attribute roll for <b>{attribute}</b> <b>{result}</b>",
             "skillRoll": "Skill roll for <b>{skill}</b> <b>{result}</b>",
-            "spellRoll": "Skill roll for <b>{spell}</b> at Power Level <b>{powerLevel}</b> <b>{result}</b>",
-            "weaponRoll": "Skill roll for {action} with <b>{skill}</b> <b>{result}</b>",
+            "spellRoll": "Skill roll for <b>{spell}</b> at <b>Power Level {powerLevel}</b> <b>{result}</b>",
+            "weaponRoll": "Skill roll for <b>{action}</b> with <b>{skill}</b> <b>{result}</b>",
             "damage": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType} Damage</b> using <b>{weapon}</b>.",
             "damageIgnoreArmor": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType} Damage ignoring armor</b> using <b>{weapon}</b>."
         },
@@ -157,6 +187,10 @@
             "uncommon": "Uncommon",
             "rare": "Rare",
             "unique": "Unique"
+        },
+        "tables": {
+            "mishapMagic": "@UUID[RollTable.rB0EjF3UvHm2CWPZ]{Mishap - Magic}",
+            "mishapMelee": "@UUID[RollTable.ldtp8mMoAoVOKczR]{Mishap - Melee}"
         },
         "weapon": {
             "grip": "Grip",
@@ -247,7 +281,8 @@
                 "rollDamage": "Roll Damage",
                 "dealDamage": "Deal damage",
                 "dealHalfDamage": "Deal half damage",
-                "dealDoubleDamage": "Deal double damage"
+                "dealDoubleDamage": "Deal double damage",
+                "choose": "Choose"
             },
             "dialog": {
                 "banes": "Banes",
@@ -258,22 +293,6 @@
                 "attributeRollTitle": "Attribute Roll",
                 "attributeRollLabel": "Roll",
                 "powerLevel": "Power Level",
-                "attackParry": "Parry",
-                "attackParryTooltip": "Parry an attack",
-                "attackNormal": "Normal",
-                "attackNormalTooltip": "Perform a normal attack",
-                "attackStab": "Stab",
-                "attackStabTooltip": "Perform an attack inflicting piercing damage",
-                "attackSlash": "Slash",
-                "attackSlashTooltip": "Perform an attack inflicting slashing damage",
-                "attackWeakpoint": "Find weak point",
-                "attackWeakpointTooltip": "Stab and try to find a gap in the enemy's armor\nThis attack adds one Bane to the roll",
-                "attackDisarm": "Disarm",
-                "attackDisarmTooltip": "Disarm the enemy instead of inflicting damage",
-                "attackTopple": "Topple",
-                "attackToppleTooltip": "Topple the enemy to the ground instead of inflicting damage",
-                "attackThrow": "Throw",
-                "attackThrowTooltip": "Trown attack",
                 "labelCancel": "Cancel",
                 "labelOk": "Ok",
                 "chooseAction": "Choose action",
@@ -286,7 +305,8 @@
             "kin": "Could not find Kin: {kin}",
             "profession": "Could not find Profession: {profession}",
             "professionSkill": "Could not find Profession Skill: {skill}",
-            "notEnoughWPForSpell": "Not enough Willpower Points to cast spell"
+            "notEnoughWPForSpell": "Not enough Willpower Points to cast spell",
+            "actorNotFound": "Can'r find actor with id: {id}"
         }
     }
 }

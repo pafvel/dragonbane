@@ -98,6 +98,21 @@ export default class DoD_Utility {
         return item?.clone();
     }
 
+    static getActorFromUUID(uuid) {
+        let doc = null;
+        try {
+            doc = fromUuidSync(uuid);
+        } catch (err) {
+            DoD_Utility.WARNING(err.message);
+        }
+        let actor = doc?.actor ?? doc;
+        if (!actor) {
+            DoD_Utility.WARNING("DoD.WARNING.actorNotFound", {id: uuid});
+            return null;    
+        }
+        return actor;
+    }
+
     static splitAndTrimString(str) {
         let result = str?.split(',');
         for (var i = 0; i < result.length; i++) {

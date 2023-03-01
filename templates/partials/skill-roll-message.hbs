@@ -1,10 +1,63 @@
 {{#if success}}
-    {{#if isDamaging}}
-    <button class="chat-button weapon-roll" data-actor-id="{{actor.id}}" data-weapon-id="{{weapon.id}}" data-damage-type="{{damageType}}" data-ignore-armor="{{ignoreArmor}}">{{localize "DoD.ui.chat.rollDamage"}}</button>
+    {{#if isMeleeCrit}}
+    <hr>
+    <div class="form-group">
+        <label>{{localize "DoD.meleeCritChoices.choiceLabel"}}</label>
+        <div class="form-fields">
+            {{radioBoxes meleeCritGroup meleeCritChoices checked=meleeCritChoice localize=true}}
+        </div>
+    </div>
+    <hr>
     {{/if}}
+
+    {{#if isMagicCrit}}
+    <hr>
+    <div class="form-group">
+        <label>{{localize "DoD.magicCritChoices.choiceLabel"}}</label>
+        <div class="form-fields">
+            {{radioBoxes magicCritGroup magicCritChoices checked=magicCritChoice localize=true}}
+        </div>
+    </div>
+    <hr>
+    <button class="chat-button weapon-roll"
+        data-actor-id="{{actor.uuid}}"
+        data-weapon-id="{{weapon.id}}"
+        data-damage-type="{{damageType}}"
+        data-ignore-armor="{{ignoreArmor}}"
+        data-is-melee-crit="{{isMeleeCrit}}"
+        data-is-magic-crit="{{isMagicCrit}}"
+        data-wp-cost="{{wpCost}}"
+        >
+        {{localize "DoD.ui.chat.choose"}}
+    </button>
+    {{/if}}
+
+    {{#if isDamaging}}
+    <button class="chat-button weapon-roll"
+        data-actor-id="{{actor.uuid}}"
+        data-weapon-id="{{weapon.id}}"
+        data-damage-type="{{damageType}}"
+        data-ignore-armor="{{ignoreArmor}}"
+        data-is-melee-crit="{{isMeleeCrit}}"
+        data-is-magic-crit="{{isMagicCrit}}"
+        >
+        {{localize "DoD.ui.chat.rollDamage"}}
+    </button>
+    {{/if}}
+
 {{else}}
+
     {{#if canPush}}
     <button class="chat-button push-roll">Push Roll</button>
     {{/if}}
+    
+    {{#if isMeleeMishap}}
+    <br>{{localize "DoD.tables.mishapMelee"}}<br><br>
+    {{/if}}
+    
+    {{#if isMagicMishap}}
+    <br>{{localize "DoD.tables.mishapMagic"}}<br><br>
+    {{/if}}
+
 {{/if}}
 {{> "templates/dice/roll.html"}}

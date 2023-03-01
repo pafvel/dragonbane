@@ -87,6 +87,9 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         let label = game.i18n.localize("DoD.ui.dialog.skillRollLabel");
         let title = game.i18n.localize("DoD.ui.dialog.skillRollTitle") + ": " + this.data.weapon.name;
         let options = await this.getRollOptionsFromDialog(title, label);
+        if (!options.action) {
+            options.action = this.data.actions[0].id;
+        }
         return options;
     }
 
@@ -117,6 +120,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
 
     postRoll() {
         super.postRoll();
+
         this.data.action = this.options.action;
         switch(this.data.action) {
             case "slash":
@@ -153,6 +157,32 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             default:
                 this.data.damageType = DoD.damageTypes.none;
                 this.data.isDamaging = true;
+        }
+
+        if (this.roll.result == 20) {
+            this.data.isMeleeMishap = true;
+        }
+
+        if (this.roll.result == 1 && this.data.action != "parry") {
+            this.data.isMeleeCrit = true;
+            this.data.meleeCritGroup = "meleeCritChoice"
+            this.data.meleeCritChoices = {};            
+
+            // populate crit choices
+            if (this.data.isDamaging) {
+                this.data.meleeCritChoices.doubleWeaponDamage = game.i18n.localize("DoD.meleeCritChoices.doubleWeaponDamage");
+            }
+            this.data.meleeCritChoices.extraAttack = game.i18n.localize("DoD.meleeCritChoices.extraAttack");
+            if (this.data.damageType == DoD.damageTypes.piercing && this.data.action != "weakpoint") {
+                this.data.meleeCritChoices.ignoreArmor = game.i18n.localize("DoD.meleeCritChoices.ignoreArmor");
+            }
+
+            // set default choice
+            if (this.data.meleeCritChoices.doubleWeaponDamage) {
+                this.data.meleeCritChoice = "doubleWeaponDamage";
+            } else {
+                this.data.meleeCritChoice = "extraAttack";
+            }
         }
     }
 }

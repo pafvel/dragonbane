@@ -66,8 +66,30 @@ export default class DoDSpellTest extends DoDSkillTest  {
 
     postRoll() {
         super.postRoll();
+
         let wpCost = this.data.spell.getSpellCost(this.options.powerLevel);
         let wp = this.data.actor.system.willPoints.value;
         this.data.actor.update({ ["system.willPoints.value"]: wp - wpCost});
+
+        this.data.wpCost = wpCost;
+
+        if (this.roll.result == 20) {
+            this.data.isMagicMishap = true;
+        }
+
+        if (this.roll.result == 1) {
+            this.data.isMagicCrit = true;
+            this.data.magicCritGroup = "magicCritChoice"
+            this.data.magicCritChoices = {};            
+
+            // populate crit choices
+            this.data.magicCritChoices.doubleDamage = game.i18n.localize("DoD.magicCritChoices.doubleDamage");
+            this.data.magicCritChoices.noCost = game.i18n.localize("DoD.magicCritChoices.noCost");
+            this.data.magicCritChoices.extraSpell = game.i18n.localize("DoD.magicCritChoices.extraSpell");
+
+            // set default choice
+            this.data.magicCritChoice = "doubleDamage";
+        }
+
     }
 }

@@ -17,7 +17,6 @@
         "TypeSpell": "Besvärjelse",
         "TypeWeapon": "Vapen"
     },
-    
     "DoD": {
         "ability": {
             "requirement": "Krav",
@@ -120,6 +119,18 @@
         "helmet": {
             "rating": "Skyddsvärde"
         },
+        "magicCritChoices": {
+            "choiceLabel": "Kritisk effekt",
+            "doubleDamage": "Skadan eller räckvidden av besvärjelsen fördubblas<br>",
+            "noCost": "Besvärjelsen kostar dig inga VP<br>",
+            "extraSpell": "Du får omedelbart lägga en besvärjelse till, fast med nackdel på slaget.<br>"
+        },
+        "meleeCritChoices": {
+            "choiceLabel": "Kritisk effekt",
+            "doubleWeaponDamage": "Dubbel vapenskada<br>",
+            "extraAttack": "Extra attack mot annan fiende (fri handling)<br>",
+            "ignoreArmor": "Rustning och skydd har ingen effekt<br>"
+        },
         "profession": {
             "key-attribute": "Viktigaste Grundegenskap",
             "skills": "Färdigheter"
@@ -174,6 +185,10 @@
             "uncommon": "Ovanlig",
             "rare": "Sällsynt",
             "unique": "Unik"
+        },
+        "tables": {
+            "mishapMagic": "@UUID[RollTable.NHVp4W45Z02qumKa]{Missöde - Magi}",
+            "mishapMelee": "@UUID[RollTable.VwP9Hy9ESvbC34XA]{Missöde - Närstrid}"
         },
         "weapon": {
             "grip": "Grepp",
@@ -267,7 +282,8 @@
                 "rollDamage": "Slå skada",
                 "dealDamage": "Tillfoga skada",
                 "dealHalfDamage": "Tillfoga halv skada",
-                "dealDoubleDamage": "Tillfoga dubbel skada"
+                "dealDoubleDamage": "Tillfoga dubbel skada",
+                "choose": "Välj"
             },
             "dialog": {
                 "banes": "Nackdelar",
@@ -289,7 +305,8 @@
             "kin": "Kan ej hitta Släkte: {kin}",
             "profession": "Kan ej hitta Yrke: {profession}",
             "professionSkill": "Kan ej hitta Yrkesfärdighet: {skill}",
-            "notEnoughWPForSpell": "För få Viljepoäng för att kasta besvärjelse"
+            "notEnoughWPForSpell": "För få Viljepoäng för att kasta besvärjelse",
+            "actorNotFound": "Kan inte hitta aktör med id: {id}"
         }
     }
 }

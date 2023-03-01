@@ -33,7 +33,11 @@ export default class DoDTest {
         let messageTemplate = this.getMessageTemplate();
         if (messageTemplate) {
             let renderedMessage = await this.renderRoll(this.roll, messageTemplate, this.data);
-            messageData.content = renderedMessage;
+            if (messageData.content) {
+                messageData.content += renderedMessage;
+            } else {
+                messageData.content = renderedMessage
+            }
         }
         this.roll.toMessage(messageData);
     }
