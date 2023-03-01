@@ -1,7 +1,8 @@
 import DoD_Utility from "./utility.js";
 
 export function addChatListeners(app, html, data) {
-    html.on("click", "button.weapon-roll", onDamageRoll);
+    html.on("click", "button.weapon-roll", onWeaponDamageRoll);
+    html.on("click", "button.magic-roll", onMagicDamageRoll);
     html.on("click", "button.push-roll", onPushRoll);
 }
 
@@ -46,7 +47,7 @@ export function addChatMessageContextMenuOptions(html, options) {
     );
 }
 
-async function onDamageRoll(event) {
+async function onWeaponDamageRoll(event) {
     const element = event.currentTarget;
     const actorId = element.dataset.actorId;
     const actor = DoD_Utility.getActorFromUUID(actorId);
@@ -83,29 +84,32 @@ async function onDamageRoll(event) {
             speaker: ChatMessage.getSpeaker({ actor: damageData.actor }),
         });
     }
-
-    if (element.dataset.isMagicCrit) {
-        const parent = element.parentElement;
-        const critChoices = parent.getElementsByTagName("input");
-        const choice = Array.from(critChoices).find(e => e.name=="magicCritChoice" && e.checked);
-
-        damageData[choice.value] = true;
-
-        ChatMessage.create({
-            content: game.i18n.localize("DoD.magicCritChoices.choiceLabel") + ": "+ game.i18n.localize("DoD.magicCritChoices." + choice.value),
-            user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: damageData.actor }),
-        });
-
-        if (choice.value == "noCost") {
-            const wpCost = Number(element.dataset.wpCost);
-            const wpNew = Math.min(actor.system.willPoints.max, actor.system.willPoints.value + wpCost);
-            await actor.update({ ["system.willPoints.value"]: wpNew});
-        }
-        return;
-    }
-
     inflictDamageMessage(damageData);    
+}
+
+async function onMagicDamageRoll(event) {
+    const element = event.currentTarget;
+    if (!element.dataset.isMagicCrit) return;
+
+    const actorId = element.dataset.actorId;
+    const actor = DoD_Utility.getActorFromUUID(actorId);
+    if (!actor) return;    
+    
+    const parent = element.parentElement;
+    const critChoices = parent.getElementsByTagName("input");
+    const choice = Array.from(critChoices).find(e => e.name=="magicCritChoice" && e.checked);
+
+    ChatMessage.create({
+        content: game.i18n.localize("DoD.magicCritChoices.choiceLabel") + ": "+ game.i18n.localize("DoD.magicCritChoices." + choice.value),
+        user: game.user.id,
+        speaker: ChatMessage.getSpeaker({ actor: actor }),
+    });
+
+    if (choice.value == "noCost") {
+        const wpCost = Number(element.dataset.wpCost);
+        const wpNew = Math.min(actor.system.willPoints.max, actor.system.willPoints.value + wpCost);
+        await actor.update({ ["system.willPoints.value"]: wpNew});
+    }
 }
 
 function onPushRoll(event) {
