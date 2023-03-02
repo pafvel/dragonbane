@@ -2,37 +2,31 @@ import DoD_Utility from "../utility.js";
 
 export default class DoDTest {
 
-    constructor(options) {
-        this.data = {};
-        this.data.boons = [];
-        this.data.banes = [];
-        this.data.fillerBanes = 0; // Needed for dialog box layout
-        this.data.fillerBoons = 0; // Needed for dialog box layout
-        this.data.actor = null; // may be set by sub-classes
-        this.data.attribute = null; // may be set by sub-classes
-        this.data.skill = null; // may be set by sub-classes
+    constructor(actor, options = {}) {
+        this.actor = actor;
+        this.options = options;
+        this.dialogData = {};
+        this.preRollData = {};
+        this.postRollData = {};        
         this.noBanesBoons = options?.noBanesBoons;
         this.defaultBanesBoons = options?.defaultBanesBoons;
-        this.skipDialog = this.noBanesBoons || this.defaultBanesBoons;
+        this.skipDialog = options?.skipDialog || this.noBanesBoons || this.defaultBanesBoons;
     }
 
     async roll() {
-        this.updateRollData();
-
-        this.options = await this.getRollOptions();
+        this.updateDialogData();
+        this.options = {... this.options, ... await this.getRollOptions()};
         if (this.options.cancelled) return;
 
-        this.preRoll();
-        
-        let formula = this.formatRollFormula(this.options);
+        this.updatePreRollData();
+        const formula = this.options.formula ?? this.formatRollFormula(this.preRollData);
         this.roll = await new Roll(formula).roll({async: true});
         
-        this.postRoll();
-
-        let messageData = this.formatRollMessage(this.roll);
-        let messageTemplate = this.getMessageTemplate();
+        this.updatePostRollData();
+        const messageData = this.formatRollMessage(this.postRollData);
+        const messageTemplate = this.getMessageTemplate();
         if (messageTemplate) {
-            let renderedMessage = await this.renderRoll(this.roll, messageTemplate, this.data);
+            let renderedMessage = await this.renderRoll(this.roll, messageTemplate, this.postRollData);
             if (messageData.content) {
                 messageData.content += renderedMessage;
             } else {
@@ -44,65 +38,104 @@ export default class DoDTest {
 
     // This method should be overridden to provide title and label
     async getRollOptions() {
-        return this.getRollOptionsFromDialog("", "");
+        return await this.getRollOptionsFromDialog("", "");
     }
 
-    preRoll() {}
-    postRoll() {}
+    updatePreRollData() {
+        this.preRollData.rollType = this.constructor.name;
+        this.preRollData.banes = (this.options.banes ? this.options.banes.length : 0) + (this.options.extraBanes ? this.options.extraBanes : 0);
+        this.preRollData.boons = (this.options.boons ? this.options.boons.length : 0) + (this.options.extraBoons ? this.options.extraBoons : 0);
+    }
 
-    updateRollData() {
+    updatePostRollData() {
+        this.postRollData = this.preRollData;
+        this.postRollData.result = this.roll.result;
+    }
+
+    updatePushRollChoices() {
+        const actor = this.postRollData.actor;
+        this.postRollData.pushRollChoices = {};
+        this.postRollData.pushRollChoice = null;
+        for (const attribute in actor.system.attributes) {
+            const condition = actor.system.conditions[attribute]
+            if (!condition.value){
+                this.postRollData.pushRollChoices[attribute] = game.i18n.localize("DoD.conditions." + attribute) + "<br>";
+                if (!this.postRollData.pushRollChoice) {
+                    this.postRollData.pushRollChoice = attribute;
+                }
+            }
+        }
+        if (!this.postRollData.pushRollChoice) {
+            this.postRollData.canPush = false;
+            return;
+        }
+        this.postRollData.pushRollChoiceGroup = "pushRollChoice";
+    }
+
+    updateDialogData() {
 
         if (this.noBanesBoons) {
             return;
         }
 
-        if (this.data.attribute) {
-            let condition = this.data.actor.system.conditions[this.data.attribute];
+        let banes = [];
+        let boons = [];
+
+        if (this.attribute) {
+            const condition = this.actor.system.conditions[this.attribute];
+            const name = game.i18n.localize("DoD.conditions." + this.attribute);
 
             if (condition?.value) {
-                let name = game.i18n.localize("DoD.conditions." + this.data.attribute);
-                this.data.banes.push( {source: name, value: true});
+                banes.push( {source: name, value: true});
             }
         }
 
-        let rollTarget = this.data.skill ? this.data.skill.name.toLowerCase() : this.data.attribute;
+        let rollTarget = this.skill ? this.skill.name.toLowerCase() : this.attribute;
 
-        for (let item of this.data.actor.items.contents) {
+        for (let item of this.actor.items.contents) {
             if (item.system.banes) {
-                let banes = DoD_Utility.splitAndTrimString(item.system.banes.toLowerCase());
-                if (banes.find(element => element.toLowerCase() == rollTarget)) {
+                let itemBanes = DoD_Utility.splitAndTrimString(item.system.banes.toLowerCase());
+                if (itemBanes.find(element => element.toLowerCase() == rollTarget)) {
                     let value = item.system.worn ? true : false;
-                    this.data.banes.push( {source: item.name, value: value});    
+                    banes.push( {source: item.name, value: value});    
                 }
             }
             if (item.system.boons) {
-                let boons = DoD_Utility.splitAndTrimString(item.system.boons.toLowerCase());
-                if (boons.find(element => element.toLowerCase() == rollTarget)) {
+                let itemBoons = DoD_Utility.splitAndTrimString(item.system.boons.toLowerCase());
+                if (itemBoons.find(element => element.toLowerCase() == rollTarget)) {
                     let value = item.system.worn ? true : false;
-                    this.data.boons.push( {source: item.name, value: value});    
+                    boons.push( {source: item.name, value: value});    
                 }
             }
         }
 
+        this.dialogData.banes = banes;
+        this.dialogData.boons = boons;
+        
         // Needed for dialog box layout
-        this.data.fillerBanes = Math.max(0, this.data.boons.length - this.data.banes.length);
-        this.data.fillerBoons = Math.max(0, this.data.banes.length - this.data.boons.length);;
+        this.dialogData.fillerBanes = Math.max(0, boons.length - banes.length);
+        this.dialogData.fillerBoons = Math.max(0, banes.length - boons.length);
     }
 
 
     async getRollOptionsFromDialog(title, label) {
 
         if (this.skipDialog) {
-            return this.data;
+            return {
+                banes: this.options.defaultBanesBoons ? this.dialogData.banes : [],
+                boons: this.options.defaultBanesBoons ? this.dialogData.boons : [],
+                extraBanes: 0,
+                extraBoons: 0
+            }
         }
 
         const template = "systems/dragonbane/templates/partials/roll-dialog.hbs";
-        const html = await renderTemplate(template, this.data);
+        const html = await renderTemplate(template, this.dialogData);
 
         return new Promise(
             resolve => {
                 const data = {
-                    actor: this.data.actor,
+                    actor: this.actor,
                     title: title,
                     content: html,
                     buttons: {
@@ -162,13 +195,13 @@ export default class DoDTest {
             banes: banes,
             boons: boons,
             extraBanes: extraBanes,
-            extraBoons, extraBoons
+            extraBoons: extraBoons
         }
     }
 
-    formatRollFormula(options) {
-        let banes = (options.banes ? options.banes.length : 0) + (options.extraBanes ? options.extraBanes : 0);
-        let boons = (options.boons ? options.boons.length : 0) + (options.extraBoons ? options.extraBoons : 0);
+    formatRollFormula(rollData) {
+        const banes = rollData.banes;
+        const boons = rollData.boons;
 
         if (banes > boons) {
             return "" + (1 + banes - boons) + "d20kh";
@@ -179,23 +212,22 @@ export default class DoDTest {
         }
     }
 
-    formatRollResult(roll, target) {
-        this.data.success = roll.result <= target;
-        if (roll.result == 1) {
+    formatRollResult(result, target) {
+        if (result == 1) {
             return game.i18n.localize("DoD.roll.dragon");
-        } else if (roll.result == 20) {
+        } else if (result == 20) {
             return game.i18n.localize("DoD.roll.demon");
         } else {
-            return roll.result <= target ? game.i18n.localize("DoD.roll.success") : game.i18n.localize("DoD.roll.failure");
+            return result <= target ? game.i18n.localize("DoD.roll.success") : game.i18n.localize("DoD.roll.failure");
         }
 
     }
 
     // This method should be overridden
-    formatRollMessage(roll) {
+    formatRollMessage(msgData) {
         return {
             user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: this.data.actor })
+            flavor: msgData.result
         };
     }
 

@@ -406,7 +406,7 @@ export default class DoDCharacterSheet extends ActorSheet {
     async _onAttributeRoll(event) {
         event.preventDefault();
 
-        let options = null;
+        let options = {};
         if (event.shiftKey || event.ctrlKey) {
             options = {
                 noBanesBoons: event.shiftKey,

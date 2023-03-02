@@ -6,20 +6,20 @@ export default class DoDWeaponTest extends DoDSkillTest  {
 
     constructor(actor, weapon, options) {
         super(actor, actor.findSkill(weapon.system.skill?.name), options);
-        this.data.weapon = weapon;
+        this.weapon = weapon;
     }
    
-    updateRollData() {
-        super.updateRollData();
+    updateDialogData() {
+        super.updateDialogData();
 
-        let hasSlashAttack = this.data.weapon.hasWeaponFeature("slashing");
-        let hasStabAttack = this.data.weapon.hasWeaponFeature("piercing");
+        let hasSlashAttack = this.weapon.hasWeaponFeature("slashing");
+        let hasStabAttack = this.weapon.hasWeaponFeature("piercing");
         let hasWeakpointAttack = hasStabAttack;
         let hasNormalAttack = !(hasStabAttack || hasSlashAttack);
-        let hasToppleAttack = this.data.weapon.hasWeaponFeature("toppling");
+        let hasToppleAttack = this.weapon.hasWeaponFeature("toppling");
         let hasDisarmAttack = true;
-        let hasThrowAttack = this.data.weapon.hasWeaponFeature("thrown");
-        let hasParry = !this.data.weapon.hasWeaponFeature("noparry");
+        let hasThrowAttack = this.weapon.hasWeaponFeature("thrown");
+        let hasParry = !this.weapon.hasWeaponFeature("noparry");
 
         let actions = [];
 
@@ -60,38 +60,38 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             actions[0].checked = true;
         }
 
-        this.data.actions = actions;
+        this.dialogData.actions = actions;
     }   
 
-    formatRollMessage(roll) {
-        let target = this.data.skill?.system.value;
-        let result = this.formatRollResult(roll, target);
+    async getRollOptions() {
+
+        let label = game.i18n.localize("DoD.ui.dialog.skillRollLabel");
+        let title = game.i18n.localize("DoD.ui.dialog.skillRollTitle") + ": " + this.weapon.name;
+        let options = await this.getRollOptionsFromDialog(title, label);
+        if (!options.action) {
+            options.action = this.dialogData.actions[0].id;
+        }
+        return options;
+    }
+
+    formatRollMessage(msgData) {
+        let result = this.formatRollResult(msgData.result, msgData.target);
         let locString = "DoD.roll.weaponRoll";
         let label = game.i18n.format(game.i18n.localize(locString), 
             {
-                action: game.i18n.localize("DoD.attackTypes." + this.data.action),
-                skill: this.data.weapon.name, 
+                action: game.i18n.localize("DoD.attackTypes." + msgData.action),
+                skill: msgData.weapon.name, 
                 result: result
             }
         );
 
         return {
             user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: this.data.actor }),
+            speaker: ChatMessage.getSpeaker({ actor: msgData.actor }),
             flavor: label
         };
     }
 
-    async getRollOptions() {
-
-        let label = game.i18n.localize("DoD.ui.dialog.skillRollLabel");
-        let title = game.i18n.localize("DoD.ui.dialog.skillRollTitle") + ": " + this.data.weapon.name;
-        let options = await this.getRollOptionsFromDialog(title, label);
-        if (!options.action) {
-            options.action = this.data.actions[0].id;
-        }
-        return options;
-    }
 
     processDialogOptions(form) {
         let options = super.processDialogOptions(form);
@@ -108,80 +108,81 @@ export default class DoDWeaponTest extends DoDSkillTest  {
                 }
             }
         }
+        if (options.action == "weakpoint") {
+            options.extraBanes++;
+        }
         return options;
     }
 
-    preRoll() {
-        super.preRoll();
-        if (this.options.action == "weakpoint") {
-            this.options.extraBanes++;
-        }
+    updatePreRollData() {
+        super.updatePreRollData();
+        this.preRollData.weapon = this.weapon;
+        this.preRollData.action = this.options.action;
     }
 
-    postRoll() {
-        super.postRoll();
+    updatePostRollData() {
+        super.updatePostRollData();
 
-        this.data.action = this.options.action;
-        switch(this.data.action) {
+        switch(this.postRollData.action) {
             case "slash":
-                this.data.damageType = DoD.damageTypes.slashing;
-                this.data.isDamaging = true;
+                this.postRollData.damageType = DoD.damageTypes.slashing;
+                this.postRollData.isDamaging = true;
                 break;
 
             case "stab":
-                this.data.damageType = DoD.damageTypes.piercing;
-                this.data.isDamaging = true;
+                this.postRollData.damageType = DoD.damageTypes.piercing;
+                this.postRollData.isDamaging = true;
                 break;
     
             case "weakpoint":
-                this.data.damageType = DoD.damageTypes.piercing;
-                this.data.isDamaging = true;
-                this.data.ignoreArmor = true;
+                this.postRollData.damageType = DoD.damageTypes.piercing;
+                this.postRollData.isDamaging = true;
+                this.postRollData.ignoreArmor = true;
                 break;
 
             case "topple":
             case "disarm":
             case "parry":
-                this.data.damageType = DoD.damageTypes.none;
-                this.data.isDamaging = false;
+                this.postRollData.damageType = DoD.damageTypes.none;
+                this.postRollData.isDamaging = false;
                 break;
             
             case "normal":
-                if (this.data.weapon.hasWeaponFeature("bludgeoning")) {
-                this.data.isDamaging = true;
-                    this.data.damageType = DoD.damageTypes.bludgeoning;
-                    this.data.isDamaging = true;
+                if (this.postRollData.weapon.hasWeaponFeature("bludgeoning")) {
+                this.postRollData.isDamaging = true;
+                    this.postRollData.damageType = DoD.damageTypes.bludgeoning;
+                    this.postRollData.isDamaging = true;
                     break;
                 }
 
             default:
-                this.data.damageType = DoD.damageTypes.none;
-                this.data.isDamaging = true;
+                this.postRollData.damageType = DoD.damageTypes.none;
+                this.postRollData.isDamaging = true;
         }
 
-        if (this.roll.result == 20) {
-            this.data.isMeleeMishap = true;
+        if (this.postRollData.result == 20) {
+            this.postRollData.isMeleeMishap = true;
         }
 
-        if (this.roll.result == 1 && this.data.action != "parry") {
-            this.data.isMeleeCrit = true;
-            this.data.meleeCritGroup = "meleeCritChoice"
-            this.data.meleeCritChoices = {};            
+        if (this.postRollData.result == 1 && this.postRollData.action != "parry") {
+            this.postRollData.isMeleeCrit = true;
+            this.postRollData.meleeCritGroup = "meleeCritChoice"
+            this.postRollData.meleeCritChoices = {};            
 
             // populate crit choices
-            if (this.data.isDamaging) {
-                this.data.meleeCritChoices.doubleWeaponDamage = game.i18n.localize("DoD.meleeCritChoices.doubleWeaponDamage");
+            if (this.postRollData.isDamaging) {
+                this.postRollData.meleeCritChoices.doubleWeaponDamage = game.i18n.localize("DoD.meleeCritChoices.doubleWeaponDamage");
             }
-            this.data.meleeCritChoices.extraAttack = game.i18n.localize("DoD.meleeCritChoices.extraAttack");
-            if (this.data.damageType == DoD.damageTypes.piercing && this.data.action != "weakpoint") {
-                this.data.meleeCritChoices.ignoreArmor = game.i18n.localize("DoD.meleeCritChoices.ignoreArmor");
+            this.postRollData.meleeCritChoices.extraAttack = game.i18n.localize("DoD.meleeCritChoices.extraAttack");
+            if (this.postRollData.damageType == DoD.damageTypes.piercing && this.postRollData.action != "weakpoint") {
+                this.postRollData.meleeCritChoices.ignoreArmor = game.i18n.localize("DoD.meleeCritChoices.ignoreArmor");
             }
 
             // set default choice
-            if (this.data.meleeCritChoices.doubleWeaponDamage) {
-                this.data.meleeCritChoice = "doubleWeaponDamage";
+            if (this.postRollData.meleeCritChoices.doubleWeaponDamage) {
+                this.postRollData.meleeCritChoice = "doubleWeaponDamage";
             } else {
-                this.data.meleeCritChoice = "extraAttack";
+                this.postRollData.meleeCritChoice = "extraAttack";
             }
         }
     }

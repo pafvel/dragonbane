@@ -56,7 +56,7 @@
     </div>
 
     {{!-- Spells --}}
-    {{#if hasPowerLevel}}
+    {{#if spell}}
     <div>
         <table class="derived-stat">
             <tr>
@@ -76,7 +76,7 @@
     {{/if}}
 
     {{!-- Weapons --}}
-    {{#if weapon}}
+    {{#if actions}}
     <div class="text-box">
         <div class="text-box-title">{{localize "DoD.ui.dialog.chooseAction"}}</div>
         <div class="weapon-action">

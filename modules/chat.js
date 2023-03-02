@@ -1,4 +1,8 @@
 import DoD_Utility from "./utility.js";
+import DoDAttributeTest from "./tests/attribute-test.js";
+import DoDSkillTest from "./tests/skill-test.js";
+import DoDWeaponTest from "./tests/weapon-test.js";
+import DoDSpellTest from "./tests/spell-test.js";
 
 export function addChatListeners(app, html, data) {
     html.on("click", "button.weapon-roll", onWeaponDamageRoll);
@@ -114,6 +118,64 @@ async function onMagicDamageRoll(event) {
 
 function onPushRoll(event) {
     console.log("onPushRoll");
+    const element = event.currentTarget;
+    const actorId = element.dataset.actorId;
+    const actor = DoD_Utility.getActorFromUUID(actorId);
+    if (!actor) return;    
+
+    // Take condition
+    const parent = element.parentElement;
+    const pushChoices = parent.getElementsByTagName("input");
+    const choice = Array.from(pushChoices).find(e => e.name=="pushRollChoice" && e.checked);
+    if (!actor.hasCondition(choice.value)) {
+        actor.updateCondition(choice.value, true);
+        const msg = game.i18n.format("DoD.ui.chat.takeCondition", 
+            {
+                actor: actor.name,
+                condition: game.i18n.localize("DoD.conditions." + choice.value)
+            });
+        ChatMessage.create({ 
+            content: msg,
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: actor })
+        });
+    } else {
+        DoD_Utility.WARNING("DoD.WARNING.conditionAlreadyTaken");
+        return;
+    }
+
+    // Re-roll
+    const options = {
+        actorId: element.dataset.actorId,
+        attribute: element.dataset.attribute,
+        formula: element.dataset.formula,
+        canPush: false,
+        skipDialog: true
+    }
+    let test = null;
+    switch (element.dataset.rollType) {
+        case "DoDAttributeTest":
+            test = new DoDAttributeTest(actor, options.attribute, options);
+            break;
+        case "DoDSkillTest":
+            options.skill = actor.findSkill(element.dataset.skillName)
+            test = new DoDSkillTest(actor, options.skill, options);
+            break;
+        case "DoDWeaponTest":
+            options.action = element.dataset.action;
+            options.weapon = fromUuidSync(element.dataset.weaponId);
+            test = new DoDWeaponTest(actor, options.weapon, options);
+            break;
+        case "DoDSpellTest":
+            options.spell = actor.findSpell(element.dataset.spellName);
+            options.powerLevel = element.dataset.powerLevel;
+            options.wpCost = 0;
+            test = new DoDSpellTest(actor, options.spell, options);
+            break;
+        default:
+            return;
+    }
+    test?.roll();
 }
 
 export async function inflictDamageMessage(damageData) {

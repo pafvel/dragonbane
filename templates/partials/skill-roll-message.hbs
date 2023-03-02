@@ -44,7 +44,27 @@
 {{else}}
 
     {{#if canPush}}
-    <button class="chat-button push-roll">Push Roll</button>
+    <div>
+        <button class="chat-button push-roll"
+            data-actor-id="{{actor.uuid}}"
+            data-attribute="{{attribute}}"
+            data-formula="{{formula}}"
+            data-roll-type="{{rollType}}"
+            data-skill-name="{{skill.name}}"
+            data-weapon-id="{{weapon.uuid}}"
+            data-action="{{action}}"
+            data-spell-name="{{spell.name}}"
+            data-power-level="{{powerLevel}}"
+            >
+            {{localize "DoD.roll.pushButtonLabel"}}
+        </button>
+        <div class="form-group">
+            <label>{{localize "DoD.roll.pushChoiceLabel"}}</label>
+            <div class="form-fields">
+                {{radioBoxes pushRollChoiceGroup pushRollChoices checked=pushRollChoice localize=false}}
+            </div>
+        </div>
+    </div>
     {{/if}}
     
     {{#if isMeleeMishap}}

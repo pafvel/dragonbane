@@ -147,7 +147,10 @@
             "spellRoll": "Skill roll for <b>{spell}</b> at <b>Power Level {powerLevel}</b> <b>{result}</b>",
             "weaponRoll": "Skill roll for <b>{action}</b> with <b>{skill}</b> <b>{result}</b>",
             "damage": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType} Damage</b> using <b>{weapon}</b>.",
-            "damageIgnoreArmor": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType} Damage ignoring armor</b> using <b>{weapon}</b>."
+            "damageIgnoreArmor": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType} Damage ignoring armor</b> using <b>{weapon}</b>.",
+            "pushButtonLabel": "Push roll",
+            "pushChoiceLabel": "Choose condition:"
+
         },
         "shield": {
             "durability": "Durability"
@@ -282,7 +285,8 @@
                 "dealDamage": "Deal damage",
                 "dealHalfDamage": "Deal half damage",
                 "dealDoubleDamage": "Deal double damage",
-                "choose": "Choose"
+                "choose": "Choose",
+                "takeCondition": "{actor} becomes {condition}."
             },
             "dialog": {
                 "banes": "Banes",
@@ -306,7 +310,8 @@
             "profession": "Could not find Profession: {profession}",
             "professionSkill": "Could not find Profession Skill: {skill}",
             "notEnoughWPForSpell": "Not enough Willpower Points to cast spell",
-            "actorNotFound": "Can'r find actor with id: {id}"
+            "actorNotFound": "Can'r find actor with id: {id}",
+            "conditionAlreadyTaken": "The condition is already taken"
         }
     }
 }

@@ -261,6 +261,20 @@ export class DoDActor extends Actor {
         return this.items.find(item => item.type == "skill" && item.name.toLowerCase() == name);
     }
 
+    findSpell(spellName) {
+        let name = spellName.toLowerCase();
+        return this.items.find(item => item.type == "spell" && item.name.toLowerCase() == name);
+    }
+
+    hasCondition(attributeName) {
+        return this.system.conditions[attributeName].value;
+    }
+
+    updateCondition(attributeName, value) {
+        const field = "system.conditions." + attributeName + ".value";
+        this.update({[field]: value})
+    }
+
     async removeKin() {
         let ids = [];
         //  kin items
