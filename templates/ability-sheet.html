@@ -30,6 +30,17 @@
             </tr>
         </table>
 
+        <table>
+            <tr>
+                <th>{{localize "DoD.ui.dialog.boons"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <input name="data.boons" type="text" value="{{data.boons}}" />
+                </td>
+            </tr>
+        </table>
+
         {{editor data.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
     </div>
 </form>

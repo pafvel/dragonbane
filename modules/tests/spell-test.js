@@ -24,11 +24,12 @@ export default class DoDSpellTest extends DoDSkillTest  {
         let options = await this.getRollOptionsFromDialog(title, label);
         if (options.cancelled) return options;
        
-        // If dialog was skipped, set default value
-        options.hasPowerLevel = this.hasPowerLevel;
-        options.powerLevel = options.hasPowerLevel ? (this.options.powerLevel ?? 1) : 0;
-
-        const wpCost = this.spell.getSpellCost(options.powerLevel);
+        // Check if the character has enough WP to cast spell
+        let powerLevel = this.hasPowerLevel ? 1 : 0;
+        if (!this.skipDialog && this.hasPowerLevel) {
+            powerLevel = options.powerLevel;
+        }
+        const wpCost = this.spell.getSpellCost(powerLevel);
         const wp = this.actor.system.willPoints.value;
         if (wpCost > wp) {
             DoD_Utility.WARNING("DoD.WARNING.notEnoughWPForSpell");

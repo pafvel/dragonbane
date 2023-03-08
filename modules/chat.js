@@ -241,7 +241,7 @@ export async function applyDamageMessage(damageData) {
     
     const damageMessage = game.i18n.format(game.i18n.localize("DoD.ui.chat.damageApplied"), {damage: damageToApply, actor: actor.name});
     const damageDetails = game.i18n.format(game.i18n.localize("DoD.ui.chat.damageAppliedDetails"), {damage: damage, armor: armorValue});
-    const msg = damageMessage + "<br/><br/>" + damageDetails;
+    let msg = damageMessage + "<br/><br/>" + damageDetails;
     if (multiplier != 1) {
         msg += "<br>" + game.i18n.format(game.i18n.localize("DoD.ui.chat.damageAppliedMultiplier"), {multiplier: multiplier});
     }

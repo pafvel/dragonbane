@@ -93,14 +93,14 @@ export default class DoDTest {
         let rollTarget = this.skill ? this.skill.name.toLowerCase() : this.attribute;
 
         for (let item of this.actor.items.contents) {
-            if (item.system.banes) {
+            if (item.system.banes?.length) {
                 let itemBanes = DoD_Utility.splitAndTrimString(item.system.banes.toLowerCase());
                 if (itemBanes.find(element => element.toLowerCase() == rollTarget)) {
                     let value = item.system.worn ? true : false;
                     banes.push( {source: item.name, value: value});    
                 }
             }
-            if (item.system.boons) {
+            if (item.system.boons?.length) {
                 let itemBoons = DoD_Utility.splitAndTrimString(item.system.boons.toLowerCase());
                 if (itemBoons.find(element => element.toLowerCase() == rollTarget)) {
                     let value = item.system.worn ? true : false;

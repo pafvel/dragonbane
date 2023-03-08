@@ -68,9 +68,6 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         let label = game.i18n.localize("DoD.ui.dialog.skillRollLabel");
         let title = game.i18n.localize("DoD.ui.dialog.skillRollTitle") + ": " + this.weapon.name;
         let options = await this.getRollOptionsFromDialog(title, label);
-        if (!options.action) {
-            options.action = this.dialogData.actions[0].id;
-        }
         return options;
     }
 
@@ -117,7 +114,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
     updatePreRollData() {
         super.updatePreRollData();
         this.preRollData.weapon = this.weapon;
-        this.preRollData.action = this.options.action;
+        this.preRollData.action = this.options.action ?? this.dialogData.actions[0].id;
     }
 
     updatePostRollData() {
