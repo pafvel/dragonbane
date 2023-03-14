@@ -10,7 +10,7 @@ export default class DoDCharacterSheet extends ActorSheet {
     
     static get defaultOptions() {
         return mergeObject(super.defaultOptions,  {
-            width: 680,
+            width: 700,
             height: 775,
             classes: ["DoD", "sheet", "character"],
             dragDrop: [{ dragSelector: ".item-list .item", dropSelector: null}],

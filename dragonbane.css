@@ -124,33 +124,32 @@
   width: 450px;
 }
 .DoD.sheet.character .character-header {
-  width: 680px;
+  width: 700px;
 }
 .DoD.sheet.character .sheet-header {
   top: 4px;
-  padding: 8px;
+  padding: 8px 8px 0px 8px;
   flex-direction: row;
 }
 .DoD.sheet.character .sheet-header .image-container {
-  display: flex;
-  flex-direction: column;
-  height: 128px;
-  width: 128px;
+  height: 140px;
+  width: 154px;
   min-height: 128px;
-  min-width: 128px;
-  align-items: center;
-  justify-content: center;
+  flex-grow: 0;
+  text-align: center;
 }
 .DoD.sheet.character .sheet-header .image-container img {
   height: 128px;
   width: 128px;
+  margin: 0px;
   border: 0px solid transparent;
 }
 .DoD.sheet.character .sheet-header .image-container h1 {
-  position: absolute;
-  width: 160px;
-  top: 128px;
-  background-image: url("art/ui/banner-name-straight.webp");
+  position: relative;
+  width: 154px;
+  top: -40px;
+  left: calc(0.5 * (100% - 154px));
+  background-image: url("art/ui/banner-name-straight-compact.webp");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -165,9 +164,7 @@
   font-weight: bold;
   border: 0px;
   background: transparent;
-  padding-top: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding: 10px 5px 0px 5px;
   margin-top: 0px;
   margin-bottom: 0px;
 }
@@ -296,6 +293,7 @@
   display: flex;
 }
 .DoD.sheet.character .sheet-content {
+  min-width: 440px;
   padding: 8px;
   padding-top: 0px;
   height: 100%;
