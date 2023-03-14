@@ -4,7 +4,11 @@
             <label>{{localize "DoD.ui.character-sheet.willPoints"}}</label>
         </div>
         <div class="will-points-max-box">
+            {{#if actor.isCharacter}}
             <label class="will-points-max-label">{{maxWP}}</label>
+            {{else}}
+            <input class="will-points-max-label" type="number" value="{{data.willPoints.max}}" data-dtype="Number" />
+            {{/if}}
         </div>
         <div class="will-points-box">
             {{#times lostWP}}
@@ -18,5 +22,4 @@
             {{/times}}
         </div>
     </div>    
-
 </section>

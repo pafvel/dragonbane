@@ -81,13 +81,8 @@ export default class DoDTest {
         let banes = [];
         let boons = [];
 
-        if (this.attribute) {
-            const condition = this.actor.system.conditions[this.attribute];
-            const name = game.i18n.localize("DoD.conditions." + this.attribute);
-
-            if (condition?.value) {
-                banes.push( {source: name, value: true});
-            }
+        if (this.attribute && this.actor.hasCondition(this.attribute)) {
+            banes.push( {source: game.i18n.localize("DoD.conditions." + this.attribute), value: true});
         }
 
         let rollTarget = this.skill ? this.skill.name.toLowerCase() : this.attribute;

@@ -25,6 +25,16 @@ DoD.castingTimeTypes = {
     shift: "DoD.castingTimeTypes.shift"
 };
 
+DoD.dice = {
+    none: "",
+    d4: "DoD.dice.d4",
+    d6: "DoD.dice.d6",
+    d8: "DoD.dice.d8",
+    d10: "DoD.dice.d10",
+    d12: "DoD.dice.d12",
+    d20: "DoD.dice.d20"
+};
+
 DoD.damageTypes = {
     none: "DoD.damageTypes.none",
     bludgeoning: "DoD.damageTypes.bludgeoning",

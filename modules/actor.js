@@ -56,7 +56,20 @@ export class DoDActor extends Actor {
     prepareEmbeddedDocuments() {
         super.prepareEmbeddedDocuments();
         
-        if (this.type == 'character') return this._prepareEquippedItems();
+        switch(this.type)
+        {
+            case "character":
+                this._prepareEquippedItems();
+                break;
+            case "npc":
+                this._prepareEquippedItems();
+                break;
+            case "monster":
+                break;
+            default:
+                break;
+        }
+
     }
 
     prepareDerivedData() {
@@ -73,6 +86,8 @@ export class DoDActor extends Actor {
             case "monster":
                 this._prepareMonsterData();
                 break;
+            default:
+                break;
         }
     }
 
@@ -88,6 +103,9 @@ export class DoDActor extends Actor {
     }
 
     _prepareNpcData() {
+        this._prepareActorStats();
+        this._prepareNpcStats();
+        this._prepareSpellValues();
     }
 
     _prepareMonsterData() {
@@ -135,15 +153,12 @@ export class DoDActor extends Actor {
                 this.system.skills.push(skill);
                 if (skill.system.skillType == 'core') {
                     this.system.coreSkills.push(skill);
-                    
-                    let value = this._getAttributeValueFromName(skill.system.attribute);
-                    if(skill.system.value > DoD_Utility.calculateBaseChance(value)) {
+                    if(skill.system.value > this._getBaseChance(skill)) {
                         this.system.trainedSkills.push(skill);
                     }
                 }  else if (skill.system.skillType == 'weapon') {
                     this.system.weaponSkills.push(skill);
-                    let value = this._getAttributeValueFromName(skill.system.attribute);
-                    if(skill.system.value > DoD_Utility.calculateBaseChance(value)) {
+                    if(skill.system.value > this._getBaseChance(skill)) {
                         this.system.trainedSkills.push(skill);
                     }
                 } else if (skill.system.skillType == 'magic') {
@@ -212,6 +227,30 @@ export class DoDActor extends Actor {
 
     _prepareActorStats() {
 
+        // Will Points
+        if (!Number.isInteger(this.system.willPoints.max)) {
+            this.update({ 
+                ["system.willPoints.max"]: 10,
+                ["system.willPoints.value"]: 10 });
+        }
+    }
+
+    _prepareNpcStats() {
+
+    }
+
+    _getBaseChance(skill) {
+        switch (this.type) {
+            case "character":
+                const value = this._getAttributeValueFromName(skill.system.attribute);
+                return DoD_Utility.calculateBaseChance(value);
+            case "npc":
+                return 5;
+            case "monster":
+                return 0;
+            default:
+                return 0;
+        }
     }
 
     _getAttributeValueFromName(name) {
@@ -221,17 +260,27 @@ export class DoDActor extends Actor {
     }
 
     _prepareBaseChances() {
-        for (let item of this.items.contents) {
+        for (const item of this.items.contents) {
             if (item.type == "skill") {
-                let skill = item;
-                let name = skill.system.attribute;
-                let value = this._getAttributeValueFromName(name);
-                skill.baseChance = DoD_Utility.calculateBaseChance(value);
-                if ((skill.system.skillType == "core" || skill.system.skillType == "weapon") && skill.system.value < skill.baseChance) {
-                    skill.system.value = skill.baseChance;
+                const skill = item;
+                const baseChance = this._getBaseChance(skill);
+                if ((skill.system.skillType == "core" || skill.system.skillType == "weapon") && skill.system.value < baseChance) {
+                    skill.system.value = baseChance;
                 }
             }
         }
+    }
+
+    get isCharacter() {
+        return this.type == "character";
+    }
+
+    get isNpc() {
+        return this.type == "npc";
+    }
+
+    get isMonster() {
+        return this.type == "monster";
     }
 
     getArmorValue(damageType) {
@@ -267,7 +316,7 @@ export class DoDActor extends Actor {
     }
 
     hasCondition(attributeName) {
-        return this.system.conditions[attributeName].value;
+        return this.system.conditions ? this.system.conditions[attributeName].value : false;
     }
 
     updateCondition(attributeName, value) {

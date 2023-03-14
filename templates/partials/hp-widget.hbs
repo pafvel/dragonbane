@@ -1,10 +1,18 @@
 <section>
+    {{#if actor.isCharacter}}
     <div class="hit-points">
+    {{else}}
+    <div class="hit-points-npc">
+    {{/if}}
         <div class="hit-points-text-label">
             <label>{{localize "DoD.ui.character-sheet.hitPoints"}}</label>
         </div>
         <div class="hit-points-max-box">
+            {{#if actor.isCharacter}}
             <label class="hit-points-max-label">{{maxHP}}</label>
+            {{else}}
+            <input class="hit-points-max-label" type="number" value="{{data.hitPoints.max}}" data-dtype="Number" />
+            {{/if}}
         </div>
         <div class="hit-points-box">
             {{#times lostHP}}
@@ -17,6 +25,7 @@
             <img class="hit-point invisible" src=""/>
             {{/times}}
         </div>
+        {{#if actor.isCharacter}}
         <div class="death-rolls-box">
             <table>
                 <tr>
@@ -44,5 +53,6 @@
                 </tr>
             </table>
         </div>
+        {{/if}}
     </div>
 </section>

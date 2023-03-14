@@ -18,9 +18,49 @@ export default class DoDCharacterSheet extends ActorSheet {
         });
     }
 
-    get template() {
-        return `systems/dragonbane/templates/character-sheet.html`;
+    #focusElement;
+
+    constructor(object, options) {
+        super(object, options);
+
+        this.#focusElement = null;
     }
+
+    get template() {
+        return `systems/dragonbane/templates/${this.actor.type}-sheet.html`;
+    }
+
+    async close(options) {
+        document.removeEventListener('keyup', this.keyupListener);
+        return super.close(options);
+     }   
+  
+     render(force, options) {
+        this.keyupListener = this.#onKeyup.bind(this);
+        document.addEventListener('keyup', this.keyupListener);
+        return super.render(force, options);
+     }
+
+     #onKeyup(event) {
+        if (event.code === "Delete" && this.#focusElement) {
+            // Don't delete items if an input element has focus
+            if (event.currentTarget?.activeElement.nodeName.toLowerCase() === "input") {
+                return;
+            }
+            event.preventDefault();
+            event.stopImmediatePropagation();            
+            const itemId = this.#focusElement.dataset.itemId;
+            const item = this.actor.items.get(itemId);
+
+            this.#focusElement = null;
+
+            if (item.type === "skill") {
+                return item.update({ ["system.value"]: 0}); 
+            } else {
+                return this.actor.deleteEmbeddedDocuments("Item", [itemId]);
+            }
+        }
+     }    
 
     getData() {
         const baseData = super.getData();
@@ -34,9 +74,9 @@ export default class DoDCharacterSheet extends ActorSheet {
         };
 
         // Prepare character data and items.
-        if (sheetData.actor.type == 'character') {
+        //if (sheetData.actor.type == 'character') {
             this._prepareItems(sheetData);
-        }        
+        //}        
 
         return sheetData;
     }
@@ -143,7 +183,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                 continue;
             }
         }
-
+        
         // Kin and Profession
         sheetData.kin = sheetData.actor.system.kin;
         sheetData.kinName = sheetData.kin?.name;
@@ -181,10 +221,12 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.fillHP = sheetData.maxHP < 11 ? 11 - sheetData.maxHP : 0; // needed for layout
 
         // Death rolls widget data
-        sheetData.deathRollsSuccesses = sheetData.actor.system.deathRolls.successes;
-        sheetData.deathRollsSuccessesRemaining = 3 - sheetData.deathRollsSuccesses;
-        sheetData.deathRollsFailures = sheetData.actor.system.deathRolls.failures;
-        sheetData.deathRollsFailuresRemaining = 3 - sheetData.deathRollsFailures;
+        if (this.actor.type == "character") {
+            sheetData.deathRollsSuccesses = sheetData.actor.system.deathRolls.successes;
+            sheetData.deathRollsSuccessesRemaining = 3 - sheetData.deathRollsSuccesses;
+            sheetData.deathRollsFailures = sheetData.actor.system.deathRolls.failures;
+            sheetData.deathRollsFailuresRemaining = 3 - sheetData.deathRollsFailures;
+        }
 
         // WP widget data
         sheetData.maxWP = sheetData.actor.system.willPoints.max;
@@ -195,29 +237,36 @@ export default class DoDCharacterSheet extends ActorSheet {
     }  
 
     _updateEncumbrance(sheetData) {
-        sheetData.maxEncumbrance = Math.ceil(0.5 * this.actor.system.attributes.str.value);
-        sheetData.encumbrance = 0;
-        if (sheetData.inventory) {
-            sheetData.inventory.forEach(item => sheetData.encumbrance += item.totalWeight);
+        if (this.actor.type == "character") {
+            sheetData.maxEncumbrance = Math.ceil(0.5 * this.actor.system.attributes.str.value);
+            sheetData.encumbrance = 0;
+            if (sheetData.inventory) {
+                sheetData.inventory.forEach(item => sheetData.encumbrance += item.totalWeight);
+            }
+            let coins = sheetData.actor.system.currency.gc + sheetData.actor.system.currency.sc + sheetData.actor.system.currency.cc;
+            sheetData.encumbrance += Math.floor(coins/100);
+            
+            sheetData.overEncumbered = sheetData.encumbrance > sheetData.maxEncumbrance;
         }
-        let coins = sheetData.actor.system.currency.gc + sheetData.actor.system.currency.sc + sheetData.actor.system.currency.cc;
-        sheetData.encumbrance += Math.floor(coins/100);
-        
-        sheetData.overEncumbered = sheetData.encumbrance > sheetData.maxEncumbrance;
     }
 
     activateListeners(html) {
 
-        html.find(".item-edit").click(this._onItemEdit.bind(this));
+        html.find(".item-edit").on("click contextmenu", this._onItemEdit.bind(this));
 
         if (this.object.isOwner) {
+
+            // // Elements need focus for the keydown event to to work
+            html.find(".item-delete-key").mouseenter(event => { this.#focusElement = event.currentTarget; });
+            html.find(".item-delete-key").mouseleave(event => { this.#focusElement = null; });
+
             html.find(".inline-edit").change(this._onInlineEdit.bind(this));
             html.find(".kin-edit").change(this._onKinEdit.bind(this));
             html.find(".profession-edit").change(this._onProfessionEdit.bind(this));
             html.find(".item-delete").click(this._onItemDelete.bind(this));
 
             html.find(".rollable-attribute").click(this._onAttributeRoll.bind(this));
-            html.find(".rollable-skill").click(this._onSkillRoll.bind(this));
+            html.find(".rollable-skill").on("click contextmenu", this._onSkillRoll.bind(this));
             html.find(".rollable-damage").click(this._onDamageRoll.bind(this));
 
             html.find(".hit-points-box").on("click contextmenu", this._onHitPointClick.bind(this));
@@ -227,13 +276,17 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".death-rolls-success-label").on("click contextmenu", this._onDeathRollsSuccessClick.bind(this));
             html.find(".death-rolls-failure").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
             html.find(".death-rolls-failure-label").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
+
+            html.find(".hit-points-max-label").change(this._onEditHp.bind(this));
+            html.find(".will-points-max-label").change(this._onEditWp.bind(this));
+
         }
         super.activateListeners(html);
     }
 
     _onHitPointClick(event) {
         event.preventDefault();
-
+  
         let hp = this.actor.system.hitPoints; 
         if (event.type == "click") { // left click
             if (hp.value > 0) {
@@ -299,14 +352,45 @@ export default class DoDCharacterSheet extends ActorSheet {
         let item = this.actor.items.get(itemId);
         let field = element.dataset.field;
 
+        event.currentTarget.blur();
+
         if (element.type == "checkbox"){
             return item.update({ [field]: element.checked});
         }        
         return item.update({ [field]: Number(element.value)});
     }
 
+    _onEditHp(event) {
+        event.preventDefault();
+        event.currentTarget.blur();
+
+        const newMax = Math.max(1, Math.floor(event.currentTarget.value));
+        const currentDamage = Math.max(0, this.actor.system.hitPoints.max - this.actor.system.hitPoints.value);
+        const newValue = Math.max(0, newMax - currentDamage);        
+
+        return this.actor.update({
+            ["system.hitPoints.max"]: newMax,
+            ["system.hitPoints.value"]: newValue
+        });
+    }
+
+    _onEditWp(event) {
+        event.preventDefault();
+        event.currentTarget.blur();
+
+        const newMax = Math.max(1, Math.floor(event.currentTarget.value));
+        const currentDamage = Math.max(0, this.actor.system.willPoints.max - this.actor.system.willPoints.value);
+        const newValue = Math.max(0, newMax - currentDamage);       
+        
+        return this.actor.update({
+            ["system.willPoints.max"]: newMax,
+            ["system.willPoints.value"]: newValue
+        });        
+    }
+
     async _onKinEdit(event) {
         event.preventDefault();
+        event.currentTarget.blur();
         let kinName = event.currentTarget.value;
         let kin = await DoD_Utility.findKin(kinName);
         if (!kin) {
@@ -321,6 +405,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
     async _onProfessionEdit(event) {
         event.preventDefault();
+        event.currentTarget.blur();
         let professionName = event.currentTarget.value;
         let profession = await DoD_Utility.findProfession(professionName);
         if (!profession) {
@@ -354,31 +439,46 @@ export default class DoDCharacterSheet extends ActorSheet {
         item.sheet.render(true);
     }
 
+    _onItemKeyDown(event) {
+        event.preventDefault();
+
+        // Del key
+        if (event.keyCode == 46) {
+            let element = event.currentTarget;
+            let itemId = element.dataset.itemId;
+            return this.actor.deleteEmbeddedDocuments("Item", [itemId]);
+        }
+    }
+
  
     async _onSkillRoll(event) {
         event.preventDefault();
 
         let itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
         let item = this.actor.items.get(itemId);
-        let test = null;
 
-        let options = null;
-        if (event.shiftKey || event.ctrlKey) {
-            options = {
-                noBanesBoons: event.shiftKey,
-                defaultBanesBoons: event.ctrlKey
-            };
-        }
+        if (event.type == "click") { // left click - skill roll
+            let test = null;
+            let options = null;
+            if (event.shiftKey || event.ctrlKey) {
+                options = {
+                    noBanesBoons: event.shiftKey,
+                    defaultBanesBoons: event.ctrlKey
+                };
+            }
 
-        if (item.type == "skill") {
-            test = new DoDSkillTest(this.actor, item, options);
-        } else if (item.type == "spell") {
-            test = new DoDSpellTest(this.actor, item, options);
-        } else if (item.type == "weapon") {
-            test = new DoDWeaponTest(this.actor, item, options);
-        }
-        if (test) {
-            await test.roll();
+            if (item.type == "skill") {
+                test = new DoDSkillTest(this.actor, item, options);
+            } else if (item.type == "spell") {
+                test = new DoDSpellTest(this.actor, item, options);
+            } else if (item.type == "weapon") {
+                test = new DoDWeaponTest(this.actor, item, options);
+            }
+            if (test) {
+                await test.roll();
+            }
+        } else { // right click - edit item
+            item.sheet.render(true);
         }
     }
 

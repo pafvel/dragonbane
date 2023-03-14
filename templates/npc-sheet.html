@@ -1,0 +1,72 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header npc-header">
+        <div class="flexcol">
+            <div class="flexrow">
+                <div class="image-container">
+                    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+                    <h1>
+                        <input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
+                    </h1>
+                </div>
+                <div>
+                    <table class="derived-stat">
+                        <tr>
+                            
+                            <th>{{localize "DoD.ui.character-sheet.damageBonusSTR"}}</th>
+                            <td>
+                                <select name="data.damageBonus.str">
+                                    {{#select data.damageBonus.str}}
+                                    {{#each config.dice as |name type|}}
+                                    <option value="{{type}}">{{localize name}}</option>
+                                    {{/each}}
+                                    {{/select}}
+                                </select>
+                            </td>
+                            </tr>
+                        <tr>
+                            <th>{{localize "DoD.ui.character-sheet.damageBonusAGL"}}</th>
+                            <td>
+                                <select name="data.damageBonus.agi">
+                                    {{#select data.damageBonus.agi}}
+                                    {{#each config.dice as |name type|}}
+                                    <option value="{{type}}">{{localize name}}</option>
+                                    {{/each}}
+                                    {{/select}}
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>{{localize "DoD.ui.character-sheet.movement"}}</th>
+                            <td><input name="data.movement" type="text" value="{{data.movement}}" data-dtype="Number" /></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="flexrow">
+                {{> "systems/dragonbane/templates/partials/hp-widget.hbs" }}
+                {{> "systems/dragonbane/templates/partials/wp-widget.hbs" }}
+            </div>
+        </div>
+    </header>
+    <div class="sheet-content">
+        {{!-- Sheet Tab Navigation --}}
+        <nav class="sheet-tabs tabs" data-group="primary">
+          {{!-- Default tab is specified in dod-character-sheet.js --}}
+          <a class="item" data-tab="main">{{localize "DoD.ui.character-sheet.main"}}</a>
+          <a class="item" data-tab="skills">{{localize "DoD.ui.character-sheet.skills"}}</a>
+          <a class="item" data-tab="inventory">{{localize "DoD.ui.character-sheet.inventory"}}</a>
+        </nav>
+
+        {{!-- Sheet Body --}}
+        <section class="sheet-body">
+            {{!-- Main Tab --}}
+            {{> "systems/dragonbane/templates/partials/npc-sheet-main.hbs" }}
+            
+            {{!-- Skills Tab --}}
+            {{> "systems/dragonbane/templates/partials/npc-sheet-skills.hbs" }}
+
+            {{!-- Inventory Tab --}}
+            {{> "systems/dragonbane/templates/partials/npc-sheet-inventory.hbs" }}
+        </section>
+    </div>
+</form>

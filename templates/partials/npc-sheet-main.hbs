@@ -1,0 +1,72 @@
+<div class="tab main" data-group="primary" data-tab="main">
+    <div class="main-tab flexcol">
+
+        {{!-- Trained Skills & Abilities --}}
+        <div class="text-box">
+            <table>
+                <tr>
+                    <th><b>{{localize "DoD.ui.character-sheet.trained-skills"}}</b></th>
+                    <td class="comma-list">
+                        {{#each trainedSkills as |skill skillId|}}
+                        <a class="rollable-skill sheet-table-data item-delete-key" data-item-id="{{skill.id}}">{{skill.name}} {{skill.system.value}}</a>
+                        {{/each}}
+                    </td>
+                </tr>
+                {{#if spells}}
+                <tr>
+                    <th><b>{{localize "DoD.ui.character-sheet.spells"}}</b></th>
+                    <td class="comma-list">
+                        {{#each spells as |spell spellId|}}
+                        <a class="rollable-skill sheet-table-data item-delete-key" data-item-id="{{spell.id}}">
+                            {{spell.name}} {{spell.system.skillValue}}
+                        </a>
+                        {{/each}}
+                    </td>
+                </tr>
+                {{/if}}
+
+                <tr>
+                    <th><b>{{localize "DoD.ui.character-sheet.abilities"}}</b></th>
+                    <td class="comma-list">
+                        {{#each abilities as |ability abilityId|}}
+                        <a class="sheet-table-data item-edit item-delete-key" tabindex="-1" data-item-id="{{ability.id}}">{{ability.name}}</a>
+                        {{/each}}
+                    </td>
+                </tr>
+
+                {{#if equippedWeapons}}
+                <tr class="item-list">
+                    <th><b>{{localize "DoD.ui.character-sheet.weapons"}}</b></th>
+                    <td class="comma-list">
+                        {{#each equippedWeapons as |weapon weaponId|}}
+                        <a class="rollable-skill sheet-table-data item-delete-key item" data-item-id="{{weapon.id}}">
+                            {{weapon.name}} {{weapon.system.skill.value}} ({{weapon.system.damage}})</a>
+                        {{/each}}
+                    </td>
+
+                </tr>
+                {{/if}}
+
+                <tr class="item-list">
+                    <th><b>{{localize "DoD.ui.character-sheet.equipped-armor"}}</b></th>
+                    <td class="comma-list">
+                        {{#if equippedArmor}}
+                        <a class="item-edit sheet-table-data item-delete-key item" data-item-id="{{equippedArmor.id}}">
+                            {{equippedArmor.name}} ({{equippedArmor.system.rating}})</a>
+                        {{/if}}
+                        {{#if equippedHelmet}}
+                        <a class="item-edit sheet-table-data item-delete-key item" data-item-id="{{equippedHelmet.id}}">
+                            {{equippedHelmet.name}} ({{equippedHelmet.system.rating}})</a>
+                        {{/if}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        {{!-- Notes --}}
+        <div>
+            <a>{{localize "DoD.ui.character-sheet.notes"}}</a>
+            {{editor data.notes target="system.notes" engine="prosemirror" button=true owner=owner editable=editable}}
+        </div>
+    </div>
+</div>

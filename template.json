@@ -50,7 +50,7 @@
                 }
             },
             "actorStats": {
-                "movement": 0,
+                "movement": 10,
                 "hitPoints": {
                     "value": 10,
                     "max": 10
