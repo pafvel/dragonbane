@@ -243,6 +243,7 @@
                 "damageBonusAGL": "Dmg Bonus AGL",
                 "damageBonusSTR": "Dmg Bonus STR",
                 "deathRolls": "Death Rolls",
+                "description": "Description",
                 "encumbrance": "Encumbrance",
                 "equipped-armor": "Equipped Armor",
                 "equipped-helmet": "Equipped Helm",

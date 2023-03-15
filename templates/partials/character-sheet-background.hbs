@@ -27,18 +27,33 @@
             </table>
         </div>
         <div class="flexrow">
-            <div>
-                <a>{{localize "DoD.ui.character-sheet.motivation"}}</a>
-                {{editor data.motivation target="system.motivation" button=true engine="prosemirror" owner=owner editable=editable}}
+
+            <div class="dod-text-container">
+                <div class="dod-text-container-label">
+                    <label>
+                        {{localize "DoD.ui.character-sheet.motivation"}}
+                    </label>
+                </div>
+                {{editor data.motivation target="system.motivation" engine="prosemirror" button=true owner=owner editable=editable}}
             </div>
-            <div>
-                <a>{{localize "DoD.ui.character-sheet.appearance"}}</a>
+            <div class="dod-text-container">
+                <div class="dod-text-container-label">
+                    <label>
+                        {{localize "DoD.ui.character-sheet.appearance"}}
+                    </label>
+                </div>
                 {{editor data.appearance target="system.appearance" engine="prosemirror" button=true owner=owner editable=editable}}
             </div>
         </div>
         <div>
-            <a>{{localize "DoD.ui.character-sheet.notes"}}</a>
-            {{editor data.notes target="system.notes" engine="prosemirror" button=true owner=owner editable=editable}}
+            <div class="dod-text-container">
+                <div class="dod-text-container-label">
+                    <label>
+                        {{localize "DoD.ui.character-sheet.notes"}}
+                    </label>
+                </div>
+                {{editor data.notes target="system.notes" engine="prosemirror" button=true owner=owner editable=editable}}
+            </div>
         </div>
     </div>
     <hr>

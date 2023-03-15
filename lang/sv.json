@@ -240,6 +240,7 @@
                 "damageBonusAGL": "Skadebonus SMI",
                 "damageBonusSTR": "Skadebonus STY",
                 "deathRolls": "Döds-\nslag",
+                "description": "Beskrivning",
                 "encumbrance": "Belastning",
                 "equipped-armor": "Rustning",
                 "equipped-helmet": "Hjälm",
