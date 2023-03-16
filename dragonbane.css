@@ -981,6 +981,10 @@
   display: flex;
   flex-wrap: nowrap;
 }
+.system-dragonbane .flex-justify-center {
+  display: flex;
+  justify-content: center;
+}
 .system-dragonbane .comma-list a::after {
   content: ", ";
 }
