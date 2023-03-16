@@ -21,8 +21,20 @@ export default class DoDCharacterSheet extends ActorSheet {
     #focusElement;
 
     constructor(object, options) {
-        super(object, options);
+        switch (object.type) {
+            case "character":
+                break;
+            case "monster":
+                break;
+            case "npc":
+                options.width = 480;
+                options.height = 600;
+                break;
+            default:
+                break;
+        }
 
+        super(object, options);
         this.#focusElement = null;
     }
 
@@ -66,17 +78,21 @@ export default class DoDCharacterSheet extends ActorSheet {
         const baseData = super.getData();
 
         let sheetData = {
-            owner: true,
+            owner: baseData.actor.isOwner,
+            observer: baseData.actor.isObserver,
             editable: this.isEditable,
             actor: baseData.actor,
             data: baseData.data.system,
             config: CONFIG.DoD
         };
 
+        // Remove secret text from description, unless it is the owner.
+        if (!sheetData.actor.isOwner) {
+            sheetData.data.description = DoD_Utility.removeSecret(sheetData.data.description);
+        }
+
         // Prepare character data and items.
-        //if (sheetData.actor.type == 'character') {
-            this._prepareItems(sheetData);
-        //}        
+        this._prepareItems(sheetData);
 
         return sheetData;
     }
@@ -98,7 +114,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         for (let item of sheetData.actor.items.contents) {
 
             // any item can be a memento
-            if (item.system.memento) {
+            if (item.system.memento && this.actor.type == "character") {
                 if(!memento) {
                     memento = item;
                     continue;
@@ -147,7 +163,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                     inventory.push(item);
                 }
                 // weapons can be mementos
-                if (item.system.memento) {
+                if (item.system.memento && this.actor.type == "character") {
                     if(!memento) {
                         memento = item;
                     } else {
@@ -174,7 +190,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
             
             if (item.type == "item") {
-                if (item.system.weight == 0)
+                if (item.system.weight == 0 && this.actor.type == "character")
                 {
                     smallItems.push(item);
                     continue;
@@ -280,7 +296,10 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".hit-points-max-label").change(this._onEditHp.bind(this));
             html.find(".will-points-max-label").change(this._onEditWp.bind(this));
 
+        } else if (this.object.isObserver) {
+            html.find(".rollable-skill").on("contextmenu", this._onSkillRoll.bind(this));
         }
+
         super.activateListeners(html);
     }
 

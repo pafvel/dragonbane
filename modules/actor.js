@@ -282,6 +282,10 @@ export class DoDActor extends Actor {
     get isMonster() {
         return this.type == "monster";
     }
+    
+    get isObserver() {
+        return this.testUserPermission(game.user, "OBSERVER");
+    }
 
     getArmorValue(damageType) {
         let armorValue = 0;

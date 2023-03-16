@@ -8,6 +8,7 @@
                         <input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
                     </h1>
                 </div>
+                {{#if observer}}
                 <div>
                     <table class="derived-stat">
                         <tr>
@@ -41,11 +42,24 @@
                         </tr>
                     </table>
                 </div>
+                {{/if}}
             </div>
+            {{#unless observer}}
+            {{!-- Notes --}}
+            <div class="dod-text-container">
+                <div class="dod-text-container-label">
+                    <label>
+                        {{localize "DoD.ui.character-sheet.description"}}
+                    </label>
+                </div>
+                {{editor data.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
+            </div>        
+            {{/unless}}
         </div>
     </header>
-    <div class="sheet-content">
+    <div class="sheet-content npc-content">
         {{!-- Sheet Tab Navigation --}}
+        {{#if observer}}
         <nav class="sheet-tabs tabs" data-group="primary">
           {{!-- Default tab is specified in dod-character-sheet.js --}}
           <a class="item" data-tab="main">{{localize "DoD.ui.character-sheet.main"}}</a>
@@ -58,11 +72,12 @@
             {{!-- Main Tab --}}
             {{> "systems/dragonbane/templates/partials/npc-sheet-main.hbs" }}
             
-            {{!-- Skills Tab --}}
+           {{!-- Skills Tab --}}
             {{> "systems/dragonbane/templates/partials/npc-sheet-skills.hbs" }}
 
             {{!-- Inventory Tab --}}
             {{> "systems/dragonbane/templates/partials/npc-sheet-inventory.hbs" }}
         </section>
+        {{/if}}
     </div>
 </form>

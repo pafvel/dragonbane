@@ -54,15 +54,17 @@ export default class DoDItemSheet extends ItemSheet {
     }
 
     activateListeners(html) {
-        // Spell items
-        html.find(".edit-school").change(this._onEditSchool.bind(this));
-
-        // Weapon items
-        html.find(".edit-weapon-features").click(this._onEditWeaponFeatures.bind(this));
-
-        // Armor items
-        html.find(".edit-armor-bonuses").click(this._onEditArmorBonuses.bind(this));
-
+        if (this.object.isOwner) {
+            if (this.object.type === "spell") {
+                html.find(".edit-school").change(this._onEditSchool.bind(this));
+            }
+            if (this.object.type === "weapon") {
+                html.find(".edit-weapon-features").click(this._onEditWeaponFeatures.bind(this));
+            }
+            if (this.object.type === "armor") {
+                html.find(".edit-armor-bonuses").click(this._onEditArmorBonuses.bind(this));
+            }
+        }
         super.activateListeners(html);
     }
 

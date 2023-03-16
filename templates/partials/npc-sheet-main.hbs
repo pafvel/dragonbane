@@ -2,12 +2,15 @@
     <div class="main-tab flexcol">
 
         {{!-- HP & WP --}}
+        {{#if observer}}
         <div class="flexrow">
             {{> "systems/dragonbane/templates/partials/hp-widget.hbs" }}
             {{> "systems/dragonbane/templates/partials/wp-widget.hbs" }}
         </div>
+        {{/if}}
 
         {{!-- Trained Skills & Abilities --}}
+        {{#if observer}}
         <div class="text-box">
             <table>
                 <tr>
@@ -66,8 +69,21 @@
                         {{/if}}
                     </td>
                 </tr>
+
+                {{#if inventory}}
+                <tr class="item-list">
+                    <th><b>{{localize "DoD.ui.character-sheet.gear"}}</b></th>
+                    <td class="comma-list">
+                    {{#each inventory as |item itemId|}}
+                        <a class="item-edit sheet-table-data item-delete-key item" data-item-id="{{item.id}}">{{item.displayName}}</a>
+                    {{/each}}
+                    </td>
+                </tr>
+                {{/if}}
+
             </table>
         </div>
+        {{/if}}
         
         {{!-- Notes --}}
         <div class="dod-text-container">
@@ -76,7 +92,7 @@
                     {{localize "DoD.ui.character-sheet.description"}}
                 </label>
             </div>
-            {{editor data.notes target="system.notes" engine="prosemirror" button=true owner=owner editable=editable}}
+            {{editor data.description target="system.description" engine="prosemirror" button=true owner=false editable=editable}}
         </div>
     </div>
 </div>

@@ -172,42 +172,6 @@
 
             </table>
 
-            {{!-- Tiny Items --}}
-            <table class="sheet-table item-list" data-droptarget="tiny">
-                <tr class="sheet-table-header">
-                    <th></th>
-                    <th class="thumbnail-header"></th>
-                    <th class="text-header">
-                        {{localize "DoD.ui.character-sheet.tiny-items"}}
-                    </th>
-                    <th></th>
-                </tr>
-                {{#if smallItems}}
-                {{#each smallItems as |item itemId|}}
-                <tr class="sheet-table-data item" data-item-id="{{item.id}}">
-                    <td></td>
-                    <td class="thumbnail-data">
-                        <img src="{{item.img}}" title="{{item.name}}"/>
-                    </td>
-                    <td class="text-data">
-                        <a class="item-edit">{{item.displayName}}</a>
-                    </td>
-                    <td class="icon-data">
-                        <a class="item-delete" data-type="spell">
-                            <i class="fas fa-trash"></i>
-                        </a>            
-                    </td>
-                </tr>
-                {{/each}}
-                {{else}}
-                <tr class="sheet-table-data">
-                    <td></td>
-                    <td><a>&nbsp</a></td>
-                    <td></td>
-                </tr>
-                {{/if}}
-
-            </table>
         </div>
     </div>
 </div>

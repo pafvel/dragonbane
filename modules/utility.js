@@ -113,6 +113,9 @@ export default class DoD_Utility {
         return actor;
     }
 
+    static removeSecret(html) {
+        return TextEditor.enrichHTML(html, {secrets: false, async: false});
+    }
     static splitAndTrimString(str) {
         let result = str?.split(',');
         for (var i = 0; i < result.length; i++) {

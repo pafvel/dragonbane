@@ -10,7 +10,10 @@
         padding: 0px;
     }
     .npc-header {
-        width: 450px;
+        min-width: 450px;
+    }
+    .npc-content {
+        min-width: 450px;
     }
     .character-header {
         width: 700px;
@@ -527,7 +530,7 @@
     .dod-text-container {
         height: 100%;
         width: 100%;
-        align-self: center;
+        align-self: start;
         background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/parchment-vertical.webp");
         background-position: left -16px bottom, right -16px bottom, center bottom 4px, left -16px top, right -16px top, center top 4px, center center;
         background-clip: border-box, border-box, padding-box, border-box, border-box, padding-box, content-box;
@@ -556,7 +559,6 @@
                 background-repeat: no-repeat;
                 background-position: center center;
                 color: whitesmoke;
-                //text-transform: uppercase;
                 font-weight: bold;
             }
         }
