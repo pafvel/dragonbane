@@ -113,8 +113,10 @@
                 "actorStats"
             ],
             "armor": 0,
-            "ferocity": 0,
-            "size": ""
+            "ferocity": 1,
+            "size": "",
+            "traits": "",
+            "attackTable": ""
         }
     },
     "Item": {

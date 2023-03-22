@@ -91,10 +91,10 @@
             "copper": "Copper"
         },
         "damageTypes": {
-            "none": "Normal",
-            "bludgeoning": "Bludgeoning",
-            "piercing": "Piercing",
-            "slashing": "Slashing"
+            "none": "Normal Damage",
+            "bludgeoning": "Bludgeoning Damage",
+            "piercing": "Piercing Damage",
+            "slashing": "Slashing Damage"
         },
         "dice": {
             "d": "D",
@@ -146,14 +146,21 @@
             "skillRoll": "Skill roll for <b>{skill}</b> <b>{result}</b>",
             "spellRoll": "Skill roll for <b>{spell}</b> at <b>Power Level {powerLevel}</b> <b>{result}</b>",
             "weaponRoll": "Skill roll for <b>{action}</b> with <b>{skill}</b> <b>{result}</b>",
-            "damage": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType} Damage</b> using <b>{weapon}</b>.",
-            "damageIgnoreArmor": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType} Damage ignoring armor</b> using <b>{weapon}</b>.",
+            "damage": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType}</b> using <b>{weapon}</b>.",
+            "damageIgnoreArmor": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType} ignoring armor</b> using <b>{weapon}</b>.",
             "pushButtonLabel": "Push roll",
             "pushChoiceLabel": "Choose condition:"
 
         },
         "shield": {
             "durability": "Durability"
+        },
+        "sizeTypes": {
+            "small": "Small",
+            "normal": "Normal",
+            "large": "Large",
+            "huge": "Huge",
+            "swarm": "Swarm"
         },
         "skill": {
             "advance": "Advance",
@@ -235,6 +242,7 @@
                 "abilities": "Abilities",
                 "age": "Age",
                 "appearance": "Appearance",
+                "armor": "Armor",
                 "background": "Background",
                 "banes": "Bane on",
                 "combat": "Combat",
@@ -249,6 +257,7 @@
                 "equipped-helmet": "Equipped Helm",
                 "equipped-weapon": "Equipped Weapons",
                 "failures": "Failures",
+                "ferocity": "Ferocity",
                 "gear": "Gear",
                 "heroicAbilities": "Heroic Abilities",
                 "hitPoints": "Hit Points",
@@ -267,12 +276,14 @@
                 "professionAbilities": "Profession Abilities",
                 "school": "School of Magic",
                 "secondarySkills": "Secondary Skills",
+                "size": "Size",
                 "skills": "Skills",
                 "skillValue": "",
                 "spell": "Spell",
                 "spells": "Spells",
                 "successes": "Successes",
                 "tiny-items": "Tiny Items",
+                "traits": "Traits",
                 "trained-skills": "Trained Skills",
                 "weapons": "Weapons",
                 "weaponSkills": "Weapon Skills",

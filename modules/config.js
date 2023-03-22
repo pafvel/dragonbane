@@ -48,6 +48,14 @@ DoD.gripTypes = {
     grip2h: "DoD.gripTypes.grip2h"
 };
 
+DoD.sizeTypes = {
+    small: "DoD.sizeTypes.small",
+    normal: "DoD.sizeTypes.normal",
+    large: "DoD.sizeTypes.large",
+    huge: "DoD.sizeTypes.huge",
+    swarm: "DoD.sizeTypes.swarm"
+};
+
 DoD.skillTypes = {
     core: "DoD.skillTypes.core",
     weapon: "DoD.skillTypes.weapon",

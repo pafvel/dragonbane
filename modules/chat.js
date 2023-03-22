@@ -5,6 +5,7 @@ import DoDWeaponTest from "./tests/weapon-test.js";
 import DoDSpellTest from "./tests/spell-test.js";
 
 export function addChatListeners(app, html, data) {
+    html.on("click", ".monster-damage-roll", onMonsterDamageRoll);
     html.on("click", "button.weapon-roll", onWeaponDamageRoll);
     html.on("click", "button.magic-roll", onMagicDamageRoll);
     html.on("click", "button.push-roll", onPushRoll);
@@ -49,6 +50,24 @@ export function addChatMessageContextMenuOptions(html, options) {
             callback: li => dealDamage(li, 2)
         }
     );
+}
+
+async function onMonsterDamageRoll(event) {
+    const element = event.currentTarget;
+    const actorId = element.dataset.actorId;
+    const actor = actorId ? DoD_Utility.getActorFromUUID(actorId) : null;
+    const damageType = element.dataset.damageType;
+    const damage = element.dataset.damage;
+    const action = element.dataset.action;
+
+    const damageData = {
+        actor: actor,
+        action: action,
+        damage: damage,
+        damageType: damageType
+    };
+ 
+    inflictDamageMessage(damageData);    
 }
 
 async function onWeaponDamageRoll(event) {
@@ -197,12 +216,15 @@ export async function inflictDamageMessage(damageData) {
 
     await roll.roll({async: true});
 
-    const msg = damageData.ignoreArmor ? "DoD.roll.damageIgnoreArmor" : "DoD.roll.damage";
+    const weaponName = damageData.weapon?.name ?? damageData.action;
+    const msg = weaponName ? (damageData.ignoreArmor ? "DoD.roll.damageIgnoreArmor" : "DoD.roll.damageWeapon") : "DoD.roll.damage";
+    const actorName = damageData.actor ? (damageData.actor.isToken ? damageData.actor.token.name : damageData.actor.name) : "";
+
     const flavor = game.i18n.format(game.i18n.localize(msg), {
-        actor: damageData.actor.name,
+        actor: actorName,
         damage: roll.total,
         damageType: game.i18n.localize(damageData.damageType),
-        weapon: damageData.weapon.name
+        weapon: weaponName
     });
     
     const template = "systems/dragonbane/templates/partials/damage-roll-message.hbs";
@@ -239,7 +261,8 @@ export async function applyDamageMessage(damageData) {
         actor.applyDamage(damageToApply);
     }
     
-    const damageMessage = game.i18n.format(game.i18n.localize("DoD.ui.chat.damageApplied"), {damage: damageToApply, actor: actor.name});
+    const actorName = actor.isToken ? actor.token.name : actor.name;
+    const damageMessage = game.i18n.format(game.i18n.localize("DoD.ui.chat.damageApplied"), {damage: damageToApply, actor: actorName});
     const damageDetails = game.i18n.format(game.i18n.localize("DoD.ui.chat.damageAppliedDetails"), {damage: damage, armor: armorValue});
     let msg = damageMessage + "<br/><br/>" + damageDetails;
     if (multiplier != 1) {

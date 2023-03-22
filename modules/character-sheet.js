@@ -25,6 +25,8 @@ export default class DoDCharacterSheet extends ActorSheet {
             case "character":
                 break;
             case "monster":
+                options.width = 480;
+                options.height = 670;
                 break;
             case "npc":
                 options.width = 480;
@@ -43,17 +45,22 @@ export default class DoDCharacterSheet extends ActorSheet {
     }
 
     async close(options) {
-        document.removeEventListener('keyup', this.keyupListener);
+        document.removeEventListener('keydown', this.keydownListener);
+        Hooks.off("dropActorSheetData", this.onDropTableListener);
         return super.close(options);
      }   
   
      render(force, options) {
-        this.keyupListener = this.#onKeyup.bind(this);
-        document.addEventListener('keyup', this.keyupListener);
+        this.keydownListener = this.#onKeydown.bind(this);
+        document.addEventListener('keydown', this.keydownListener);
+
+        this.onDropTableListener = this._onDropTable.bind(this);
+        Hooks.on("dropActorSheetData", this.onDropTableListener);
+
         return super.render(force, options);
      }
 
-     #onKeyup(event) {
+     #onKeydown(event) {
         if (event.code === "Delete" && this.#focusElement) {
             // Don't delete items if an input element has focus
             if (event.currentTarget?.activeElement.nodeName.toLowerCase() === "input") {
@@ -86,10 +93,10 @@ export default class DoDCharacterSheet extends ActorSheet {
             config: CONFIG.DoD
         };
 
-        // Remove secret text from description, unless it is the owner.
-        if (!sheetData.actor.isOwner) {
-            sheetData.data.description = DoD_Utility.removeSecret(sheetData.data.description);
-        }
+        sheetData.data.description = TextEditor.enrichHTML(sheetData.data.description, {
+            secrets: sheetData.actor.isOwner,
+            async: false
+        });
 
         // Prepare character data and items.
         this._prepareItems(sheetData);
@@ -245,11 +252,12 @@ export default class DoDCharacterSheet extends ActorSheet {
         }
 
         // WP widget data
-        sheetData.maxWP = sheetData.actor.system.willPoints.max;
-        sheetData.currentWP = sheetData.actor.system.willPoints.value;
-        sheetData.lostWP = sheetData.maxWP - sheetData.currentWP;
-        sheetData.fillWP = sheetData.maxWP < 11 ? 11 - sheetData.maxWP : 0; // needed for layout
-
+        if (this.actor.type == "character" || this.actor.type == "npc") {
+            sheetData.maxWP = sheetData.actor.system.willPoints.max;
+            sheetData.currentWP = sheetData.actor.system.willPoints.value;
+            sheetData.lostWP = sheetData.maxWP - sheetData.currentWP;
+            sheetData.fillWP = sheetData.maxWP < 11 ? 11 - sheetData.maxWP : 0; // needed for layout
+        }
     }  
 
     _updateEncumbrance(sheetData) {
@@ -296,11 +304,77 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".hit-points-max-label").change(this._onEditHp.bind(this));
             html.find(".will-points-max-label").change(this._onEditWp.bind(this));
 
+            if (this.object.type === "monster") {
+                html.find(".monster-attack").on("click contextmenu", this._onMonsterAttack.bind(this));                
+                html.find(".monster-defend").on("click", this._onMonsterDefend.bind(this));                
+            }
         } else if (this.object.isObserver) {
             html.find(".rollable-skill").on("contextmenu", this._onSkillRoll.bind(this));
         }
 
         super.activateListeners(html);
+    }
+
+    async _onMonsterAttack(event) {
+        event.preventDefault();
+        const table = fromUuidSync(this.actor.system.attackTable); 
+        if (!table) return;
+
+        if (event.type == "click") { // left click
+            //return table.draw();
+            const draw = await table.draw({displayChat: false});
+
+            // begin toMessage
+            //toMessage(results, {roll=null, messageData={}, messageOptions={}}={})
+            let messageData = {};
+            let messageOptions = {};
+            const results = draw.results;
+            const roll = draw.roll;
+            
+            const speaker = ChatMessage.getSpeaker({token: this.token});
+
+            // Construct chat data
+            const flavorKey = `TABLE.DrawFlavor${results.length > 1 ? "Plural" : ""}`;
+            messageData = foundry.utils.mergeObject({
+            flavor: game.i18n.format(flavorKey, {number: results.length, name: table.name}),
+            user: game.user.id,
+            speaker: speaker,
+            type: roll ? CONST.CHAT_MESSAGE_TYPES.ROLL : CONST.CHAT_MESSAGE_TYPES.OTHER,
+            roll: roll,
+            sound: roll ? CONFIG.sounds.dice : null,
+            flags: {"core.RollTable": table.id}
+            }, messageData);
+
+            // Copy results to avoid modifying table
+            let messageResults = await results.map(result => {
+                const r = result.toObject(false);
+                r.text = result.getChatText();
+                r.icon = result.icon;
+                return r;
+            });
+            // Enrich HTML with knowledge of actor
+            for (let r of messageResults) {
+                r.text = await TextEditor.enrichHTML(r.text, {actor: this.actor, async: true});                
+            }
+
+            // Render the chat card which combines the dice roll with the drawn results
+            messageData.content = await renderTemplate(CONFIG.RollTable.resultTemplate, {
+            description: await TextEditor.enrichHTML(table.description, {documents: true, async: true}),
+            results: messageResults,
+            rollHTML: table.displayRoll && roll ? await roll.render() : null,
+            table: table
+            });
+
+            // Create the chat message
+            return ChatMessage.create(messageData, messageOptions);
+
+        } else { // right click
+            return table.sheet.render(true);
+        }        
+    }
+
+    _onMonsterDefend(event) {
+        
     }
 
     _onHitPointClick(event) {
@@ -535,6 +609,14 @@ export default class DoDCharacterSheet extends ActorSheet {
         let attributeName = event.currentTarget.dataset.attribute;
         let test = new DoDAttributeTest(this.actor, attributeName, options);
         await test.roll();
+    }
+
+    async _onDropTable(actor, _sheet, data) {
+        if (data.type === "RollTable" && this.actor.isOwner && this.actor.type === "monster") {
+            actor.update({ ["system.attackTable"]: data.uuid});
+            return false; // Stop
+        }
+        return true; // Continue
     }
 
     async _onDropItem(event, data)

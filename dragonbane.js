@@ -52,6 +52,7 @@ async function preloadHandlebarsTemplates() {
         "systems/dragonbane/templates/partials/character-sheet-combat.hbs",
         "systems/dragonbane/templates/partials/character-sheet-inventory.hbs",
         "systems/dragonbane/templates/partials/character-sheet-background.hbs",
+        "systems/dragonbane/templates/partials/monster-sheet-main.hbs",
         "systems/dragonbane/templates/partials/npc-sheet-main.hbs",
         "systems/dragonbane/templates/partials/npc-sheet-skills.hbs",
         "systems/dragonbane/templates/partials/npc-sheet-inventory.hbs",
@@ -85,3 +86,21 @@ Hooks.once("init", function() {
 Hooks.on("renderChatLog", DoDChat.addChatListeners);
 
 Hooks.on("getChatLogEntryContext", DoDChat.addChatMessageContextMenuOptions);
+
+CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
+    {
+        pattern : /\[\[\/damage\s((?:\d+)?[dD](?:\d+)(?:[\+\-]\d+)?)\s?(slashing|piercing|bludgeoning)?(?:\s(.+))?\]\]/gm,
+        enricher : (match, options) => {
+            const a = document.createElement("a");
+            a.classList.add("inline-roll");
+            a.classList.add("monster-damage-roll");
+            a.dataset.damage = match[1];
+            a.dataset.damageType = "DoD.damageTypes." + (match[2] ?? "none");
+            if (options.actor) a.dataset.actorId = options.actor.uuid;
+            if (match[3]) a.dataset.action = match[3];
+
+            a.innerHTML = `<i class="fas fa-dice-d20"></i>` + match[1] + " " + game.i18n.localize(a.dataset.damageType);
+            return a;
+        }
+    }
+]);

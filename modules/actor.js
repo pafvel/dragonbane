@@ -65,6 +65,7 @@ export class DoDActor extends Actor {
                 this._prepareEquippedItems();
                 break;
             case "monster":
+                this._prepareEquippedItems();
                 break;
             default:
                 break;
@@ -109,6 +110,9 @@ export class DoDActor extends Actor {
     }
 
     _prepareMonsterData() {
+        this.system.damageBonus.agl = 0;
+        this.system.damageBonus.str = 0;
+
     }
 
     _prepareEquippedItems() {
@@ -282,7 +286,7 @@ export class DoDActor extends Actor {
     get isMonster() {
         return this.type == "monster";
     }
-    
+
     get isObserver() {
         return this.testUserPermission(game.user, "OBSERVER");
     }
@@ -294,6 +298,9 @@ export class DoDActor extends Actor {
         }
         if (this.system.equippedHelmet) {
             armorValue += this.system.equippedHelmet.getArmorValue(damageType);
+        }
+        if (this.type == "monster") {
+            armorValue += this.system.armor;
         }
         return armorValue;
     }
