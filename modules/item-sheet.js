@@ -15,7 +15,7 @@ export default class DoDItemSheet extends ItemSheet {
         return `systems/dragonbane/templates/${this.item.type}-sheet.html`;
     }
 
-    getData() {
+    async getData() {
         const baseData = super.getData();
    
         let sheetData = {
@@ -25,6 +25,8 @@ export default class DoDItemSheet extends ItemSheet {
             data: baseData.data.system,
             config: CONFIG.DoD
         };
+
+        sheetData.data.description = await TextEditor.enrichHTML(sheetData.data.description, { async: true });
 
         if (this.item.type == "weapon") {
             let weaponFeatures = [];
@@ -64,8 +66,20 @@ export default class DoDItemSheet extends ItemSheet {
             if (this.object.type === "armor") {
                 html.find(".edit-armor-bonuses").click(this._onEditArmorBonuses.bind(this));
             }
+            if (this.object.type === "profession") {
+                html.find(".edit-profession-abilities").change(this._onEditProfessionAbilities.bind(this));
+            }
         }
         super.activateListeners(html);
+    }
+
+    async _onEditProfessionAbilities(event) {
+        if (this.item.actor) {
+            event.preventDefault();
+            let newValue = event.currentTarget.value;
+            await this.item.update({ ["system.abilities"]: newValue});
+            await this.item.actor.updateProfessionAbilities();
+        };
     }
 
     _onEditSchool(event) {
@@ -215,13 +229,16 @@ export default class DoDItemSheet extends ItemSheet {
 
     async _onDrop(event) {
 
-        if (this.item.type == "kin")
+        if (this.item.type == "profession")
         {
             const data = TextEditor.getDragEventData(event);
-            const item = await Item.implementation.fromDropData(data);
-            let itemData = item.toObject();
-            itemData = itemData instanceof Array ? itemData : [itemData];
-            return this.item.createEmbeddedDocuments("Item", itemData);
+            if (data.type === "Item") {
+                const item = await Item.implementation.fromDropData(data);
+                if (item.type === "ability") {
+                    await this.item.update({ ["system.abilities"]: item.name});
+                    await this.item.actor.updateProfessionAbilities();        
+                }
+            }
         }
     }
 }

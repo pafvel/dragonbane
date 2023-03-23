@@ -3,22 +3,6 @@ import DoD_Utility from "./utility.js";
 export class DoDActor extends Actor {
 
     /** @override */
-    /*
-    getData() {
-        const context = super.getData();
-        const gear = [];
-
-        for (let i of context.items) {
-            i.img = i.img || DEFAULT_TOKEN;
-            gear.push(i);
-        }
-        context.gear = gear;
-
-        return context;
-    }
-    */
-
-    /** @override */
     async _preCreate(data, options, user) {
 
         await super._preCreate(data, options, user);
@@ -356,12 +340,16 @@ export class DoDActor extends Actor {
         this.items.contents.forEach(i => {
             if (i.type == "profession") ids.push(i.id)
         });
+        //  profession ability items
+        this.items.contents.forEach(i => {
+            if (i.type == "ability" && i.system.abilityType == "profession") ids.push(i.id)
+        });
         // delete items and clear profession
         await this.deleteEmbeddedDocuments("Item", ids);
         this.system.profession = null;
     }
 
-    async addKinAbilities() {
+    async updateKin() {
         let kin = this.system.kin;
 
         if (kin && kin.system.abilities.length) {
@@ -384,12 +372,53 @@ export class DoDActor extends Actor {
         }
     }
 
-    updateProfession()
+    async updateProfessionAbilities()
     {
-        this.system.profession = this.items.find(item => item.type == "profession");
+        // Character's abilities
+        const abilities = this.items.filter(item => item.type == "ability");
+
+        // Ability names defined in the current profession
+        const proAbilityNames = 
+            (this.system.profession && this.system.profession.system.abilities.length)
+                ? DoD_Utility.splitAndTrimString(this.system.profession.system.abilities) : [];
+
+
+        // Remove profession abilities not in current profession
+        let removeAbilityIds = [];
+        for (const ability of abilities) {
+            if (ability.system.abilityType === "profession" && !proAbilityNames.find(name => name === ability.name)) {
+                removeAbilityIds.push(ability.id);
+            }
+        }
+        if (removeAbilityIds.length) {
+            await this.deleteEmbeddedDocuments("Item", removeAbilityIds);
+        }
+
+        // add missing profession abilities from current profession
+        let createItemData = [];
+        for(const proAbilityName of proAbilityNames) {
+            let professionAbility = this.findAbility(proAbilityName);
+            if (!professionAbility) {
+                const foundAbility = await DoD_Utility.findAbility(proAbilityName);
+                if (foundAbility) {
+                    const abilityData = foundAbility.toObject();
+                    abilityData.system.abilityType = "profession";
+                    createItemData.push(abilityData);
+                } else {
+                    DoD_Utility.WARNING("DoD.WARNING.professionAbility", {ability: proAbilityName});
+                }
+            }
+        }
+        if (createItemData.length) {
+            await this.createEmbeddedDocuments("Item", createItemData);
+        }
+    }
+
+    updateProfessionSkills() {
         this.system.professionSkills = [];
         let missingSkills = [];
 
+        // update profession skills
         if (this.system.profession) {
             let professionSkillNames = DoD_Utility.splitAndTrimString(this.system.profession.system.skills);
             for (const skillName of professionSkillNames) {
@@ -404,12 +433,20 @@ export class DoDActor extends Actor {
         return missingSkills;
     }
 
+    async updateProfession()
+    {
+        await this.updateProfessionAbilities();
+        return this.updateProfessionSkills();
+    }
+
+
     _prepareKin() {
         this.system.kin = this.items.find(item => item.type == "kin");
     }
 
     _prepareProfession() {
-        this.updateProfession();
+        this.system.profession = this.items.find(item => item.type == "profession");
+        this.updateProfessionSkills();
     }
 
     _prepareSpellValues() {

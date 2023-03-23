@@ -81,7 +81,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         }
      }    
 
-    getData() {
+    async getData() {
         const baseData = super.getData();
 
         let sheetData = {
@@ -93,10 +93,21 @@ export default class DoDCharacterSheet extends ActorSheet {
             config: CONFIG.DoD
         };
 
-        sheetData.data.description = TextEditor.enrichHTML(sheetData.data.description, {
-            secrets: sheetData.actor.isOwner,
-            async: false
-        });
+        async function enrich(html) {
+            if (html) {
+                return await TextEditor.enrichHTML(html, {
+                    secrets: sheetData.actor.isOwner,
+                    async: true
+                });    
+            } else {
+                return html;
+            }
+        }
+
+        sheetData.data.appearance = await enrich(sheetData.data.appearance);
+        sheetData.data.description = await enrich(sheetData.data.description);
+        sheetData.data.notes = await enrich(sheetData.data.notes);
+        sheetData.data.weakness = await enrich(sheetData.data.weakness);
 
         // Prepare character data and items.
         this._prepareItems(sheetData);
@@ -317,7 +328,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
     async _onMonsterAttack(event) {
         event.preventDefault();
-        const table = fromUuidSync(this.actor.system.attackTable); 
+        const table = this.actor.system.attackTable ? fromUuidSync(this.actor.system.attackTable) : null; 
         if (!table) return;
 
         if (event.type == "click") { // left click
@@ -492,7 +503,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         } else {
             await this.actor.removeKin();
             await this.actor.createEmbeddedDocuments("Item", [kin.toObject()]);
-            await this.actor.addKinAbilities();
+            await this.actor.updateKin();
         }
     }
 
@@ -508,7 +519,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             await this.actor.removeProfession();
             await this.actor.createEmbeddedDocuments("Item", [profession.toObject()]);
 
-            let missingSkills = this.actor.updateProfession();
+            let missingSkills = await this.actor.updateProfession();
             for (const skillName of missingSkills) {
                 DoD_Utility.WARNING("DoD.WARNING.professionSkill", {skill: skillName});
             }
@@ -671,7 +682,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             await this.actor.removeKin();
         }
 
-        // Remove profession
+        // Remove profession and profession abilities
         if (itemData.type == "profession") {
             await this.actor.removeProfession();
         }
@@ -680,14 +691,14 @@ export default class DoDCharacterSheet extends ActorSheet {
         // Create the owned item
         let returnValue = await this._onDropItemCreate(itemData);
 
-        // Add new Kin abilities
+        // Update kin and kin abilities
         if (itemData.type == "kin") {
-            await this.actor.addKinAbilities();
+            await this.actor.updateKin();
         }
 
-        // Update profession
+        // Update profession and profession abilities
         if (itemData.type == "profession") {
-            let missingSkills = this.actor.updateProfession();
+            let missingSkills = await this.actor.updateProfession();
             for (const skillName of missingSkills) {
                 DoD_Utility.WARNING("DoD.WARNING.professionSkill", {skill: skillName});
             }
