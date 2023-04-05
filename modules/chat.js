@@ -12,8 +12,16 @@ export function addChatListeners(app, html, data) {
 }
 
 export function addChatMessageContextMenuOptions(html, options) {
-    const canDealDamage = li => canvas.tokens.controlled.length > 0 && li.find(".damage-roll").length > 0;
+
     
+    // const canDealDamage = li => canvas.tokens.controlled.length > 0 && li.find(".damage-roll").length > 0;
+    const canDealDamage = li =>
+    {
+        return game.user.targets.size > 0 && li.find(".damage-roll").length > 0;
+    }
+    
+    
+
     const dealDamage = function(li, multiplier = 1) {
         const damageData = {};
         const element = li.find(".damage-roll")[0];
@@ -24,8 +32,9 @@ export function addChatMessageContextMenuOptions(html, options) {
         damageData.multiplier = multiplier;
         damageData.ignoreArmor = element.dataset.ignoreArmor;
 
-        for (const token of canvas.tokens.controlled) {
-            damageData.actor = token.actor;
+        const targets = Array.from(game.user.targets);
+        for (const target of targets) {
+            damageData.actor = target.actor;
             applyDamageMessage(damageData);
         }
     }

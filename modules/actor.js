@@ -94,9 +94,10 @@ export class DoDActor extends Actor {
     }
 
     _prepareMonsterData() {
-        this.system.damageBonus.agl = 0;
-        this.system.damageBonus.str = 0;
-
+        if (this.system.damageBonus) {
+            this.system.damageBonus.agl = 0;
+            this.system.damageBonus.str = 0;
+        }
     }
 
     _prepareEquippedItems() {
@@ -287,6 +288,14 @@ export class DoDActor extends Actor {
             armorValue += this.system.armor;
         }
         return armorValue;
+    }
+
+    getDamageBonus(attribute) {
+        if (attribute && this.system.damageBonus) {
+            return this.system.damageBonus[attribute];
+        } else {
+            return 0;
+        }
     }
 
     applyDamage(damage) {

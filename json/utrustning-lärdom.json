@@ -1,0 +1,94 @@
+[
+    {
+      "Föremål": "Amulett",
+      "Pris": "3 guld",
+      "Tillgång": "Ovanlig",
+      "Vikt": "–",
+      "Effekt": "Kan användas som fokus för besvärjelser."
+    },
+    {
+      "Föremål": "Anteckningsbok",
+      "Pris": "5 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Tom, kan användas som formelbok."
+    },
+    {
+      "Föremål": "Bok",
+      "Pris": "25 guld",
+      "Tillgång": "Ovanlig",
+      "Vikt": "1",
+      "Effekt": "Ger fördel på LÄRDOM i specifikt ämne. Priset varierar beroende på ämnet."
+    },
+    {
+      "Föremål": "Brosch",
+      "Pris": "5 guld",
+      "Tillgång": "Ovanlig",
+      "Vikt": "–",
+      "Effekt": "Kan användas som fokus för besvärjelser."
+    },
+    {
+      "Föremål": "Fjäderpenna",
+      "Pris": "10 guld",
+      "Tillgång": "Ovanlig",
+      "Vikt": "1",
+      "Effekt": "Kan användas för att nedteckna besvärjelser."
+    },
+    {
+      "Föremål": "Formelbok",
+      "Pris": "50 guld",
+      "Tillgång": "Unik",
+      "Vikt": "1",
+      "Effekt": "Priset varierar beroende på innehåll och kan vara mycket högre."
+    },
+    {
+      "Föremål": "Krita",
+      "Pris": "1 koppar",
+      "Tillgång": "Vanlig",
+      "Vikt": "–",
+      "Effekt": "Kan användas som fokus för besvärjelser."
+    },
+    {
+      "Föremål": "Papper (ark)",
+      "Pris": "2 silver",
+      "Tillgång": "Ovanlig",
+      "Vikt": "–",
+      "Effekt": "Kan användas för att nedteckna besvärjelser."
+    },
+    {
+      "Föremål": "Pergament (ark)",
+      "Pris": "1 silver",
+      "Tillgång": "Vanlig",
+      "Vikt": "–",
+      "Effekt": "Kan användas för att nedteckna besvärjelser."
+    },
+    {
+      "Föremål": "Relikskrin",
+      "Pris": "5 guld",
+      "Tillgång": "Ovanlig",
+      "Vikt": "1",
+      "Effekt": "Kan användas som fokus för besvärjelser."
+    },
+    {
+      "Föremål": "Spåkula",
+      "Pris": "18 guld",
+      "Tillgång": "Ovanlig",
+      "Vikt": "1",
+      "Effekt": "Kan användas som fokus för besvärjelser."
+    },
+    {
+      "Föremål": "Timglas",
+      "Pris": "25 guld",
+      "Tillgång": "Sällsynt",
+      "Vikt": "1",
+      "Effekt": "Kan användas som fokus för besvärjelser."
+    },
+    {
+      "Föremål": "Trollspö",
+      "Pris": "10 guld",
+      "Tillgång": "Ovanlig",
+      "Vikt": "1",
+      "Effekt": "Kan användas som fokus för besvärjelser."
+    }
+  ]
+  

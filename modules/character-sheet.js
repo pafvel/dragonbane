@@ -589,19 +589,28 @@ export default class DoDCharacterSheet extends ActorSheet {
     async _onDamageRoll(event) {
         event.preventDefault();
 
-        let itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
-        let weapon = this.actor.items.get(itemId);
-        let weaponDamage = weapon.system.damage;
-        let skill = this.actor.findSkill(weapon.system.skill.name);
-        let attribute = skill?.system.attribute;
-        let damageBonus = attribute ? this.actor.system.damageBonus[attribute] : 0;
-        let damage = weaponDamage + "+" + damageBonus;
+        const itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
+        const weapon = this.actor.items.get(itemId);
+        const weaponDamage = weapon.system.damage;
+        const skill = this.actor.findSkill(weapon.system.skill.name);
+        const attribute = skill?.system.attribute;
+        const damageBonus = this.actor.getDamageBonus(attribute);
+        const damage = damageBonus ? weaponDamage + "+" + damageBonus : weaponDamage;
+        let damageType = DoD.damageTypes.none; 
 
-        let damageData = {
+        if (weapon.hasWeaponFeature("bludgeoning")) {
+            damageType = DoD.damageTypes.bludgeoning;
+        } else if (weapon.hasWeaponFeature("slashing")) {
+            damageType = DoD.damageTypes.slashing;
+        } else if (weapon.hasWeaponFeature("piercing")) {
+            damageType = DoD.damageTypes.piercing;
+        }
+
+        const damageData = {
             actor: this.actor,
             weapon: weapon,
             damage: damage,
-            damageType: DoD.damageTypes.none
+            damageType: damageType
         };
 
         DoDChat.inflictDamageMessage(damageData);
@@ -635,14 +644,15 @@ export default class DoDCharacterSheet extends ActorSheet {
         if ( !this.actor.isOwner ) return false;
         const item = await Item.implementation.fromDropData(data);
         const itemData = item.toObject();
-    
+        const actorData = await this.getData();
+
         // Handle item sorting within the same Actor
         if ( this.actor.uuid === item.parent?.uuid ) {
             let result =  this._onSortItem(event, itemData);
             let dropTarget = event.target.closest(".item-list").dataset.droptarget;
 
             if (dropTarget) {
-                if (dropTarget == "weapon" && itemData.type == "weapon" && this.getData().equippedWeapons.length < 3)
+                if (dropTarget == "weapon" && itemData.type == "weapon")
                 {
                     item.update({
                         ["system.worn"]: true,
@@ -650,21 +660,21 @@ export default class DoDCharacterSheet extends ActorSheet {
                     });
                 }
                 else if (dropTarget == "armor" && itemData.type == "armor") {
-                    this.getData().equippedArmor?.update({ ["system.worn"]: false});
+                    actorData.equippedArmor?.update({ ["system.worn"]: false});
                     item.update({
                         ["system.worn"]: true,
                         ["system.memento"]: false
                     });
                 }
                 else if (dropTarget == "helmet" && itemData.type == "helmet") {
-                    this.getData().equippedHelmet?.update({ ["system.worn"]: false});
+                    actorData.equippedHelmet?.update({ ["system.worn"]: false});
                     item.update({
                         ["system.worn"]: true,
                         ["system.memento"]: false
                     });
                 }
                 else if (dropTarget == "memento") {
-                    this.getData().memento?.update({ ["system.memento"]: false });
+                    actorData.memento?.update({ ["system.memento"]: false });
                     item.update({ ["system.memento"]: true});
                 }
                 else if (dropTarget == "inventory" || dropTarget == "tiny") {
@@ -705,9 +715,9 @@ export default class DoDCharacterSheet extends ActorSheet {
         }
 
         // Equip weapons, armor and helmet
-        if (itemData.type == "weapon" && this.getData().equippedWeapons.length < 3 
-            || itemData.type == "armor" && !this.getData().equippedArmor
-            || itemData.type == "helmet" && !this.getData().equippedHelmet )
+        if (itemData.type == "weapon" && !(actorData.equippedWeapons?.length >= 2) 
+            || itemData.type == "armor" && !actorData.equippedArmor
+            || itemData.type == "helmet" && !actorData.equippedHelmet )
         {
             let equipItem = returnValue[0];
             equipItem.update({ ["system.worn"]: true });

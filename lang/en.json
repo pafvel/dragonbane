@@ -190,7 +190,8 @@
             "round": "Round",
             "stretch": "Stretch",
             "shift": "Shift",
-            "concentration": "Concentration"
+            "concentration": "Concentration",
+            "permanent": "Permanent"
         },
         "supplyTypes": {
             "common": "Common",

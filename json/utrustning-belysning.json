@@ -1,0 +1,44 @@
+[
+    {
+      "Föremål": "Fackla",
+      "Pris": "5 koppar",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Lyser upp 10 meters radie. Brinner upp till ett Skift, men slå T6 efter varje Kvart, eller om facklan används som vapen. Vid en etta slocknar facklan."
+    },
+    {
+      "Föremål": "Elddon",
+      "Pris": "5 silver",
+      "Tillgång": "Vanlig",
+      "Vikt": "–",
+      "Effekt": "Krävs för att tända fackla, ljus eller lykta, samt göra upp eld."
+    },
+    {
+      "Föremål": "Lampolja",
+      "Pris": "3 silver",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Rymmer tio doser. Varje dos håller en oljelampa eller stormlykta brinnande i upp till ett Skift."
+    },
+    {
+      "Föremål": "Oljelampa",
+      "Pris": "1 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Lyser upp 10 meters radie. Brinner upp till ett Skift, men slå T6 efter varje Kvart. Vid en etta slocknar lampan och måste fyllas på och tändas igen (handling)."
+    },
+    {
+      "Föremål": "Stormlykta",
+      "Pris": "10 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Lyser upp 10 meters radie. Brinner upp till ett Skift, men slå T8 efter varje Kvart. Vid en etta slocknar lyktan och måste fyllas på och tändas igen (handling)."
+    },
+    {
+      "Föremål": "Talgljus",
+      "Pris": "1 koppar",
+      "Tillgång": "Vanlig",
+      "Vikt": "–",
+      "Effekt": "Lyser upp 4 meters radie. Brinner upp till ett Skift, men slå T4 efter varje Kvart, eller om bäraren anfaller eller blir anfallen. Vid en etta slocknar ljuset."
+    }
+  ]

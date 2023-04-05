@@ -36,8 +36,8 @@ export default class DoDItemSheet extends ItemSheet {
                     name: "DoD.weaponFeatureTypes." + feature,
                     tooltip: "DoD.weaponFeatureTypes." + feature + "Tooltip"
                 })
-            });            
-            sheetData.weaponFeatures = weaponFeatures;
+            });
+            sheetData.weaponFeatures = weaponFeatures;            
         }
 
         if (this.item.type == "armor") {
@@ -104,13 +104,19 @@ export default class DoDItemSheet extends ItemSheet {
         let featureData = [];
         for (let feature in DoD.weaponFeatureTypes)
         {
+            const name = "DoD.weaponFeatureTypes." + feature;
+            const localizedName = game.i18n.localize(name);
+
             featureData.push( {
-                name: "DoD.weaponFeatureTypes." + feature,
-                tooltip: "DoD.weaponFeatureTypes." + feature + "Tooltip",
+                name: name,
+                localizedName: localizedName,
+                tooltip: name + "Tooltip",
                 id: feature,
                 value: this.item.hasWeaponFeature(feature)
             });
         }
+        featureData = featureData.sort((a, b) => { return a.localizedName < b.localizedName ? -1 : 1; });
+
         console.log(featureData);
 
         let dialogData = {features: featureData};
@@ -236,7 +242,7 @@ export default class DoDItemSheet extends ItemSheet {
                 const item = await Item.implementation.fromDropData(data);
                 if (item.type === "ability") {
                     await this.item.update({ ["system.abilities"]: item.name});
-                    await this.item.actor.updateProfessionAbilities();        
+                    await this.item.actor?.updateProfessionAbilities();
                 }
             }
         }

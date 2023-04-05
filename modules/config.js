@@ -69,6 +69,7 @@ DoD.spellDurationTypes = {
     stretch: "DoD.spellDurationTypes.stretch",
     shift: "DoD.spellDurationTypes.shift",
     concentration: "DoD.spellDurationTypes.concentration",
+    permanent: "DoD.spellDurationTypes.permanent",
 };
 
 DoD.supplyTypes = {
@@ -82,8 +83,10 @@ DoD.weaponFeatureTypes = {
     bludgeoning: "DoD.weaponFeatureTypes.bludgeoning",
     long: "DoD.weaponFeatureTypes.long",
     mounted: "DoD.weaponFeatureTypes.mounted",
+    noDamageBonus: "DoD.weaponFeatureTypes.noDamageBonus",
     noparry: "DoD.weaponFeatureTypes.noparry",
     piercing: "DoD.weaponFeatureTypes.piercing",
+    quiver: "DoD.weaponFeatureTypes.quiver",
     slashing: "DoD.weaponFeatureTypes.slashing",
     subtle: "DoD.weaponFeatureTypes.subtle",
     thrown: "DoD.weaponFeatureTypes.thrown",

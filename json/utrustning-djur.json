@@ -1,0 +1,56 @@
+[
+    {
+      "Djur": "Brevduva i bur",
+      "Pris": "2 guld",
+      "Tillgång": "Ovanlig",
+      "Kommentar": "Flyger hem till sitt duvslag oavsett var den befinner sig."
+    },
+    {
+      "Djur": "Får",
+      "Pris": "3 guld",
+      "Tillgång": "Vanlig",
+      "Kommentar": "Ger 2T4 ransoner mat efter slakt. Köttet bör tillagas (sid xx)."
+    },
+    {
+      "Djur": "Gris",
+      "Pris": "2 guld",
+      "Tillgång": "Vanlig",
+      "Kommentar": "Ger 2T6 ransoner mat efter slakt. Köttet bör tillagas (sid xx)."
+    },
+    {
+      "Djur": "Ko",
+      "Pris": "10 guld",
+      "Tillgång": "Ovanlig",
+      "Kommentar": "Ger T4 ransoner mat (mjölk) per dag, och 2T10 ransoner mat efter slakt. Köttet bör tillagas (sid xx)."
+    },
+    {
+      "Djur": "Kyckling",
+      "Pris": "4 silver",
+      "Tillgång": "Vanlig",
+      "Kommentar": "Ger en ranson mat efter slakt. Köttet bör tillagas (sid xx)."
+    },
+    {
+      "Djur": "Ridhäst",
+      "Pris": "60 guld",
+      "Tillgång": "Ovanlig",
+      "Kommentar": "Kan bära ryttare och 20 enheter vikt, eller två ryttare."
+    },
+    {
+      "Djur": "Stridstränad häst",
+      "Pris": "400 guld",
+      "Tillgång": "Sällsynt",
+      "Kommentar": "Kan bära ryttare och 20 enheter vikt, eller två ryttare."
+    },
+    {
+      "Djur": "Vakthund",
+      "Pris": "15 guld",
+      "Tillgång": "Vanlig",
+      "Kommentar": "Skyddar sin ägare. För speldata, se sidan xx."
+    },
+    {
+      "Djur": "Åsna",
+      "Pris": "12 guld",
+      "Tillgång": "Vanlig",
+      "Kommentar": "Kan bära 20 enheter vikt. Kan ej ridas."
+    }
+  ]

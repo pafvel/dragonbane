@@ -1,0 +1,58 @@
+[
+    {
+      "Föremål": "Flaska",
+      "Pris": "1 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Rymmer en enhet vätska."
+    },
+    {
+      "Föremål": "Hink",
+      "Pris": "5 koppar",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Rymmer upp till 5 enheter vätska."
+    },
+    {
+      "Föremål": "Kista",
+      "Pris": "5 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "3",
+      "Effekt": "Rymmer upp till 20 viktenheter. Tål 25 poäng skada, skyddsvärde 5."
+    },
+    {
+      "Föremål": "Korg",
+      "Pris": "4 silver",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Rymmer upp till 10 viktenheter."
+    },
+    {
+      "Föremål": "Lerkrus",
+      "Pris": "5 silver",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Rymmer en enhet vätska."
+    },
+    {
+      "Föremål": "Ryggsäck",
+      "Pris": "3 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "–",
+      "Effekt": "Ökar bärförmåga med 2. Kan inte kombineras mer fler bärhjälpmedel."
+    },
+    {
+      "Föremål": "Säck",
+      "Pris": "5 koppar",
+      "Tillgång": "Vanlig",
+      "Vikt": "–",
+      "Effekt": "Ökar bärförmåga med 1. Kan inte kombineras mer fler bärhjälpmedel."
+    },
+    {
+      "Föremål": "Tunna",
+      "Pris": "2 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "2",
+      "Effekt": "Rymmer upp till 15 viktenheter. Tål 10 poäng skada, skyddsvärde 3."
+    }
+  ]

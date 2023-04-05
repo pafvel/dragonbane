@@ -167,7 +167,8 @@
 }
 .DoD.sheet.character .sheet-header .image-container img {
   height: 128px;
-  width: 128px;
+  min-height: 128px;
+  width: auto;
   margin: 0px;
   border: 0px solid transparent;
 }

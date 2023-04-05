@@ -188,7 +188,8 @@
             "round": "Runda",
             "stretch": "Kvart",
             "shift": "Skift",
-            "concentration": "Koncentration"
+            "concentration": "Koncentration",
+            "permanent": "Permanent"
         },
         "supplyTypes": {
             "common": "Vanlig",
@@ -217,8 +218,12 @@
             "bludgeoning": "Krossande",
             "long": "Lång",
             "mounted": "Riddjur",
+            "noDamageBonus": "Ingen skadebonus",
+            "noDamageBonusTooltip": "Ingen skadebonus",
             "noparry": "Ej parering",
             "piercing": "Stickande",
+            "quiver": "Koger",
+            "quiverTooltip": "Kräver koger",
             "slashing": "Huggande",
             "subtle": "Smidig",
             "thrown": "Kast",

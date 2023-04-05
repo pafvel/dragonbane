@@ -1,0 +1,177 @@
+[
+    {
+      "Föremål": "Dyrkar, avancerade",
+      "Pris": "20 guld",
+      "Tillgång": "Ovanlig",
+      "Vikt": "1",
+      "Effekt": "Ger fördel för slag mot FINGERFÄRDIGHET för att dyrka ett lås."
+    },
+    {
+      "Föremål": "Dyrkar, enkla",
+      "Pris": "1 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Krävs för att slippa nackdel för slag mot FINGERFÄRDIGHET för att dyrka ett lås."
+    },
+    {
+      "Föremål": "Fältkök",
+      "Pris": "4 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "2",
+      "Effekt": "Ger fördel på slag mot VILDMARKSVANA för att laga mat (sid xx)."
+    },
+    {
+      "Föremål": "Fältranson",
+      "Pris": "5 silver",
+      "Tillgång": "Vanlig",
+      "Vikt": "1/4",
+      "Effekt": "En ranson måste konsumeras per dygn, annars blir du utsvulten (sid xx)."
+    },
+    {
+      "Föremål": "Filt",
+      "Pris": "5 silver",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Krävs för att slippa effekten av kyla (sid xx)."
+    },
+    {
+      "Föremål": "Förstoringsglas",
+      "Pris": "30 guld",
+      "Tillgång": "Ovanlig",
+      "Vikt": "1",
+      "Effekt": "Ger fördel på slag mot FINNA DOLDA TING."
+    },
+    {
+      "Föremål": "Hänglås",
+      "Pris": "10 guld",
+      "Tillgång": "Vanlig",
+      "Effekt": "Kan försegla dörr eller kista. Tål 20 poäng skada, skyddsvärde 5."
+    },
+    {
+      "Föremål": "Karta",
+      "Pris": "5 guld",
+      "Tillgång": "Ovanlig",
+      "Vikt": "–",
+      "Effekt": "Krävs för att undvika nackdel på slag mot VILDMARKSVANA för att leda vägen under utfärd."
+    },
+    {
+      "Föremål": "Kikare",
+      "Pris": "50 guld",
+      "Tillgång": "Sällsynt",
+      "Vikt": "1",
+      "Effekt": "Ger fördel för slag mot VILDMARKSVANA för att leda vägen under utfärd."
+    },
+    {
+      "Föremål": "Koger med pilar, järnspets",
+      "Pris": "2 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Krävs för att avfyra pilbåge eller armborst."
+    },
+    {
+      "Föremål": "Koger med pilar, träspets",
+      "Pris": "5 silver",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Krävs för att avfyra pilbåge eller armborst. Effekt av rustning fördubblas."
+    },
+    {
+      "Föremål": "Kulram",
+      "Pris": "2 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Ger fördel på slag mot BILDNING vid matematiska frågor."
+    },
+    {
+      "Föremål": "Parfym (10 doser)",
+      "Pris": "5 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Ger fördel på slag mot ÖVERTALA."
+    },
+    {
+      "Föremål": "Rep, hampa (10 meter)",
+      "Pris": "1 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Ger fördel på slag mot RÖRLIGHET vid klättring, men kräver att repet är säkrat."
+    },
+    {
+      "Föremål": "Rep, silke (10 meter)",
+      "Pris": "10 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "–",
+      "Effekt": "Ger fördel på slag mot RÖRLIGHET vid klättring, men kräver att repet är säkrat."
+    },
+    {
+      "Föremål": "Sadel",
+      "Pris": "10 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Krävs för att rida på en häst om hjälteförmågan xx saknas."
+    },
+    {
+      "Föremål": "Schackspel",
+      "Pris": "1 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Motståndsslag för BILDNING avgör vem som vinner spelet."
+    },
+    {
+      "Föremål": "Sovfäll",
+      "Pris": "1 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Krävs för att slippa nackdel för slag mot VILDMARKSVANA för att slå läger."
+    },
+    {
+      "Föremål": "Spelkort",
+      "Pris": "5 silver",
+      "Tillgång": "Vanlig",
+      "Vikt": "–",
+      "Effekt": "Motståndsslag för ÖVERTALA avgör vem som vinner spelet."
+    },
+    {
+      "Föremål": "Stenkulor",
+      "Pris": "1 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Kan kastas mot humanoid fiende inom 10 meter, som en handling. Fienden måste vid sin nästa tur slå mot RÖRLIGHET (ej handling) för att kunna förflytta sig."
+    },
+    {
+      "Föremål": "Tält, litet",
+      "Pris": "2 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "2",
+      "Effekt": "Rymmer upp till två personer. Ger fördel för slag mot VILDMARKSVANA för att slå läger. Bara en person slår, andra kan hjälpa."
+    },
+    {
+      "Föremål": "Tält, stort",
+      "Pris": "4 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "4",
+      "Effekt": "Rymmer upp till sex personer. Ger fördel för slag mot VILDMARKSVANA för att slå läger. Bara en person slår, andra kan hjälpa."
+    },
+    {
+      "Föremål": "Tärningar",
+      "Pris": "1 silver",
+      "Tillgång": "Vanlig",
+      "Vikt": "–",
+      "Effekt": "Slumpen avgör vem som vinner spelet."
+    },
+    {
+      "Föremål": "Vissla",
+      "Pris": "5 silver",
+      "Tillgång": "Vanlig",
+      "Vikt": "–",
+      "Effekt": "Hörs upp till 100 meter."
+    },
+    {
+      "Föremål": "Änterhake",
+      "Pris": "3 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Kan användas för att säkra ett rep. Kan kastas och säkras med slag mot RÖRLIGHET upp till STY meter (STY x 2 med nackdel)."
+    }
+  ]
+  

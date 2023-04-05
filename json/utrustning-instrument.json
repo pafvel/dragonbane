@@ -1,0 +1,44 @@
+[
+    {
+      "Föremål": "Blåshorn",
+      "Pris": "6 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Ökar räckvidden för bardens Tonkonst till 30 meter."
+    },
+    {
+      "Föremål": "Flöjt",
+      "Pris": "2 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Minskar VP-kostnaden för bardens Tonkonst till 2."
+    },
+    {
+      "Föremål": "Harpa",
+      "Pris": "8 guld",
+      "Tillgång": "Ovanlig",
+      "Vikt": "2",
+      "Effekt": "Minskar VP-kostnaden för bardens Tonkonst till 1."
+    },
+    {
+      "Föremål": "Lyra",
+      "Pris": "20 guld",
+      "Tillgång": "Ovanlig",
+      "Vikt": "1",
+      "Effekt": "Minskar VP-kostnaden för bardens Tonkonst till 1."
+    },
+    {
+      "Föremål": "Säckpipa",
+      "Pris": "30 guld",
+      "Tillgång": "Ovanlig",
+      "Vikt": "1",
+      "Effekt": "Minskar VP-kostnaden för bardens Tonkonst till 1 och ökar räckvidden till 20 meter."
+    },
+    {
+      "Föremål": "Trumma",
+      "Pris": "4 guld",
+      "Tillgång": "Vanlig",
+      "Vikt": "1",
+      "Effekt": "Ökar räckvidden för bardens Tonkonst till 20 meter."
+    }
+  ]
