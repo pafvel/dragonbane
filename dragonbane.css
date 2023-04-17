@@ -710,6 +710,8 @@
   --color-shadow-highlight: #3e7d63;
   --color-border-highlight: #3e7d63;
   --color-border-highlight-alt: #007544;
+  --color-underline-header: #237262;
+  --color-text-dark-header: #237262;
 }
 @font-face {
   font-family: "QTFrizQuad";
@@ -730,7 +732,36 @@
   font-weight: bold;
 }
 .system-dragonbane {
+  --dod-color-text-dark-title: #00604D;
   background-image: url(art/ui/dragonbane.jpg);
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content {
+  background: url(art/ui/item-sheet-bg.webp) repeat;
+}
+.system-dragonbane .sheet.journal-entry img {
+  border: 0px solid transparent;
+}
+.system-dragonbane .sheet.journal-entry .title {
+  font-size: 4em;
+  font-weight: bolder;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--dod-color-text-dark-title);
+}
+.system-dragonbane .sheet.journal-entry h1 {
+  font-size: 4em;
+  font-weight: bolder;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--color-text-dark-header);
+  border-bottom: 0px solid transparent;
+}
+.system-dragonbane .sheet.journal-entry h2 {
+  font-size: 1.5em;
+  font-weight: normal;
+  text-transform: uppercase;
+  text-align: left;
+  border-bottom: 0px solid transparent;
 }
 .system-dragonbane .chat-message {
   font-family: QTFrizQuad;
