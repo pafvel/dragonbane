@@ -736,17 +736,70 @@
   background-image: url(art/ui/dragonbane.jpg);
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content {
-  background: url(art/ui/item-sheet-bg.webp) repeat;
+  background: url("art/ui/journal-page-bg.webp");
+  background-size: 100% auto;
 }
-.system-dragonbane .sheet.journal-entry img {
-  border: 0px solid transparent;
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-header {
+  background: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/border-horizontal.webp");
+  background-position: -12px bottom, calc(100% + 12px) bottom, center calc(100% - 6px);
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  background-size: auto 24px, auto 24px, 100% 12px;
+  background-clip: border-box, border-box, padding-box;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-bottom: 20px;
+  margin-bottom: 0px;
 }
-.system-dragonbane .sheet.journal-entry .title {
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-header .title {
   font-size: 4em;
   font-weight: bolder;
   text-transform: uppercase;
   text-align: center;
   color: var(--dod-color-text-dark-title);
+  height: 100%;
+  line-height: 100%;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .info-box {
+  height: 100%;
+  width: 100%;
+  align-self: start;
+  background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/parchment-vertical.webp");
+  background-position: left -16px bottom, right -16px bottom, center bottom 4px, left -16px top, right -16px top, center top 4px, center center;
+  background-clip: border-box, border-box, padding-box, border-box, border-box, padding-box, content-box;
+  background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y;
+  background-size: auto 24px, auto 24px, auto 16px, auto 24px, auto 24px, auto 16px, 100% auto;
+  padding: 6px 0px 12px 0px;
+  margin: 4px 0px 4px 0px;
+  border-width: 0px 26px 0px 26px;
+  border-style: solid;
+  border-color: transparent;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .info-box p {
+  padding: 16px 16px 0px 16px;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .info-box .info-box-label {
+  position: relative;
+  text-align: center;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .info-box .info-box-label p {
+  font-size: 16px;
+  width: 274px;
+  height: 32px;
+  position: absolute;
+  top: -16px;
+  left: calc(50% - 137px);
+  padding: 6px 24px 12px 24px;
+  background-image: url("art/ui/text-box-title-bg.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  color: whitesmoke;
+  font-weight: bold;
+}
+.system-dragonbane .sheet.journal-entry img {
+  border: 0px solid transparent;
 }
 .system-dragonbane .sheet.journal-entry h1 {
   font-size: 4em;
