@@ -81,44 +81,106 @@
                 }
             }
 
-            .info-box {
-                height: 100%;
-                width: 100%;
-                align-self: start;
-                background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/parchment-vertical.webp");
-                background-position: left -16px bottom, right -16px bottom, center bottom 4px, left -16px top, right -16px top, center top 4px, center center;
-                background-clip: border-box, border-box, padding-box, border-box, border-box, padding-box, content-box;
-                background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y;
-                background-size: auto 24px, auto 24px, auto 16px, auto 24px, auto 24px, auto 16px, 100% auto;
-                padding: 6px 0px 12px 0px;
-                margin: 4px 0px 4px 0px;
-                border-width: 0px 26px 0px 26px;
-                border-style: solid;
-                border-color: transparent;
-                
-                p {
-                    padding: 16px 16px 0px 16px;
-                }
-                .info-box-label {
+            img {
+                display: block;
+                margin: auto;
+            }
+            blockquote {
+                &.info {
+                    height: 100%;
+                    width: 100%;
+                    min-width: 300px;
+                    background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/parchment-vertical.webp");
+                    background-position: left -16px bottom, right -16px bottom, center bottom 4px, left -16px top, right -16px top, center top 4px, center center;
+                    background-clip: border-box, border-box, padding-box, border-box, border-box, padding-box, content-box;
+                    background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y;
+                    background-size: auto 24px, auto 24px, auto 16px, auto 24px, auto 24px, auto 16px, 100% auto;
+                    padding: 6px 0px 12px 0px;
+                    margin: 4px 0px 4px 0px;
+                    border-width: 0px 26px 0px 26px;
+                    border-style: solid;
+                    border-color: transparent;
                     position: relative;
-                    text-align: center;
-                    p {
-                        font-size: 16px;
-                        width: 274px;
-                        height: 32px;
+
+                    h3 {
                         position: absolute;
-                        top: -16px;
-                        left: calc(50% - 137px);
+                        width: 280px;
+                        height: 32px;
+                        top: -4px;
+                        left: calc(50% - 140px);
+                        
+                        text-align: center;
+                        vertical-align: middle;
+                        color:whitesmoke;
+                        font-size: 16px;
+                        font-style: normal;
+
+                        border: 0px solid transparent;
                         padding: 6px 24px 12px 24px;
-                        background-image: url("art/ui/text-box-title-bg.webp");
+                        background-image: url("art/ui/info-box-title-bg.webp");
                         background-size: contain;
                         background-repeat: no-repeat;
                         background-position: center center;
-                        color: whitesmoke;
+
+                    }
+                    p {
+                        padding: 4px 16px 0px 16px;
+                        font-style: normal;
+                        font-size: 13px;
                         font-weight: bold;
+                        color: rgb(74, 36, 7);
+                    }
+                    p:first-of-type {
+                        padding-top: 16px;
                     }
                 }
-            }        
+                &.optional {
+                    height: 100%;
+                    width: 100%;
+                    min-width: 300px;
+                    background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/title-bar.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/title-bar.webp"), url("art/ui/stone-vertical.webp");
+                    background-position: left -16px bottom, right -16px bottom, center bottom, left -16px top, right -16px top, center top, center center;
+                    background-clip: border-box, border-box, padding-box, border-box, border-box, padding-box, content-box;
+                    background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y;
+                    background-size: auto 32px, auto 32px, auto 32px, auto 32px, auto 32px, auto 32px, 100% auto;
+                    padding: 6px 0px 12px 0px;
+                    margin: 4px 0px 4px 0px;
+                    border-width: 0px 26px 0px 26px;
+                    border-style: solid;
+                    border-color: transparent;
+                    color: rgb(222, 233, 230);
+                    position: relative;
+
+                    h3 {
+                        position: absolute;
+                        width: 280px;
+                        height: 32px;
+                        top: -1px;
+                        left: calc(50% - 140px);
+                        
+                        text-align: center;
+                        vertical-align: middle;
+                        font-size: 16px;
+                        font-style: normal;
+
+                        border: 0px solid transparent;
+                        padding: 6px 24px 12px 24px;
+                    }
+                    p {
+                        padding: 4px 16px 0px 16px;
+                        font-style: normal;
+                        font-size: 13px;
+                        font-weight: normal;
+                    }
+                    p:first-of-type {
+                        padding-top: 20px;
+                    }
+                    p:last-of-type {
+                        padding-bottom: 16px;
+                    }
+
+                }
+            }
         }
         img {
             border: 0px solid transparent;
