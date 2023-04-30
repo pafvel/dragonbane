@@ -108,6 +108,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.data.description = await enrich(sheetData.data.description);
         sheetData.data.notes = await enrich(sheetData.data.notes);
         sheetData.data.weakness = await enrich(sheetData.data.weakness);
+        sheetData.data.traits = await enrich(sheetData.data.traits);
 
         // Prepare character data and items.
         this._prepareItems(sheetData);

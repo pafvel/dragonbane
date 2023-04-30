@@ -765,6 +765,12 @@
   display: block;
   margin: auto;
 }
+.system-dragonbane .sheet.journal-entry .journal-entry-content table th {
+  text-align: left;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content table td {
+  text-align: left;
+}
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info {
   height: 100%;
   width: 100%;
@@ -803,11 +809,19 @@
   padding: 4px 16px 0px 16px;
   font-style: normal;
   font-size: 13px;
-  font-weight: bold;
   color: #4a2407;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info p:first-of-type {
   padding-top: 16px;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info table {
+  margin-left: 1em;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info ol {
+  margin-left: 1em;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info ul {
+  margin-left: 1em;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional {
   height: 100%;
@@ -850,6 +864,15 @@
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional p:last-of-type {
   padding-bottom: 16px;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional ol {
+  margin-left: 1em;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional ul {
+  margin-left: 1em;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional .content-link {
+  background: #dddddd80;
 }
 .system-dragonbane .sheet.journal-entry img {
   border: 0px solid transparent;

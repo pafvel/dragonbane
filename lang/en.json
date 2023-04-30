@@ -91,7 +91,7 @@
             "copper": "Copper"
         },
         "damageTypes": {
-            "none": "Normal Damage",
+            "none": "Damage",
             "bludgeoning": "Bludgeoning Damage",
             "piercing": "Piercing Damage",
             "slashing": "Slashing Damage"

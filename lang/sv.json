@@ -89,7 +89,7 @@
             "copper": "Koppar"
         },
         "damageTypes": {
-            "none": "vanlig skada",
+            "none": "skada",
             "bludgeoning": "krosskada",
             "piercing": "stickskada",
             "slashing": "huggskada"
