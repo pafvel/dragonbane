@@ -322,6 +322,9 @@
                 "weaponFeatures": "Vapenegenskaper"
            }
         },
+        "INFO": {
+            "professionSkillAdded": "Lade till Yrkesfärdighet: {skill}"
+        },
         "WARNING": {
             "kinAbility": "Kan ej hitta Släktesförmåga: {ability}",
             "kin": "Kan ej hitta Släkte: {kin}",
@@ -330,6 +333,7 @@
             "professionSkill": "Kan ej hitta Yrkesfärdighet: {skill}",
             "notEnoughWPForSpell": "För få Viljepoäng för att kasta besvärjelse",
             "actorNotFound": "Kan inte hitta aktör med id: {id}",
+            "tableNotFound": "Kan inte hitta tabellen: {id}",
             "conditionAlreadyTaken": "Tillståndet är redan taget"
         }
     }

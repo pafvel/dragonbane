@@ -347,12 +347,14 @@ export class DoDActor extends Actor {
         let ids = [];
         //  profession items
         this.items.contents.forEach(i => {
-            if (i.type == "profession") ids.push(i.id)
+            if ((i.type == "profession") 
+            || (i.type == "ability" && i.system.abilityType == "profession")
+            || (i.type == "skill" && (i.system.skillType == "secondary" || i.system.skillType == "magic") && i.system.value == 0))
+            {
+                ids.push(i.id)
+            }
         });
-        //  profession ability items
-        this.items.contents.forEach(i => {
-            if (i.type == "ability" && i.system.abilityType == "profession") ids.push(i.id)
-        });
+
         // delete items and clear profession
         await this.deleteEmbeddedDocuments("Item", ids);
         this.system.profession = null;

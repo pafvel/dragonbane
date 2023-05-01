@@ -522,7 +522,12 @@ export default class DoDCharacterSheet extends ActorSheet {
 
             let missingSkills = await this.actor.updateProfession();
             for (const skillName of missingSkills) {
-                DoD_Utility.WARNING("DoD.WARNING.professionSkill", {skill: skillName});
+                const skill = DoD_Utility.findSkill(skillName);
+                if (skill) {
+                    await this._onDropItemCreate(skill.toObject());
+                } else {
+                    DoD_Utility.WARNING("DoD.WARNING.professionSkill", {skill: skillName});
+                }
             }
         }
     }
@@ -711,7 +716,13 @@ export default class DoDCharacterSheet extends ActorSheet {
         if (itemData.type == "profession") {
             let missingSkills = await this.actor.updateProfession();
             for (const skillName of missingSkills) {
-                DoD_Utility.WARNING("DoD.WARNING.professionSkill", {skill: skillName});
+                const skill = await DoD_Utility.findSkill(skillName);
+                if (skill && (skill.system.skillType == "secondary" || skill.system.skillType == "magic")) {
+                    await this._onDropItemCreate(skill.toObject());
+                    DoD_Utility.INFO("DoD.INFO.professionSkillAdded", {skill: skillName});
+                } else {
+                    DoD_Utility.WARNING("DoD.WARNING.professionSkill", {skill: skillName});
+                }
             }
         }
 

@@ -9,6 +9,8 @@ export function addChatListeners(app, html, data) {
     html.on("click", "button.weapon-roll", onWeaponDamageRoll);
     html.on("click", "button.magic-roll", onMagicDamageRoll);
     html.on("click", "button.push-roll", onPushRoll);
+
+    html.on('click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
 }
 
 export function addChatMessageContextMenuOptions(html, options) {
@@ -75,8 +77,8 @@ async function onMonsterDamageRoll(event) {
         damage: damage,
         damageType: damageType
     };
- 
     inflictDamageMessage(damageData);    
+    event.stopPropagation();
 }
 
 async function onWeaponDamageRoll(event) {

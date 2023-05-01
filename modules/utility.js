@@ -49,29 +49,11 @@ export default class DoD_Utility {
 
     static getConditionByAttributeName(actor, attributeName) {
         return actor.system.conditions[attributeName];
-        /*
-        for (const [key, condition] of Object.entries(actor.system.conditions)) {
-            if (condition.attribute == attributeName) {
-                return condition;
-            }
-        }
-        return null;
-        */
     }
 
     static async getBaseSkills() {
-        let baseSkills = [];
-    
-        let packName = "world.fardigheter-drakar-och-demoner";
-        let pack = game.packs.get(packName);
-        if (pack) {
-            let docs = await pack.getDocuments();
-            if (docs) {
-                docs = docs.filter(doc => doc.system.skillType == "core" || doc.system.skillType == "weapon");
-                docs.forEach(doc => baseSkills.push(doc.toObject()));
-            }
-        }
-        return baseSkills;
+        let skills = game.items.filter(i => i.type == "skill" && (i.system.skillType == "core" || i.system.skillType == "weapon"));
+        return skills.map(skill => skill.toObject());
     }
 
     static async findAbility(abilityName) {
@@ -86,10 +68,25 @@ export default class DoD_Utility {
         return kin;
     }
 
-    static async findProfession(kinName) {
+    static async findSkill(skillName) {
         // Prio 1: World items
-        let kin = this.findItem(kinName, "profession", game.items);
+        let kin = this.findItem(skillName, "skill", game.items);
         return kin;
+    }
+
+    static async findProfession(professionName) {
+        // Prio 1: World items
+        let kin = this.findItem(professionName, "profession", game.items);
+        return kin;
+    }
+
+    static findTable(name) {
+        let table = game.tables.find(i => i.name.toLowerCase() == name.toLowerCase()) || fromUuidSync(name);
+        if (!table) {
+            DoD_Utility.WARNING("DoD.WARNING.tableNotFound", {id: name});
+            return null;    
+        }
+        return table;
     }
 
     static async findItem(itemName, itemType, collection) {
@@ -119,6 +116,30 @@ export default class DoD_Utility {
             result[i] = result[i].replace(/^\s+|\s+$/gm,'');
         }
         return result;
+    }
+
+    static async handleTableRoll(event) {
+        const tableId = event.currentTarget.dataset.tableId;
+        const tableName = event.currentTarget.dataset.tableName;
+        const table = fromUuidSync(tableId) || this.findTable(tableName);
+        if (table) {
+            if (event.type == "click") { // left click
+                table.draw();
+            } else { // right click
+                table.sheet.render(true);
+            }
+        }
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    
+
+    static INFO(msg, params) {
+        if (!params) {
+            return ui.notifications.info(game.i18n.localize(msg));
+        } else {
+            return ui.notifications.info(game.i18n.format(game.i18n.localize(msg), params));
+        }
     }
 
     static WARNING(msg, params) {

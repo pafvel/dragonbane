@@ -4,6 +4,7 @@ import { DoDItem } from "./modules/item.js";
 import * as DoDChat from "./modules/chat.js";
 import DoDItemSheet from "./modules/item-sheet.js";
 import DoDCharacterSheet from "./modules/character-sheet.js";
+import DoD_Utility from "./modules/utility.js";
 
 function registerHandlebarsHelpers() {
     
@@ -84,8 +85,12 @@ Hooks.once("init", function() {
 });
 
 Hooks.on("renderChatLog", DoDChat.addChatListeners);
-
 Hooks.on("getChatLogEntryContext", DoDChat.addChatMessageContextMenuOptions);
+
+Hooks.on("renderJournalPageSheet", (obj, html, data) => {
+    html.on('click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
+  });
+
 
 CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     {
@@ -101,6 +106,28 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
 
             a.innerHTML = `<i class="fas fa-dice-d20"></i>` + match[1] + " " + game.i18n.localize(a.dataset.damageType);
             return a;
+        }
+    },
+    {
+        pattern : /@Table\[(.+?)\](?:{(.+?)})?/gm,
+        enricher : (match, options) => {
+            const table = DoD_Utility.findTable(match[1]);
+            const tableName = match[2] ?? table?.name;
+            const a = document.createElement("a");
+            if (table) {
+                a.classList.add("inline-roll");
+                a.classList.add("table-roll");
+                a.dataset.tableId = table.uuid;
+                a.dataset.tableName = table.name;
+                a.innerHTML = `<i class="fas fa-dice-d20"></i><i class="fas fa-th-list"></i> ${tableName}`;
+            } else {
+                a.dataset.tableId = match[1];
+                if (match[2]) a.dataset.tableName = match[2];
+                a.classList.add("content-link");
+                a.classList.add("broken");
+                a.innerHTML = `<i class="fas fa-unlink"></i> ${tableName}`;
+            }
+            return a
         }
     }
 ]);
