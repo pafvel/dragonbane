@@ -5,7 +5,6 @@ export default class DoDItemSheet extends ItemSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions,  {
             width: 560,
-            height: 340,
             dragDrop: [{ dragSelector: null, dropSelector: null}],
             classes: ["DoD", "sheet", "item"]
         });
