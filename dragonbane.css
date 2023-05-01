@@ -760,6 +760,8 @@
   color: var(--dod-color-text-dark-title);
   height: 100%;
   line-height: 100%;
+  background-color: transparent;
+  border-color: transparent;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content img {
   display: block;
