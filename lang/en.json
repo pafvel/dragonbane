@@ -12,7 +12,6 @@
         "TypeItem": "Item",
         "TypeKin": "Kin",
         "TypeProfession": "Profession",
-        "TypeShield": "Shield",
         "TypeSkill": "Skill",
         "TypeSpell": "Spell",
         "TypeWeapon": "Weapon"
@@ -151,9 +150,6 @@
             "pushButtonLabel": "Push roll",
             "pushChoiceLabel": "Choose condition:"
 
-        },
-        "shield": {
-            "durability": "Durability"
         },
         "sizeTypes": {
             "small": "Small",

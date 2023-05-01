@@ -120,7 +120,7 @@
         }
     },
     "Item": {
-        "types": ["ability", "armor", "helmet", "item", "kin", "profession", "shield", "skill", "spell", "weapon"],
+        "types": ["ability", "armor", "helmet", "item", "kin", "profession", "skill", "spell", "weapon"],
         "templates": {
             "itemDescripton": {
                 "description": ""
@@ -159,10 +159,6 @@
         "helmet": {
             "templates": ["gear", "itemDescripton"],
             "rating": 0
-        },
-        "shield": {
-            "templates": ["gear", "itemDescripton"],
-            "durability": 0
         },
         "item": {
             "templates": ["gear", "itemDescripton"],

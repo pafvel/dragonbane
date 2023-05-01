@@ -12,7 +12,6 @@
         "TypeItem": "Föremål",
         "TypeKin": "Släkte",
         "TypeProfession": "Yrke",
-        "TypeShield": "Sköld",
         "TypeSkill": "Färdighet",
         "TypeSpell": "Besvärjelse",
         "TypeWeapon": "Vapen"
@@ -149,9 +148,6 @@
             "damageIgnoreArmor": "<b>{actor}</b> gör <b>{damage}</b> poäng <b>{damageType}</b> med <b>{weapon}</b>. Skadan <b>ignorerar rustning</b>.",
             "pushButtonLabel": "Pressa slag",
             "pushChoiceLabel": "Välj tillstånd:"
-        },
-        "shield": {
-            "durability": "Brytvärde"
         },
         "sizeTypes": {
             "small": "Liten",
