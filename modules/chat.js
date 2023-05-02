@@ -3,9 +3,10 @@ import DoDAttributeTest from "./tests/attribute-test.js";
 import DoDSkillTest from "./tests/skill-test.js";
 import DoDWeaponTest from "./tests/weapon-test.js";
 import DoDSpellTest from "./tests/spell-test.js";
+import { DoD } from "./config.js";
 
 export function addChatListeners(app, html, data) {
-    html.on("click", ".monster-damage-roll", onMonsterDamageRoll);
+    html.on("click", ".inline-damage-roll", onInlineDamageRoll);
     html.on("click", "button.weapon-roll", onWeaponDamageRoll);
     html.on("click", "button.magic-roll", onMagicDamageRoll);
     html.on("click", "button.push-roll", onPushRoll);
@@ -15,16 +16,50 @@ export function addChatListeners(app, html, data) {
 
 export function addChatMessageContextMenuOptions(html, options) {
 
-    
-    // const canDealDamage = li => canvas.tokens.controlled.length > 0 && li.find(".damage-roll").length > 0;
-    const canDealDamage = li =>
+    const canDealTargetDamage = li =>
     {
-        return game.user.targets.size > 0 && li.find(".damage-roll").length > 0;
+        const element = li.find(".damage-roll")[0];
+        if (element?.dataset.targetId) {
+            const target = DoD_Utility.getActorFromUUID(element.dataset.targetId);
+            return target?.isOwner;
+        }
+        return false;
     }
-    
-    
 
-    const dealDamage = function(li, multiplier = 1) {
+    const dealTargetDamage = function(li, multiplier = 1) {
+        const damageData = {};
+        const element = li.find(".damage-roll")[0];
+
+        damageData.damage = element.dataset.damage;
+        damageData.damageType = element.dataset.damageType.substr(String("DoD.damageTypes.").length);
+        damageData.actor = DoD_Utility.getActorFromUUID(element.dataset.targetId);
+        damageData.multiplier = multiplier;
+        damageData.ignoreArmor = element.dataset.ignoreArmor;
+
+        if (damageData.actor.isOwner) {
+            applyDamageMessage(damageData);
+        } else {
+            DoD_Utility.WARNING("DoD.WARNING.noPermissionToModifyActor");
+        }
+    }
+
+    const canDealSelectedDamage = li =>
+    {
+        if(li.find(".damage-roll")[0]?.dataset.targetId) {
+            return false;
+        }
+        if (canvas.tokens.controlled.length > 0 && li.find(".damage-roll").length > 0) {
+            for (const token of canvas.tokens.controlled) {
+                if (!token.isOwner) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    const dealSelectedDamage = function(li, multiplier = 1) {
         const damageData = {};
         const element = li.find(".damage-roll")[0];
 
@@ -34,10 +69,14 @@ export function addChatMessageContextMenuOptions(html, options) {
         damageData.multiplier = multiplier;
         damageData.ignoreArmor = element.dataset.ignoreArmor;
 
-        const targets = Array.from(game.user.targets);
+        const targets = canvas.tokens.controlled;
         for (const target of targets) {
-            damageData.actor = target.actor;
-            applyDamageMessage(damageData);
+            if (target.actor.isOwner) {
+                damageData.actor = target.actor;              
+                applyDamageMessage(damageData);
+            } else {
+                DoD_Utility.WARNING("DoD.WARNING.noPermissionToModifyActor");
+            }
         }
     }
 
@@ -45,40 +84,68 @@ export function addChatMessageContextMenuOptions(html, options) {
         {
             name: game.i18n.format("DoD.ui.chat.dealDamage"),
             icon: '<i class="fas fa-user-minus"></i>',
-            condition: canDealDamage,
-            callback: li => dealDamage(li)
+            condition: canDealTargetDamage,
+            callback: li => dealTargetDamage(li)
         },
         {
             name: game.i18n.format("DoD.ui.chat.dealHalfDamage"),
             icon: '<i class="fas fa-user-minus"></i>',
-            condition: canDealDamage,
-            callback: li => dealDamage(li, 0.5)
+            condition: canDealTargetDamage,
+            callback: li => dealTargetDamage(li, 0.5)
         },
         {
             name: game.i18n.format("DoD.ui.chat.dealDoubleDamage"),
             icon: '<i class="fas fa-user-minus"></i>',
-            condition: canDealDamage,
-            callback: li => dealDamage(li, 2)
+            condition: canDealTargetDamage,
+            callback: li => dealTargetDamage(li, 2)
+        },
+        {
+            name: game.i18n.format("DoD.ui.chat.dealSelectedDamage"),
+            icon: '<i class="fas fa-user-minus"></i>',
+            condition: canDealSelectedDamage,
+            callback: li => dealSelectedDamage(li)
+        },
+        {
+            name: game.i18n.format("DoD.ui.chat.dealSelectedHalfDamage"),
+            icon: '<i class="fas fa-user-minus"></i>',
+            condition: canDealSelectedDamage,
+            callback: li => dealSelectedDamage(li, 0.5)
+        },
+        {
+            name: game.i18n.format("DoD.ui.chat.dealSelectedDoubleDamage"),
+            icon: '<i class="fas fa-user-minus"></i>',
+            condition: canDealSelectedDamage,
+            callback: li => dealSelectedDamage(li, 2)
         }
     );
 }
 
-async function onMonsterDamageRoll(event) {
+async function onInlineDamageRoll(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
     const element = event.currentTarget;
     const actorId = element.dataset.actorId;
     const actor = actorId ? DoD_Utility.getActorFromUUID(actorId) : null;
     const damageType = element.dataset.damageType;
     const damage = element.dataset.damage;
     const action = element.dataset.action;
-
-    const damageData = {
+    let damageData = {
         actor: actor,
         action: action,
         damage: damage,
         damageType: damageType
     };
-    inflictDamageMessage(damageData);    
-    event.stopPropagation();
+    
+    const targets = Array.from(game.user.targets)
+    if (targets.length > 0) {
+        for (const target of targets) {
+            damageData.target = target.actor;
+            await inflictDamageMessage(damageData);    
+        }
+     } else {
+        await inflictDamageMessage(damageData);    
+    }
 }
 
 async function onWeaponDamageRoll(event) {
@@ -96,13 +163,15 @@ async function onWeaponDamageRoll(event) {
     const attribute = skill ? skill.system.attribute : null;
     const damageBonus = attribute ? actor.system.damageBonus[attribute] : 0;
     const damage = weaponDamage ? weaponDamage + "+" + damageBonus : 0;
+    const target = element.dataset.targetId ? DoD_Utility.getActorFromUUID(element.dataset.targetId) : null;
 
     const damageData = {
         actor: actor,
         weapon: weapon,
         damage: damage,
         damageType: damageType,
-        ignoreArmor: ignoreArmor
+        ignoreArmor: ignoreArmor,
+        target: target
     };
  
     if (element.dataset.isMeleeCrit) {
@@ -228,14 +297,19 @@ export async function inflictDamageMessage(damageData) {
     await roll.roll({async: true});
 
     const weaponName = damageData.weapon?.name ?? damageData.action;
-    const msg = weaponName ? (damageData.ignoreArmor ? "DoD.roll.damageIgnoreArmor" : "DoD.roll.damageWeapon") : "DoD.roll.damage";
+    let msg = weaponName ? (damageData.ignoreArmor ? "DoD.roll.damageIgnoreArmor" : "DoD.roll.damageWeapon") : "DoD.roll.damage";
+    if (damageData.target) {
+        msg += "Target";
+    }
     const actorName = damageData.actor ? (damageData.actor.isToken ? damageData.actor.token.name : damageData.actor.name) : "";
+    const targetName = damageData.target ? (damageData.target.isToken ? damageData.target.token.name : damageData.target.name) : "";
 
     const flavor = game.i18n.format(game.i18n.localize(msg), {
         actor: actorName,
         damage: roll.total,
         damageType: game.i18n.localize(damageData.damageType),
-        weapon: weaponName
+        weapon: weaponName,
+        target: targetName
     });
     
     const template = "systems/dragonbane/templates/partials/damage-roll-message.hbs";
@@ -245,7 +319,8 @@ export async function inflictDamageMessage(damageData) {
         tooltip: await roll.getTooltip(),
         total: Math.round(roll.total * 100) / 100,
         damageType: damageData.damageType,
-        ignoreArmor: damageData.ignoreArmor
+        ignoreArmor: damageData.ignoreArmor,
+        target: damageData.target
     };
     const renderedTemplate = await renderTemplate(template, templateContext);
 

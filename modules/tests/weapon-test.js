@@ -73,12 +73,13 @@ export default class DoDWeaponTest extends DoDSkillTest  {
 
     formatRollMessage(msgData) {
         let result = this.formatRollResult(msgData.result, msgData.target);
-        let locString = "DoD.roll.weaponRoll";
+        let locString = this.postRollData.targetActor ? "DoD.roll.weaponRollTarget" : "DoD.roll.weaponRoll";
         let label = game.i18n.format(game.i18n.localize(locString), 
             {
                 action: game.i18n.localize("DoD.attackTypes." + msgData.action),
                 skill: msgData.weapon.name, 
-                result: result
+                result: result,
+                target: this.postRollData.targetActor?.isToken ? this.postRollData.targetActor.token.name : this.postRollData.targetActor?.name
             }
         );
 

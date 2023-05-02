@@ -98,7 +98,7 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
         enricher : (match, options) => {
             const a = document.createElement("a");
             a.classList.add("inline-roll");
-            a.classList.add("monster-damage-roll");
+            a.classList.add("inline-damage-roll");
             a.dataset.damage = match[1];
             a.dataset.damageType = "DoD.damageTypes." + (match[2] ?? "none");
             if (options.actor) a.dataset.actorId = options.actor.uuid;
@@ -127,7 +127,7 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
                 a.classList.add("broken");
                 a.innerHTML = `<i class="fas fa-unlink"></i> ${tableName}`;
             }
-            return a
+            return a;
         }
     }
 ]);

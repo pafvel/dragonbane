@@ -1,7 +1,8 @@
 <div class="damage-roll"
     data-damage="{{total}}"
     data-damage-type="{{damageType}}"
-    data-ignore-armor="{{ignoreArmor}}"
+    {{#if ignoreArmor}} data-ignore-armor="{{ignoreArmor}}" {{/if}}
+    {{#if target}} data-target-id="{{target.uuid}}" {{/if}}
 >
 {{> "templates/dice/roll.html"}}
 </div>

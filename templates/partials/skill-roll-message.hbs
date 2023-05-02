@@ -1,3 +1,5 @@
+{{> "templates/dice/roll.html"}}
+
 {{#if success}}
     {{#if isMeleeCrit}}
     <hr>
@@ -33,9 +35,10 @@
         data-actor-id="{{actor.uuid}}"
         data-weapon-id="{{weapon.id}}"
         data-damage-type="{{damageType}}"
-        data-ignore-armor="{{ignoreArmor}}"
-        data-is-melee-crit="{{isMeleeCrit}}"
-        data-is-magic-crit="{{isMagicCrit}}"
+        {{#if ignoreArmor }} data-ignore-armor="{{ignoreArmor}}" {{/if}}
+        {{#if isMeleeCrit }} data-is-melee-crit="{{isMeleeCrit}}" {{/if}}
+        {{#if isMagicCrit }} data-is-magic-crit="{{isMagicCrit}}" {{/if}}
+        {{#if targetActor }} data-target-id="{{targetActor.uuid}}" {{/if}}
         >
         {{localize "DoD.ui.chat.rollDamage"}}
     </button>
@@ -76,4 +79,3 @@
     {{/if}}
 
 {{/if}}
-{{> "templates/dice/roll.html"}}

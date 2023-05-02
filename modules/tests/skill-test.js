@@ -34,6 +34,10 @@ export default class DoDSkillTest extends DoDTest  {
         if (this.postRollData.canPush) {
             this.updatePushRollChoices();
         }
+
+        if (this.options.targets) {
+            this.postRollData.targetActor = this.options.targets[0].actor;
+        }
     }
 
     formatRollMessage(msgData) {

@@ -137,15 +137,19 @@
         "roll": {
             "dragon": "lyckades med ett Drakslag!",
             "demon": "misslyckades med ett Demonslag!",
-            "success": "lyckades",
-            "failure": "misslyckades",
-            "attributeRoll": "Grundegenskapsslag för <b>{attribute}</b> <b>{result}</b>.",
-            "skillRoll": "Färdighetsslag för <b>{skill}</b> <b>{result}</b>.",
-            "spellRoll": "Färdighetsslag för <b>{spell} effektgrad {powerLevel} {result}</b>.",
-            "weaponRoll": "Färdighetsslag för <b>{action}</b> med <b>{skill}</b> <b>{result}</b>.",
+            "success": "lyckades.",
+            "failure": "misslyckades.",
+            "attributeRoll": "Grundegenskapsslag för <b>{attribute}</b> <b>{result}</b>",
+            "skillRoll": "Färdighetsslag för <b>{skill}</b> <b>{result}</b>",
+            "spellRoll": "Färdighetsslag för <b>{spell} effektgrad {powerLevel} {result}</b>",
+            "weaponRoll": "<b>{action}</b> med <b>{skill}</b> <b>{result}</b>",
+            "weaponRollTarget": "<b>{action}</b> med <b>{skill}</b> mot <b>{target}</b> <b>{result}</b>",
             "damage": "<b>{actor}</b> gör <b>{damage}</b> poäng <b>{damageType}</b>.",
             "damageWeapon": "<b>{actor}</b> gör <b>{damage}</b> poäng <b>{damageType}</b> med <b>{weapon}</b>.",
             "damageIgnoreArmor": "<b>{actor}</b> gör <b>{damage}</b> poäng <b>{damageType}</b> med <b>{weapon}</b>. Skadan <b>ignorerar rustning</b>.",
+            "damageTarget": "<b>{actor}</b> gör <b>{damage}</b> poäng <b>{damageType}</b> på <b>{target}</b>.",
+            "damageWeaponTarget": "<b>{actor}</b> gör <b>{damage}</b> poäng <b>{damageType}</b> med <b>{weapon}</b> på <b>{target}</b>.",
+            "damageIgnoreArmorTarget": "<b>{actor}</b> gör <b>{damage}</b> poäng <b>{damageType}</b> med <b>{weapon}</b> på <b>{target}</b>. Skadan <b>ignorerar rustning</b>.",
             "pushButtonLabel": "Pressa slag",
             "pushChoiceLabel": "Välj tillstånd:"
         },
@@ -194,8 +198,8 @@
             "unique": "Unik"
         },
         "tables": {
-            "mishapMagic": "@UUID[RollTable.NHVp4W45Z02qumKa]{Missöde - Magi}",
-            "mishapMelee": "@UUID[RollTable.VwP9Hy9ESvbC34XA]{Missöde - Närstrid}"
+            "mishapMagic": "@Table[RollTable.NHVp4W45Z02qumKa]{Missöde - Magi}",
+            "mishapMelee": "@Table[RollTable.VwP9Hy9ESvbC34XA]{Missöde - Närstrid}"
         },
         "weapon": {
             "grip": "Grepp",
@@ -300,6 +304,9 @@
                 "dealDamage": "Tillfoga skada",
                 "dealHalfDamage": "Tillfoga halv skada",
                 "dealDoubleDamage": "Tillfoga dubbel skada",
+                "dealSelectedDamage": "Tillfoga skada (vald spelfigur)",
+                "dealSelectedHalfDamage": "Tillfoga halv skada (vald spelfigur)",
+                "dealSelectedDoubleDamage": "Tillfoga dubbel skada (vald spelfigur)",
                 "choose": "Välj",
                 "takeCondition": "{actor} blir {condition}."
             },
@@ -330,7 +337,8 @@
             "notEnoughWPForSpell": "För få Viljepoäng för att kasta besvärjelse",
             "actorNotFound": "Kan inte hitta aktör med id: {id}",
             "tableNotFound": "Kan inte hitta tabellen: {id}",
-            "conditionAlreadyTaken": "Tillståndet är redan taget"
+            "conditionAlreadyTaken": "Tillståndet är redan taget",
+            "noPermissionToModifyActor": "Saknar behörighet att modifiera karaktären"
         }
     }
 }

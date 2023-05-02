@@ -569,14 +569,16 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         if (event.type == "click") { // left click - skill roll
             let test = null;
-            let options = null;
+            let options = {};
             if (event.shiftKey || event.ctrlKey) {
                 options = {
                     noBanesBoons: event.shiftKey,
                     defaultBanesBoons: event.ctrlKey
                 };
             }
-
+            if (game.user.targets.size > 0) {
+                options.targets = Array.from(game.user.targets);
+            }
             if (item.type == "skill") {
                 test = new DoDSkillTest(this.actor, item, options);
             } else if (item.type == "spell") {

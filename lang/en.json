@@ -144,9 +144,14 @@
             "attributeRoll": "Attribute roll for <b>{attribute}</b> <b>{result}</b>",
             "skillRoll": "Skill roll for <b>{skill}</b> <b>{result}</b>",
             "spellRoll": "Skill roll for <b>{spell}</b> at <b>Power Level {powerLevel}</b> <b>{result}</b>",
-            "weaponRoll": "Skill roll for <b>{action}</b> with <b>{skill}</b> <b>{result}</b>",
-            "damage": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType}</b> using <b>{weapon}</b>.",
+            "weaponRoll": "<b>{action}</b> with <b>{skill}</b> <b>{result}</b>",
+            "weaponRollTarget": "<b>{action}</b> with <b>{skill}</b> targeting <b>{target}</b> <b>{result}</b>",
+            "damage": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType}</b>.",
+            "damageWeapon": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType}</b> using <b>{weapon}</b>.",
             "damageIgnoreArmor": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType} ignoring armor</b> using <b>{weapon}</b>.",
+            "damageTarget": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType}</b> on {target}.",
+            "damageWeaponTarget": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType}</b> on {target} using <b>{weapon}</b>.",
+            "damageIgnoreArmorTarget": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType} on {target} ignoring armor</b> using <b>{weapon}</b>.",
             "pushButtonLabel": "Push roll",
             "pushChoiceLabel": "Choose condition:"
 
@@ -196,8 +201,8 @@
             "unique": "Unique"
         },
         "tables": {
-            "mishapMagic": "@UUID[RollTable.rB0EjF3UvHm2CWPZ]{Mishap - Magic}",
-            "mishapMelee": "@UUID[RollTable.ldtp8mMoAoVOKczR]{Mishap - Melee}"
+            "mishapMagic": "@Table[RollTable.rB0EjF3UvHm2CWPZ]{Mishap - Magic}",
+            "mishapMelee": "@Table[RollTable.ldtp8mMoAoVOKczR]{Mishap - Melee}"
         },
         "weapon": {
             "grip": "Grip",
@@ -295,6 +300,9 @@
                 "dealDamage": "Deal damage",
                 "dealHalfDamage": "Deal half damage",
                 "dealDoubleDamage": "Deal double damage",
+                "dealSelectedDamage": "Deal damage (selected token)",
+                "dealSelectedHalfDamage": "Deal half damage (selected token)",
+                "dealSelectedDoubleDamage": "Deal double damage (selected token)",
                 "choose": "Choose",
                 "takeCondition": "{actor} becomes {condition}."
             },
@@ -326,7 +334,8 @@
             "notEnoughWPForSpell": "Not enough Willpower Points to cast spell",
             "actorNotFound": "Can't find actor with id: {id}",
             "tableNotFound": "Can't find table: {id}",
-            "conditionAlreadyTaken": "The condition is already taken"
+            "conditionAlreadyTaken": "The condition is already taken",
+            "noPermissionToModifyActor": "You lack permission to modify the actor"
         }
     }
 }
