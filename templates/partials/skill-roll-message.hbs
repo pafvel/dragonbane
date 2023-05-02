@@ -4,9 +4,9 @@
     {{#if isMeleeCrit}}
     <hr>
     <div class="form-group">
-        <label>{{localize "DoD.meleeCritChoices.choiceLabel"}}</label>
+        <label>{{localize "DoD.critChoices.choiceLabel"}}</label>
         <div class="form-fields">
-            {{radioBoxes meleeCritGroup meleeCritChoices checked=meleeCritChoice localize=true}}
+            {{radioBoxes meleeCritGroup critChoices checked=critChoice localize=true}}
         </div>
     </div>
     <hr>
@@ -72,6 +72,10 @@
     
     {{#if isMeleeMishap}}
     <br>{{localize "DoD.tables.mishapMelee"}}<br><br>
+    {{/if}}
+
+    {{#if isRangedMishap}}
+    <br>{{localize "DoD.tables.mishapRanged"}}<br><br>
     {{/if}}
     
     {{#if isMagicMishap}}

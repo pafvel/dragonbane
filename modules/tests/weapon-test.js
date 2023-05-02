@@ -12,14 +12,15 @@ export default class DoDWeaponTest extends DoDSkillTest  {
     updateDialogData() {
         super.updateDialogData();
 
-        let hasSlashAttack = this.weapon.hasWeaponFeature("slashing");
-        let hasStabAttack = this.weapon.hasWeaponFeature("piercing");
-        let hasWeakpointAttack = hasStabAttack;
-        let hasNormalAttack = !(hasStabAttack || hasSlashAttack);
-        let hasToppleAttack = this.weapon.hasWeaponFeature("toppling");
-        let hasDisarmAttack = true;
-        let hasThrowAttack = this.weapon.hasWeaponFeature("thrown");
-        let hasParry = !this.weapon.hasWeaponFeature("noparry");
+        const isRangedWeapon = this.weapon.system.range >= 10;
+        const hasSlashAttack = this.weapon.hasWeaponFeature("slashing");
+        const hasStabAttack = this.weapon.hasWeaponFeature("piercing");
+        const hasWeakpointAttack = hasStabAttack;
+        const hasNormalAttack = !(hasStabAttack || hasSlashAttack);
+        const hasToppleAttack = this.weapon.hasWeaponFeature("toppling");
+        const hasDisarmAttack = true;
+        const hasThrowAttack = this.weapon.hasWeaponFeature("thrown");
+        const hasParry = !this.weapon.hasWeaponFeature("noparry");
 
         let actions = [];
 
@@ -31,28 +32,31 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             });
         }
 
-        if(hasNormalAttack) {
+        if(isRangedWeapon) {
+            pushAction("ranged");
+        }
+        if(hasNormalAttack && !isRangedWeapon) {
             pushAction("normal");
         }
-        if(hasSlashAttack) {
+        if(hasSlashAttack && !isRangedWeapon) {
             pushAction("slash");
         }
-        if(hasStabAttack) {
+        if(hasStabAttack && !isRangedWeapon) {
             pushAction("stab");
         }
-        if(hasWeakpointAttack) {
+        if(hasWeakpointAttack && !isRangedWeapon) {
             pushAction("weakpoint");
         }
-        if(hasToppleAttack) {
+        if(hasToppleAttack && !isRangedWeapon) {
             pushAction("topple");
         }
-        if(hasDisarmAttack) {
+        if(hasDisarmAttack && !isRangedWeapon) {
             pushAction("disarm");
         }        
-        if(hasThrowAttack) {
+        if(hasThrowAttack && !isRangedWeapon) {
             pushAction("throw");
         }        
-        if(hasParry) {
+        if(hasParry && !isRangedWeapon) {
             pushAction("parry");
         }
 
@@ -147,7 +151,20 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             
             case "normal":
                 if (this.postRollData.weapon.hasWeaponFeature("bludgeoning")) {
-                this.postRollData.isDamaging = true;
+                    this.postRollData.damageType = DoD.damageTypes.bludgeoning;
+                    this.postRollData.isDamaging = true;
+                    break;
+                }
+
+            case "throw":
+            case "ranged":
+                this.postRollData.isRanged = true;
+                if (this.postRollData.weapon.hasWeaponFeature("piercing")) {
+                    this.postRollData.damageType = DoD.damageTypes.piercing;
+                    this.postRollData.isDamaging = true;
+                    break;
+                }
+                if (this.postRollData.weapon.hasWeaponFeature("bludgeoning")) {
                     this.postRollData.damageType = DoD.damageTypes.bludgeoning;
                     this.postRollData.isDamaging = true;
                     break;
@@ -159,28 +176,34 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         }
 
         if (this.postRollData.result == 20) {
-            this.postRollData.isMeleeMishap = true;
+            if (this.postRollData.isRanged) {
+                this.postRollData.isRangedMishap = true;
+            } else {
+                this.postRollData.isMeleeMishap = true;
+            }
         }
 
         if (this.postRollData.result == 1 && this.postRollData.action != "parry") {
             this.postRollData.isMeleeCrit = true;
-            this.postRollData.meleeCritGroup = "meleeCritChoice"
-            this.postRollData.meleeCritChoices = {};            
+            this.postRollData.meleeCritGroup = "critChoice"
+            this.postRollData.critChoices = {};            
 
             // populate crit choices
             if (this.postRollData.isDamaging) {
-                this.postRollData.meleeCritChoices.doubleWeaponDamage = game.i18n.localize("DoD.meleeCritChoices.doubleWeaponDamage");
+                this.postRollData.critChoices.doubleWeaponDamage = game.i18n.localize("DoD.critChoices.doubleWeaponDamage");
             }
-            this.postRollData.meleeCritChoices.extraAttack = game.i18n.localize("DoD.meleeCritChoices.extraAttack");
+            if (!this.postRollData.isRanged) {
+                this.postRollData.critChoices.extraAttack = game.i18n.localize("DoD.critChoices.extraAttack");
+            }
             if (this.postRollData.damageType == DoD.damageTypes.piercing && this.postRollData.action != "weakpoint") {
-                this.postRollData.meleeCritChoices.ignoreArmor = game.i18n.localize("DoD.meleeCritChoices.ignoreArmor");
+                this.postRollData.critChoices.ignoreArmor = game.i18n.localize("DoD.critChoices.ignoreArmor");
             }
 
             // set default choice
-            if (this.postRollData.meleeCritChoices.doubleWeaponDamage) {
-                this.postRollData.meleeCritChoice = "doubleWeaponDamage";
+            if (this.postRollData.critChoices.doubleWeaponDamage) {
+                this.postRollData.critChoice = "doubleWeaponDamage";
             } else {
-                this.postRollData.meleeCritChoice = "extraAttack";
+                this.postRollData.critChoice = "extraAttack";
             }
         }
     }

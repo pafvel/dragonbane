@@ -1,3 +1,5 @@
+import DoD_Utility from "./utility.js";
+
 export class DoDItem extends Item {
     /**
      * Augment the basic Item data model with additional dynamic data.
@@ -22,7 +24,7 @@ export class DoDItem extends Item {
         this.system.attributeShort = game.i18n.localize("DoD.attributes." + this.system.attribute);
     }
 
-    _prepareWeapon() {
+    async _prepareWeapon() {
         // Migrate data from pre-release
         if (!Array.isArray(this.system.features)) {
             this.system.features = [];
@@ -37,6 +39,22 @@ export class DoDItem extends Item {
         // Skill value
         let skill = this.actor?.getSkill(this.system.skill.name);
         this.system.skill.value = skill ? skill.system.value : 0;
+
+        // Range
+        if (this.actor) {
+            let r = new Roll(String(this.system.range), {str: this.actor.system.attributes?.str.value});
+            try {
+                await r.evaluate({async: true});
+                this.system.displayRange = r.total;
+            } catch {
+                DoD_Utility.WARNING("DoD.WARNING.cannotEvaluateFormula");
+                this.system.range = "";
+                this.system.displayRange = "";    
+            }
+        } else {
+            let r = new Roll(String(this.system.range), {str: game.i18n.localize("DoD.attributes.str")});
+            this.system.displayRange = r.formula;
+        }
     }
 
     get displayName() {

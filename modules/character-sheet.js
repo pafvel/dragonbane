@@ -657,7 +657,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         // Handle item sorting within the same Actor
         if ( this.actor.uuid === item.parent?.uuid ) {
             let result =  this._onSortItem(event, itemData);
-            let dropTarget = event.target.closest(".item-list").dataset.droptarget;
+            let dropTarget = event.target.closest(".item-list")?.dataset.droptarget;
 
             if (dropTarget) {
                 if (dropTarget == "weapon" && itemData.type == "weapon")

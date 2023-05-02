@@ -177,12 +177,12 @@ async function onWeaponDamageRoll(event) {
     if (element.dataset.isMeleeCrit) {
         const parent = element.parentElement;
         const critChoices = parent.getElementsByTagName("input");
-        const choice = Array.from(critChoices).find(e => e.name=="meleeCritChoice" && e.checked);
+        const choice = Array.from(critChoices).find(e => e.name=="critChoice" && e.checked);
 
         damageData[choice.value] = true;
 
         ChatMessage.create({
-            content: game.i18n.localize("DoD.meleeCritChoices.choiceLabel") + ": "+ game.i18n.localize("DoD.meleeCritChoices." + choice.value),
+            content: game.i18n.localize("DoD.critChoices.choiceLabel") + ": "+ game.i18n.localize("DoD.critChoices." + choice.value),
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: damageData.actor }),
         });

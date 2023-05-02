@@ -36,7 +36,7 @@ export default class DoDItemSheet extends ItemSheet {
                     tooltip: "DoD.weaponFeatureTypes." + feature + "Tooltip"
                 })
             });
-            sheetData.weaponFeatures = weaponFeatures;            
+            sheetData.weaponFeatures = weaponFeatures;
         }
 
         if (this.item.type == "armor") {

@@ -43,6 +43,8 @@
             "bonuses": "Bonusskydd"
         },
         "attackTypes": {
+            "ranged": "Avståndsattack",
+            "rangedTooltip": "Attackera med avståndsvapen",
             "parry": "Parera",
             "parryTooltip": "Parera en attack",
             "normal": "Attackera",
@@ -124,7 +126,7 @@
             "noCost": "Besvärjelsen kostar dig inga VP<br>",
             "extraSpell": "Du får omedelbart lägga en besvärjelse till, fast med nackdel på slaget.<br>"
         },
-        "meleeCritChoices": {
+        "critChoices": {
             "choiceLabel": "Kritisk effekt",
             "doubleWeaponDamage": "Dubbel vapenskada<br>",
             "extraAttack": "Extra attack mot annan fiende (fri handling)<br>",
@@ -199,7 +201,8 @@
         },
         "tables": {
             "mishapMagic": "@Table[RollTable.NHVp4W45Z02qumKa]{Missöde - Magi}",
-            "mishapMelee": "@Table[RollTable.VwP9Hy9ESvbC34XA]{Missöde - Närstrid}"
+            "mishapMelee": "@Table[RollTable.VwP9Hy9ESvbC34XA]{Missöde - Närstrid}",
+            "mishapRanged": "@Table[RollTable.RPBIOBT0QvPjf3Sq]{Missöde - Avståndsstrid}"
         },
         "weapon": {
             "grip": "Grepp",
@@ -338,7 +341,8 @@
             "actorNotFound": "Kan inte hitta aktör med id: {id}",
             "tableNotFound": "Kan inte hitta tabellen: {id}",
             "conditionAlreadyTaken": "Tillståndet är redan taget",
-            "noPermissionToModifyActor": "Saknar behörighet att modifiera karaktären"
+            "noPermissionToModifyActor": "Saknar behörighet att modifiera karaktären",
+            "cannotEvaluateFormula": "Kan ej evaluera formeln"
         }
     }
 }

@@ -25,11 +25,16 @@
                 <td>
                     <input name="data.str" type="text" value="{{data.str}}" data-dtype="Number" />
                 </td>
-                <td>
-                    <input name="data.range" type="text" value="{{data.range}}" data-dtype="Number" />
+                <td class="flexrow">
+                    <input name="data.range" type="text" value="{{data.range}}" />
+                    <!--
+                    {{#if data.displayRange}}
+                        <span style="display: inline-flex; align-items: center">({{data.displayRange}})</span>
+                    {{/if}}
+                    -->
                 </td>
                 <td>
-                    <input data-field="system.damage" name="data.damage" type="text" value="{{data.damage}}" />
+                    <input name="data.damage" type="text" value="{{data.damage}}" />
                 </td>
                 <td>
                     <input name="data.durability" type="text" value="{{data.durability}}" data-dtype="Number" />
