@@ -1,24 +1,24 @@
 <div class="flex-justify-center">
-    <div class="will-points">
-        <div class="will-points-text-label">
+    <div class="will-points resource-points">
+        <div class="resource-points-text-label">
             <label>{{localize "DoD.ui.character-sheet.willPoints"}}</label>
         </div>
-        <div class="will-points-max-box">
+        <div class="resource-points-max-box">
             {{#if actor.isCharacter}}
-            <label class="will-points-max-label">{{maxWP}}</label>
+            <label class="resource-points-max-label will-points-max-label">{{maxWP}}</label>
             {{else}}
-            <input class="will-points-max-label" type="number" value="{{data.willPoints.max}}" data-dtype="Number" />
+            <input class="resource-points-max-label will-points-max-label" type="number" value="{{data.willPoints.max}}" data-dtype="Number" />
             {{/if}}
         </div>
-        <div class="will-points-box">
+        <div class="resource-points-box will-points-box">
             {{#times lostWP}}
-            <img class="will-point" src="./systems/dragonbane/art/ui/point-checked.webp"/>
+            <img class="resource-point" src="./systems/dragonbane/art/ui/point-checked.webp"/>
             {{/times}}
              {{#times currentWP}}
-            <img class="will-point" src="./systems/dragonbane/art/ui/point-unchecked.webp"/>
+            <img class="resource-point" src="./systems/dragonbane/art/ui/point-unchecked.webp"/>
             {{/times}}
            {{#times fillWP}}
-            <img class="will-point invisible" src=""/>
+            <img class="resource-point invisible" src=""/>
             {{/times}}
         </div>
     </div>    

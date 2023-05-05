@@ -283,11 +283,26 @@
         background-size: contain, 200px auto;
         background-repeat: no-repeat, no-repeat;
         background-position: left top, center bottom;
-
+        height: 110px;
+    }
+    .hit-points-npc {
+        background-image: url("art/ui/hp-panel.webp");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: left top;
+        height: 75px;
+    }
+    .will-points {
+        background-image: url("art/ui/wp-panel.webp");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: left top;
+        height: 75px;
+    }
+    .resource-points {
         position: relative;
         width: 200px;
-        height: 110px;
-        .hit-points-text-label {
+        .resource-points-text-label {
             position: absolute;
             top: 14px;
             left: 24px;
@@ -296,14 +311,14 @@
             color: white;
             text-transform: uppercase;
         }
-        .hit-points-max-box {
+        .resource-points-max-box {
             position: absolute;
             top: 33px;
             left: 24px;
             width: 34px;
             height: 23px;
             background-color: transparent;
-            .hit-points-max-label {
+            .resource-points-max-label {
                 display: inline-block;
                 text-align: center;
                 color: black;
@@ -311,9 +326,10 @@
                 height: 100%;
                 font-size: 18px;
                 font-weight: bold;
+                border-color: transparent;
             }
         }
-        .hit-points-box {
+        .resource-points-box {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
@@ -323,14 +339,14 @@
             width: 115px;
             height: 40px;
             align-items: center;
-            .hit-point {
+            .resource-point {
                 width: 10px;
                 height: 10px;    
                 border: 0 solid transparent;
                 margin: 0px;
                 flex: none;
             }
-            .hit-point:nth-child(10n+6) {
+            .resource-point:nth-child(10n+6) {
                 margin-left: 10px;
             }
             .invisible {
@@ -370,128 +386,6 @@
                 width: 10px;
                 height: 10px;    
                 border: 0 solid transparent;
-            }
-        }
-    }
-
-    .hit-points-npc {
-        background-image: url("art/ui/hp-panel.webp");
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: left top;
-
-        position: relative;
-        width: 200px;
-        height: 75px;
-        .hit-points-text-label {
-            position: absolute;
-            top: 14px;
-            left: 24px;
-            text-align: center;
-            font-size: 12px;
-            color: white;
-            text-transform: uppercase;
-        }
-        .hit-points-max-box {
-            position: absolute;
-            top: 33px;
-            left: 24px;
-            width: 34px;
-            height: 23px;
-            background-color: transparent;
-            .hit-points-max-label {
-                display: inline-block;
-                text-align: center;
-                color: black;
-                width: 100%;
-                height: 100%;
-                font-size: 18px;
-                font-weight: bold;
-                border-color: transparent;
-            }
-        }
-        .hit-points-box {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            position: absolute;
-            top: 24px;
-            left: 66px;
-            width: 115px;
-            height: 40px;
-            align-items: center;
-            flex: 0 0 1;
-            .hit-point {
-                width: 10px;
-                height: 10px;    
-                border: 0 solid transparent;
-                margin: 0px;
-                flex: none;
-            }
-            .hit-point:nth-child(10n+6) {
-                margin-left: 10px;
-            }
-            .invisible {
-                visibility: hidden;
-            }
-        }
-    }
-
-    .will-points {
-        background-image: url("art/ui/wp-panel.webp");
-        background-size: contain;
-        position: relative;
-        width: 200px;
-        height: 75px;
-        .will-points-text-label {
-            position: absolute;
-            top: 14px;
-            left: 24px;
-            text-align: center;
-            font-size: 12px;
-            color: white;
-            text-transform: uppercase;
-        }
-        .will-points-max-box {
-            position: absolute;
-            top: 33px;
-            left: 24px;
-            width: 34px;
-            height: 23px;
-            background-color: transparent;
-            .will-points-max-label {
-                display: inline-block;
-                text-align: center;
-                color: black;
-                width: 100%;
-                height: 100%;
-                font-size: 18px;
-                font-weight: bold;
-                border-color: transparent;
-            }
-        }
-        .will-points-box {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            position: absolute;
-            top: 24px;
-            left: 66px;
-            width: 115px;
-            height: 40px;
-            align-items: center;
-            .will-point {
-                width: 10px;
-                height: 10px;    
-                border: 0 solid transparent;
-                margin: 0px;
-                flex: none;
-            }
-            .will-point:nth-child(10n+6) {
-                margin-left: 10px;
-            }
-            .invisible {
-                visibility: hidden;
             }
         }
     }

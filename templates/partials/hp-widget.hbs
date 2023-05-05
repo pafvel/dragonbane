@@ -1,28 +1,28 @@
 <div class="flex-justify-center">
     {{#if actor.isCharacter}}
-    <div class="hit-points">
+    <div class="resource-points hit-points">
     {{else}}
-    <div class="hit-points-npc">
+    <div class="resource-points hit-points-npc">
     {{/if}}
-        <div class="hit-points-text-label">
+        <div class="resource-points-text-label">
             <label>{{localize "DoD.ui.character-sheet.hitPoints"}}</label>
         </div>
-        <div class="hit-points-max-box">
+        <div class="resource-points-max-box">
             {{#if actor.isCharacter}}
-            <label class="hit-points-max-label">{{maxHP}}</label>
+            <label class="resource-points-max-label">{{maxHP}}</label>
             {{else}}
-            <input class="hit-points-max-label" type="number" value="{{data.hitPoints.max}}" data-dtype="Number" />
+            <input class="resource-points-max-label hit-points-max-label" type="number" value="{{data.hitPoints.max}}" data-dtype="Number" />
             {{/if}}
         </div>
-        <div class="hit-points-box">
+        <div class="resource-points-box hit-points-box">
             {{#times lostHP}}
-            <img class="hit-point" src="./systems/dragonbane/art/ui/point-checked.webp"/>
+            <img class="resource-point" src="./systems/dragonbane/art/ui/point-checked.webp"/>
             {{/times}}
             {{#times currentHP}}
-            <img class="hit-point" src="./systems/dragonbane/art/ui/point-unchecked.webp"/>
+            <img class="resource-point" src="./systems/dragonbane/art/ui/point-unchecked.webp"/>
             {{/times}}
             {{#times fillHP}}
-            <img class="hit-point invisible" src=""/>
+            <img class="resource-point invisible" src=""/>
             {{/times}}
         </div>
         {{#if actor.isCharacter}}
