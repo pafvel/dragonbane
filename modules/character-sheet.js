@@ -237,6 +237,27 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.professionAbilities = professionAbilities.sort(DoD_Utility.nameSorter);
         sheetData.abilities = heroicAbilities.concat(kinAbilities, professionAbilities).sort(DoD_Utility.nameSorter);
 
+        // 
+        let formattedAbilities = [];
+        for (let i=0, j; i < sheetData.abilities.length; i=j) {
+            let count = 1;
+            // count number of abilities with same name and skip duplicates
+            for (j = i+1; j < sheetData.abilities.length; j++) {
+                if (sheetData.abilities[i].name === sheetData.abilities[j].name) {
+                    count++;
+                } else {
+                    break;
+                }
+            }
+            // Push first unique ability. Add ability count in parenthesis (if multiple)
+            formattedAbilities.push({
+                id: sheetData.abilities[i].id, 
+                name: count == 1 ? sheetData.abilities[i].name : sheetData.abilities[i].name + " (" + count + ")"
+            });
+        }
+        sheetData.abilities = formattedAbilities;
+
+
         sheetData.spells = spells?.sort(DoD_Utility.nameSorter);
         sheetData.hasSpells = spells.length > 0;
 
