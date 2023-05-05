@@ -236,6 +236,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.kinAbilities = kinAbilities.sort(DoD_Utility.nameSorter);
         sheetData.professionAbilities = professionAbilities.sort(DoD_Utility.nameSorter);
         sheetData.abilities = heroicAbilities.concat(kinAbilities, professionAbilities).sort(DoD_Utility.nameSorter);
+        sheetData.hasWillpower = sheetData.actor.type == "character" || sheetData.abilities.length > 0;
 
         sheetData.spells = spells?.sort(DoD_Utility.nameSorter);
         sheetData.hasSpells = spells.length > 0;
@@ -483,7 +484,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         event.preventDefault();
         event.currentTarget.blur();
 
-        const newMax = Math.max(1, Math.floor(event.currentTarget.value));
+        const newMax = Math.max(0, Math.floor(event.currentTarget.value));
         const currentDamage = Math.max(0, this.actor.system.willPoints.max - this.actor.system.willPoints.value);
         const newValue = Math.max(0, newMax - currentDamage);       
         
