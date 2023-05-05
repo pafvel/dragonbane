@@ -1,8 +1,16 @@
 <div class="flex-justify-center">
     {{#if actor.isCharacter}}
-    <div class="resource-points hit-points">
+        {{#if largeHP}}
+            <div class="resource-points hit-points-large">
+        {{else}}
+            <div class="resource-points hit-points">
+        {{/if}}
     {{else}}
-    <div class="resource-points hit-points-npc">
+        {{#if largeHP}}
+            <div class="resource-points hit-points-npc-large">
+        {{else}}
+            <div class="resource-points hit-points-npc">
+        {{/if}}
     {{/if}}
         <div class="resource-points-text-label">
             <label>{{localize "DoD.ui.character-sheet.hitPoints"}}</label>
@@ -14,6 +22,11 @@
             <input class="resource-points-max-label hit-points-max-label" type="number" value="{{data.hitPoints.max}}" data-dtype="Number" />
             {{/if}}
         </div>
+        {{#if largeHP}}
+        <div class="resource-points-current-box">
+            <input class="resource-points-current-label hit-points-current-label" type="number" value="{{data.hitPoints.value}}" data-dtype="Number" />
+        </div>
+        {{else}}
         <div class="resource-points-box hit-points-box">
             {{#times lostHP}}
             <img class="resource-point" src="./systems/dragonbane/art/ui/point-checked.webp"/>
@@ -25,6 +38,7 @@
             <img class="resource-point invisible" src=""/>
             {{/times}}
         </div>
+        {{/if}}
         {{#if actor.isCharacter}}
         <div class="death-rolls-box">
             <table>

@@ -236,7 +236,6 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.kinAbilities = kinAbilities.sort(DoD_Utility.nameSorter);
         sheetData.professionAbilities = professionAbilities.sort(DoD_Utility.nameSorter);
         sheetData.abilities = heroicAbilities.concat(kinAbilities, professionAbilities).sort(DoD_Utility.nameSorter);
-        sheetData.hasWillpower = sheetData.actor.type == "character" || sheetData.abilities.length > 0;
 
         sheetData.spells = spells?.sort(DoD_Utility.nameSorter);
         sheetData.hasSpells = spells.length > 0;
@@ -255,6 +254,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.currentHP = sheetData.actor.system.hitPoints.value;
         sheetData.lostHP = sheetData.maxHP - sheetData.currentHP;
         sheetData.fillHP = sheetData.maxHP < 11 ? 11 - sheetData.maxHP : 0; // needed for layout
+        sheetData.largeHP = sheetData.maxHP > 40; // switch to large hp widget
 
         // Death rolls widget data
         if (this.actor.type == "character") {
@@ -266,10 +266,14 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         // WP widget data
         if (this.actor.type == "character" || this.actor.type == "npc") {
-            sheetData.maxWP = sheetData.actor.system.willPoints.max;
-            sheetData.currentWP = sheetData.actor.system.willPoints.value;
-            sheetData.lostWP = sheetData.maxWP - sheetData.currentWP;
-            sheetData.fillWP = sheetData.maxWP < 11 ? 11 - sheetData.maxWP : 0; // needed for layout
+            sheetData.hasWillpower = sheetData.actor.type == "character" || sheetData.abilities.length > 0;
+            if (sheetData.hasWillpower) {
+                sheetData.maxWP = sheetData.actor.system.willPoints.max;
+                sheetData.currentWP = sheetData.actor.system.willPoints.value;
+                sheetData.lostWP = sheetData.maxWP - sheetData.currentWP;
+                sheetData.fillWP = sheetData.maxWP < 11 ? 11 - sheetData.maxWP : 0; // needed for layout
+                sheetData.largeWP = sheetData.maxWP > 40; // switch to large wp widget
+            }
         }
     }  
 
@@ -315,7 +319,9 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".death-rolls-failure-label").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
 
             html.find(".hit-points-max-label").change(this._onEditHp.bind(this));
+            html.find(".hit-points-current-label").change(this._onEditCurrentHp.bind(this));
             html.find(".will-points-max-label").change(this._onEditWp.bind(this));
+            html.find(".will-points-current-label").change(this._onEditCurrentWp.bind(this));
 
             if (this.object.type === "monster") {
                 html.find(".monster-attack").on("click contextmenu", this._onMonsterAttack.bind(this));                
@@ -479,6 +485,16 @@ export default class DoDCharacterSheet extends ActorSheet {
             ["system.hitPoints.value"]: newValue
         });
     }
+    _onEditCurrentHp(event) {
+        event.preventDefault();
+        event.currentTarget.blur();
+
+        const newValue = DoD_Utility.clamp(event.currentTarget.value, 0, this.actor.system.hitPoints.max);
+
+        return this.actor.update({
+            ["system.hitPoints.value"]: newValue
+        });
+    }
 
     _onEditWp(event) {
         event.preventDefault();
@@ -492,6 +508,16 @@ export default class DoDCharacterSheet extends ActorSheet {
             ["system.willPoints.max"]: newMax,
             ["system.willPoints.value"]: newValue
         });        
+    }
+    _onEditCurrentWp(event) {
+        event.preventDefault();
+        event.currentTarget.blur();
+
+        const newValue = DoD_Utility.clamp(event.currentTarget.value, 0, this.actor.system.willPoints.max);
+
+        return this.actor.update({
+            ["system.willPoints.value"]: newValue
+        });
     }
 
     async _onKinEdit(event) {

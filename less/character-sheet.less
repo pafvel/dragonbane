@@ -277,31 +277,10 @@
           };                 
     };
 
-   
-    .hit-points {
-        background-image: url("art/ui/hp-panel.webp"), url("art/ui/death-rolls-bg.webp");
-        background-size: contain, 200px auto;
-        background-repeat: no-repeat, no-repeat;
-        background-position: left top, center bottom;
-        height: 110px;
-    }
-    .hit-points-npc {
-        background-image: url("art/ui/hp-panel.webp");
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: left top;
-        height: 75px;
-    }
-    .will-points {
-        background-image: url("art/ui/wp-panel.webp");
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: left top;
-        height: 75px;
-    }
     .resource-points {
         position: relative;
         width: 200px;
+        height: 75px;
         .resource-points-text-label {
             position: absolute;
             top: 14px;
@@ -328,7 +307,7 @@
                 font-weight: bold;
                 border-color: transparent;
             }
-        }
+        }        
         .resource-points-box {
             display: flex;
             flex-direction: row;
@@ -351,6 +330,24 @@
             }
             .invisible {
                 visibility: hidden;
+            }
+        }
+        .resource-points-current-box {
+            position: absolute;
+            top: 33px;
+            left: 128px;
+            width: 50px;
+            height: 23px;
+            background-color: transparent;
+            .resource-points-current-label {
+                display: inline-block;
+                text-align: center;
+                color: black;
+                width: 100%;
+                height: 100%;
+                font-size: 18px;
+                font-weight: bold;
+                border-color: transparent;
             }
         }
         .death-rolls-box {
@@ -389,7 +386,88 @@
             }
         }
     }
+    .hit-points {
+        background-image: url("art/ui/hp-panel.webp"), url("art/ui/death-rolls-bg.webp");
+        background-size: contain, 200px auto;
+        background-repeat: no-repeat, no-repeat;
+        background-position: left top, center bottom;
+        height: 110px;
+    }
+    .hit-points-large {
+        background-image: url("art/ui/hp-panel-large.webp"), url("art/ui/death-rolls-bg.webp");
+        background-size: contain, 200px auto;
+        background-repeat: no-repeat, no-repeat;
+        background-position: left top, center bottom;
+        height: 110px;
+        .resource-points-max-box {
+            width: 50px;
+        }
+    }
+    .hit-points-npc {
+        background-image: url("art/ui/hp-panel.webp");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: left top;
+    }
+    .hit-points-npc-large {
+        background-image: url("art/ui/hp-panel-large.webp");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: left top;
+        .resource-points-max-box {
+            width: 50px;
+        }
+    }
+    .will-points {
+        background-image: url("art/ui/wp-panel.webp");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: left top;
+    }
+    .will-points-large {
+        background-image: url("art/ui/wp-panel-large.webp");
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: left top;
+        .resource-points-max-box {
+            width: 50px;
+        }
+    }
 
+
+    /*
+    .resource-points {
+        position: relative;
+        width: 200px;
+        .resource-points-text-label {
+            position: absolute;
+            top: 14px;
+            left: 24px;
+            text-align: center;
+            font-size: 12px;
+            color: white;
+            text-transform: uppercase;
+        }
+        .resource-points-max-box {
+            position: absolute;
+            top: 33px;
+            left: 24px;
+            width: 50px;
+            height: 23px;
+            background-color: transparent;
+            .resource-points-max-label {
+                display: inline-block;
+                text-align: center;
+                color: black;
+                width: 100%;
+                height: 100%;
+                font-size: 18px;
+                font-weight: bold;
+                border-color: transparent;
+            }
+        }
+    }
+    */
     .armor {
         background-image: url("art/ui/banner-right.webp");
         background-size: 221px 61px;

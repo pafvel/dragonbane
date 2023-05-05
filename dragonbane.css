@@ -111,6 +111,41 @@
   padding-left: 12px;
   padding-right: 12px;
 }
+.DoD.sheet.character {
+  /*
+    .resource-points {
+        position: relative;
+        width: 200px;
+        .resource-points-text-label {
+            position: absolute;
+            top: 14px;
+            left: 24px;
+            text-align: center;
+            font-size: 12px;
+            color: white;
+            text-transform: uppercase;
+        }
+        .resource-points-max-box {
+            position: absolute;
+            top: 33px;
+            left: 24px;
+            width: 50px;
+            height: 23px;
+            background-color: transparent;
+            .resource-points-max-label {
+                display: inline-block;
+                text-align: center;
+                color: black;
+                width: 100%;
+                height: 100%;
+                font-size: 18px;
+                font-weight: bold;
+                border-color: transparent;
+            }
+        }
+    }
+    */
+}
 .DoD.sheet.character form {
   display: flex;
   flex-direction: column;
@@ -374,30 +409,10 @@
   float: right;
   color: #505050;
 }
-.DoD.sheet.character .hit-points {
-  background-image: url("art/ui/hp-panel.webp"), url("art/ui/death-rolls-bg.webp");
-  background-size: contain, 200px auto;
-  background-repeat: no-repeat, no-repeat;
-  background-position: left top, center bottom;
-  height: 110px;
-}
-.DoD.sheet.character .hit-points-npc {
-  background-image: url("art/ui/hp-panel.webp");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: left top;
-  height: 75px;
-}
-.DoD.sheet.character .will-points {
-  background-image: url("art/ui/wp-panel.webp");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: left top;
-  height: 75px;
-}
 .DoD.sheet.character .resource-points {
   position: relative;
   width: 200px;
+  height: 75px;
 }
 .DoD.sheet.character .resource-points .resource-points-text-label {
   position: absolute;
@@ -450,6 +465,24 @@
 .DoD.sheet.character .resource-points .resource-points-box .invisible {
   visibility: hidden;
 }
+.DoD.sheet.character .resource-points .resource-points-current-box {
+  position: absolute;
+  top: 33px;
+  left: 128px;
+  width: 50px;
+  height: 23px;
+  background-color: transparent;
+}
+.DoD.sheet.character .resource-points .resource-points-current-box .resource-points-current-label {
+  display: inline-block;
+  text-align: center;
+  color: black;
+  width: 100%;
+  height: 100%;
+  font-size: 18px;
+  font-weight: bold;
+  border-color: transparent;
+}
 .DoD.sheet.character .resource-points .death-rolls-box {
   position: absolute;
   top: 60px;
@@ -484,6 +517,53 @@
   width: 10px;
   height: 10px;
   border: 0 solid transparent;
+}
+.DoD.sheet.character .hit-points {
+  background-image: url("art/ui/hp-panel.webp"), url("art/ui/death-rolls-bg.webp");
+  background-size: contain, 200px auto;
+  background-repeat: no-repeat, no-repeat;
+  background-position: left top, center bottom;
+  height: 110px;
+}
+.DoD.sheet.character .hit-points-large {
+  background-image: url("art/ui/hp-panel-large.webp"), url("art/ui/death-rolls-bg.webp");
+  background-size: contain, 200px auto;
+  background-repeat: no-repeat, no-repeat;
+  background-position: left top, center bottom;
+  height: 110px;
+}
+.DoD.sheet.character .hit-points-large .resource-points-max-box {
+  width: 50px;
+}
+.DoD.sheet.character .hit-points-npc {
+  background-image: url("art/ui/hp-panel.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left top;
+}
+.DoD.sheet.character .hit-points-npc-large {
+  background-image: url("art/ui/hp-panel-large.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left top;
+}
+.DoD.sheet.character .hit-points-npc-large .resource-points-max-box {
+  width: 50px;
+}
+.DoD.sheet.character .will-points {
+  background-image: url("art/ui/wp-panel.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left top;
+}
+.DoD.sheet.character .will-points-large {
+  background-image: url("art/ui/wp-panel-large.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left top;
+}
+.DoD.sheet.character .will-points-large .resource-points-max-box {
+  width: 50px;
 }
 .DoD.sheet.character .armor {
   background-image: url("art/ui/banner-right.webp");
