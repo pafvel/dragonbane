@@ -328,6 +328,10 @@
         "INFO": {
             "professionSkillAdded": "Added Profession Skill: {skill}"
         },
+        "SETTINGS": {
+            "keepOwnershipOnImport": "Keep ownership when importing adventure",
+            "keepOwnershipOnImportHint": "Do not overwrite ownership rights when importing content that already exists in the world."
+        },
         "WARNING": {
             "kinAbility": "Could not find Kin Ability: {ability}",
             "kin": "Could not find Kin: {kin}",

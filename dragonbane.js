@@ -82,6 +82,16 @@ Hooks.once("init", function() {
 
     registerHandlebarsHelpers();
     preloadHandlebarsTemplates();
+
+    game.settings.register("dragonbane", "keepOwnershipOnImport", {
+        name: "DoD.SETTINGS.keepOwnershipOnImport",
+        hint: "DoD.SETTINGS.keepOwnershipOnImportHint",
+        scope: "world",
+        config: true,
+        default: false,
+        type: Boolean
+    });
+    
 });
 
 Hooks.on("renderChatLog", DoDChat.addChatListeners);
@@ -90,6 +100,21 @@ Hooks.on("getChatLogEntryContext", DoDChat.addChatMessageContextMenuOptions);
 Hooks.on("renderJournalPageSheet", (obj, html, data) => {
     html.on('click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
   });
+
+Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
+    const keepOwnership = game.settings.get("dragonbane", "keepOwnershipOnImport");
+    if (keepOwnership) {
+        // Ignore ownership when updating data
+        for ( const [_documentName, updateData] of Object.entries(toUpdate) ) {
+            for (let data of updateData) {
+                if (data.ownership) {
+                    delete data.ownership;
+                }
+            }
+        }
+    }
+    return true;
+});
 
 
 CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
@@ -131,3 +156,4 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
         }
     }
 ]);
+

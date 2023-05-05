@@ -331,6 +331,10 @@
         "INFO": {
             "professionSkillAdded": "Lade till Yrkesfärdighet: {skill}"
         },
+        "SETTINGS": {
+            "keepOwnershipOnImport": "Behåll ägande vid import av äventyr",
+            "keepOwnershipOnImportHint": "Skriv inte över äganderättigheter vid import av innehåll som redan finns i världen."
+        },
         "WARNING": {
             "kinAbility": "Kan ej hitta Släktesförmåga: {ability}",
             "kin": "Kan ej hitta Släkte: {kin}",
