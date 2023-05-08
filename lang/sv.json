@@ -179,7 +179,8 @@
             "prerequisite": "Krav",
             "requirement": "Rekvisit",
             "castingTime": "Tidsåtgång",
-            "range": "Räckvidd",
+            "range": "Avstånd",
+            "rangeType": "Räckvidd",
             "areaOfEffect": "Area",
             "duration": "Varaktighet",
             "memorized": "Memorerad",
@@ -193,6 +194,13 @@
             "concentration": "Koncentration",
             "permanent": "Permanent"
         },
+        "spellRangeTypes": {
+            "personal": "Personlig",
+            "touch": "Beröring",
+            "range": "Avstånd",
+            "cone": "Kon",
+            "sphere": "Sfär"
+        },        
         "supplyTypes": {
             "common": "Vanlig",
             "uncommon": "Ovanlig",

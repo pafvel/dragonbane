@@ -196,9 +196,12 @@
             "prerequisite": "",
             "requirement": "",
             "castingTime": "",
+            "rangeType": "",
             "range": 0,
             "areaOfEffect": "",
             "duration": "",
+            "damage": "",
+            "damagePerPowerLevel": "",
             "memorized": false
         }
     }

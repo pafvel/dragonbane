@@ -12,6 +12,14 @@ DoD.ageTypes = {
     old: "DoD.ageTypes.old"
 };
 
+DoD.spellRangeTypes = {
+    range: "DoD.spellRangeTypes.range",
+    personal: "DoD.spellRangeTypes.personal",
+    touch: "DoD.spellRangeTypes.touch",
+    cone: "DoD.spellRangeTypes.cone",
+    sphere: "DoD.spellRangeTypes.sphere"
+};
+
 DoD.areaOfEffectTypes = {
     none: "DoD.areaOfEffectTypes.none",
     cone: "DoD.areaOfEffectTypes.cone",

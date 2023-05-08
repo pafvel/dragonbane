@@ -51,6 +51,21 @@ export default class DoDItemSheet extends ItemSheet {
             sheetData.armorBonuses = armorBonuses;
         }
 
+        if (this.item.type == "spell") {
+            switch(this.item.system.rangeType) {
+                case "touch":
+                case "personal":
+                    sheetData.enableRange = false;
+                    break;
+                default:
+                    sheetData.enableRange = true;
+                    break;
+            }
+            if(!sheetData.enableRange) {
+                sheetData.data.range = "";
+            }
+        }
+
         return sheetData;
     }
 

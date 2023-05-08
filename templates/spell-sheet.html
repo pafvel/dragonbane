@@ -9,7 +9,7 @@
                 <th>{{localize "DoD.spell.school"}}</th>
                 <th>{{localize "DoD.spell.rank"}}</th>
                 <th>{{localize "DoD.spell.prerequisite"}}</th>
-                <th>{{localize "DoD.spell.memorized"}}</th>
+                <th>{{localize "DoD.spell.requirement"}}</th>
             </tr>
             <tr>
                 <td>
@@ -22,7 +22,7 @@
                     <input name="data.prerequisite" type="text" value="{{data.prerequisite}}" />
                 </td>
                 <td>
-                    <input name="data.memorized" type="checkbox" {{checked data.memorized}} />
+                    <input name="data.requirement" type="text" value="{{data.requirement}}" />
                 </td>
             </tr>
         </table>
@@ -30,10 +30,9 @@
         <table>
             <tr>
                 <th>{{localize "DoD.spell.castingTime"}}</th>
+                <th>{{localize "DoD.spell.rangeType"}}</th>
                 <th>{{localize "DoD.spell.range"}}</th>
-                <th>{{localize "DoD.spell.areaOfEffect"}}</th>
                 <th>{{localize "DoD.spell.duration"}}</th>
-                <th>{{localize "DoD.spell.requirement"}}</th>
             </tr>
             <tr>
                 <td>
@@ -46,16 +45,20 @@
                     </select>
                 </td>
                 <td>
-                    <input name="data.range" type="text" value="{{data.range}}" data-dtype="Number" />
-                </td>
-                <td>
-                    <select name="data.areaOfEffect">
-                        {{#select data.areaOfEffect}}
-                        {{#each config.areaOfEffectTypes as |name areaOfEffect|}}
-                        <option value="{{areaOfEffect}}">{{localize name}}</option>
+                    <select name="data.rangeType">
+                        {{#select data.rangeType}}
+                        {{#each config.spellRangeTypes as |name rangeType|}}
+                        <option value="{{rangeType}}">{{localize name}}</option>
                         {{/each}}
                         {{/select}}
                     </select>
+                </td>
+                <td>
+                    {{#if enableRange}}
+                    <input name="data.range" type="text" value="{{data.range}}" data-dtype="Number" />
+                    {{else}}
+                    <input name="data.range" type="text" value="-" data-dtype="Number" disabled/>
+                    {{/if}}
                 </td>
                 <td>
                     <select name="data.duration">
@@ -65,9 +68,6 @@
                         {{/each}}
                         {{/select}}
                     </select>
-                </td>
-                <td>
-                    <input name="data.requirement" type="text" value="{{data.requirement}}" />
                 </td>
             </tr>
         </table>

@@ -182,7 +182,8 @@
             "prerequisite": "Prerequisite",
             "requirement": "Requirement",
             "castingTime": "Casting Time",
-            "range": "Range",
+            "range": "Distance",
+            "rangeType": "Range",
             "areaOfEffect": "Area",
             "duration": "Duration",
             "memorized": "Memorized",
@@ -196,6 +197,13 @@
             "concentration": "Concentration",
             "permanent": "Permanent"
         },
+        "spellRangeTypes": {
+            "personal": "Personal",
+            "touch": "Touch",
+            "range": "Range",
+            "cone": "Cone",
+            "sphere": "Sphere"
+        },        
         "supplyTypes": {
             "common": "Common",
             "uncommon": "Uncommon",

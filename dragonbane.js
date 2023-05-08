@@ -5,6 +5,7 @@ import * as DoDChat from "./modules/chat.js";
 import DoDItemSheet from "./modules/item-sheet.js";
 import DoDCharacterSheet from "./modules/character-sheet.js";
 import DoD_Utility from "./modules/utility.js";
+import * as DoDMigrate from "./modules/migrate.js";
 
 function registerHandlebarsHelpers() {
     
@@ -66,6 +67,25 @@ async function preloadHandlebarsTemplates() {
     return loadTemplates(templatePaths);
 }
 
+function registerSettings() {
+
+    game.settings.register("dragonbane", "keepOwnershipOnImport", {
+        name: "DoD.SETTINGS.keepOwnershipOnImport",
+        hint: "DoD.SETTINGS.keepOwnershipOnImportHint",
+        scope: "world",
+        config: true,
+        default: false,
+        type: Boolean
+    });
+
+    game.settings.register("dragonbane", "systemMigrationVersion", {
+        config: false,
+        scope: "world",
+        type: String,
+        default: ""
+    });
+}
+
 Hooks.once("init", function() {
     console.log("DoD | Initializing Dragonbane System");
     
@@ -83,15 +103,27 @@ Hooks.once("init", function() {
     registerHandlebarsHelpers();
     preloadHandlebarsTemplates();
 
-    game.settings.register("dragonbane", "keepOwnershipOnImport", {
-        name: "DoD.SETTINGS.keepOwnershipOnImport",
-        hint: "DoD.SETTINGS.keepOwnershipOnImportHint",
-        scope: "world",
-        config: true,
-        default: false,
-        type: Boolean
-    });
-    
+    registerSettings();
+
+    game.dragonbane = {
+        migrateWorld: DoDMigrate.migrateWorld
+    };
+});
+
+Hooks.once("ready", function () {
+
+    if (!game.user.isGM) {
+        return;
+    }
+
+    const SYSTEM_MIGRATION_VERSION = 0.01;
+    const currentVersion = game.settings.get("dragonbane", "systemMigrationVersion");
+    const needsMigration = !currentVersion || isNewerVersion(SYSTEM_MIGRATION_VERSION, currentVersion);
+
+    if (needsMigration) {
+        DoDMigrate.migrateWorld();
+        game.settings.set("dragonbane", "systemMigrationVersion", SYSTEM_MIGRATION_VERSION);
+    }
 });
 
 Hooks.on("renderChatLog", DoDChat.addChatListeners);
