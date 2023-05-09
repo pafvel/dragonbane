@@ -314,6 +314,23 @@ export class DoDActor extends Actor {
         return this.items.find(item => item.type == "skill" && item.name.toLowerCase() == name);
     }
 
+    findMagicSkill(schoolName) {
+        if (schoolName == "DoD.spell.general") {
+            // find magic skill with highest skill value
+            let bestSkill = null;
+            for (let item of this.items.contents) {
+                if (item.type == "skill" && item.system.skillType == "magic") {
+                    if (!bestSkill || bestSkill.system.value < item.system.value) {
+                        bestSkill = item;
+                    }
+                }
+            }
+            return bestSkill;
+        } else {
+            return this.findSkill(schoolName);
+        }
+    }
+
     findSpell(spellName) {
         let name = spellName.toLowerCase();
         return this.items.find(item => item.type == "spell" && item.name.toLowerCase() == name);

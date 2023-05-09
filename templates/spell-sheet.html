@@ -72,6 +72,22 @@
             </tr>
         </table>
 
+        <table>
+            <tr>
+                <th>{{localize "DoD.spell.damage"}}</th>
+                <th>{{localize "DoD.spell.damagePerPowerlevel"}}</th>
+            </tr>
+            
+            <tr>
+                <td>
+                    <input name="data.damage" type="text" value="{{data.damage}}" />
+                </td>    
+                <td>
+                    <input name="data.damagePerPowerlevel" type="text" value="{{data.damagePerPowerlevel}}" />
+                </td>    
+            </tr>
+        </table>
+
         {{editor data.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
     </div>
 </form>

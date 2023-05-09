@@ -1,50 +1,70 @@
 {{> "templates/dice/roll.html"}}
 
 {{#if success}}
-    {{#if isMeleeCrit}}
-    <hr>
-    <div class="form-group">
-        <label>{{localize "DoD.critChoices.choiceLabel"}}</label>
-        <div class="form-fields">
-            {{radioBoxes meleeCritGroup critChoices checked=critChoice localize=true}}
-        </div>
-    </div>
-    <hr>
-    {{/if}}
 
-    {{#if isMagicCrit}}
-    <hr>
-    <div class="form-group">
-        <label>{{localize "DoD.magicCritChoices.choiceLabel"}}</label>
-        <div class="form-fields">
-            {{radioBoxes magicCritGroup magicCritChoices checked=magicCritChoice localize=true}}
-        </div>
-    </div>
-    <hr>
-    <button class="chat-button magic-roll"
-        data-actor-id="{{actor.uuid}}"
-        data-is-magic-crit="{{isMagicCrit}}"
-        data-wp-cost="{{wpCost}}"
-        >
-        {{localize "DoD.ui.chat.choose"}}
-    </button>
-    {{/if}}
+    {{#if weapon}}
+        {{#if isMeleeCrit}}
+            <hr>
+            <div class="form-group">
+                <label>{{localize "DoD.critChoices.choiceLabel"}}</label>
+                <div class="form-fields">
+                    {{radioBoxes meleeCritGroup critChoices checked=critChoice localize=true}}
+                </div>
+            </div>
+            <hr>
+        {{/if}} <!-- isMeleeCrit -->
 
-    {{#if isDamaging}}
-    <button class="chat-button weapon-roll"
-        data-actor-id="{{actor.uuid}}"
-        data-weapon-id="{{weapon.id}}"
-        data-damage-type="{{damageType}}"
-        {{#if ignoreArmor }} data-ignore-armor="{{ignoreArmor}}" {{/if}}
-        {{#if isMeleeCrit }} data-is-melee-crit="{{isMeleeCrit}}" {{/if}}
-        {{#if isMagicCrit }} data-is-magic-crit="{{isMagicCrit}}" {{/if}}
-        {{#if targetActor }} data-target-id="{{targetActor.uuid}}" {{/if}}
-        >
-        {{localize "DoD.ui.chat.rollDamage"}}
-    </button>
-    {{/if}}
+        {{#if isDamaging}}
+            <button class="chat-button weapon-roll"
+                data-actor-id="{{actor.uuid}}"
+                data-weapon-id="{{weapon.id}}"
+                data-damage-type="{{damageType}}"
+                {{#if ignoreArmor }} data-ignore-armor="{{ignoreArmor}}" {{/if}}
+                {{#if isMeleeCrit }} data-is-melee-crit="{{isMeleeCrit}}" {{/if}}
+                {{#if targetActor }} data-target-id="{{targetActor.uuid}}" {{/if}}
+                >
+                {{localize "DoD.ui.chat.rollDamage"}}
+            </button>
+        {{/if}} <!-- isDamaging -->
+    {{/if}} <!-- weapon -->
 
-{{else}}
+
+    {{#if spell}}
+        {{#if isMagicCrit}}
+            <hr>
+            <div class="form-group">
+                <label>{{localize "DoD.magicCritChoices.choiceLabel"}}</label>
+                <div class="form-fields">
+                    {{radioBoxes magicCritGroup magicCritChoices checked=magicCritChoice localize=true}}
+                </div>
+            </div>
+            <hr>
+            {{#unless isDamaging}}
+                <button class="chat-button magic-roll"
+                    data-actor-id="{{actor.uuid}}"
+                    data-is-magic-crit="{{isMagicCrit}}"
+                    data-wp-cost="{{wpCost}}"
+                    >
+                    {{localize "DoD.ui.chat.choose"}}
+                </button>
+            {{/unless}} <!-- isDamaging -->
+        {{/if}} <!-- isMagicCrit -->
+
+        {{#if isDamaging}}
+            <button class="chat-button magic-roll"
+                data-actor-id="{{actor.uuid}}"
+                data-spell-id="{{spell.id}}"
+                data-power-level="{{powerLevel}}"
+                data-wp-cost="{{wpCost}}"
+                {{#if isMagicCrit }} data-is-magic-crit="{{isMagicCrit}}" {{/if}}
+                {{#if targetActor }} data-target-id="{{targetActor.uuid}}" {{/if}}
+                >
+                {{localize "DoD.ui.chat.rollDamage"}}
+            </button>
+        {{/if}} <!-- isDamaging -->
+    {{/if}} <!-- spell -->
+
+{{else}} <!-- success -->
 
     {{#if canPush}}
     <div>
@@ -68,7 +88,7 @@
             </div>
         </div>
     </div>
-    {{/if}}
+    {{/if}}  <!-- canPush -->
     
     {{#if isMeleeMishap}}
     <br>{{localize "DoD.tables.mishapMelee"}}<br><br>
@@ -82,4 +102,4 @@
     <br>{{localize "DoD.tables.mishapMagic"}}<br><br>
     {{/if}}
 
-{{/if}}
+{{/if}}  <!-- success -->

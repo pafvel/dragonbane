@@ -124,7 +124,8 @@
         },
         "magicCritChoices": {
             "choiceLabel": "Critical effect",
-            "doubleDamage": "Double damage or range<br>",
+            "doubleDamage": "Double damage<br>",
+            "doubleRange": "Double range<br>",
             "noCost": "The spell does not cost any WP<br>",
             "extraSpell": "You can immediately cast another spell, but get a bane on the roll<br>"
         },

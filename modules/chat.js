@@ -163,7 +163,8 @@ async function onWeaponDamageRoll(event) {
     const attribute = skill ? skill.system.attribute : null;
     const damageBonus = attribute ? actor.system.damageBonus[attribute] : 0;
     const damage = weaponDamage ? weaponDamage + "+" + damageBonus : 0;
-    const target = element.dataset.targetId ? DoD_Utility.getActorFromUUID(element.dataset.targetId) : null;
+    let target = element.dataset.targetId ? DoD_Utility.getActorFromUUID(element.dataset.targetId) : null;
+
 
     const damageData = {
         actor: actor,
@@ -187,31 +188,88 @@ async function onWeaponDamageRoll(event) {
             speaker: ChatMessage.getSpeaker({ actor: damageData.actor }),
         });
     }
+
+    if (!target) {
+        const targets = Array.from(game.user.targets)
+        if (targets.length > 0) {
+            for (const target of targets) {
+                damageData.target = target.actor;
+                await inflictDamageMessage(damageData);    
+            }
+            return;
+        }
+    }
     inflictDamageMessage(damageData);    
 }
 
 async function onMagicDamageRoll(event) {
     const element = event.currentTarget;
-    if (!element.dataset.isMagicCrit) return;
-
     const actorId = element.dataset.actorId;
     const actor = DoD_Utility.getActorFromUUID(actorId);
-    if (!actor) return;    
+    if (!actor) return;
+
+    const spellId = element.dataset.spellId;
+    const spell = spellId ? actor.items.get(spellId) : null;
+    const powerLevel = Number(element.dataset.powerLevel);
+    const isMagicCrit = element.dataset.isMagicCrit;
+    let doubleDamage = false;
+
+    if (isMagicCrit) {
     
-    const parent = element.parentElement;
-    const critChoices = parent.getElementsByTagName("input");
-    const choice = Array.from(critChoices).find(e => e.name=="magicCritChoice" && e.checked);
+        const parent = element.parentElement;
+        const critChoices = parent.getElementsByTagName("input");
+        const choice = Array.from(critChoices).find(e => e.name=="magicCritChoice" && e.checked);
 
-    ChatMessage.create({
-        content: game.i18n.localize("DoD.magicCritChoices.choiceLabel") + ": "+ game.i18n.localize("DoD.magicCritChoices." + choice.value),
-        user: game.user.id,
-        speaker: ChatMessage.getSpeaker({ actor: actor }),
-    });
+        ChatMessage.create({
+            content: game.i18n.localize("DoD.magicCritChoices.choiceLabel") + ": "+ game.i18n.localize("DoD.magicCritChoices." + choice.value),
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: actor }),
+        });
 
-    if (choice.value == "noCost") {
-        const wpCost = Number(element.dataset.wpCost);
-        const wpNew = Math.min(actor.system.willPoints.max, actor.system.willPoints.value + wpCost);
-        await actor.update({ ["system.willPoints.value"]: wpNew});
+        if (choice.value == "noCost") {
+            const wpCost = Number(element.dataset.wpCost);
+            const wpNew = Math.min(actor.system.willPoints.max, actor.system.willPoints.value + wpCost);
+            await actor.update({ ["system.willPoints.value"]: wpNew});
+        }
+        if (choice.value == "doubleDamage") {
+            doubleDamage = true;
+        }
+    }
+
+    if (spell?.isDamaging) {
+
+        let damage = spell.system.damage;
+        if (powerLevel > 1 && spell.system.damagePerPowerlevel.length > 0) {
+            for (let i = 1; i < powerLevel; ++i) {
+                if (damage.length > 0) {
+                    damage += " + ";
+                }
+                damage += spell.system.damagePerPowerlevel;
+            }
+        }
+
+        const target = element.dataset.targetId ? DoD_Utility.getActorFromUUID(element.dataset.targetId) : null;
+
+        const damageData = {
+            actor: actor,
+            weapon: spell,
+            damage: damage,
+            damageType: DoD.damageTypes.none,
+            doubleSpellDamage: doubleDamage,
+            target: target
+        };
+
+        if (!target) {
+            const targets = Array.from(game.user.targets)
+            if (targets.length > 0) {
+                for (const target of targets) {
+                    damageData.target = target.actor;
+                    await inflictDamageMessage(damageData);    
+                }
+                return;
+            }
+        }    
+        inflictDamageMessage(damageData);    
     }
 }
 
@@ -306,7 +364,7 @@ export async function inflictDamageMessage(damageData) {
 
     const flavor = game.i18n.format(game.i18n.localize(msg), {
         actor: actorName,
-        damage: roll.total,
+        damage: damageData.doubleSpellDamage ? 2 * roll.total : roll.total,
         damageType: game.i18n.localize(damageData.damageType),
         weapon: weaponName,
         target: targetName

@@ -122,7 +122,8 @@
         },
         "magicCritChoices": {
             "choiceLabel": "Kritisk effekt",
-            "doubleDamage": "Skadan eller räckvidden av besvärjelsen fördubblas<br>",
+            "doubleDamage": "Skadan av besvärjelsen fördubblas<br>",
+            "doubleRange": "Räckvidden av besvärjelsen fördubblas<br>",
             "noCost": "Besvärjelsen kostar dig inga VP<br>",
             "extraSpell": "Du får omedelbart lägga en besvärjelse till, fast med nackdel på slaget.<br>"
         },
@@ -174,17 +175,19 @@
             "magic": "Magiskola"
         },
         "spell": {
-            "school": "Magiskola",
-            "rank": "Nivå",
-            "prerequisite": "Krav",
-            "requirement": "Rekvisit",
+            "areaOfEffect": "Area",
             "castingTime": "Tidsåtgång",
+            "damage": "Skada",
+            "damagePerPowerlevel": "Skada per effektgrad",
+            "duration": "Varaktighet",
+            "general": "Allmän",
+            "memorized": "Memorerad",
+            "prerequisite": "Krav",
             "range": "Avstånd",
             "rangeType": "Räckvidd",
-            "areaOfEffect": "Area",
-            "duration": "Varaktighet",
-            "memorized": "Memorerad",
-            "general": "Allmän"
+            "rank": "Nivå",
+            "requirement": "Rekvisit",
+            "school": "Magiskola"
         },
         "spellDurationTypes": {
             "instant": "Omedelbar",

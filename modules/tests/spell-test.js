@@ -5,7 +5,7 @@ import DoDSkillTest from "./skill-test.js";
 export default class DoDSpellTest extends DoDSkillTest  {
 
     constructor(actor, spell, options) {
-        super(actor, actor.findSkill(spell.system.school), options);
+        super(actor, actor.findMagicSkill(spell.system.school), options);
         this.spell = spell;
         this.hasPowerLevel = spell.system.rank > 0;
     }
@@ -64,6 +64,8 @@ export default class DoDSpellTest extends DoDSkillTest  {
 
         this.postRollData.actor.update({ ["system.willPoints.value"]: wpNew});
 
+        this.postRollData.isDamaging = this.spell.isDamaging;
+
         if (this.postRollData.result == 20) {
             this.postRollData.isMagicMishap = true;
         }
@@ -74,12 +76,15 @@ export default class DoDSpellTest extends DoDSkillTest  {
             this.postRollData.magicCritChoices = {};            
 
             // populate crit choices
-            this.postRollData.magicCritChoices.doubleDamage = game.i18n.localize("DoD.magicCritChoices.doubleDamage");
             this.postRollData.magicCritChoices.noCost = game.i18n.localize("DoD.magicCritChoices.noCost");
+            if (this.preRollData.spell.isDamaging) {
+                this.postRollData.magicCritChoices.doubleDamage = game.i18n.localize("DoD.magicCritChoices.doubleDamage");
+            }
+            this.postRollData.magicCritChoices.doubleRange = game.i18n.localize("DoD.magicCritChoices.doubleRange");
             this.postRollData.magicCritChoices.extraSpell = game.i18n.localize("DoD.magicCritChoices.extraSpell");
 
             // set default choice
-            this.postRollData.magicCritChoice = "doubleDamage";
+            this.postRollData.magicCritChoice = "noCost";
         }
     }    
 
