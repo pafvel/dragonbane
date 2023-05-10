@@ -170,6 +170,9 @@ export class DoDActor extends Actor {
 
         // Will Points
         let maxWillPoints = this.system.attributes.wil.value;
+        const wpBonuses = this.items.filter(i => i.type == "ability" && i.system.secondaryAttribute == "willPoints").length;
+        maxWillPoints += 2 * wpBonuses;
+
         if (this.system.willPoints.max != maxWillPoints) {
             // Attribute changed - keep spent amount (damage) and update max value
             let damage = this.system.willPoints.max - this.system.willPoints.value;
@@ -185,6 +188,9 @@ export class DoDActor extends Actor {
         
         // Hit Points
         let maxHitPoints = this.system.attributes.con.value;
+        const hpBonuses = this.items.filter(i => i.type == "ability" && i.system.secondaryAttribute == "hitPoints").length;
+        maxHitPoints += 2 * hpBonuses;
+        
         if (this.system.hitPoints.max != maxHitPoints) {
             // Attribute changed - keep damage and update max value
             let damage = this.system.hitPoints.max - this.system.hitPoints.value;
@@ -198,20 +204,12 @@ export class DoDActor extends Actor {
                 ["system.hitPoints.value"]: maxHitPoints - damage });
         }
 
-        // Death rolls
-        /*
-        if (this.system.hitPoints.value > 0)
-        {
-            this.update({
-                ["system.deathRolls.successes"]: 0,
-                ["system.deathRolls.failures"]: 0 });
-        }
-        */
-
         // Movement
-        let baseMovement = Number(this.system.kin ? this.system.kin.system.movement : 10);
-        let movementModifier =  DoD_Utility.calculateMovementModifier(this.system.attributes.agl.value);
-        this.system.movement = baseMovement + movementModifier;
+        const baseMovement = Number(this.system.kin ? this.system.kin.system.movement : 10);
+        const movementModifier =  DoD_Utility.calculateMovementModifier(this.system.attributes.agl.value);
+        const moveBonuses = this.items.filter(i => i.type == "ability" && i.system.secondaryAttribute == "movement").length;
+
+        this.system.movement = baseMovement + movementModifier + 2 * moveBonuses;
     }
 
     _prepareActorStats() {

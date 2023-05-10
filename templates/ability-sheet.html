@@ -33,10 +33,20 @@
         <table>
             <tr>
                 <th>{{localize "DoD.ui.dialog.boons"}}</th>
+                <th>{{localize "DoD.ability.secondaryAttribute"}}</th>
             </tr>
             <tr>
                 <td>
                     <input name="data.boons" type="text" value="{{data.boons}}" />
+                </td>
+                <td>
+                    <select name="data.secondaryAttribute">
+                        {{#select data.secondaryAttribute}}
+                        {{#each config.secondaryAttributeTypes as |name attribute|}}
+                        <option value="{{attribute}}">{{localize name}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
                 </td>
             </tr>
         </table>

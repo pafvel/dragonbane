@@ -21,7 +21,8 @@
         "ability": {
             "requirement": "Requirement",
             "type": "Type",
-            "wp": "Willpower Points"
+            "wp": "Willpower Points",
+            "secondaryAttribute": "Attribute bonus"
         },
         "abilityTypes": {
             "kin": "Kin",
@@ -163,6 +164,12 @@
             "pushButtonLabel": "Push roll",
             "pushChoiceLabel": "Choose condition:"
 
+        },
+        "secondaryAttributeTypes": {
+            "none": "-",
+            "hitPoints": "Hip Points",
+            "willPoints": "Willpower Points",
+            "movement": "Movement"
         },
         "sizeTypes": {
             "small": "Small",

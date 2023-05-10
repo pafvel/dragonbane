@@ -20,7 +20,8 @@
         "ability": {
             "requirement": "Krav",
             "type": "Typ",
-            "wp": "Viljepoäng"
+            "wp": "Viljepoäng",
+            "secondaryAttribute": "Egenskapsbonus"
         },
         "abilityTypes": {
             "kin": "Släktesförmåga",
@@ -160,6 +161,12 @@
             "damageIgnoreArmorTarget": "<b>{actor}</b> gör <b>{damage}</b> poäng <b>{damageType}</b> med <b>{weapon}</b> på <b>{target}</b>. Skadan <b>ignorerar rustning</b>.",
             "pushButtonLabel": "Pressa slag",
             "pushChoiceLabel": "Välj tillstånd:"
+        },
+        "secondaryAttributeTypes": {
+            "none": "-",
+            "hitPoints": "Kroppspoäng",
+            "willPoints": "Viljepoäng",
+            "movement": "Förflyttning"
         },
         "sizeTypes": {
             "small": "Liten",

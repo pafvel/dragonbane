@@ -187,7 +187,9 @@
             "type": "",
             "requirement": "",
             "wp": "",
-            "boons": ""
+            "boons": "",
+            "secondaryAttribute": "",
+            "secondaryAttributeBonus": 0
         },
         "spell": {
             "templates": ["itemDescripton"],

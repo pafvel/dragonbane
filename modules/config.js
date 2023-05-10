@@ -17,6 +17,13 @@ DoD.itemTypes = {
     backpack: "DoD.itemTypes.backpack"
 };
 
+DoD.secondaryAttributeTypes = {
+    none: "DoD.secondaryAttributeTypes.none",
+    hitPoints: "DoD.secondaryAttributeTypes.hitPoints",
+    willPoints: "DoD.secondaryAttributeTypes.willPoints",
+    movement: "DoD.secondaryAttributeTypes.movement"
+};
+
 DoD.spellRangeTypes = {
     range: "DoD.spellRangeTypes.range",
     personal: "DoD.spellRangeTypes.personal",
