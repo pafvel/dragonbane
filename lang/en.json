@@ -112,7 +112,8 @@
             "cost": "Cost",
             "supply": "Supply",
             "worn": "Worn",
-            "memento": "Memento"
+            "memento": "Memento",
+            "type": "Category"
         },
         "gripTypes": {
             "none": "-",
@@ -121,6 +122,10 @@
         },
         "helmet": {
             "rating": "Armor Rating"
+        },
+        "itemTypes": {
+            "item": "Item",
+            "backpack": "Backpack"
         },
         "magicCritChoices": {
             "choiceLabel": "Critical effect",

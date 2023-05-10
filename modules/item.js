@@ -68,6 +68,10 @@ export class DoDItem extends Item {
         return this.system.weight * this.system.quantity;
     }
 
+    get displayWeight() {
+        return this.totalWeight > 0 ? this.totalWeight : "-";
+    }
+
     getSpellCost(powerLevel)
     {
         if (this.type != "spell") return 0;

@@ -209,7 +209,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
             
             if (item.type == "item") {
-                if (item.system.weight == 0 && this.actor.type == "character")
+                if (item.system.weight == 0 && item.system.type != "backpack" && this.actor.type == "character")
                 {
                     smallItems.push(item);
                     continue;
@@ -301,6 +301,9 @@ export default class DoDCharacterSheet extends ActorSheet {
     _updateEncumbrance(sheetData) {
         if (this.actor.type == "character") {
             sheetData.maxEncumbrance = Math.ceil(0.5 * this.actor.system.attributes.str.value);
+            if (sheetData.inventory.find(item => item.system.type == "backpack")) {
+                sheetData.maxEncumbrance += 2;
+            }
             sheetData.encumbrance = 0;
             if (sheetData.inventory) {
                 sheetData.inventory.forEach(item => sheetData.encumbrance += item.totalWeight);

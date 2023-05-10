@@ -12,6 +12,11 @@ DoD.ageTypes = {
     old: "DoD.ageTypes.old"
 };
 
+DoD.itemTypes = {
+    item: "DoD.itemTypes.item",
+    backpack: "DoD.itemTypes.backpack"
+};
+
 DoD.spellRangeTypes = {
     range: "DoD.spellRangeTypes.range",
     personal: "DoD.spellRangeTypes.personal",

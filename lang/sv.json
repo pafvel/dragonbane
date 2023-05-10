@@ -110,7 +110,8 @@
             "cost": "Pris",
             "supply": "Tillgång",
             "worn": "Till hands",
-            "memento": "Minnessak"
+            "memento": "Minnessak",
+            "type": "Kategori"
         },
         "gripTypes": {
             "none": "-",
@@ -119,6 +120,10 @@
         },
         "helmet": {
             "rating": "Skyddsvärde"
+        },
+        "itemTypes": {
+            "item": "Föremål",
+            "backpack": "Ryggsäck"
         },
         "magicCritChoices": {
             "choiceLabel": "Kritisk effekt",

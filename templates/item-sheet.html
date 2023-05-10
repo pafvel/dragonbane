@@ -10,7 +10,6 @@
                 <th>{{localize "DoD.gear.quantity"}}</th>
                 <th>{{localize "DoD.gear.cost"}}</th>
                 <th>{{localize "DoD.gear.supply"}}</th>
-                <th>{{localize "DoD.gear.memento"}}</th>
             </tr>
             <tr>
                 <td>
@@ -26,6 +25,23 @@
                     <select name="data.supply">
                         {{#select data.supply}}
                         {{#each config.supplyTypes as |name type|}}
+                        <option value="{{type}}">{{localize name}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <table>
+            <tr>
+                <th>{{localize "DoD.gear.type"}}</th>
+                <th>{{localize "DoD.gear.memento"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <select name="data.type">
+                        {{#select data.type}}
+                        {{#each config.itemTypes as |name type|}}
                         <option value="{{type}}">{{localize name}}</option>
                         {{/each}}
                         {{/select}}
