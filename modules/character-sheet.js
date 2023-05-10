@@ -260,6 +260,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         sheetData.spells = spells?.sort(DoD_Utility.nameSorter);
         sheetData.hasSpells = spells.length > 0;
+        sheetData.memorizedSpells = sheetData.spells?.filter(s => s.system.memorized);
 
         sheetData.inventory = inventory?.sort(DoD_Utility.itemSorter);
         sheetData.equippedWeapons = equippedWeapons?.sort(DoD_Utility.itemSorter);

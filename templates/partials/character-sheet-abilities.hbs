@@ -96,8 +96,13 @@
                     <th class="text-header">
                         {{localize "DoD.ui.character-sheet.spell"}}
                     </th>
+                    <th class="number-header">
+                        {{localize "DoD.spell.rank"}}
+                    </th>        
                     <th class="checkbox-header">
-                        {{localize "DoD.ui.character-sheet.memorized"}}
+                        <label title={{localize "DoD.spell.memorized"}}>
+                            {{localize "DoD.ui.character-sheet.memorized"}}
+                        </label>
                     </th>
                     <th class="text-header">
                         {{localize "DoD.ui.character-sheet.school"}}
@@ -109,16 +114,19 @@
                 <tr class="sheet-table-data" data-item-id="{{spell.id}}">
                     <td></td>
                     <td class="number-data">
-                        <a>{{spell.system.skillValue}}</a>
+                        {{spell.system.skillValue}}
                     </td>
                     <td class="text-data">
                         <a class="rollable-skill">{{spell.name}}</a>
+                    </td>
+                    <td class="number-data">
+                        {{spell.system.rank}}
                     </td>
                     <td class="checkbox-data">
                         <input class="inline-edit" data-field="system.memorized"  type="checkbox" {{checked spell.system.memorized}} />
                     </td>
                     <td class="text-data">
-                        <a>{{localize spell.system.school}}</a>
+                        {{localize spell.system.school}}
                     </td>
                     <td class="icon-data">
                         <a class="item-delete" data-type="spell">
