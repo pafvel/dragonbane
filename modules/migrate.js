@@ -31,7 +31,7 @@ export async function migrateWorld() {
           err.message = `Failed system migration for Actor ${actor.name}: ${err.message}`;
           console.error(err);
         }
-      }
+    }
  
     // Migrate Scenes
     for (let scene of game.scenes.contents) {
@@ -185,3 +185,52 @@ async function migrateCompendium(pack) {
     await pack.configure({ locked: wasLocked });
     console.log(`Migrated all ${document} entities from Compendium ${pack.collection}`);
   };
+
+export function updateSpellsOnActors() {
+    const worldSpells = game.items.filter(i => i.type == "spell");
+
+    // World Actors
+    for (let actor of game.actors.contents) {
+        const actorSpells = actor.items.filter(i => i.type == "spell");
+        for (const actorSpell of actorSpells) {
+            const worldSpell = worldSpells.find(i => i.name == actorSpell.name);
+            if (worldSpell) {
+                const template = { system: worldSpell.system, img: "" };
+                const diff = diffObject(filterObject(actorSpell, template), filterObject(worldSpell, template));
+                if (!isEmpty(diff)) {
+                    console.log("Updating spell in " + actor.name + " : " + actorSpell.name);
+                    actorSpell.update(diff);
+                }
+            } else {
+                console.log("Could not find " + actorSpell.name + "(" + actor.name + ") in world.")
+            }
+        }
+    }
+}
+    
+export function updateSkillsOnActors() {
+    const worldSkills = game.items.filter(i => i.type == "skill");
+    
+    // World Actors
+    for (let actor of game.actors.contents) {
+        const actorSkills = actor.items.filter(i => i.type == "skill");
+        for (const actorSkill of actorSkills) {
+            const worldSkill = worldSkills.find(i => i.name == actorSkill.name);
+            if (worldSkill) {
+                // only look for differences in system or img 
+                let template = { system: duplicate(worldSkill.system), img: "" };
+                // these are set by the actor, ignore them
+                delete template.system.advance;
+                delete template.system.value;
+
+                const diff = diffObject(filterObject(actorSkill, template), filterObject(worldSkill, template));
+                if (!isEmpty(diff)) {
+                    console.log("Updating skill in " + actor.name + " : " + actorSkill.name);
+                    actorSkill.update(diff);
+                }
+            } else {
+                console.log("Could not find " + actorSkill.name + "(" + actor.name + ") in world.")
+            }
+        }
+    }
+}

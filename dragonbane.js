@@ -106,7 +106,9 @@ Hooks.once("init", function() {
     registerSettings();
 
     game.dragonbane = {
-        migrateWorld: DoDMigrate.migrateWorld
+        migrateWorld: DoDMigrate.migrateWorld,
+        updateSpells: DoDMigrate.updateSpellsOnActors,
+        updateSkills: DoDMigrate.updateSkillsOnActors
     };
 });
 
