@@ -29,7 +29,9 @@ export default class DoDSkillTest extends DoDTest  {
         super.updatePostRollData();
         this.postRollData.result = this.roll.result;
         this.postRollData.success = this.preRollData.result <= this.preRollData.target;
-        this.postRollData.canPush = this.preRollData.canPush && !this.postRollData.success && this.postRollData.result != 20;
+        this.postRollData.isDragon = this.postRollData.result <= 1 + (this.preRollData.extraDragons ?? 0);
+        this.postRollData.isDemon = this.postRollData.result >= 20 - (this.preRollData.extraDemons ?? 0);
+        this.postRollData.canPush = this.preRollData.canPush && !this.postRollData.success && !this.postRollData.isDemon;
 
         if (this.postRollData.canPush) {
             this.updatePushRollChoices();
@@ -40,13 +42,13 @@ export default class DoDSkillTest extends DoDTest  {
         }
     }
 
-    formatRollMessage(msgData) {
-        const target = msgData.skill.system.value;
-        const resultMsg = this.formatRollResult(msgData.result, target);
-        const label = game.i18n.format(game.i18n.localize("DoD.roll.skillRoll"), {skill: msgData.skill.name, result: resultMsg});
+    formatRollMessage(postRollData) {
+        const target = postRollData.skill.system.value;
+        const resultMsg = this.formatRollResult(postRollData);
+        const label = game.i18n.format(game.i18n.localize("DoD.roll.skillRoll"), {skill: postRollData.skill.name, result: resultMsg});
         return {
             user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: msgData.actor }),
+            speaker: ChatMessage.getSpeaker({ actor: postRollData.actor }),
             flavor: label
         };
     }

@@ -96,5 +96,29 @@
             </div>
         </div>
     </div>
+    <div >
+        <table class="simple-table">
+            <tr>
+                <th>{{localize "DoD.ui.dialog.extraDamage"}}</th>
+                <th>{{localize "DoD.ui.dialog.enchantedWeapon"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <input class="extra-damage" name="extraDamage" type="text" value="{{extraDamage}}" pattern="(\d+)?[dD](\d+)([\+\-]\d+)?|(([\+\-])?\d+)?" />
+                </td>
+                <td>
+                    <select class="enchanted-weapon" name="enchantedWeapon">
+                        {{#select enchantedWeapon}}
+                        <option value="0">-</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        {{/select}}
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br>
     {{/if}}
 </form>

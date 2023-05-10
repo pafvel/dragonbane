@@ -39,6 +39,12 @@
   background-size: auto 12px, auto 12px;
   padding-bottom: 0px;
 }
+.DoD.sheet.item .sheet-content input:invalid {
+  color: red;
+}
+.DoD.sheet.item .sheet-content input:valid {
+  color: black;
+}
 .DoD.sheet.item .sheet-content table {
   border: 0px;
   background: none;
@@ -1046,6 +1052,54 @@
 }
 .system-dragonbane .sheet-table-data .wide {
   width: 100%;
+}
+.system-dragonbane .simple-table {
+  border: 0px;
+  background: none;
+}
+.system-dragonbane .simple-table input:invalid {
+  color: red;
+}
+.system-dragonbane .simple-table input:valid {
+  color: black;
+}
+.system-dragonbane .simple-table th {
+  text-align: center;
+  padding-left: 12px;
+  padding-right: 0px;
+}
+.system-dragonbane .simple-table th:last-child {
+  padding-right: 20px;
+}
+.system-dragonbane .simple-table tr:nth-child(1n+2) {
+  background-image: url("art/ui/table-row-left.webp"), url("art/ui/table-row-right.webp"), url("art/ui/table-row-banner.webp");
+  background-position: left center, right center, center center;
+  background-repeat: no-repeat, no-repeat, repeat-x;
+  background-size: contain, contain, contain;
+  background-clip: border-box, border-box, padding-box;
+  border-left: 8px transparent;
+  border-right: 8px transparent;
+}
+.system-dragonbane .simple-table tr:nth-child(1n+2) td {
+  text-align: center;
+  padding-left: 16px;
+  padding-right: 0px;
+}
+.system-dragonbane .simple-table tr:nth-child(1n+2) td input {
+  border: 0px;
+  background: transparent;
+}
+.system-dragonbane .simple-table tr:nth-child(1n+2) td:nth-child(1n+2) {
+  background-image: url("art/ui/table-row-separator.webp");
+  background-position: left center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.system-dragonbane .simple-table tr:nth-child(1n+2) td:last-child {
+  padding-right: 20px;
+}
+.system-dragonbane .simple-table tr:nth-child(1n+2) select {
+  border: 0px;
 }
 .system-dragonbane .derived-stat-box {
   width: 100%;

@@ -339,7 +339,9 @@
             "dialog": {
                 "banes": "Nackdelar",
                 "boons": "Fördelar",
+                "enchantedWeapon": "Förtrolla vapen",
                 "extra": "Extra",
+                "extraDamage": "Extra skada",
                 "skillRollTitle": "Färdighetsslag",
                 "skillRollLabel": "Slå färdighetsslag",
                 "attributeRollTitle": "Grundegenskapsslag",
@@ -349,6 +351,7 @@
                 "labelOk": "Ok",
                 "chooseAction": "Välj handling",
                 "weaponFeatures": "Vapenegenskaper"
+                
            }
         },
         "INFO": {

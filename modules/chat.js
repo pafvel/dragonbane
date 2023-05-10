@@ -162,7 +162,16 @@ async function onWeaponDamageRoll(event) {
     const skill = weapon ? actor.findSkill(weapon.system.skill.name) : null;
     const attribute = skill ? skill.system.attribute : null;
     const damageBonus = attribute ? actor.system.damageBonus[attribute] : 0;
-    const damage = weaponDamage ? weaponDamage + "+" + damageBonus : 0;
+    const extraDamage = element.dataset.extraDamage;
+
+    let damage = weaponDamage;
+    if (damageBonus && damageBonus != "0") {
+        damage += " + " + damageBonus;
+    }
+    if (extraDamage && extraDamage != "0") {
+        damage += " + " + extraDamage;
+    }
+
     let target = element.dataset.targetId ? DoD_Utility.getActorFromUUID(element.dataset.targetId) : null;
 
 

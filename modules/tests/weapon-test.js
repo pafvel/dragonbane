@@ -1,5 +1,6 @@
 import DoDSkillTest from "./skill-test.js";
 import { DoD } from "../config.js";
+import DoD_Utility from "../utility.js";
 
 
 export default class DoDWeaponTest extends DoDSkillTest  {
@@ -75,13 +76,13 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         return options;
     }
 
-    formatRollMessage(msgData) {
-        let result = this.formatRollResult(msgData.result, msgData.target);
+    formatRollMessage(postRollData) {
+        let result = this.formatRollResult(postRollData);
         let locString = this.postRollData.targetActor ? "DoD.roll.weaponRollTarget" : "DoD.roll.weaponRoll";
         let label = game.i18n.format(game.i18n.localize(locString), 
             {
-                action: game.i18n.localize("DoD.attackTypes." + msgData.action),
-                skill: msgData.weapon.name, 
+                action: game.i18n.localize("DoD.attackTypes." + postRollData.action),
+                skill: postRollData.weapon.name, 
                 result: result,
                 target: this.postRollData.targetActor?.isToken ? this.postRollData.targetActor.token.name : this.postRollData.targetActor?.name
             }
@@ -89,7 +90,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
 
         return {
             user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: msgData.actor }),
+            speaker: ChatMessage.getSpeaker({ actor: postRollData.actor }),
             flavor: label
         };
     }
@@ -111,8 +112,31 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             }
         }
         if (options.action == "weakpoint") {
-            options.extraBanes++;
+            options.banes.push(game.i18n.localize("DoD.attackTypes.weakpoint"));
         }
+
+        // Process extra damage
+        elements = form.getElementsByClassName("extra-damage");
+        element = elements ? elements[0] : null;
+        if (element && element.value.length > 0) {
+            if (element.validity.valid) {
+                options.extraDamage = element.value;
+            } else {
+                DoD_Utility.WARNING("DoD.WARNING.cannotEvaluateFormula");
+            }
+        }       
+
+        // Process enchanted weapon
+        elements = form.getElementsByClassName("enchanted-weapon");
+        element = elements ? elements[0] : null;
+        if (element) {
+            const value = Number(element.value);
+            if (value > 0) {
+                options.enchantedWeapon = value;
+            }
+        }       
+
+
         return options;
     }
 
@@ -120,6 +144,8 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         super.updatePreRollData();
         this.preRollData.weapon = this.weapon;
         this.preRollData.action = this.options.action ?? this.dialogData.actions[0].id;
+        this.preRollData.extraDamage = this.options.extraDamage;
+        this.preRollData.extraDragons = this.options.enchantedWeapon ?? 0;
     }
 
     updatePostRollData() {
@@ -175,7 +201,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
                 this.postRollData.isDamaging = true;
         }
 
-        if (this.postRollData.result == 20) {
+        if (this.postRollData.isDemon) {
             if (this.postRollData.isRanged) {
                 this.postRollData.isRangedMishap = true;
             } else {
@@ -183,7 +209,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             }
         }
 
-        if (this.postRollData.result == 1 && this.postRollData.action != "parry") {
+        if (this.postRollData.isDragon && this.postRollData.action != "parry") {
             this.postRollData.isMeleeCrit = true;
             this.postRollData.meleeCritGroup = "critChoice"
             this.postRollData.critChoices = {};            

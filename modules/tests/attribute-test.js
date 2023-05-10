@@ -37,14 +37,14 @@ export default class DoDAttributeTest extends DoDTest {
         }
     }
 
-    formatRollMessage(msgData) {
-       let result = this.formatRollResult(msgData.result, msgData.target);
+    formatRollMessage(postRollData) {
+       let result = this.formatRollResult(postRollData);
 
-        let localizedName = game.i18n.localize("DoD.attributes." + msgData.attribute);
+        let localizedName = game.i18n.localize("DoD.attributes." + postRollData.attribute);
         let label = game.i18n.format(game.i18n.localize("DoD.roll.attributeRoll"), {attribute: localizedName, result: result});
         return {
             user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: msgData.actor }),
+            speaker: ChatMessage.getSpeaker({ actor: postRollData.actor }),
             flavor: label
         };
     }

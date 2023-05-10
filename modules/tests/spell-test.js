@@ -88,23 +88,23 @@ export default class DoDSpellTest extends DoDSkillTest  {
         }
     }    
 
-    formatRollMessage(msgData) {
-        const target = msgData.skill?.system.value;
-        const result = this.formatRollResult(msgData.result, target);
-        const locString = msgData.powerLevel > 0 ? "DoD.roll.spellRoll" : "DoD.roll.skillRoll";
+    formatRollMessage(postRollData) {
+        const target = postRollData.skill?.system.value;
+        const result = this.formatRollResult(postRollData);
+        const locString = postRollData.powerLevel > 0 ? "DoD.roll.spellRoll" : "DoD.roll.skillRoll";
         const label = game.i18n.format(
             game.i18n.localize(locString), 
             {
-                skill: msgData.spell.name, 
-                spell: msgData.spell.name, 
-                powerLevel: msgData.powerLevel,
+                skill: postRollData.spell.name, 
+                spell: postRollData.spell.name, 
+                powerLevel: postRollData.powerLevel,
                 result: result
             }
         );
 
         return {
             user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: msgData.actor }),
+            speaker: ChatMessage.getSpeaker({ actor: postRollData.actor }),
             flavor: label
         };
     }

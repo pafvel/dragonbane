@@ -333,7 +333,9 @@
             "dialog": {
                 "banes": "Banes",
                 "boons": "Boons",
+                "enchantedWeapon": "Enchanted weapon",
                 "extra": "Extra",
+                "extraDamage": "Additional damage",
                 "skillRollTitle": "Skill Roll",
                 "skillRollLabel": "Roll",
                 "attributeRollTitle": "Attribute Roll",

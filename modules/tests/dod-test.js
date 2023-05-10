@@ -208,22 +208,22 @@ export default class DoDTest {
         }
     }
 
-    formatRollResult(result, target) {
-        if (result == 1) {
+    formatRollResult(postRollData) {
+        if (postRollData.isDragon) {
             return game.i18n.localize("DoD.roll.dragon");
-        } else if (result == 20) {
+        } else if (postRollData.isDemon) {
             return game.i18n.localize("DoD.roll.demon");
         } else {
-            return result <= target ? game.i18n.localize("DoD.roll.success") : game.i18n.localize("DoD.roll.failure");
+            return postRollData.result <= postRollData.target ? game.i18n.localize("DoD.roll.success") : game.i18n.localize("DoD.roll.failure");
         }
 
     }
 
     // This method should be overridden
-    formatRollMessage(msgData) {
+    formatRollMessage(postRollData) {
         return {
             user: game.user.id,
-            flavor: msgData.result
+            flavor: postRollData.result
         };
     }
 
