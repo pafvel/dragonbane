@@ -861,6 +861,9 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional .content-link {
   background: #dddddd80;
 }
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional .inline-roll {
+  background: #dddddd80;
+}
 .system-dragonbane .sheet.journal-entry img {
   border: 0px solid transparent;
 }

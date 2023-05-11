@@ -332,6 +332,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".item-delete").click(this._onItemDelete.bind(this));
 
             html.find(".rollable-attribute").click(this._onAttributeRoll.bind(this));
+            html.find(".condition-panel").click(this._onConditionClick.bind(this));
             html.find(".rollable-skill").on("click contextmenu", this._onSkillRoll.bind(this));
             html.find(".rollable-damage").click(this._onDamageRoll.bind(this));
 
@@ -689,6 +690,19 @@ export default class DoDCharacterSheet extends ActorSheet {
         let attributeName = event.currentTarget.dataset.attribute;
         let test = new DoDAttributeTest(this.actor, attributeName, options);
         await test.roll();
+    }
+
+    _onConditionClick(event) {
+        if (event.target.className == "condition-input") {
+            return; // event has alrady been handled by input element
+        }
+        event.preventDefault();
+        const elements = event.currentTarget.getElementsByClassName("condition-input");
+        if (elements.length > 0) {
+            let name = elements[0].name;
+            name = name.replace("data.", "system.");
+            this.actor.update({[name]: !getProperty(this.actor, name)});
+        }
     }
 
     async _onDropTable(actor, _sheet, data) {
