@@ -165,7 +165,7 @@ async function onWeaponDamageRoll(event) {
     const extraDamage = element.dataset.extraDamage;
 
     let damage = weaponDamage;
-    if (damageBonus && damageBonus != "0") {
+    if (damageBonus && damageBonus != "0" && damageBonus != "none") {
         damage += " + " + damageBonus;
     }
     if (extraDamage && extraDamage != "0") {

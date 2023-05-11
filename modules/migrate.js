@@ -186,7 +186,7 @@ async function migrateCompendium(pack) {
     console.log(`Migrated all ${document} entities from Compendium ${pack.collection}`);
   };
 
-export function updateSpellsOnActors() {
+export async function updateSpellsOnActors() {
     const worldSpells = game.items.filter(i => i.type == "spell");
 
     // World Actors
@@ -199,7 +199,7 @@ export function updateSpellsOnActors() {
                 const diff = diffObject(filterObject(actorSpell, template), filterObject(worldSpell, template));
                 if (!isEmpty(diff)) {
                     console.log("Updating spell in " + actor.name + " : " + actorSpell.name);
-                    actorSpell.update(diff);
+                    await actorSpell.update(diff);
                 }
             } else {
                 console.log("Could not find " + actorSpell.name + "(" + actor.name + ") in world.")
@@ -208,7 +208,7 @@ export function updateSpellsOnActors() {
     }
 }
     
-export function updateSkillsOnActors() {
+export async function updateSkillsOnActors() {
     const worldSkills = game.items.filter(i => i.type == "skill");
     
     // World Actors
@@ -226,10 +226,24 @@ export function updateSkillsOnActors() {
                 const diff = diffObject(filterObject(actorSkill, template), filterObject(worldSkill, template));
                 if (!isEmpty(diff)) {
                     console.log("Updating skill in " + actor.name + " : " + actorSkill.name);
-                    actorSkill.update(diff);
+                    await actorSkill.update(diff);
                 }
             } else {
                 console.log("Could not find " + actorSkill.name + "(" + actor.name + ") in world.")
+            }
+        }
+    }
+}
+
+export async function updateItemImagesOnActors() {
+    // World Actors
+    for (let actor of game.actors.contents) {
+        for (const actorItem of actor.items) {
+            const worldItem = game.items.find(i => i.type == actorItem.type && i.name == actorItem.name);
+            if (worldItem && worldItem.img != actorItem.img) {
+                console.log("Updating item image in " + actor.name + " : " + actorItem.name);
+                console.log(actorItem.img + " -> " + worldItem.img);
+                await actorItem.update({img: worldItem.img});
             }
         }
     }

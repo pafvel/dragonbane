@@ -108,7 +108,8 @@ Hooks.once("init", function() {
     game.dragonbane = {
         migrateWorld: DoDMigrate.migrateWorld,
         updateSpells: DoDMigrate.updateSpellsOnActors,
-        updateSkills: DoDMigrate.updateSkillsOnActors
+        updateSkills: DoDMigrate.updateSkillsOnActors,
+        updateImages: DoDMigrate.updateItemImagesOnActors
     };
 });
 
