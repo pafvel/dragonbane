@@ -336,6 +336,11 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".rollable-skill").on("click contextmenu", this._onSkillRoll.bind(this));
             html.find(".rollable-damage").click(this._onDamageRoll.bind(this));
 
+            html.find(".hit-points-max-label").change(this._onEditHp.bind(this));
+            html.find(".hit-points-current-label").change(this._onEditCurrentHp.bind(this));
+            html.find(".will-points-max-label").change(this._onEditWp.bind(this));
+            html.find(".will-points-current-label").change(this._onEditCurrentWp.bind(this));
+
             html.find(".hit-points-box").on("click contextmenu", this._onHitPointClick.bind(this));
             html.find(".will-points-box").on("click contextmenu", this._onWillPointClick.bind(this));
 
@@ -344,10 +349,9 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".death-rolls-failure").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
             html.find(".death-rolls-failure-label").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
 
-            html.find(".hit-points-max-label").change(this._onEditHp.bind(this));
-            html.find(".hit-points-current-label").change(this._onEditCurrentHp.bind(this));
-            html.find(".will-points-max-label").change(this._onEditWp.bind(this));
-            html.find(".will-points-current-label").change(this._onEditCurrentWp.bind(this));
+            html.find(".rest-round").on("click", this._onRestRound.bind(this));                
+            html.find(".rest-stretch").on("click", this._onRestStretch.bind(this));                
+            html.find(".rest-shift").on("click", this._onRestShift.bind(this));                
 
             if (this.object.type === "monster") {
                 html.find(".monster-attack").on("click contextmenu", this._onMonsterAttack.bind(this));                
@@ -482,6 +486,95 @@ export default class DoDCharacterSheet extends ActorSheet {
         }
     }
 
+    async _onRestRound(event) {
+        event.preventDefault();
+
+        const roll = await new Roll("D6").roll({async: true});
+        const currentWP = this.actor.system.willPoints.value;
+        const maxWP = this.actor.system.willPoints.max;
+        const newWP = Math.min(maxWP, currentWP + roll.total);
+        
+        const msg = await roll.toMessage({
+            user: game.user.id,
+            actor: this.actor,
+            flavor: game.i18n.format("DoD.ui.character-sheet.restRound", {actor: this.actor.name, wp: newWP - currentWP})
+        });
+        game.dice3d.waitFor3DAnimationByMessageID(msg.id).then(
+            () => this.actor.update({["system.willPoints.value"]: newWP })
+        );
+    }
+    async _onRestStretch(event) {
+        event.preventDefault();
+
+        // Make roll
+        const roll = await new Roll("D6[Hit Points] + D6[Willpower Points]").roll({async: true});
+        
+        // Calc HP
+        const currentHP = this.actor.system.hitPoints.value;
+        const maxHP = this.actor.system.hitPoints.max;
+        const newHP = Math.min(maxHP, currentHP + Number(roll.terms[0].total));
+        
+        // Calc WP
+        const currentWP = this.actor.system.willPoints.value;
+        const maxWP = this.actor.system.willPoints.max;
+        const newWP = Math.min(maxWP, currentWP + Number(roll.terms[2].total));
+        
+        // Render message
+        const context =  {
+            formula: roll.formula,
+            user: game.user.id,
+            tooltip: await roll.getTooltip()
+        };
+        const template = "systems/dragonbane/templates/partials/roll-no-total.hbs";
+        const content = await renderTemplate(template, context);
+        const msg = await roll.toMessage({
+            user: game.user.id,
+            actor: this.actor,
+            flavor: game.i18n.format("DoD.ui.character-sheet.restStretch", {actor: this.actor.name, hp: newHP - currentHP, wp: newWP - currentWP}),
+            content: content
+        });
+
+        // Wait for dice and update actor
+        game.dice3d.waitFor3DAnimationByMessageID(msg.id).then(
+            () => this.actor.update({
+                ["system.hitPoints.value"]: newHP,
+                ["system.willPoints.value"]: newWP
+             })
+        );
+
+    }
+
+    async _onRestShift(event) {
+        event.preventDefault();
+
+        // Make roll
+        const roll = await new Roll("D6[Hit Points] + D6[Willpower Points]").roll({async: true});
+        
+        // Calc HP
+        const currentHP = this.actor.system.hitPoints.value;
+        const maxHP = this.actor.system.hitPoints.max;
+        const newHP = maxHP;
+        
+        // Calc WP
+        const currentWP = this.actor.system.willPoints.value;
+        const maxWP = this.actor.system.willPoints.max;
+        const newWP = maxWP;
+
+        ChatMessage.create({
+            user: game.user.id,
+            flavor: game.i18n.format("DoD.ui.character-sheet.restShift", {actor: this.actor.name, hp: newHP - currentHP, wp: newWP - currentWP})
+        });        
+        this.actor.update({
+            ["system.hitPoints.value"]: newHP,
+            ["system.willPoints.value"]: newWP,
+            ["system.conditions.str.value"]: false,
+            ["system.conditions.con.value"]: false,
+            ["system.conditions.agl.value"]: false,
+            ["system.conditions.int.value"]: false,
+            ["system.conditions.wil.value"]: false,
+            ["system.conditions.cha.value"]: false
+        });
+    }
 
     _onInlineEdit(event) {
         event.preventDefault();

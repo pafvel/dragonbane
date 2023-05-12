@@ -50,8 +50,6 @@ async function preloadHandlebarsTemplates() {
         "systems/dragonbane/templates/partials/character-sheet-main.hbs",
         "systems/dragonbane/templates/partials/character-sheet-skills.hbs",
         "systems/dragonbane/templates/partials/character-sheet-abilities.hbs",
-        "systems/dragonbane/templates/partials/character-sheet-spells.hbs",
-        "systems/dragonbane/templates/partials/character-sheet-combat.hbs",
         "systems/dragonbane/templates/partials/character-sheet-inventory.hbs",
         "systems/dragonbane/templates/partials/character-sheet-background.hbs",
         "systems/dragonbane/templates/partials/monster-sheet-main.hbs",
@@ -61,7 +59,8 @@ async function preloadHandlebarsTemplates() {
         "systems/dragonbane/templates/partials/roll-dialog.hbs",
         "systems/dragonbane/templates/partials/damage-roll-message.hbs",
         "systems/dragonbane/templates/partials/skill-roll-message.hbs",
-        "templates/dice/roll.html"
+        "templates/dice/roll.html",
+        "systems/dragonbane/templates/partials/roll-no-total.hbs",
     ];
 
     return loadTemplates(templatePaths);

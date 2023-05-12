@@ -26,8 +26,19 @@
             <div class="flexcol">
                 {{> "systems/dragonbane/templates/partials/hp-widget.hbs" }}
             </div>
-            <div class="flexrow">
+            <div class="flexcol">
                 {{> "systems/dragonbane/templates/partials/wp-widget.hbs" }}
+                <div class="rest-actions">
+                    <button class="rest-round" title="{{localize "DoD.ui.character-sheet.restRoundTooltip"}}">
+                        <img src="systems/dragonbane/art/icons/rest-round.webp"/>
+                    </button>
+                    <button class="rest-stretch" title="{{localize "DoD.ui.character-sheet.restStretchTooltip"}}"">
+                        <img src="systems/dragonbane/art/icons/rest-stretch.webp"/>
+                    </button>
+                    <button class="rest-shift" title="{{localize "DoD.ui.character-sheet.restShiftTooltip"}}"">
+                        <img src="systems/dragonbane/art/icons/rest-shift.webp"/>
+                    </button>
+                </div>
             </div>
             <table class="derived-stat">
                 <tr>
