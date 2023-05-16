@@ -1,16 +1,16 @@
 <div class="tab main" data-group="primary" data-tab="main">
     <div class="main-tab flexcol">
 
-        {{!-- HP & WP --}}
+        {{!-- HP, Attack & Defend --}}
         {{#if observer}}
         <div class="flexrow">
             {{> "systems/dragonbane/templates/partials/hp-widget.hbs" }}
             <div class="monster-actions">
                 <button>
-                    <img  class="monster-attack" src="systems/dragonbane/art/ui/sword.webp"/>
+                    <img class="monster-attack" title="{{localize "DoD.ui.character-sheet.monsterAttackTooltip"}}" src="systems/dragonbane/art/ui/sword.webp"/>
                 </button>
                 <button>
-                    <img class="monster-defend" src="systems/dragonbane/art/ui/shield.webp"/>
+                    <img class="monster-defend"  title="{{localize "DoD.ui.character-sheet.monsterDefendTooltip"}}" src="systems/dragonbane/art/ui/shield.webp"/>
                 </button>
             </div>
         </div>

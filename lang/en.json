@@ -295,6 +295,10 @@
                 "max-encumbrance": "Max Encumbrance",
                 "memento": "Memento",
                 "memorized": "M",
+                "monsterAttackFlavor": "<b>{actor}</b> performs a Monster Attack from <b>{table}</b>.",
+                "monsterAttackTooltip": "Monster Attack",
+                "monsterDefendSkillFlavor": "Dodge or Parry",
+                "monsterDefendTooltip": "Dodge or Parry",
                 "movement": "Movement",
                 "notes": "Notes",
                 "profession": "Profession",
@@ -372,7 +376,9 @@
             "tableNotFound": "Can't find table: {id}",
             "conditionAlreadyTaken": "The condition is already taken",
             "noPermissionToModifyActor": "You lack permission to modify the actor",
-            "cannotEvaluateFormula": "Formula can not be evaluated"
+            "cannotEvaluateFormula": "Formula can not be evaluated",
+            "missingMonsterAttackTable": "Missing monster attack table. Drag and drop a table onto the character sheet."
+
         }
     }
 }

@@ -367,32 +367,32 @@ export default class DoDCharacterSheet extends ActorSheet {
     async _onMonsterAttack(event) {
         event.preventDefault();
         const table = this.actor.system.attackTable ? fromUuidSync(this.actor.system.attackTable) : null; 
-        if (!table) return;
+        if (!table) {
+            DoD_Utility.WARNING("DoD.WARNING.missingMonsterAttackTable");
+            return;
+        }
+
 
         if (event.type == "click") { // left click
-            //return table.draw();
-            const draw = await table.draw({displayChat: false});
-
-            // begin toMessage
-            //toMessage(results, {roll=null, messageData={}, messageOptions={}}={})
-            let messageData = {};
-            let messageOptions = {};
+            const draw = await this.actor.drawMonsterAttack(table);
             const results = draw.results;
             const roll = draw.roll;
-            
-            const speaker = ChatMessage.getSpeaker({token: this.token});
+
+            if (results.length == 0) {
+                return;
+            }          
 
             // Construct chat data
-            const flavorKey = `TABLE.DrawFlavor${results.length > 1 ? "Plural" : ""}`;
-            messageData = foundry.utils.mergeObject({
-            flavor: game.i18n.format(flavorKey, {number: results.length, name: table.name}),
-            user: game.user.id,
-            speaker: speaker,
-            type: roll ? CONST.CHAT_MESSAGE_TYPES.ROLL : CONST.CHAT_MESSAGE_TYPES.OTHER,
-            roll: roll,
-            sound: roll ? CONFIG.sounds.dice : null,
-            flags: {"core.RollTable": table.id}
-            }, messageData);
+            const flavorKey = "DoD.ui.character-sheet.monsterAttackFlavor";
+            let messageData = {
+                flavor: game.i18n.format(flavorKey, {actor: this.actor.name, table: table.name}),
+                user: game.user.id,
+                speaker: ChatMessage.getSpeaker({token: this.token}),
+                type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+                roll: roll,
+                sound: CONFIG.sounds.dice,
+                flags: {"core.RollTable": table.id}
+            };
 
             // Copy results to avoid modifying table
             let messageResults = await results.map(result => {
@@ -408,22 +408,31 @@ export default class DoDCharacterSheet extends ActorSheet {
 
             // Render the chat card which combines the dice roll with the drawn results
             messageData.content = await renderTemplate(CONFIG.RollTable.resultTemplate, {
-            description: await TextEditor.enrichHTML(table.description, {documents: true, async: true}),
-            results: messageResults,
-            rollHTML: table.displayRoll && roll ? await roll.render() : null,
-            table: table
+                description: await TextEditor.enrichHTML(table.description, {documents: true, async: true}),
+                results: messageResults,
+                rollHTML: table.displayRoll && roll ? await roll.render() : null,
+                table: table
             });
 
             // Create the chat message
-            return ChatMessage.create(messageData, messageOptions);
+            return ChatMessage.create(messageData);
 
         } else { // right click
             return table.sheet.render(true);
         }        
     }
 
-    _onMonsterDefend(event) {
-        
+    async _onMonsterDefend(event) {
+        event.preventDefault();
+
+        // Monsters always dodge or parry with skill value 15
+        const skill = {
+            name: game.i18n.localize("DoD.ui.character-sheet.monsterDefendSkillFlavor"),
+            system: {value: 15}
+        }
+
+        const test = new DoDSkillTest(this.actor, skill, {skipDialog: true});
+        await test.roll();
     }
 
     _onHitPointClick(event) {

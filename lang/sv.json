@@ -298,6 +298,10 @@
                 "labelOk": "Ok",
                 "main": "Översikt",
                 "max-encumbrance": "Bärförmåga",
+                "monsterAttackFlavor": "<b>{actor}</b> utför en monsterattack från tabellen <b>{table}</b>.",
+                "monsterAttackTooltip": "Monsterattack",
+                "monsterDefendSkillFlavor": "ducka eller parera",
+                "monsterDefendTooltip": "Ducka eller parera",
                 "memento": "Minnessak",
                 "memorized": "M",
                 "movement": "Förflyttning",
@@ -378,7 +382,8 @@
             "tableNotFound": "Kan inte hitta tabellen: {id}",
             "conditionAlreadyTaken": "Tillståndet är redan taget",
             "noPermissionToModifyActor": "Saknar behörighet att modifiera karaktären",
-            "cannotEvaluateFormula": "Kan ej evaluera formeln"
+            "cannotEvaluateFormula": "Kan ej evaluera formeln",
+            "missingMonsterAttackTable": "Saknar tabell för monsterattacker. Dra och släpp en tabell på karaktärsarket."
         }
     }
 }

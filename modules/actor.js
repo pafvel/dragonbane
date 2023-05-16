@@ -465,6 +465,39 @@ export class DoDActor extends Actor {
         return this.updateProfessionSkills();
     }
 
+    async drawMonsterAttack(t) {
+        const table = t || (this.system.attackTable ? fromUuidSync(this.system.attackTable) : null); 
+        if (!table) return null;
+
+        const draw = await table.draw({displayChat: false});
+        const results = draw.results;
+        const roll = draw.roll;
+
+        if (results[0]) {
+            // Monsters never draw the same attack twice in a row - if that happens pick next attack in the table
+            let newResult = null;
+            let found = false;
+            if (results[0].uuid == this.system.previousMonsterAttack) {
+                // Find next attack
+                for (let tableResult of table.results)
+                {
+                    // initialize newResult with first result, used when matching attack is the last one
+                    if (!newResult) {
+                        newResult = tableResult;
+                    }
+                    // matched attack last iteration, this is the next attack
+                    if (found) {
+                        newResult = tableResult;
+                        break;
+                    }
+                    found = results[0].uuid == tableResult.uuid;
+                }
+                results[0] = newResult;
+            }
+            this.system.previousMonsterAttack = results[0].uuid;
+        }
+        return {results, roll};
+    }
 
     _prepareKin() {
         this.system.kin = this.items.find(item => item.type == "kin");
