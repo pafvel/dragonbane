@@ -40,6 +40,21 @@ export class DoDItem extends Item {
         let skill = this.actor?.getSkill(this.system.skill.name);
         this.system.skill.value = skill ? skill.system.value : 0;
 
+        // Shield skill is same as best strength weapon skill
+        if (this.actor && this.hasWeaponFeature("shield")) {
+            for (let item of this.actor.items) {
+                if (item.type == "skill" 
+                && item.system.skillType == "weapon" 
+                && item.system.attribute == "str"
+                && item.system.value > this.system.skill.value)
+                {
+                    this.system.skill.name = item.name;
+                    this.system.skill.value = item.system.value;
+                }
+            }
+        }
+
+
         // Range
         if (this.actor) {
             let r = new Roll(String(this.system.range), {str: this.actor.system.attributes?.str.value});

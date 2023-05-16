@@ -229,16 +229,25 @@
         },
         "weapon": {
             "grip": "Grepp",
+            "gripTooltip": "Anger om vapnet används med en eller två händer",
             "str": "STY",
+            "strTooltip": "STY-krav för att använda vapnet obehindrat",
             "range": "Räckvidd",
             "rangeShort": "RV",
+            "rangeTooltip": "Räckvidd anger det maximala avståndet i meter på vilket vapnet kan användas effektivt",
             "damage": "Skada",
             "damageShort": "Skada",
+            "damageTooltip": "Anger hur mycket skada vapnet gör vid en träff",
             "durability": "Brytvärde",
             "durabilityShort": "BV",
+            "durabilityTooltip": "Brytvärde avgör hur mycket skada vapnet kan ta utan att skadas när du parerar",
             "features": "Egenskaper",
             "skill": "Färdighet",
-            "skillValue": "FV"
+            "skillValue": "FV",
+            "skillValueTooltip": "Färdighetsvärde för vapnet",
+            "brokenTooltip": "Anger om vapnet är trasigt",
+            "mainHandTooltip": "Håller vapnet i svärdshanden",
+            "offHandTooltip": "Håller vapnet i den aviga handen"
         },
         "weaponFeatureTypes": {
             "bludgeoning": "Krossande",

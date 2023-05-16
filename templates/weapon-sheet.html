@@ -11,6 +11,7 @@
                 <th>{{localize "DoD.weapon.range"}}</th>
                 <th>{{localize "DoD.weapon.damage"}}</th>
                 <th>{{localize "DoD.weapon.durability"}}</th>
+                <th>Broken</th>
             </tr>
             <tr>
                 <td>
@@ -27,11 +28,6 @@
                 </td>
                 <td class="flexrow">
                     <input name="data.range" type="text" value="{{data.range}}" />
-                    <!--
-                    {{#if data.displayRange}}
-                        <span style="display: inline-flex; align-items: center">({{data.displayRange}})</span>
-                    {{/if}}
-                    -->
                 </td>
                 <td>
                     <input name="data.damage" type="text" value="{{data.damage}}" pattern="(\d+)?[dD](\d+)([\+\-]\d+)?|(([\+\-])?\d+)?"/>
@@ -39,6 +35,10 @@
                 <td>
                     <input name="data.durability" type="text" value="{{data.durability}}" data-dtype="Number" />
                 </td>
+                <td>
+                    <input class="inline-edit" name="data.broken" data-field="data.broken" type="checkbox" {{checked data.broken}} />
+                </td>
+
         </table>
         <table>
             <tr>

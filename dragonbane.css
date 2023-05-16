@@ -912,6 +912,10 @@
   font-family: QTFrizQuad;
   font-weight: normal;
 }
+.system-dragonbane .mirror {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+}
 .system-dragonbane .sheet-table {
   font-family: QTFrizQuad;
   font-weight: normal;
@@ -968,10 +972,14 @@
 }
 .system-dragonbane .sheet-table-header .thumbnail-header {
   padding: 0px;
-  width: 36px;
-  height: 36px;
-  min-width: 36px;
-  min-height: 36px;
+}
+.system-dragonbane .sheet-table-header .thumbnail-header img {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  min-height: 20px;
+  border: 0px solid transparent;
+  filter: invert(100%) sepia(1%) saturate(256%) hue-rotate(64deg) brightness(116%) contrast(92%);
 }
 .system-dragonbane .sheet-table-header .text-header {
   text-indent: 1em;
@@ -1003,6 +1011,17 @@
   min-height: 36px;
 }
 .system-dragonbane .sheet-table-data .thumbnail-data img {
+  vertical-align: middle;
+  border: 0px solid transparent;
+}
+.system-dragonbane .sheet-table-data .checkbox-data {
+  padding: 0px;
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
+}
+.system-dragonbane .sheet-table-data .checkbox-data img {
   vertical-align: middle;
   border: 0px solid transparent;
 }

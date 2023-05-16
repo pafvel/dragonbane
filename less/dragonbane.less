@@ -283,6 +283,11 @@
         }
     }
 
+    .mirror {
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+    };
+
     .sheet-table {
     font-family: QTFrizQuad;
     font-weight: normal;
@@ -341,10 +346,15 @@
         
         .thumbnail-header {
             padding: 0px;            
-            width: 36px;
-            height: 36px;
-            min-width: 36px;
-            min-height: 36px;
+            img {
+                width: 20px;
+                height: 20px;
+                min-width: 20px;
+                min-height: 20px;
+                border: 0px solid transparent;
+                // whitesmoke color
+                filter: invert(100%) sepia(1%) saturate(256%) hue-rotate(64deg) brightness(116%) contrast(92%);
+            }
         }
 
         .text-header {
@@ -379,6 +389,18 @@
         height: 36px;
         min-width: 36px;
         min-height: 36px;
+        img {
+            vertical-align: middle;
+            border: 0px solid transparent;         
+        }
+    }
+
+    .checkbox-data {
+        padding: 0px;            
+        width: 24px;
+        height: 24px;
+        min-width: 24px;
+        min-height: 24px;
         img {
             vertical-align: middle;
             border: 0px solid transparent;         

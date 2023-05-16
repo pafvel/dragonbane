@@ -230,16 +230,25 @@
         },
         "weapon": {
             "grip": "Grip",
+            "gripTooltip": "If you need one or two hands to wield the weapon.",
             "str": "STR",
+            "strTooltip": "How much STR you need to use the weapon effectively.",
             "range": "Range",
             "rangeShort": "R",
+            "rangeTooltip": "Range indicates the maximum range in meters at which the weapon can be used effectively",
             "damage": "Damage",
             "damageShort": "Dmg",
+            "damageTooltip": "How much damage the weapon inflicts on a hit.",
             "durability": "Durability",
             "durabilityShort": "Dur.",
+            "durabilityTooltip": "Durability determines how much damage you can parry without damaging the weapon",
             "features": "Features",
             "skill": "Skill",
-            "skillValue": "Skill"
+            "skillValue": "Skill",
+            "skillValueTooltip": "Skill value when using the weapon.",
+            "brokenTooltip": "Indicates if the weapon is broken",
+            "mainHandTooltip": "Holding the weapon in the main hand.",
+            "offHandTooltip": "Holding the weapon in the off-hand."
         },
         "weaponFeatureTypes": {
             "bludgeoning": "Bludgeoning",

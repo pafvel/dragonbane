@@ -148,7 +148,10 @@
                 "name": "",
                 "value": 0
             },
-            "features": []
+            "features": [],
+            "broken": false,
+            "mainHand": false,
+            "offHand": false
         },
         "armor": {
             "templates": ["gear", "itemDescripton"],

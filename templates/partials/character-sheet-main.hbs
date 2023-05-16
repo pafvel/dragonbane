@@ -96,12 +96,21 @@
                 <th>&nbsp</th>
                 <th>&nbsp</th>
                 <th class="text-header">{{localize "DoD.ui.character-sheet.weapons"}}</th>
-                <th class="number-header">{{localize "DoD.weapon.skillValue"}}</th>
-                <th class="number-header">{{localize "DoD.weapon.grip"}}</th>
-                <th class="number-header">{{localize "DoD.weapon.str"}}</th>
-                <th class="number-header">{{localize "DoD.weapon.rangeShort"}}</th>
-                <th class="number-header">{{localize "DoD.weapon.damageShort"}}</th>
-                <th class="number-header">{{localize "DoD.weapon.durabilityShort"}}</th>
+                <th class="number-header" title="{{localize "DoD.weapon.skillValueTooltip"}}">{{localize "DoD.weapon.skillValue"}}</th>
+                <th class="number-header" title="{{localize "DoD.weapon.gripTooltip"}}">{{localize "DoD.weapon.grip"}}</th>
+                <th class="thumbnail-header">
+                    <img title="{{localize "DoD.weapon.mainHandTooltip"}}" src="systems/dragonbane/art/icons/fist.svg"/>
+                </th>
+                <th class="thumbnail-header">
+                    <img class="mirror" title="{{localize "DoD.weapon.offHandTooltip"}}" src="systems/dragonbane/art/icons/fist.svg"/>
+                </th>
+                <th class="number-header" title="{{localize "DoD.weapon.strTooltip"}}">{{localize "DoD.weapon.str"}}</th>
+                <th class="number-header" title="{{localize "DoD.weapon.rangeTooltip"}}">{{localize "DoD.weapon.rangeShort"}}</th>
+                <th class="number-header" title="{{localize "DoD.weapon.damageTooltip"}}">{{localize "DoD.weapon.damageShort"}}</th>
+                <th class="number-header" title="{{localize "DoD.weapon.durabilityTooltip"}}">{{localize "DoD.weapon.durabilityShort"}}</th>
+                <th class="thumbnail-header">
+                    <img title="{{localize "DoD.weapon.brokenTooltip"}}" src="systems/dragonbane/art/icons/broken-axe.svg"/>
+                </th>
                 <th></th>
             </tr>
             {{#if equippedWeapons}}
@@ -114,10 +123,19 @@
                 <td class="text-data"><a class="rollable-skill">{{weapon.name}}</a></td>
                 <td class="number-data">{{weapon.system.skill.value}}</td>
                 <td class="number-data">{{localize weapon.system.grip.label}}</td>
+                <td class="checkbox-data">
+                    <input class="inline-edit" data-field="system.mainHand" type="checkbox" {{checked weapon.system.mainHand}} />
+                </td>
+                <td class="checkbox-data">
+                    <input class="inline-edit" data-field="system.offHand" type="checkbox" {{checked weapon.system.offHand}} />
+                </td>                
                 <td class="number-data">{{weapon.system.str}}</td>
                 <td class="number-data">{{weapon.system.displayRange}}</td>
                 <td class="number-data"><a class="rollable-damage">{{weapon.system.damage}}</a></td>
                 <td class="number-data">{{weapon.system.durability}}</td>
+                <td class="checkbox-data">
+                    <input class="inline-edit" data-field="system.broken" type="checkbox" {{checked weapon.system.broken}} />
+                </td>
                 <td></td>
             </tr>
             {{/each}}

@@ -174,7 +174,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                 continue;
             }
             
-            if (item.type == "weapon" || item.type == "shield") {
+            if (item.type == "weapon") {
                 if (item.system.worn) {
                     // TODO limit 3
                     equippedWeapons.push(item);
@@ -614,10 +614,46 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         event.currentTarget.blur();
 
-        if (element.type == "checkbox"){
-            return item.update({ [field]: element.checked});
-        }        
-        return item.update({ [field]: Number(element.value)});
+        if (element.type == "checkbox") {
+
+            // Handle equipping & unequipping weapons
+            if (field == "system.mainHand" || field == "system.offHand") {
+                const twoHanded = item.system.grip.value == "grip2h";
+                if (element.checked) {
+                    // Un-equip weapons in same hand or both hands if equipping 2-handed weapon
+                    for (let actorItem of this.actor.items) {
+                        if (actorItem.type == "weapon") {
+                            if (actorItem.uuid != item.uuid) {
+                                // Equipping a different weapon
+                                // Un-eqiup weapon in same hand or if any of the weapons is two-handed
+                                if (twoHanded || actorItem.system.grip.value == "grip2h") {
+                                    actorItem.update({["system.mainHand"]: false, ["system.offHand"]: false});
+                                } else {
+                                    actorItem.update({[field]: false});
+                                }
+                            } else {
+                                // Equipping same weapon
+                                // Un-equip from other hand if one-handed
+                                if (!twoHanded) {
+                                    if (field == "system.mainHand") {
+                                        actorItem.update({ ["system.offHand"]: false });
+                                    } else {
+                                        actorItem.update({ ["system.mainHand"]: false });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                // Equip/Unequip 2-handed weapon
+                if (twoHanded) {
+                    return item.update({["system.mainHand"]: element.checked, "system.offHand": element.checked});
+                }
+            }            
+            return item.update({ [field]: element.checked });
+        }
+
+        return item.update({ [field]: Number(element.value) });
     }
 
     _onEditHp(event) {
