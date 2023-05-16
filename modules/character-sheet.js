@@ -326,9 +326,11 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".item-delete-key").mouseenter(event => { this.#focusElement = event.currentTarget; });
             html.find(".item-delete-key").mouseleave(event => { this.#focusElement = null; });
 
+            html.find(".attribute-input").change(this._onEditAttribute.bind(this));
             html.find(".inline-edit").change(this._onInlineEdit.bind(this));
             html.find(".kin-edit").change(this._onKinEdit.bind(this));
             html.find(".profession-edit").change(this._onProfessionEdit.bind(this));
+            html.find(".age-edit").change(this._onAgeEdit.bind(this));
             html.find(".item-delete").click(this._onItemDelete.bind(this));
 
             html.find(".rollable-attribute").click(this._onAttributeRoll.bind(this));
@@ -366,6 +368,8 @@ export default class DoDCharacterSheet extends ActorSheet {
 
     async _onMonsterAttack(event) {
         event.preventDefault();
+        event.currentTarget?.blur();
+
         const table = this.actor.system.attackTable ? fromUuidSync(this.actor.system.attackTable) : null; 
         if (!table) {
             DoD_Utility.WARNING("DoD.WARNING.missingMonsterAttackTable");
@@ -424,6 +428,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
     async _onMonsterDefend(event) {
         event.preventDefault();
+        event.currentTarget?.blur();
 
         // Monsters always dodge or parry with skill value 15
         const skill = {
@@ -497,6 +502,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
     async _onRestRound(event) {
         event.preventDefault();
+        event.currentTarget?.blur();
 
         const roll = await new Roll("D6").roll({async: true});
         const currentWP = this.actor.system.willPoints.value;
@@ -514,6 +520,7 @@ export default class DoDCharacterSheet extends ActorSheet {
     }
     async _onRestStretch(event) {
         event.preventDefault();
+        event.currentTarget?.blur();
 
         // Make roll
         const roll = await new Roll("D6[Hit Points] + D6[Willpower Points]").roll({async: true});
@@ -555,6 +562,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
     async _onRestShift(event) {
         event.preventDefault();
+        event.currentTarget?.blur();
 
         // Make roll
         const roll = await new Roll("D6[Hit Points] + D6[Willpower Points]").roll({async: true});
@@ -583,6 +591,18 @@ export default class DoDCharacterSheet extends ActorSheet {
             ["system.conditions.wil.value"]: false,
             ["system.conditions.cha.value"]: false
         });
+    }
+
+    _onEditAttribute(event) {
+        event.preventDefault();
+        event.currentTarget.blur();
+
+        let element = event.currentTarget;
+        if (element.value < 1 || element.value > 18) {
+            element.value = element.defaultValue;
+            DoD_Utility.WARNING("DoD.WARNING.attributeOutOfRange")
+            return false;
+        }
     }
 
     _onInlineEdit(event) {
@@ -685,6 +705,51 @@ export default class DoDCharacterSheet extends ActorSheet {
                 }
             }
         }
+    }
+
+    async _onAgeEdit(event) {
+        event.preventDefault();
+        event.currentTarget.blur();
+        
+        const modifiers = {
+            young: {
+                ["system.attributes.str.value"]: 0,
+                ["system.attributes.con.value"]: 1,
+                ["system.attributes.agl.value"]: 1,
+                ["system.attributes.int.value"]: 0,
+                ["system.attributes.wil.value"]: 0,
+                ["system.attributes.cha.value"]: 0,
+            },
+            adult: {
+                ["system.attributes.str.value"]: 0,
+                ["system.attributes.con.value"]: 0,
+                ["system.attributes.agl.value"]: 0,
+                ["system.attributes.int.value"]: 0,
+                ["system.attributes.wil.value"]: 0,
+                ["system.attributes.cha.value"]: 0,
+            },
+            old: {
+                ["system.attributes.str.value"]: -2,
+                ["system.attributes.con.value"]: -2,
+                ["system.attributes.agl.value"]: -2,
+                ["system.attributes.int.value"]: 1,
+                ["system.attributes.wil.value"]: 1,
+                ["system.attributes.cha.value"]: 0,
+            }
+        };
+
+        const currentAge = this.actor.system.age || "adult";
+        const newAge = event.currentTarget.value || "adult";
+
+        let newValues = {"system.age": newAge};
+
+        for (const key in modifiers[currentAge]) {
+            newValues[key] = modifiers[newAge][key] - modifiers[currentAge][key] + getProperty(this.actor, key);
+            if (newValues[key] < 1 || newValues[key] > 18) {
+                DoD_Utility.WARNING("DoD.WARNING.attributeOutOfRange");
+            }
+        }
+        await this.actor.update(newValues);
     }
 
     _onItemDelete(event) {

@@ -15,6 +15,10 @@ export class DoDActor extends Actor {
                 data.items = baseSkills;
                 this.updateSource(data);
         }
+
+        if (this.type == "character") {
+            this.updateSource({ "system.age": "adult" });
+        }
     }
     
     /** @override */

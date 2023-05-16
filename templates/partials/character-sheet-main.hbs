@@ -21,7 +21,7 @@
         </div>
 
 
-        {{!-- HP, WP & Derived stats --}}
+        {{!-- HP, WP, Derived stats & Rest buttons --}}
         <div class="flexrow">
             <div class="flexcol">
                 {{> "systems/dragonbane/templates/partials/hp-widget.hbs" }}
@@ -29,13 +29,13 @@
             <div class="flexcol">
                 {{> "systems/dragonbane/templates/partials/wp-widget.hbs" }}
                 <div class="rest-actions">
-                    <button class="rest-round" title="{{localize "DoD.ui.character-sheet.restRoundTooltip"}}">
+                    <button class="rest-round" type="button" title="{{localize "DoD.ui.character-sheet.restRoundTooltip"}}">
                         <img src="systems/dragonbane/art/icons/rest-round.webp"/>
                     </button>
-                    <button class="rest-stretch" title="{{localize "DoD.ui.character-sheet.restStretchTooltip"}}"">
+                    <button class="rest-stretch" type="button" title="{{localize "DoD.ui.character-sheet.restStretchTooltip"}}"">
                         <img src="systems/dragonbane/art/icons/rest-stretch.webp"/>
                     </button>
-                    <button class="rest-shift" title="{{localize "DoD.ui.character-sheet.restShiftTooltip"}}"">
+                    <button class="rest-shift" type="button" title="{{localize "DoD.ui.character-sheet.restShiftTooltip"}}"">
                         <img src="systems/dragonbane/art/icons/rest-shift.webp"/>
                     </button>
                 </div>

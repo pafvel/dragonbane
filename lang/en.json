@@ -377,8 +377,8 @@
             "conditionAlreadyTaken": "The condition is already taken",
             "noPermissionToModifyActor": "You lack permission to modify the actor",
             "cannotEvaluateFormula": "Formula can not be evaluated",
-            "missingMonsterAttackTable": "Missing monster attack table. Drag and drop a table onto the character sheet."
-
+            "missingMonsterAttackTable": "Missing monster attack table. Drag and drop a table onto the character sheet.",
+            "attributeOutOfRange": "An attribute can not be higher than 18 or lower than 1."
         }
     }
 }

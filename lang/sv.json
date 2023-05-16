@@ -383,7 +383,8 @@
             "conditionAlreadyTaken": "Tillståndet är redan taget",
             "noPermissionToModifyActor": "Saknar behörighet att modifiera karaktären",
             "cannotEvaluateFormula": "Kan ej evaluera formeln",
-            "missingMonsterAttackTable": "Saknar tabell för monsterattacker. Dra och släpp en tabell på karaktärsarket."
+            "missingMonsterAttackTable": "Saknar tabell för monsterattacker. Dra och släpp en tabell på karaktärsarket.",
+            "attributeOutOfRange": "Grundegenskaper kan inte ha högre värde än 18 och inte lägre värde än 1."
         }
     }
 }
