@@ -161,7 +161,11 @@ async function onWeaponDamageRoll(event) {
     const weaponDamage = weapon ? weapon.system.damage : null;
     const skill = weapon ? actor.findSkill(weapon.system.skill.name) : null;
     const attribute = skill ? skill.system.attribute : null;
-    const damageBonus = attribute ? actor.system.damageBonus[attribute] : 0;
+    let damageBonus = attribute ? actor.system.damageBonus[attribute] : 0;
+    if (damageBonus == "" && attribute == "agl") {
+        // HACK until i migrate data from agi to agl
+        damageBonus = actor.system.damageBonus["agi"];
+    }
     const extraDamage = element.dataset.extraDamage;
 
     let damage = weaponDamage;
