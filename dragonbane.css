@@ -709,6 +709,12 @@
   --dod-color-text-dark-title: #00604D;
   background-image: url(art/ui/dragonbane.jpg);
 }
+.system-dragonbane #pause {
+  background: url();
+}
+.system-dragonbane #pause img {
+  content: url(art/icons/symbol-red.webp);
+}
 .system-dragonbane .sheet.journal-entry .journal-entry-content {
   background: url("art/ui/journal-page-bg.webp");
   background-size: 100% auto;
