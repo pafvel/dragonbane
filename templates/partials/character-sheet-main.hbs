@@ -169,7 +169,9 @@
                 </tr>
                 <tr>
                     <td class="armor-banes">
+                        {{#if equippedArmor.system.banes}}
                         <b>{{localize "DoD.ui.character-sheet.banes"}}:</b> {{equippedArmor.system.banes}}
+                        {{/if}}
                     </td>
                 </tr>
             </table>
@@ -191,7 +193,9 @@
                 </tr>
                 <tr>
                     <td class="armor-banes">
+                        {{#if equippedHelmet.system.banes}}
                         <b>{{localize "DoD.ui.character-sheet.banes"}}:</b> {{equippedHelmet.system.banes}}
+                        {{/if}}
                     </td>
                 </tr>
             </table>

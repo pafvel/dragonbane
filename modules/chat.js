@@ -166,6 +166,9 @@ async function onWeaponDamageRoll(event) {
         // HACK until i migrate data from agi to agl
         damageBonus = actor.system.damageBonus["agi"];
     }
+    if (weapon.hasWeaponFeature("noDamageBonus")) {
+        damageBonus = 0;
+    }
     const extraDamage = element.dataset.extraDamage;
 
     let damage = weaponDamage;
