@@ -2,7 +2,7 @@
     <div class="flexrow">
         {{!-- Core Skills --}}
         <div>
-            <table class="sheet-table core-skills">
+            <table class="sheet-table core-skills item-list">
                 <tr class="sheet-table-header">
                     <th></th>
                     <th class="number-header">
@@ -17,7 +17,7 @@
                     </th>
                 </tr>
                 {{#each coreSkills as |skill skillId|}}
-                <tr class="sheet-table-data" data-item-id="{{skill.id}}">
+                <tr class="sheet-table-data item" data-item-id="{{skill.id}}">
                     <td class="checkbox-data">
                         <input class="inline-edit" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
                     </td>
@@ -46,7 +46,7 @@
         
         <div>
             {{!-- Weapon Skills --}}
-            <table class="sheet-table weapon-skills">
+            <table class="sheet-table weapon-skills item-list">
                 <tr class="sheet-table-header">
                     <th></th>
                     <th class="number-header">
@@ -61,7 +61,7 @@
                     </th>
                 </tr>
                 {{#each weaponSkills as |skill skillId|}}
-                <tr class="sheet-table-data" data-item-id="{{skill.id}}">
+                <tr class="sheet-table-data item" data-item-id="{{skill.id}}">
                     <td class="checkbox-data">
                         <input class="inline-edit checkbox" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
                     </td>
@@ -88,7 +88,7 @@
             </table>
             {{!-- Secondary Skills --}}
             {{#if secondarySkills }}
-            <table class="sheet-table secondary-skills">
+            <table class="sheet-table secondary-skills item-list">
                 <tr class="sheet-table-header">
                     <th></th>
                     <th class="number-header">
@@ -102,7 +102,7 @@
                     </th>
                 </tr>
                 {{#each secondarySkills as |skill skillId|}}
-                <tr class="sheet-table-data" data-item-id="{{skill.id}}">
+                <tr class="sheet-table-data item" data-item-id="{{skill.id}}">
                     <td class="checkbox-data">
                         <input class="inline-edit checkbox" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
                     </td>

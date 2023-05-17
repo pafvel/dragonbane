@@ -2,7 +2,7 @@
     <div class="flexrow">
         {{!-- Core Skills --}}
         <div>
-            <table class="sheet-table core-skills">
+            <table class="sheet-table core-skills item-list">
                 <tr class="sheet-table-header">
                     <th></th>
                     <th class="number-header">
@@ -17,7 +17,7 @@
                     </th>
                 </tr>
                 {{#each coreSkills as |skill skillId|}}
-                <tr class="sheet-table-data" data-item-id="{{skill.id}}">
+                <tr class="sheet-table-data item" data-item-id="{{skill.id}}">
                     <td></td>
                     <td class="number-data narrow">
                         <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
@@ -41,7 +41,7 @@
         
         <div>
             {{!-- Weapon Skills --}}
-            <table class="sheet-table weapon-skills">
+            <table class="sheet-table weapon-skills item-list">
                 <tr class="sheet-table-header">
                     <th></th>
                     <th class="number-header">
@@ -56,7 +56,7 @@
                     </th>
                 </tr>
                 {{#each weaponSkills as |skill skillId|}}
-                <tr class="sheet-table-data" data-item-id="{{skill.id}}">
+                <tr class="sheet-table-data item" data-item-id="{{skill.id}}">
                     <td></td>
                     <td class="number-data narrow">
                         <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
@@ -78,7 +78,7 @@
             </table>
             {{!-- Secondary Skills --}}
             {{#if secondarySkills }}
-            <table class="sheet-table secondary-skills">
+            <table class="sheet-table secondary-skills item-list">
                 <tr class="sheet-table-header">
                     <th></th>
                     <th class="number-header">
@@ -92,7 +92,7 @@
                     </th>
                 </tr>
                 {{#each secondarySkills as |skill skillId|}}
-                <tr class="sheet-table-data" data-item-id="{{skill.id}}">
+                <tr class="sheet-table-data item" data-item-id="{{skill.id}}">
                     <td></td>
                     <td class="number-data narrow">
                         <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>

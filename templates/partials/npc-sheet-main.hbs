@@ -13,13 +13,13 @@
 
         {{!-- Trained Skills & Abilities --}}
         {{#if observer}}
-        <div class="text-box">
+        <div class="text-box item-list">
             <table>
                 <tr>
                     <th><b>{{localize "DoD.ui.character-sheet.trained-skills"}}</b></th>
                     <td class="comma-list">
                         {{#each trainedSkills as |skill skillId|}}
-                        <a class="rollable-skill sheet-table-data item-delete-key" data-item-id="{{skill.id}}">{{skill.name}} {{skill.system.value}}</a>
+                        <a class="rollable-skill sheet-table-data item-delete-key item" data-item-id="{{skill.id}}">{{skill.name}} {{skill.system.value}}</a>
                         {{/each}}
                     </td>
                 </tr>
@@ -28,7 +28,7 @@
                     <th><b>{{localize "DoD.ui.character-sheet.spells"}}</b></th>
                     <td class="comma-list">
                         {{#each spells as |spell spellId|}}
-                        <a class="rollable-skill sheet-table-data item-delete-key" data-item-id="{{spell.id}}">{{spell.name}} {{spell.system.skillValue}}</a>
+                        <a class="rollable-skill sheet-table-data item-delete-key item" data-item-id="{{spell.id}}">{{spell.name}} {{spell.system.skillValue}}</a>
                         {{/each}}
                     </td>
                 </tr>
@@ -38,7 +38,7 @@
                     <th><b>{{localize "DoD.ui.character-sheet.abilities"}}</b></th>
                     <td class="comma-list">
                         {{#each abilities as |ability abilityId|}}
-                        <a class="sheet-table-data item-edit item-delete-key" tabindex="-1" data-item-id="{{ability.id}}">{{ability.name}}</a>
+                        <a class="sheet-table-data item-edit item-delete-key item" tabindex="-1" data-item-id="{{ability.id}}">{{ability.name}}</a>
                         {{/each}}
                     </td>
                 </tr>

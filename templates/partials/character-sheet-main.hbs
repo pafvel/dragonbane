@@ -61,18 +61,18 @@
             <table>
                 <tr>
                     <th><b>{{localize "DoD.ui.character-sheet.trained-skills"}}</b></th>
-                    <td class="comma-list">
+                    <td class="comma-list item-list">
                         {{#each trainedSkills as |skill skillId|}}
-                        <a class="rollable-skill sheet-table-data" data-item-id="{{skill.id}}">{{skill.name}} {{skill.system.value}}</a>
+                        <a class="rollable-skill sheet-table-data item" data-item-id="{{skill.id}}">{{skill.name}} {{skill.system.value}}</a>
                         {{/each}}
                     </td>
                 </tr>
                 {{#if spells}}
                 <tr>
                     <th><b>{{localize "DoD.ui.character-sheet.spells"}}</b></th>
-                    <td class="comma-list">
+                    <td class="comma-list item-list">
                         {{#each memorizedSpells as |spell spellId|}}
-                        <a class="rollable-skill sheet-table-data" data-item-id="{{spell.id}}">
+                        <a class="rollable-skill sheet-table-data item" data-item-id="{{spell.id}}">
                             {{spell.name}} {{spell.system.skillValue}}
                         </a>
                         {{/each}}
@@ -81,9 +81,9 @@
                 {{/if}}
                 <tr>
                     <th><b>{{localize "DoD.ui.character-sheet.abilities"}}</b></th>
-                    <td class="comma-list">
+                    <td class="comma-list item-list">
                         {{#each abilities as |ability abilityId|}}
-                        <a class="sheet-table-data item-edit" data-item-id="{{ability.id}}">{{ability.name}}</a>
+                        <a class="sheet-table-data item-edit item" data-item-id="{{ability.id}}">{{ability.name}}</a>
                         {{/each}}
                     </td>
                 </tr>
@@ -91,7 +91,7 @@
         </div>
         
         {{!-- Weapons --}}
-        <table class="weapon-table">
+        <table class="weapon-table item-list">
             <tr class="sheet-table-header">
                 <th>&nbsp</th>
                 <th>&nbsp</th>

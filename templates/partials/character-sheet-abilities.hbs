@@ -9,7 +9,7 @@
             {{!-- Abilities --}}
             <div>
                 {{!-- Kin Abilities --}}
-                <table class="sheet-table kin-abilities">
+                <table class="sheet-table kin-abilities item-list">
                     <tr class="sheet-table-header">
                         <th></th>
                         <th class="text-header">
@@ -21,7 +21,7 @@
                         </th>
                     </tr>
                     {{#each kinAbilities as |ability abilityId|}}
-                    <tr class="sheet-table-data item-edit" data-item-id="{{ability.id}}">
+                    <tr class="sheet-table-data item-edit item" data-item-id="{{ability.id}}">
                         <td></td>
                         <td class="text-data">
                             <a>{{ability.name}}</a>
@@ -33,7 +33,7 @@
                 </table>
                 {{!-- Profession Abilities --}}
                 {{#if professionAbilities }}
-                <table class="sheet-table profession-abilities">
+                <table class="sheet-table profession-abilities item-list">
                     <tr class="sheet-table-header">
                         <th></th>
                         <th class="text-header">
@@ -45,7 +45,7 @@
                         </th>
                     </tr>
                     {{#each professionAbilities as |ability abilityId|}}
-                    <tr class="sheet-table-data item-edit" data-item-id="{{ability.id}}">
+                    <tr class="sheet-table-data item-edit item" data-item-id="{{ability.id}}">
                         <td></td>
                         <td class="text-name">
                             <a>{{ability.name}}</a>
@@ -57,7 +57,7 @@
                 </table>
                 {{/if}}
                 {{!-- Heroic Abilities --}}
-                <table class="sheet-table heroic-abilities">
+                <table class="sheet-table heroic-abilities item-list">
                     <tr class="sheet-table-header">
                         <th></th>
                         <th class="text-header">
@@ -69,7 +69,7 @@
                         </th>
                     </tr>
                     {{#each heroicAbilities as |ability abilityId|}}
-                    <tr class="sheet-table-data" data-item-id="{{ability.id}}">
+                    <tr class="sheet-table-data item" data-item-id="{{ability.id}}">
                         <td></td>
                         <td class="text-data">
                             <a class="item-edit">{{ability.name}}</a>
@@ -87,7 +87,7 @@
         {{#if hasSpells }}
         <div>
             {{!-- Spells --}}
-            <table class="sheet-table spells">
+            <table class="sheet-table item-list spells">
                 <tr class="sheet-table-header">
                     <th></th>
                     <th class="number-header">
@@ -111,7 +111,7 @@
                     <th></th>
                 </tr>
                 {{#each spells as |spell spellId|}}
-                <tr class="sheet-table-data" data-item-id="{{spell.id}}">
+                <tr class="sheet-table-data item" data-item-id="{{spell.id}}">
                     <td></td>
                     <td class="number-data">
                         {{spell.system.skillValue}}

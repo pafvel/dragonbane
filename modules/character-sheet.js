@@ -378,49 +378,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
 
         if (event.type == "click") { // left click
-            const draw = await this.actor.drawMonsterAttack(table);
-            const results = draw.results;
-            const roll = draw.roll;
-
-            if (results.length == 0) {
-                return;
-            }          
-
-            // Construct chat data
-            const flavorKey = "DoD.ui.character-sheet.monsterAttackFlavor";
-            let messageData = {
-                flavor: game.i18n.format(flavorKey, {actor: this.actor.name, table: table.name}),
-                user: game.user.id,
-                speaker: ChatMessage.getSpeaker({token: this.token}),
-                type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-                roll: roll,
-                sound: CONFIG.sounds.dice,
-                flags: {"core.RollTable": table.id}
-            };
-
-            // Copy results to avoid modifying table
-            let messageResults = await results.map(result => {
-                const r = result.toObject(false);
-                r.text = result.getChatText();
-                r.icon = result.icon;
-                return r;
-            });
-            // Enrich HTML with knowledge of actor
-            for (let r of messageResults) {
-                r.text = await TextEditor.enrichHTML(r.text, {actor: this.actor, async: true});                
-            }
-
-            // Render the chat card which combines the dice roll with the drawn results
-            messageData.content = await renderTemplate(CONFIG.RollTable.resultTemplate, {
-                description: await TextEditor.enrichHTML(table.description, {documents: true, async: true}),
-                results: messageResults,
-                rollHTML: table.displayRoll && roll ? await roll.render() : null,
-                table: table
-            });
-
-            // Create the chat message
-            return ChatMessage.create(messageData);
-
+            return DoD_Utility.monsterAttack(this.actor, table);
         } else { // right click
             return table.sheet.render(true);
         }        

@@ -6,6 +6,7 @@ import DoDItemSheet from "./modules/item-sheet.js";
 import DoDCharacterSheet from "./modules/character-sheet.js";
 import DoD_Utility from "./modules/utility.js";
 import * as DoDMigrate from "./modules/migrate.js";
+import * as DoDMacro from "./modules/macro.js";
 
 function registerHandlebarsHelpers() {
     
@@ -106,26 +107,36 @@ Hooks.once("init", function() {
 
     game.dragonbane = {
         migrateWorld: DoDMigrate.migrateWorld,
-        updateSpells: DoDMigrate.updateSpellsOnActors,
-        updateSkills: DoDMigrate.updateSkillsOnActors,
-        updateImages: DoDMigrate.updateItemImagesOnActors
+        //updateSpells: DoDMigrate.updateSpellsOnActors,
+        //updateSkills: DoDMigrate.updateSkillsOnActors,
+        //updateImages: DoDMigrate.updateItemImagesOnActors,
+        rollItem: DoDMacro.rollItemMacro,
+        monsterAttack: DoDMacro.monsterAttackMacro,
+        monsterDefend: DoDMacro.monsterDefendMacro,
     };
 });
 
 Hooks.once("ready", function () {
 
-    if (!game.user.isGM) {
-        return;
+    Hooks.on("hotbarDrop", (bar, data, slot) => {
+        if (data.type == "Item") {
+            DoDMacro.createItemMacro(data, slot);
+            return false;
+        }
+    });
+
+    // Migration
+    if (game.user.isGM) {
+        const SYSTEM_MIGRATION_VERSION = 0.01;
+        const currentVersion = game.settings.get("dragonbane", "systemMigrationVersion");
+        const needsMigration = !currentVersion || isNewerVersion(SYSTEM_MIGRATION_VERSION, currentVersion);
+    
+        if (needsMigration) {
+            DoDMigrate.migrateWorld();
+            game.settings.set("dragonbane", "systemMigrationVersion", SYSTEM_MIGRATION_VERSION);
+        }
     }
 
-    const SYSTEM_MIGRATION_VERSION = 0.01;
-    const currentVersion = game.settings.get("dragonbane", "systemMigrationVersion");
-    const needsMigration = !currentVersion || isNewerVersion(SYSTEM_MIGRATION_VERSION, currentVersion);
-
-    if (needsMigration) {
-        DoDMigrate.migrateWorld();
-        game.settings.set("dragonbane", "systemMigrationVersion", SYSTEM_MIGRATION_VERSION);
-    }
 });
 
 Hooks.on("renderChatLog", DoDChat.addChatListeners);
