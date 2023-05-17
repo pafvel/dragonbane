@@ -1,20 +1,19 @@
 {
     "id": "dragonbane",
     "name": "dragonbane",
-    "title": "Dragonbane",
-    "description": "System for playing Dragonbane",
+    "title": "Dragonbane / Drakar och Demoner",
+    "description": "System for playing Dragonbane / Drakar och Demoner",
     "version": "0.0.1",
     "compatibility": {
       "minimum": "10",
-      "verified": "10",
+      "verified": "10.291",
       "maximum": "10"
     },
     "authors": [
       {
-        "name": "patrikp",
-        "url": "YOUR WEBSITE ADDRESS HERE",
-        "email": "YOUR EMAIL ADDRESS HERE",
-        "discord": "YOUR DISCORD USERNAME HERE"
+        "name": "PatrikP",
+        "url": "www.patrikp.com",
+        "email": "patrik@patrikp.com"
       }
     ],
     "esmodules": [
@@ -39,5 +38,10 @@
     "gridDistance": 2,
     "gridUnits": "m",
     "primaryTokenAttribute": "health",
-    "secondaryTokenAttribute": "power"
+    "secondaryTokenAttribute": "power",
+    "background": "systems/dragonbane/art/dragonbane-splash.webp",
+    "url": "https://github.com/pafvel/dragonbane",
+    "manifest": "https://raw.githubusercontent.com/pafvel/dragonbane/master/system.json",
+    "download": "https://github.com/pafvel/dragonbane/releases/download/v0.0.1/dragonbane_v0.0.1.zip",
+    "license": "LICENSE.txt"
   }
