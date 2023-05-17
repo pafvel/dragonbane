@@ -144,7 +144,8 @@ Hooks.on("getChatLogEntryContext", DoDChat.addChatMessageContextMenuOptions);
 
 Hooks.on("renderJournalPageSheet", (obj, html, data) => {
     html.on('click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
-  });
+    html.on("click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);
+});
 
 Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
     const keepOwnership = game.settings.get("dragonbane", "keepOwnershipOnImport");

@@ -120,7 +120,7 @@ export function addChatMessageContextMenuOptions(html, options) {
     );
 }
 
-async function onInlineDamageRoll(event) {
+export async function onInlineDamageRoll(event) {
     event.stopPropagation();
     event.preventDefault();
 

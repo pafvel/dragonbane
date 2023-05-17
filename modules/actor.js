@@ -11,13 +11,25 @@ export class DoDActor extends Actor {
         if (!data.items?.length)
         {
             let baseSkills = await DoD_Utility.getBaseSkills();
-            if (baseSkills) {}
+            if (baseSkills) {
                 data.items = baseSkills;
                 this.updateSource(data);
-        }
-
-        if (this.type == "character") {
-            this.updateSource({ "system.age": "adult" });
+            }
+            switch (this.type) {
+                case "character":
+                    this.updateSource({
+                        "system.age": "adult",
+                        "prototypeToken.actorLink": true,
+                        "prototypeToken.disposition": 1
+                    });
+                    break;
+                case "npc":
+                    this.updateSource({"prototypeToken.disposition": 0});
+                    break;
+                case "monster":
+                    this.updateSource({"prototypeToken.disposition": -1});
+                    break;
+            }    
         }
     }
     
