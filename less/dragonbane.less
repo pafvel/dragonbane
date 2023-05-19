@@ -95,6 +95,140 @@
                 margin: auto;
             }
 
+            .display-skill {
+                h4 {
+                    font-size: large;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+            }
+            .display-spell {
+                h4 {
+                    font-size: large;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+                li {
+                    color: var(--dod-color-text-dark-title);
+                }
+                span {
+                    color: black;
+                }
+            }
+            .display-ability {
+                h4 {
+                    font-size: large;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+                li {
+                    color: var(--dod-color-text-dark-title);
+                }
+                span {
+                    color: black;
+                }
+            }
+            .display-monster {
+                background-image: url("art/ui/separator-bottom.webp"), url("art/ui/separator-monster.webp"), url("art/ui/parchment-2columns.webp");
+                background-size: auto 20px, 100% 10px, 100% auto;
+                background-position: center bottom -8px, left bottom -3px, center top;
+                background-repeat: no-repeat, no-repeat, no-repeat;
+                background-clip: border-box, border-box, padding-box;
+                padding: 5% 5% 12px 5%;
+                border-bottom: 8px solid transparent;
+                color: rgb(63, 35, 6);
+                .monster-title {
+                    text-align: center;    
+                    font-size: x-large;
+                    .content-link {
+                        border: 0px solid transparent;
+                        background-color: transparent;
+                    }
+                }
+                table {
+                    border-color: rgb(63, 35, 6);
+                }
+            }
+            .display-npc {
+                background-image: url("art/ui/separator-bottom.webp"), url("art/ui/separator-monster.webp"), url("art/ui/parchment-2columns.webp");
+                background-size: auto 20px, 100% 10px, 100% auto;
+                background-position: center bottom -8px, left bottom -3px, center top;
+                background-repeat: no-repeat, no-repeat, no-repeat;
+                background-clip: border-box, border-box, padding-box;
+                padding: 5% 5% 12px 5%;
+                border-bottom: 8px solid transparent;
+                color: rgb(63, 35, 6);
+                .npc-title {
+                    text-align: center;    
+                    font-size: x-large;
+                    .content-link {
+                        border: 0px solid transparent;
+                        background-color: transparent;
+                    }
+                }
+                table {
+                    border-color: rgb(63, 35, 6);
+                    .list-row {
+                        div {
+                            flex-shrink: 0;
+                            flex-grow: 1;
+                        }
+                        div:first-child {
+                            flex-shrink: 1;
+                            flex-grow: 0;
+                        }
+                    }
+                }
+            }
+
+            .display-table {
+                table {
+                    border: 0px solid transparent;
+                    background: transparent;
+                    caption {
+                        width: 100%;
+                        height: 32px;
+                        left: calc(50% - 170px);
+                        padding: 6px 24px 12px 24px;
+                        background-image: url("art/ui/text-box-title-wide-bg.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp");
+                        background-size: contain, auto 24px, auto 24px, calc(100% - 24px) 16px;
+                        background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+                        background-position: center center, left center, right center, center center;
+                        background-clip: border-box, border-box, border-box, padding-box;
+                        color: whitesmoke;
+                        //text-transform: uppercase;
+                    }
+                    tr {
+                        color: rgb(74, 36, 7);
+                        border-bottom: 1px solid rgb(74, 36, 7);
+                        background: transparent;
+                        td:first-child {
+                            text-align: center;
+                            width: 0%;
+                        }
+                        th:first-child {
+                            text-align: center;
+                            width: 0%;
+                        }
+                    }
+                    tr:first-child {
+                        border-bottom: 2px solid rgb(74, 36, 7);
+                    }
+                    tr:last-child {
+                        border-bottom: 0px solid transparent;
+                    }
+                    tr:nth-child(2n) {
+                        background-color: rgba(74, 36, 7, 0.2);
+                    }
+                    th {
+                        padding: 2px;
+                    }
+                    td {
+                        padding: 2px;
+                    }
+            }
+            }
+        
             table {
                 th {
                     text-align: left;
@@ -641,6 +775,15 @@
             content: "";
         }
         a:focus {
+            outline: none;  
+        }
+        span::after {
+            content: ", ";
+        }
+        span:last-child::after {
+            content: "";
+        }
+        span:focus {
             outline: none;  
         }
     }

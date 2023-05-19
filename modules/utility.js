@@ -70,6 +70,11 @@ export default class DoD_Utility {
         return kin;
     }
 
+    static async findMonster(monsterUUID) {
+        const monster = this.getActorFromUUID(monsterUUID);
+        return monster;
+    }
+
     static async findSkill(skillName) {
         // Prio 1: World items
         let kin = this.findItem(skillName, "skill", game.items);
@@ -86,6 +91,10 @@ export default class DoD_Utility {
         let table = game.tables.find(i => i.name.toLowerCase() == name.toLowerCase()) || fromUuidSync(name);
         if (!table) {
             DoD_Utility.WARNING("DoD.WARNING.tableNotFound", {id: name});
+            return null;    
+        }
+        if (!table instanceof RollTable) {
+            DoD_Utility.WARNING("DoD.WARNING.typeMismatch", {id: name});
             return null;    
         }
         return table;

@@ -290,6 +290,22 @@ export class DoDActor extends Actor {
         return this.testUserPermission(game.user, "OBSERVER");
     }
 
+    get hasAbilities() {
+        return this.items.find(i => i.type == "ability") != null;
+    }
+
+    get hasSpells() {
+        return this.items.find(i => i.type == "spell") != null;
+    }
+
+    get hasSkills() {
+        return this.system.trainedSkills.length > 0;
+    }
+
+    getEquippedWeapons() {
+        return this.items.filter(i => i.type == "weapon" && i.system.worn == true);
+    }
+
     getArmorValue(damageType) {
         let armorValue = 0;
         if (this.system.equippedArmor) {
@@ -305,10 +321,10 @@ export class DoDActor extends Actor {
     }
 
     getDamageBonus(attribute) {
-        if (attribute && this.system.damageBonus) {
+        if (attribute && this.system.damageBonus && this.system.damageBonus[attribute] != "none") {
             return this.system.damageBonus[attribute];
         } else {
-            return 0;
+            return "";
         }
     }
 

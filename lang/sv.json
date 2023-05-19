@@ -126,6 +126,9 @@
             "item": "Föremål",
             "backpack": "Ryggsäck"
         },
+        "journal": {
+            "tableResult": "Resultat"
+        },
         "magicCritChoices": {
             "choiceLabel": "Kritisk effekt",
             "doubleDamage": "Skadan av besvärjelsen fördubblas<br>",
@@ -226,6 +229,9 @@
             "mishapMagic": "@Table[RollTable.NHVp4W45Z02qumKa]{Missöde - Magi}",
             "mishapMelee": "@Table[RollTable.VwP9Hy9ESvbC34XA]{Missöde - Närstrid}",
             "mishapRanged": "@Table[RollTable.RPBIOBT0QvPjf3Sq]{Missöde - Avståndsstrid}"
+        },
+        "unit": {
+            "meterPlural": "meter"
         },
         "weapon": {
             "grip": "Grepp",

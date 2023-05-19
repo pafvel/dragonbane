@@ -7,6 +7,7 @@ import DoDCharacterSheet from "./modules/character-sheet.js";
 import DoD_Utility from "./modules/utility.js";
 import * as DoDMigrate from "./modules/migrate.js";
 import * as DoDMacro from "./modules/macro.js";
+import * as DoDJournal from "./modules/journal.js";
 
 function registerHandlebarsHelpers() {
     
@@ -165,6 +166,8 @@ Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
 
 CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     {
+        // Rollable damage
+        // Format [[/damage <formula> [<slashing|piercing|bludgeoning>]]]
         pattern : /\[\[\/damage\s((?:\d+)?[dD](?:\d+)(?:[\+\-]\d+)?)\s?(slashing|piercing|bludgeoning)?(?:\s(.+))?\]\]/gm,
         enricher : (match, options) => {
             const a = document.createElement("a");
@@ -180,6 +183,7 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
         }
     },
     {
+        // Rollable table
         pattern : /@Table\[(.+?)\](?:{(.+?)})?/gm,
         enricher : (match, options) => {
             const table = DoD_Utility.findTable(match[1]);
@@ -200,6 +204,38 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
             }
             return a;
         }
+    },
+    {
+        pattern : /@DisplayAbility\[(.+?)\](?:{(.+?)})?/gm,
+        enricher : DoDJournal.enrichDisplayAbility
+    },
+    {
+        pattern : /@DisplayMonster\[(.+?)\](?:{(.+?)})?/gm,
+        enricher: DoDJournal.enrichDisplayMonster
+    },
+    {
+        pattern : /@DisplayNpcCard\[(.+?)\](?:{(.+?)})?/gm,
+        enricher : DoDJournal.enrichDisplayNpcCard
+    },
+    {
+        pattern : /@DisplayNpcDescription\[(.+?)\](?:{(.+?)})?/gm,
+        enricher : DoDJournal.enrichDisplayNpcDescription
+    },
+    {
+        pattern : /@DisplaySkill\[(.+?)\](?:{(.+?)})?/gm,
+        enricher : DoDJournal.enrichDisplaySkill
+    },
+    {
+        pattern : /@DisplaySpell\[(.+?)\](?:{(.+?)})?/gm,
+        enricher : DoDJournal.enrichDisplaySpell 
+    },
+    {
+        pattern : /@DisplayTable\[(.+?)\](?:{(.+?)})?/gm,
+        enricher : DoDJournal.enrichDisplayTable
+    },
+    {
+        pattern : /@DisplayTrick\[(.+?)\](?:{(.+?)})?/gm,
+        enricher : DoDJournal.enrichDisplayTrick
     }
 ]);
 
