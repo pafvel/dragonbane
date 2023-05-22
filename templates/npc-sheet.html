@@ -27,8 +27,8 @@
                         <tr>
                             <th>{{localize "DoD.ui.character-sheet.damageBonusAGL"}}</th>
                             <td>
-                                <select name="data.damageBonus.agi">
-                                    {{#select data.damageBonus.agi}}
+                                <select name="data.damageBonus.agl">
+                                    {{#select data.damageBonus.agl}}
                                     {{#each config.dice as |name type|}}
                                     <option value="{{type}}">{{localize name}}</option>
                                     {{/each}}

@@ -80,8 +80,8 @@ export async function enrichDisplayNpcCard(match, options) {
         if (npc.getDamageBonus("str") != "") {
             html += `<div><b>${game.i18n.localize("DoD.ui.character-sheet.damageBonusSTR")}:&nbsp</b><span style="text-transform:uppercase">${npc.getDamageBonus("str")}</span></div>`;
         }
-        if (npc.getDamageBonus("agi") != "") {
-            html += `<div><b>${game.i18n.localize("DoD.ui.character-sheet.damageBonusAGL")}:&nbsp</b><span style="text-transform:uppercase">${npc.getDamageBonus("agi")}</span></div>`;
+        if (npc.getDamageBonus("agl") != "") {
+            html += `<div><b>${game.i18n.localize("DoD.ui.character-sheet.damageBonusAGL")}:&nbsp</b><span style="text-transform:uppercase">${npc.getDamageBonus("agl")}</span></div>`;
         }
 
         // Armor

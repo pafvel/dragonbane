@@ -92,8 +92,18 @@ async function migrateActorData(actor) {
     let updateData = {};
     let itemArray = [];
 
+    // migrate from damageBonus.agi to damageBonus.agl
+    if (actor?.system?.damageBonus?.agi) {
+        if (actor.system.damageBonus.agi != actor.system.damageBonus.agl) {
+            updateData["system.damageBonus.agl"] = actor.system.damageBonus.agi;
+            console.log(actor.name + ` AGI: ${actor.system.damageBonus.agi} -> AGL: ${actor.system.damageBonus.agl}`);
+        }
+        updateData["system.damageBonus.agi"] = null;
+        console.log("system.damageBonus.agi = null");
+    }
+
     // Migrate Owned Items
-    if (actor.items) {
+    if (actor?.items) {
         for (let item of actor.items) {
             let itemUpdateData = migrateItemData(item, actor.name);
             if (!foundry.utils.isEmpty(itemUpdateData)) {

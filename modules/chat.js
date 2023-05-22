@@ -163,8 +163,7 @@ async function onWeaponDamageRoll(event) {
     const attribute = skill ? skill.system.attribute : null;
     let damageBonus = attribute ? actor.system.damageBonus[attribute] : 0;
     if (damageBonus == "" && attribute == "agl") {
-        // HACK until i migrate data from agi to agl
-        damageBonus = actor.system.damageBonus["agi"];
+        damageBonus = actor.system.damageBonus["agl"];
     }
     if (weapon.hasWeaponFeature("noDamageBonus")) {
         damageBonus = 0;
