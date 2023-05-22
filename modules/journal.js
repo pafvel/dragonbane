@@ -7,7 +7,7 @@ export async function enrichDisplayAbility (match, options) {
     if (ability) {
         let html = `
         <div class="display-ability">
-            <h4>${ability.name}</h4>
+            <h4>@UUID[${match[1]}]{${ability.name}}</h4>
             <ul>
                 <li><b>${game.i18n.localize("DoD.ability.requirement")}: </b><span>${ability.system.requirement}</span>
                 <li><b>${game.i18n.localize("DoD.ability.wp")}: </b><span>${ability.system.wp}</span>
@@ -75,13 +75,13 @@ export async function enrichDisplayNpcCard(match, options) {
                 <tr><td>
                     
                     <div class="flexrow">
-                        <div><b>Movement:&nbsp</b>${npc.system.movement}</div>`
+                        <div><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}:&nbsp</b>${npc.system.movement}</div>`
 
         if (npc.getDamageBonus("str") != "") {
-            html += `<div><b>Damage Bonus STR:&nbsp</b><span style="text-transform:uppercase">${npc.getDamageBonus("str")}</span></div>`;
+            html += `<div><b>${game.i18n.localize("DoD.ui.character-sheet.damageBonusSTR")}:&nbsp</b><span style="text-transform:uppercase">${npc.getDamageBonus("str")}</span></div>`;
         }
         if (npc.getDamageBonus("agi") != "") {
-            html += `<div><b>Damage Bonus AGL:&nbsp</b><span style="text-transform:uppercase">${npc.getDamageBonus("agi")}</span></div>`;
+            html += `<div><b>${game.i18n.localize("DoD.ui.character-sheet.damageBonusAGL")}:&nbsp</b><span style="text-transform:uppercase">${npc.getDamageBonus("agi")}</span></div>`;
         }
 
         // Armor
@@ -101,11 +101,11 @@ export async function enrichDisplayNpcCard(match, options) {
                 </td></tr>
                 <tr><td>
                     <div class="flexrow">
-                        <div><b>Armor:&nbsp</b>${armor}</div>
-                        <div><b>HP:&nbsp</b>${npc.system.hitPoints.max}</div>`;
+                        <div><b>${game.i18n.localize("DoD.ui.character-sheet.armor")}:&nbsp</b>${armor}</div>
+                        <div><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}:&nbsp</b>${npc.system.hitPoints.max}</div>`;
         
         if (npc.hasAbilities) {
-            html += `<div><b>WP:&nbsp</b>${npc.system.willPoints.max}</div>`;
+            html += `<div><b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:&nbsp</b>${npc.system.willPoints.max}</div>`;
         }
         html += `
                     </div>
@@ -124,7 +124,7 @@ export async function enrichDisplayNpcCard(match, options) {
             html += `
                 <tr><td>
                     <div class="flexrow list-row">
-                        <div style="flex-shrink:0;flex-grow:0"><b>Skills:&nbsp</b></div>
+                        <div style="flex-shrink:0;flex-grow:0"><b>${game.i18n.localize("DoD.ui.character-sheet.skills")}:&nbsp</b></div>
                         <div style="flex-shrink:0;flex-grow:1"><span class="comma-list">`;
             for (const skill of skills) {
                 html += `<span>${skill.name} ${skill.system.value}</span>`
@@ -141,7 +141,7 @@ export async function enrichDisplayNpcCard(match, options) {
             html += `
                 <tr><td>
                     <div class="flexrow list-row">
-                        <div><b>Abilities:&nbsp</b></div>
+                        <div><b>${game.i18n.localize("DoD.ui.character-sheet.abilities")}:&nbsp</b></div>
                         <div ><span class="comma-list">`;
             for (const ability of abilities) {
                 html += `<span>${ability.name}</span>`
@@ -158,7 +158,7 @@ export async function enrichDisplayNpcCard(match, options) {
             html += `
                 <tr><td>
                     <div class="flexrow list-row">
-                        <div><b>Spells:&nbsp</b></div>
+                        <div><b>${game.i18n.localize("DoD.ui.character-sheet.spells")}:&nbsp</b></div>
                         <div><span class="comma-list">`;
             for (const spell of spells) {
                 html += `<span>${spell.name}</span>`
@@ -174,7 +174,7 @@ export async function enrichDisplayNpcCard(match, options) {
             html += `
                 <tr><td>
                     <div class="flexrow list-row">
-                        <div><b>Weapons:&nbsp</b></div>
+                        <div><b>${game.i18n.localize("DoD.ui.character-sheet.weapons")}:&nbsp</b></div>
                         <div><span class="comma-list">`;
             for (const weapon of equippedWeapons) {
                 html += `<span>${weapon.name} ${weapon.system.skill.value} (${weapon.system.damage})</span>`
@@ -228,7 +228,7 @@ export async function enrichDisplaySkill (match, options) {
     if (skill) {
         let html = `
         <div class="display-skill">
-            <h4>${skillName} <small>(${game.i18n.localize("DoD.attributes." + skill.system.attribute)})</small></h4>
+            <h4>@UUID[${match[1]}]{${skillName}} <small>(${game.i18n.localize("DoD.attributes." + skill.system.attribute)})</small></h4>
             ${skill.system.description}
         </div>`;
         a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
@@ -268,7 +268,7 @@ export async function enrichDisplaySpell (match, options) {
         
         let html = `
         <div class="display-spell">
-            <h4>${spell.name}</h4>
+            <h4>@UUID[${match[1]}]{${spell.name}}</h4>
             <ul>
             <li><b>${game.i18n.localize("DoD.spell.rank")}: </b><span>${spell.system.rank}</span>
             <li><b>${game.i18n.localize("DoD.spell.prerequisite")}: </b><span>${spell.system.prerequisite != "" ? spell.system.prerequisite : "-"}</span>
@@ -298,7 +298,7 @@ export async function enrichDisplayTable (match, options) {
         a.classList.add("display-table");
         let html = `
         <table>
-            <caption>${tableName}</caption>
+            <caption>@Table[${match[1]}]{${tableName}}</caption>
             <tr>
                 <th>[[/roll ${table.formula}]]</th>
                 <th>${game.i18n.localize("DoD.journal.tableResult")}</th>
@@ -357,7 +357,7 @@ export async function enrichDisplayTrick(match, options) {
     if (spell) {               
         let html = `
         <div class="display-spell">
-            <h4>${spell.name}</h4>
+            <h4>@UUID[${match[1]}]{${spellName}}</h4>
             ${spell.system.description}
         </div>`;
         a.innerHTML = await TextEditor.enrichHTML(html, {async: true});

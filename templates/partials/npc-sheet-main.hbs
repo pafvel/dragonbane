@@ -85,6 +85,15 @@
         </div>
         {{/if}}
         
+        {{!-- Traits --}}
+        <div class="dod-text-container">
+            <div class="dod-text-container-label">
+                <label>
+                    {{localize "DoD.ui.character-sheet.traits"}}
+                </label>
+            </div>
+            {{editor data.traits target="system.traits" engine="prosemirror" button=true owner=false editable=editable}}
+        </div>
         {{!-- Notes --}}
         <div class="dod-text-container">
             <div class="dod-text-container-label">

@@ -105,7 +105,8 @@
                 "characterDescripton",
                 "actorStats",
                 "characterStats"
-            ]
+            ],
+            "traits": ""
         },
         "monster": {
             "templates": [

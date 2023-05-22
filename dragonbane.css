@@ -752,10 +752,18 @@
   font-weight: bold;
   text-transform: uppercase;
 }
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-skill h4 .content-link {
+  border: 0px solid transparent;
+  background-color: transparent;
+}
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-spell h4 {
   font-size: large;
   font-weight: bold;
   text-transform: uppercase;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-spell h4 .content-link {
+  border: 0px solid transparent;
+  background-color: transparent;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-spell li {
   color: var(--dod-color-text-dark-title);
@@ -767,6 +775,10 @@
   font-size: large;
   font-weight: bold;
   text-transform: uppercase;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-ability h4 .content-link {
+  border: 0px solid transparent;
+  background-color: transparent;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-ability li {
   color: var(--dod-color-text-dark-title);
@@ -839,6 +851,15 @@
   background-position: center center, left center, right center, center center;
   background-clip: border-box, border-box, border-box, padding-box;
   color: whitesmoke;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption .content-link,
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption .table-roll {
+  border: 0px solid transparent;
+  background-color: transparent;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption .content-link i,
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption .table-roll i {
+  color: inherit;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table tr {
   color: #4a2407;
