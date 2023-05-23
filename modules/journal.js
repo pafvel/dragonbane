@@ -416,7 +416,7 @@ export async function enrichGearTable(match, options) {
         case "trade":
         case "knowledge":
         case "light":
-        case "tools":
+        case "tool":
         case "container":
         case "medicine":
         case "hunting":
@@ -485,7 +485,7 @@ export async function enrichGearTable(match, options) {
             case "trade":
             case "knowledge":
             case "light":
-            case "tools":
+            case "tool":
             case "container":
             case "medicine":
             case "hunting":
