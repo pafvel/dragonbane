@@ -112,7 +112,25 @@
             "supply": "Tillgång",
             "worn": "Till hands",
             "memento": "Minnessak",
-            "type": "Kategori"
+            "type": "Kategori",
+            "effect": "Effekt"
+        },
+        "gearTypeName": {
+            "animal": "Djur",
+            "armor": "Rustning",
+            "clothes": "Plagg",
+            "container": "Föremål",
+            "hunting": "Föremål",
+            "instrument": "Föremål",
+            "knowledge": "Föremål",
+            "light": "Föremål",
+            "medicine": "Föremål",
+            "melee": "Vapen",
+            "ranged": "Vapen",
+            "service": "Tjänst",
+            "tool": "Verktyg",
+            "trade": "Föremål",
+            "travel": "Fordon"
         },
         "gripTypes": {
             "none": "-",

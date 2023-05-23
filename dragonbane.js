@@ -236,6 +236,10 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     {
         pattern : /@DisplayTrick\[(.+?)\](?:{(.+?)})?/gm,
         enricher : DoDJournal.enrichDisplayTrick
+    },
+    {
+        pattern : /@GearTableStart\[(.+?)\](?:{(.+?)})((?:(?!@GearTableEnd)[\S\s])+)@GearTableEnd/gm,
+        enricher : DoDJournal.enrichGearTable
     }
 ]);
 

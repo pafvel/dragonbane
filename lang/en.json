@@ -114,7 +114,25 @@
             "supply": "Supply",
             "worn": "Worn",
             "memento": "Memento",
-            "type": "Category"
+            "type": "Category",
+            "effect": "Effect"
+        },
+        "gearTypeName": {
+            "animal": "Animal",
+            "armor": "Armor",
+            "clothes": "Garment",
+            "container": "Item",
+            "hunting": "Item",
+            "instrument": "Item",
+            "knowledge": "Item",
+            "light": "Item",
+            "medicine": "Item",
+            "melee": "Weapon",
+            "ranged": "Weapon",
+            "service": "Service",
+            "tool": "Tool",
+            "trade": "Item",
+            "travel": "Vehicle"
         },
         "gripTypes": {
             "none": "-",

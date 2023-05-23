@@ -370,3 +370,168 @@ export async function enrichDisplayTrick(match, options) {
     }
     return a;
 }
+
+export async function enrichGearTable(match, options) {
+    const type = match[1];
+    const name = match[2];
+    const content = match[3];
+
+    const div = document.createElement("div");
+    div.classList.add("display-table");
+    div.classList.add("gear-table");
+    
+    // Table and caption
+    let html = `
+        <table>
+            <caption>${name}</caption>            
+    `;
+
+    // Header
+    switch (type) {
+        case "armor":
+            html += `
+            <tr>
+                <th style="text-align:left;width: 20%">${game.i18n.localize("DoD.gearTypeName." + type)}</th>
+                <th>${game.i18n.localize("DoD.armor.rating")}</th>
+                <th>${game.i18n.localize("DoD.gear.cost")}</th>
+                <th>${game.i18n.localize("DoD.gear.supply")}</th>
+                <th>${game.i18n.localize("DoD.ui.character-sheet.banes")}</th>
+            </tr>`;
+            break;
+
+        case "clothes":
+        case "service":
+        case "travel":
+        case "animal":
+            html += `
+            <tr>
+                <th style="text-align:left;width: 20%">${game.i18n.localize("DoD.gearTypeName." + type)}</th>
+                <th>${game.i18n.localize("DoD.gear.cost")}</th>
+                <th>${game.i18n.localize("DoD.gear.supply")}</th>
+                <th>${game.i18n.localize("DoD.gear.effect")}</th>
+            </tr>`;
+            break;
+
+        case "instrument":
+        case "trade":
+        case "knowledge":
+        case "light":
+        case "tools":
+        case "container":
+        case "medicine":
+        case "hunting":
+            html += `
+            <tr>
+                <th style="text-align:left;width: 20%">${game.i18n.localize("DoD.gearTypeName." + type)}</th>
+                <th>${game.i18n.localize("DoD.gear.cost")}</th>
+                <th>${game.i18n.localize("DoD.gear.supply")}</th>
+                <th>${game.i18n.localize("DoD.gear.weight")}</th>
+                <th>${game.i18n.localize("DoD.gear.effect")}</th>
+            </tr>`;
+            break;
+            
+        case "melee":
+        case "ranged":
+                    html += `
+            <tr>
+                <th style="text-align:left;width: 20%">${game.i18n.localize("DoD.gearTypeName." + type)}</th>
+                <th>${game.i18n.localize("DoD.weapon.grip")}</th>
+                <th>${game.i18n.localize("DoD.weapon.str")}</th>
+                <th>${game.i18n.localize("DoD.weapon.rangeShort")}</th>
+                <th>${game.i18n.localize("DoD.weapon.damageShort")}</th>
+                <th>${game.i18n.localize("DoD.weapon.durabilityShort")}</th>
+                <th>${game.i18n.localize("DoD.gear.cost")}</th>
+                <th>${game.i18n.localize("DoD.gear.supply")}</th>
+                <th>${game.i18n.localize("DoD.weapon.features")}</th>
+            </tr>`;
+            break;
+    }
+    
+    
+    // Gear
+    const regexp = /@Gear\[(.+?)\](?:{(.+?)})?/gm;
+    const matches = content.matchAll(regexp);
+    for (const match of matches) {
+        const uuid = match[1];
+        const item = fromUuidSync(uuid);
+        const itemName = match[2] ?? item.name;
+
+        switch (type) {
+            case "armor":
+                html += `
+                <tr>
+                    <td style="text-align:left">@UUID[${uuid}]{${itemName}}</td>
+                    <td>${item.system.rating}</td>
+                    <td>${item.system.cost}</td>
+                    <td>${game.i18n.localize("DoD.supplyTypes." + item.system.supply)}</td>
+                    <td>${item.system.banes}</td>
+                </tr>`;
+                break;
+
+            case "clothes":
+            case "service":
+            case "travel":
+            case "animal":
+                html += `
+                <tr>
+                    <td style="text-align:left">@UUID[${uuid}]{${itemName}}</td>
+                    <td>${item.system.cost}</td>
+                    <td>${game.i18n.localize("DoD.supplyTypes." + item.system.supply)}</td>
+                    <td>${item.system.description}</td>
+                </tr>`;
+                break;
+
+            case "instrument":
+            case "trade":
+            case "knowledge":
+            case "light":
+            case "tools":
+            case "container":
+            case "medicine":
+            case "hunting":
+                html += `
+                <tr>
+                    <td style="text-align:left">@UUID[${uuid}]{${itemName}}</td>
+                    <td>${item.system.cost}</td>
+                    <td>${game.i18n.localize("DoD.supplyTypes." + item.system.supply)}</td>
+                    <td>${item.system.weight}</td>
+                    <td>${item.system.description}</td>
+                </tr>`;
+                break;
+
+
+            case "melee":
+            case "ranged":
+                let range = item.system.range.toString() ?? "";
+                range = range.replace("@str", game.i18n.localize("DoD.attributes.str"));
+
+                html += `
+                <tr>
+                    <td style="text-align:left">@UUID[${uuid}]{${itemName}}</td>
+                    <td>${game.i18n.localize(item.system.grip.label)}</td>
+                    <td>${item.system.str > 0 ? item.system.str : "-"}</td>
+                    <td>${range}</td>
+                    <td>${item.system.damage}</td>
+                    <td>${item.system.durability > 0 ? item.system.durability : "-"}</td>
+                    <td>${item.system.cost != "" ? item.system.cost : "-"}</td>
+                    <td>${game.i18n.localize("DoD.supplyTypes." + item.system.supply)}</td>
+                    <td class="comma-list">`;
+                
+                for (const feature of item.system.features) {
+                    html += `<span>${game.i18n.localize("DoD.weaponFeatureTypes." + feature)}</span>`;
+                }
+
+                html += `
+                    </td>
+                </tr>`;
+                break;
+        }
+    }
+
+
+
+    html += `</table>`
+
+    div.innerHTML = await TextEditor.enrichHTML(html, {async: true});
+    return div;
+}

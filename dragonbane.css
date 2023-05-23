@@ -836,6 +836,16 @@
   flex-shrink: 1;
   flex-grow: 0;
 }
+.system-dragonbane .sheet.journal-entry .journal-entry-content .gear-table td {
+  padding: 2px;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .gear-table td .content-link {
+  border: 0px solid transparent;
+  background-color: transparent;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .gear-table td .content-link i {
+  color: inherit;
+}
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table {
   border: 0px solid transparent;
   background: transparent;
@@ -884,9 +894,6 @@
   background-color: rgba(74, 36, 7, 0.2);
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table th {
-  padding: 2px;
-}
-.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table td {
   padding: 2px;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content table th {
