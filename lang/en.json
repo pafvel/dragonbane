@@ -147,7 +147,8 @@
             "backpack": "Backpack"
         },
         "journal": {
-            "tableResult": "Resultat"
+            "tableResult": "Result",
+            "monsterAttacks": "Monster Attacks"
         },
         "magicCritChoices": {
             "choiceLabel": "Critical effect",
@@ -211,17 +212,19 @@
             "magic": "School of magic"  
         },
         "spell": {
-            "school": "School of Magic",
-            "rank": "Rank",
-            "prerequisite": "Prerequisite",
-            "requirement": "Requirement",
+            "areaOfEffect": "Area",
             "castingTime": "Casting Time",
+            "damage": "Damage",
+            "damagePerPowerlevel": "Damage per Power Level",
+            "duration": "Duration",
+            "general": "General",
+            "memorized": "Memorized",
+            "prerequisite": "Prerequisite",
             "range": "Distance",
             "rangeType": "Range",
-            "areaOfEffect": "Area",
-            "duration": "Duration",
-            "memorized": "Memorized",
-            "general": "General"
+            "rank": "Rank",
+            "requirement": "Requirement",
+            "school": "School of Magic"
         },
         "spellDurationTypes": {
             "instant": "Instant",
@@ -245,9 +248,9 @@
             "unique": "Unique"
         },
         "tables": {
-            "mishapMagic": "@Table[RollTable.rB0EjF3UvHm2CWPZ]{Mishap - Magic}",
-            "mishapMelee": "@Table[RollTable.ldtp8mMoAoVOKczR]{Mishap - Melee}",
-            "mishapRanged": "@Table[RollTable.RPBIOBT0QvPjf3Sq]"
+            "mishapMagic": "@Table[RollTable.5dtUg9IwWH1bn9PW]",
+            "mishapMelee": "@Table[RollTable.3wfWpxB02vy2vjQ2]",
+            "mishapRanged": "@Table[RollTable.FWsxt61XzYAfoY1L]"
         },
         "weapon": {
             "grip": "Grip",
@@ -278,8 +281,12 @@
             "bludgeoning": "Bludgeoning",
             "long": "Long",
             "mounted": "Mounted",
+            "noDamageBonus": "No damage bonus",
+            "noDamageBonusTooltip": "No damage bonus",
             "noparry": "No parry",
             "piercing": "Piercing",
+            "quiver": "Quiver",
+            "quiverTooltip": "Requires quiver",
             "slashing": "Slashing",
             "subtle": "Subtle",
             "thrown": "Thrown",

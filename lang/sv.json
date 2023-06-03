@@ -145,7 +145,8 @@
             "backpack": "Ryggsäck"
         },
         "journal": {
-            "tableResult": "Resultat"
+            "tableResult": "Resultat",
+            "monsterAttacks": "Monsterattacker"
         },
         "magicCritChoices": {
             "choiceLabel": "Kritisk effekt",

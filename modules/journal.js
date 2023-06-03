@@ -25,27 +25,38 @@ export async function enrichDisplayAbility (match, options) {
     return a;
 }
 
+export async function enrichDisplayMonsterCard (match, options) {
+    return enrichDisplayMonster(match, {skipImage: true});
+}
+
 export async function enrichDisplayMonster (match, options) {
     const monster = await DoD_Utility.findMonster(match[1]);
     const monsterName = match[2] ?? monster?.name;
+    const skipImage = options?.skipImage || false;
+
     const a = document.createElement("div");
     if (monster) {
-        let html = `
-        <div>
-            <img src="${monster.img}">
-            ${monster.system.description}
-        </div>
+        let html = "";
+        if (!skipImage) {
+            html += `
+            <div>
+                <img src="${monster.img}">
+                ${monster.system.description}
+            </div>
+            `;
+        }
+        html += `
         <div class="display-monster">
             <div class="monster-title">@UUID[${monster.uuid}]{${monsterName}}</div>
             <table>
                 <tr>
-                    <td><b>Handlingskraft: </b>${monster.system.ferocity}</td>
-                    <td><b>Förflyttning: </b>${monster.system.movement}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}: </b>${monster.system.movement}</td>
                 </tr>
                 <tr>
-                    <td><b>Storlek: </b>${game.i18n.localize("DoD.sizeTypes." + monster.system.size)}</td>
-                    <td><b>Skydd: </b>${monster.system.armor}</td>
-                    <td><b>KP: </b>${monster.system.hitPoints.max}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.size")}: </b>${game.i18n.localize("DoD.sizeTypes." + monster.system.size)}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.armor")}: </b>${monster.system.armor}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}: </b>${monster.system.hitPoints.max}</td>
                 </tr>
             </table>
             <div>
@@ -63,14 +74,90 @@ export async function enrichDisplayMonster (match, options) {
     return a;
 }
 
+export async function enrichDisplayMonsterDescriptionCard (match, options) {
+    const monster = await DoD_Utility.findMonster(match[1]);
+    const monsterName = match[2] ?? monster?.name;
+    const skipImage = options?.skipImage || false;
+    const table = monster?.system.attackTable ? fromUuidSync(monster.system.attackTable) : null;
+    const tableName = table?.name;
+
+    const a = document.createElement("div");
+    if (monster) {
+        let html = `
+        <div class="display-monster">
+            <div class="monster-title">@UUID[${monster.uuid}]{${monsterName}}</div>
+            <div>
+                ${monster.system.description}
+            </div>
+            <table>
+                <tr>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}: </b>${monster.system.movement}</td>
+                </tr>
+                <tr>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.size")}: </b>${game.i18n.localize("DoD.sizeTypes." + monster.system.size)}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.armor")}: </b>${monster.system.armor}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}: </b>${monster.system.hitPoints.max}</td>
+                </tr>
+            </table>
+            <div>
+                ${monster.system.traits}
+            </div>
+            <div class="display-table">
+                ${displayTable(match[1], table, game.i18n.localize("DoD.journal.monsterAttacks"))}
+            </div>
+        </div>`;
+        a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
+    } else {
+        a.dataset.monsterId = match[1];
+        if (match[2]) a.dataset.monsterName = match[2];
+        a.classList.add("content-link");
+        a.classList.add("broken");
+        a.innerHTML = `<i class="fas fa-unlink"></i> ${monsterName}`;
+    }
+    return a;
+}
+
+export async function enrichDisplayMonsterDescription (match, options) {
+    const monster = await DoD_Utility.findMonster(match[1]);
+    const monsterName = match[2] ?? monster?.name;
+    
+    const a = document.createElement("div");
+    if (monster) {
+        let html = `
+        <div class="display-monster">
+            <div class="monster-title">@UUID[${monster.uuid}]{${monsterName}}</div>
+            <div>
+                ${monster.system.description}
+            </div>
+        </div>`;
+        a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
+    } else {
+        a.dataset.monsterId = match[1];
+        if (match[2]) a.dataset.monsterName = match[2];
+        a.classList.add("content-link");
+        a.classList.add("broken");
+        a.innerHTML = `<i class="fas fa-unlink"></i> ${monsterName}`;
+    }
+    return a;
+}
+
+export async function enrichDisplayNpc(match, options) {
+    return enrichDisplayNpcCard(match, {skipDescription: false});
+}  
 export async function enrichDisplayNpcCard(match, options) {
     const npc = await DoD_Utility.getActorFromUUID(match[1]);
     const npcName = match[2] ?? npc?.name;
+    const skipDescription = options?.skipDescription != null ? options.skipDescription : true;
     const a = document.createElement("div");
     if (npc) {
         let html = `
         <div class="display-npc">
-            <div class="npc-title">@UUID[${npc.uuid}]{${npcName}}</div>
+            <div class="npc-title">@UUID[${npc.uuid}]{${npcName}}</div>`;
+        if (!skipDescription) {
+            html += `${npc.system.description}`;
+        }        
+        html += `
             <table>
                 <tr><td>
                     
@@ -83,25 +170,12 @@ export async function enrichDisplayNpcCard(match, options) {
         if (npc.getDamageBonus("agl") != "") {
             html += `<div><b>${game.i18n.localize("DoD.ui.character-sheet.damageBonusAGL")}:&nbsp</b><span style="text-transform:uppercase">${npc.getDamageBonus("agl")}</span></div>`;
         }
-
-        // Armor
-        let armor = "";
-        if (npc.system.equippedArmor) {
-            armor += `${npc.system.equippedArmor.name} (${npc.system.equippedArmor.system.rating})`;
-        }
-        if (npc.system.equippedHelmet) {
-            if (armor.length > 0) {
-                armor += `, `;
-            }
-            armor += `${npc.system.equippedHelmet.name} (${npc.system.equippedHelmet.system.rating})`;
-        }
         
         html += `
                     </div>
                 </td></tr>
                 <tr><td>
                     <div class="flexrow">
-                        <div><b>${game.i18n.localize("DoD.ui.character-sheet.armor")}:&nbsp</b>${armor}</div>
                         <div><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}:&nbsp</b>${npc.system.hitPoints.max}</div>`;
         
         if (npc.hasAbilities) {
@@ -185,6 +259,27 @@ export async function enrichDisplayNpcCard(match, options) {
                 </td></tr>`
         }                
 
+        // Armor
+        let armor = "";
+        if (npc.system.equippedArmor) {
+            armor += `${npc.system.equippedArmor.name} (${npc.system.equippedArmor.system.rating})`;
+        }
+        if (npc.system.equippedHelmet) {
+            if (armor.length > 0) {
+                armor += `, `;
+            }
+            armor += `${npc.system.equippedHelmet.name} (${npc.system.equippedHelmet.system.rating})`;
+        }
+        if (!npc.system.equippedArmor && !npc.system.equippedHelmet) {
+            armor = "-";
+        }
+        html += `
+        <tr><td>
+        <div class="flexrow list-row">
+            <div><b>${game.i18n.localize("DoD.ui.character-sheet.armor")}:&nbsp</b></div>
+            <div>${armor}</div>
+        </div>
+        </td></tr>`;
 
         html += `
             </table>
@@ -290,55 +385,64 @@ export async function enrichDisplaySpell (match, options) {
     return a;
 }
 
+function displayTable(uuid, table, tableName) {
+    if (!table) {
+        return;
+    }
+
+    let html = `
+    <table>
+        <caption>@Table[${uuid}]{${tableName}}</caption>
+        <tr>
+            <th>[[/roll ${table.formula}]]</th>
+            <th>${game.i18n.localize("DoD.journal.tableResult")}</th>
+        </tr>`;
+    for (let result of table.results) {
+        html += `
+        <tr>
+            <td>${result.range[0]}`;
+        if (result.range[1] != result.range[0]) {
+            html += ` - ${result.range[1]}`;
+        }
+        if (result.documentCollection == "RollTable") {
+            let subTable = DoD_Utility.findTable(result.text);
+            if (subTable?.uuid != table.uuid) {
+                let subTableName = result.text;
+                if(subTableName.startsWith(table.name)) {
+                    subTableName = subTableName.slice(table.name.length);
+                    if (subTableName.startsWith(" - ")) {
+                        subTableName = subTableName.slice(3);
+                    }
+                }
+                html += `</td>
+                    <td>${subTable?.description} @DisplayTable[RollTable.${result.documentId}]{${subTableName}}</td>
+                </tr>`;    
+            } else {
+                html += `</td>
+                    <td>${result.text}</td>
+                </tr>`;    
+            }
+        } else if (result.documentCollection == "Item") {
+            html += `</td>
+                <td>@UUID[Item.${result.documentId}]{${result.text}}</td>
+            </tr>`;    
+        } else {
+            html += `</td>
+                <td>${result.text}</td>
+            </tr>`;
+        }
+    }
+    html += `</table>`;
+    return html;
+}
+
 export async function enrichDisplayTable (match, options) {
     const table = DoD_Utility.findTable(match[1]);
     const tableName = match[2] ?? table?.name;
     const a = document.createElement("div");
     if (table) {
         a.classList.add("display-table");
-        let html = `
-        <table>
-            <caption>@Table[${match[1]}]{${tableName}}</caption>
-            <tr>
-                <th>[[/roll ${table.formula}]]</th>
-                <th>${game.i18n.localize("DoD.journal.tableResult")}</th>
-            </tr>`;
-        for (let result of table.results) {
-            html += `
-            <tr>
-                <td>${result.range[0]}`;
-            if (result.range[1] != result.range[0]) {
-                html += ` - ${result.range[1]}`;
-            }
-            if (result.documentCollection == "RollTable") {
-                let subTable = DoD_Utility.findTable(result.text);
-                if (subTable?.uuid != table.uuid) {
-                    let subTableName = result.text;
-                    if(subTableName.startsWith(table.name)) {
-                        subTableName = subTableName.slice(table.name.length);
-                        if (subTableName.startsWith(" - ")) {
-                            subTableName = subTableName.slice(3);
-                        }
-                    }
-                    html += `</td>
-                        <td>${subTable?.description} @DisplayTable[RollTable.${result.documentId}]{${subTableName}}</td>
-                    </tr>`;    
-                } else {
-                    html += `</td>
-                        <td>${result.text}</td>
-                    </tr>`;    
-                }
-            } else if (result.documentCollection == "Item") {
-                html += `</td>
-                    <td>@UUID[Item.${result.documentId}]{${result.text}}</td>
-                </tr>`;    
-            } else {
-                html += `</td>
-                    <td>${result.text}</td>
-                </tr>`;
-            }
-        }
-        html += `</table>`;
+        let html = displayTable(match[1], table, tableName);
         a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
     } else {
         a.dataset.tableId = match[1];

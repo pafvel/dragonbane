@@ -25,7 +25,7 @@ export default class DoDItemSheet extends ItemSheet {
             config: CONFIG.DoD
         };
 
-        sheetData.data.description = await TextEditor.enrichHTML(sheetData.data.description, { async: true });
+        sheetData.data.description = await TextEditor.enrichHTML(sheetData.data.description, { async: true, secrets: game.user.isGM });
 
         if (this.item.type == "weapon") {
             let weaponFeatures = [];

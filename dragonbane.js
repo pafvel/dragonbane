@@ -214,6 +214,22 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
         enricher: DoDJournal.enrichDisplayMonster
     },
     {
+        pattern : /@DisplayMonsterCard\[(.+?)\](?:{(.+?)})?/gm,
+        enricher: DoDJournal.enrichDisplayMonsterCard
+    },
+    {
+        pattern : /@DisplayMonsterDescription\[(.+?)\](?:{(.+?)})?/gm,
+        enricher: DoDJournal.enrichDisplayMonsterDescription
+    },
+    {
+        pattern : /@DisplayMonsterDescriptionCard\[(.+?)\](?:{(.+?)})?/gm,
+        enricher: DoDJournal.enrichDisplayMonsterDescriptionCard
+    },
+    {
+        pattern : /@DisplayNpc\[(.+?)\](?:{(.+?)})?/gm,
+        enricher : DoDJournal.enrichDisplayNpc
+    },
+    {
         pattern : /@DisplayNpcCard\[(.+?)\](?:{(.+?)})?/gm,
         enricher : DoDJournal.enrichDisplayNpcCard
     },
