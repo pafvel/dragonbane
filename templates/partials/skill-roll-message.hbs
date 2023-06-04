@@ -75,10 +75,11 @@
             data-formula="{{formula}}"
             data-roll-type="{{rollType}}"
             data-skill-name="{{skill.name}}"
-            data-weapon-id="{{weapon.uuid}}"
-            data-action="{{action}}"
-            data-spell-name="{{spell.name}}"
-            data-power-level="{{powerLevel}}"
+            {{#if weapon }} data-weapon-id="{{weapon.uuid}}" {{/if}}
+            {{#if action }} data-extra-damage="{{extraDamage}}" {{/if}}
+            {{#if spell }} data-spell-name="{{spell.name}}" {{/if}}
+            {{#if powerLevel }} data-power-level="{{powerLevel}}" {{/if}}
+            {{#if extraDamage }} data-extra-damage="{{extraDamage}}" {{/if}}
             >
             {{localize "DoD.roll.pushButtonLabel"}}
         </button>

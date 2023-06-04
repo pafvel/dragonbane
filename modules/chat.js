@@ -335,6 +335,7 @@ function onPushRoll(event) {
             break;
         case "DoDWeaponTest":
             options.action = element.dataset.action;
+            options.extraDamage = element.dataset.extraDamage;
             options.weapon = fromUuidSync(element.dataset.weaponId);
             test = new DoDWeaponTest(actor, options.weapon, options);
             break;

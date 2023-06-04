@@ -956,7 +956,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         }
 
         // Equip weapons, armor and helmet
-        if (itemData.type == "weapon" && !(actorData.equippedWeapons?.length >= 2) 
+        if (itemData.type == "weapon" && !(actorData.equippedWeapons?.length >= 3) 
             || itemData.type == "armor" && !actorData.equippedArmor
             || itemData.type == "helmet" && !actorData.equippedHelmet )
         {
