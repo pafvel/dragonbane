@@ -250,7 +250,8 @@
         "tables": {
             "mishapMagic": "@Table[RollTable.5dtUg9IwWH1bn9PW]",
             "mishapMelee": "@Table[RollTable.3wfWpxB02vy2vjQ2]",
-            "mishapRanged": "@Table[RollTable.FWsxt61XzYAfoY1L]"
+            "mishapRanged": "@Table[RollTable.FWsxt61XzYAfoY1L]",
+            "treasure":  "RollTable.l7LGpfcv56e7BWpF"
         },
         "weapon": {
             "grip": "Grip",
@@ -378,7 +379,9 @@
                 "dealSelectedHalfDamage": "Deal half damage (selected token)",
                 "dealSelectedDoubleDamage": "Deal double damage (selected token)",
                 "choose": "Choose",
-                "takeCondition": "{actor} becomes {condition}."
+                "takeCondition": "{actor} becomes {condition}.",
+                "treasureCard": "1 Treasure Card",
+                "treasureCards": "{count} Treasure Cards"
             },
             "dialog": {
                 "banes": "Banes",

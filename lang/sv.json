@@ -247,7 +247,8 @@
         "tables": {
             "mishapMagic": "@Table[RollTable.NHVp4W45Z02qumKa]{Missöde - Magi}",
             "mishapMelee": "@Table[RollTable.VwP9Hy9ESvbC34XA]{Missöde - Närstrid}",
-            "mishapRanged": "@Table[RollTable.RPBIOBT0QvPjf3Sq]{Missöde - Avståndsstrid}"
+            "mishapRanged": "@Table[RollTable.RPBIOBT0QvPjf3Sq]{Missöde - Avståndsstrid}",
+            "treasure":  "RollTable.YK8RolElBcnE9QnQ"
         },
         "unit": {
             "meterPlural": "meter"
@@ -378,7 +379,9 @@
                 "dealSelectedHalfDamage": "Tillfoga halv skada (vald spelfigur)",
                 "dealSelectedDoubleDamage": "Tillfoga dubbel skada (vald spelfigur)",
                 "choose": "Välj",
-                "takeCondition": "{actor} blir {condition}."
+                "takeCondition": "{actor} blir {condition}.",
+                "treasureCard": "1 Skattkort",
+                "treasureCards": "{count} Skattkort"
             },
             "dialog": {
                 "banes": "Nackdelar",

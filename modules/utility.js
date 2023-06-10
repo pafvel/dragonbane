@@ -214,6 +214,35 @@ export default class DoD_Utility {
         await test.roll();
     }
 
+    static async drawTreasureCards(number) {
+        const table = DoD_Utility.findTable(game.i18n.localize("DoD.tables.treasure"));
+        if (!table) { 
+          return;
+        }
+        const count = DoD_Utility.clamp(number, 1, table.results.size);
+
+        // RollTable.drawMany doesn't work with nested tables, using this as workaround
+        async function drawMany(t, cnt) {
+            const results = [];
+            const rolls = [];
+
+            // Draw one at a time
+            for (let i = 0; i < cnt; ++i) {
+                const draw = await t.draw({displayChat: false});
+                rolls.push(draw.roll);
+                results.push(draw.results[0]);
+            }
+            // Construct a Roll object using the constructed pool
+            const pool = PoolTerm.fromRolls(rolls);
+            const roll = Roll.defaultImplementation.fromTerms([pool]);
+
+            // Display results and reset table
+            await t.toMessage(results, {roll: roll});
+            await t.resetResults();        
+        };
+        drawMany(table, count);
+    }
+
     static INFO(msg, params) {
         if (!params) {
             return ui.notifications.info(game.i18n.localize(msg));

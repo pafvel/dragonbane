@@ -7,6 +7,7 @@ import { DoD } from "./config.js";
 
 export function addChatListeners(app, html, data) {
     html.on("click", ".inline-damage-roll", onInlineDamageRoll);
+    html.on("click", ".treasure-roll", onTreasureRoll);
     html.on("click", "button.weapon-roll", onWeaponDamageRoll);
     html.on("click", "button.magic-roll", onMagicDamageRoll);
     html.on("click", "button.push-roll", onPushRoll);
@@ -146,6 +147,15 @@ export async function onInlineDamageRoll(event) {
      } else {
         await inflictDamageMessage(damageData);    
     }
+}
+export async function onTreasureRoll(event) {
+    event.stopPropagation();
+    event.preventDefault();
+
+    const element = event.currentTarget;
+    const count = element.dataset.count;
+
+    DoD_Utility.drawTreasureCards(count);
 }
 
 async function onWeaponDamageRoll(event) {

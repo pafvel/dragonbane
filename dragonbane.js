@@ -146,6 +146,7 @@ Hooks.on("getChatLogEntryContext", DoDChat.addChatMessageContextMenuOptions);
 Hooks.on("renderJournalPageSheet", (obj, html, data) => {
     html.on('click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
     html.on("click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);
+    html.on("click", ".treasure-roll", DoDChat.onTreasureRoll);
 });
 
 Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
@@ -163,6 +164,33 @@ Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
     return true;
 });
 
+/* Custom chat commands:
+ *
+ *      /treasure - draw treasure from treasure table
+ * 
+*/
+
+Hooks.on("chatMessage", (html, content, msg) => {
+    // Setup new message's visibility
+    // let rollMode = game.settings.get("core", "rollMode");
+
+    let regExp;
+    regExp = /(\S+)/g;
+    let commands = content.match(regExp);
+    let command = commands[0];
+
+    if (command === "/treasure") {
+        let count = 1;
+        if (commands.length > 1) {
+            const parsed = parseInt(commands[1]);
+            if (!isNaN(parsed)) {
+                count = parsed;
+            }
+        }
+        DoD_Utility.drawTreasureCards(count);
+        return false;
+    }
+});
 
 CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     {
@@ -202,6 +230,23 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
                 a.classList.add("broken");
                 a.innerHTML = `<i class="fas fa-unlink"></i> ${tableName}`;
             }
+            return a;
+        }
+    },
+    {
+        // Rollable treasure
+        // Format [[/treasure <number>]]
+        pattern : /\[\[\/treasure(\s[\d]+)?\]\]/gm,
+        enricher : (match, options) => {
+            const count = match[1] ?? 1;
+            const a = document.createElement("a");
+            a.classList.add("inline-roll");
+            a.classList.add("treasure-roll");
+            a.dataset.count = count;
+
+            let text = "DoD.ui.chat.treasureCard";
+            if (count > 1) text += "s";
+            a.innerHTML = `<i class="fas fa-dice-d20"></i> ${game.i18n.format(text, {count: count})}`;
             return a;
         }
     },
