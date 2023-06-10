@@ -1032,6 +1032,9 @@
   background-size: cover;
   background-position-x: center;
 }
+.system-dragonbane .chat-message .result-image {
+  border: 0px transparent;
+}
 .system-dragonbane .chat-message.whisper {
   font-family: QTFrizQuad;
   background-image: url(art/ui/whisper-chat-card-bg.webp);
