@@ -5,12 +5,14 @@ export async function enrichDisplayAbility (match, options) {
     const abilityName = match[2] ?? ability?.name;
     const a = document.createElement("div");
     if (ability) {
+        const requirement = ability.system.requirement?.length > 0 ? ability.system.requirement : "-";
+        const wp = ability.system.wp ?? "-";
         let html = `
         <div class="display-ability">
             <h4>@UUID[${match[1]}]{${ability.name}}</h4>
             <ul>
-                <li><b>${game.i18n.localize("DoD.ability.requirement")}: </b><span>${ability.system.requirement}</span>
-                <li><b>${game.i18n.localize("DoD.ability.wp")}: </b><span>${ability.system.wp}</span>
+                <li><b>${game.i18n.localize("DoD.ability.requirement")}: </b><span>${requirement}</span>
+                <li><b>${game.i18n.localize("DoD.ability.wp")}: </b><span>${wp}</span>
             </ul>
             ${ability.system.description}
         </div>`;
@@ -104,7 +106,7 @@ export async function enrichDisplayMonsterDescriptionCard (match, options) {
                 ${monster.system.traits}
             </div>
             <div class="display-table">
-                ${displayTable(match[1], table, game.i18n.localize("DoD.journal.monsterAttacks"))}
+                ${displayTable(monster?.system.attackTable, table, game.i18n.localize("DoD.journal.monsterAttacks"))}
             </div>
         </div>`;
         a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
@@ -387,9 +389,11 @@ export async function enrichDisplaySpell (match, options) {
 
 function displayTable(uuid, table, tableName) {
     if (!table) {
-        return;
+        return "";
     }
 
+    /*
+    // Rollable table in caption
     let html = `
     <table>
         <caption>@Table[${uuid}]{${tableName}}</caption>
@@ -397,6 +401,17 @@ function displayTable(uuid, table, tableName) {
             <th>[[/roll ${table.formula}]]</th>
             <th>${game.i18n.localize("DoD.journal.tableResult")}</th>
         </tr>`;
+    */
+    
+    // Rollable table in roll column header
+    let html = `
+    <table>
+        <caption>${tableName}</caption>
+        <tr>
+            <th style="text-transform: uppercase;">@Table[${uuid}]{${table.formula}}</th>
+            <th>${game.i18n.localize("DoD.journal.tableResult")}</th>
+        </tr>`;
+    
     for (let result of table.results) {
         html += `
         <tr>

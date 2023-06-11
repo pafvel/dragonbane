@@ -189,7 +189,7 @@
         },
         "secondaryAttributeTypes": {
             "none": "-",
-            "hitPoints": "Hip Points",
+            "hitPoints": "Hit Points",
             "willPoints": "Willpower Points",
             "movement": "Movement"
         },
@@ -218,7 +218,7 @@
             "damagePerPowerlevel": "Damage per Power Level",
             "duration": "Duration",
             "general": "General",
-            "memorized": "Memorized",
+            "memorized": "Prepared",
             "prerequisite": "Prerequisite",
             "range": "Distance",
             "rangeType": "Range",
@@ -335,7 +335,7 @@
                 "main": "Main",
                 "max-encumbrance": "Max Encumbrance",
                 "memento": "Memento",
-                "memorized": "M",
+                "memorized": "P",
                 "monsterAttackFlavor": "<b>{actor}</b> performs a Monster Attack from <b>{table}</b>.",
                 "monsterAttackTooltip": "Monster Attack",
                 "monsterDefendSkillFlavor": "Dodge or Parry",
