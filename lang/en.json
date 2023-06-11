@@ -107,6 +107,9 @@
             "d12": "D12",
             "d20": "D20"
         },
+        "decks": {
+            "initiative": "5LxBJudVVT5w8XHk"
+        },
         "gear": {
             "weight": "Weight",
             "quantity": "Count",

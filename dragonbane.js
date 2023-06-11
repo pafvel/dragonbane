@@ -137,8 +137,20 @@ Hooks.once("ready", function () {
             game.settings.set("dragonbane", "systemMigrationVersion", SYSTEM_MIGRATION_VERSION);
         }
     }
-
 });
+
+// Initialize YZE Combat module
+// Workaround for 'yzeCombatInit' hook failing when making calls
+Hooks.once('yzeCombatReady', async yzec => {
+    // Workaround: false flag overwrites any vaule already set, e.g. the automatically created decks post-init
+    await yzec.setInitiativeDeck(game.i18n.localize("DoD.decks.initiative"), false); 
+
+    await yzec.register({
+    // Sets the value that defines the speed of the combatant.
+    actorSpeedAttribute: 'system.ferocity',
+    });
+});
+
 
 Hooks.on("renderChatLog", DoDChat.addChatListeners);
 Hooks.on("getChatLogEntryContext", DoDChat.addChatMessageContextMenuOptions);

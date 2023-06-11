@@ -105,6 +105,9 @@
             "d12": "D12",
             "d20": "D20"
         },
+        "decks": {
+            "initiative": "93dNu2t4dJAKtqUi"
+        },
         "gear": {
             "weight": "Vikt",
             "quantity": "Antal",
