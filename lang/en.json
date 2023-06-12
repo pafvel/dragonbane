@@ -384,7 +384,10 @@
                 "choose": "Choose",
                 "takeCondition": "{actor} becomes {condition}.",
                 "treasureCard": "1 Treasure Card",
-                "treasureCards": "{count} Treasure Cards"
+                "treasureCards": "{count} Treasure Cards",
+                "failedDeathRoll": "{actor} failed a death roll due to taking damage at 0 HP.",
+                "characterDied": "{actor} died.",
+                "characterProne": "{actor} reached 0 HP and became prone."
             },
             "dialog": {
                 "banes": "Banes",

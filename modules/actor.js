@@ -20,14 +20,25 @@ export class DoDActor extends Actor {
                     this.updateSource({
                         "system.age": "adult",
                         "prototypeToken.actorLink": true,
-                        "prototypeToken.disposition": 1
+                        "prototypeToken.disposition": 1, // Friendly
+                        "prototypeToken.bar1.attribute": "hitPoints",
+                        "prototypeToken.bar2.attribute": "willPoints",
+                        "prototypeToken.displayBars": 30, // Hovered by Anyone
                     });
                     break;
                 case "npc":
-                    this.updateSource({"prototypeToken.disposition": 0});
+                    this.updateSource({
+                        "prototypeToken.disposition": 0, // Neutral
+                        "prototypeToken.bar1.attribute": "hitPoints",
+                        "prototypeToken.displayBars": 20, // Hovered by Owner
+                    });
                     break;
                 case "monster":
-                    this.updateSource({"prototypeToken.disposition": -1});
+                    this.updateSource({
+                        "prototypeToken.disposition": -1, // Hostile
+                        "prototypeToken.bar1.attribute": "hitPoints",
+                        "prototypeToken.displayBars": 20, // Hovered by Owner
+                    });
                     break;
             }    
         }
@@ -331,7 +342,11 @@ export class DoDActor extends Actor {
     applyDamage(damage) {
         let value = this.system.hitPoints.value;
         let newValue = DoD_Utility.clamp(value - damage, 0, value);
-        this.update({["system.hitPoints.value"]: newValue});
+
+        // Update HP
+        if (value != newValue) {
+            this.update({["system.hitPoints.value"]: newValue});
+        }
     }
 
     findAbility(abilityName) {

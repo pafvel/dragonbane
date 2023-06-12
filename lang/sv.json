@@ -384,7 +384,10 @@
                 "choose": "Välj",
                 "takeCondition": "{actor} blir {condition}.",
                 "treasureCard": "1 Skattkort",
-                "treasureCards": "{count} Skattkort"
+                "treasureCards": "{count} Skattkort",
+                "failedDeathRoll": "{actor} tog skada vid 0 KP och misslyckades automatiskt med ett dödsslag.",
+                "characterDied": "{actor} dog.",
+                "characterProne": "{actor} nådde 0 KP och blev liggande."
             },
             "dialog": {
                 "banes": "Nackdelar",

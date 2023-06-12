@@ -424,9 +424,10 @@ export async function applyDamageMessage(damageData) {
     const damageType = damageData.damageType;
     const multiplier = damageData.multiplier;
     const ignoreArmor = damageData.ignoreArmor;
-
     const armorValue = ignoreArmor ? 0 : actor.getArmorValue(damageType);
     const damageToApply = Math.max(0, Math.floor((damage - armorValue) * multiplier));
+    const oldHP = actor.system.hitPoints.value;
+
     if (damageToApply > 0) {
         actor.applyDamage(damageToApply);
     }
@@ -434,9 +435,36 @@ export async function applyDamageMessage(damageData) {
     const actorName = actor.isToken ? actor.token.name : actor.name;
     const damageMessage = game.i18n.format(game.i18n.localize("DoD.ui.chat.damageApplied"), {damage: damageToApply, actor: actorName});
     const damageDetails = game.i18n.format(game.i18n.localize("DoD.ui.chat.damageAppliedDetails"), {damage: damage, armor: armorValue});
-    let msg = damageMessage + "<br/><br/>" + damageDetails;
+    let msg = damageMessage + "<p>" + damageDetails;
     if (multiplier != 1) {
         msg += "<br>" + game.i18n.format(game.i18n.localize("DoD.ui.chat.damageAppliedMultiplier"), {multiplier: multiplier});
     }
+
+    if (actor.type == "character") {
+        const token = canvas.scene.tokens.find(t => t.actor.uuid == actor.uuid);
+
+        // Characters add death roll when at 0 HP and taking damage
+        if (oldHP == 0 && damageToApply > 0) {
+            let failures = actor.system.deathRolls.failures;
+            if (failures < 3) {
+                actor.update({["system.deathRolls.failures"]: ++failures});
+                msg += "<p>" + game.i18n.format("DoD.ui.chat.failedDeathRoll", {actor: actorName}) + "</p>";
+                if (failures == 3) {
+                    const status = CONFIG.statusEffects.find(a => a.id === 'dead');
+                    token.toggleActiveEffect(status, {active: true});
+                    msg += "<p>" + game.i18n.format("DoD.ui.chat.characterDied", {actor: actorName}) + "</p>";
+                }
+            }
+        }
+        // Characters go prone when reaching 0 HP
+        if (oldHP > 0 && damageToApply >= oldHP) {
+            if (token && !token.hasStatusEffect("prone")) {
+                const status = CONFIG.statusEffects.find(a => a.id === 'prone');
+                token.toggleActiveEffect(status, {active: true});
+                msg += "<p>" + game.i18n.format("DoD.ui.chat.characterProne", {actor: actorName}) + "</p>";
+            }
+        }
+    }
+
     ChatMessage.create({ content: msg });
 }
