@@ -1161,6 +1161,9 @@
 .system-dragonbane .sheet-table-data td:last-child {
   padding-right: 2em;
 }
+.system-dragonbane .sheet-table-data select {
+  border: 0px;
+}
 .system-dragonbane .sheet-table-data .thumbnail-data {
   padding: 0px;
   width: 36px;

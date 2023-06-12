@@ -168,11 +168,13 @@ export default class DoDTest {
         for (let input of inputs) {
             if (input.type == "checkbox" && input.checked) {
                 banes.push(input.name);
-            } else if (input.name == "extraBanes") {
-                extraBanes = Number(input.value);
-                extraBanes = isNaN(extraBanes) ? 0 : extraBanes;
             }
         }
+        // Process extra banes
+        elements = form.getElementsByClassName("extraBanes");
+        element = elements ? elements[0] : null;
+        extraBanes = element ? Number(element.value) : 0;
+        extraBanes = isNaN(extraBanes) ? 0 : extraBanes;
 
         // Process boons
         elements = form.getElementsByClassName("boons");
@@ -181,11 +183,13 @@ export default class DoDTest {
         for (let input of inputs) {
             if (input.type == "checkbox" && input.checked) {
                 boons.push(input.name);
-            } else if (input.name == "extraBoons") {
-                extraBoons = Number(input.value);
-                extraBoons = isNaN(extraBoons) ? 0 : extraBoons;
             }
         }
+        // Process extra boons
+        elements = form.getElementsByClassName("extraBoons");
+        element = elements ? elements[0] : null;
+        extraBoons = element ? Number(element.value) : 0;
+        extraBoons = isNaN(extraBoons) ? 0 : extraBoons;
 
         return {
             banes: banes,
