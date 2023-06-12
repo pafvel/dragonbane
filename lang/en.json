@@ -22,7 +22,9 @@
             "requirement": "Requirement",
             "type": "Type",
             "wp": "Willpower Points",
-            "secondaryAttribute": "Attribute bonus"
+            "secondaryAttribute": "Attribute bonus",
+            "useWithWP": "<b>{actor}</b> spends <b>{wp}</b> WP to activate @UUID[{uuid}].",
+            "useWithoutWP": "<b>{actor}</b> activates @UUID[{uuid}]. See ability for WP cost."
         },
         "abilityTypes": {
             "kin": "Kin",
@@ -409,6 +411,9 @@
                 "labelCancel": "Cancel",
                 "labelOk": "Ok",
                 "chooseAction": "Choose action",
+                "useAbility": "Activate Ability",
+                "useAbilityWithWP": "Pay <b>{wp}</b> WP to use <b>{ability}</b>?",
+                "useAbilityWithoutWP": "Use <b>{ability}</b>?",
                 "weaponFeatures": "Weapon Features"
             }
 
@@ -427,6 +432,7 @@
             "professionAbility": "Could not find Profession Ability: {ability}",
             "professionSkill": "Could not find Profession Skill: {skill}",
             "notEnoughWPForSpell": "Not enough Willpower Points to cast spell",
+            "notEnoughWPForAbility": "Not enough Willpower Points to activate ability",
             "actorNotFound": "Can't find actor with id: {id}",
             "tableNotFound": "Can't find table: {id}",
             "conditionAlreadyTaken": "The condition is already taken",

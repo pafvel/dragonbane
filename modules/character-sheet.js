@@ -337,6 +337,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".condition-panel").click(this._onConditionClick.bind(this));
             html.find(".rollable-skill").on("click contextmenu", this._onSkillRoll.bind(this));
             html.find(".rollable-damage").click(this._onDamageRoll.bind(this));
+            html.find(".use-item").on("click contextmenu", this._onUseItem.bind(this));
 
             html.find(".hit-points-max-label").change(this._onEditHp.bind(this));
             html.find(".hit-points-current-label").change(this._onEditCurrentHp.bind(this));
@@ -802,6 +803,70 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
             if (test) {
                 await test.roll();
+            }
+        } else { // right click - edit item
+            item.sheet.render(true);
+        }
+    }
+
+    async _onUseItem(event) {
+        event.preventDefault();
+
+        const itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
+        const item = this.actor.items.get(itemId);
+
+        if (event.type == "click") { // left click - use item
+            if (item.type == "ability") {
+                let wp = Number(item.system.wp);
+                wp = isNaN(wp) ? 0 : wp;
+
+                const use = await new Promise(
+                    resolve => {
+                        const data = {
+                            title: game.i18n.localize("DoD.ui.dialog.useAbility"),
+                            content: wp > 0 ? game.i18n.format("DoD.ui.dialog.useAbilityWithWP", {wp: wp, ability: item.name}) : game.i18n.format("DoD.ui.dialog.useAbilityWithoutWP", {ability: item.name}),
+                            buttons: {
+                                ok: {
+                                    icon: '<i class="fas fa-check"></i>',
+                                    label: game.i18n.localize("DoD.ui.dialog.labelOk"),
+                                    callback: () => resolve(true)              
+                                },
+                                cancel: {
+                                    icon: '<i class="fas fa-times"></i>',
+                                    label: game.i18n.localize("DoD.ui.dialog.labelCancel"),
+                                    callback: html => resolve(false)
+                                }
+                            },
+                            default: "cancel",
+                            close: () => resolve(false)
+                        };
+                        new Dialog(data, null).render(true);
+                    }
+                );
+                if (use) {
+                    let content;
+                    if (wp > 0) {
+                        if (this.actor.system.willPoints.value < wp) {
+                            DoD_Utility.WARNING("DoD.WARNING.notEnoughWPForAbility");
+                            return;
+                        } else {
+                            this.actor.update({"system.willPoints.value": this.actor.system.willPoints.value - wp});
+                            content = game.i18n.format("DoD.ability.useWithWP", {
+                                actor: this.actor.name,
+                                uuid: item.uuid,
+                                wp: wp
+                            });
+                        }
+                    } else {
+                        content = game.i18n.format("DoD.ability.useWithoutWP", {
+                            actor: this.actor.name,
+                            uuid: item.uuid
+                        });
+                }
+                    ChatMessage.create({
+                        content: content,
+                    });
+                }
             }
         } else { // right click - edit item
             item.sheet.render(true);

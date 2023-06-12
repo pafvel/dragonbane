@@ -21,7 +21,9 @@
             "requirement": "Krav",
             "type": "Typ",
             "wp": "Viljepoäng",
-            "secondaryAttribute": "Egenskapsbonus"
+            "secondaryAttribute": "Egenskapsbonus",
+            "useWithWP": "<b>{actor}</b> spenderar <b>{wp}</b> Viljepoäng och aktiverar @UUID[{uuid}].",
+            "useWithoutWP": "<b>{actor}</b> aktiverar @UUID[{uuid}]. Se förmågan för kostnad i Viljepoäng."
         },
         "abilityTypes": {
             "kin": "Släktesförmåga",
@@ -406,9 +408,12 @@
                 "attributeRollTitle": "Grundegenskapsslag",
                 "attributeRollLabel": "Slå grundegenskapsslag",
                 "powerLevel": "Effektgrad",
-                "labelCancel": "Cancel",
+                "labelCancel": "Avbryt",
                 "labelOk": "Ok",
                 "chooseAction": "Välj handling",
+                "useAbility": "Aktivera förmåga",
+                "useAbilityWithWP": "Spendera <b>{wp}</b> Viljepoäng och aktivera <b>{ability}</b>?",
+                "useAbilityWithoutWP": "Aktivera <b>{ability}</b>?",
                 "weaponFeatures": "Vapenegenskaper"
                 
            }
@@ -426,7 +431,8 @@
             "profession": "Kan ej hitta Yrke: {profession}",
             "professionAbility": "Kan ej hitta Yrkesförmåga: {ability}",
             "professionSkill": "Kan ej hitta Yrkesfärdighet: {skill}",
-            "notEnoughWPForSpell": "För få Viljepoäng för att kasta besvärjelse",
+            "notEnoughWPForSpell": "För få Viljepoäng för att kasta besvärjelse.",
+            "notEnoughWPForAbility": "För få Viljepoäng för att aktivera förmågan.",
             "actorNotFound": "Kan inte hitta aktör med id: {id}",
             "tableNotFound": "Kan inte hitta tabellen: {id}",
             "conditionAlreadyTaken": "Tillståndet är redan taget",
