@@ -187,7 +187,9 @@
             "damageWeaponTarget": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType}</b> on {target} using <b>{weapon}</b>.",
             "damageIgnoreArmorTarget": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType} on {target} ignoring armor</b> using <b>{weapon}</b>.",
             "pushButtonLabel": "Push roll",
-            "pushChoiceLabel": "Choose condition:"
+            "pushChoiceLabel": "Choose condition:",
+            "parryWeapon": "<p>If the parried damage exceeds your weapon's durability (<b>{durability}</b>), the weapon is damaged. Piercing damage can not damage a weapon.</p>",
+            "parryShield": "<p>If the parried damage exceeds your shield's durability (<b>{durability}</b>), the shield is damaged. Piercing damage can not damage a shield.</p>"
 
         },
         "secondaryAttributeTypes": {
@@ -392,6 +394,10 @@
             "dialog": {
                 "banes": "Banes",
                 "boons": "Boons",
+                "brokenWeaponTitle": "Broken Weapon",
+                "brokenWeaponContent": "The weapon is broken. Are you sure you want to use it to perform an action?",
+                "performAction": "Perform Action",
+                "cancelAction": "Cancel Action",
                 "enchantedWeapon": "Enchanted weapon",
                 "extra": "Extra",
                 "extraDamage": "Additional damage",

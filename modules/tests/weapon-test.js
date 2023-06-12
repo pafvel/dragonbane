@@ -72,7 +72,37 @@ export default class DoDWeaponTest extends DoDSkillTest  {
 
         let label = game.i18n.localize("DoD.ui.dialog.skillRollLabel");
         let title = game.i18n.localize("DoD.ui.dialog.skillRollTitle") + ": " + this.weapon.name;
-        let options = await this.getRollOptionsFromDialog(title, label);
+        let options = {cancelled: true};
+
+        if (this.weapon.system.broken) {
+            options = await new Promise(
+                resolve => {
+                    const data = {
+                        title: game.i18n.localize("DoD.ui.dialog.brokenWeaponTitle"),
+                        content: game.i18n.localize("DoD.ui.dialog.brokenWeaponContent"),
+                        buttons: {
+                            ok: {
+                                icon: '<i class="fas fa-check"></i>',
+                                label: game.i18n.localize("DoD.ui.dialog.performAction"),
+                                callback: () => {
+                                    resolve(this.getRollOptionsFromDialog(title, label));              
+                                }
+                            }                            ,
+                            cancel: {
+                                icon: '<i class="fas fa-times"></i>',
+                                label: game.i18n.localize("DoD.ui.dialog.cancelAction"),
+                                callback: html => resolve({cancelled: true})
+                            }
+                        },
+                        default: "cancel",
+                        close: () => resolve({cancelled: true})
+                    };
+                    new Dialog(data, null).render(true);
+                }
+            );
+        } else {
+            options = await this.getRollOptionsFromDialog(title, label);
+        }
         return options;
     }
 
@@ -87,6 +117,14 @@ export default class DoDWeaponTest extends DoDSkillTest  {
                 target: this.postRollData.targetActor?.isToken ? this.postRollData.targetActor.token.name : this.postRollData.targetActor?.name
             }
         );
+
+        if (postRollData.action == "parry" && postRollData.success) {
+            if (postRollData.weapon.hasWeaponFeature("shield")) {
+                label += game.i18n.format("DoD.roll.parryShield", {durability: postRollData.weapon.system.durability});
+            } else {
+                label += game.i18n.format("DoD.roll.parryWeapon", {durability: postRollData.weapon.system.durability});
+            }
+        }
 
         return {
             user: game.user.id,

@@ -185,7 +185,9 @@
             "damageWeaponTarget": "<b>{actor}</b> gör <b>{damage}</b> poäng <b>{damageType}</b> med <b>{weapon}</b> på <b>{target}</b>.",
             "damageIgnoreArmorTarget": "<b>{actor}</b> gör <b>{damage}</b> poäng <b>{damageType}</b> med <b>{weapon}</b> på <b>{target}</b>. Skadan <b>ignorerar rustning</b>.",
             "pushButtonLabel": "Pressa slag",
-            "pushChoiceLabel": "Välj tillstånd:"
+            "pushChoiceLabel": "Välj tillstånd:",
+            "parryShield": "<p>Om skadan är högre än brytvärdet (<b>{durability}</b>) skadas skölden och blir trasig (gäller ej stickskada).",
+            "parryWeapon": "<p>Om skadan är högre än brytvärdet (<b>{durability}</b>) skadas vapnet och blir trasigt (gäller ej stickskada)."
         },
         "secondaryAttributeTypes": {
             "none": "-",
@@ -392,6 +394,10 @@
             "dialog": {
                 "banes": "Nackdelar",
                 "boons": "Fördelar",
+                "brokenWeaponTitle": "Trasigt vapen",
+                "brokenWeaponContent": "Vapnet är trasigt. Är du säker på att du vill utföra en handling med vapnet?",
+                "performAction": "Utför handling",
+                "cancelAction": "Avbryt handling",
                 "enchantedWeapon": "Förtrolla vapen",
                 "extra": "Extra",
                 "extraDamage": "Extra skada",
