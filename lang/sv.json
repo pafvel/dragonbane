@@ -16,6 +16,24 @@
         "TypeSpell": "Besvärjelse",
         "TypeWeapon": "Vapen"
     },
+    "TYPES": {
+        "Actor": {
+            "character": "Rollperson",
+            "npc": "Spelledarperson",
+            "monster": "Monster"
+        },
+        "Item": {
+            "ability": "Förmåga",
+            "armor": "Rustning",
+            "helmet": "Hjälm",
+            "item": "Föremål",
+            "kin": "Släkte",
+            "profession": "Yrke",
+            "skill": "Färdighet",
+            "spell": "Besvärjelse",
+            "weapon": "Vapen"                
+        }
+    },
     "DoD": {
         "ability": {
             "requirement": "Krav",

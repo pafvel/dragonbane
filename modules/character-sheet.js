@@ -473,9 +473,11 @@ export default class DoDCharacterSheet extends ActorSheet {
             actor: this.actor,
             flavor: game.i18n.format("DoD.ui.character-sheet.restRound", {actor: this.actor.name, wp: newWP - currentWP})
         });
-        game.dice3d.waitFor3DAnimationByMessageID(msg.id).then(
-            () => this.actor.update({["system.willPoints.value"]: newWP })
-        );
+        if (game.dice3d) {
+            game.dice3d.waitFor3DAnimationByMessageID(msg.id).then(
+                () => this.actor.update({["system.willPoints.value"]: newWP })
+            );
+        }
     }
     async _onRestStretch(event) {
         event.preventDefault();
@@ -510,12 +512,14 @@ export default class DoDCharacterSheet extends ActorSheet {
         });
 
         // Wait for dice and update actor
-        game.dice3d.waitFor3DAnimationByMessageID(msg.id).then(
-            () => this.actor.update({
-                ["system.hitPoints.value"]: newHP,
-                ["system.willPoints.value"]: newWP
-             })
-        );
+        if (game.dice3d) {
+            game.dice3d.waitFor3DAnimationByMessageID(msg.id).then(
+                () => this.actor.update({
+                    ["system.hitPoints.value"]: newHP,
+                    ["system.willPoints.value"]: newWP
+                })
+            );
+        }
 
     }
 
