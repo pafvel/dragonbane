@@ -68,6 +68,13 @@ export default class DoDSpellTest extends DoDSkillTest  {
 
         if (this.postRollData.result == 20) {
             this.postRollData.isMagicMishap = true;
+            const table = DoD_Utility.findSystemTable("magicMishapTable", game.i18n.localize("DoD.tables.mishapMagic"));
+            if (table) {
+                this.postRollData.magicMishapTable = "@Table[" + table.uuid + "]{" + table.name + "}";
+            } else {
+                DoD_Utility.WARNING(game.i18n.localize("DoD.WARNING.noMagicMishapTable"));
+            }
+
         }
 
         if (this.postRollData.result == 1) {

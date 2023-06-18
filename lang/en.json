@@ -125,9 +125,6 @@
             "d12": "D12",
             "d20": "D20"
         },
-        "decks": {
-            "initiative": "5LxBJudVVT5w8XHk"
-        },
         "gear": {
             "weight": "Weight",
             "quantity": "Count",
@@ -271,10 +268,9 @@
             "unique": "Unique"
         },
         "tables": {
-            "mishapMagic": "@Table[RollTable.5dtUg9IwWH1bn9PW]",
-            "mishapMelee": "@Table[RollTable.3wfWpxB02vy2vjQ2]",
-            "mishapRanged": "@Table[RollTable.FWsxt61XzYAfoY1L]",
-            "treasure":  "RollTable.l7LGpfcv56e7BWpF"
+            "mishapMagic": "Mishap - Magic",
+            "mishapMelee": "Mishap - Melee",
+            "mishapRanged": "Mishap - Ranged"
         },
         "weapon": {
             "grip": "Grip",
@@ -458,7 +454,11 @@
             "attributeOutOfRange": "An attribute can not be higher than 18 or lower than 1.",
             "macroNoActor": "Missing actor for macro.",
             "macroNoItem": "Missing item for macro. Name: {item}. Type: {type}.",
-            "macroMultipleItems": "Multiple items of the same type ({type}) and name ({item}). The first found item will be used by the macro."
-       }
+            "macroMultipleItems": "Multiple items of the same type ({type}) and name ({item}). The first found item will be used by the macro.",
+            "noTreasureTable": "Missing treasure table.",
+            "noMeleeMishapTable": "Missing the misphap table for melee weapons.",
+            "noRangedMishapTable": "Missing the misphap table for ranged weapons.",
+            "noMagicMishapTable": "Missing the magic misphap table."
+      }
     }
 }

@@ -69,7 +69,9 @@ async function preloadHandlebarsTemplates() {
 }
 
 function registerSettings() {
+    console.log ("Dragonbane: Registering settings");
 
+    // If true, keeps permission on assets when re-importing them
     game.settings.register("dragonbane", "keepOwnershipOnImport", {
         name: "DoD.SETTINGS.keepOwnershipOnImport",
         hint: "DoD.SETTINGS.keepOwnershipOnImportHint",
@@ -77,6 +79,42 @@ function registerSettings() {
         config: true,
         default: false,
         type: Boolean
+    });
+
+    // The core module registers itself here, could be different language versions.
+    game.settings.register("dragonbane", "coreModuleCompendium", {
+        config: false,
+        scope: "world",
+        type: String,
+        default: ""
+    });
+
+    game.settings.register("dragonbane", "magicMishapTable", {
+        config: false,
+        scope: "world",
+        type: String,
+        default: ""
+    });
+
+    game.settings.register("dragonbane", "meleeMishapTable", {
+        config: false,
+        scope: "world",
+        type: String,
+        default: ""
+    });
+
+    game.settings.register("dragonbane", "rangedMishapTable", {
+        config: false,
+        scope: "world",
+        type: String,
+        default: ""
+    });
+
+    game.settings.register("dragonbane", "treasureTable", {
+        config: false,
+        scope: "world",
+        type: String,
+        default: ""
     });
 
     game.settings.register("dragonbane", "systemMigrationVersion", {
@@ -114,6 +152,7 @@ Hooks.once("init", function() {
         rollItem: DoDMacro.rollItemMacro,
         monsterAttack: DoDMacro.monsterAttackMacro,
         monsterDefend: DoDMacro.monsterDefendMacro,
+        drawTreasureCards: DoD_Utility.drawTreasureCards
     };
 });
 
@@ -139,19 +178,6 @@ Hooks.once("ready", function () {
     }
 });
 
-// Initialize YZE Combat module
-// Workaround for 'yzeCombatInit' hook failing when making calls
-Hooks.once('yzeCombatReady', async yzec => {
-    // Workaround: false flag overwrites any vaule already set, e.g. the automatically created decks post-init
-    await yzec.setInitiativeDeck(game.i18n.localize("DoD.decks.initiative"), false); 
-
-    await yzec.register({
-    // Sets the value that defines the speed of the combatant.
-    actorSpeedAttribute: 'system.ferocity',
-    });
-});
-
-
 Hooks.on("renderChatLog", DoDChat.addChatListeners);
 Hooks.on("getChatLogEntryContext", DoDChat.addChatMessageContextMenuOptions);
 
@@ -174,34 +200,6 @@ Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
         }
     }
     return true;
-});
-
-/* Custom chat commands:
- *
- *      /treasure - draw treasure from treasure table
- * 
-*/
-
-Hooks.on("chatMessage", (html, content, msg) => {
-    // Setup new message's visibility
-    // let rollMode = game.settings.get("core", "rollMode");
-
-    let regExp;
-    regExp = /(\S+)/g;
-    let commands = content.match(regExp);
-    let command = commands[0];
-
-    if (command === "/treasure") {
-        let count = 1;
-        if (commands.length > 1) {
-            const parsed = parseInt(commands[1]);
-            if (!isNaN(parsed)) {
-                count = parsed;
-            }
-        }
-        DoD_Utility.drawTreasureCards(count);
-        return false;
-    }
 });
 
 CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([

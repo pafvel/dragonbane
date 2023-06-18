@@ -54,6 +54,18 @@ export default class DoD_Utility {
     }
 
     static async getBaseSkills() {
+        // Get skills from core module compendium
+        const compendiumUuid = game.settings.get("dragonbane", "coreModuleCompendium");
+        if (compendiumUuid) {
+            const compendium = await fromUuid(compendiumUuid);
+            if (compendium) {
+                let skills = compendium.items.filter(i => i.type == "skill" && (i.system.skillType == "core" || i.system.skillType == "weapon"));
+                skills = Array.from(skills);
+                return skills.map(skill => skill.toObject());
+            }
+        }
+
+        // If no compendium, look for skills in the active game
         let skills = game.items.filter(i => i.type == "skill" && (i.system.skillType == "core" || i.system.skillType == "weapon"));
         return skills.map(skill => skill.toObject());
     }
@@ -87,15 +99,29 @@ export default class DoD_Utility {
         return kin;
     }
 
-    static findTable(name) {
+    static findTable(name, options) {
         let table = game.tables.find(i => i.name.toLowerCase() == name.toLowerCase()) || fromUuidSync(name);
         if (!table) {
-            DoD_Utility.WARNING("DoD.WARNING.tableNotFound", {id: name});
+            if (!options?.noWarnings){
+                DoD_Utility.WARNING("DoD.WARNING.tableNotFound", {id: name});
+            }
             return null;    
         }
         if (!table instanceof RollTable) {
-            DoD_Utility.WARNING("DoD.WARNING.typeMismatch", {id: name});
+            if (!options?.noWarning){
+                DoD_Utility.WARNING("DoD.WARNING.typeMismatch", {id: name});
+            }
             return null;    
+        }
+        return table;
+    }
+
+    static findSystemTable(settingName, tableName) {
+        const tableId = game.settings.get("dragonbane", settingName);
+        let tableUuid = "RollTable." + tableId;
+        let table = DoD_Utility.findTable(tableUuid, {noWarnings: true});
+        if (!table) {
+            table = DoD_Utility.findTable(tableName, {noWarnings: true});
         }
         return table;
     }
@@ -215,10 +241,15 @@ export default class DoD_Utility {
     }
 
     static async drawTreasureCards(number) {
-        const table = DoD_Utility.findTable(game.i18n.localize("DoD.tables.treasure"));
+        
+        const tableId = game.settings.get("dragonbane", "treasureTable");
+        const table = DoD_Utility.findTable("RollTable." + tableId);
+
         if (!table) { 
-          return;
+            DoD_Utility.WARNING(game.i18n.localize("DoD.WARNING.noTreasureTable"));
+            return;
         }
+        
         const count = DoD_Utility.clamp(number, 1, table.results.size);
 
         // RollTable.drawMany doesn't work with nested tables, using this as workaround

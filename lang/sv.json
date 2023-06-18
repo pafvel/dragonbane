@@ -125,9 +125,6 @@
             "d12": "D12",
             "d20": "D20"
         },
-        "decks": {
-            "initiative": "93dNu2t4dJAKtqUi"
-        },
         "gear": {
             "weight": "Vikt",
             "quantity": "Antal",
@@ -270,10 +267,9 @@
             "unique": "Unik"
         },
         "tables": {
-            "mishapMagic": "@Table[RollTable.NHVp4W45Z02qumKa]{Missöde - Magi}",
-            "mishapMelee": "@Table[RollTable.VwP9Hy9ESvbC34XA]{Missöde - Närstrid}",
-            "mishapRanged": "@Table[RollTable.RPBIOBT0QvPjf3Sq]{Missöde - Avståndsstrid}",
-            "treasure":  "RollTable.YK8RolElBcnE9QnQ"
+            "mishapMagic": "Missöde - Magi",
+            "mishapMelee": "Missöde - Närstrid",
+            "mishapRanged": "Missöde - Avståndsstrid"
         },
         "unit": {
             "meterPlural": "meter"
@@ -460,7 +456,11 @@
             "attributeOutOfRange": "Grundegenskaper kan inte ha högre värde än 18 och inte lägre värde än 1.",
             "macroNoActor": "Saknar karaktär att utföra makro med.",
             "macroNoItem": "Saknar föremål för makro. Namn: {item}. Typ: {type}.",
-            "macroMultipleItems": "Det finns flera artiklar av samma typ ({type}) och namn ({item}). Den första hittade artikeln kommer att användas av makrot."
+            "macroMultipleItems": "Det finns flera artiklar av samma typ ({type}) och namn ({item}). Den första hittade artikeln kommer att användas av makrot.",
+            "noTreasureTable": "Skattetabellen saknas.",
+            "noMeleeMishapTable": "Tabellen för missöde för närstridsvapen saknas.",
+            "noRangedMishapTable": "Tabellen för missöde för avståndsvapen saknas.",
+            "noMagicMishapTable": "Tabellen för magiska missöden saknas."
         }
     }
 }
