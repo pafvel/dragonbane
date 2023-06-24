@@ -477,6 +477,8 @@ export default class DoDCharacterSheet extends ActorSheet {
             game.dice3d.waitFor3DAnimationByMessageID(msg.id).then(
                 () => this.actor.update({["system.willPoints.value"]: newWP })
             );
+        } else {
+            await this.actor.update({["system.willPoints.value"]: newWP });
         }
     }
     async _onRestStretch(event) {
@@ -519,6 +521,11 @@ export default class DoDCharacterSheet extends ActorSheet {
                     ["system.willPoints.value"]: newWP
                 })
             );
+        } else {
+            await this.actor.update({
+                ["system.hitPoints.value"]: newHP,
+                ["system.willPoints.value"]: newWP
+            });            
         }
 
     }

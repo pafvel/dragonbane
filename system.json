@@ -34,6 +34,17 @@
         "path": "lang/sv.json"
       }
     ],
+    "packs": [
+        {
+            "name": "dragonbane-drakar-och-demoner-system",
+            "label": "Dragonbane / Drakar och Demoner",
+            "path": "packs/dragonbane-drakar-och-demoner-system.db",
+            "type": "Adventure",
+            "module": "Dragonbane",
+            "private": false,
+            "system": "dragonbane"
+        }
+    ],
     "initiative": "1d20",
     "gridDistance": 2,
     "gridUnits": "m",

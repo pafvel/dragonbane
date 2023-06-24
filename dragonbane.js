@@ -81,6 +81,22 @@ function registerSettings() {
         type: Boolean
     });
 
+    // Most recent system version
+    game.settings.register("dragonbane", "systemVersion", {
+        config: false,
+        scope: "world",
+        type: String,
+        default: ""
+    });
+
+    // Most recent data format version
+    game.settings.register("dragonbane", "systemMigrationVersion", {
+        config: false,
+        scope: "world",
+        type: String,
+        default: ""
+    });
+
     // The core module registers itself here, could be different language versions.
     game.settings.register("dragonbane", "coreModuleCompendium", {
         config: false,
@@ -111,13 +127,6 @@ function registerSettings() {
     });
 
     game.settings.register("dragonbane", "treasureTable", {
-        config: false,
-        scope: "world",
-        type: String,
-        default: ""
-    });
-
-    game.settings.register("dragonbane", "systemMigrationVersion", {
         config: false,
         scope: "world",
         type: String,
@@ -156,7 +165,7 @@ Hooks.once("init", function() {
     };
 });
 
-Hooks.once("ready", function () {
+Hooks.once("ready", async function () {
 
     Hooks.on("hotbarDrop", (bar, data, slot) => {
         if (data.type == "Item") {
@@ -176,6 +185,21 @@ Hooks.once("ready", function () {
             game.settings.set("dragonbane", "systemMigrationVersion", SYSTEM_MIGRATION_VERSION);
         }
     }
+
+    // If this is a new version, prompt adventure import
+    if (game.user.isGM) {
+        const systemVersion = game.settings.get("dragonbane", "systemVersion");
+        if (!systemVersion || isNewerVersion(game.system.version, systemVersion)) {
+            const pack = game.packs.get("dragonbane.dragonbane-drakar-och-demoner-system");
+            const adventureId = pack?.index.contents[0]._id;
+            if (adventureId) {
+                const adventure = await pack.getDocument(adventureId);
+                await adventure.sheet.render(true);
+                game.settings.set("dragonbane", "systemVersion", game.system.version);
+            }
+        }    
+    }
+      
 });
 
 Hooks.on("renderChatLog", DoDChat.addChatListeners);

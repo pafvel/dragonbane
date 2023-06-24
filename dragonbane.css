@@ -951,8 +951,14 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info ol {
   margin-left: 1em;
 }
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info ol li {
+  color: #4a2407;
+}
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info ul {
   margin-left: 1em;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info ul li {
+  color: #4a2407;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional {
   height: 100%;
