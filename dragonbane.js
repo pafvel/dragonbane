@@ -199,7 +199,20 @@ Hooks.once("ready", async function () {
             }
         }    
     }
-      
+
+    // Show welcome journal when importing the adventure
+    Hooks.on('importAdventure', async (created, updated) => {
+        const ADVENTURE_NAME = "Dragonbane / Drakar och Demoner - System";
+        if (created?.name == ADVENTURE_NAME) {
+            const title = "(" + game.i18n.lang.toLowerCase() + ")";
+            const adventureJournal = created.journal.find(j => j.name.toLowerCase().includes(title));
+            if (adventureJournal) {
+                const gameJournal = game.journal.get(adventureJournal.id);
+                gameJournal?.show();
+            }
+        }
+        console.log("Dragonbane: Imported " + created.name);
+    });
 });
 
 Hooks.on("renderChatLog", DoDChat.addChatListeners);
