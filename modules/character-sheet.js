@@ -266,6 +266,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.equippedWeapons = equippedWeapons?.sort(DoD_Utility.itemSorter);
         sheetData.equippedArmor = equippedArmor;
         sheetData.equippedHelmet = equippedHelmet;
+        sheetData.hasArmor = equippedArmor || equippedHelmet;
         sheetData.smallItems = smallItems?.sort(DoD_Utility.itemSorter);
         sheetData.memento = memento;
 

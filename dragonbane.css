@@ -202,6 +202,7 @@
   width: auto;
   margin: 0px;
   border: 0px solid transparent;
+  object-fit: cover;
 }
 .DoD.sheet.character .sheet-header .image-container h1 {
   position: relative;
@@ -733,7 +734,7 @@
   margin-bottom: 0px;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .journal-header .title {
-  font-size: 4em;
+  font-size: 2em;
   font-weight: bolder;
   text-transform: uppercase;
   text-align: center;

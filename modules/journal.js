@@ -211,9 +211,28 @@ export async function enrichDisplayNpcCard(match, options) {
                 </td></tr>`
         }                
 
-        // Abilities
+        // Abilities        
         if (npc.hasAbilities) {
-            const abilities = npc.items.filter(i => i.type == "ability");
+            let abilities = npc.items.filter(i => i.type == "ability").sort(DoD_Utility.nameSorter);
+            // Format duplicate abilities
+            let formattedAbilities = [];
+            for (let i=0, j; i < abilities.length; i=j) {
+                let count = 1;
+                // count number of abilities with same name and skip duplicates
+                for (j = i+1; j < abilities.length; j++) {
+                    if (abilities[i].name === abilities[j].name) {
+                        count++;
+                    } else {
+                        break;
+                    }
+                }
+                // Push first unique ability. Add ability count in parenthesis (if multiple)
+                formattedAbilities.push({
+                    name: count == 1 ? abilities[i].name : abilities[i].name + " (" + count + ")"
+                });
+            }
+            abilities = formattedAbilities;
+
             html += `
                 <tr><td>
                     <div class="flexrow list-row">

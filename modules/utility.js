@@ -207,7 +207,11 @@ export default class DoD_Utility {
         // Copy results to avoid modifying table
         let messageResults = await results.map(result => {
             const r = result.toObject(false);
-            r.text = result.getChatText();
+            if (result.parent.id != table.id) {
+                r.text = result.parent.description + "<p>" + result.getChatText() + "</p>";
+            } else {
+                r.text = result.getChatText();
+            }
             r.icon = result.icon;
             return r;
         });

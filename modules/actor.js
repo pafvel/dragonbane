@@ -24,6 +24,7 @@ export class DoDActor extends Actor {
                         "prototypeToken.bar1.attribute": "hitPoints",
                         "prototypeToken.bar2.attribute": "willPoints",
                         "prototypeToken.displayBars": 30, // Hovered by Anyone
+                        "prototypeToken.sight.enabled": true, // Vision enabled
                     });
                     break;
                 case "npc":

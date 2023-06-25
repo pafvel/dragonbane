@@ -34,6 +34,7 @@
                 </tr>
                 {{/if}}
 
+                {{#if abilities}}
                 <tr>
                     <th><b>{{localize "DoD.ui.character-sheet.abilities"}}</b></th>
                     <td class="comma-list">
@@ -42,6 +43,7 @@
                         {{/each}}
                     </td>
                 </tr>
+                {{/if}}
 
                 {{#if equippedWeapons}}
                 <tr class="item-list">
@@ -56,6 +58,7 @@
                 </tr>
                 {{/if}}
 
+                {{#if hasArmor}}
                 <tr class="item-list">
                     <th><b>{{localize "DoD.ui.character-sheet.equipped-armor"}}</b></th>
                     <td class="comma-list">
@@ -69,6 +72,7 @@
                         {{/if}}
                     </td>
                 </tr>
+                {{/if}}
 
                 {{#if inventory}}
                 <tr class="item-list">

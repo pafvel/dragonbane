@@ -224,6 +224,7 @@ Hooks.on("renderJournalPageSheet", (obj, html, data) => {
     html.on("click", ".treasure-roll", DoDChat.onTreasureRoll);
 });
 
+// Apply seeting to keep ownership permission on import
 Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
     const keepOwnership = game.settings.get("dragonbane", "keepOwnershipOnImport");
     if (keepOwnership) {
@@ -238,6 +239,19 @@ Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
     }
     return true;
 });
+
+// Re-generate thumbnails when importing scenes
+Hooks.on('importAdventure', async (created, updated) => {
+    if (created) {
+        console.log("Dragonbane: Imported " + created.name);
+        created.scenes.forEach(async s => {
+            const scene = game.scenes.get(s.id);
+            const thumb = await scene.createThumbnail();
+            scene.update({ "thumb": thumb.thumb });
+        });
+    }
+});
+
 
 CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     {
