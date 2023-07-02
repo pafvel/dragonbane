@@ -243,7 +243,7 @@ export class DoDActor extends Actor {
     _prepareActorStats() {
 
         // Will Points
-        if (!Number.isInteger(this.system.willPoints.max)) {
+        if (!this.system.willPoints || !Number.isInteger(this.system.willPoints.max)) {
             this.update({ 
                 ["system.willPoints.max"]: 10,
                 ["system.willPoints.value"]: 10 });

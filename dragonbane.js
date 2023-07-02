@@ -243,7 +243,7 @@ Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
 // Re-generate thumbnails when importing scenes
 Hooks.on('importAdventure', async (created, updated) => {
     if (created) {
-        console.log("Dragonbane: Imported " + created.name);
+        console.log("Dragonbane: Re-generating thumbnails for " + created.name);
         created.scenes.forEach(async s => {
             const scene = game.scenes.get(s.id);
             const thumb = await scene.createThumbnail();

@@ -6,7 +6,7 @@
     "version": "0.0.2",
     "compatibility": {
       "minimum": "10",
-      "verified": "10.291",
+      "verified": "11",
       "maximum": "11"
     },
     "authors": [
@@ -42,7 +42,8 @@
             "type": "Adventure",
             "module": "Dragonbane",
             "private": false,
-            "system": "dragonbane"
+            "system": "dragonbane",
+            "banner": "./systems/dragonbane/art/dragonbane-banner.webp"
         }
     ],
     "initiative": "1d20",
