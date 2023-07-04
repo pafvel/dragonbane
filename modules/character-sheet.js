@@ -966,31 +966,31 @@ export default class DoDCharacterSheet extends ActorSheet {
             if (dropTarget) {
                 if (dropTarget == "weapon" && itemData.type == "weapon")
                 {
-                    item.update({
+                    await item.update({
                         ["system.worn"]: true,
                         ["system.memento"]: false
                     });
                 }
                 else if (dropTarget == "armor" && itemData.type == "armor") {
-                    actorData.equippedArmor?.update({ ["system.worn"]: false});
-                    item.update({
+                    await actorData.equippedArmor?.update({ ["system.worn"]: false});
+                    await item.update({
                         ["system.worn"]: true,
                         ["system.memento"]: false
                     });
                 }
                 else if (dropTarget == "helmet" && itemData.type == "helmet") {
-                    actorData.equippedHelmet?.update({ ["system.worn"]: false});
-                    item.update({
+                    await actorData.equippedHelmet?.update({ ["system.worn"]: false});
+                    await item.update({
                         ["system.worn"]: true,
                         ["system.memento"]: false
                     });
                 }
                 else if (dropTarget == "memento") {
-                    actorData.memento?.update({ ["system.memento"]: false });
-                    item.update({ ["system.memento"]: true});
+                    await actorData.memento?.update({ ["system.memento"]: false });
+                    await item.update({ ["system.memento"]: true});
                 }
                 else if (dropTarget == "inventory" || dropTarget == "tiny") {
-                    item.update({
+                    await item.update({
                         ["system.worn"]: false,
                         ["system.memento"]: false
                     });
@@ -1038,7 +1038,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             || itemData.type == "helmet" && !actorData.equippedHelmet )
         {
             let equipItem = returnValue[0];
-            equipItem.update({ ["system.worn"]: true });
+            await equipItem.update({ ["system.worn"]: true });
         }
         return returnValue;
     }
