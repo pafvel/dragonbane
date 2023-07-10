@@ -230,7 +230,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.magicSkills = sheetData.actor.system.magicSkills?.sort(DoD_Utility.nameSorter); 
         sheetData.secondarySkills = sheetData.actor.system.secondarySkills?.sort(DoD_Utility.nameSorter); 
         sheetData.weaponSkills = sheetData.actor.system.weaponSkills?.sort(DoD_Utility.nameSorter);
-        sheetData.trainedSkills = sheetData.actor.system.trainedSkills?.sort(DoD_Utility.nameSorter);
+        sheetData.trainedSkills = sheetData.actor.system.trainedSkills?.sort(DoD_Utility.nameSorter).filter(s => s.system.hideTrained == false);
 
         sheetData.heroicAbilities = heroicAbilities.sort(DoD_Utility.nameSorter);
         sheetData.kinAbilities = kinAbilities.sort(DoD_Utility.nameSorter);

@@ -221,8 +221,13 @@
         },
         "skill": {
             "advance": "Förbättra",
+            "advanceTooltip": "Anger att du kan slå ett Förbättringsslag för färdigheten",
             "attribute": "Grundegenskap",
-            "type": "Typ"
+            "attributeTooltip": "Färdighetens grundegenskap",
+            "hide": "Dölj",
+            "hideTooltip": "Dölj från listan med Tränade färdigheter",
+            "type": "Typ",
+            "typeTooltip": "Färdighetens typ"
         },
         "skillTypes": {
             "core": "Grundfärdighet",

@@ -184,7 +184,8 @@
             "skillType": "",
             "attribute": "",
             "value": 0,
-            "advance": 0
+            "advance": 0,
+            "hideTrained": false
         },
         "ability": {
             "templates": ["itemDescripton"],

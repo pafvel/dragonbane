@@ -6,9 +6,26 @@
     <div class="sheet-content">
         <table>
             <tr>
-                <th>{{localize "DoD.skill.type"}}</th>
-                <th>{{localize "DoD.skill.attribute"}}</th>
-                <th>{{localize "DoD.skill.advance"}}</th>
+                <th>
+                    <label title="{{localize "DoD.skill.typeTooltip"}}">
+                    {{localize "DoD.skill.type"}}
+                    </label>
+                </th>
+                <th>
+                    <label title="{{localize "DoD.skill.attributeTooltip"}}">
+                    {{localize "DoD.skill.attribute"}}
+                    </label>
+                </th>
+                <th>
+                    <label title="{{localize "DoD.skill.advanceTooltip"}}">
+                    {{localize "DoD.skill.advance"}}
+                    </label>
+                </th>
+                <th>
+                    <label title="{{localize "DoD.skill.hideTooltip"}}">
+                    {{localize "DoD.skill.hide"}}
+                    </label>
+                </th>
             </tr>
             <tr>
                 <td>
@@ -31,6 +48,9 @@
                 </td>
                 <td>
                     <input class="inline-edit" name="data.advance" data-field="data.advance" type="checkbox" {{checked data.advance}} />
+                </td>
+                <td>
+                    <input class="inline-edit" name="data.hideTrained" data-field="data.hideTrained" type="checkbox" {{checked data.hideTrained}} />
                 </td>
             </tr>
         </table>

@@ -222,8 +222,13 @@
         },
         "skill": {
             "advance": "Advance",
+            "advanceTooltip": "Marks that you can make an Advancement Roll",
             "attribute": "Attribute",
-            "type": "Type"
+            "attributeTooltip": "The skill's Attribute",
+            "hide": "Hide",
+            "hideTooltip": "Hides skill from the list of Trained Skills",
+            "type": "Type",
+            "typeTooltip": "The skill's Type"
         },
         "skillTypes": {
             "core": "Core skill",
