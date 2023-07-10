@@ -912,7 +912,15 @@ export default class DoDCharacterSheet extends ActorSheet {
             damageType: damageType
         };
 
-        DoDChat.inflictDamageMessage(damageData);
+        const targets = Array.from(game.user.targets)
+        if (targets.length > 0) {
+            for (const target of targets) {
+                damageData.target = target.actor;
+                await DoDChat.inflictDamageMessage(damageData);    
+            }
+         } else {
+            await DoDChat.inflictDamageMessage(damageData);    
+        }
     }
 
     async _onAttributeRoll(event) {
