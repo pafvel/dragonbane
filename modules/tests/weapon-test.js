@@ -13,14 +13,14 @@ export default class DoDWeaponTest extends DoDSkillTest  {
     updateDialogData() {
         super.updateDialogData();
 
-        const isRangedWeapon = this.weapon.system.range >= 10;
+        const hasThrowAttack = this.weapon.hasWeaponFeature("thrown");
+        const isRangedWeapon = !hasThrowAttack && this.weapon.system.range >= 10;
         const hasSlashAttack = this.weapon.hasWeaponFeature("slashing");
         const hasStabAttack = this.weapon.hasWeaponFeature("piercing");
         const hasWeakpointAttack = hasStabAttack;
         const hasNormalAttack = !(hasStabAttack || hasSlashAttack);
         const hasToppleAttack = this.weapon.hasWeaponFeature("toppling");
         const hasDisarmAttack = true;
-        const hasThrowAttack = this.weapon.hasWeaponFeature("thrown");
         const hasParry = !this.weapon.hasWeaponFeature("noparry");
 
         let actions = [];
