@@ -127,7 +127,7 @@
         },
         "gear": {
             "weight": "Weight",
-            "quantity": "Count",
+            "quantity": "Quantity",
             "cost": "Cost",
             "supply": "Supply",
             "worn": "Worn",
