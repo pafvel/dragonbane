@@ -27,7 +27,7 @@ export function addChatMessageContextMenuOptions(html, options) {
         return false;
     }
 
-    const dealTargetDamage = function(li, multiplier = 1) {
+    const dealTargetDamage = function(li, multiplier = 1, ignoreArmor = false) {
         const damageData = {};
         const element = li.find(".damage-roll")[0];
 
@@ -35,7 +35,7 @@ export function addChatMessageContextMenuOptions(html, options) {
         damageData.damageType = element.dataset.damageType.substr(String("DoD.damageTypes.").length);
         damageData.actor = DoD_Utility.getActorFromUUID(element.dataset.targetId);
         damageData.multiplier = multiplier;
-        damageData.ignoreArmor = element.dataset.ignoreArmor;
+        damageData.ignoreArmor = ignoreArmor || element.dataset.ignoreArmor;
 
         if (damageData.actor.isOwner) {
             applyDamageMessage(damageData);
@@ -60,7 +60,7 @@ export function addChatMessageContextMenuOptions(html, options) {
         return false;
     }
 
-    const dealSelectedDamage = function(li, multiplier = 1) {
+    const dealSelectedDamage = function(li, multiplier = 1, ignoreArmor = false) {
         const damageData = {};
         const element = li.find(".damage-roll")[0];
 
@@ -68,7 +68,7 @@ export function addChatMessageContextMenuOptions(html, options) {
         damageData.damageType = element.dataset.damageType.substr(String("DoD.damageTypes.").length);
         damageData.actor = canvas.tokens.controlled[0].actor;
         damageData.multiplier = multiplier;
-        damageData.ignoreArmor = element.dataset.ignoreArmor;
+        damageData.ignoreArmor = ignoreArmor || element.dataset.ignoreArmor;
 
         const targets = canvas.tokens.controlled;
         for (const target of targets) {
@@ -101,6 +101,12 @@ export function addChatMessageContextMenuOptions(html, options) {
             callback: li => dealTargetDamage(li, 2)
         },
         {
+            name: game.i18n.format("DoD.ui.chat.dealDamageIgnoreArmor"),
+            icon: '<i class="fas fa-user-minus"></i>',
+            condition: canDealTargetDamage,
+            callback: li => dealTargetDamage(li, 1, true)
+        },
+        {
             name: game.i18n.format("DoD.ui.chat.dealSelectedDamage"),
             icon: '<i class="fas fa-user-minus"></i>',
             condition: canDealSelectedDamage,
@@ -117,6 +123,12 @@ export function addChatMessageContextMenuOptions(html, options) {
             icon: '<i class="fas fa-user-minus"></i>',
             condition: canDealSelectedDamage,
             callback: li => dealSelectedDamage(li, 2)
+        },
+        {
+            name: game.i18n.format("DoD.ui.chat.dealSelectedDamageIgnoreArmor"),
+            icon: '<i class="fas fa-user-minus"></i>',
+            condition: canDealSelectedDamage,
+            callback: li => dealSelectedDamage(li, 1, true)
         }
     );
 }
