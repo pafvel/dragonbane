@@ -337,7 +337,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".rollable-attribute").click(this._onAttributeRoll.bind(this));
             html.find(".condition-panel").click(this._onConditionClick.bind(this));
             html.find(".rollable-skill").on("click contextmenu", this._onSkillRoll.bind(this));
-            html.find(".rollable-damage").click(this._onDamageRoll.bind(this));
+            html.find(".rollable-damage").on("click contextmenu", this._onDamageRoll.bind(this));
             html.find(".use-item").on("click contextmenu", this._onUseItem.bind(this));
 
             html.find(".hit-points-max-label").change(this._onEditHp.bind(this));
@@ -890,36 +890,42 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         const itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
         const weapon = this.actor.items.get(itemId);
-        const weaponDamage = weapon.system.damage;
-        const skill = this.actor.findSkill(weapon.system.skill.name);
-        const attribute = skill?.system.attribute;
-        const damageBonus = this.actor.getDamageBonus(attribute);
-        const damage = damageBonus ? weaponDamage + "+" + damageBonus : weaponDamage;
-        let damageType = DoD.damageTypes.none; 
 
-        if (weapon.hasWeaponFeature("bludgeoning")) {
-            damageType = DoD.damageTypes.bludgeoning;
-        } else if (weapon.hasWeaponFeature("slashing")) {
-            damageType = DoD.damageTypes.slashing;
-        } else if (weapon.hasWeaponFeature("piercing")) {
-            damageType = DoD.damageTypes.piercing;
-        }
+        if (event.type == "click") { // left click - roll damage
 
-        const damageData = {
-            actor: this.actor,
-            weapon: weapon,
-            damage: damage,
-            damageType: damageType
-        };
+            const weaponDamage = weapon.system.damage;
+            const skill = this.actor.findSkill(weapon.system.skill.name);
+            const attribute = skill?.system.attribute;
+            const damageBonus = this.actor.getDamageBonus(attribute);
+            const damage = damageBonus ? weaponDamage + "+" + damageBonus : weaponDamage;
+            let damageType = DoD.damageTypes.none; 
 
-        const targets = Array.from(game.user.targets)
-        if (targets.length > 0) {
-            for (const target of targets) {
-                damageData.target = target.actor;
+            if (weapon.hasWeaponFeature("bludgeoning")) {
+                damageType = DoD.damageTypes.bludgeoning;
+            } else if (weapon.hasWeaponFeature("slashing")) {
+                damageType = DoD.damageTypes.slashing;
+            } else if (weapon.hasWeaponFeature("piercing")) {
+                damageType = DoD.damageTypes.piercing;
+            }
+
+            const damageData = {
+                actor: this.actor,
+                weapon: weapon,
+                damage: damage,
+                damageType: damageType
+            };
+
+            const targets = Array.from(game.user.targets)
+            if (targets.length > 0) {
+                for (const target of targets) {
+                    damageData.target = target.actor;
+                    await DoDChat.inflictDamageMessage(damageData);    
+                }
+            } else {
                 await DoDChat.inflictDamageMessage(damageData);    
             }
-         } else {
-            await DoDChat.inflictDamageMessage(damageData);    
+        } else { // right click - edit item
+            weapon.sheet.render(true);
         }
     }
 
