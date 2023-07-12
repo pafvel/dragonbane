@@ -145,7 +145,7 @@ export default class DoDItemSheet extends ItemSheet {
             resolve => {
                 const data = {
                     item: this.item,
-                    title: "Title",
+                    title: game.i18n.localize("DoD.ui.dialog.weaponFeatures"),
                     content: html,
                     buttons: {
                         ok: {
@@ -211,7 +211,7 @@ export default class DoDItemSheet extends ItemSheet {
             resolve => {
                 const data = {
                     item: this.item,
-                    title: "Title",
+                    title: game.i18n.localize("DoD.armor.bonuses"),
                     content: html,
                     buttons: {
                         ok: {

@@ -114,7 +114,10 @@
             "none": "Damage",
             "bludgeoning": "Bludgeoning Damage",
             "piercing": "Piercing Damage",
-            "slashing": "Slashing Damage"
+            "slashing": "Slashing Damage",
+            "bludgeoningTooltip": "Bludgeoning Damage",
+            "piercingTooltip": "Piercing Damage",
+            "slashingTooltip": "Slashing Damage"
         },
         "dice": {
             "d": "D",
@@ -295,6 +298,7 @@
             "skill": "Skill",
             "skillValue": "Skill",
             "skillValueTooltip": "Skill value when using the weapon.",
+            "broken": "Broken",
             "brokenTooltip": "Indicates if the weapon is broken",
             "mainHandTooltip": "Holding the weapon in the main hand.",
             "offHandTooltip": "Holding the weapon in the off-hand."
@@ -332,6 +336,7 @@
             "character-sheet": {
                 "abilities": "Abilities",
                 "age": "Age",
+                "and": "&",
                 "appearance": "Appearance",
                 "armor": "Armor",
                 "background": "Background",

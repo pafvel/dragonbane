@@ -114,7 +114,10 @@
             "none": "skada",
             "bludgeoning": "krosskada",
             "piercing": "stickskada",
-            "slashing": "huggskada"
+            "slashing": "huggskada",
+            "bludgeoningTooltip": "Krosskada",
+            "piercingTooltip": "Stickskada",
+            "slashingTooltip": "Huggskada"
         },
         "dice": {
             "d": "D",
@@ -297,6 +300,7 @@
             "skill": "Färdighet",
             "skillValue": "FV",
             "skillValueTooltip": "Färdighetsvärde för vapnet",
+            "broken": "Trasigt",
             "brokenTooltip": "Anger om vapnet är trasigt",
             "mainHandTooltip": "Håller vapnet i svärdshanden",
             "offHandTooltip": "Håller vapnet i den aviga handen"
@@ -331,6 +335,7 @@
             "character-sheet": {
                 "abilities": "Förmågor",
                 "age": "Ålder",
+                "and": "&",
                 "appearance": "Utseende",
                 "armor": "Skydd",
                 "background": "Bakgrund",
