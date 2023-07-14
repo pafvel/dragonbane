@@ -344,7 +344,8 @@ function onPushRoll(event) {
         attribute: element.dataset.attribute,
         formula: element.dataset.formula,
         canPush: false,
-        skipDialog: true
+        skipDialog: true,
+        isReRoll: true
     }
     let test = null;
     switch (element.dataset.rollType) {
@@ -363,8 +364,8 @@ function onPushRoll(event) {
             break;
         case "DoDSpellTest":
             options.spell = actor.findSpell(element.dataset.spellName);
-            options.powerLevel = element.dataset.powerLevel;
-            options.wpCost = 0;
+            options.powerLevel = Number(element.dataset.powerLevel);
+            options.wpCost = Number(element.dataset.wpCost);
             test = new DoDSpellTest(actor, options.spell, options);
             break;
         default:

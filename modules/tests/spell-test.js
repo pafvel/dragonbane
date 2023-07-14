@@ -24,16 +24,18 @@ export default class DoDSpellTest extends DoDSkillTest  {
         let options = await this.getRollOptionsFromDialog(title, label);
         if (options.cancelled) return options;
        
-        // Check if the character has enough WP to cast spell
-        let powerLevel = this.hasPowerLevel ? 1 : 0;
-        if (!this.skipDialog && this.hasPowerLevel) {
-            powerLevel = options.powerLevel;
-        }
-        const wpCost = this.spell.getSpellCost(powerLevel);
-        const wp = this.actor.system.willPoints.value;
-        if (wpCost > wp) {
-            DoD_Utility.WARNING("DoD.WARNING.notEnoughWPForSpell");
-            options.cancelled = true;
+        if (!this.isReRoll) {
+            // Check if the character has enough WP to cast spell
+            let powerLevel = this.hasPowerLevel ? 1 : 0;
+            if (!this.skipDialog && this.hasPowerLevel) {
+                powerLevel = options.powerLevel;
+            }
+            const wpCost = this.spell.getSpellCost(powerLevel);
+            const wp = this.actor.system.willPoints.value;
+            if (wpCost > wp) {
+                DoD_Utility.WARNING("DoD.WARNING.notEnoughWPForSpell");
+                options.cancelled = true;
+            }
         }
         return options;
     }
@@ -60,9 +62,11 @@ export default class DoDSpellTest extends DoDSkillTest  {
     updatePostRollData() {
         super.updatePostRollData();
 
-        const wpNew = this.postRollData.actor.system.willPoints.value - this.postRollData.wpCost;
-
-        this.postRollData.actor.update({ ["system.willPoints.value"]: wpNew});
+        if (!this.isReRoll) {
+            // Pay WP cost
+            const wpNew = this.postRollData.actor.system.willPoints.value - this.postRollData.wpCost;
+            this.postRollData.actor.update({ ["system.willPoints.value"]: wpNew});    
+        }
 
         this.postRollData.isDamaging = this.spell.isDamaging;
 
