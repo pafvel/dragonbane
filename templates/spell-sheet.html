@@ -13,16 +13,16 @@
             </tr>
             <tr>
                 <td>
-                    <input class="edit-school" data-field="system.school" name="data.school" type="text" value="{{localize data.school}}" />
+                    <input class="edit-school" data-field="system.school" name="system.school" type="text" value="{{localize data.school}}" />
                 </td>
                 <td>
-                    <input name="data.rank" type="text" value="{{data.rank}}" data-dtype="Number" />
+                    <input name="system.rank" type="text" value="{{data.rank}}" data-dtype="Number" />
                 </td>
                 <td>
-                    <input name="data.prerequisite" type="text" value="{{data.prerequisite}}" />
+                    <input name="system.prerequisite" type="text" value="{{data.prerequisite}}" />
                 </td>
                 <td>
-                    <input name="data.requirement" type="text" value="{{data.requirement}}" />
+                    <input name="system.requirement" type="text" value="{{data.requirement}}" />
                 </td>
             </tr>
         </table>
@@ -36,7 +36,7 @@
             </tr>
             <tr>
                 <td>
-                    <select name="data.castingTime">
+                    <select name="system.castingTime">
                         {{#select data.castingTime}}
                         {{#each config.castingTimeTypes as |name castingTime|}}
                         <option value="{{castingTime}}">{{localize name}}</option>
@@ -45,7 +45,7 @@
                     </select>
                 </td>
                 <td>
-                    <select name="data.rangeType">
+                    <select name="system.rangeType">
                         {{#select data.rangeType}}
                         {{#each config.spellRangeTypes as |name rangeType|}}
                         <option value="{{rangeType}}">{{localize name}}</option>
@@ -55,13 +55,13 @@
                 </td>
                 <td>
                     {{#if enableRange}}
-                    <input name="data.range" type="text" value="{{data.range}}" data-dtype="Number" />
+                    <input name="system.range" type="text" value="{{data.range}}" data-dtype="Number" />
                     {{else}}
-                    <input name="data.range" type="text" value="-" data-dtype="Number" disabled/>
+                    <input name="system.range" type="text" value="-" data-dtype="Number" disabled/>
                     {{/if}}
                 </td>
                 <td>
-                    <select name="data.duration">
+                    <select name="system.duration">
                         {{#select data.duration}}
                         {{#each config.spellDurationTypes as |name duration|}}
                         <option value="{{duration}}">{{localize name}}</option>
@@ -80,10 +80,10 @@
             
             <tr>
                 <td>
-                    <input name="data.damage" type="text" value="{{data.damage}}" pattern="(\d+)?[dD](\d+)([\+\-]\d+)?|(([\+\-])?\d+)?"/>
+                    <input name="system.damage" type="text" value="{{data.damage}}" pattern="(\d+)?[dD](\d+)([\+\-]\d+)?|(([\+\-])?\d+)?"/>
                 </td>    
                 <td>
-                    <input name="data.damagePerPowerlevel" type="text" value="{{data.damagePerPowerlevel}}" pattern="(\d+)?[dD](\d+)([\+\-]\d+)?|(([\+\-])?\d+)?"/>
+                    <input name="system.damagePerPowerlevel" type="text" value="{{data.damagePerPowerlevel}}" pattern="(\d+)?[dD](\d+)([\+\-]\d+)?|(([\+\-])?\d+)?"/>
                 </td>    
             </tr>
         </table>

@@ -15,7 +15,7 @@
             </tr>
             <tr>
                 <td>
-                    <select name="data.grip.value">
+                    <select name="system.grip.value">
                         {{#select data.grip.value}}
                         {{#each config.gripTypes as |name type|}}
                         <option value="{{type}}">{{localize name}}</option>
@@ -24,19 +24,19 @@
                     </select>
                 </td>
                 <td>
-                    <input name="data.str" type="text" value="{{data.str}}" data-dtype="Number" />
+                    <input name="system.str" type="text" value="{{data.str}}" data-dtype="Number" />
                 </td>
                 <td class="flexrow">
-                    <input name="data.range" type="text" value="{{data.range}}" />
+                    <input name="system.range" type="text" value="{{data.range}}" />
                 </td>
                 <td>
-                    <input name="data.damage" type="text" value="{{data.damage}}" pattern="(\d+)?[dD](\d+)([\+\-]\d+)?|(([\+\-])?\d+)?"/>
+                    <input name="system.damage" type="text" value="{{data.damage}}" pattern="(\d+)?[dD](\d+)([\+\-]\d+)?|(([\+\-])?\d+)?"/>
                 </td>
                 <td>
-                    <input name="data.durability" type="text" value="{{data.durability}}" data-dtype="Number" />
+                    <input name="system.durability" type="text" value="{{data.durability}}" data-dtype="Number" />
                 </td>
                 <td>
-                    <input class="inline-edit" name="data.broken" data-field="data.broken" type="checkbox" {{checked data.broken}} />
+                    <input class="inline-edit" name="system.broken" data-field="data.broken" type="checkbox" {{checked data.broken}} />
                 </td>
 
         </table>
@@ -47,7 +47,7 @@
             </tr>
             <tr>
                 <td>
-                    <input name="data.skill.name" type="text" value="{{data.skill.name}}" />
+                    <input name="system.skill.name" type="text" value="{{data.skill.name}}" />
                 </td>
                 <td class="edit-weapon-features comma-list">
                     {{#each weaponFeatures as |feature|}}
@@ -65,10 +65,10 @@
             </tr>
             <tr>
                 <td>
-                    <input name="data.cost" type="text" value="{{data.cost}}" />
+                    <input name="system.cost" type="text" value="{{data.cost}}" />
                 </td>
                 <td>
-                    <select name="data.supply">
+                    <select name="system.supply">
                         {{#select data.supply}}
                         {{#each config.supplyTypes as |name type|}}
                         <option value="{{type}}">{{localize name}}</option>
@@ -77,10 +77,10 @@
                     </select>
                 </td>
                 <td>
-                    <input name="data.weight" type="text" value="{{data.weight}}" data-dtype="Number" />
+                    <input name="system.weight" type="text" value="{{data.weight}}" data-dtype="Number" />
                 </td>
                 <td>
-                    <input name="data.quantity" type="text" value="{{data.quantity}}" data-dtype="Number" />
+                    <input name="system.quantity" type="text" value="{{data.quantity}}" data-dtype="Number" />
                 </td>
             </tr>
         </table>

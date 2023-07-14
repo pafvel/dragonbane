@@ -11,10 +11,10 @@
             </tr>
             <tr>
                 <td>
-                    <input name="data.rating" type="text" value="{{data.rating}}" data-dtype="Number" />
+                    <input name="system.rating" type="text" value="{{data.rating}}" data-dtype="Number" />
                 </td>
                 <td>
-                    <input name="data.banes" type="text" value="{{data.banes}}" />
+                    <input name="system.banes" type="text" value="{{data.banes}}" />
                 </td>
             </tr>
         </table>
@@ -27,16 +27,16 @@
             </tr>
             <tr>
                 <td>
-                    <input name="data.weight" type="text" value="{{data.weight}}" data-dtype="Number" />
+                    <input name="system.weight" type="text" value="{{data.weight}}" data-dtype="Number" />
                 </td>
                 <td>
-                    <input name="data.quantity" type="text" value="{{data.quantity}}" data-dtype="Number" />
+                    <input name="system.quantity" type="text" value="{{data.quantity}}" data-dtype="Number" />
                 </td>
                 <td>
-                    <input name="data.cost" type="text" value="{{data.cost}}" />
+                    <input name="system.cost" type="text" value="{{data.cost}}" />
                 </td>
                 <td>
-                    <select name="data.supply">
+                    <select name="system.supply">
                         {{#select data.supply}}
                         {{#each config.supplyTypes as |name type|}}
                         <option value="{{type}}">{{localize name}}</option>
