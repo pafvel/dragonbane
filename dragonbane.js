@@ -218,6 +218,10 @@ Hooks.once("ready", async function () {
 Hooks.on("renderChatLog", DoDChat.addChatListeners);
 Hooks.on("getChatLogEntryContext", DoDChat.addChatMessageContextMenuOptions);
 
+Hooks.on("renderChatMessage", (app, html, data) => {
+    DoDChat.hideChatPermissions(app, html, data);
+});
+
 Hooks.on("renderJournalPageSheet", (obj, html, data) => {
     html.on('click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
     html.on("click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);

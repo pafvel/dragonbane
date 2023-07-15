@@ -481,3 +481,13 @@ export async function applyDamageMessage(damageData) {
 
     ChatMessage.create({ content: msg });
 }
+
+export function hideChatPermissions(app, html, data) {
+    const elements = html.find(".owner-permission");
+    elements.each((i, element) => {
+        const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId);
+        if (actor && !actor.isOwner) {
+            element.style.display = "none";
+        }
+    });
+}

@@ -1,5 +1,7 @@
 {{> "templates/dice/roll.html"}}
 
+<div class="owner-permission" data-actor-id="{{actor.uuid}}">
+
 {{#if success}}
 
     {{#if weapon}}
@@ -106,3 +108,5 @@
     {{/if}}
 
 {{/if}}  <!-- success -->
+
+</div>
