@@ -58,12 +58,19 @@ export default class DoDTest {
         this.postRollData.pushRollChoices = {};
         this.postRollData.pushRollChoice = null;
         for (const attribute in actor.system.attributes) {
-            const condition = actor.system.conditions[attribute]
-            if (!condition.value){
-                this.postRollData.pushRollChoices[attribute] = game.i18n.localize("DoD.conditions." + attribute) + "<br>";
-                if (!this.postRollData.pushRollChoice) {
-                    this.postRollData.pushRollChoice = attribute;
-                }
+            const condition = actor.system.conditions[attribute];
+            if (condition) {
+                if (!condition.value){
+
+                    this.postRollData.pushRollChoices[attribute] = 
+                        game.i18n.localize("DoD.conditions." + attribute) + " (" +
+                        game.i18n.localize("DoD.attributes." + attribute) + ")<br>";
+                    if (!this.postRollData.pushRollChoice) {
+                        this.postRollData.pushRollChoice = attribute;
+                    }
+                }    
+            } else {
+                DoD_Utility.ERROR("Missing condition for attribute " + attribute);
             }
         }
         if (!this.postRollData.pushRollChoice) {

@@ -293,4 +293,12 @@ export default class DoD_Utility {
             return ui.notifications.warn(game.i18n.format(game.i18n.localize(msg), params));
         }
     }
+
+    static ERROR(msg, params) {
+        if (!params) {
+            return ui.notifications.error(game.i18n.localize(msg));
+        } else {
+            return ui.notifications.error(game.i18n.format(game.i18n.localize(msg), params));
+        }
+    }
 }
