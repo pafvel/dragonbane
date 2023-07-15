@@ -31,5 +31,5 @@ The system provides support for
   - Svenska
 
 ## Official modules
-[Dragonbane Core Rules (English)](https://foundryvtt.com/packages/dragonbane-coreset) - Includes all content from the core rules and the epic campaign Secret of the Dragon Emperor.
+[Dragonbane Core Rules (English)](https://foundryvtt.com/packages/dragonbane-coreset) - Includes all content from the core rules and the epic campaign Secret of the Dragon Emperor.  
 [Drakar och Demoner Grundspel (Svenska)](https://foundryvtt.com/packages/dragonbane-grundspel) - Allt innehåll från grundreglerna och den episka kampanjen  Drakkejsarens hemlighet.
