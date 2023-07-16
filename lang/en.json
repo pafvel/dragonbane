@@ -58,6 +58,7 @@
             "sphere": "Sphere"
         },
         "armor": {
+            "new": "New Armor",
             "banes": "Banes",
             "rating": "Armor Rating",
             "bonuses": "Bonus Armor"
@@ -128,6 +129,9 @@
             "d12": "D12",
             "d20": "D20"
         },
+        "item": {
+            "new": "New Item"
+        },
         "gear": {
             "weight": "Weight",
             "quantity": "Quantity",
@@ -161,6 +165,7 @@
             "grip2h": "2h"
         },
         "helmet": {
+            "new": "New Helmet",
             "rating": "Armor Rating"
         },
         "itemTypes": {
@@ -281,6 +286,7 @@
             "mishapRanged": "Mishap - Ranged"
         },
         "weapon": {
+            "new": "New Weapon",
             "grip": "Grip",
             "gripTooltip": "If you need one or two hands to wield the weapon.",
             "str": "STR",
@@ -343,6 +349,10 @@
                 "banes": "Bane on",
                 "combat": "Combat",
                 "coreSkills": "Core Skills",
+                "create-armor": "Create Armor",
+                "create-helmet": "Create Helmet",
+                "create-item": "Create Item",
+                "create-weapon": "Create Weapon",
                 "currency": "Coin",
                 "damageBonusAGL": "Dmg Bonus AGL",
                 "damageBonusSTR": "Dmg Bonus STR",
@@ -350,7 +360,7 @@
                 "description": "Description",
                 "encumbrance": "Encumbrance",
                 "equipped-armor": "Equipped Armor",
-                "equipped-helmet": "Equipped Helm",
+                "equipped-helmet": "Equipped Helmet",
                 "equipped-weapon": "Equipped Weapons",
                 "failures": "Failures",
                 "ferocity": "Ferocity",

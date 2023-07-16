@@ -497,6 +497,15 @@
         height: 36px;
         th {
             white-space: nowrap;
+            button {
+                padding: 0px;
+                margin: 0px;
+                text-align: center;
+                border: 0px transparent;
+                background: transparent;
+                color:whitesmoke;
+                max-width: 24px;
+            }
         };
         th:first-child {
             background-image: url("art/ui/arrow-left.webp");
@@ -525,6 +534,11 @@
         
         .thumbnail-header {
             padding: 0px;            
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            min-height: 36px;
+
             img {
                 width: 20px;
                 height: 20px;
@@ -533,7 +547,7 @@
                 border: 0px solid transparent;
                 // whitesmoke color
                 filter: invert(100%) sepia(1%) saturate(256%) hue-rotate(64deg) brightness(116%) contrast(92%);
-            }
+            };
         }
 
         .text-header {

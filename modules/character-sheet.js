@@ -357,6 +357,8 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".rest-stretch").on("click", this._onRestStretch.bind(this));                
             html.find(".rest-shift").on("click", this._onRestShift.bind(this));                
 
+            html.find(".item-create").click(this._onItemCreate.bind(this));
+
             if (this.object.type === "monster") {
                 html.find(".monster-attack").on("click contextmenu", this._onMonsterAttack.bind(this));                
                 html.find(".monster-defend").on("click", this._onMonsterDefend.bind(this));                
@@ -1023,6 +1025,12 @@ export default class DoDCharacterSheet extends ActorSheet {
             await this.actor.removeProfession();
         }
         
+        // If there are available slots, equip weapons, armor and helmet
+        if (item.type == "weapon" || item.type == "armor" || item.type == "helmet") {
+            itemData.system.worn = itemData.type == "weapon" && !(actorData.equippedWeapons?.length >= 3) 
+                || itemData.type == "armor" && !actorData.equippedArmor
+                || itemData.type == "helmet" && !actorData.equippedHelmet;
+        }
 
         // Create the owned item
         let returnValue = await this._onDropItemCreate(itemData);
@@ -1046,14 +1054,28 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
         }
 
-        // Equip weapons, armor and helmet
-        if (itemData.type == "weapon" && !(actorData.equippedWeapons?.length >= 3) 
-            || itemData.type == "armor" && !actorData.equippedArmor
-            || itemData.type == "helmet" && !actorData.equippedHelmet )
-        {
-            let equipItem = returnValue[0];
-            await equipItem.update({ ["system.worn"]: true });
-        }
         return returnValue;
     }
+
+    async _onItemCreate(event) {
+        event.preventDefault();
+        const element = event.currentTarget;
+        const type = element.dataset.type
+        let itemData = {
+            name: game.i18n.localize(`DoD.${type}.new`),
+            type: element.dataset.type
+        };
+
+        // If there are available slots, equip weapons, armor and helmet
+        if (type == "weapon" || type == "armor" || type == "helmet") {
+            const actorData = await this.getData();
+            itemData.system = {};
+            itemData.system.worn = itemData.type == "weapon" && !(actorData.equippedWeapons?.length >= 3) 
+                || itemData.type == "armor" && !actorData.equippedArmor
+                || itemData.type == "helmet" && !actorData.equippedHelmet;
+        }
+
+        return this.actor.createEmbeddedDocuments("Item", [itemData]);
+    }    
 }
+

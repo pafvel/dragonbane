@@ -5,7 +5,11 @@
             <table class="sheet-table item-list" data-droptarget="weapon">
                 <tr class="sheet-table-header">
                     <th></th>
-                    <th class="thumbnail-header"></th>
+                    <th class="thumbnail-header">
+                        <button type="button" class="item-create" data-type="weapon" title="{{localize "DoD.ui.character-sheet.create-weapon"}}">
+                            <a  class="fas fa-plus"></a>
+                        </button>                        
+                    </th>
                     <th class="text-header">{{localize "DoD.ui.character-sheet.equipped-weapon"}}</th>
                     <th></th>
                 </tr>
@@ -40,7 +44,11 @@
             <table class="sheet-table item-list" data-droptarget="armor">
                 <tr class="sheet-table-header">
                     <th></th>
-                    <th class="thumbnail-header"></th>
+                    <th class="thumbnail-header">
+                        <button type="button" class="item-create" data-type="armor" title="{{localize "DoD.ui.character-sheet.create-armor"}}">
+                            <a  class="fas fa-plus"></a>
+                        </button>                        
+                    </th>
                     <th class="text-header">
                         {{localize "DoD.ui.character-sheet.equipped-armor"}}
                     </th>
@@ -75,7 +83,11 @@
             <table class="sheet-table item-list" data-droptarget="helmet">
                 <tr class="sheet-table-header">
                     <th></th>
-                    <th class="thumbnail-header"></th>
+                    <th class="thumbnail-header">
+                        <button type="button" class="item-create" data-type="helmet" title="{{localize "DoD.ui.character-sheet.create-helmet"}}"</a>
+                            <a  class="fas fa-plus"></a>
+                        </button>                        
+                    </th>
                     <th class="text-header">
                         {{localize "DoD.ui.character-sheet.equipped-helmet"}}
                     </th>
@@ -145,15 +157,21 @@
             {{!-- Inventory --}}
             <table class="sheet-table item-list" data-droptarget="inventory">
                 <tr class="sheet-table-header">
-                    <th></th>
-                    <th class="thumbnail-header"></th>
+                    <th>
+                    </th>
+                    <th class="thumbnail-header">
+                        <button type="button" class="item-create" data-type="item" title="{{localize "DoD.ui.character-sheet.create-item"}}">
+                            <a  class="fas fa-plus"></a>
+                        </button>                        
+                    </th>
                     <th class="text-header">
                         {{localize "DoD.ui.character-sheet.inventory"}}
                     </th>
                     <th class="number-header">
                         {{localize "DoD.gear.weight"}}
                     </th>
-                    <th></th>
+                    <th>
+                    </th>
                 </tr>
                 {{#if inventory}}
                 {{#each inventory as |item itemId|}}

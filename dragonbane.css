@@ -1111,6 +1111,15 @@
 .system-dragonbane .sheet-table-header th {
   white-space: nowrap;
 }
+.system-dragonbane .sheet-table-header th button {
+  padding: 0px;
+  margin: 0px;
+  text-align: center;
+  border: 0px transparent;
+  background: transparent;
+  color: whitesmoke;
+  max-width: 24px;
+}
 .system-dragonbane .sheet-table-header th:first-child {
   background-image: url("art/ui/arrow-left.webp");
   background-position-x: left;
@@ -1137,6 +1146,10 @@
 }
 .system-dragonbane .sheet-table-header .thumbnail-header {
   padding: 0px;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
 }
 .system-dragonbane .sheet-table-header .thumbnail-header img {
   width: 20px;

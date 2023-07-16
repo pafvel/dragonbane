@@ -59,6 +59,7 @@
             "sphere": "Sfär"
         },
         "armor": {
+            "new": "Ny rustning",
             "banes": "Nackdelar",
             "rating": "Skyddsvärde",
             "bonuses": "Bonusskydd"
@@ -128,6 +129,9 @@
             "d12": "D12",
             "d20": "D20"
         },
+        "item": {
+            "new": "Nytt föremål"
+        },
         "gear": {
             "weight": "Vikt",
             "quantity": "Antal",
@@ -161,6 +165,7 @@
             "grip2h": "2h"
         },
         "helmet": {
+            "new": "Ny hjälm",
             "rating": "Skyddsvärde"
         },
         "itemTypes": {
@@ -283,6 +288,7 @@
             "meterPlural": "meter"
         },
         "weapon": {
+            "new": "Nytt vapen",
             "grip": "Grepp",
             "gripTooltip": "Anger om vapnet används med en eller två händer",
             "str": "STY",
@@ -340,6 +346,10 @@
                 "armor": "Skydd",
                 "background": "Bakgrund",
                 "banes": "Nackdel på",
+                "create-armor": "Skapa rustning",
+                "create-helmet": "Skapa hjälm",
+                "create-item": "Skapa föremål",
+                "create-weapon": "Skapa vapen",
                 "combat": "Strid",
                 "coreSkills": "Grundfärdigheter",
                 "currency": "Mynt",
