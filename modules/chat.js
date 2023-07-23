@@ -400,10 +400,11 @@ export async function inflictDamageMessage(damageData) {
     }
     const actorName = damageData.actor ? (damageData.actor.isToken ? damageData.actor.token.name : damageData.actor.name) : "";
     const targetName = damageData.target ? (damageData.target.isToken ? damageData.target.token.name : damageData.target.name) : "";
+    const damageTotal = damageData.doubleSpellDamage ? 2 * roll.total : roll.total;
 
     const flavor = game.i18n.format(game.i18n.localize(msg), {
         actor: actorName,
-        damage: damageData.doubleSpellDamage ? 2 * roll.total : roll.total,
+        damage: damageTotal,
         damageType: game.i18n.localize(damageData.damageType),
         weapon: weaponName,
         target: targetName
@@ -411,10 +412,10 @@ export async function inflictDamageMessage(damageData) {
     
     const template = "systems/dragonbane/templates/partials/damage-roll-message.hbs";
     const templateContext = {
-        formula: roll.formula,
+        formula: damageData.doubleSpellDamage ? "2 x (" + roll.formula + ")" : roll.formula,
         user: game.user.id,
         tooltip: await roll.getTooltip(),
-        total: Math.round(roll.total * 100) / 100,
+        total: damageTotal,
         damageType: damageData.damageType,
         ignoreArmor: damageData.ignoreArmor,
         target: damageData.target
