@@ -390,7 +390,7 @@ export async function enrichDisplaySpell (match, options) {
             <li><b>${game.i18n.localize("DoD.spell.prerequisite")}: </b><span>${spell.system.prerequisite != "" ? spell.system.prerequisite : "-"}</span>
             <li><b>${game.i18n.localize("DoD.spell.requirement")}: </b><span>${spell.system.requirement != "" ? spell.system.requirement : "-"}</span>
             <li><b>${game.i18n.localize("DoD.spell.castingTime")}: </b><span>${game.i18n.localize("DoD.castingTimeTypes." + spell.system.castingTime)}</span>
-            <li><b>${game.i18n.localize("DoD.spell.range")}: </b><span>${range}</span>
+            <li><b>${game.i18n.localize("DoD.spell.rangeType")}: </b><span>${range}</span>
             <li><b>${game.i18n.localize("DoD.spell.duration")}: </b><span>${game.i18n.localize("DoD.spellDurationTypes." + spell.system.duration)}</span>
             </ul>
             ${spell.system.description}
