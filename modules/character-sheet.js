@@ -490,6 +490,23 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         // Make roll
         const roll = await new Roll("D6[Hit Points] + D6[Willpower Points]").roll({async: true});
+       
+        if (game.dice3d) {
+            // Red for HP
+            roll.dice[0].options.appearance = {
+                name: 'inline red',
+                foreground: '#ffffff',
+                background: '#6F0000',
+                edge: '#6F0000',
+            };
+            // Green for WP
+            roll.dice[1].options.appearance = {
+                name: 'inline green',
+                foreground: '#ffffff',
+                background: '#00a000',
+                edge: '#00a000',
+            };
+        }
         
         // Calc HP
         const currentHP = this.actor.system.hitPoints.value;

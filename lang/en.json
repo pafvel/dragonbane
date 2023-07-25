@@ -129,6 +129,14 @@
             "d12": "D12",
             "d20": "D20"
         },
+        "diceSoNice": {
+            "colorGreen": "Dragonbane Green",
+            "colorGreenTransparent": "Dragonbane Green (Transparent)",
+            "colorRed": "Dragonbane Red",
+            "colorRedTransparent": "Dragonbane Red (Transparent)",
+            "system": "Dragonbane",
+            "textureTransparent": "Dragonbane (Transparent)"
+        },
         "item": {
             "new": "New Item"
         },

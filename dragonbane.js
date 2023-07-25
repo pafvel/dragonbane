@@ -257,6 +257,94 @@ Hooks.on('importAdventure', async (created, updated) => {
 });
 
 
+Hooks.once('diceSoNiceInit', async (dice3d) => {
+    await dice3d.addTexture("DragonbaneTexture", {
+        name: game.i18n.localize("DoD.diceSoNice.textureTransparent"),
+        composite:"destination-in",
+        source:"systems/dragonbane/art/ui/dsn/texture.webp",
+        bump:"systems/dragonbane/art/ui/dsn/texture.webp",
+        material:"metal"
+    });
+});
+
+Hooks.once('diceSoNiceReady', (dice3d) => {
+    
+    dice3d.addColorset({
+        name: 'DragonbaneGreen1',
+        description: game.i18n.localize("DoD.diceSoNice.colorGreen"),
+        category: game.i18n.localize("DoD.diceSoNice.system"),
+        foreground: '#ffffff',
+        background: '#00a000',
+        outline: 'none',
+        edge: '#00a000',
+        material: 'metal',
+        font: "QTFrizQuad"
+        },
+        'preferred'
+    );
+
+    dice3d.addColorset({
+        name: 'DragonbaneRed1',
+        description: game.i18n.localize("DoD.diceSoNice.colorRed"),
+        category: game.i18n.localize("DoD.diceSoNice.system"),
+        foreground: '#ffffff',
+        background: '#6F0000',
+        outline: 'none',
+        edge: '#6F0000',
+        material: 'metal',
+        font: "QTFrizQuad"
+        },
+        'default'
+    );
+
+    dice3d.addColorset({
+        name: 'DragonbaneGreen2',
+        description: game.i18n.localize("DoD.diceSoNice.colorGreenTransparent"),
+        category: game.i18n.localize("DoD.diceSoNice.system"),
+        foreground: '#ffffff',
+        background: '#00a000',
+        outline: '#00a000',
+        edge: '#00a000',
+        texture: 'DragonbaneTexture',
+        material: 'metal',
+        font: "QTFrizQuad"
+        },
+        'default'
+    );
+    
+    dice3d.addColorset({
+        name: 'DragonbaneRed2',
+        description: game.i18n.localize("DoD.diceSoNice.colorRedTransparent"),
+        category: game.i18n.localize("DoD.diceSoNice.system"),
+        foreground: '#ffffff',
+        background: '#6F0000',
+        outline: '#6F0000',
+        edge: '#6F0000',
+        texture: 'DragonbaneTexture',
+        material: 'metal',
+        font: "QTFrizQuad"
+        },
+        'default'
+    );
+    
+
+    dice3d.addSystem({ id: 'dragonbane', name: game.i18n.localize("DoD.diceSoNice.system") }, 'preferred');    
+    dice3d.addDicePreset({
+        type: 'd20',
+        labels: [
+            "systems/dragonbane/art/ui/dsn/dod-ikon-drake-vit-256.png",
+            "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19",
+            "systems/dragonbane/art/ui/dsn/dod-ikon-demon-vit-256.png"
+        ],
+        bumpMaps: [
+        "systems/dragonbane/art/ui/dsn/dod-ikon-drake-bump.png",
+        ,,,,,,,,,,,,,,,,,,
+        "systems/dragonbane/art/ui/dsn/dod-ikon-demon-bump.png"
+        ],
+        system: 'dragonbane',
+    });
+});
+
 CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     {
         // Rollable damage

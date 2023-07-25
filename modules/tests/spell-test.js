@@ -55,8 +55,8 @@ export default class DoDSpellTest extends DoDSkillTest  {
     updatePreRollData() {
         super.updatePreRollData();
         this.preRollData.spell = this.spell;
-        this.preRollData.powerLevel = this.options.powerLevel;
-        this.preRollData.wpCost = this.options.wpCost ?? this.spell.getSpellCost(this.options.powerLevel);
+        this.preRollData.powerLevel = this.options.powerLevel ?? 1;
+        this.preRollData.wpCost = this.options.wpCost ?? this.spell.getSpellCost(this.preRollData.powerLevel);
     }
 
     updatePostRollData() {

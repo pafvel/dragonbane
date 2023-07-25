@@ -129,6 +129,14 @@
             "d12": "D12",
             "d20": "D20"
         },
+        "diceSoNice": {
+            "colorGreen": "Drakar och Demoner Grön",
+            "colorGreenTransparent": "Drakar och Demoner Grön (Genomskinlig)",
+            "colorRed": "Drakar och Demoner Röd",
+            "colorRedTransparent": "Drakar och Demoner Röd (Genomskinlig)",
+            "system": "Drakar och Demoner",
+            "textureTransparent": "Drakar och Demoner (Genomskinlig)"
+        },
         "item": {
             "new": "Nytt föremål"
         },
