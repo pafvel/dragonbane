@@ -1013,7 +1013,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             if (dropTarget) {
                 if (dropTarget == "weapon" && itemData.type == "weapon")
                 {
-                    const worn = !(actorData.equippedWeapons?.length >= 3);
+                    const worn = item.system.worn || !(actorData.equippedWeapons?.length >= 3);
                     if(!worn) {
                         DoD_Utility.WARNING("DoD.WARNING.maxWeaponsEquipped");
                     }
