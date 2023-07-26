@@ -83,8 +83,25 @@ export default class DoDItemSheet extends ItemSheet {
             if (this.object.type === "profession") {
                 html.find(".edit-profession-abilities").change(this._onEditProfessionAbilities.bind(this));
             }
+            if (this.object.type === "item") {
+                html.find(".edit-memento").change(this._onEditMemento.bind(this));
+            }
         }
         super.activateListeners(html);
+    }
+
+    async _onEditMemento(event) {
+        if (this.item.actor) {
+            event.preventDefault();
+            let newValue = event.currentTarget.checked;
+            if (newValue) {
+                const memento = this.item.actor.items.find(i => i.system.memento);
+                if (memento) {
+                    await memento.update({ ["system.memento"]: false});
+                }
+            }
+            await this.item.update({ ["system.memento"]: newValue});
+        };
     }
 
     async _onEditProfessionAbilities(event) {
