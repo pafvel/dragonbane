@@ -15,7 +15,7 @@
                 </tr>
                 {{#if equippedWeapons}}
                 {{#each equippedWeapons as |weapon weaponId|}}
-                <tr class="sheet-table-data item" data-item-id="{{weapon.id}}">
+                <tr class="sheet-table-data item draggable-item" data-item-id="{{weapon.id}}">
                     <td></td>
                     <td class="thumbnail-data">
                         <img src="{{weapon.img}}" title="{{weapon.name}}"/>
@@ -55,7 +55,7 @@
                     <th></th>
                 </tr>
                 {{#if equippedArmor}}
-                <tr class="sheet-table-data item" data-item-id="{{equippedArmor.id}}">
+                <tr class="sheet-table-data item draggable-item" data-item-id="{{equippedArmor.id}}">
                     <td></td>
                     <td class="thumbnail-data">
                         <img src="{{equippedArmor.img}}" title="{{equippedArmor.name}}"/>
@@ -94,7 +94,7 @@
                     <th></th>
                 </tr>
                 {{#if equippedHelmet}}
-                <tr class="sheet-table-data item" data-item-id="{{equippedHelmet.id}}">
+                <tr class="sheet-table-data item draggable-item" data-item-id="{{equippedHelmet.id}}">
                     <td></td>
                     <td class="thumbnail-data">
                         <img src="{{equippedHelmet.img}}" title="{{equippedHelmet.name}}"/>
@@ -175,7 +175,7 @@
                 </tr>
                 {{#if inventory}}
                 {{#each inventory as |item itemId|}}
-                <tr class="sheet-table-data item" data-item-id="{{item.id}}">
+                <tr class="sheet-table-data item draggable-item" data-item-id="{{item.id}}">
                     <td></td>
                     <td class="thumbnail-data">
                         <img src="{{item.img}}" title="{{item.name}}"/>
@@ -215,7 +215,7 @@
                     <th></th>
                 </tr>
                 {{#if memento}}
-                <tr class="sheet-table-data item" data-item-id="{{memento.id}}">
+                <tr class="sheet-table-data item draggable-item" data-item-id="{{memento.id}}">
                     <td></td>
                     <td class="thumbnail-data">
                         <img src="{{memento.img}}" title="{{memento.name}}"/>
@@ -252,7 +252,7 @@
                 </tr>
                 {{#if smallItems}}
                 {{#each smallItems as |item itemId|}}
-                <tr class="sheet-table-data item" data-item-id="{{item.id}}">
+                <tr class="sheet-table-data item draggable-item" data-item-id="{{item.id}}">
                     <td></td>
                     <td class="thumbnail-data">
                         <img src="{{item.img}}" title="{{item.name}}"/>

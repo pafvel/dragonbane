@@ -490,7 +490,8 @@
             "noTreasureTable": "Skattetabellen saknas.",
             "noMeleeMishapTable": "Tabellen för missöde för närstridsvapen saknas.",
             "noRangedMishapTable": "Tabellen för missöde för avståndsvapen saknas.",
-            "noMagicMishapTable": "Tabellen för magiska missöden saknas."
+            "noMagicMishapTable": "Tabellen för magiska missöden saknas.",
+            "maxWeaponsEquipped": "Högst 3 vapen till hands."
         }
     }
 }

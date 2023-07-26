@@ -374,7 +374,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
             // Enable dragging items from this sheet
             let handler = this._onDragStart.bind(this);
-            html.find('.item').each((i, li) => {
+            html.find('.draggable-item').each((i, li) => {
                 li.setAttribute("draggable", true);
                 li.addEventListener("dragstart", handler, false);
             });
@@ -1013,8 +1013,12 @@ export default class DoDCharacterSheet extends ActorSheet {
             if (dropTarget) {
                 if (dropTarget == "weapon" && itemData.type == "weapon")
                 {
+                    const worn = !(actorData.equippedWeapons?.length >= 3);
+                    if(!worn) {
+                        DoD_Utility.WARNING("DoD.WARNING.maxWeaponsEquipped");
+                    }
                     await item.update({
-                        ["system.worn"]: true,
+                        ["system.worn"]: worn,
                         ["system.memento"]: false
                     });
                 }

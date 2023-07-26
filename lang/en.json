@@ -488,7 +488,8 @@
             "noTreasureTable": "Missing treasure table.",
             "noMeleeMishapTable": "Missing the misphap table for melee weapons.",
             "noRangedMishapTable": "Missing the misphap table for ranged weapons.",
-            "noMagicMishapTable": "Missing the magic misphap table."
+            "noMagicMishapTable": "Missing the magic misphap table.",
+            "maxWeaponsEquipped": "Maximum 3 equipped weapons."
       }
     }
 }
