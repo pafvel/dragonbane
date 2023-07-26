@@ -13,7 +13,11 @@ export default class DoDCharacterSheet extends ActorSheet {
             width: 700,
             height: 775,
             classes: ["DoD", "sheet", "character"],
-            dragDrop: [{ dragSelector: ".item-list .item", dropSelector: null}],
+            dragDrop: [{ 
+                dragSelector: ".item-list .item", 
+                dropSelector: null,
+                permissions: { dragstart: () => true }
+            }],
             tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "main" }]
         });
     }
@@ -364,7 +368,17 @@ export default class DoDCharacterSheet extends ActorSheet {
                 html.find(".monster-defend").on("click", this._onMonsterDefend.bind(this));                
             }
         } else if (this.object.isObserver) {
+            // Enable right-clicking skills & items
             html.find(".rollable-skill").on("contextmenu", this._onSkillRoll.bind(this));
+            html.find(".use-item").on("contextmenu", this._onUseItem.bind(this));
+
+            // Enable dragging items from this sheet
+            let handler = this._onDragStart.bind(this);
+            html.find('.item').each((i, li) => {
+                li.setAttribute("draggable", true);
+                li.addEventListener("dragstart", handler, false);
+            });
+
         }
 
         super.activateListeners(html);
