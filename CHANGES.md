@@ -1,5 +1,17 @@
 # Change Log
 
+## Version 1.0.0
+- General
+    - Added custom 3D dice for Dice So Nice.
+    - Removed repetition on background image.
+- Characters
+    - Enabled dragging items from Observable characters.
+    - Checking Memento on an item unchecks existing Memento.
+- Spells
+    - Changed label from Distance to Range in spell list journal.
+    - Fixed double damage on spell crit.
+    - Fixed CTRL/SHIFT+spell draining all WP.
+    
 ## Version 0.0.4
 - Characters
     - Create items from the inventory tab on the character sheet.

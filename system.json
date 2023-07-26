@@ -3,11 +3,10 @@
     "name": "dragonbane",
     "title": "Dragonbane / Drakar och Demoner",
     "description": "System for playing Dragonbane / Drakar och Demoner",
-    "version": "0.0.4",
+    "version": "1.0.0",
     "compatibility": {
       "minimum": "10",
-      "verified": "11",
-      "maximum": "11"
+      "verified": "11"
     },
     "authors": [
       {
@@ -53,6 +52,6 @@
     "secondaryTokenAttribute": "willPoints",
     "background": "systems/dragonbane/art/dragonbane-splash.webp",
     "url": "https://github.com/pafvel/dragonbane",
-    "manifest": "https://github.com/pafvel/dragonbane/releases/download/v0.0.4/system.json",
-    "download": "https://github.com/pafvel/dragonbane/releases/download/v0.0.4/dragonbane.zip"
+    "manifest": "https://github.com/pafvel/dragonbane/releases/download/v1.0.0/system.json",
+    "download": "https://github.com/pafvel/dragonbane/releases/download/v1.0.0/dragonbane.zip"
   }
