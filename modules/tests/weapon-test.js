@@ -19,7 +19,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         const hasStabAttack = this.weapon.hasWeaponFeature("piercing");
         const hasWeakpointAttack = hasStabAttack;
         const hasNormalAttack = !(hasStabAttack || hasSlashAttack);
-        const hasToppleAttack = this.weapon.hasWeaponFeature("toppling");
+        const hasToppleAttack = true; //this.weapon.hasWeaponFeature("toppling");
         const hasDisarmAttack = true;
         const hasParry = !this.weapon.hasWeaponFeature("noparry");
 
@@ -152,6 +152,11 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         if (options.action == "weakpoint") {
             options.banes.push(game.i18n.localize("DoD.attackTypes.weakpoint"));
         }
+
+        if (options.action == "topple" && this.weapon.hasWeaponFeature("toppling")) {
+            options.boons.push(game.i18n.localize("DoD.attackTypes.topple"));
+        }
+        ;
 
         // Process extra damage
         elements = form.getElementsByClassName("extra-damage");

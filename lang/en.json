@@ -343,7 +343,7 @@
             "slashingTooltip": "Slashing",
             "subtleTooltip": "Subtle",
             "thrownTooltip": "Can be thrown",
-            "topplingTooltip": "Toppling",
+            "topplingTooltip": "Gives advantage on Topple",
             "shieldTooltip": "Shield"    
         },    
         "ui": {
