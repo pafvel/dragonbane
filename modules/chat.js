@@ -461,7 +461,7 @@ export async function applyDamageMessage(damageData) {
         if (oldHP == 0 && damageToApply > 0) {
             let failures = actor.system.deathRolls.failures;
             if (failures < 3) {
-                actor.update({["system.deathRolls.failures"]: ++failures});
+                await actor.update({["system.deathRolls.failures"]: ++failures});
                 msg += "<p>" + game.i18n.format("DoD.ui.chat.failedDeathRoll", {actor: actorName}) + "</p>";
                 if (failures == 3) {
                     const status = CONFIG.statusEffects.find(a => a.id === 'dead');

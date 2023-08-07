@@ -446,32 +446,34 @@ export default class DoDCharacterSheet extends ActorSheet {
         }
     }
 
-    _onDeathRollsSuccessClick(event) {
+    async _onDeathRollsSuccessClick(event) {
         event.preventDefault();
 
         let successes = this.actor.system.deathRolls.successes; 
+        console.assert(successes >= 0 && successes <= 3, "Dragonbane: system.deathRolls.successes out of range for " + this.actor.uuid); 
         if (event.type == "click") { // left click
             if (successes < 3) {
-                return this.actor.update({ ["system.deathRolls.successes"]: successes+1});
+                return await this.actor.update({ ["system.deathRolls.successes"]: successes+1});
             }
         } else { // right click
             if (successes > 0) {
-                return this.actor.update({ ["system.deathRolls.successes"]: successes-1});
+                return await this.actor.update({ ["system.deathRolls.successes"]: successes-1});
             }
         }
     }
 
-    _onDeathRollsFailureClick(event) {
+    async _onDeathRollsFailureClick(event) {
         event.preventDefault();
 
-        let failures = this.actor.system.deathRolls.failures; 
+        let failures = this.actor.system.deathRolls.failures;
+        console.assert(failures >= 0 && failures <= 3, "Dragonbane: system.deathRolls.failures out of range for " + this.actor.uuid); 
         if (event.type == "click") { // left click
             if (failures < 3) {
-                return this.actor.update({ ["system.deathRolls.failures"]: failures+1});
+                return await this.actor.update({ ["system.deathRolls.failures"]: failures+1});
             }
         } else { // right click
             if (failures > 0) {
-                return this.actor.update({ ["system.deathRolls.failures"]: failures-1});
+                return await this.actor.update({ ["system.deathRolls.failures"]: failures-1});
             }
         }
     }
