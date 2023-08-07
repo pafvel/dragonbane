@@ -72,11 +72,23 @@ function registerSettings() {
     console.log ("Dragonbane: Registering settings");
 
     // If true, keeps permission on assets when re-importing them
+    
     game.settings.register("dragonbane", "keepOwnershipOnImport", {
         name: "DoD.SETTINGS.keepOwnershipOnImport",
         hint: "DoD.SETTINGS.keepOwnershipOnImportHint",
         scope: "world",
         config: true,
+        default: false,
+        type: Boolean
+    });
+    
+
+    // If true, skips automatic initialization of YZE Combat
+    game.settings.register("dragonbane", "skipYzecInit", {
+        name: "DoD.SETTINGS.skipYzecInit",
+        hint: "DoD.SETTINGS.skipYzecInitHint",
+        scope: "world",
+        config: false, // Until the modules using the setting has been released
         default: false,
         type: Boolean
     });

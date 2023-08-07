@@ -469,7 +469,9 @@
         },
         "SETTINGS": {
             "keepOwnershipOnImport": "Behåll ägande vid import av äventyr",
-            "keepOwnershipOnImportHint": "Skriv inte över äganderättigheter vid import av innehåll som redan finns i världen."
+            "keepOwnershipOnImportHint": "Skriv inte över äganderättigheter vid import av innehåll som redan finns i världen.",
+            "skipYzecInit": "Hoppa över initialisering av Year Zero Engine: Combat",
+            "skipYzecInitHint": "Om modulen Year Zero Engine: Combat är aktiv, så initaliseras inte modulens inställningar vid uppstart."
         },
         "WARNING": {
             "kinAbility": "Kan ej hitta Släktesförmåga: {ability}",

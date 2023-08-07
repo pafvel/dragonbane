@@ -468,7 +468,9 @@
         },
         "SETTINGS": {
             "keepOwnershipOnImport": "Keep ownership when importing adventure",
-            "keepOwnershipOnImportHint": "Do not overwrite ownership rights when importing content that already exists in the world."
+            "keepOwnershipOnImportHint": "Do not overwrite ownership rights when importing content that already exists in the world.",
+            "skipYzecInit": "Skip initialization of Year Zero Engine: Combat",
+            "skipYzecInitHint": "If the module Year Zero Engine: Combat is active, do not initialize module settings on startup."
         },
         "WARNING": {
             "kinAbility": "Could not find Kin Ability: {ability}",
