@@ -268,6 +268,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         sheetData.inventory = inventory?.sort(DoD_Utility.itemSorter);
         sheetData.equippedWeapons = equippedWeapons?.sort(DoD_Utility.itemSorter);
+        sheetData.canEquipWeapon = equippedWeapons ? equippedWeapons.filter(w => !w.hasWeaponFeature("unarmed")).length < 3 : true;
         sheetData.equippedArmor = equippedArmor;
         sheetData.equippedHelmet = equippedHelmet;
         sheetData.hasArmor = equippedArmor || equippedHelmet;
@@ -1015,7 +1016,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             if (dropTarget) {
                 if (dropTarget == "weapon" && itemData.type == "weapon")
                 {
-                    const worn = item.system.worn || !(actorData.equippedWeapons?.length >= 3);
+                    const worn = item.system.worn || actorData.canEquipWeapon || item.hasWeaponFeature("unarmed");
                     if(!worn) {
                         DoD_Utility.WARNING("DoD.WARNING.maxWeaponsEquipped");
                     }
@@ -1064,9 +1065,10 @@ export default class DoDCharacterSheet extends ActorSheet {
         
         // If there are available slots, equip weapons, armor and helmet
         if (item.type == "weapon" || item.type == "armor" || item.type == "helmet") {
-            itemData.system.worn = itemData.type == "weapon" && !(actorData.equippedWeapons?.length >= 3) 
-                || itemData.type == "armor" && !actorData.equippedArmor
-                || itemData.type == "helmet" && !actorData.equippedHelmet;
+            itemData.system.worn =
+                item.type == "weapon" && (actorData.canEquipWeapon || item.hasWeaponFeature("unarmed"))
+                || item.type == "armor" && !actorData.equippedArmor
+                || item.type == "helmet" && !actorData.equippedHelmet;
         }
 
         // Create the owned item
@@ -1107,7 +1109,8 @@ export default class DoDCharacterSheet extends ActorSheet {
         if (type == "weapon" || type == "armor" || type == "helmet") {
             const actorData = await this.getData();
             itemData.system = {};
-            itemData.system.worn = itemData.type == "weapon" && !(actorData.equippedWeapons?.length >= 3) 
+            itemData.system.worn =
+                itemData.type == "weapon" && actorData.canEquipWeapon
                 || itemData.type == "armor" && !actorData.equippedArmor
                 || itemData.type == "helmet" && !actorData.equippedHelmet;
         }

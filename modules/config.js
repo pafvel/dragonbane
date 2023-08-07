@@ -111,7 +111,8 @@ DoD.weaponFeatureTypes = {
     subtle: "DoD.weaponFeatureTypes.subtle",
     thrown: "DoD.weaponFeatureTypes.thrown",
     toppling: "DoD.weaponFeatureTypes.toppling",
-    shield: "DoD.weaponFeatureTypes.shield"
+    shield: "DoD.weaponFeatureTypes.shield",
+    unarmed: "DoD.weaponFeatureTypes.unarmed"
 };
 
 DoD.attributes = {
