@@ -486,7 +486,7 @@ export async function applyDamageMessage(damageData) {
 export function hideChatPermissions(app, html, data) {
     const elements = html.find(".owner-permission");
     elements.each((i, element) => {
-        const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId);
+        const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId, {noWarnings: true});
         if (actor && !actor.isOwner) {
             element.style.display = "none";
         }

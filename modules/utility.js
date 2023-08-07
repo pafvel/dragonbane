@@ -132,16 +132,21 @@ export default class DoD_Utility {
         return item?.clone();
     }
 
-    static getActorFromUUID(uuid) {
+    static getActorFromUUID(uuid, options = {noWarnings: false}) {
         let doc = null;
         try {
             doc = fromUuidSync(uuid);
         } catch (err) {
-            DoD_Utility.WARNING(err.message);
+            if(!options.noWarnings) {
+                DoD_Utility.WARNING(err.message);
+            }
+            
         }
         let actor = doc?.actor ?? doc;
         if (!actor) {
-            DoD_Utility.WARNING("DoD.WARNING.actorNotFound", {id: uuid});
+            if(!options.noWarnings) {
+                DoD_Utility.WARNING("DoD.WARNING.actorNotFound", {id: uuid});
+            }
             return null;    
         }
         return actor;
