@@ -1046,7 +1046,7 @@
 .system-dragonbane .chat-message .result-image {
   border: 0px transparent;
 }
-.system-dragonbane * {
+.system-dragonbane .chat-message * {
   -webkit-user-select: text;
   -moz-user-select: text;
   -ms-user-select: text;
