@@ -80,7 +80,7 @@
             "disarm": "Avväpna",
             "disarmTooltip": "Avväpna din fiende istället för att orsaka skada",
             "topple": "Fäll",
-            "toppleTooltip": "Fäll en fiende till marken i stället för att orsaka skada",
+            "toppleTooltip": "Fäll en fiende till marken i stället för att orsaka skada\nFällande vapen ger en Fördel på slaget",
             "throw": "Kasta",
             "throwTooltip": "Använd som kastvapen"
         },

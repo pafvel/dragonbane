@@ -80,7 +80,7 @@
             "disarm": "Disarm",
             "disarmTooltip": "Disarm the enemy instead of inflicting damage",
             "topple": "Topple",
-            "toppleTooltip": "Topple the enemy to the ground instead of inflicting damage",
+            "toppleTooltip": "Topple the enemy to the ground instead of inflicting damage\nToppling weapons get a Boon to the roll",
             "throw": "Throw",
             "throwTooltip": "Trown attack"
         },
