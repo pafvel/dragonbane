@@ -330,6 +330,9 @@
   font-size: 10px;
   text-align: center;
   pointer-events: none;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .DoD.sheet.character .attributes-container .attributes .conditions .condition1 {
   left: 17%;
