@@ -31,6 +31,11 @@
         "lang": "sv",
         "name": "Svenska",
         "path": "lang/sv.json"
+      },
+      {
+        "lang": "pt-BR",
+        "name": "Português Brasileiro",
+        "path": "lang/pt-br.json"
       }
     ],
     "packs": [
