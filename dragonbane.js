@@ -82,17 +82,6 @@ function registerSettings() {
         type: Boolean
     });
     
-
-    // If true, skips automatic initialization of YZE Combat
-    game.settings.register("dragonbane", "skipYzecInit", {
-        name: "DoD.SETTINGS.skipYzecInit",
-        hint: "DoD.SETTINGS.skipYzecInitHint",
-        scope: "world",
-        config: false, // Until the modules using the setting has been released
-        default: false,
-        type: Boolean
-    });
-
     // Most recent system version
     game.settings.register("dragonbane", "systemVersion", {
         config: false,
