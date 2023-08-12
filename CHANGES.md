@@ -1,5 +1,24 @@
 # Change Log
 
+## Version 1.1.0
+- Weapons
+    - New weapon feature: Unarmed. Unarmed weapons do not count towards weapons at hand.
+    - All melee weapons can now Topple.
+    - Toppling weapons get a Boon on Topple.
+    - Fixed bug where pushing a weapon roll always resulted in the default action
+- Character
+    - Prevent having more than 3 weapons at hand after dragging and dropping on the inventory tab.
+- Monsters and NPCs
+    - Items can be created on the inventory tab.
+- Miscellaneous
+    - Removed error message when deleted token is referenced in chat message
+    - Chat message text is always selectable
+    - Fixed spelling error in introduction journal.
+    - Changed how Death Rolls are updated.
+    - Disheartened is now written in full in the chat log.
+    - Condition labels on the character sheet will be clipped if too long.
+    - Added Brazilian Portuguese localization
+
 ## Version 1.0.0
 - General
     - Added custom 3D dice for Dice So Nice.
