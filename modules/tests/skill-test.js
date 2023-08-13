@@ -1,7 +1,7 @@
 import DoDTest from "./dod-test.js";
 
 
-export default class DoDSkillTest extends DoDTest  {
+export default class DoDSkillTest extends DoDTest {
 
     constructor(actor, skill, options) {
         super(actor, options);
@@ -11,7 +11,7 @@ export default class DoDSkillTest extends DoDTest  {
         this.canPush = options ? options.canPush != false : true;
         this.isReRoll = options?.isReRoll | false;
     }
-   
+
     async getRollOptions() {
         const label = game.i18n.localize("DoD.ui.dialog.skillRollLabel");
         const title = game.i18n.localize("DoD.ui.dialog.skillRollTitle") + ": " + this.skill.name;
@@ -41,12 +41,21 @@ export default class DoDSkillTest extends DoDTest  {
         if (this.options.targets) {
             this.postRollData.targetActor = this.options.targets[0].actor;
         }
+
+        if (this.postRollData.isDemon || this.postRollData.isDragon) {
+            this.setAdvancementMark();
+        }
+    }
+
+    async setAdvancementMark() {
+        if (this.skill.system.advance) return;
+        await this.skill.update({ "system.advance": true })
     }
 
     formatRollMessage(postRollData) {
         const target = postRollData.skill.system.value;
         const resultMsg = this.formatRollResult(postRollData);
-        const label = game.i18n.format(game.i18n.localize("DoD.roll.skillRoll"), {skill: postRollData.skill.name, result: resultMsg});
+        const label = game.i18n.format(game.i18n.localize("DoD.roll.skillRoll"), { skill: postRollData.skill.name, result: resultMsg });
         return {
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: postRollData.actor }),
