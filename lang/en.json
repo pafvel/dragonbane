@@ -30,7 +30,7 @@
             "profession": "Profession",
             "skill": "Skill",
             "spell": "Spell",
-            "weapon": "Weapon"                
+            "weapon": "Weapon"
         }
     },
     "DoD": {
@@ -62,7 +62,6 @@
             "banes": "Banes",
             "rating": "Armor Rating",
             "bonuses": "Bonus Armor"
-
         },
         "attackTypes": {
             "ranged": "Ranged attack",
@@ -221,7 +220,6 @@
             "pushChoiceLabel": "Choose condition:",
             "parryWeapon": "<p>If the parried damage exceeds your weapon's durability (<b>{durability}</b>), the weapon is damaged. Piercing damage can not damage a weapon.</p>",
             "parryShield": "<p>If the parried damage exceeds your shield's durability (<b>{durability}</b>), the shield is damaged. Piercing damage can not damage a shield.</p>"
-
         },
         "secondaryAttributeTypes": {
             "none": "-",
@@ -243,6 +241,7 @@
             "attributeTooltip": "The skill's Attribute",
             "hide": "Hide",
             "hideTooltip": "Hides skill from the list of Trained Skills",
+            "rollAdvancement": "Roll to advance skill at end of session",
             "type": "Type",
             "typeTooltip": "The skill's Type"
         },
@@ -250,7 +249,7 @@
             "core": "Core skill",
             "weapon": "Weapon skill",
             "secondary": "Secondary skill",
-            "magic": "School of magic"  
+            "magic": "School of magic"
         },
         "spell": {
             "areaOfEffect": "Area",
@@ -281,7 +280,7 @@
             "range": "Range",
             "cone": "Cone",
             "sphere": "Sphere"
-        },        
+        },
         "supplyTypes": {
             "common": "Common",
             "uncommon": "Uncommon",
@@ -347,8 +346,7 @@
             "topplingTooltip": "Gives advantage on Topple",
             "unarmed": "Unarmed",
             "unarmedTooltip": "Unarmed weapons don't count towards weapons at hand"
-            
-        },    
+        },
         "ui": {
             "character-sheet": {
                 "abilities": "Abilities",
@@ -417,7 +415,7 @@
                 "willPoints": "Willpower Points",
                 "wp": "WP"
             },
-            "chat":{
+            "chat": {
                 "damageApplied": "<b>{damage} damage</b> applied to <b>{actor}</b>.",
                 "damageAppliedDetails": "{damage} damage vs {armor} armor rating.",
                 "damageAppliedMultiplier": "x{multiplier} multiplier.",
@@ -461,7 +459,6 @@
                 "useAbilityWithoutWP": "Use <b>{ability}</b>?",
                 "weaponFeatures": "Weapon Features"
             }
-
         },
         "INFO": {
             "professionSkillAdded": "Added Profession Skill: {skill}"
@@ -493,6 +490,6 @@
             "noRangedMishapTable": "Missing the misphap table for ranged weapons.",
             "noMagicMishapTable": "Missing the magic misphap table.",
             "maxWeaponsEquipped": "Maximum 3 equipped weapons."
-      }
+        }
     }
 }

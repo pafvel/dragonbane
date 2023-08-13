@@ -7,7 +7,7 @@ export default class DoDTest {
         this.options = options;
         this.dialogData = {};
         this.preRollData = {};
-        this.postRollData = {};        
+        this.postRollData = {};
         this.noBanesBoons = options?.noBanesBoons;
         this.defaultBanesBoons = options?.defaultBanesBoons;
         this.skipDialog = options?.skipDialog || this.noBanesBoons || this.defaultBanesBoons;
@@ -21,7 +21,7 @@ export default class DoDTest {
         this.updatePreRollData();
         const formula = this.options.formula ?? this.formatRollFormula(this.preRollData);
         this.roll = await new Roll(formula).roll({async: true});
-        
+
         this.updatePostRollData();
         const messageData = this.formatRollMessage(this.postRollData);
         const messageTemplate = this.getMessageTemplate();
@@ -35,6 +35,7 @@ export default class DoDTest {
             }
         }
         this.roll.toMessage(messageData);
+        return this;
     }
 
     // This method should be overridden to provide title and label
@@ -62,13 +63,13 @@ export default class DoDTest {
             if (condition) {
                 if (!condition.value){
 
-                    this.postRollData.pushRollChoices[attribute] = 
+                    this.postRollData.pushRollChoices[attribute] =
                         game.i18n.localize("DoD.conditions." + attribute) + " (" +
                         game.i18n.localize("DoD.attributes." + attribute) + ")<br>";
                     if (!this.postRollData.pushRollChoice) {
                         this.postRollData.pushRollChoice = attribute;
                     }
-                }    
+                }
             } else {
                 DoD_Utility.ERROR("Missing condition for attribute " + attribute);
             }
@@ -100,21 +101,21 @@ export default class DoDTest {
                 let itemBanes = DoD_Utility.splitAndTrimString(item.system.banes.toLowerCase());
                 if (itemBanes.find(element => element.toLowerCase() == rollTarget)) {
                     let value = item.system.worn ? true : false;
-                    banes.push( {source: item.name, value: value});    
+                    banes.push( {source: item.name, value: value});
                 }
             }
             if (item.system.boons?.length) {
                 let itemBoons = DoD_Utility.splitAndTrimString(item.system.boons.toLowerCase());
                 if (itemBoons.find(element => element.toLowerCase() == rollTarget)) {
                     let value = item.system.worn ? true : false;
-                    boons.push( {source: item.name, value: value});    
+                    boons.push( {source: item.name, value: value});
                 }
             }
         }
 
         this.dialogData.banes = banes;
         this.dialogData.boons = boons;
-        
+
         // Needed for dialog box layout
         this.dialogData.fillerBanes = Math.max(0, boons.length - banes.length);
         this.dialogData.fillerBoons = Math.max(0, banes.length - boons.length);
