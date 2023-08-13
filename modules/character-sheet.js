@@ -991,7 +991,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         if (!postRollData) return;
 
         const success = postRollData.success;
-        if (!success) await skillItem.update({ "system.value": skillItem.system.value + 1 });
+        if (!success) await skillItem.update({ "system.value": Math.min(18, skillItem.system.value + 1) });
 
         await skillItem.update({ "system.advance": false })
     }
