@@ -1,4 +1,5 @@
 import DoD_Utility from "./utility.js";
+import DoDSkillTest from "./tests/skill-test.js";
 
 export class DoDActor extends Actor {
 
@@ -358,6 +359,16 @@ export class DoDActor extends Actor {
     findSkill(skillName) {
         let name = skillName.toLowerCase();
         return this.items.find(item => item.type == "skill" && item.name.toLowerCase() == name);
+    }
+
+    testSkill(skillName, options = {defaultBanesBoons: true}) {
+        const skill = this.findSkill(skillName);
+        if(!skill) {
+            console.log("Could not find skill: " + skillName);
+            return;
+        }
+        const test = new DoDSkillTest(this, skill, options);
+        return test.roll();
     }
 
     findMagicSkill(schoolName) {
