@@ -29,7 +29,7 @@ export default class DoDAttributeTest extends DoDTest {
 
     updatePostRollData() {
         super.updatePostRollData();
-        this.postRollData.success = this.preRollData.result <= this.preRollData.target;
+        this.postRollData.success = this.postRollData.result <= this.preRollData.target;
         this.postRollData.canPush = this.preRollData.canPush && !this.postRollData.success && this.postRollData.result != 20;
         
         if (this.postRollData.canPush) {

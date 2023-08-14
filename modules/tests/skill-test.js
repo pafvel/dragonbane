@@ -29,7 +29,7 @@ export default class DoDSkillTest extends DoDTest {
     updatePostRollData() {
         super.updatePostRollData();
         this.postRollData.result = this.roll.result;
-        this.postRollData.success = this.preRollData.result <= this.preRollData.target;
+        this.postRollData.success = this.postRollData.result <= this.preRollData.target;
         this.postRollData.isDragon = this.postRollData.result <= 1 + (this.preRollData.extraDragons ?? 0);
         this.postRollData.isDemon = this.postRollData.result >= 20 - (this.preRollData.extraDemons ?? 0);
         this.postRollData.canPush = this.preRollData.canPush && !this.postRollData.success && !this.postRollData.isDemon;
