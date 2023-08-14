@@ -19,7 +19,11 @@
                 {{#each coreSkills as |skill skillId|}}
                 <tr class="sheet-table-data item" data-item-id="{{skill.id}}">
                     <td class="checkbox-data">
-                        <input class="inline-edit" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
+                        {{#if skill.system.advance}}
+                            <button type="button" data-action="roll-advancement"  title="{{localize "DoD.skill.rollAdvancement"}}"><i class="fas fa-arrow-up"></i></button>
+                        {{else}}
+                            <input class="inline-edit" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
+                        {{/if}}
                     </td>
                     <td class="number-data narrow">
                         <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
@@ -34,16 +38,16 @@
                     <td class="icon-data">
                         <a class="item-delete" data-type="skill">
                             <i class="fas fa-trash"></i>
-                        </a>    
+                        </a>
                         <a class="item-edit" data-type="skill">
                             <i class="fas fa-edit"></i>
-                        </a>                                                
+                        </a>
                     </td>
                 </tr>
                 {{/each}}
             </table>
         </div>
-        
+
         <div>
             {{!-- Weapon Skills --}}
             <table class="sheet-table weapon-skills item-list">
@@ -78,10 +82,10 @@
                     <td class="icon-data">
                         <a class="item-delete" data-type="skill">
                             <i class="fas fa-trash"></i>
-                        </a>    
+                        </a>
                         <a class="item-edit" data-type="skill">
                             <i class="fas fa-edit"></i>
-                        </a>            
+                        </a>
                     </td>
                 </tr>
                 {{/each}}
@@ -119,10 +123,10 @@
                     <td class="icon-data">
                         <a class="item-delete" data-type="skill">
                             <i class="fas fa-trash"></i>
-                        </a>    
+                        </a>
                         <a class="item-edit" data-type="skill">
                             <i class="fas fa-edit"></i>
-                        </a>            
+                        </a>
                     </td>
                 </tr>
                 {{/each}}

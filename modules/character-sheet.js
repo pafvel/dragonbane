@@ -1,20 +1,20 @@
-import DoD_Utility from "./utility.js";
+import * as DoDChat from "./chat.js";
+import { DoD } from "./config.js";
 import DoDAttributeTest from "./tests/attribute-test.js";
 import DoDSkillTest from "./tests/skill-test.js";
 import DoDSpellTest from "./tests/spell-test.js";
 import DoDWeaponTest from "./tests/weapon-test.js";
-import { DoD } from "./config.js";
-import * as DoDChat from "./chat.js";
+import DoD_Utility from "./utility.js";
 
 export default class DoDCharacterSheet extends ActorSheet {
-    
+
     static get defaultOptions() {
         return mergeObject(super.defaultOptions,  {
             width: 700,
             height: 775,
             classes: ["DoD", "sheet", "character"],
-            dragDrop: [{ 
-                dragSelector: ".item-list .item", 
+            dragDrop: [{
+                dragSelector: ".item-list .item",
                 dropSelector: null,
                 permissions: { dragstart: () => true }
             }],
@@ -52,8 +52,8 @@ export default class DoDCharacterSheet extends ActorSheet {
         document.removeEventListener('keydown', this.keydownListener);
         Hooks.off("dropActorSheetData", this.onDropTableListener);
         return super.close(options);
-     }   
-  
+     }
+
      render(force, options) {
         this.keydownListener = this.#onKeydown.bind(this);
         document.addEventListener('keydown', this.keydownListener);
@@ -71,19 +71,19 @@ export default class DoDCharacterSheet extends ActorSheet {
                 return;
             }
             event.preventDefault();
-            event.stopImmediatePropagation();            
+            event.stopImmediatePropagation();
             const itemId = this.#focusElement.dataset.itemId;
             const item = this.actor.items.get(itemId);
 
             this.#focusElement = null;
 
             if (item.type === "skill") {
-                return item.update({ ["system.value"]: 0}); 
+                return item.update({ ["system.value"]: 0});
             } else {
                 return this.actor.deleteEmbeddedDocuments("Item", [itemId]);
             }
         }
-     }    
+     }
 
     async getData() {
         const baseData = super.getData();
@@ -102,7 +102,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                 return await TextEditor.enrichHTML(html, {
                     secrets: sheetData.actor.isOwner,
                     async: true
-                });    
+                });
             } else {
                 return html;
             }
@@ -133,7 +133,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         let equippedHelmet = sheetData.actor.system.equippedHelmet;
         let memento = null;
         let smallItems = [];
-        
+
         for (let item of sheetData.actor.items.contents) {
 
             // any item can be a memento
@@ -143,7 +143,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                     continue;
                 } else {
                     // Memento slot busy. Clear flag and process as normal item
-                    item.update({ ["system.memento"]: false}); 
+                    item.update({ ["system.memento"]: false});
                 }
             }
 
@@ -170,14 +170,14 @@ export default class DoDCharacterSheet extends ActorSheet {
                 let spell = item;
 
                 spells.push(spell);
-                
+
                 if (!schools[spell.system.school]) {
                     schools[spell.system.school] = [];
                 }
                 schools[spell.system.school].push(spell);
                 continue;
             }
-            
+
             if (item.type == "weapon") {
                 if (item.system.worn) {
                     // TODO limit 3
@@ -191,13 +191,13 @@ export default class DoDCharacterSheet extends ActorSheet {
                         memento = item;
                     } else {
                         // Memento slot busy. Clear flag and process as normal item
-                        item.update({ ["system.memento"]: false}); 
+                        item.update({ ["system.memento"]: false});
                     }
                 }
 
                 continue;
             }
-            
+
             if (item.type == "armor") {
                 if (!item.system.worn) {
                     inventory.push(item);
@@ -211,7 +211,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                 }
                 continue;
             }
-            
+
             if (item.type == "item") {
                 if (item.system.weight == 0 && item.system.type != "backpack" && this.actor.type == "character")
                 {
@@ -222,7 +222,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                 continue;
             }
         }
-        
+
         // Kin and Profession
         sheetData.kin = sheetData.actor.system.kin;
         sheetData.kinName = sheetData.kin?.name;
@@ -231,8 +231,8 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         // Items (skills, abilities, spells)
         sheetData.coreSkills = sheetData.actor.system.coreSkills?.sort(DoD_Utility.nameSorter);;
-        sheetData.magicSkills = sheetData.actor.system.magicSkills?.sort(DoD_Utility.nameSorter); 
-        sheetData.secondarySkills = sheetData.actor.system.secondarySkills?.sort(DoD_Utility.nameSorter); 
+        sheetData.magicSkills = sheetData.actor.system.magicSkills?.sort(DoD_Utility.nameSorter);
+        sheetData.secondarySkills = sheetData.actor.system.secondarySkills?.sort(DoD_Utility.nameSorter);
         sheetData.weaponSkills = sheetData.actor.system.weaponSkills?.sort(DoD_Utility.nameSorter);
         sheetData.trainedSkills = sheetData.actor.system.trainedSkills?.sort(DoD_Utility.nameSorter).filter(s => s.system.hideTrained == false);
 
@@ -241,7 +241,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.professionAbilities = professionAbilities.sort(DoD_Utility.nameSorter);
         sheetData.abilities = heroicAbilities.concat(kinAbilities, professionAbilities).sort(DoD_Utility.nameSorter);
 
-        // 
+        //
         let formattedAbilities = [];
         for (let i=0, j; i < sheetData.abilities.length; i=j) {
             let count = 1;
@@ -255,7 +255,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
             // Push first unique ability. Add ability count in parenthesis (if multiple)
             formattedAbilities.push({
-                id: sheetData.abilities[i].id, 
+                id: sheetData.abilities[i].id,
                 name: count == 1 ? sheetData.abilities[i].name : sheetData.abilities[i].name + " (" + count + ")"
             });
         }
@@ -303,7 +303,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                 sheetData.largeWP = sheetData.maxWP > 40; // switch to large wp widget
             }
         }
-    }  
+    }
 
     _updateEncumbrance(sheetData) {
         if (this.actor.type == "character") {
@@ -317,7 +317,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
             let coins = sheetData.actor.system.currency.gc + sheetData.actor.system.currency.sc + sheetData.actor.system.currency.cc;
             sheetData.encumbrance += Math.floor(coins/100);
-            
+
             sheetData.overEncumbered = sheetData.encumbrance > sheetData.maxEncumbrance;
         }
     }
@@ -344,6 +344,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".rollable-skill").on("click contextmenu", this._onSkillRoll.bind(this));
             html.find(".rollable-damage").on("click contextmenu", this._onDamageRoll.bind(this));
             html.find(".use-item").on("click contextmenu", this._onUseItem.bind(this));
+            html.find("[data-action='roll-advancement']").click(this._onAdvancementRoll.bind(this))
 
             html.find(".hit-points-max-label").change(this._onEditHp.bind(this));
             html.find(".hit-points-current-label").change(this._onEditCurrentHp.bind(this));
@@ -358,15 +359,15 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".death-rolls-failure").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
             html.find(".death-rolls-failure-label").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
 
-            html.find(".rest-round").on("click", this._onRestRound.bind(this));                
-            html.find(".rest-stretch").on("click", this._onRestStretch.bind(this));                
-            html.find(".rest-shift").on("click", this._onRestShift.bind(this));                
+            html.find(".rest-round").on("click", this._onRestRound.bind(this));
+            html.find(".rest-stretch").on("click", this._onRestStretch.bind(this));
+            html.find(".rest-shift").on("click", this._onRestShift.bind(this));
 
             html.find(".item-create").click(this._onItemCreate.bind(this));
 
             if (this.object.type === "monster") {
-                html.find(".monster-attack").on("click contextmenu", this._onMonsterAttack.bind(this));                
-                html.find(".monster-defend").on("click", this._onMonsterDefend.bind(this));                
+                html.find(".monster-attack").on("click contextmenu", this._onMonsterAttack.bind(this));
+                html.find(".monster-defend").on("click", this._onMonsterDefend.bind(this));
             }
         } else if (this.object.isObserver) {
             // Enable right-clicking skills & items
@@ -389,7 +390,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         event.preventDefault();
         event.currentTarget?.blur();
 
-        const table = this.actor.system.attackTable ? fromUuidSync(this.actor.system.attackTable) : null; 
+        const table = this.actor.system.attackTable ? fromUuidSync(this.actor.system.attackTable) : null;
         if (!table) {
             DoD_Utility.WARNING("DoD.WARNING.missingMonsterAttackTable");
             return;
@@ -400,7 +401,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             return DoD_Utility.monsterAttack(this.actor, table);
         } else { // right click
             return table.sheet.render(true);
-        }        
+        }
     }
 
     async _onMonsterDefend(event) {
@@ -419,8 +420,8 @@ export default class DoDCharacterSheet extends ActorSheet {
 
     _onHitPointClick(event) {
         event.preventDefault();
-  
-        let hp = this.actor.system.hitPoints; 
+
+        let hp = this.actor.system.hitPoints;
         if (event.type == "click") { // left click
             if (hp.value > 0) {
                 return this.actor.update({ ["system.hitPoints.value"]: hp.value-1});
@@ -435,7 +436,7 @@ export default class DoDCharacterSheet extends ActorSheet {
     _onWillPointClick(event) {
         event.preventDefault();
 
-        let wp = this.actor.system.willPoints; 
+        let wp = this.actor.system.willPoints;
         if (event.type == "click") { // left click
             if (wp.value > 0) {
                 return this.actor.update({ ["system.willPoints.value"]: wp.value-1});
@@ -450,8 +451,8 @@ export default class DoDCharacterSheet extends ActorSheet {
     async _onDeathRollsSuccessClick(event) {
         event.preventDefault();
 
-        let successes = this.actor.system.deathRolls.successes; 
-        console.assert(successes >= 0 && successes <= 3, "Dragonbane: system.deathRolls.successes out of range for " + this.actor.uuid); 
+        let successes = this.actor.system.deathRolls.successes;
+        console.assert(successes >= 0 && successes <= 3, "Dragonbane: system.deathRolls.successes out of range for " + this.actor.uuid);
         if (event.type == "click") { // left click
             if (successes < 3) {
                 return await this.actor.update({ ["system.deathRolls.successes"]: successes+1});
@@ -467,7 +468,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         event.preventDefault();
 
         let failures = this.actor.system.deathRolls.failures;
-        console.assert(failures >= 0 && failures <= 3, "Dragonbane: system.deathRolls.failures out of range for " + this.actor.uuid); 
+        console.assert(failures >= 0 && failures <= 3, "Dragonbane: system.deathRolls.failures out of range for " + this.actor.uuid);
         if (event.type == "click") { // left click
             if (failures < 3) {
                 return await this.actor.update({ ["system.deathRolls.failures"]: failures+1});
@@ -487,7 +488,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         const currentWP = this.actor.system.willPoints.value;
         const maxWP = this.actor.system.willPoints.max;
         const newWP = Math.min(maxWP, currentWP + roll.total);
-        
+
         const msg = await roll.toMessage({
             user: game.user.id,
             actor: this.actor,
@@ -507,7 +508,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         // Make roll
         const roll = await new Roll("D6[Hit Points] + D6[Willpower Points]").roll({async: true});
-       
+
         if (game.dice3d) {
             // Red for HP
             roll.dice[0].options.appearance = {
@@ -524,17 +525,17 @@ export default class DoDCharacterSheet extends ActorSheet {
                 edge: '#00a000',
             };
         }
-        
+
         // Calc HP
         const currentHP = this.actor.system.hitPoints.value;
         const maxHP = this.actor.system.hitPoints.max;
         const newHP = Math.min(maxHP, currentHP + Number(roll.terms[0].total));
-        
+
         // Calc WP
         const currentWP = this.actor.system.willPoints.value;
         const maxWP = this.actor.system.willPoints.max;
         const newWP = Math.min(maxWP, currentWP + Number(roll.terms[2].total));
-        
+
         // Render message
         const context =  {
             formula: roll.formula,
@@ -562,7 +563,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             await this.actor.update({
                 ["system.hitPoints.value"]: newHP,
                 ["system.willPoints.value"]: newWP
-            });            
+            });
         }
 
     }
@@ -573,12 +574,12 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         // Make roll
         const roll = await new Roll("D6[Hit Points] + D6[Willpower Points]").roll({async: true});
-        
+
         // Calc HP
         const currentHP = this.actor.system.hitPoints.value;
         const maxHP = this.actor.system.hitPoints.max;
         const newHP = maxHP;
-        
+
         // Calc WP
         const currentWP = this.actor.system.willPoints.value;
         const maxWP = this.actor.system.willPoints.max;
@@ -587,7 +588,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         ChatMessage.create({
             user: game.user.id,
             flavor: game.i18n.format("DoD.ui.character-sheet.restShift", {actor: this.actor.name, hp: newHP - currentHP, wp: newWP - currentWP})
-        });        
+        });
         this.actor.update({
             ["system.hitPoints.value"]: newHP,
             ["system.willPoints.value"]: newWP,
@@ -656,7 +657,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                 if (twoHanded) {
                     return item.update({["system.mainHand"]: element.checked, "system.offHand": element.checked});
                 }
-            }            
+            }
             return item.update({ [field]: element.checked });
         }
 
@@ -669,7 +670,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         const newMax = Math.max(1, Math.floor(event.currentTarget.value));
         const currentDamage = Math.max(0, this.actor.system.hitPoints.max - this.actor.system.hitPoints.value);
-        const newValue = Math.max(0, newMax - currentDamage);        
+        const newValue = Math.max(0, newMax - currentDamage);
 
         return this.actor.update({
             ["system.hitPoints.max"]: newMax,
@@ -693,12 +694,12 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         const newMax = Math.max(0, Math.floor(event.currentTarget.value));
         const currentDamage = Math.max(0, this.actor.system.willPoints.max - this.actor.system.willPoints.value);
-        const newValue = Math.max(0, newMax - currentDamage);       
-        
+        const newValue = Math.max(0, newMax - currentDamage);
+
         return this.actor.update({
             ["system.willPoints.max"]: newMax,
             ["system.willPoints.value"]: newValue
-        });        
+        });
     }
     _onEditCurrentWp(event) {
         event.preventDefault();
@@ -753,7 +754,7 @@ export default class DoDCharacterSheet extends ActorSheet {
     async _onAgeEdit(event) {
         event.preventDefault();
         event.currentTarget.blur();
-        
+
         const modifiers = {
             young: {
                 ["system.attributes.str.value"]: 0,
@@ -796,7 +797,7 @@ export default class DoDCharacterSheet extends ActorSheet {
     }
 
     _onItemDelete(event) {
-        event.preventDefault();       
+        event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".sheet-table-data").dataset.itemId;
 
@@ -823,7 +824,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         }
     }
 
- 
+
     async _onSkillRoll(event) {
         event.preventDefault();
 
@@ -877,7 +878,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                                 ok: {
                                     icon: '<i class="fas fa-check"></i>',
                                     label: game.i18n.localize("DoD.ui.dialog.labelOk"),
-                                    callback: () => resolve(true)              
+                                    callback: () => resolve(true)
                                 },
                                 cancel: {
                                     icon: '<i class="fas fa-times"></i>',
@@ -934,7 +935,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             const attribute = skill?.system.attribute;
             const damageBonus = this.actor.getDamageBonus(attribute);
             const damage = damageBonus ? weaponDamage + "+" + damageBonus : weaponDamage;
-            let damageType = DoD.damageTypes.none; 
+            let damageType = DoD.damageTypes.none;
 
             if (weapon.hasWeaponFeature("bludgeoning")) {
                 damageType = DoD.damageTypes.bludgeoning;
@@ -955,10 +956,10 @@ export default class DoDCharacterSheet extends ActorSheet {
             if (targets.length > 0) {
                 for (const target of targets) {
                     damageData.target = target.actor;
-                    await DoDChat.inflictDamageMessage(damageData);    
+                    await DoDChat.inflictDamageMessage(damageData);
                 }
             } else {
-                await DoDChat.inflictDamageMessage(damageData);    
+                await DoDChat.inflictDamageMessage(damageData);
             }
         } else { // right click - edit item
             weapon.sheet.render(true);
@@ -978,6 +979,21 @@ export default class DoDCharacterSheet extends ActorSheet {
         let attributeName = event.currentTarget.dataset.attribute;
         let test = new DoDAttributeTest(this.actor, attributeName, options);
         await test.roll();
+    }
+
+    async _onAdvancementRoll(event) {
+        const itemId = event.currentTarget.closest("tr").dataset.itemId;
+        const skillItem = this.actor.items.get(itemId);
+
+        const test = new DoDSkillTest(this.actor, skillItem)
+
+        const { postRollData } = await test.roll();
+        if (!postRollData) return;
+
+        const success = postRollData.success;
+        if (!success) await skillItem.update({ "system.value": Math.min(18, skillItem.system.value + 1) });
+
+        await skillItem.update({ "system.advance": false })
     }
 
     _onConditionClick(event) {
@@ -1062,7 +1078,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         if (itemData.type == "profession") {
             await this.actor.removeProfession();
         }
-        
+
         // If there are available slots, equip weapons, armor and helmet
         if (item.type == "weapon" || item.type == "armor" || item.type == "helmet") {
             itemData.system.worn =
@@ -1116,6 +1132,6 @@ export default class DoDCharacterSheet extends ActorSheet {
         }
 
         return this.actor.createEmbeddedDocuments("Item", [itemData]);
-    }    
+    }
 }
 
