@@ -572,93 +572,110 @@
     }
 
     .sheet-table-data {
-    background-color: transparent;
+        background-color: transparent;
 
-    td {
-        padding-left: 1em;
-        padding-right: 1em;
-    };
-    td:first-child {
-        padding-left: 2em;
-        padding-right: 0em;
-        text-align: right;
-    };
-    td:last-child {
-        padding-right: 2em;
-    };
-
-    select {
-        border: 0px;
-    };
-
-    .thumbnail-data {
-        padding: 0px;            
-        width: 36px;
-        height: 36px;
-        min-width: 36px;
-        min-height: 36px;
-        img {
+        button {
+            padding: 0px;
+            margin: 0px -1px 0px 0px;
+            border: 0px solid transparent;
+            background: transparent;
+            width: 14px;
+            height: 14px;
             vertical-align: middle;
-            border: 0px solid transparent;         
+            i {
+                vertical-align: top;
+                float: none;
+            }
         }
-    }
-
-    .checkbox-data {
-        padding: 0px;            
-        width: 24px;
-        height: 24px;
-        min-width: 24px;
-        min-height: 24px;
-        img {
-            vertical-align: middle;
-            border: 0px solid transparent;         
+        button:hover {
+            text-shadow: 0 0 8px var(--color-shadow-primary);
+            box-shadow: none;
         }
-    }
-
-    .text-data {
-        text-align: left;
-    }
-
-    .number-data {
-        text-align: center;
-        padding-left: 0.5em;
-        padding-right: 0.5em;
-        input {
-            border: 0px;
-            height: 100%;
-            width: 2em;
-            padding: 0px 0px;
-            text-align: center;
-            vertical-align: middle;
+        td {
+            padding-left: 1em;
+            padding-right: 1em;
         };
-    }            
+        td:first-child {
+            padding-left: 2em;
+            padding-right: 0em;
+            text-align: right;
+        };
+        td:last-child {
+            padding-right: 2em;
+        };
 
-    .checkbox-data {
-        margin: 0px;
-        padding: 0px;
-        text-align: center;
-        input {
-            width: 12px;
-            margin: 0px;
-            vertical-align: middle;
+        select {
+            border: 0px;
+        };
+
+        .thumbnail-data {
+            padding: 0px;            
+            width: 36px;
+            height: 36px;
+            min-width: 36px;
+            min-height: 36px;
+            img {
+                vertical-align: middle;
+                border: 0px solid transparent;         
+            }
         }
-    }
 
-    .icon-data {
-        width: 4em;
-        min-width: 4em;
-        padding-left: 0px;
-    }
+        .checkbox-data {
+            padding: 0px;            
+            width: 24px;
+            height: 24px;
+            min-width: 24px;
+            min-height: 24px;
+            img {
+                vertical-align: middle;
+                border: 0px solid transparent;         
+            }
+        }
 
-    .narrow {
-        padding-left: 0px;
-        padding-right: 0px;
-        text-indent: 0px;
-    }
+        .text-data {
+            text-align: left;
+        }
 
-    .wide {
-        width: 100%;
-    }
+        .number-data {
+            text-align: center;
+            padding-left: 0.5em;
+            padding-right: 0.5em;
+            input {
+                border: 0px;
+                height: 100%;
+                width: 2em;
+                padding: 0px 0px;
+                text-align: center;
+                vertical-align: middle;
+            };
+        }            
+
+        .checkbox-data {
+            margin: 0px;
+            padding: 0px;
+            text-align: center;
+            input {
+                width: 12px;
+                margin: 0px;
+                vertical-align: middle;
+            }
+        }
+
+        .icon-data {
+            width: 4em;
+            min-width: 4em;
+            padding-left: 0px;
+        }
+
+        .narrow {
+            padding-left: 0px;
+            padding-right: 0px;
+            text-indent: 0px;
+        }
+
+        .wide {
+            width: 100%;
+        }
     };
     
     .simple-table {

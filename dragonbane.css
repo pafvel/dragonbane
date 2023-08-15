@@ -1182,6 +1182,23 @@
 .system-dragonbane .sheet-table-data {
   background-color: transparent;
 }
+.system-dragonbane .sheet-table-data button {
+  padding: 0px;
+  margin: 0px -1px 0px 0px;
+  border: 0px solid transparent;
+  background: transparent;
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+}
+.system-dragonbane .sheet-table-data button i {
+  vertical-align: top;
+  float: none;
+}
+.system-dragonbane .sheet-table-data button:hover {
+  text-shadow: 0 0 8px var(--color-shadow-primary);
+  box-shadow: none;
+}
 .system-dragonbane .sheet-table-data td {
   padding-left: 1em;
   padding-right: 1em;
