@@ -237,10 +237,13 @@
         "skill": {
             "advance": "Advance",
             "advanceTooltip": "Marks that you can make an Advancement Roll",
+            "advancementFail": "Failed to increase <b>{skill}</b>.",
+            "advancementSuccess": "<b>{skill}</b> increased from <b>{old}</b> to <b>{new}</b>.",
             "attribute": "Attribute",
             "attributeTooltip": "The skill's Attribute",
             "hide": "Hide",
             "hideTooltip": "Hides skill from the list of Trained Skills",
+            "markAdvancement": "Mark skill for advancement",
             "rollAdvancement": "Roll to advance skill at end of session",
             "type": "Type",
             "typeTooltip": "The skill's Type"

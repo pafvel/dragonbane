@@ -344,7 +344,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".rollable-skill").on("click contextmenu", this._onSkillRoll.bind(this));
             html.find(".rollable-damage").on("click contextmenu", this._onDamageRoll.bind(this));
             html.find(".use-item").on("click contextmenu", this._onUseItem.bind(this));
-            html.find("[data-action='roll-advancement']").click(this._onAdvancementRoll.bind(this))
+            html.find("[data-action='roll-advancement']").on("click contextmenu", this._onAdvancementRoll.bind(this))
 
             html.find(".hit-points-max-label").change(this._onEditHp.bind(this));
             html.find(".hit-points-current-label").change(this._onEditCurrentHp.bind(this));
@@ -982,17 +982,36 @@ export default class DoDCharacterSheet extends ActorSheet {
     }
 
     async _onAdvancementRoll(event) {
+        event.preventDefault();
         const itemId = event.currentTarget.closest("tr").dataset.itemId;
         const skillItem = this.actor.items.get(itemId);
 
-        const test = new DoDSkillTest(this.actor, skillItem)
+        // left click to roll, right-click to clear
+        if (event.type == "click") { 
 
-        const { postRollData } = await test.roll();
-        if (!postRollData) return;
+            // Make roll
+            const roll = await new Roll("D20").roll({async: true});
+            const advance = roll.result > skillItem.system.value;
+            const flavorText = advance ? 
+                game.i18n.format("DoD.skill.advancementSuccess", {skill: skillItem.name, old: skillItem.system.value, new: skillItem.system.value + 1}) :
+                game.i18n.format("DoD.skill.advancementFail", {skill: skillItem.name});
 
-        const success = postRollData.success;
-        if (!success) await skillItem.update({ "system.value": Math.min(18, skillItem.system.value + 1) });
-
+            const msg = await roll.toMessage({
+                user: game.user.id,
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                flavor: flavorText
+            });
+        
+            if (advance) {
+                if(game.dice3d) {
+                    game.dice3d.waitFor3DAnimationByMessageID(msg.id).then(
+                        () => skillItem.update({ "system.value": skillItem.system.value + 1}));
+                } else {
+                    await skillItem.update({ "system.value": skillItem.system.value + 1});
+                }
+            }
+        }
+        // always clear advancement
         await skillItem.update({ "system.advance": false })
     }
 
