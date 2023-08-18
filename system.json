@@ -36,7 +36,7 @@
         "lang": "pt-BR",
         "name": "Português Brasileiro",
         "path": "lang/pt-br.json"
-      }      
+      }
     ],
     "packs": [
         {
@@ -57,6 +57,6 @@
     "secondaryTokenAttribute": "willPoints",
     "background": "systems/dragonbane/art/dragonbane-splash.webp",
     "url": "https://github.com/pafvel/dragonbane",
-    "manifest": "https://github.com/pafvel/dragonbane/releases/download/v1.1.0/system.json",
+    "manifest": "https://github.com/pafvel/dragonbane/releases/latest/download/system.json",
     "download": "https://github.com/pafvel/dragonbane/releases/download/v1.1.0/dragonbane.zip"
   }
