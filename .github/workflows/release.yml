@@ -29,3 +29,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: "CHANGES.md, module.json, dragonbane.zip"
           generateReleaseNotes: true
+          draft: true
