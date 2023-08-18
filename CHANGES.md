@@ -1,12 +1,16 @@
 # Change Log
 
+## Version 1.2.0
+- Characters
+    - Skill advancement automation. Contribution from @aMediocreDad.
+
 ## Version 1.1.0
 - Weapons
     - New weapon feature: Unarmed. Unarmed weapons do not count towards weapons at hand.
     - All melee weapons can now Topple.
     - Toppling weapons get a Boon on Topple.
     - Fixed bug where pushing a weapon roll always resulted in the default action
-- Character
+- Characters
     - Prevent having more than 3 weapons at hand after dragging and dropping on the inventory tab.
 - Monsters and NPCs
     - Items can be created on the inventory tab.
