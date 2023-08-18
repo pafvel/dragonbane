@@ -57,6 +57,6 @@
     "secondaryTokenAttribute": "willPoints",
     "background": "systems/dragonbane/art/dragonbane-splash.webp",
     "url": "https://github.com/pafvel/dragonbane",
-    "manifest": "https://github.com/pafvel/dragonbane/releases/download/v1.1.0/system.json",
-    "download": "https://github.com/pafvel/dragonbane/releases/download/v1.1.0/dragonbane.zip"
+    "manifest": "https://github.com/pafvel/dragonbane/releases/download/v1.2.0/system.json",
+    "download": "https://github.com/pafvel/dragonbane/releases/download/v1.2.0/dragonbane.zip"
   }
