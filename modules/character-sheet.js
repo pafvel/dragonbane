@@ -639,16 +639,6 @@ export default class DoDCharacterSheet extends ActorSheet {
                                 } else {
                                     actorItem.update({[field]: false});
                                 }
-                            } else {
-                                // Equipping same weapon
-                                // Un-equip from other hand if one-handed
-                                if (!twoHanded) {
-                                    if (field == "system.mainHand") {
-                                        actorItem.update({ ["system.offHand"]: false });
-                                    } else {
-                                        actorItem.update({ ["system.mainHand"]: false });
-                                    }
-                                }
                             }
                         }
                     }

@@ -115,5 +115,13 @@ export class DoDItem extends Item {
         let bonus = this.hasDamageBonus(damageType) ? 2 : 0;
         return this.system.rating + bonus;
     }
+
+    get requiredStr() {
+        let str = this.system.str;
+        if (this.system.grip.value == "grip1h" && this.system.mainHand && this.system.offHand) {
+            str = Math.max(0, str - 3);
+        }
+        return str;
+    }
 }
   

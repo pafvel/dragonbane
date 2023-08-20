@@ -321,7 +321,8 @@
             "broken": "Trasigt",
             "brokenTooltip": "Anger om vapnet är trasigt",
             "mainHandTooltip": "Håller vapnet i svärdshanden",
-            "offHandTooltip": "Håller vapnet i den aviga handen"
+            "offHandTooltip": "Håller vapnet i den aviga handen",
+            "belowRequiredStr": "STY-krav"
         },
         "weaponFeatureTypes": {
             "bludgeoning": "Krossande",
