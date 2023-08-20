@@ -34,7 +34,7 @@ export default class DoDTest {
                 messageData.content = renderedMessage
             }
         }
-        this.roll.toMessage(messageData);
+        this.rollMessage = await this.roll.toMessage(messageData);
         return this;
     }
 

@@ -512,6 +512,26 @@
   border: 0px solid transparent;
   text-align: center;
 }
+.DoD.sheet.character .resource-points .death-rolls-box button {
+  font-family: QTFrizQuad;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 0px;
+  margin: 0px;
+  border: 0px solid transparent;
+  background: transparent;
+  vertical-align: middle;
+  text-align: center;
+  line-height: normal;
+}
+.DoD.sheet.character .resource-points .death-rolls-box button i {
+  vertical-align: top;
+  float: none;
+}
+.DoD.sheet.character .resource-points .death-rolls-box button:hover {
+  text-shadow: 0 0 8px var(--color-shadow-primary);
+  box-shadow: none;
+}
 .DoD.sheet.character .resource-points .death-rolls-box .hit-point {
   width: 10px;
   height: 10px;

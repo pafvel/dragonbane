@@ -220,7 +220,9 @@
             "pushButtonLabel": "Pressa slag",
             "pushChoiceLabel": "Välj tillstånd:",
             "parryShield": "<p>Om skadan är högre än brytvärdet (<b>{durability}</b>) skadas skölden och blir trasig (gäller ej stickskada).",
-            "parryWeapon": "<p>Om skadan är högre än brytvärdet (<b>{durability}</b>) skadas vapnet och blir trasigt (gäller ej stickskada)."
+            "parryWeapon": "<p>Om skadan är högre än brytvärdet (<b>{durability}</b>) skadas vapnet och blir trasigt (gäller ej stickskada).",
+            "deathRoll": "Dödsslaget <b>{result}</b>"
+
         },
         "secondaryAttributeTypes": {
             "none": "-",
@@ -405,6 +407,7 @@
                 "restStretchTooltip": "Kort vila\rDu vilar i en kvart och återfår T6 KP och T6 VP, samt återhämtar ett valfritt tillstånd.\rOm du använder din minnessak återhämtar du ytterligare ett tillstånd.\rDu kan bara utföra en kort vila en gång per skift.",
                 "restShift": "Lång vila: <b>{actor}</b> vilar ett skift och läker <b>{hp}</b> Kroppspoäng, <b>{wp}</b> Viljepoäng och alla tillstånd.",
                 "restShiftTooltip": "Lång vila\rDu vilar i ett skift och läker alla KP, VP och tillstånd",
+                "rollDeathRoll": "Slå dödsslag",
                 "school": "Magiskola",
                 "secondarySkills": "Sekundära färdigheter",
                 "size": "Storlek",
@@ -442,6 +445,7 @@
                 "treasureCards": "{count} Skattkort",
                 "failedDeathRoll": "{actor} tog skada vid 0 KP och misslyckades automatiskt med ett dödsslag.",
                 "characterDied": "{actor} dog.",
+                "characterSurvived": "{actor} undvek döden och återfår [[/roll D6]] KP.",
                 "characterProne": "{actor} nådde 0 KP och blev liggande."
             },
             "dialog": {

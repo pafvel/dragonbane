@@ -219,7 +219,8 @@
             "pushButtonLabel": "Push roll",
             "pushChoiceLabel": "Choose condition:",
             "parryWeapon": "<p>If the parried damage exceeds your weapon's durability (<b>{durability}</b>), the weapon is damaged. Piercing damage can not damage a weapon.</p>",
-            "parryShield": "<p>If the parried damage exceeds your shield's durability (<b>{durability}</b>), the shield is damaged. Piercing damage can not damage a shield.</p>"
+            "parryShield": "<p>If the parried damage exceeds your shield's durability (<b>{durability}</b>), the shield is damaged. Piercing damage can not damage a shield.</p>",
+            "deathRoll": "Death Roll <b>{result}</b>"
         },
         "secondaryAttributeTypes": {
             "none": "-",
@@ -402,6 +403,7 @@
                 "restStretchTooltip": "Stretch Rest\rRest for one stretch and heals D6 HP, D6 WP and a condition of your choice.\rYou can use your memento to recover an additional condition.\rYou can only have a stretch rest once per shift.",
                 "restShift": "Shift Rest: <b>{actor}</b> rests one shift and heals <b>{hp}</b> HP, <b>{wp}</b> WP and all conditions.",
                 "restShiftTooltip": "Shift Rest\rRest one shift and heal all HP, WP and conditions",
+                "rollDeathRoll": "Roll Death Roll",
                 "school": "School of Magic",
                 "secondarySkills": "Secondary Skills",
                 "size": "Size",
@@ -438,6 +440,7 @@
                 "treasureCards": "{count} Treasure Cards",
                 "failedDeathRoll": "{actor} failed a death roll due to taking damage at 0 HP.",
                 "characterDied": "{actor} died.",
+                "characterSurvived": "{actor} escaped death and recovers [[/roll D6]] HP.",
                 "characterProne": "{actor} reached 0 HP and became prone."
             },
             "dialog": {

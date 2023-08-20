@@ -31,6 +31,8 @@ export default class DoDAttributeTest extends DoDTest {
         super.updatePostRollData();
         this.postRollData.success = this.postRollData.result <= this.preRollData.target;
         this.postRollData.canPush = this.preRollData.canPush && !this.postRollData.success && this.postRollData.result != 20;
+        this.postRollData.isDragon = this.postRollData.result <= 1 + (this.preRollData.extraDragons ?? 0);
+        this.postRollData.isDemon = this.postRollData.result >= 20 - (this.preRollData.extraDemons ?? 0);
         
         if (this.postRollData.canPush) {
             this.updatePushRollChoices();
@@ -38,10 +40,9 @@ export default class DoDAttributeTest extends DoDTest {
     }
 
     formatRollMessage(postRollData) {
-       let result = this.formatRollResult(postRollData);
-
+        let result = this.formatRollResult(postRollData);
         let localizedName = game.i18n.localize("DoD.attributes." + postRollData.attribute);
-        let label = game.i18n.format(game.i18n.localize("DoD.roll.attributeRoll"), {attribute: localizedName, result: result});
+        let label = game.i18n.format(game.i18n.localize(this.options.flavor ?? "DoD.roll.attributeRoll"), {attribute: localizedName, result: result});
         return {
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: postRollData.actor }),

@@ -358,6 +358,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".death-rolls-success-label").on("click contextmenu", this._onDeathRollsSuccessClick.bind(this));
             html.find(".death-rolls-failure").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
             html.find(".death-rolls-failure-label").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
+            html.find("[data-action='roll-deathRoll']").click(this._onDeathRoll.bind(this))
 
             html.find(".rest-round").on("click", this._onRestRound.bind(this));
             html.find(".rest-stretch").on("click", this._onRestStretch.bind(this));
@@ -477,6 +478,60 @@ export default class DoDCharacterSheet extends ActorSheet {
             if (failures > 0) {
                 return await this.actor.update({ ["system.deathRolls.failures"]: failures-1});
             }
+        }
+    }
+
+    async _onDeathRoll(event) {
+        event.preventDefault();
+        event.currentTarget?.blur();
+
+        let options = {
+            defaultBanesBoons: true,
+            canPush: false,
+            flavor: "DoD.roll.deathRoll"
+        };
+
+        let test = new DoDAttributeTest(this.actor, "con", options);
+        await test.roll();
+
+        const success = test.postRollData.success;
+        const isDragon = test.postRollData.isDragon;
+        const isDemon = test.postRollData.isDemon;
+        
+        async function updateDeathRolls(actor) {
+            if (success) {
+                if (actor.system.deathRolls.successes < 3) {            
+                    await actor.update({ ["system.deathRolls.successes"]: Math.min(3, actor.system.deathRolls.successes + (isDragon ? 2 : 1))});
+                }
+            } else {
+                if (actor.system.deathRolls.failures < 3) {
+                    await actor.update({ ["system.deathRolls.failures"]: Math.min(3, actor.system.deathRolls.failures + (isDemon ? 2 : 1))});
+                }
+            }
+            if (actor.system.deathRolls.failures == 3) {
+                const token = canvas.scene.tokens.find(t => t.actor.uuid == actor.uuid);
+                if (token) {
+                    const status = CONFIG.statusEffects.find(a => a.id === 'dead');
+                    token.toggleActiveEffect(status, {active: true});    
+                }
+                const actorName = actor.isToken ? actor.token.name : actor.name;
+                const msg = "<p>" + game.i18n.format("DoD.ui.chat.characterDied", {actor: actorName}) + "</p>";
+                ChatMessage.create({ content: msg });
+            }
+            if (actor.system.deathRolls.successes == 3) {
+                const actorName = actor.isToken ? actor.token.name : actor.name;
+                const msg = "<p>" + game.i18n.format("DoD.ui.chat.characterSurvived", {actor: actorName}) + "</p>";
+                ChatMessage.create({ content: msg });
+                await actor.update({["system.deathRolls.failures"]: 0, ["system.deathRolls.successes"]: 0});
+            }
+
+        }
+
+        if(game.dice3d) {
+            game.dice3d.waitFor3DAnimationByMessageID(test.rollMessage.id).then(
+                () => updateDeathRolls(this.actor));
+        } else {
+            updateDeathRolls(this.actor);
         }
     }
 
