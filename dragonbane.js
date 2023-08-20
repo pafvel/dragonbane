@@ -1,22 +1,22 @@
-import { DoD } from "./modules/config.js";
 import { DoDActor } from "./modules/actor.js";
-import { DoDItem } from "./modules/item.js";
-import * as DoDChat from "./modules/chat.js";
-import DoDItemSheet from "./modules/item-sheet.js";
 import DoDCharacterSheet from "./modules/character-sheet.js";
-import DoD_Utility from "./modules/utility.js";
-import * as DoDMigrate from "./modules/migrate.js";
-import * as DoDMacro from "./modules/macro.js";
+import * as DoDChat from "./modules/chat.js";
+import { DoD } from "./modules/config.js";
+import DoDItemSheet from "./modules/item-sheet.js";
+import { DoDItem } from "./modules/item.js";
 import * as DoDJournal from "./modules/journal.js";
+import * as DoDMacro from "./modules/macro.js";
+import * as DoDMigrate from "./modules/migrate.js";
+import DoD_Utility from "./modules/utility.js";
 
 function registerHandlebarsHelpers() {
-    
+
     /*
     * Repeat given markup with n times
     */
-    Handlebars.registerHelper("times", function(n, block) {
+    Handlebars.registerHelper("times", function (n, block) {
         var result = "";
-        for(let i = 0; i < n; ++i) {
+        for (let i = 0; i < n; ++i) {
             result += block.fn(i);
         }
         return result;
@@ -31,8 +31,8 @@ function registerHandlebarsHelpers() {
         var i;
         var data = {};
 
-        if ( from < to ) {
-            for ( i = from; i <= to; i += 1 ) {
+        if (from < to) {
+            for (i = from; i <= to; i += 1) {
                 data.index = i;
                 result += block.fn(this, {
                     data: data
@@ -42,7 +42,7 @@ function registerHandlebarsHelpers() {
             result = block.inverse(this);
         }
         return result;
-    });    
+    });
 }
 
 async function preloadHandlebarsTemplates() {
@@ -69,10 +69,10 @@ async function preloadHandlebarsTemplates() {
 }
 
 function registerSettings() {
-    console.log ("Dragonbane: Registering settings");
+    console.log("Dragonbane: Registering settings");
 
     // If true, keeps permission on assets when re-importing them
-    
+
     game.settings.register("dragonbane", "keepOwnershipOnImport", {
         name: "DoD.SETTINGS.keepOwnershipOnImport",
         hint: "DoD.SETTINGS.keepOwnershipOnImportHint",
@@ -81,7 +81,7 @@ function registerSettings() {
         default: false,
         type: Boolean
     });
-    
+
     // Most recent system version
     game.settings.register("dragonbane", "systemVersion", {
         config: false,
@@ -133,21 +133,28 @@ function registerSettings() {
         type: String,
         default: ""
     });
+
+    game.settings.register("dragonbane", "configuredYzeCombat", {
+        config: false,
+        scope: "world",
+        type: Boolean,
+        default: false
+    });
 }
 
-Hooks.once("init", function() {
+Hooks.once("init", function () {
     console.log("DoD | Initializing Dragonbane System");
-    
+
     CONFIG.DoD = DoD;
 
     CONFIG.Actor.documentClass = DoDActor;
     CONFIG.Item.documentClass = DoDItem;
 
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("DoD", DoDCharacterSheet, {makeDefault: true});
+    Actors.registerSheet("DoD", DoDCharacterSheet, { makeDefault: true });
 
     Items.unregisterSheet("core", ItemSheet);
-    Items.registerSheet("DoD", DoDItemSheet, {makeDefault: true});
+    Items.registerSheet("DoD", DoDItemSheet, { makeDefault: true });
 
     registerHandlebarsHelpers();
     preloadHandlebarsTemplates();
@@ -180,7 +187,7 @@ Hooks.once("ready", async function () {
         const SYSTEM_MIGRATION_VERSION = 0.01;
         const currentVersion = game.settings.get("dragonbane", "systemMigrationVersion");
         const needsMigration = !currentVersion || isNewerVersion(SYSTEM_MIGRATION_VERSION, currentVersion);
-    
+
         if (needsMigration) {
             DoDMigrate.migrateWorld();
             game.settings.set("dragonbane", "systemMigrationVersion", SYSTEM_MIGRATION_VERSION);
@@ -198,7 +205,7 @@ Hooks.once("ready", async function () {
                 await adventure.sheet.render(true);
                 game.settings.set("dragonbane", "systemVersion", game.system.version);
             }
-        }    
+        }
     }
 
     // Show welcome journal when importing the adventure
@@ -234,7 +241,7 @@ Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
     const keepOwnership = game.settings.get("dragonbane", "keepOwnershipOnImport");
     if (keepOwnership) {
         // Ignore ownership when updating data
-        for ( const [_documentName, updateData] of Object.entries(toUpdate) ) {
+        for (const [_documentName, updateData] of Object.entries(toUpdate)) {
             for (let data of updateData) {
                 if (data.ownership) {
                     delete data.ownership;
@@ -261,15 +268,15 @@ Hooks.on('importAdventure', async (created, updated) => {
 Hooks.once('diceSoNiceInit', async (dice3d) => {
     await dice3d.addTexture("DragonbaneTexture", {
         name: game.i18n.localize("DoD.diceSoNice.textureTransparent"),
-        composite:"destination-in",
-        source:"systems/dragonbane/art/ui/dsn/texture.webp",
-        bump:"systems/dragonbane/art/ui/dsn/texture.webp",
-        material:"metal"
+        composite: "destination-in",
+        source: "systems/dragonbane/art/ui/dsn/texture.webp",
+        bump: "systems/dragonbane/art/ui/dsn/texture.webp",
+        material: "metal"
     });
 });
 
 Hooks.once('diceSoNiceReady', (dice3d) => {
-    
+
     dice3d.addColorset({
         name: 'DragonbaneGreen1',
         description: game.i18n.localize("DoD.diceSoNice.colorGreen"),
@@ -280,7 +287,7 @@ Hooks.once('diceSoNiceReady', (dice3d) => {
         edge: '#00a000',
         material: 'metal',
         font: "QTFrizQuad"
-        },
+    },
         'preferred'
     );
 
@@ -294,7 +301,7 @@ Hooks.once('diceSoNiceReady', (dice3d) => {
         edge: '#6F0000',
         material: 'metal',
         font: "QTFrizQuad"
-        },
+    },
         'default'
     );
 
@@ -309,10 +316,10 @@ Hooks.once('diceSoNiceReady', (dice3d) => {
         texture: 'DragonbaneTexture',
         material: 'metal',
         font: "QTFrizQuad"
-        },
+    },
         'default'
     );
-    
+
     dice3d.addColorset({
         name: 'DragonbaneRed2',
         description: game.i18n.localize("DoD.diceSoNice.colorRedTransparent"),
@@ -324,12 +331,12 @@ Hooks.once('diceSoNiceReady', (dice3d) => {
         texture: 'DragonbaneTexture',
         material: 'metal',
         font: "QTFrizQuad"
-        },
+    },
         'default'
     );
-    
 
-    dice3d.addSystem({ id: 'dragonbane', name: game.i18n.localize("DoD.diceSoNice.system") }, 'preferred');    
+
+    dice3d.addSystem({ id: 'dragonbane', name: game.i18n.localize("DoD.diceSoNice.system") }, 'preferred');
     dice3d.addDicePreset({
         type: 'd20',
         labels: [
@@ -338,20 +345,35 @@ Hooks.once('diceSoNiceReady', (dice3d) => {
             "systems/dragonbane/art/ui/dsn/dod-ikon-demon-vit-256.png"
         ],
         bumpMaps: [
-        "systems/dragonbane/art/ui/dsn/dod-ikon-drake-bump.png",
-        ,,,,,,,,,,,,,,,,,,
-        "systems/dragonbane/art/ui/dsn/dod-ikon-demon-bump.png"
+            "systems/dragonbane/art/ui/dsn/dod-ikon-drake-bump.png",
+            , , , , , , , , , , , , , , , , , ,
+            "systems/dragonbane/art/ui/dsn/dod-ikon-demon-bump.png"
         ],
         system: 'dragonbane',
     });
 });
 
+// Set up Year Zero Engine Combat
+Hooks.on("yzeCombatReady", () => {
+    if (game.settings.get("dragonbane", "configuredYzeCombat")) return;
+    try {
+        game.settings.set("yze-combat", "resetEachRound", true);
+        game.settings.set("yze-combat", "slowAndFastActions", false);
+        game.settings.set("yze-combat", "initAutoDraw", true);
+        game.settings.set("yze-combat", "duplicateCombatantOnCombatStart", true);
+        game.settings.set("yze-combat", "actorSpeedAttribute", "system.ferocity");
+        game.settings.set("dragonbane", "configuredYzeCombat", true);
+    } catch (e) {
+        console.error("Dragonbane: Could not configure YZE Combat. Try refreshing the page");
+    }
+})
+
 CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     {
         // Rollable damage
         // Format [[/damage <formula> [<slashing|piercing|bludgeoning>]]]
-        pattern : /\[\[\/damage\s((?:\d+)?[dD](?:\d+)(?:[\+\-]\d+)?)\s?(slashing|piercing|bludgeoning)?(?:\s(.+))?\]\]/gm,
-        enricher : (match, options) => {
+        pattern: /\[\[\/damage\s((?:\d+)?[dD](?:\d+)(?:[\+\-]\d+)?)\s?(slashing|piercing|bludgeoning)?(?:\s(.+))?\]\]/gm,
+        enricher: (match, options) => {
             const a = document.createElement("a");
             a.classList.add("inline-roll");
             a.classList.add("inline-damage-roll");
@@ -366,8 +388,8 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     },
     {
         // Rollable table
-        pattern : /@Table\[(.+?)\](?:{(.+?)})?/gm,
-        enricher : (match, options) => {
+        pattern: /@Table\[(.+?)\](?:{(.+?)})?/gm,
+        enricher: (match, options) => {
             const table = DoD_Utility.findTable(match[1]);
             const tableName = match[2] ?? table?.name;
             const a = document.createElement("a");
@@ -390,8 +412,8 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     {
         // Rollable treasure
         // Format [[/treasure <number>]]
-        pattern : /\[\[\/treasure(\s[\d]+)?\]\]/gm,
-        enricher : (match, options) => {
+        pattern: /\[\[\/treasure(\s[\d]+)?\]\]/gm,
+        enricher: (match, options) => {
             const count = match[1] ?? 1;
             const a = document.createElement("a");
             a.classList.add("inline-roll");
@@ -400,61 +422,61 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
 
             let text = "DoD.ui.chat.treasureCard";
             if (count > 1) text += "s";
-            a.innerHTML = `<i class="fas fa-dice-d20"></i> ${game.i18n.format(text, {count: count})}`;
+            a.innerHTML = `<i class="fas fa-dice-d20"></i> ${game.i18n.format(text, { count: count })}`;
             return a;
         }
     },
     {
-        pattern : /@DisplayAbility\[(.+?)\](?:{(.+?)})?/gm,
-        enricher : DoDJournal.enrichDisplayAbility
+        pattern: /@DisplayAbility\[(.+?)\](?:{(.+?)})?/gm,
+        enricher: DoDJournal.enrichDisplayAbility
     },
     {
-        pattern : /@DisplayMonster\[(.+?)\](?:{(.+?)})?/gm,
+        pattern: /@DisplayMonster\[(.+?)\](?:{(.+?)})?/gm,
         enricher: DoDJournal.enrichDisplayMonster
     },
     {
-        pattern : /@DisplayMonsterCard\[(.+?)\](?:{(.+?)})?/gm,
+        pattern: /@DisplayMonsterCard\[(.+?)\](?:{(.+?)})?/gm,
         enricher: DoDJournal.enrichDisplayMonsterCard
     },
     {
-        pattern : /@DisplayMonsterDescription\[(.+?)\](?:{(.+?)})?/gm,
+        pattern: /@DisplayMonsterDescription\[(.+?)\](?:{(.+?)})?/gm,
         enricher: DoDJournal.enrichDisplayMonsterDescription
     },
     {
-        pattern : /@DisplayMonsterDescriptionCard\[(.+?)\](?:{(.+?)})?/gm,
+        pattern: /@DisplayMonsterDescriptionCard\[(.+?)\](?:{(.+?)})?/gm,
         enricher: DoDJournal.enrichDisplayMonsterDescriptionCard
     },
     {
-        pattern : /@DisplayNpc\[(.+?)\](?:{(.+?)})?/gm,
-        enricher : DoDJournal.enrichDisplayNpc
+        pattern: /@DisplayNpc\[(.+?)\](?:{(.+?)})?/gm,
+        enricher: DoDJournal.enrichDisplayNpc
     },
     {
-        pattern : /@DisplayNpcCard\[(.+?)\](?:{(.+?)})?/gm,
-        enricher : DoDJournal.enrichDisplayNpcCard
+        pattern: /@DisplayNpcCard\[(.+?)\](?:{(.+?)})?/gm,
+        enricher: DoDJournal.enrichDisplayNpcCard
     },
     {
-        pattern : /@DisplayNpcDescription\[(.+?)\](?:{(.+?)})?/gm,
-        enricher : DoDJournal.enrichDisplayNpcDescription
+        pattern: /@DisplayNpcDescription\[(.+?)\](?:{(.+?)})?/gm,
+        enricher: DoDJournal.enrichDisplayNpcDescription
     },
     {
-        pattern : /@DisplaySkill\[(.+?)\](?:{(.+?)})?/gm,
-        enricher : DoDJournal.enrichDisplaySkill
+        pattern: /@DisplaySkill\[(.+?)\](?:{(.+?)})?/gm,
+        enricher: DoDJournal.enrichDisplaySkill
     },
     {
-        pattern : /@DisplaySpell\[(.+?)\](?:{(.+?)})?/gm,
-        enricher : DoDJournal.enrichDisplaySpell 
+        pattern: /@DisplaySpell\[(.+?)\](?:{(.+?)})?/gm,
+        enricher: DoDJournal.enrichDisplaySpell
     },
     {
-        pattern : /@DisplayTable\[(.+?)\](?:{(.+?)})?/gm,
-        enricher : DoDJournal.enrichDisplayTable
+        pattern: /@DisplayTable\[(.+?)\](?:{(.+?)})?/gm,
+        enricher: DoDJournal.enrichDisplayTable
     },
     {
-        pattern : /@DisplayTrick\[(.+?)\](?:{(.+?)})?/gm,
-        enricher : DoDJournal.enrichDisplayTrick
+        pattern: /@DisplayTrick\[(.+?)\](?:{(.+?)})?/gm,
+        enricher: DoDJournal.enrichDisplayTrick
     },
     {
-        pattern : /@GearTableStart\[(.+?)\](?:{(.+?)})((?:(?!@GearTableEnd)[\S\s])+)@GearTableEnd/gm,
-        enricher : DoDJournal.enrichGearTable
+        pattern: /@GearTableStart\[(.+?)\](?:{(.+?)})((?:(?!@GearTableEnd)[\S\s])+)@GearTableEnd/gm,
+        enricher: DoDJournal.enrichGearTable
     }
 ]);
 
