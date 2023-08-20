@@ -62,7 +62,6 @@
             "banes": "Desgraças",
             "rating": "Classe de Armadura",
             "bonuses": "Bônus de Armadura"
-
         },
         "attackTypes": {
             "ranged": "Ataque à Distância",
@@ -95,7 +94,7 @@
         "castingTimeTypes": {
             "action": "Ação",
             "reaction": "Reação",
-            "stretch": "Esticada",
+            "stretch": "Intervalo",
             "shift": "Turno"
         },
         "conditions": {
@@ -130,12 +129,12 @@
             "d20": "D20"
         },
         "diceSoNice": {
-            "colorGreen": "Dragonbane Green",
-            "colorGreenTransparent": "Dragonbane Green (Transparent)",
-            "colorRed": "Dragonbane Red",
-            "colorRedTransparent": "Dragonbane Red (Transparent)",
+            "colorGreen": "Dragonbane Verde",
+            "colorGreenTransparent": "Dragonbane Verde (Transparente)",
+            "colorRed": "Dragonbane Vermelho",
+            "colorRedTransparent": "Dragonbane Vermelho (Transparente)",
             "system": "Dragonbane",
-            "textureTransparent": "Dragonbane (Transparent)"
+            "textureTransparent": "Dragonbane (Transparente)"
         },
         "item": {
             "new": "Novo Item"
@@ -221,7 +220,6 @@
             "pushChoiceLabel": "Escolha a condição:",
             "parryWeapon": "<p>Se o dano aparado exceder a durabilidade da sua arma (<b>{durability}</b>), a arma é danificada. Dano perfurante não pode danificar uma arma.</p>",
             "parryShield": "<p>Se o dano aparado exceder a durabilidade do seu escudo (<b>{durability}</b>), o escudo é danificado. Dano perfurante não pode danificar um escudo.</p>"
-
         },
         "secondaryAttributeTypes": {
             "none": "-",
@@ -239,10 +237,14 @@
         "skill": {
             "advance": "Avanço",
             "advanceTooltip": "Marca que você pode fazer uma Rolagem de Avanço",
+            "advancementFail": "Falha ao aumentar <b>{skill}</b>.",
+            "advancementSuccess": "<b>{skill}</b> aumentou de <b>{old}</b> para <b>{new}</b>.",
             "attribute": "Atributo",
             "attributeTooltip": "Atributo da Perícia",
             "hide": "Esconder",
             "hideTooltip": "Oculta a perícia da lista de Perícias Treinadas",
+            "markAdvancement": "Marcar perícia para avanço",
+            "rollAdvancement": "Rolar para melhorar a perícia no final da sessão",
             "type": "Tipo",
             "typeTooltip": "Tipo da Perícia"
         },
@@ -270,7 +272,7 @@
         "spellDurationTypes": {
             "instant": "Instante",
             "round": "Rodada",
-            "stretch": "Esticada",
+            "stretch": "Intervalo",
             "shift": "Turno",
             "concentration": "Concentração",
             "permanent": "Permanente"
@@ -322,29 +324,31 @@
         },
         "weaponFeatureTypes": {
             "bludgeoning": "Contundente",
+            "bludgeoningTooltip": "Contundente",
             "long": "Longo",
+            "longTooltip": "Longo",
             "mounted": "Montado",
+            "mountedTooltip": "Requer montaria treinada em combate",
             "noDamageBonus": "Nenhum bônus de dano",
             "noDamageBonusTooltip": "Nenhum bônus de dano",
             "noparry": "Sem aparar",
+            "noparryTooltip": "Não pode ser usado para aparar",
             "piercing": "Perfurante",
+            "piercingTooltip": "Perfurante",
             "quiver": "Aljava",
             "quiverTooltip": "Requer aljava",
-            "slashing": "Cortante",
-            "subtle": "Sutil",
-            "thrown": "Arremessável",
-            "toppling": "Derrubar",
             "shield": "Escudo",
-            "bludgeoningTooltip": "Contundente",
-            "longTooltip": "Longo",
-            "mountedTooltip": "Requer montaria treinada em combate",
-            "noparryTooltip": "Não pode ser usado para aparar",
-            "piercingTooltip": "Perfurante",
+            "shieldTooltip": "Escudo",
+            "slashing": "Cortante",
             "slashingTooltip": "Cortante",
+            "subtle": "Sutil",
             "subtleTooltip": "Sutil",
+            "thrown": "Arremessável",
             "thrownTooltip": "Pode ser arremessada",
+            "toppling": "Derrubar",
             "topplingTooltip": "Pode ser usada para derrubar",
-            "shieldTooltip": "Escudo"    
+            "unarmed": "Desarmado",
+            "unarmedTooltip": "Ataques desarmados não contam no limite de armas em mãos"
         },    
         "ui": {
             "character-sheet": {
@@ -353,7 +357,7 @@
                 "and": "&",
                 "appearance": "Aparência",
                 "armor": "Armadura",
-                "background": "Background",
+                "background": "Biografia",
                 "banes": "Desgraça em",
                 "combat": "Combate",
                 "coreSkills": "Perícias Principais",
@@ -393,8 +397,8 @@
                 "professionAbilities": "Habilidades de Profissão",
                 "restRound": "Descanso de Rodada: <b>{actor}</b> descansa uma rodada e recupera <b>{wp}</b> FV.",
                 "restRoundTooltip": "Descanso de Rodada\rUm descanso rápido que dura uma única rodada.\rDurante uma rodada de descanso, você recupera D6 FV.\rVocê só pode ter uma rodada de descanso uma vez por Turno.",
-                "restStretch": "Descanso de Esticada: <b>{actor}</b> descansa por uma esticada e recupera <b>{hp}</b> PV, <b>{wp}</b> FV e <b>uma condição de sua escolha</b>.<br>Você pode usar sua Recordação para recuperar uma condição adicional.",
-                "restStretchTooltip": "Descanso de Esticada\rDescanse por uma esticada e cure D6 PV, D6 FV e uma condição de sua escolha.\rVocê pode usar sua Recordação para recuperar uma condição adicional.\rVocê só pode ter um descanso de esticada uma vez por Turno.",
+                "restStretch": "Descanso de Intervalo: <b>{actor}</b> descansa por um Intervalo e recupera <b>{hp}</b> PV, <b>{wp}</b> FV e <b>uma condição de sua escolha</b>.<br>Você pode usar sua Recordação para recuperar uma condição adicional.",
+                "restStretchTooltip": "Descanso de Intervalo\rDescanse por um Intervalo e cure D6 PV, D6 FV e uma condição de sua escolha.\rVocê pode usar sua Recordação para recuperar uma condição adicional.\rVocê só pode ter um descanso de Intervalo uma vez por Turno.",
                 "restShift": "Descanso de Turno: <b>{actor}</b> descansa um turno e cura <b>{hp}</b> PV, <b>{wp}</b> FV e todas as condições.",
                 "restShiftTooltip": "Descanso de Turno\rDescanse um turno inteiro e cure todo o PV, FV e condições",
                 "school": "Escola de Magia",
@@ -414,7 +418,7 @@
                 "willPoints": "Força de Vontade",
                 "wp": "FV"
             },
-            "chat":{
+            "chat": {
                 "damageApplied": "<b>{damage} dano</b> aplicado a <b>{actor}</b>.",
                 "damageAppliedDetails": "{damage} dano vs {armor} classe de armadura.",
                 "damageAppliedMultiplier": "x{multiplier} multiplicador.",
@@ -458,7 +462,6 @@
                 "useAbilityWithoutWP": "Usar <b>{ability}</b>?",
                 "weaponFeatures": "Características de Arma"
             }
-
         },
         "INFO": {
             "professionSkillAdded": "Perícia de profissão adicionada: {skill}"
@@ -488,7 +491,8 @@
             "noTreasureTable": "Tabela de tesouro não encontrada.",
             "noMeleeMishapTable": "Faltando a tabela de acidentes para armas corpo a corpo.",
             "noRangedMishapTable": "Faltando a tabela de acidentes para armas de longo alcance.",
-            "noMagicMishapTable": "Faltando a tabela de acidentes mágicos."
-      }
+            "noMagicMishapTable": "Faltando a tabela de acidentes mágicos.",
+            "maxWeaponsEquipped": "Máximo de 3 armas equipadas."
+		}
     }
 }
