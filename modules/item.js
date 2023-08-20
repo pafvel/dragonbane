@@ -117,7 +117,7 @@ export class DoDItem extends Item {
     }
 
     get requiredStr() {
-        let str = this.system.str;
+        let str = Number(this.system.str);
         if (this.system.grip.value == "grip1h" && this.system.mainHand && this.system.offHand) {
             str = Math.max(0, str - 3);
         }
