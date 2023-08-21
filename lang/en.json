@@ -441,7 +441,8 @@
                 "failedDeathRoll": "{actor} failed a death roll due to taking damage at 0 HP.",
                 "characterDied": "{actor} died.",
                 "characterSurvived": "{actor} escaped death and recovers [[/roll D6]] HP.",
-                "characterProne": "{actor} reached 0 HP and became prone."
+                "characterProne": "{actor} reached 0 HP and became prone.",
+                "castMagicTrick": "<b>{actor}</b> casts <b>{spell}</b>."
             },
             "dialog": {
                 "banes": "Banes",
@@ -462,9 +463,11 @@
                 "labelOk": "Ok",
                 "chooseAction": "Choose action",
                 "useAbility": "Activate Ability",
-                "useAbilityWithWP": "Pay <b>{wp}</b> WP to use <b>{ability}</b>?",
+                "useAbilityWithWP": "Spend <b>{wp}</b> WP to use <b>{ability}</b>?",
                 "useAbilityWithoutWP": "Use <b>{ability}</b>?",
-                "weaponFeatures": "Weapon Features"
+                "weaponFeatures": "Weapon Features",
+                "castMagicTrickTitle": "Cast Magic Trick",
+                "castMagicTrickContent": "Spend <b>1</b> WP to cast <b>{spell}</b>?"
             }
         },
         "INFO": {

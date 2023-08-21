@@ -891,7 +891,49 @@ export default class DoDCharacterSheet extends ActorSheet {
             if (item.type == "skill") {
                 test = new DoDSkillTest(this.actor, item, options);
             } else if (item.type == "spell") {
-                test = new DoDSpellTest(this.actor, item, options);
+                if (item.system.rank > 0) {
+                    test = new DoDSpellTest(this.actor, item, options);
+                } else {
+                    const use = await new Promise(
+                        resolve => {
+                            const data = {
+                                title: game.i18n.localize("DoD.ui.dialog.castMagicTrickTitle"),
+                                content: game.i18n.format("DoD.ui.dialog.castMagicTrickContent", {spell: item.name}),
+                                buttons: {
+                                    ok: {
+                                        icon: '<i class="fas fa-check"></i>',
+                                        label: game.i18n.localize("DoD.ui.dialog.labelOk"),
+                                        callback: () => resolve(true)
+                                    },
+                                    cancel: {
+                                        icon: '<i class="fas fa-times"></i>',
+                                        label: game.i18n.localize("DoD.ui.dialog.labelCancel"),
+                                        callback: html => resolve(false)
+                                    }
+                                },
+                                default: "cancel",
+                                close: () => resolve(false)
+                            };
+                            new Dialog(data, null).render(true);
+                        }
+                    );
+                    if (use) {
+                        if (this.actor.system.willPoints.value < 1) {
+                            DoD_Utility.WARNING("DoD.WARNING.notEnoughWPForSpell");
+                            return;
+                        } else {
+                            this.actor.update({"system.willPoints.value": this.actor.system.willPoints.value - 1});
+                            const content = game.i18n.format("DoD.ui.chat.castMagicTrick", {
+                                actor: this.actor.name,
+                                spell: item.name,
+                                uuid: item.uuid
+                            });
+                            ChatMessage.create({
+                                content: content,
+                            });
+                            }
+                    }                    
+                }
             } else if (item.type == "weapon") {
                 test = new DoDWeaponTest(this.actor, item, options);
             }

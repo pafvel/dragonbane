@@ -446,7 +446,8 @@
                 "failedDeathRoll": "{actor} tog skada vid 0 KP och misslyckades automatiskt med ett dödsslag.",
                 "characterDied": "{actor} dog.",
                 "characterSurvived": "{actor} undvek döden och återfår [[/roll D6]] KP.",
-                "characterProne": "{actor} nådde 0 KP och blev liggande."
+                "characterProne": "{actor} nådde 0 KP och blev liggande.",
+                "castMagicTrick": "<b>{actor}</b> utför trolleritricket <b>{spell}</b>."
             },
             "dialog": {
                 "banes": "Nackdelar",
@@ -469,8 +470,9 @@
                 "useAbility": "Aktivera förmåga",
                 "useAbilityWithWP": "Spendera <b>{wp}</b> Viljepoäng och aktivera <b>{ability}</b>?",
                 "useAbilityWithoutWP": "Aktivera <b>{ability}</b>?",
-                "weaponFeatures": "Vapenegenskaper"
-                
+                "weaponFeatures": "Vapenegenskaper",
+                "castMagicTrickTitle": "Utför trolleritrick",
+                "castMagicTrickContent": "Spendera <b>1</b> VP och utför trolleritricket <b>{spell}</b>?"
            }
         },
         "INFO": {
