@@ -18,7 +18,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         const hasSlashAttack = this.weapon.hasWeaponFeature("slashing");
         const hasStabAttack = this.weapon.hasWeaponFeature("piercing");
         const hasWeakpointAttack = hasStabAttack;
-        const hasNormalAttack = !(hasStabAttack || hasSlashAttack);
+        const hasNormalAttack = this.weapon.hasWeaponFeature("bludgeoning") || !(hasStabAttack || hasSlashAttack);
         const hasToppleAttack = true; //this.weapon.hasWeaponFeature("toppling");
         const hasDisarmAttack = true;
         const hasParry = !this.weapon.hasWeaponFeature("noparry");
