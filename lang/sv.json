@@ -472,7 +472,9 @@
                 "useAbilityWithoutWP": "Aktivera <b>{ability}</b>?",
                 "weaponFeatures": "Vapenegenskaper",
                 "castMagicTrickTitle": "Utför trolleritrick",
-                "castMagicTrickContent": "Spendera <b>1</b> VP och utför trolleritricket <b>{spell}</b>?"
+                "castMagicTrickContent": "Spendera <b>1</b> VP och utför trolleritricket <b>{spell}</b>?",
+                "deleteItemTitle": "Radera {item}",
+                "deleteItemContent": "Vill du radera <b>{item}</b>?"
            }
         },
         "INFO": {

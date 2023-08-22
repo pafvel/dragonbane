@@ -841,11 +841,39 @@ export default class DoDCharacterSheet extends ActorSheet {
         await this.actor.update(newValues);
     }
 
-    _onItemDelete(event) {
+    async _onItemDelete(event) {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".sheet-table-data").dataset.itemId;
+        let item = this.actor.items.get(itemId);
 
+        const ok = await new Promise(
+            resolve => {
+                const data = {
+                    title: game.i18n.format("DoD.ui.dialog.deleteItemTitle", 
+                        {item: game.i18n.localize("TYPES.Item." + item.type)}),
+                    content: game.i18n.format("DoD.ui.dialog.deleteItemContent", {item: item.name}),
+                    buttons: {
+                        ok: {
+                            icon: '<i class="fas fa-check"></i>',
+                            label: game.i18n.localize("Yes"),
+                            callback: () => resolve(true)
+                        },
+                        cancel: {
+                            icon: '<i class="fas fa-times"></i>',
+                            label: game.i18n.localize("No"),
+                            callback: html => resolve(false)
+                        }
+                    },
+                    default: "cancel",
+                    close: () => resolve(false)
+                };
+                new Dialog(data, null).render(true);
+            }
+        );
+        if (!ok) {
+            return;
+        }
         return this.actor.deleteEmbeddedDocuments("Item", [itemId]);
     }
 
@@ -902,12 +930,12 @@ export default class DoDCharacterSheet extends ActorSheet {
                                 buttons: {
                                     ok: {
                                         icon: '<i class="fas fa-check"></i>',
-                                        label: game.i18n.localize("DoD.ui.dialog.labelOk"),
+                                        label: game.i18n.localize("Yes"),
                                         callback: () => resolve(true)
                                     },
                                     cancel: {
                                         icon: '<i class="fas fa-times"></i>',
-                                        label: game.i18n.localize("DoD.ui.dialog.labelCancel"),
+                                        label: game.i18n.localize("No"),
                                         callback: html => resolve(false)
                                     }
                                 },
@@ -964,12 +992,12 @@ export default class DoDCharacterSheet extends ActorSheet {
                             buttons: {
                                 ok: {
                                     icon: '<i class="fas fa-check"></i>',
-                                    label: game.i18n.localize("DoD.ui.dialog.labelOk"),
+                                    label: game.i18n.localize("Yes"),
                                     callback: () => resolve(true)
                                 },
                                 cancel: {
                                     icon: '<i class="fas fa-times"></i>',
-                                    label: game.i18n.localize("DoD.ui.dialog.labelCancel"),
+                                    label: game.i18n.localize("No"),
                                     callback: html => resolve(false)
                                 }
                             },

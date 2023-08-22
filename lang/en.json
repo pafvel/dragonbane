@@ -467,7 +467,9 @@
                 "useAbilityWithoutWP": "Use <b>{ability}</b>?",
                 "weaponFeatures": "Weapon Features",
                 "castMagicTrickTitle": "Cast Magic Trick",
-                "castMagicTrickContent": "Spend <b>1</b> WP to cast <b>{spell}</b>?"
+                "castMagicTrickContent": "Spend <b>1</b> WP to cast <b>{spell}</b>?",
+                "deleteItemTitle": "Delete {item}",
+                "deleteItemContent": "Do you want to delete <b>{item}</b>?"
             }
         },
         "INFO": {
