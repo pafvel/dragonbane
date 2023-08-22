@@ -132,7 +132,9 @@
                 "cost": "",
                 "supply": "",
                 "worn": false,
-                "memento": false
+                "memento": false,
+                "boons": "",
+                "banes": ""
             }
         },
         "weapon": {

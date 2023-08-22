@@ -52,6 +52,20 @@
                 </td>
             </tr>
         </table>
+        <table>
+            <tr>
+                <th>{{localize "DoD.ui.dialog.boons"}}</th>
+                <th>{{localize "DoD.ui.dialog.banes"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <input name="system.boons" type="text" value="{{data.boons}}" />
+                </td>
+                <td>
+                    <input name="system.banes" type="text" value="{{data.banes}}" />
+                </td>
+        </table>
+
         {{editor data.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
     </div>
 </form>
