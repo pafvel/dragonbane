@@ -1,8 +1,0 @@
-[
-  {"Rustning":"Läder","Skydd":"1","Pris":"2 guld","Tillgång":"Vanlig","Effekt":"–"},
-  {"Rustning":"Nitläder","Skydd":"2","Pris":"10 guld","Tillgång":"Ovanlig","Effekt":"Nackdel på slag för SMYGA."},
-  {"Rustning":"Ringbrynja","Skydd":"4","Pris":"50 guld","Tillgång":"Ovanlig","Effekt":"Nackdel på slag för RÖRLIGHET och SMYGA."},
-  {"Rustning":"Plåtrustning","Skydd":"6","Pris":"500 guld","Tillgång":"Sällsynt","Effekt":"Nackdel på slag för RÖRLIGHET och SMYGA. Bäraren kan ej sprinta."},
-  {"Rustning":"Öppen hjälm","Skydd":"'+1","Pris":"12 guld","Tillgång":"Ovanlig","Effekt":"Nackdel på slag för SPEJA."},
-  {"Rustning":"Tunnhjälm","Skydd":"+2","Pris":"100 guld","Tillgång":"Sällsynt","Effekt":"Nackdel på slag för SPEJA och SKYTTE."}
-]
