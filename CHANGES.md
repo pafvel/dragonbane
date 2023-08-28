@@ -1,5 +1,26 @@
 # Change Log
 
+## Version 1.3.0
+- Character Sheet
+    - Death Roll automation.
+    - Confirmation dialog when deleting items from character.
+- Weapons
+    - Bane when using weapon with higher STR requirement than character's STR.
+    - Lower STR requirement when wielding 1h weapon with both hands.
+    - Bludgeoning can be combined with Slashing/Piercing.
+- Spells
+    - Magic tricks always succeed.
+- Boons & Banes
+    - Gear can have boons & banes.
+    - Added boons & banes to die roll tooltip.
+- YZE Combat integration
+    - Default settings for Year Zero Combat (by @aMediocreDad).
+        - will be applied the first time the module is loaded after this update.
+- Localization
+    - Added German localization (by KaiderWeise).
+    - Updated Brazilian Portuguese localization (by Roberto Pedroso).
+
+
 ## Version 1.2.0
 - Characters
     - Skill advancement automation. Contribution from @aMediocreDad.
