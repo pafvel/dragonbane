@@ -319,7 +319,7 @@
             "brokenTooltip": "Indicates if the weapon is broken",
             "mainHandTooltip": "Holding the weapon in the main hand.",
             "offHandTooltip": "Holding the weapon in the off-hand.",
-            "belowRequiredStr": "Under STR"
+            "belowRequiredStr": "Below STR"
         },
         "unit": {
             "meterPlural": "meters"
