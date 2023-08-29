@@ -21,7 +21,13 @@ export default class DoDTest {
 
         this.updatePreRollData();
         const formula = this.options.formula ?? this.formatRollFormula(this.preRollData);
-        this.roll = await new DoDRoll(formula, {}, this.options).roll({async: true});
+        const rollOptions = {
+            boons: this.options.boons,
+            banes: this.options.banes,
+            extraBoons: this.options.extraBoons,
+            extraBanes: this.options.extraBanes
+        }
+        this.roll = await new DoDRoll(formula, {}, rollOptions).roll({async: true});
 
         this.updatePostRollData();
         const messageData = this.formatRollMessage(this.postRollData);
