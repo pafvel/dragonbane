@@ -1,4 +1,5 @@
 import DoD_Utility from "../utility.js";
+import DoDRoll from "../roll.js";
 
 export default class DoDTest {
 
@@ -20,7 +21,7 @@ export default class DoDTest {
 
         this.updatePreRollData();
         const formula = this.options.formula ?? this.formatRollFormula(this.preRollData);
-        this.roll = await new Roll(formula).roll({async: true});
+        this.roll = await new DoDRoll(formula, {}, this.options).roll({async: true});
 
         this.updatePostRollData();
         const messageData = this.formatRollMessage(this.postRollData);
