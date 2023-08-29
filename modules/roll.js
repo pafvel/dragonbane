@@ -12,7 +12,7 @@ static TOOLTIP_TEMPLATE = "systems/dragonbane/templates/partials/tooltip.hbs";
    */
   async getTooltip() {
     const parts = this.dice.map(d => d.getTooltipData());
-    let options = {boons: Object.values(this.options.boons), banes: Object.values(this.options.banes)};
+    let options = {boons: this.options.boons ? Object.values(this.options.boons) : null, banes: this.options.banes ? Object.values(this.options.banes) : null};
     if (this.options.extraBoons) {
         options.boons.push("+" + this.options.extraBoons);
     }
