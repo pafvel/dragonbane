@@ -1,5 +1,9 @@
 # Change Log
 
+## Version 1.3.2
+- Fix for NPC weapon actions not working.
+- Reverted boons & banes in die roll tooltip.
+
 ## Version 1.3.1
 - Fix for RollTables not working
 
