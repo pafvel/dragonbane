@@ -8,7 +8,6 @@ import * as DoDJournal from "./modules/journal.js";
 import * as DoDMacro from "./modules/macro.js";
 import * as DoDMigrate from "./modules/migrate.js";
 import DoD_Utility from "./modules/utility.js";
-import DoDRoll from "./modules/roll.js";
 
 function registerHandlebarsHelpers() {
 
@@ -62,7 +61,6 @@ async function preloadHandlebarsTemplates() {
         "systems/dragonbane/templates/partials/roll-dialog.hbs",
         "systems/dragonbane/templates/partials/damage-roll-message.hbs",
         "systems/dragonbane/templates/partials/skill-roll-message.hbs",
-        "systems/dragonbane/templates/partials/tooltip.hbs",
         "templates/dice/roll.html",
         "systems/dragonbane/templates/partials/roll-no-total.hbs",
     ];
@@ -151,8 +149,6 @@ Hooks.once("init", function () {
 
     CONFIG.Actor.documentClass = DoDActor;
     CONFIG.Item.documentClass = DoDItem;
-
-    CONFIG.Dice.rolls.unshift(DoDRoll);
 
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("DoD", DoDCharacterSheet, { makeDefault: true });
