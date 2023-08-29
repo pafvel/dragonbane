@@ -1,5 +1,8 @@
 # Change Log
 
+## Version 1.3.1
+- Fix for RollTables not working
+
 ## Version 1.3.0
 - Character Sheet
     - Death Roll automation.
