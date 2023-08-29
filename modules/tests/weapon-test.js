@@ -65,7 +65,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             actions[0].checked = true;
         }
 
-        if (this.weapon.requiredStr > this.actor.system.attributes.str.value) {
+        if (this.actor.type == "character" && this.weapon.requiredStr > this.actor.system.attributes.str.value) {
             this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.belowRequiredStr"), value: true});
         }
 
