@@ -1,6 +1,6 @@
 # Change Log
 
-## Version 1.3.2
+## Version 1.3.3
 - Added boons & banes to die roll tooltip.
 
 ## Version 1.3.2
