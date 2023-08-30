@@ -27,6 +27,6 @@ jobs:
         uses: ncipollo/release-action@v1.12.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "CHANGES.md, module.json, dragonbane.zip"
+          artifacts: "CHANGES.md, system.json, dragonbane.zip"
           generateReleaseNotes: true
           draft: true
