@@ -435,6 +435,7 @@
                 "dealSelectedHalfDamage": "Deal half damage (selected)",
                 "dealSelectedDoubleDamage": "Deal double damage (selected)",
                 "dealSelectedDamageIgnoreArmor": "Deal damage, no armor (selected)",
+                "healSelectedDamage": "Heal damage (selected)",
                 "choose": "Choose",
                 "takeCondition": "{actor} becomes {condition}.",
                 "treasureCard": "1 Treasure Card",

@@ -440,6 +440,7 @@
                 "dealSelectedHalfDamage": "Tillfoga halv skada (vald spelfigur)",
                 "dealSelectedDoubleDamage": "Tillfoga dubbel skada (vald spelfigur)",
                 "dealSelectedDamageIgnoreArmor": "Tillfoga skada, ignorera rustning (vald spelfigur)",
+                "healSelectedDamage": "Läk skada (vald spelfigur)",
                 "choose": "Välj",
                 "takeCondition": "{actor} blir {condition}.",
                 "treasureCard": "1 Skattkort",

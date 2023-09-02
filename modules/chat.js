@@ -160,7 +160,7 @@ export function addChatMessageContextMenuOptions(html, options) {
             callback: li => dealSelectedDamage(li, 1, true)
         },
         {
-            name: "Heal damage (selected)",
+            name: game.i18n.format("DoD.ui.chat.healSelectedDamage"),
             icon: '<i class="fas fa-user-plus"></i>',
             condition: canHealSelectedDamage,
             callback: li => healSelectedDamage(li)
