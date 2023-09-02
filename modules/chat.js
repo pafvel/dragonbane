@@ -46,10 +46,10 @@ export function addChatMessageContextMenuOptions(html, options) {
 
     const canDealSelectedDamage = li =>
     {
-        if(li.find(".damage-roll")[0]?.dataset.targetId) {
+        if(canDealTargetDamage(li)) {
             return false;
         }
-        if (canvas.tokens.controlled.length > 0 && li.find(".damage-roll").length > 0) {
+        if (canvas.tokens.controlled.length > 0 && (li.find(".damage-roll").length > 0 || li.find(".dice-total").length > 0)) {
             for (const token of canvas.tokens.controlled) {
                 if (!token.isOwner) {
                     return false;
@@ -62,10 +62,10 @@ export function addChatMessageContextMenuOptions(html, options) {
 
     const dealSelectedDamage = function(li, multiplier = 1, ignoreArmor = false) {
         const damageData = {};
-        const element = li.find(".damage-roll")[0];
+        const element = li.find(".damage-roll")[0] || li.find(".dice-total")[0];
 
-        damageData.damage = element.dataset.damage;
-        damageData.damageType = element.dataset.damageType.substr(String("DoD.damageTypes.").length);
+        damageData.damage = element.dataset.damage ?? Number(element.innerText);
+        damageData.damageType = element.dataset.damageType?.substr(String("DoD.damageTypes.").length);
         damageData.actor = canvas.tokens.controlled[0].actor;
         damageData.multiplier = multiplier;
         damageData.ignoreArmor = ignoreArmor || element.dataset.ignoreArmor;
@@ -75,6 +75,35 @@ export function addChatMessageContextMenuOptions(html, options) {
             if (target.actor.isOwner) {
                 damageData.actor = target.actor;              
                 applyDamageMessage(damageData);
+            } else {
+                DoD_Utility.WARNING("DoD.WARNING.noPermissionToModifyActor");
+            }
+        }
+    }
+
+    const canHealSelectedDamage = li =>
+    {
+        if (canvas.tokens.controlled.length > 0 && li.find(".dice-total").length > 0 && li.find(".damage-roll").length == 0) {
+            for (const token of canvas.tokens.controlled) {
+                if (!token.isOwner) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    const healSelectedDamage = function(li) {
+        const healingData = {};
+        const element = li.find(".dice-total")[0];
+
+        healingData.damage = Number(element.innerText);
+
+        for (const target of canvas.tokens.controlled) {
+            if (target.actor.isOwner) {
+                healingData.actor = target.actor;              
+                applyHealingMessage(healingData);
             } else {
                 DoD_Utility.WARNING("DoD.WARNING.noPermissionToModifyActor");
             }
@@ -129,6 +158,12 @@ export function addChatMessageContextMenuOptions(html, options) {
             icon: '<i class="fas fa-user-minus"></i>',
             condition: canDealSelectedDamage,
             callback: li => dealSelectedDamage(li, 1, true)
+        },
+        {
+            name: "Heal damage (selected)",
+            icon: '<i class="fas fa-user-plus"></i>',
+            condition: canHealSelectedDamage,
+            callback: li => healSelectedDamage(li)
         }
     );
 }
@@ -479,6 +514,23 @@ export async function applyDamageMessage(damageData) {
             }
         }
     }
+
+    ChatMessage.create({ content: msg });
+}
+
+export async function applyHealingMessage(damageData) {
+
+    const actor = damageData.actor;
+    const damage = damageData.damage;
+    const oldHP = actor.system.hitPoints.value;
+    let newHP = oldHP;
+
+    if (damage > 0) {
+        newHP = await actor.applyDamage(-damage);
+    }
+    
+    const actorName = actor.isToken ? actor.token.name : actor.name;
+    const msg = game.i18n.format(game.i18n.localize("DoD.ui.chat.healingApplied"), {damage: newHP - oldHP, actor: actorName});
 
     ChatMessage.create({ content: msg });
 }

@@ -341,14 +341,16 @@ export class DoDActor extends Actor {
         }
     }
 
-    applyDamage(damage) {
+    async applyDamage(damage) {
         let value = this.system.hitPoints.value;
-        let newValue = DoD_Utility.clamp(value - damage, 0, value);
+        let max = this.system.hitPoints.max;
+        let newValue = DoD_Utility.clamp(value - damage, 0, max);
 
         // Update HP
         if (value != newValue) {
-            this.update({["system.hitPoints.value"]: newValue});
+            await this.update({["system.hitPoints.value"]: newValue});
         }
+        return newValue;
     }
 
     findAbility(abilityName) {

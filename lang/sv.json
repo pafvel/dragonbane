@@ -430,6 +430,7 @@
                 "damageApplied": "<b>{actor}</b> tillfogades {damage} i skada.",
                 "damageAppliedDetails": "{damage} skada mot {armor} rustning.",
                 "damageAppliedMultiplier": "x{multiplier} i slutgiltig skada.",
+                "healingApplied": "<b>{actor}</b> läker <b>{damage}</b> KP.",
                 "rollDamage": "Slå skada",
                 "dealDamage": "Tillfoga skada",
                 "dealHalfDamage": "Tillfoga halv skada",
