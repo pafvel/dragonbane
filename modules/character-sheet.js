@@ -1170,7 +1170,6 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         // Handle item sorting within the same Actor
         if ( this.actor.uuid === item.parent?.uuid ) {
-            let result =  this._onSortItem(event, itemData);
             let dropTarget = event.target.closest(".item-list")?.dataset.droptarget;
 
             if (dropTarget) {
@@ -1179,11 +1178,22 @@ export default class DoDCharacterSheet extends ActorSheet {
                     const worn = item.system.worn || actorData.canEquipWeapon || item.hasWeaponFeature("unarmed");
                     if(!worn) {
                         DoD_Utility.WARNING("DoD.WARNING.maxWeaponsEquipped");
+                        return;
+                    } else {
+                        if (item.system.quantity > 1) {
+                            // split item
+                            itemData.system.quantity = 1;
+                            itemData.system.worn = true;
+                            await item.update({["system.quantity"]: item.system.quantity - 1 });                            
+                            return await this._onDropItemCreate(itemData);
+                        } else {
+                            await item.update({
+                                ["system.worn"]: worn,
+                                ["system.memento"]: false
+                            });
+                            return this._onSortItem(event, itemData);                         
+                        }    
                     }
-                    await item.update({
-                        ["system.worn"]: worn,
-                        ["system.memento"]: false
-                    });
                 }
                 else if (dropTarget == "armor" && itemData.type == "armor") {
                     await actorData.equippedArmor?.update({ ["system.worn"]: false});
@@ -1210,7 +1220,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                     });
                 }
             }
-            return result;
+            return this._onSortItem(event, itemData);
         }
 
         // Remove kin and kin abilities
