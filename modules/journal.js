@@ -530,8 +530,8 @@ export async function enrichGearTable(match, options) {
             html += `
             <tr>
                 <th style="text-align:left;width: 20%">${game.i18n.localize("DoD.gearTypeName." + type)}</th>
-                <th>${game.i18n.localize("DoD.armor.rating")}</th>
-                <th>${game.i18n.localize("DoD.gear.cost")}</th>
+                <th style="text-align:center">${game.i18n.localize("DoD.armor.rating")}</th>
+                <th style="text-align:center">${game.i18n.localize("DoD.gear.cost")}</th>
                 <th>${game.i18n.localize("DoD.gear.supply")}</th>
                 <th>${game.i18n.localize("DoD.ui.character-sheet.banes")}</th>
             </tr>`;
@@ -544,7 +544,7 @@ export async function enrichGearTable(match, options) {
             html += `
             <tr>
                 <th style="text-align:left;width: 20%">${game.i18n.localize("DoD.gearTypeName." + type)}</th>
-                <th>${game.i18n.localize("DoD.gear.cost")}</th>
+                <th style="text-align:center">${game.i18n.localize("DoD.gear.cost")}</th>
                 <th>${game.i18n.localize("DoD.gear.supply")}</th>
                 <th>${game.i18n.localize("DoD.gear.effect")}</th>
             </tr>`;
@@ -561,9 +561,9 @@ export async function enrichGearTable(match, options) {
             html += `
             <tr>
                 <th style="text-align:left;width: 20%">${game.i18n.localize("DoD.gearTypeName." + type)}</th>
-                <th>${game.i18n.localize("DoD.gear.cost")}</th>
+                <th style="text-align:center">${game.i18n.localize("DoD.gear.cost")}</th>
                 <th>${game.i18n.localize("DoD.gear.supply")}</th>
-                <th>${game.i18n.localize("DoD.gear.weight")}</th>
+                <th style="text-align:center">${game.i18n.localize("DoD.gear.weight")}</th>
                 <th>${game.i18n.localize("DoD.gear.effect")}</th>
             </tr>`;
             break;
@@ -573,12 +573,12 @@ export async function enrichGearTable(match, options) {
                     html += `
             <tr>
                 <th style="text-align:left;width: 20%">${game.i18n.localize("DoD.gearTypeName." + type)}</th>
-                <th>${game.i18n.localize("DoD.weapon.grip")}</th>
-                <th>${game.i18n.localize("DoD.weapon.str")}</th>
-                <th>${game.i18n.localize("DoD.weapon.rangeShort")}</th>
-                <th>${game.i18n.localize("DoD.weapon.damageShort")}</th>
-                <th>${game.i18n.localize("DoD.weapon.durabilityShort")}</th>
-                <th>${game.i18n.localize("DoD.gear.cost")}</th>
+                <th style="text-align:center">${game.i18n.localize("DoD.weapon.grip")}</th>
+                <th style="text-align:center">${game.i18n.localize("DoD.weapon.str")}</th>
+                <th style="text-align:center">${game.i18n.localize("DoD.weapon.rangeShort")}</th>
+                <th style="text-align:center">${game.i18n.localize("DoD.weapon.damageShort")}</th>
+                <th style="text-align:center">${game.i18n.localize("DoD.weapon.durabilityShort")}</th>
+                <th style="text-align:center">${game.i18n.localize("DoD.gear.cost")}</th>
                 <th>${game.i18n.localize("DoD.gear.supply")}</th>
                 <th>${game.i18n.localize("DoD.weapon.features")}</th>
             </tr>`;
@@ -599,8 +599,8 @@ export async function enrichGearTable(match, options) {
                 html += `
                 <tr>
                     <td style="text-align:left">@UUID[${uuid}]{${itemName}}</td>
-                    <td>${item.system.rating}</td>
-                    <td>${item.system.cost}</td>
+                    <td style="text-align:center">${item.system.rating}</td>
+                    <td style="text-align:center">${item.system.cost}</td>
                     <td>${game.i18n.localize("DoD.supplyTypes." + item.system.supply)}</td>
                     <td>${item.system.banes}</td>
                 </tr>`;
@@ -613,7 +613,7 @@ export async function enrichGearTable(match, options) {
                 html += `
                 <tr>
                     <td style="text-align:left">@UUID[${uuid}]{${itemName}}</td>
-                    <td>${item.system.cost}</td>
+                    <td style="text-align:center">${item.system.cost}</td>
                     <td>${game.i18n.localize("DoD.supplyTypes." + item.system.supply)}</td>
                     <td>${item.system.description}</td>
                 </tr>`;
@@ -630,9 +630,9 @@ export async function enrichGearTable(match, options) {
                 html += `
                 <tr>
                     <td style="text-align:left">@UUID[${uuid}]{${itemName}}</td>
-                    <td>${item.system.cost}</td>
+                    <td style="text-align:center">${item.system.cost}</td>
                     <td>${game.i18n.localize("DoD.supplyTypes." + item.system.supply)}</td>
-                    <td>${item.system.weight}</td>
+                    <td style="text-align:center">${item.system.weight}</td>
                     <td>${item.system.description}</td>
                 </tr>`;
                 break;
@@ -646,12 +646,12 @@ export async function enrichGearTable(match, options) {
                 html += `
                 <tr>
                     <td style="text-align:left">@UUID[${uuid}]{${itemName}}</td>
-                    <td>${game.i18n.localize(item.system.grip.label)}</td>
-                    <td>${item.system.str > 0 ? item.system.str : "-"}</td>
-                    <td>${range}</td>
-                    <td>${item.system.damage}</td>
-                    <td>${item.system.durability > 0 ? item.system.durability : "-"}</td>
-                    <td>${item.system.cost != "" ? item.system.cost : "-"}</td>
+                    <td style="text-align:center">${game.i18n.localize(item.system.grip.label)}</td>
+                    <td style="text-align:center">${item.system.str > 0 ? item.system.str : "-"}</td>
+                    <td style="text-align:center">${range}</td>
+                    <td style="text-align:center">${item.system.damage}</td>
+                    <td style="text-align:center">${item.system.durability > 0 ? item.system.durability : "-"}</td>
+                    <td style="text-align:center">${item.system.cost != "" ? item.system.cost : "-"}</td>
                     <td>${game.i18n.localize("DoD.supplyTypes." + item.system.supply)}</td>
                     <td class="comma-list">`;
                 
