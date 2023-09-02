@@ -182,6 +182,8 @@ export default class DoDCharacterSheet extends ActorSheet {
                 if (item.system.worn) {
                     // TODO limit 3
                     equippedWeapons.push(item);
+                } else if (item.system.weight == 0 && this.actor.type == "character") {
+                    smallItems.push(item);
                 } else {
                     inventory.push(item);
                 }
@@ -200,14 +202,22 @@ export default class DoDCharacterSheet extends ActorSheet {
 
             if (item.type == "armor") {
                 if (!item.system.worn) {
-                    inventory.push(item);
+                    if (item.system.weight == 0 && this.actor.type == "character") {
+                        smallItems.push(item);
+                    } else {                   
+                        inventory.push(item);
+                    }
                 }
                 continue;
             }
 
             if (item.type == "helmet") {
                 if (!item.system.worn) {
-                    inventory.push(item);
+                    if (item.system.weight == 0 && this.actor.type == "character") {
+                        smallItems.push(item);
+                    } else {                   
+                        inventory.push(item);
+                    }
                 }
                 continue;
             }
