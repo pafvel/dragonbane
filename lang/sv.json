@@ -322,8 +322,8 @@
             "skillValueTooltip": "Färdighetsvärde för vapnet",
             "broken": "Trasigt",
             "brokenTooltip": "Anger om vapnet är trasigt",
-            "mainHandTooltip": "Håller vapnet i svärdshanden",
-            "offHandTooltip": "Håller vapnet i den aviga handen",
+            "mainHandTooltip": "Håller vapnet i vänstra handen",
+            "offHandTooltip": "Håller vapnet i högra handen",
             "belowRequiredStr": "STY-krav"
         },
         "weaponFeatureTypes": {

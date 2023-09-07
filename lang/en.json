@@ -317,8 +317,8 @@
             "skillValueTooltip": "Skill value when using the weapon.",
             "broken": "Broken",
             "brokenTooltip": "Indicates if the weapon is broken",
-            "mainHandTooltip": "Holding the weapon in the main hand.",
-            "offHandTooltip": "Holding the weapon in the off-hand.",
+            "mainHandTooltip": "Holding the weapon in the left hand.",
+            "offHandTooltip": "Holding the weapon in the right hand.",
             "belowRequiredStr": "Below STR"
         },
         "unit": {
