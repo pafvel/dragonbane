@@ -496,10 +496,15 @@ export default class DoDCharacterSheet extends ActorSheet {
         event.currentTarget?.blur();
 
         let options = {
-            defaultBanesBoons: true,
             canPush: false,
             flavor: "DoD.roll.deathRoll"
         };
+        if (event.shiftKey || event.ctrlKey) {
+            options = {
+                noBanesBoons: event.shiftKey,
+                defaultBanesBoons: event.ctrlKey
+            };
+        }
 
         let test = new DoDAttributeTest(this.actor, "con", options);
         await test.roll();
