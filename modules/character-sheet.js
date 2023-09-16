@@ -1173,6 +1173,11 @@ export default class DoDCharacterSheet extends ActorSheet {
         const itemData = item.toObject();
         const actorData = await this.getData();
 
+        // Monsters can't have spells
+        if (this.actor.type == "monster" && itemData.type == "spell") {
+            return false;
+        }
+
         // Handle item sorting within the same Actor
         if ( this.actor.uuid === item.parent?.uuid ) {
             let dropTarget = event.target.closest(".item-list")?.dataset.droptarget;

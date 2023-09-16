@@ -73,7 +73,11 @@
                     <td class="comma-list item-list">
                         {{#each memorizedSpells as |spell spellId|}}
                         <a class="rollable-skill sheet-table-data item" data-item-id="{{spell.id}}">
+                            {{#if spell.system.rank}}
                             {{spell.name}} {{spell.system.skillValue}}
+                            {{else}}
+                            {{spell.name}}
+                            {{/if}}
                         </a>
                         {{/each}}
                     </td>

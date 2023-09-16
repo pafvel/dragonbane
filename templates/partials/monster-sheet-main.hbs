@@ -33,9 +33,11 @@
                     <th><b>{{localize "DoD.ui.character-sheet.spells"}}</b></th>
                     <td class="comma-list">
                         {{#each spells as |spell spellId|}}
-                        <a class="rollable-skill sheet-table-data item-delete-key item" data-item-id="{{spell.id}}">
-                            {{spell.name}} {{spell.system.skillValue}}
-                        </a>
+                        {{#if spell.system.rank}}
+                        <a class="rollable-skill sheet-table-data item-delete-key item" data-item-id="{{spell.id}}">{{spell.name}} {{spell.system.skillValue}}</a>
+                        {{else}}
+                        <a class="rollable-skill sheet-table-data item-delete-key item" data-item-id="{{spell.id}}">{{spell.name}}</a>
+                        {{/if}}
                         {{/each}}
                     </td>
                 </tr>

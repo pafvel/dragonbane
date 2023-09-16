@@ -114,7 +114,11 @@
                 <tr class="sheet-table-data item" data-item-id="{{spell.id}}">
                     <td></td>
                     <td class="number-data">
+                        {{#if spell.system.rank}}
                         {{spell.system.skillValue}}
+                        {{else}}
+                        -
+                        {{/if}}
                     </td>
                     <td class="text-data">
                         <a class="rollable-skill">{{spell.name}}</a>
