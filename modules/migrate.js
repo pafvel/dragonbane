@@ -196,7 +196,7 @@ async function migrateCompendium(pack) {
     console.log(`Migrated all ${document} entities from Compendium ${pack.collection}`);
   };
 
-export async function updateSpellsOnActors() {
+  export async function updateSpellsOnActors() {
     const worldSpells = game.items.filter(i => i.type == "spell");
 
     // World Actors
@@ -213,6 +213,36 @@ export async function updateSpellsOnActors() {
                 }
             } else {
                 console.log("Could not find " + actorSpell.name + "(" + actor.name + ") in world.")
+            }
+        }
+    }
+}
+    
+export async function updateItemsOnActors() {
+    const worldItems = game.items.filter(i => i.type == "item" || i.type == "weapon");
+
+    // World Actors
+    for (let actor of game.actors.contents) {
+        const actorItems = actor.items.filter(i => (i.type == "item"));
+        for (const actorItem of actorItems) {
+            const worldItem = worldItems.find(i => i.name == actorItem.name);
+            if (worldItem) {
+                const template = { system: worldItem.system, img: "" };
+                const diff = diffObject(filterObject(actorItem, template), filterObject(worldItem, template));
+                // ignore quantity
+                if (diff.system?.quantity && actorItem.system?.quantity != null && worldItem.system?.quantity != null) {
+                    delete diff.system.quantity;
+                    if (isEmpty(diff.system)) {
+                        delete diff.system;
+                    }
+                }
+                if (!isEmpty(diff)) {
+                    console.log("Updating item in " + actor.name + " : " + actorItem.name);
+                    console.log(diff);
+                    await actorItem.update(diff);
+                }
+            } else {
+                console.log("Could not find " + actorItem.name + "(" + actor.name + ") in world.")
             }
         }
     }

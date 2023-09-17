@@ -169,6 +169,7 @@ Hooks.once("init", function () {
         migrateWorld: DoDMigrate.migrateWorld,
         //updateSpells: DoDMigrate.updateSpellsOnActors,
         //updateSkills: DoDMigrate.updateSkillsOnActors,
+        //updateItems: DoDMigrate.updateItemsOnActors,
         //updateImages: DoDMigrate.updateItemImagesOnActors,
         rollItem: DoDMacro.rollItemMacro,
         monsterAttack: DoDMacro.monsterAttackMacro,
