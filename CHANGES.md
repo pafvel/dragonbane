@@ -1,5 +1,24 @@
 # Change Log
 
+## Version 1.4.0
+
+- Character Sheet
+    - Death Rolls now use the standard roll dialog.
+    - Removed skill values for Magic tricks.
+    - Equipping a weapon with quantity greater than one now only equips one weapon, not the entire stack.
+    - Changed labels from main/offhand to left/right, matching the icons. The system currently doesn't make a difference between main and offhand, so this change will make it less confusing for some right-handed players.
+    - Weapons, Armor and Helmets can be Tiny items.
+
+- Journal
+    - Minor formatting improvements in the Gear lists.
+
+- Monsters
+    - Monsters can't have spells anymore. They could before, but there was an error trying to cast spells because monsters don't have WP.
+
+- Chat & Combat
+    - Healing and damage can be applied from normal die rolls.
+
+
 ## Version 1.3.3
 - Added boons & banes to die roll tooltip.
 
