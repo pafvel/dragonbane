@@ -101,19 +101,20 @@ export default class DoDTest {
             banes.push( {source: game.i18n.localize("DoD.conditions." + this.attribute), value: true});
         }
 
-        let rollTarget = this.skill ? this.skill.name.toLowerCase() : this.attribute;
+        let rollTarget = this.skill ? this.skill.name.toLowerCase() : game.i18n.localize("DoD.attributes." + this.attribute).toLowerCase();
+        let rollAttribute = this.skill ? this.skill.system.attributeShort.toLowerCase() : rollTarget;
 
         for (let item of this.actor.items.contents) {
             if (item.system.banes?.length) {
                 let itemBanes = DoD_Utility.splitAndTrimString(item.system.banes.toLowerCase());
-                if (itemBanes.find(element => element.toLowerCase() == rollTarget)) {
+                if (itemBanes.find(element => element.toLowerCase() == rollTarget || element.toLowerCase() == rollAttribute)) {
                     let value = item.system.worn ? true : false;
                     banes.push( {source: item.name, value: value});
                 }
             }
             if (item.system.boons?.length) {
                 let itemBoons = DoD_Utility.splitAndTrimString(item.system.boons.toLowerCase());
-                if (itemBoons.find(element => element.toLowerCase() == rollTarget)) {
+                if (itemBoons.find(element => element.toLowerCase() == rollTarget || element.toLowerCase() == rollAttribute)) {
                     let value = item.system.worn ? true : false;
                     boons.push( {source: item.name, value: value});
                 }
