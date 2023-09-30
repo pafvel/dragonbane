@@ -47,6 +47,49 @@ export class DoDActor extends Actor {
     }
     
     /** @override */
+    async _preUpdate(updateData, options, user) {
+        await super._preUpdate(updateData, options, user);
+    
+        this._handleScrollingText(updateData);
+    }
+
+    _handleScrollingText(data) {
+        if (hasProperty(data, "system.hitPoints.value")) {
+            const options = {
+                anchor: CONST.TEXT_ANCHOR_POINTS.LEFT,
+                fill: "0xFF0000"
+            };
+            this._displayScrollingText(getProperty(data, "system.hitPoints.value") - this.system.hitPoints.value, options);
+        }
+        if (hasProperty(data, "system.willPoints.value")) {
+            const options = {
+                anchor: CONST.TEXT_ANCHOR_POINTS.RIGHT,
+                fill: "0x00FF00"
+            };
+            this._displayScrollingText(getProperty(data, "system.willPoints.value") - this.system.willPoints.value, options);
+        }
+    }
+    
+    _displayScrollingText(change, options = {}) {
+        if (!change) return;
+        const tokens = this.isToken ? [this.token?.object] : this.getActiveTokens(true);
+        const defaultOptions = {
+            anchor: (change<0) ? CONST.TEXT_ANCHOR_POINTS.BOTTOM: CONST.TEXT_ANCHOR_POINTS.TOP,
+            direction: (change<0) ? 1: 2,
+            fontSize: 30,
+            fill: change < 0 ? "0xFF0000" : "0x00FF00",
+            stroke: 0x000000,
+            strokeThickness: 4,
+            jitter: 0.25
+        };
+        const scrollOptions = {...defaultOptions, ...options};
+
+        for (let t of tokens) {
+          canvas.interface.createScrollingText(t.center, change.signedString(), scrollOptions);
+        }
+    }
+    
+    /** @override */
     prepareData() {
         // Prepare data for the actor. Calling the super version of this executes
         // the following, in order: data reset (to clear active effects),
