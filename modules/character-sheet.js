@@ -1121,7 +1121,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
             // Make roll
             const roll = await new Roll("D20").roll({async: true});
-            const advance = roll.result > skillItem.system.value;
+            const advance = Math.min(DoD.skillMaximum , roll.result) > skillItem.system.value;
             const flavorText = advance ? 
                 game.i18n.format("DoD.skill.advancementSuccess", {skill: skillItem.name, old: skillItem.system.value, new: skillItem.system.value + 1}) :
                 game.i18n.format("DoD.skill.advancementFail", {skill: skillItem.name});

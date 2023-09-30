@@ -83,6 +83,8 @@ DoD.skillTypes = {
     magic: "DoD.skillTypes.magic"
 };
 
+DoD.skillMaximum = 18;
+
 DoD.spellDurationTypes = {
     instant: "DoD.spellDurationTypes.instant",
     round: "DoD.spellDurationTypes.round",
