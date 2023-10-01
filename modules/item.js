@@ -1,4 +1,5 @@
 import DoD_Utility from "./utility.js";
+import { DoD } from "./config.js";
 
 export class DoDItem extends Item {
     /**
@@ -122,6 +123,10 @@ export class DoDItem extends Item {
             str = Math.max(0, str - 3);
         }
         return str;
+    }
+
+    get canImproveSkill() {
+        return this.system.value < DoD.skillMaximum;
     }
 }
   

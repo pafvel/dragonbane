@@ -19,12 +19,14 @@
                 {{#each coreSkills as |skill skillId|}}
                 <tr class="sheet-table-data item" data-item-id="{{skill.id}}">
                     <td class="checkbox-data icon-data">
-                        {{#if skill.system.advance}}
-                        <button type="button" class="roll-advancement" data-action="roll-advancement"  title="{{localize "DoD.skill.rollAdvancement"}}">
-                            <i class="fas fa-circle-arrow-up"></i>
-                        </button>
-                        {{else}}
-                            <input  title="{{localize "DoD.skill.markAdvancement"}}" class="inline-edit" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
+                        {{#if skill.canImproveSkill}}
+                            {{#if skill.system.advance}}
+                            <button type="button" class="roll-advancement" data-action="roll-advancement"  title="{{localize "DoD.skill.rollAdvancement"}}">
+                                <i class="fas fa-circle-arrow-up"></i>
+                            </button>
+                            {{else}}
+                                <input  title="{{localize "DoD.skill.markAdvancement"}}" class="inline-edit" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
+                            {{/if}}
                         {{/if}}
                     </td>
                     <td class="number-data narrow">
@@ -69,12 +71,14 @@
                 {{#each weaponSkills as |skill skillId|}}
                 <tr class="sheet-table-data item" data-item-id="{{skill.id}}">
                     <td class="checkbox-data icon-data">
-                        {{#if skill.system.advance}}
-                        <button type="button" class="roll-advancement" data-action="roll-advancement"  title="{{localize "DoD.skill.rollAdvancement"}}">
-                            <i class="fas fa-circle-arrow-up"></i>
-                        </button>
-                        {{else}}
-                            <input  title="{{localize "DoD.skill.markAdvancement"}}" class="inline-edit" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
+                        {{#if skill.canImproveSkill}}
+                            {{#if skill.system.advance}}
+                            <button type="button" class="roll-advancement" data-action="roll-advancement"  title="{{localize "DoD.skill.rollAdvancement"}}">
+                                <i class="fas fa-circle-arrow-up"></i>
+                            </button>
+                            {{else}}
+                                <input  title="{{localize "DoD.skill.markAdvancement"}}" class="inline-edit" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
+                            {{/if}}
                         {{/if}}
                     </td>
                     <td class="number-data narrow">
@@ -116,14 +120,16 @@
                 {{#each secondarySkills as |skill skillId|}}
                 <tr class="sheet-table-data item" data-item-id="{{skill.id}}">
                     <td class="checkbox-data icon-data">
-                        {{#if skill.system.advance}}
-                        <button type="button" class="roll-advancement" data-action="roll-advancement"  title="{{localize "DoD.skill.rollAdvancement"}}">
-                            <i class="fas fa-circle-arrow-up"></i>
-                        </button>
-                        {{else}}
-                            <input  title="{{localize "DoD.skill.markAdvancement"}}" class="inline-edit" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
+                        {{#if skill.canImproveSkill}}
+                            {{#if skill.system.advance}}
+                            <button type="button" class="roll-advancement" data-action="roll-advancement"  title="{{localize "DoD.skill.rollAdvancement"}}">
+                                <i class="fas fa-circle-arrow-up"></i>
+                            </button>
+                            {{else}}
+                                <input  title="{{localize "DoD.skill.markAdvancement"}}" class="inline-edit" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
+                            {{/if}}
                         {{/if}}
-                    </td>
+                        </td>
                     <td class="number-data narrow">
                         <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
                     </td>
