@@ -598,7 +598,7 @@ export class DoDActor extends Actor {
                 }
                 results[0] = newResult;
             }
-            this.system.previousMonsterAttack = results[0].uuid;
+            await this.update({["system.previousMonsterAttack"]: results[0].uuid});
         }
         return {results, roll};
     }
