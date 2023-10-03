@@ -283,6 +283,15 @@ export default class DoD_Utility {
         drawMany(table, count);
     }
 
+    static getViewDamagePermission() {
+        const permissionValue = game.settings.get("dragonbane", "viewDamagePermission");
+        function getKeyByValue(object, value) {
+            return Object.keys(object).find(key =>
+                object[key] === value);
+        }
+        return getKeyByValue(CONST.DOCUMENT_OWNERSHIP_LEVELS, permissionValue);
+    }
+    
     static INFO(msg, params) {
         if (!params) {
             return ui.notifications.info(game.i18n.localize(msg));

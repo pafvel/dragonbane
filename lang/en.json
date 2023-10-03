@@ -68,7 +68,7 @@
             "rangedTooltip": "Attack with ranged weapon",
             "parry": "Parry",
             "parryTooltip": "Parry an attack",
-            "normal": "Normal",
+            "normal": "Attack",
             "normalTooltip": "Perform a normal attack",
             "stab": "Stab",
             "stabTooltip": "Perform an attack inflicting piercing damage",
@@ -422,7 +422,7 @@
                 "wp": "WP"
             },
             "chat": {
-                "damageApplied": "<b>{damage} damage</b> applied to <b>{actor}</b>.",
+                "damageApplied": "<b>{damage}</b> HP damage applied to <b>{actor}</b>.",
                 "damageAppliedDetails": "{damage} damage vs {armor} armor rating.",
                 "damageAppliedMultiplier": "x{multiplier} multiplier.",
                 "healingApplied": "<b>{actor}</b> heals <b>{damage}</b> HP.",
@@ -436,6 +436,7 @@
                 "dealSelectedDoubleDamage": "Deal double damage (selected)",
                 "dealSelectedDamageIgnoreArmor": "Deal damage, no armor (selected)",
                 "healSelectedDamage": "Heal damage (selected)",
+                "undoDamage": "Undo damage",
                 "choose": "Choose",
                 "takeCondition": "{actor} becomes {condition}.",
                 "treasureCard": "1 Treasure Card",
@@ -444,7 +445,11 @@
                 "characterDied": "{actor} died.",
                 "characterSurvived": "{actor} escaped death and recovers [[/roll D6]] HP.",
                 "characterProne": "{actor} reached 0 HP and became prone.",
-                "castMagicTrick": "<b>{actor}</b> casts <b>{spell}</b>."
+                "castMagicTrick": "<b>{actor}</b> casts <b>{spell}</b>.",
+                "damageDetailDamage": "Damage",
+                "damageDetailArmor": "Armor",
+                "damageDetailMultiplier": "Multiplier",
+                "damageDetailTotal": "Total damage"
             },
             "dialog": {
                 "banes": "Banes",
@@ -478,8 +483,10 @@
             "professionSkillAdded": "Added Profession Skill: {skill}"
         },
         "SETTINGS": {
-            "keepOwnershipOnImport": "Keep ownership when importing adventure",
-            "keepOwnershipOnImportHint": "Do not overwrite ownership rights when importing content that already exists in the world."
+            "keepOwnershipOnImport": "Keep ownership",
+            "keepOwnershipOnImportHint": "Do not overwrite ownership rights when importing adventure content that already exists in the world.",
+            "viewDamagePermission": "Permission to see Damage",
+            "viewDamagePermissionHint": "Choose the minimum permission level a user must have to see the amount of damage an actor takes."
         },
         "WARNING": {
             "kinAbility": "Could not find Kin Ability: {ability}",

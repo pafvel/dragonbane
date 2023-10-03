@@ -45,28 +45,57 @@ export class DoDActor extends Actor {
             }    
         }
     }
-    
-    /** @override */
-    async _preUpdate(updateData, options, user) {
-        await super._preUpdate(updateData, options, user);
-    
-        this._handleScrollingText(updateData);
-    }
+    static onPreUpdateActorEvent(actor, data, options, userId) {
+        console.log("onUpdateActorEvent", actor);
 
-    _handleScrollingText(data) {
         if (hasProperty(data, "system.hitPoints.value")) {
             const options = {
                 anchor: CONST.TEXT_ANCHOR_POINTS.LEFT,
                 fill: "0xFF0000"
             };
-            this._displayScrollingText(getProperty(data, "system.hitPoints.value") - this.system.hitPoints.value, options);
+            actor._displayScrollingText(getProperty(data, "system.hitPoints.value") - actor.system.hitPoints.value, options);
         }
         if (hasProperty(data, "system.willPoints.value")) {
             const options = {
                 anchor: CONST.TEXT_ANCHOR_POINTS.RIGHT,
                 fill: "0x00FF00"
             };
-            this._displayScrollingText(getProperty(data, "system.willPoints.value") - this.system.willPoints.value, options);
+            actor._displayScrollingText(getProperty(data, "system.willPoints.value") - actor.system.willPoints.value, options);
+        }
+
+    }
+
+    /** @override */
+    async _preUpdate(data, options, user) {
+        await super._preUpdate(data, options, user);
+    
+        if (hasProperty(data, "system.hitPoints.value")) {
+            options._deltaHP = getProperty(data, "system.hitPoints.value") - this.system.hitPoints.value;
+        }
+        if (hasProperty(data, "system.willPoints.value")) {
+            options._deltaWP = getProperty(data, "system.willPoints.value") - this.system.willPoints.value, options;
+        }
+    }
+
+    /** @override */
+    async _onUpdate(data, options, user) {
+        await super._onUpdate(data, options, user);
+
+        // Handle scrolling text
+        if (options._deltaHP || options._deltaWP) {
+            const permission = DoD_Utility.getViewDamagePermission();
+            if (this.testUserPermission(game.user, permission)) {
+                if (options._deltaHP) {
+                    this._displayScrollingText(options._deltaHP, {
+                        anchor: CONST.TEXT_ANCHOR_POINTS.LEFT,
+                        fill: "0xFF0000"});      
+                }
+                if (options._deltaWP) {
+                    this._displayScrollingText(options._deltaWP, {
+                        anchor: CONST.TEXT_ANCHOR_POINTS.RIGHT,
+                        fill: "0x00FF00"});      
+                }    
+            }
         }
     }
     
@@ -85,7 +114,9 @@ export class DoDActor extends Actor {
         const scrollOptions = {...defaultOptions, ...options};
 
         for (let t of tokens) {
-          canvas.interface.createScrollingText(t.center, change.signedString(), scrollOptions);
+            if (t) {
+                canvas.interface.createScrollingText(t.center, change.signedString(), scrollOptions);
+            }
         }
     }
     
@@ -344,6 +375,10 @@ export class DoDActor extends Actor {
 
     get isObserver() {
         return this.testUserPermission(game.user, "OBSERVER");
+    }
+
+    get isLimited() {
+        return this.testUserPermission(game.user, "LIMITED");
     }
 
     get hasAbilities() {

@@ -427,7 +427,7 @@
                 "wp": "VP"
             },
             "chat":{
-                "damageApplied": "<b>{actor}</b> tillfogades {damage} i skada.",
+                "damageApplied": "<b>{actor}</b> tillfogades <b>{damage}</b> KP i skada.",
                 "damageAppliedDetails": "{damage} skada mot {armor} rustning.",
                 "damageAppliedMultiplier": "x{multiplier} i slutgiltig skada.",
                 "healingApplied": "<b>{actor}</b> läker <b>{damage}</b> KP.",
@@ -441,6 +441,7 @@
                 "dealSelectedDoubleDamage": "Tillfoga dubbel skada (vald spelfigur)",
                 "dealSelectedDamageIgnoreArmor": "Tillfoga skada, ignorera rustning (vald spelfigur)",
                 "healSelectedDamage": "Läk skada (vald spelfigur)",
+                "undoDamage": "Ångra skada",
                 "choose": "Välj",
                 "takeCondition": "{actor} blir {condition}.",
                 "treasureCard": "1 Skattkort",
@@ -449,7 +450,11 @@
                 "characterDied": "{actor} dog.",
                 "characterSurvived": "{actor} undvek döden och återfår [[/roll D6]] KP.",
                 "characterProne": "{actor} nådde 0 KP och blev liggande.",
-                "castMagicTrick": "<b>{actor}</b> utför trolleritricket <b>{spell}</b>."
+                "castMagicTrick": "<b>{actor}</b> utför trolleritricket <b>{spell}</b>.",
+                "damageDetailDamage": "Skada",
+                "damageDetailArmor": "Skydd",
+                "damageDetailMultiplier": "Modifikation",
+                "damageDetailTotal": "Total skada"
             },
             "dialog": {
                 "banes": "Nackdelar",
@@ -483,8 +488,10 @@
             "professionSkillAdded": "Lade till Yrkesfärdighet: {skill}"
         },
         "SETTINGS": {
-            "keepOwnershipOnImport": "Behåll ägande vid import av äventyr",
-            "keepOwnershipOnImportHint": "Skriv inte över äganderättigheter vid import av innehåll som redan finns i världen."
+            "keepOwnershipOnImport": "Behåll ägande vid import",
+            "keepOwnershipOnImportHint": "Skriv inte över äganderättigheter vid import av innehåll i äventyr som redan finns i världen.",
+            "viewDamagePermission": "Rättighet att se skada",
+            "viewDamagePermissionHint": "Välj den lägsta nivån av rättighet som krävs för att en spelare ska se hur mycket skada en karaktär tar."
         },
         "WARNING": {
             "kinAbility": "Kan ej hitta Släktesförmåga: {ability}",

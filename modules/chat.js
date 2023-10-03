@@ -11,6 +11,7 @@ export function addChatListeners(app, html, data) {
     html.on("click", "button.weapon-roll", onWeaponDamageRoll);
     html.on("click", "button.magic-roll", onMagicDamageRoll);
     html.on("click", "button.push-roll", onPushRoll);
+    html.on("click", ".damage-details", onExpandableClick);
 
     html.on('click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
 }
@@ -110,6 +111,26 @@ export function addChatMessageContextMenuOptions(html, options) {
         }
     }
 
+    const canUndoDamage = li =>
+    {
+        const element = li.find(".damage-message")[0];
+        if (element?.dataset.actorId) {
+            const target = DoD_Utility.getActorFromUUID(element.dataset.actorId);
+            return target?.isOwner && Number(element?.dataset.damage) != 0;
+        }
+        return false;
+    }
+
+    const undoDamage = function(li) {
+        const element = li.find(".damage-message")[0];
+        const healingData = {
+            actor: DoD_Utility.getActorFromUUID(element?.dataset.actorId),
+            damage: Number(element?.dataset.damage)
+        };
+        applyHealingMessage(healingData);
+    }
+
+
     options.push(
         {
             name: game.i18n.format("DoD.ui.chat.dealDamage"),
@@ -164,6 +185,12 @@ export function addChatMessageContextMenuOptions(html, options) {
             icon: '<i class="fas fa-user-plus"></i>',
             condition: canHealSelectedDamage,
             callback: li => healSelectedDamage(li)
+        },
+        {
+            name: game.i18n.format("DoD.ui.chat.undoDamage"),
+            icon: '<i class="fas fa-undo-alt"></i>',
+            condition: canUndoDamage,
+            callback: li => undoDamage(li)
         }
     );
 }
@@ -478,16 +505,32 @@ export async function applyDamageMessage(damageData) {
     const oldHP = actor.system.hitPoints.value;
 
     if (damageToApply > 0) {
-        actor.applyDamage(damageToApply);
+        await actor.applyDamage(damageToApply);
     }
-    
+    const newHP = actor.system.hitPoints.value;
+    const damageTaken = oldHP - newHP;
+
     const actorName = actor.isToken ? actor.token.name : actor.name;
-    const damageMessage = game.i18n.format(game.i18n.localize("DoD.ui.chat.damageApplied"), {damage: damageToApply, actor: actorName});
-    const damageDetails = game.i18n.format(game.i18n.localize("DoD.ui.chat.damageAppliedDetails"), {damage: damage, armor: armorValue});
-    let msg = damageMessage + "<p>" + damageDetails;
-    if (multiplier != 1) {
-        msg += "<br>" + game.i18n.format(game.i18n.localize("DoD.ui.chat.damageAppliedMultiplier"), {multiplier: multiplier});
-    }
+    const permissionKey = DoD_Utility.getViewDamagePermission().toLowerCase();
+
+    const msg = `
+        <div class="damage-message permission-${permissionKey}" data-damage="${damageTaken}" data-actor-id="${actor.uuid}">
+            ${game.i18n.format(game.i18n.localize("DoD.ui.chat.damageApplied"), {damage: damageTaken, actor: actorName})}
+            <div class="damage-details permission-observer" data-actor-id="${actor.uuid}">
+                <i class="fa-solid fa-circle-info"></i>
+                <div class="expandable" style="text-align: left; margin-left: 0.5em">
+                    <b>${game.i18n.localize("DoD.ui.chat.damageDetailDamage")}:</b> ${damage} ${game.i18n.localize("DoD.damageTypes." + damageType)}<br>
+                    <b>${game.i18n.localize("DoD.ui.chat.damageDetailArmor")}:</b> ${armorValue}<br>
+                    <b>${game.i18n.localize("DoD.ui.chat.damageDetailMultiplier")}:</b> x${multiplier}<br>
+                    <b>${game.i18n.localize("DoD.ui.chat.damageDetailTotal")}:</b> ${damageToApply}<br>
+                    <b>${game.i18n.localize("DoD.ui.character-sheet.hp")}:</b> ${oldHP} <i class="fa-solid fa-arrow-right"></i> ${newHP}<br>
+                </div>
+            </div>            
+        </div>
+        <div class="damage-message permission-not-${permissionKey}" data-actor-id="${actor.uuid}">
+            ${game.i18n.format(game.i18n.localize("DoD.ui.chat.damageApplied"), {damage: "???", actor: actorName})}
+        </div>
+    `;
 
     if (actor.type == "character") {
         const token = canvas.scene.tokens.find(t => t.actor.uuid == actor.uuid);
@@ -530,17 +573,98 @@ export async function applyHealingMessage(damageData) {
     }
     
     const actorName = actor.isToken ? actor.token.name : actor.name;
-    const msg = game.i18n.format(game.i18n.localize("DoD.ui.chat.healingApplied"), {damage: newHP - oldHP, actor: actorName});
+    const permissionKey = DoD_Utility.getViewDamagePermission().toLowerCase();
+
+    const msg = `
+    <div class="permission-${permissionKey}" data-actor-id="${actor.uuid}">
+        ${game.i18n.format(game.i18n.localize("DoD.ui.chat.healingApplied"), {damage: newHP - oldHP, actor: actorName})}
+        <div class="damage-details permission-observer" data-actor-id="${actor.uuid}">
+            <i class="fa-solid fa-circle-info"></i>
+            <div class="expandable" style="text-align: left; margin-left: 0.5em">
+                <b>${game.i18n.localize("DoD.ui.character-sheet.hp")}:</b> ${oldHP} <i class="fa-solid fa-arrow-right"></i> ${newHP}<br>
+            </div>
+        </div>            
+    </div>
+    <div class="permission-not-${permissionKey}" data-actor-id="${actor.uuid}">
+        ${game.i18n.format(game.i18n.localize("DoD.ui.chat.healingApplied"), {damage: "???", actor: actorName})}
+    </div>`;
 
     ChatMessage.create({ content: msg });
 }
 
 export function hideChatPermissions(app, html, data) {
-    const elements = html.find(".owner-permission");
+
+    if (!game.user.isGM) {
+        html.find(".permission-gm").remove();
+    } else {
+        html.find(".permission-not-gm").remove();
+    }
+
+    let elements = html.find(".permission-owner");
     elements.each((i, element) => {
         const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId, {noWarnings: true});
         if (actor && !actor.isOwner) {
-            element.style.display = "none";
+            element.remove();
         }
     });
+
+    elements = html.find(".permission-not-owner");
+    elements.each((i, element) => {
+        const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId, {noWarnings: true});
+        if (actor && actor.isOwner) {
+            element.remove();
+        }
+    });
+
+    elements = html.find(".permission-observer");
+    elements.each((i, element) => {
+        const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId, {noWarnings: true});
+        if (actor && !actor.isObserver) {
+            element.remove();
+        }
+    });
+
+    elements = html.find(".permission-not-observer");
+    elements.each((i, element) => {
+        const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId, {noWarnings: true});
+        if (actor && actor.isObserver) {
+            element.remove();
+        }
+    });
+
+    elements = html.find(".permission-limited");
+    elements.each((i, element) => {
+        const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId, {noWarnings: true});
+        if (actor && !actor.isLimited) {
+            element.remove();
+        }
+    });
+
+    elements = html.find(".permission-not-limited");
+    elements.each((i, element) => {
+        const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId, {noWarnings: true});
+        if (actor && actor.isLimited) {
+            element.remove();
+        }
+    });
+
+    elements = html.find(".permission-not-none");
+    elements.remove();
 }
+
+export function onExpandableClick(event) {
+    event.preventDefault();
+
+    // Toggle the message flag
+    let roll = event.currentTarget;
+    const message = game.messages.get(roll.closest(".message").dataset.messageId);
+    message._expanded = !message._expanded;
+
+    // Expand or collapse tooltips
+    const tooltips = roll.querySelectorAll(".expandable");
+    for ( let tip of tooltips ) {
+      if ( message._expanded ) $(tip).slideDown(200);
+      else $(tip).slideUp(200);
+      tip.classList.toggle("expanded", message._expanded);
+    }
+  }

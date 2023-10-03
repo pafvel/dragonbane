@@ -74,13 +74,12 @@ function registerSettings() {
     console.log("Dragonbane: Registering settings");
 
     // If true, keeps permission on assets when re-importing them
-
     game.settings.register("dragonbane", "keepOwnershipOnImport", {
         name: "DoD.SETTINGS.keepOwnershipOnImport",
         hint: "DoD.SETTINGS.keepOwnershipOnImportHint",
         scope: "world",
         config: true,
-        default: false,
+        default: true,
         type: Boolean
     });
 
@@ -142,6 +141,26 @@ function registerSettings() {
         type: Boolean,
         default: false
     });
+    
+    // User permission levels
+    const permissionLevels = {};
+    permissionLevels[CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE] = "OWNERSHIP.NONE";
+    permissionLevels[CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED] = "OWNERSHIP.LIMITED";
+    permissionLevels[CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER] = "OWNERSHIP.OBSERVER";
+    permissionLevels[CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER] = "OWNERSHIP.OWNER";
+
+    // Minimum level to view damage applied in messages
+    game.settings.register("dragonbane", "viewDamagePermission", {
+        name: "DoD.SETTINGS.viewDamagePermission",
+        hint: "DoD.SETTINGS.viewDamagePermissionHint",
+        scope: "world",
+        config: true,
+        default: CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
+        type: Number,
+        choices: permissionLevels,
+        onChange: value => { console.log(value) }
+    });
+
 }
 
 Hooks.once("init", function () {
@@ -230,10 +249,7 @@ Hooks.once("ready", async function () {
 
 Hooks.on("renderChatLog", DoDChat.addChatListeners);
 Hooks.on("getChatLogEntryContext", DoDChat.addChatMessageContextMenuOptions);
-
-Hooks.on("renderChatMessage", (app, html, data) => {
-    DoDChat.hideChatPermissions(app, html, data);
-});
+Hooks.on("renderChatMessage", DoDChat.hideChatPermissions);
 
 Hooks.on("renderJournalPageSheet", (obj, html, data) => {
     html.on('click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
