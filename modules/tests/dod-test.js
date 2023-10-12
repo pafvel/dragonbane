@@ -247,14 +247,20 @@ export default class DoDTest {
         };
     }
 
-    async renderRoll(roll, template, templateContext, isPrivate = false) {
+    async renderRoll(roll, template, templateContext) {
         if ( !roll._evaluated ) await roll.evaluate({async: true});
 
-        let context = templateContext ? templateContext : {};
-        context.formula = isPrivate ? "???" : roll.formula;
-        context.user = game.user.id;
-        context.tooltip = isPrivate ? "" : await roll.getTooltip();
-        context.total = isPrivate ? "?" : Math.round(roll.total * 100) / 100;
+        const defaultContext = {
+            formula: roll.formula,
+            user: game.user.id,
+            tooltip: await roll.getTooltip(),
+            total: Math.round(roll.total * 100) / 100,
+        };
+
+        const context = {...defaultContext, ...templateContext};
+        if (context.formulaInfo) {
+            context.formula += context.formulaInfo;
+        }
 
         return await renderTemplate(template, context);
     }

@@ -559,11 +559,29 @@ export default class DoDCharacterSheet extends ActorSheet {
         const maxWP = this.actor.system.willPoints.max;
         const newWP = Math.min(maxWP, currentWP + roll.total);
 
+        let formula = `
+        <i class="fa-solid fa-circle-info"></i>
+        <div class="permission-observer dice-tooltip" data-actor-id="${this.actor.uuid}" style="text-align: left; margin-left: 0.5em">`;
+        if (newWP != currentWP) {
+            formula += `<b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${currentWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>`;
+        }
+        formula += "</div>";
+
+        // Render message
+        const context =  {
+            formula: formula,
+            user: game.user.id,
+            tooltip: await roll.getTooltip()
+        };
+        const template = "systems/dragonbane/templates/partials/roll-no-total.hbs";
+        const content = await renderTemplate(template, context);
         const msg = await roll.toMessage({
             user: game.user.id,
             actor: this.actor,
-            flavor: game.i18n.format("DoD.ui.character-sheet.restRound", {actor: this.actor.name, wp: newWP - currentWP})
+            flavor: game.i18n.format("DoD.ui.character-sheet.restRound", {actor: this.actor.name, wp: newWP - currentWP}),
+            content: content
         });
+
         if (game.dice3d) {
             game.dice3d.waitFor3DAnimationByMessageID(msg.id).then(
                 () => this.actor.update({["system.willPoints.value"]: newWP })
@@ -577,7 +595,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         event.currentTarget?.blur();
 
         // Make roll
-        const roll = await new Roll("D6[Hit Points] + D6[Willpower Points]").roll({async: true});
+        const roll = await new Roll(`D6[${game.i18n.localize("DoD.secondaryAttributeTypes.hitPoints")}] + D6[${game.i18n.localize("DoD.secondaryAttributeTypes.willPoints")}]`).roll({async: true});
 
         if (game.dice3d) {
             // Red for HP
@@ -606,9 +624,20 @@ export default class DoDCharacterSheet extends ActorSheet {
         const maxWP = this.actor.system.willPoints.max;
         const newWP = Math.min(maxWP, currentWP + Number(roll.terms[2].total));
 
+        let formula = `
+        <i class="fa-solid fa-circle-info"></i>
+        <div class="permission-observer dice-tooltip" data-actor-id="${this.actor.uuid}" style="text-align: left; margin-left: 0.5em">`;
+        if (newHP != currentHP) {
+            formula += `<b>${game.i18n.localize("DoD.ui.character-sheet.hp")}:</b> ${currentHP} <i class="fa-solid fa-arrow-right"></i> ${newHP}<br>`;
+        }
+        if (newWP != currentWP) {
+            formula += `<b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${currentWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>`;
+        }
+        formula += "</div>";
+
         // Render message
         const context =  {
-            formula: roll.formula,
+            formula: formula,
             user: game.user.id,
             tooltip: await roll.getTooltip()
         };
@@ -655,10 +684,22 @@ export default class DoDCharacterSheet extends ActorSheet {
         const maxWP = this.actor.system.willPoints.max;
         const newWP = maxWP;
 
+        // Prepare chat message
+        const msg = `
+            <div class="damage-details permission-observer" data-actor-id="${this.actor.uuid}">
+                <i class="fa-solid fa-circle-info"></i>
+                <div class="expandable" style="text-align: left; margin-left: 0.5em">
+                <b>${game.i18n.localize("DoD.ui.character-sheet.hp")}:</b> ${currentHP} <i class="fa-solid fa-arrow-right"></i> ${newHP}<br>
+                <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${currentWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>
+                </div>
+            </div>`;
+
         ChatMessage.create({
             user: game.user.id,
-            flavor: game.i18n.format("DoD.ui.character-sheet.restShift", {actor: this.actor.name, hp: newHP - currentHP, wp: newWP - currentWP})
+            flavor: game.i18n.format("DoD.ui.character-sheet.restShift", {actor: this.actor.name, hp: newHP - currentHP, wp: newWP - currentWP}),
+            content: msg
         });
+
         this.actor.update({
             ["system.hitPoints.value"]: newHP,
             ["system.willPoints.value"]: newWP,
@@ -1000,7 +1041,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                 wp = isNaN(wp) ? 0 : wp;
 
                 const use = await new Promise(
-                    resolve => {
+                    resolve => {        
                         const data = {
                             title: game.i18n.localize("DoD.ui.dialog.useAbility"),
                             content: wp > 0 ? game.i18n.format("DoD.ui.dialog.useAbilityWithWP", {wp: wp, ability: item.name}) : game.i18n.format("DoD.ui.dialog.useAbilityWithoutWP", {ability: item.name}),
@@ -1025,16 +1066,24 @@ export default class DoDCharacterSheet extends ActorSheet {
                 if (use) {
                     let content;
                     if (wp > 0) {
-                        if (this.actor.system.willPoints.value < wp) {
+                        const oldWP = this.actor.system.willPoints.value;
+                        if (oldWP < wp) {
                             DoD_Utility.WARNING("DoD.WARNING.notEnoughWPForAbility");
                             return;
                         } else {
-                            this.actor.update({"system.willPoints.value": this.actor.system.willPoints.value - wp});
-                            content = game.i18n.format("DoD.ability.useWithWP", {
-                                actor: this.actor.name,
-                                uuid: item.uuid,
-                                wp: wp
-                            });
+                            const newWP = oldWP - wp;
+                            this.actor.update({"system.willPoints.value": newWP});
+                            //content = game.i18n.format("DoD.ability.useWithWP", {actor: this.actor.name, uuid: item.uuid, wp: wp});
+                            content = `
+                            <p>
+                                ${game.i18n.format("DoD.ability.useWithWP", {actor: this.actor.name, uuid: item.uuid, wp: wp})}
+                            </p>
+                            <div class="damage-details permission-observer" data-actor-id="${this.actor.uuid}">
+                                <i class="fa-solid fa-circle-info"></i>
+                                <div class="expandable" style="text-align: left; margin-left: 0.5em">
+                                    <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${oldWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>
+                                </div>
+                            </div>`;
                         }
                     } else {
                         content = game.i18n.format("DoD.ability.useWithoutWP", {

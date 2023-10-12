@@ -62,11 +62,19 @@ export default class DoDSpellTest extends DoDSkillTest  {
     updatePostRollData() {
         super.updatePostRollData();
 
-        if (!this.isReRoll) {
+        this.postRollData.wpOld = this.postRollData.actor.system.willPoints.value;
+        this.postRollData.wpNew = this.isReRoll ? this.postRollData.wpOld : this.postRollData.actor.system.willPoints.value - this.postRollData.wpCost;
+        if (this.postRollData.wpNew != this.postRollData.wpOld) {
             // Pay WP cost
-            const wpNew = this.postRollData.actor.system.willPoints.value - this.postRollData.wpCost;
-            this.postRollData.actor.update({ ["system.willPoints.value"]: wpNew});    
+            this.postRollData.actor.update({ ["system.willPoints.value"]: this.postRollData.wpNew});
+
+            // Add info to chat card
+            this.postRollData.formulaInfo = 
+            `<div class="permission-observer dice-tooltip" data-actor-id="${this.postRollData.actor.uuid}" style="text-align: left; margin-left: 0.5em">
+                    <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${this.postRollData.wpOld} <i class="fa-solid fa-arrow-right"></i> ${this.postRollData.wpNew}<br>
+            </div>`;
         }
+        
 
         this.postRollData.isDamaging = this.spell.isDamaging;
 

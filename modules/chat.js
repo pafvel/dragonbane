@@ -319,20 +319,31 @@ async function onMagicDamageRoll(event) {
         const critChoices = parent.getElementsByTagName("input");
         const choice = Array.from(critChoices).find(e => e.name=="magicCritChoice" && e.checked);
 
-        ChatMessage.create({
-            content: game.i18n.localize("DoD.magicCritChoices.choiceLabel") + ": "+ game.i18n.localize("DoD.magicCritChoices." + choice.value),
+        const message = {
+            flavor: game.i18n.localize("DoD.magicCritChoices.choiceLabel") + ": "+ game.i18n.localize("DoD.magicCritChoices." + choice.value),
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: actor }),
-        });
+        };
 
         if (choice.value == "noCost") {
+            const wpOld = actor.system.willPoints.value;
             const wpCost = Number(element.dataset.wpCost);
-            const wpNew = Math.min(actor.system.willPoints.max, actor.system.willPoints.value + wpCost);
+            const wpNew = Math.min(actor.system.willPoints.max, wpOld + wpCost);
             await actor.update({ ["system.willPoints.value"]: wpNew});
+
+            message.content = `
+            <div class="damage-details permission-observer" data-actor-id="${actor.uuid}">
+                <i class="fa-solid fa-circle-info"></i>
+                <div class="expandable" style="text-align: left; margin-left: 0.5em">
+                    <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${wpOld} <i class="fa-solid fa-arrow-right"></i> ${wpNew}<br>
+                </div>
+            </div>`;
         }
         if (choice.value == "doubleDamage") {
             doubleDamage = true;
         }
+
+        ChatMessage.create(message);        
     }
 
     if (spell?.isDamaging) {
