@@ -83,6 +83,9 @@ export default class DoDItemSheet extends ItemSheet {
             if (this.object.type === "profession") {
                 html.find(".edit-profession-abilities").change(this._onEditProfessionAbilities.bind(this));
             }
+            if (this.object.type === "kin") {
+                html.find(".edit-kin-abilities").change(this._onEditKinAbilities.bind(this));
+            }
             if (this.object.type === "item") {
                 html.find(".edit-memento").change(this._onEditMemento.bind(this));
             }
@@ -101,6 +104,15 @@ export default class DoDItemSheet extends ItemSheet {
                 }
             }
             await this.item.update({ ["system.memento"]: newValue});
+        };
+    }
+
+    async _onEditKinAbilities(event) {
+        if (this.item.actor) {
+            event.preventDefault();
+            let newValue = event.currentTarget.value;
+            await this.item.update({ ["system.abilities"]: newValue});
+            await this.item.actor.updateKinAbilities();
         };
     }
 
