@@ -258,6 +258,8 @@ Hooks.on("renderJournalPageSheet", (obj, html, data) => {
     html.on("click", ".treasure-roll", DoDChat.onTreasureRoll);
 });
 
+Hooks.on("dropActorSheetData", DoDCharacterSheet._onDropTable);
+
 // Apply seeting to keep ownership permission on import
 Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
     const keepOwnership = game.settings.get("dragonbane", "keepOwnershipOnImport");

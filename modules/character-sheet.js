@@ -50,17 +50,12 @@ export default class DoDCharacterSheet extends ActorSheet {
 
     async close(options) {
         document.removeEventListener('keydown', this.keydownListener);
-        Hooks.off("dropActorSheetData", this.onDropTableListener);
         return super.close(options);
      }
 
      render(force, options) {
         this.keydownListener = this.#onKeydown.bind(this);
         document.addEventListener('keydown', this.keydownListener);
-
-        this.onDropTableListener = this._onDropTable.bind(this);
-        Hooks.on("dropActorSheetData", this.onDropTableListener);
-
         return super.render(force, options);
      }
 
@@ -1207,8 +1202,8 @@ export default class DoDCharacterSheet extends ActorSheet {
         }
     }
 
-    async _onDropTable(actor, _sheet, data) {
-        if (data.type === "RollTable" && this.actor.isOwner && this.actor.type === "monster") {
+    static async _onDropTable(actor, _sheet, data) {
+        if (data.type === "RollTable" && actor.isOwner && actor.type === "monster") {
             actor.update({ ["system.attackTable"]: data.uuid});
             return false; // Stop
         }
