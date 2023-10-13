@@ -819,7 +819,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         } else {
             await this.actor.removeKin();
             await this.actor.createEmbeddedDocuments("Item", [kin.toObject()]);
-            await this.actor.updateKin();
+            await this.actor.updateKinAbilities();
         }
     }
 
@@ -1300,7 +1300,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         // Update kin and kin abilities
         if (itemData.type == "kin") {
-            await this.actor.updateKin();
+            await this.actor.updateKinAbilities();
         }
 
         // Update profession and profession abilities

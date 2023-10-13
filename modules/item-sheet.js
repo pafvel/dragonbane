@@ -277,5 +277,19 @@ export default class DoDItemSheet extends ItemSheet {
                 }
             }
         }
+
+        if (this.item.type == "kin")
+        {
+            const data = TextEditor.getDragEventData(event);
+            if (data.type === "Item") {
+                const item = await Item.implementation.fromDropData(data);
+                if (item.type === "ability") {
+                    await this.item.update({ ["system.abilities"]: item.name});
+                    await this.item.actor?.updateKinAbilities();
+                }
+            }
+        }
+
+        super._onDrop(event);
     }
 }

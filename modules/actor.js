@@ -514,31 +514,48 @@ export class DoDActor extends Actor {
         this.system.profession = null;
     }
 
-    async updateKin() {
-        let kin = this.system.kin;
+    async updateKinAbilities() {
+        // Character's abilities
+        const abilities = this.items.filter(item => item.type == "ability");
 
-        if (kin && kin.system.abilities.length) {
-            let abilities = DoD_Utility.splitAndTrimString(kin.system.abilities);
-            let itemData = [];
+        // Ability names defined in the current kin
+        const kinAbilityNames = 
+            (this.system.kin && this.system.kin.system.abilities.length)
+                ? DoD_Utility.splitAndTrimString(this.system.kin.system.abilities) : [];
 
-            for(const abilityName of abilities) {
-                // Make sure kin ability exist
-                let kinAbility = this.findAbility(abilityName);
-                if (!kinAbility) {
-                    kinAbility = await DoD_Utility.findAbility(abilityName);
-                    if (kinAbility) {
-                        itemData.push(kinAbility.toObject());
-                    } else {
-                        DoD_Utility.WARNING("DoD.WARNING.kinAbility", {ability: abilityName});
-                    }
+
+        // Remove kin abilities not in current kin
+        let removeAbilityIds = [];
+        for (const ability of abilities) {
+            if (ability.system.abilityType === "kin" && !kinAbilityNames.find(name => name === ability.name)) {
+                removeAbilityIds.push(ability.id);
+            }
+        }
+        if (removeAbilityIds.length) {
+            await this.deleteEmbeddedDocuments("Item", removeAbilityIds);
+        }
+
+        // add missing kin abilities from current kin
+        let createItemData = [];
+        for(const kinAbilityName of kinAbilityNames) {
+            let kinAbility = this.findAbility(kinAbilityName);
+            if (!kinAbility) {
+                const foundAbility = await DoD_Utility.findAbility(kinAbilityName);
+                if (foundAbility) {
+                    const abilityData = foundAbility.toObject();
+                    abilityData.system.abilityType = "kin";
+                    createItemData.push(abilityData);
+                } else {
+                    DoD_Utility.WARNING("DoD.WARNING.kinAbility", {ability: kinAbilityName});
                 }
             }
-            await this.createEmbeddedDocuments("Item", itemData);
+        }
+        if (createItemData.length) {
+            await this.createEmbeddedDocuments("Item", createItemData);
         }
     }
 
-    async updateProfessionAbilities()
-    {
+    async updateProfessionAbilities() {
         // Character's abilities
         const abilities = this.items.filter(item => item.type == "ability");
 
