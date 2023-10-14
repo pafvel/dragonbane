@@ -757,7 +757,12 @@ export default class DoDCharacterSheet extends ActorSheet {
             return await item.update({ [field]: element.checked });
         }
 
-        return await item.update({ [field]: Number(element.value) });
+        let result = await item.update({ [field]: Number(element.value) });
+        
+        // Skill values may reset to their base chance. 
+        let value = getProperty(item, field);
+        element.value = value;
+        return result;
     }
 
     _onEditHp(event) {
