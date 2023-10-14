@@ -69,6 +69,17 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.belowRequiredStr"), value: true});
         }
 
+        if (this.options.targets.length > 0) {
+            const targetToken = this.options.targets[0].document;
+            if (targetToken.hasStatusEffect("prone"))
+            {
+                const token = canvas.scene.tokens.find(t => t.actor.uuid == this.actor.uuid);
+                if (token && !token.hasStatusEffect("prone")) {
+                    this.dialogData.boons.push({source: game.i18n.localize("EFFECT.StatusProne"), value: true});
+                    this.dialogData.extraDamage = "D6";
+                }
+            }
+        }
         this.dialogData.actions = actions;
     }   
 
