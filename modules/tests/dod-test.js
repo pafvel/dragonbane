@@ -101,8 +101,8 @@ export default class DoDTest {
             banes.push( {source: game.i18n.localize("DoD.conditions." + this.attribute), value: true});
         }
 
-        let rollTarget = this.skill ? this.skill.name.toLowerCase() : game.i18n.localize("DoD.attributes." + this.attribute).toLowerCase();
-        let rollAttribute = this.skill ? this.skill.system.attributeShort.toLowerCase() : rollTarget;
+        let rollTarget = this.skill ? this.skill.name.toLowerCase() : this.attribute.toLowerCase();
+        let rollAttribute = this.skill ? this.skill.system.attribute.toLowerCase() : rollTarget;
 
         for (let item of this.actor.items.contents) {
             if (item.system.banes?.length) {
