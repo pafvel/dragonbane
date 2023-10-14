@@ -357,7 +357,7 @@ export class DoDActor extends Actor {
             if (item.type == "skill") {
                 const skill = item;
                 const baseChance = this._getBaseChance(skill);
-                if ((skill.system.skillType == "core" || skill.system.skillType == "weapon") && skill.system.value < baseChance) {
+                if ((skill.system.skillType == "core" || skill.system.skillType == "weapon") && skill.system.value < 1) {
                     skill.system.value = baseChance;
                 }
             }

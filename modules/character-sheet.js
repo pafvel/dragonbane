@@ -719,7 +719,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         }
     }
 
-    _onInlineEdit(event) {
+    async _onInlineEdit(event) {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".sheet-table-data").dataset.itemId;
@@ -754,10 +754,10 @@ export default class DoDCharacterSheet extends ActorSheet {
                     return item.update({["system.mainHand"]: element.checked, "system.offHand": element.checked});
                 }
             }
-            return item.update({ [field]: element.checked });
+            return await item.update({ [field]: element.checked });
         }
 
-        return item.update({ [field]: Number(element.value) });
+        return await item.update({ [field]: Number(element.value) });
     }
 
     _onEditHp(event) {
