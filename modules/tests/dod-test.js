@@ -259,7 +259,7 @@ export default class DoDTest {
 
         const context = {...defaultContext, ...templateContext};
         if (context.formulaInfo) {
-            context.formula += context.formulaInfo;
+            context.tooltip = context.formulaInfo + context.tooltip;
         }
 
         return await renderTemplate(template, context);

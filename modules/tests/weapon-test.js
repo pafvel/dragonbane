@@ -69,7 +69,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.belowRequiredStr"), value: true});
         }
 
-        if (this.options.targets.length > 0) {
+        if (this.options.targets?.length > 0) {
             const targetToken = this.options.targets[0].document;
             if (targetToken.hasStatusEffect("prone"))
             {
