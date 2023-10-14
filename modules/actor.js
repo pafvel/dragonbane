@@ -81,22 +81,24 @@ export class DoDActor extends Actor {
     async _onUpdate(data, options, user) {
         await super._onUpdate(data, options, user);
 
-        // Handle scrolling text
-        if (options._deltaHP || options._deltaWP) {
-            const permission = DoD_Utility.getViewDamagePermission();
-            if (this.testUserPermission(game.user, permission)) {
-                if (options._deltaHP) {
-                    this._displayScrollingText(options._deltaHP, {
-                        anchor: CONST.TEXT_ANCHOR_POINTS.LEFT,
-                        fill: "0xFF0000"});      
-                }
-                if (options._deltaWP) {
-                    this._displayScrollingText(options._deltaWP, {
-                        anchor: CONST.TEXT_ANCHOR_POINTS.RIGHT,
-                        fill: "0x00FF00"});      
-                }    
-            }
+        const hasPermission = this.testUserPermission(game.user, DoD_Utility.getViewDamagePermission());
+
+        if (!hasPermission) return;
+
+        if (options._deltaHP) {
+            this._displayScrollingText(options._deltaHP, {
+                anchor: CONST.TEXT_ANCHOR_POINTS.LEFT,
+                fill: "0xFF0000",
+                hidden: !hasPermission
+            });      
         }
+        if (options._deltaWP) {
+            this._displayScrollingText(options._deltaWP, {
+                anchor: CONST.TEXT_ANCHOR_POINTS.RIGHT,
+                fill: "0x00FF00",
+                hidden: !hasPermission
+            });      
+        }    
     }
     
     _displayScrollingText(change, options = {}) {
@@ -112,10 +114,11 @@ export class DoDActor extends Actor {
             jitter: 0.25
         };
         const scrollOptions = {...defaultOptions, ...options};
+        const scrollingText = options.hidden ? "???" : change.signedString();
 
         for (let t of tokens) {
             if (t) {
-                canvas.interface.createScrollingText(t.center, change.signedString(), scrollOptions);
+                canvas.interface.createScrollingText(t.center, scrollingText, scrollOptions);
             }
         }
     }

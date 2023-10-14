@@ -518,11 +518,11 @@ export default class DoDCharacterSheet extends ActorSheet {
                     await actor.update({ ["system.deathRolls.failures"]: Math.min(3, actor.system.deathRolls.failures + (isDemon ? 2 : 1))});
                 }
             }
-            if (actor.system.deathRolls.failures == 3) {
+            if (actor.system.deathRolls.failures == 3 && game.settings.get("dragonbane", "automateCharacterDeath")) {
                 const token = canvas.scene.tokens.find(t => t.actor.uuid == actor.uuid);
                 if (token) {
                     const status = CONFIG.statusEffects.find(a => a.id === 'dead');
-                    token.toggleActiveEffect(status, {active: true});    
+                    token.toggleActiveEffect(status, {active: true, overlay: true});    
                 }
                 const actorName = actor.isToken ? actor.token.name : actor.name;
                 const msg = "<p>" + game.i18n.format("DoD.ui.chat.characterDied", {actor: actorName}) + "</p>";

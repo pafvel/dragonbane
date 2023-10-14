@@ -451,6 +451,7 @@
                 "treasureCards": "<b>{count}</b> Skattkort",
                 "failedDeathRoll": "<b>{actor}</b> tog skada vid 0 KP och misslyckades automatiskt med ett dödsslag.",
                 "characterDied": "<b>{actor}</b> dog.",
+                "characterDiedInstantly": "<b>{actor}</b> dog omedelbart.",
                 "characterSurvived": "<b>{actor}</b> undvek döden och återfår [[/roll D6]] KP.",
                 "characterProne": "<b>{actor}</b> nådde 0 KP och blev liggande.",
                 "castMagicTrick": "<b>{actor}</b> utför trolleritricket <b>{spell}</b>.",
@@ -491,6 +492,12 @@
             "professionSkillAdded": "Lade till Yrkesfärdighet: {skill}"
         },
         "SETTINGS": {
+            "automateNpcDeath": "Markera döda SLP",
+            "automateNpcDeathHint": "Markera spelledarpersoner som döda när de når 0 KP.",
+            "automateMonsterDeath": "Markera döda monster",
+            "automateMonsterDeathHint": "Markera monster som döda när de når 0 KP.",
+            "automateCharacterDeath": "Markera döda rollpersoner",
+            "automateCharacterDeathHint": "Markera rollpersoner som döda när de misslyckas med 3 dödsslag eller om de dör omedelbart på grund av hög skada.",
             "keepOwnershipOnImport": "Behåll ägande vid import",
             "keepOwnershipOnImportHint": "Skriv inte över äganderättigheter vid import av innehåll i äventyr som redan finns i världen.",
             "viewDamagePermission": "Rättighet att se skada",

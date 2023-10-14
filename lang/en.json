@@ -446,6 +446,7 @@
                 "treasureCards": "<b>{count}</b> Treasure Cards",
                 "failedDeathRoll": "<b>{actor}</b> failed a death roll due to taking damage at 0 HP.",
                 "characterDied": "<b>{actor}</b> died.",
+                "characterDiedInstantly": "<b>{actor}</b> died instantly.",
                 "characterSurvived": "<b>{actor}</b> escaped death and recovers [[/roll D6]] HP.",
                 "characterProne": "<b>{actor}</b> reached 0 HP and became prone.",
                 "castMagicTrick": "<b>{actor}</b> casts <b>{spell}</b>.",
@@ -486,6 +487,12 @@
             "professionSkillAdded": "Added Profession Skill: {skill}"
         },
         "SETTINGS": {
+            "automateNpcDeath": "Automate NPC Death",
+            "automateNpcDeathHint": "If checked, automatically marks NPCs as dead when the reach 0 HP.",
+            "automateMonsterDeath": "Automate Monster Death",
+            "automateMonsterDeathHint": "If checked, automatically marks Monsters as dead when the reach 0 HP.",
+            "automateCharacterDeath": "Automate Character Death",
+            "automateCharacterDeathHint": "If checked, automatically marks Characters as dead when they fail 3 death rolls or get instantly killed by excessive damage.",
             "keepOwnershipOnImport": "Keep ownership",
             "keepOwnershipOnImportHint": "Do not overwrite ownership rights when importing adventure content that already exists in the world.",
             "viewDamagePermission": "Permission to see Damage",

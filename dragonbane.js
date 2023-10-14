@@ -158,10 +158,36 @@ function registerSettings() {
         config: true,
         default: CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
         type: Number,
-        choices: permissionLevels,
-        onChange: value => { console.log(value) }
+        choices: permissionLevels
     });
 
+    // If true, autmatically marks Characters as dead when they fail 3 death rolls or get instantly killed
+    game.settings.register("dragonbane", "automateCharacterDeath", {
+        name: "DoD.SETTINGS.automateCharacterDeath",
+        hint: "DoD.SETTINGS.automateCharacterDeathHint",
+        scope: "world",
+        config: true,
+        default: true,
+        type: Boolean
+    });
+    // If true, autmatically marks NPCs as dead when the reach 0 HP
+    game.settings.register("dragonbane", "automateNpcDeath", {
+        name: "DoD.SETTINGS.automateNpcDeath",
+        hint: "DoD.SETTINGS.automateNpcDeathHint",
+        scope: "world",
+        config: true,
+        default: true,
+        type: Boolean
+    });
+    // If true, autmatically marks Monsters as dead when the reach 0 HP
+    game.settings.register("dragonbane", "automateMonsterDeath", {
+        name: "DoD.SETTINGS.automateMonsterDeath",
+        hint: "DoD.SETTINGS.automateMonsterDeathHint",
+        scope: "world",
+        config: true,
+        default: true,
+        type: Boolean
+    });
 }
 
 Hooks.once("init", function () {

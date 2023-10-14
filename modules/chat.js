@@ -522,15 +522,78 @@ export async function applyDamageMessage(damageData) {
     const damageTaken = oldHP - newHP;
 
     const actorName = actor.isToken ? actor.token.name : actor.name;
+    const token = canvas.scene.tokens.find(t => t.actor.uuid == actor.uuid);
+
     const permissionKey = DoD_Utility.getViewDamagePermission().toLowerCase();
 
-    const msg = `
+    let message = "";
+    let isDead = false;
+    let instantDeath = false;
+
+    // Automate Character going prone when reaching 0 HP
+    if (actor.type == "character") {
+        if (oldHP > 0 && damageToApply >= oldHP) {
+            if (token && !token.hasStatusEffect("prone")) {
+                const status = CONFIG.statusEffects.find(a => a.id === 'prone');
+                token.toggleActiveEffect(status, {active: true});
+                message += "<p>" + game.i18n.format("DoD.ui.chat.characterProne", {actor: actorName}) + "</p>";
+            }
+        }
+    }
+
+    // Automate instant death
+    if (damageToApply - oldHP >= actor.system.hitPoints.max) {
+        isDead = true;
+        instantDeath = true;
+    } 
+
+    // Automate NPC & Monster death
+    if (!isDead && (actor.type == "npc" || actor.type == "monster")) {
+        if (oldHP > 0 && damageToApply >= oldHP) {
+            isDead = true;
+        }
+    }
+
+    // Automate Character death
+    if (!isDead && actor.type == "character") {
+        // Characters add death roll when at 0 HP and taking damage
+        if (oldHP == 0 && damageToApply > 0) {
+            let failures = actor.system.deathRolls.failures;
+            if (failures < 3) {
+                await actor.update({["system.deathRolls.failures"]: ++failures});
+                message += "<p>" + game.i18n.format("DoD.ui.chat.failedDeathRoll", {actor: actorName}) + "</p>";
+                if (failures == 3) {
+                    isDead = true;
+                }
+            }
+        }
+    }
+
+    if (isDead) {
+        if (actor.type == "npc" && game.settings.get("dragonbane", "automateNpcDeath")
+        || actor.type == "monster" && game.settings.get("dragonbane", "automateMonsterDeath")
+        || actor.type == "character" && game.settings.get("dragonbane", "automateCharacterDeath"))
+        {
+            const status = CONFIG.statusEffects.find(a => a.id === 'dead');
+            if (token && !token.hasStatusEffect("dead")) {
+                token.toggleActiveEffect(status, {active: true, overlay: true});
+            }
+            if (instantDeath) {
+                message += "<p>" + game.i18n.format("DoD.ui.chat.characterDiedInstantly", {actor: actorName}) + "</p>";
+            } else {
+                message += "<p>" + game.i18n.format("DoD.ui.chat.characterDied", {actor: actorName}) + "</p>";
+            }    
+        }
+    }
+
+    let html = `
         <div class="damage-message permission-${permissionKey}" data-damage="${damageTaken}" data-actor-id="${actor.uuid}">
             ${game.i18n.format(game.i18n.localize("DoD.ui.chat.damageApplied"), {damage: damageTaken, actor: actorName})}
+            ${message}
             <div class="damage-details permission-observer" data-actor-id="${actor.uuid}">
                 <i class="fa-solid fa-circle-info"></i>
                 <div class="expandable" style="text-align: left; margin-left: 0.5em">
-                    <b>${game.i18n.localize("DoD.ui.chat.damageDetailDamage")}:</b> ${damage} ${game.i18n.localize("DoD.damageTypes." + damageType)}<br>
+                    <b>${game.i18n.localize("DoD.ui.chat.damageDetailDamage")}:</b> ${damage} ${game.i18n.localize("DoD.damageTypes." + (damageType ?? "none"))}<br>
                     <b>${game.i18n.localize("DoD.ui.chat.damageDetailArmor")}:</b> ${armorValue}<br>
                     <b>${game.i18n.localize("DoD.ui.chat.damageDetailMultiplier")}:</b> x${multiplier}<br>
                     <b>${game.i18n.localize("DoD.ui.chat.damageDetailTotal")}:</b> ${damageToApply}<br>
@@ -540,36 +603,9 @@ export async function applyDamageMessage(damageData) {
         </div>
         <div class="damage-message permission-not-${permissionKey}" data-actor-id="${actor.uuid}">
             ${game.i18n.format(game.i18n.localize("DoD.ui.chat.damageApplied"), {damage: "???", actor: actorName})}
-        </div>
-    `;
-
-    if (actor.type == "character") {
-        const token = canvas.scene.tokens.find(t => t.actor.uuid == actor.uuid);
-
-        // Characters add death roll when at 0 HP and taking damage
-        if (oldHP == 0 && damageToApply > 0) {
-            let failures = actor.system.deathRolls.failures;
-            if (failures < 3) {
-                await actor.update({["system.deathRolls.failures"]: ++failures});
-                msg += "<p>" + game.i18n.format("DoD.ui.chat.failedDeathRoll", {actor: actorName}) + "</p>";
-                if (failures == 3) {
-                    const status = CONFIG.statusEffects.find(a => a.id === 'dead');
-                    token.toggleActiveEffect(status, {active: true});
-                    msg += "<p>" + game.i18n.format("DoD.ui.chat.characterDied", {actor: actorName}) + "</p>";
-                }
-            }
-        }
-        // Characters go prone when reaching 0 HP
-        if (oldHP > 0 && damageToApply >= oldHP) {
-            if (token && !token.hasStatusEffect("prone")) {
-                const status = CONFIG.statusEffects.find(a => a.id === 'prone');
-                token.toggleActiveEffect(status, {active: true});
-                msg += "<p>" + game.i18n.format("DoD.ui.chat.characterProne", {actor: actorName}) + "</p>";
-            }
-        }
-    }
-
-    ChatMessage.create({ content: msg });
+            ${message}
+        </div>`;
+    ChatMessage.create({ content: html });
 }
 
 export async function applyHealingMessage(damageData) {
@@ -599,6 +635,14 @@ export async function applyHealingMessage(damageData) {
     <div class="permission-not-${permissionKey}" data-actor-id="${actor.uuid}">
         ${game.i18n.format(game.i18n.localize("DoD.ui.chat.healingApplied"), {damage: "???", actor: actorName})}
     </div>`;
+
+    if (oldHP == 0 && newHP > 0) {
+        const token = canvas.scene.tokens.find(t => t.actor.uuid == actor.uuid);
+        if (token && token.hasStatusEffect("dead")) {
+            const status = CONFIG.statusEffects.find(a => a.id === 'dead');
+            token.toggleActiveEffect(status);
+        }
+    }
 
     ChatMessage.create({ content: msg });
 }
