@@ -1,5 +1,42 @@
 # Change Log
 
+## Version 1.5.0
+
+- Combat
+    - Improved combat chat messages
+        - Players with Observer permission or higher can view detailed damage info.
+        - Damage dealt can be hidden from chat message based on permissions and configurable settings.
+        - Fixed some minor formatting issues in chat messages.
+    - Scrolling status text
+        - Scrolling status text now support changes in in HP and WP. They follow the same rules for visibility as chat messages.
+    - Automation
+        - NPCs, Monster and Characters will get marked as Dead automatically based on configurable settings.
+        - Attacks on a prone target automatically gets a Boon and bonus damage.
+
+- Character Sheet
+    - Prevent Advancement Marks from advancing skill beyond 18. Contributed by @Bithir.
+    - Skill values can now go below base chance. If entering zero or empty value, it will reset to base chance.
+    - Fix for character sheet sometimes not updating when skill value reset to base chance.
+    - Added tooltips on Abilities tab, explaining how to add Profession, Kin and Heroic Abilities.
+
+- Monster Sheet
+    - Fix for performance bug when dropping table on monster sheet.
+    - Fix for same monster attack sometime occuring twice in a row.
+
+- Items Sheets
+    - Support drag'n'drop for Abilities onto the Kin item sheet.
+    - Character now updates properly when the Ability on the Kin sheet is changed.
+    - Removed advancement checkbox from Skill sheet.
+    - Support for attributes in Item Banes & Boons. Use the non-localized short attribute names: STR, CON, etc.
+
+- Settings
+    - Setting for minimum permission level to view amount of damage done to an actor.
+    - Settings for automatically marking actors as Dead.
+
+Localization
+- Added italian localization. Contributed by @FR4NC35C0.
+
+
 ## Version 1.4.0
 
 - Character Sheet
