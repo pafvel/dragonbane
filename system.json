@@ -46,7 +46,12 @@
           "lang": "it",
           "name": "Italiano",
           "path": "lang/it.json"
-      }
+      },
+      {
+        "lang": "es",
+        "name": "Español",
+        "path": "lang/es.json"
+      }      
     ],
     "packs": [
         {
