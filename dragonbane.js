@@ -286,8 +286,8 @@ Hooks.on("renderJournalPageSheet", (obj, html, data) => {
 
 Hooks.on("dropActorSheetData", DoDCharacterSheet._onDropTable);
 
-// Apply seeting to keep ownership permission on import
 Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
+    // Apply seeting to keep ownership permission on import
     const keepOwnership = game.settings.get("dragonbane", "keepOwnershipOnImport");
     if (keepOwnership) {
         // Ignore ownership when updating data
@@ -297,6 +297,12 @@ Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
                     delete data.ownership;
                 }
             }
+        }
+    }
+    // Don't update "drawn" status on cards.
+    for (let deck of toUpdate.Cards) {
+        for (let card of deck.cards) {
+            delete card.drawn;
         }
     }
     return true;
