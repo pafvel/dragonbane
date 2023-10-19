@@ -13,8 +13,10 @@ export default class DoDWeaponTest extends DoDSkillTest  {
     updateDialogData() {
         super.updateDialogData();
 
-        const hasThrowAttack = this.weapon.hasWeaponFeature("thrown");
-        const isRangedWeapon = !hasThrowAttack && this.weapon.system.range >= 10;
+        const isThrownWeapon = this.weapon.hasWeaponFeature("thrown");
+        const isRangedWeapon = !isThrownWeapon && this.weapon.system.calculatedRange >= 10;
+        const isMeleeWeapon = !isThrownWeapon && !isRangedWeapon;
+        const isLongWeapon = this.weapon.hasWeaponFeature("long");
         const hasSlashAttack = this.weapon.hasWeaponFeature("slashing");
         const hasStabAttack = this.weapon.hasWeaponFeature("piercing");
         const hasWeakpointAttack = hasStabAttack;
@@ -33,6 +35,12 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             });
         }
 
+        const actorToken = canvas.scene.tokens.find(t => t.actor.uuid == this.actor.uuid);
+        const targetToken = this.options.targets?.length > 0 ? this.options.targets[0].document : null;
+        const distance = (actorToken && targetToken) ? canvas.grid.measureDistance(actorToken, targetToken, {gridSpaces: true}) : 0;
+        const isInRange = distance <= this.weapon.system.calculatedRange;
+        const isInMeleeRange = distance <= (isMeleeWeapon ? this.weapon.system.calculatedRange : (isLongWeapon ? 4 : 2));
+        
         if(isRangedWeapon) {
             pushAction("ranged");
         }
@@ -54,7 +62,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         if(hasDisarmAttack && !isRangedWeapon) {
             pushAction("disarm");
         }        
-        if(hasThrowAttack && !isRangedWeapon) {
+        if(isThrownWeapon && !isRangedWeapon) {
             pushAction("throw");
         }        
         if(hasParry && !isRangedWeapon) {
@@ -69,15 +77,12 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.belowRequiredStr"), value: true});
         }
 
-        if (this.options.targets?.length > 0) {
-            const targetToken = this.options.targets[0].document;
-            if (targetToken.hasStatusEffect("prone"))
-            {
-                const token = canvas.scene.tokens.find(t => t.actor.uuid == this.actor.uuid);
-                if (token && !token.hasStatusEffect("prone")) {
-                    this.dialogData.boons.push({source: game.i18n.localize("EFFECT.StatusProne"), value: true});
-                    this.dialogData.extraDamage = "D6";
-                }
+        // Boon and extra damage on melee attack on prone target
+        const isMeleeAttack = isMeleeWeapon || isThrownWeapon && isInMeleeRange;
+        if (isMeleeAttack && targetToken && actorToken) {
+            if (targetToken.hasStatusEffect("prone") && !actorToken.hasStatusEffect("prone")) {
+                this.dialogData.boons.push({source: game.i18n.localize("EFFECT.StatusProne"), value: true});
+                this.dialogData.extraDamage = "D6";
             }
         }
         this.dialogData.actions = actions;
@@ -124,22 +129,22 @@ export default class DoDWeaponTest extends DoDSkillTest  {
     formatRollMessage(postRollData) {
         let result = this.formatRollResult(postRollData);
         let locString = this.postRollData.targetActor ? "DoD.roll.weaponRollTarget" : "DoD.roll.weaponRoll";
+        let weapon = postRollData.weapon.name;
+
+        // Add durability info to message
+        if (postRollData.action == "parry" && postRollData.success) {
+            const durability = this.postRollData.weapon.system.durability ?? 0;
+            weapon += `<span class="permission-observer" data-actor-id="${this.postRollData.actor.uuid}" style="font-weight:normal;"> (${game.i18n.localize("DoD.weapon.durability")} ${durability})</span>`;
+        }
+
         let label = game.i18n.format(game.i18n.localize(locString), 
             {
                 action: game.i18n.localize("DoD.attackTypes." + postRollData.action),
-                skill: postRollData.weapon.name, 
+                skill: weapon, 
                 result: result,
                 target: this.postRollData.targetActor?.isToken ? this.postRollData.targetActor.token.name : this.postRollData.targetActor?.name
             }
         );
-
-        if (postRollData.action == "parry" && postRollData.success) {
-            if (postRollData.weapon.hasWeaponFeature("shield")) {
-                label += game.i18n.format("DoD.roll.parryShield", {durability: postRollData.weapon.system.durability});
-            } else {
-                label += game.i18n.format("DoD.roll.parryWeapon", {durability: postRollData.weapon.system.durability});
-            }
-        }
 
         return {
             user: game.user.id,

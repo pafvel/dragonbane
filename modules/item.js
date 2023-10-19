@@ -61,15 +61,15 @@ export class DoDItem extends Item {
             let r = new Roll(String(this.system.range), {str: this.actor.system.attributes?.str.value});
             try {
                 await r.evaluate({async: true});
-                this.system.displayRange = r.total;
+                this.system.calculatedRange = r.total;
             } catch {
                 DoD_Utility.WARNING("DoD.WARNING.cannotEvaluateFormula");
                 this.system.range = "";
-                this.system.displayRange = "";    
+                this.system.calculatedRange = "";    
             }
         } else {
             let r = new Roll(String(this.system.range), {str: game.i18n.localize("DoD.attributes.str")});
-            this.system.displayRange = r.formula;
+            this.system.calculatedRange = r.formula;
         }
     }
 
