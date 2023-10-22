@@ -1,5 +1,11 @@
 # Change Log
 
+## Version 1.5.1
+- Fix for Monster Defend not working.
+- Fix for decks going out of sync if there were drawn cards when the draw deck is re-imported.
+- Removed bonus when making ranged attack on prone target.
+- Added Spanish localization (contribution by Tarot).
+
 ## Version 1.5.0
 
 - Combat
