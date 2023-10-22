@@ -102,7 +102,7 @@ export default class DoDTest {
         }
 
         let rollTarget = this.skill ? this.skill.name.toLowerCase() : this.attribute.toLowerCase();
-        let rollAttribute = this.skill ? this.skill.system.attribute.toLowerCase() : rollTarget;
+        let rollAttribute = (this.skill && this.skill.system.attribute) ? this.skill.system.attribute.toLowerCase() : rollTarget;
 
         for (let item of this.actor.items.contents) {
             if (item.system.banes?.length) {
