@@ -11,10 +11,12 @@ export class DoDActor extends Actor {
         // If the created actor has items (only applicable to duplicated actors) bypass the new actor creation logic
         if (!data.items?.length)
         {
-            let baseSkills = await DoD_Utility.getBaseSkills();
-            if (baseSkills) {
-                data.items = baseSkills;
-                this.updateSource(data);
+            if (this.type != "monster") {
+                let baseSkills = await DoD_Utility.getBaseSkills();
+                if (baseSkills) {
+                    data.items = baseSkills;
+                    this.updateSource(data);
+                }    
             }
             switch (this.type) {
                 case "character":
@@ -37,6 +39,7 @@ export class DoDActor extends Actor {
                     break;
                 case "monster":
                     this.updateSource({
+                        "system.size": "normal",
                         "prototypeToken.disposition": -1, // Hostile
                         "prototypeToken.bar1.attribute": "hitPoints",
                         "prototypeToken.displayBars": 20, // Hovered by Owner

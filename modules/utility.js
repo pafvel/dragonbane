@@ -55,7 +55,7 @@ export default class DoD_Utility {
 
     static async getBaseSkills() {
         // Get skills from core module compendium
-        /*
+        
         const compendiumName = game.settings.get("dragonbane", "coreModuleCompendium");
         const pack = game.packs.get(compendiumName + "." + compendiumName);
         if (pack) {
@@ -67,7 +67,7 @@ export default class DoD_Utility {
             skills = Array.from(skills);
             return skills.map(skill => skill.toObject());
         }
-        */
+        
        
         // If no compendium, look for skills in the active game
         let skills = game.items.filter(i => i.type == "skill" && (i.system.skillType == "core" || i.system.skillType == "weapon"));
