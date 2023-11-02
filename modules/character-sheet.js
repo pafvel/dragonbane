@@ -279,6 +279,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.hasArmor = equippedArmor || equippedHelmet;
         sheetData.smallItems = smallItems?.sort(DoD_Utility.itemSorter);
         sheetData.memento = memento;
+        sheetData.canEquipItems = game.settings.get("dragonbane", "canEquipItems");
 
         this._updateEncumbrance(sheetData);
 
@@ -299,7 +300,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         // WP widget data
         if (this.actor.type == "character" || this.actor.type == "npc") {
-            sheetData.hasWillpower = sheetData.actor.type == "character" || sheetData.abilities.length > 0 || sheetData.spells.length > 0;
+            sheetData.hasWillpower = sheetData.actor.type != "monster" || sheetData.abilities.length > 0 || sheetData.spells.length > 0;
             if (sheetData.hasWillpower) {
                 sheetData.maxWP = sheetData.actor.system.willPoints.max;
                 sheetData.currentWP = sheetData.actor.system.willPoints.value;
@@ -729,6 +730,28 @@ export default class DoDCharacterSheet extends ActorSheet {
         event.currentTarget.blur();
 
         if (element.type == "checkbox") {
+
+            // Handle wearing armor, helmet and weapons
+            if (field == "system.worn" && element.checked) {
+                if (item.type == "weapon" && !item.hasWeaponFeature("unarmed")) {
+                    const actorData = await this.getData();
+                    if (!actorData.canEquipWeapon) {
+                        element.checked = false;
+                        DoD_Utility.WARNING("DoD.WARNING.maxWeaponsEquipped");
+                        return;
+                    }
+                } else if (item.type=="armor" && this.actor.system.equippedArmor) {
+                    await this.actor.system.equippedArmor.update({
+                        ["system.worn"]: true,
+                        ["system.memento"]: false
+                    });
+                } else if (item.type=="helmet" && this.actor.system.equippedHelmet) {
+                    await this.actor.system.equippedHelmet.update({
+                        ["system.worn"]: true,
+                        ["system.memento"]: false
+                    });
+                }                    
+            }
 
             // Handle equipping & unequipping weapons
             if (field == "system.mainHand" || field == "system.offHand") {

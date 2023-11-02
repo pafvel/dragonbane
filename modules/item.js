@@ -81,7 +81,7 @@ export class DoDItem extends Item {
     }
 
     get totalWeight() {
-        return this.system.weight * this.system.quantity;
+        return this.system.worn ? 0 : this.system.weight * this.system.quantity;
     }
 
     get displayWeight() {

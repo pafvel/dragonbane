@@ -11,6 +11,13 @@
                         </button>                        
                     </th>
                     <th class="text-header">{{localize "DoD.ui.character-sheet.equipped-weapon"}}</th>
+                    {{#if canEquipItems}}
+                    <th class="checkbox-header">
+                        <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
+                            <span class="fa-solid fa-shirt"></span>
+                        </label>
+                    </th>
+                    {{/if}}
                     <th></th>
                 </tr>
                 {{#if equippedWeapons}}
@@ -23,6 +30,11 @@
                     <td class="text-data">
                         <a class="item-edit">{{weapon.displayName}}</a>
                     </td>
+                    {{#if ../canEquipItems}}
+                    <td class="checkbox-data">
+                        <input class="inline-edit" data-field="system.worn"  type="checkbox" {{checked weapon.system.worn}} />
+                    </td>
+                    {{/if}}
                     <td class="icon-data">
                         <a class="item-delete" data-type="weapon">
                             <i class="fas fa-trash"></i>
@@ -52,6 +64,13 @@
                     <th class="text-header">
                         {{localize "DoD.ui.character-sheet.equipped-armor"}}
                     </th>
+                    {{#if canEquipItems}}
+                    <th class="checkbox-header">
+                        <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
+                            <span class="fa-solid fa-shirt"></span>
+                        </label>
+                    </th>
+                    {{/if}}
                     <th></th>
                 </tr>
                 {{#if equippedArmor}}
@@ -63,6 +82,11 @@
                     <td class="text-data">
                         <a class="item-edit">{{equippedArmor.displayName}}</a>
                     </td>
+                    {{#if canEquipItems}}
+                    <td class="checkbox-data">
+                        <input class="inline-edit" data-field="system.worn"  type="checkbox" {{checked equippedArmor.system.worn}} />
+                    </td>
+                    {{/if}}
                     <td class="icon-data">
                         <a class="item-delete" data-type="armor">
                             <i class="fas fa-trash"></i>
@@ -91,6 +115,13 @@
                     <th class="text-header">
                         {{localize "DoD.ui.character-sheet.equipped-helmet"}}
                     </th>
+                    {{#if canEquipItems}}
+                    <th class="checkbox-header">
+                        <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
+                            <span class="fa-solid fa-shirt"></span>
+                        </label>
+                    </th>
+                    {{/if}}
                     <th></th>
                 </tr>
                 {{#if equippedHelmet}}
@@ -102,6 +133,11 @@
                     <td class="text-data">
                         <a class="item-edit">{{equippedHelmet.displayName}}</a>
                     </td>
+                    {{#if canEquipItems}}
+                    <td class="checkbox-data">
+                        <input class="inline-edit" data-field="system.worn"  type="checkbox" {{checked equippedHelmet.system.worn}} />
+                    </td>
+                    {{/if}}
                     <td class="icon-data">
                         <a class="item-delete" data-type="helmet">
                             <i class="fas fa-trash"></i>
@@ -167,6 +203,13 @@
                     <th class="text-header">
                         {{localize "DoD.ui.character-sheet.inventory"}}
                     </th>
+                    {{#if canEquipItems}}
+                    <th class="checkbox-header">
+                        <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
+                            <span class="fa-solid fa-shirt"></span>
+                        </label>
+                    </th>
+                    {{/if}}
                     <th class="number-header">
                         {{localize "DoD.gear.weight"}}
                     </th>
@@ -183,6 +226,11 @@
                     <td class="text-data">
                         <a class="item-edit">{{item.displayName}}</a>
                     </td>
+                    {{#if ../canEquipItems}}
+                    <td class="checkbox-data">
+                        <input class="inline-edit" data-field="system.worn"  type="checkbox" {{checked item.system.worn}} />
+                    </td>
+                    {{/if}}
                     <td class="number-data">
                         <a>{{item.displayWeight}}</a>
                     </td>
@@ -212,6 +260,13 @@
                     <th class="text-header">
                         {{localize "DoD.ui.character-sheet.memento"}}
                     </th>
+                    {{#if canEquipItems}}
+                    <th class="checkbox-header">
+                        <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
+                            <span class="fa-solid fa-shirt"></span>
+                        </label>
+                    </th>
+                    {{/if}}
                     <th></th>
                 </tr>
                 {{#if memento}}
@@ -223,6 +278,11 @@
                     <td class="text-data">
                         <a class="item-edit">{{memento.displayName}}</a>
                     </td>
+                    {{#if canEquipItems}}
+                    <td class="checkbox-data">
+                        <input class="inline-edit" data-field="system.worn"  type="checkbox" {{checked item.system.worn}} />
+                    </td>
+                    {{/if}}
                     <td class="icon-data">
                         <a class="item-delete" data-type="helmet">
                             <i class="fas fa-trash"></i>
@@ -248,6 +308,13 @@
                     <th class="text-header">
                         {{localize "DoD.ui.character-sheet.tiny-items"}}
                     </th>
+                    {{#if canEquipItems}}
+                    <th class="checkbox-header">
+                        <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
+                            <span class="fa-solid fa-shirt"></span>
+                        </label>
+                    </th>
+                    {{/if}}
                     <th></th>
                 </tr>
                 {{#if smallItems}}
@@ -260,6 +327,11 @@
                     <td class="text-data">
                         <a class="item-edit">{{item.displayName}}</a>
                     </td>
+                    {{#if ../canEquipItems}}
+                    <td class="checkbox-data">
+                        <input class="inline-edit" data-field="system.worn"  type="checkbox" {{checked item.system.worn}} />
+                    </td>
+                    {{/if}}
                     <td class="icon-data">
                         <a class="item-delete" data-type="spell">
                             <i class="fas fa-trash"></i>
