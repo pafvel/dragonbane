@@ -498,7 +498,7 @@ export async function inflictDamageMessage(damageData) {
     let isHealing = false;
     if (formula[0] == "-") {
         isHealing = true;
-        formula = formula.substr(1).replaceAll("-", "");
+        formula = formula.substr(1);
     }
 
     // Add "1" in front of D to make sure the first roll term is a Die.
