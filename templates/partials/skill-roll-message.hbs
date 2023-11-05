@@ -1,6 +1,6 @@
 {{> "systems/dragonbane/templates/partials/roll.hbs"}}
 
-<div class="permission-owner" data-actor-id="{{actor.uuid}}">
+<div class="permission-owner skill-roll" data-actor-id="{{actor.uuid}}">
 
 {{#if success}}
 
@@ -62,7 +62,11 @@
                 {{#if isMagicCrit }} data-is-magic-crit="{{isMagicCrit}}" {{/if}}
                 {{#if targetActor }} data-target-id="{{targetActor.uuid}}" {{/if}}
                 >
+                {{#if isHealing}}
+                {{localize "DoD.ui.chat.rollHealing"}}
+                {{else}}
                 {{localize "DoD.ui.chat.rollDamage"}}
+                {{/if}}
             </button>
         {{/if}} <!-- isDamaging -->
     {{/if}} <!-- spell -->

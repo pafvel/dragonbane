@@ -45,12 +45,41 @@ export function addChatMessageContextMenuOptions(html, options) {
         }
     }
 
+    const canHealTarget = li =>
+    {
+        const element = li.find(".healing-roll")[0];
+        if (element?.dataset.targetId) {
+            const target = DoD_Utility.getActorFromUUID(element.dataset.targetId);
+            return target?.isOwner;
+        }
+        return false;
+    }
+
+    const healTarget = function(li, multiplier = 1, ignoreArmor = false) {
+        const healingData = {};
+        const element = li.find(".healing-roll")[0];
+
+        healingData.damage = element.dataset.healing;
+        healingData.actor = DoD_Utility.getActorFromUUID(element.dataset.targetId);
+
+        if (healingData.actor.isOwner) {
+            applyHealingMessage(healingData);
+        } else {
+            DoD_Utility.WARNING("DoD.WARNING.noPermissionToModifyActor");
+        }
+    }
+
     const canDealSelectedDamage = li =>
     {
         if(canDealTargetDamage(li)) {
             return false;
         }
-        if (canvas.tokens.controlled.length > 0 && (li.find(".damage-roll").length > 0 || li.find(".dice-total").length > 0)) {
+        
+        if (canvas.tokens.controlled.length == 0 || li.find(".healing-roll").length > 0 || li.find(".skill-roll").length > 0) {
+            return false;
+        }
+
+        if ((li.find(".damage-roll").length > 0 || li.find(".dice-total").length)) {
             for (const token of canvas.tokens.controlled) {
                 if (!token.isOwner) {
                     return false;
@@ -84,7 +113,15 @@ export function addChatMessageContextMenuOptions(html, options) {
 
     const canHealSelectedDamage = li =>
     {
-        if (canvas.tokens.controlled.length > 0 && li.find(".dice-total").length > 0 && li.find(".damage-roll").length == 0) {
+        if (canHealTarget(li)) {
+            return false;
+        }
+
+        if (canvas.tokens.controlled.length == 0 || li.find(".damage-roll").length > 0 || li.find(".skill-roll").length > 0) {
+            return false;
+        }
+
+        if (li.find(".healing-roll").length > 0 || li.find(".dice-total").length > 0) {
             for (const token of canvas.tokens.controlled) {
                 if (!token.isOwner) {
                     return false;
@@ -179,6 +216,12 @@ export function addChatMessageContextMenuOptions(html, options) {
             icon: '<i class="fas fa-user-minus"></i>',
             condition: canDealSelectedDamage,
             callback: li => dealSelectedDamage(li, 1, true)
+        },
+        {
+            name: game.i18n.format("DoD.ui.chat.healTarget"),
+            icon: '<i class="fas fa-user-plus"></i>',
+            condition: canHealTarget,
+            callback: li => healTarget(li)
         },
         {
             name: game.i18n.format("DoD.ui.chat.healSelectedDamage"),
@@ -449,8 +492,16 @@ function onPushRoll(event) {
 
 export async function inflictDamageMessage(damageData) {
   
-    // Add "1" in front of D to make sure the first roll term is a Die.
+
     let formula = damageData.damage;
+
+    let isHealing = false;
+    if (formula[0] == "-") {
+        isHealing = true;
+        formula = formula.substr(1).replaceAll("-", "");
+    }
+
+    // Add "1" in front of D to make sure the first roll term is a Die.
     if (formula[0] == "d" || formula[0] == "D") {
         formula = "1" + formula;
     }
@@ -467,7 +518,10 @@ export async function inflictDamageMessage(damageData) {
     await roll.roll({async: true});
 
     const weaponName = damageData.weapon?.name ?? damageData.action;
-    let msg = weaponName ? (damageData.ignoreArmor ? "DoD.roll.damageIgnoreArmor" : "DoD.roll.damageWeapon") : "DoD.roll.damage";
+    let msg = isHealing ? 
+        "DoD.roll.healing" :
+        (weaponName ? (damageData.ignoreArmor ? "DoD.roll.damageIgnoreArmor" : "DoD.roll.damageWeapon") : "DoD.roll.damage");
+
     if (damageData.target) {
         msg += "Target";
     }
@@ -491,7 +545,8 @@ export async function inflictDamageMessage(damageData) {
         total: damageTotal,
         damageType: damageData.damageType,
         ignoreArmor: damageData.ignoreArmor,
-        target: damageData.target
+        target: damageData.target,
+        isHealing: isHealing
     };
     const renderedTemplate = await renderTemplate(template, templateContext);
 

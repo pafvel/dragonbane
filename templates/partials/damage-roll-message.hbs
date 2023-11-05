@@ -1,8 +1,15 @@
+{{#if isHealing}}
+<div class="healing-roll"
+    data-healing="{{total}}"
+    {{#if target}} data-target-id="{{target.uuid}}" {{/if}}
+>
+{{else}}
 <div class="damage-roll"
     data-damage="{{total}}"
     data-damage-type="{{damageType}}"
     {{#if ignoreArmor}} data-ignore-armor="{{ignoreArmor}}" {{/if}}
     {{#if target}} data-target-id="{{target.uuid}}" {{/if}}
 >
+{{/if}}
 {{> "templates/dice/roll.html"}}
 </div>

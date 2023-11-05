@@ -104,6 +104,10 @@ export class DoDItem extends Item {
         return false;
     }
 
+    get isHealing() {
+        return this.isDamaging && this.system.damage[0] == "-";
+    }
+
     hasWeaponFeature(feature) {
         return this.system.features.find(e => e == feature) ? true : false;
     }

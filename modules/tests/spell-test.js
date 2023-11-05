@@ -78,6 +78,7 @@ export default class DoDSpellTest extends DoDSkillTest  {
         }        
 
         this.postRollData.isDamaging = this.spell.isDamaging;
+        this.postRollData.isHealing = this.spell.isHealing;
 
         if (this.postRollData.isDemon) {
             this.postRollData.isMagicMishap = true;
