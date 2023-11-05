@@ -110,15 +110,16 @@ export default class DoDSpellTest extends DoDSkillTest  {
     }    
 
     formatRollMessage(postRollData) {
-        const target = postRollData.skill?.system.value;
+        const target = postRollData.targetActor;
         const result = this.formatRollResult(postRollData);
-        const locString = postRollData.powerLevel > 0 ? "DoD.roll.spellRoll" : "DoD.roll.skillRoll";
+        const locString = postRollData.powerLevel > 0 ? (target ? "DoD.roll.spellRollTarget" : "DoD.roll.spellRoll") : "DoD.roll.skillRoll";
         const label = game.i18n.format(
             game.i18n.localize(locString), 
             {
                 skill: postRollData.spell.name, 
                 spell: postRollData.spell.name, 
                 powerLevel: postRollData.powerLevel,
+                target: postRollData.targetActor?.isToken ? postRollData.targetActor.token.name : postRollData.targetActor?.name,
                 result: result
             }
         );
