@@ -999,6 +999,9 @@ export default class DoDCharacterSheet extends ActorSheet {
                 test = new DoDSkillTest(this.actor, item, options);
             } else if (item.type == "spell") {
                 if (item.system.rank > 0) {
+                    if (this.actor.type == "monster") {
+                        options.autoSuccess = true;
+                    };
                     test = new DoDSpellTest(this.actor, item, options);
                 } else {
                     const use = await new Promise(
@@ -1244,11 +1247,6 @@ export default class DoDCharacterSheet extends ActorSheet {
         const item = await Item.implementation.fromDropData(data);
         const itemData = item.toObject();
         const actorData = await this.getData();
-
-        // Monsters can't have spells
-        if (this.actor.type == "monster" && itemData.type == "spell") {
-            return false;
-        }
 
         // Handle item sorting within the same Actor
         if ( this.actor.uuid === item.parent?.uuid ) {

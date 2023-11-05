@@ -24,7 +24,7 @@ export default class DoDSpellTest extends DoDSkillTest  {
         let options = await this.getRollOptionsFromDialog(title, label);
         if (options.cancelled) return options;
        
-        if (!this.isReRoll) {
+        if (!this.isReRoll && !this.autoSuccess) {
             // Check if the character has enough WP to cast spell
             let powerLevel = this.hasPowerLevel ? 1 : 0;
             if (!this.skipDialog && this.hasPowerLevel) {
@@ -62,23 +62,24 @@ export default class DoDSpellTest extends DoDSkillTest  {
     updatePostRollData() {
         super.updatePostRollData();
 
-        this.postRollData.wpOld = this.postRollData.actor.system.willPoints.value;
-        this.postRollData.wpNew = this.isReRoll ? this.postRollData.wpOld : this.postRollData.actor.system.willPoints.value - this.postRollData.wpCost;
-        if (this.postRollData.wpNew != this.postRollData.wpOld) {
-            // Pay WP cost
-            this.postRollData.actor.update({ ["system.willPoints.value"]: this.postRollData.wpNew});
+        if (this.actor.type != "monster") {
+            this.postRollData.wpOld = this.postRollData.actor.system.willPoints.value;
+            this.postRollData.wpNew = this.isReRoll ? this.postRollData.wpOld : this.postRollData.actor.system.willPoints.value - this.postRollData.wpCost;
+            if (this.postRollData.wpNew != this.postRollData.wpOld) {
+                // Pay WP cost
+                this.postRollData.actor.update({ ["system.willPoints.value"]: this.postRollData.wpNew});
 
-            // Add info to chat card
-            this.postRollData.formulaInfo = 
-            `<div class="permission-observer dice-tooltip" data-actor-id="${this.postRollData.actor.uuid}" style="text-align: left">
-                    <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${this.postRollData.wpOld} <i class="fa-solid fa-arrow-right"></i> ${this.postRollData.wpNew}<br>
-            </div>`;
-        }
-        
+                // Add info to chat card
+                this.postRollData.formulaInfo = 
+                `<div class="permission-observer dice-tooltip" data-actor-id="${this.postRollData.actor.uuid}" style="text-align: left">
+                        <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${this.postRollData.wpOld} <i class="fa-solid fa-arrow-right"></i> ${this.postRollData.wpNew}<br>
+                </div>`;
+            }
+        }        
 
         this.postRollData.isDamaging = this.spell.isDamaging;
 
-        if (this.postRollData.result == 20) {
+        if (this.postRollData.isDemon) {
             this.postRollData.isMagicMishap = true;
             const table = DoD_Utility.findSystemTable("magicMishapTable", game.i18n.localize("DoD.tables.mishapMagic"));
             if (table) {
@@ -89,7 +90,7 @@ export default class DoDSpellTest extends DoDSkillTest  {
 
         }
 
-        if (this.postRollData.result == 1) {
+        if (this.postRollData.isDragon) {
             this.postRollData.isMagicCrit = true;
             this.postRollData.magicCritGroup = "magicCritChoice"
             this.postRollData.magicCritChoices = {};            

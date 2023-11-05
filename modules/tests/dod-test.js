@@ -12,6 +12,7 @@ export default class DoDTest {
         this.noBanesBoons = options?.noBanesBoons;
         this.defaultBanesBoons = options?.defaultBanesBoons;
         this.skipDialog = options?.skipDialog || this.noBanesBoons || this.defaultBanesBoons;
+        this.autoSuccess = options?.autoSuccess;
     }
 
     async roll() {
@@ -41,7 +42,9 @@ export default class DoDTest {
                 messageData.content = renderedMessage
             }
         }
+        if (this.autoSuccess && game.dice3d) game.dice3d.messageHookDisabled = true;
         this.rollMessage = await this.roll.toMessage(messageData);
+        if (this.autoSuccess && game.dice3d) game.dice3d.messageHookDisabled = false;
         return this;
     }
 
@@ -54,6 +57,7 @@ export default class DoDTest {
         this.preRollData.rollType = this.constructor.name;
         this.preRollData.banes = (this.options.banes ? this.options.banes.length : 0) + (this.options.extraBanes ? this.options.extraBanes : 0);
         this.preRollData.boons = (this.options.boons ? this.options.boons.length : 0) + (this.options.extraBoons ? this.options.extraBoons : 0);
+        this.preRollData.autoSuccess = this.autoSuccess;
     }
 
     updatePostRollData() {
@@ -90,7 +94,7 @@ export default class DoDTest {
 
     updateDialogData() {
 
-        if (this.noBanesBoons) {
+        if (this.noBanesBoons || this.autoSuccess) {
             return;
         }
 
@@ -234,7 +238,7 @@ export default class DoDTest {
         } else if (postRollData.isDemon) {
             return game.i18n.localize("DoD.roll.demon");
         } else {
-            return postRollData.result <= postRollData.target ? game.i18n.localize("DoD.roll.success") : game.i18n.localize("DoD.roll.failure");
+            return postRollData.success ? game.i18n.localize("DoD.roll.success") : game.i18n.localize("DoD.roll.failure");
         }
 
     }
