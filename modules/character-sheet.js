@@ -1028,25 +1028,27 @@ export default class DoDCharacterSheet extends ActorSheet {
                         }
                     );
                     if (use) {
-                        if (this.actor.system.willPoints.value < 1) {
+                        if (this.actor.type != "monster" && this.actor.system.willPoints.value < 1) {
                             DoD_Utility.WARNING("DoD.WARNING.notEnoughWPForSpell");
                             return;
                         } else {
-                            const oldWP = this.actor.system.willPoints.value;
-                            const newWP = oldWP - 1;
-                            await this.actor.update({"system.willPoints.value": newWP});
                             let content = "<p>" + game.i18n.format("DoD.ui.chat.castMagicTrick", {
                                 actor: this.actor.name,
                                 spell: item.name,
                                 uuid: item.uuid
                             }) + "</p>";
-                            content +=
-                            `<div class="damage-details permission-observer" data-actor-id="${this.actor.uuid}">
-                                <i class="fa-solid fa-circle-info"></i>
-                                <div class="expandable" style="text-align: left; margin-left: 0.5em">
-                                    <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${oldWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>
-                                </div>
-                            </div>`;
+                            if (this.actor.type != "monster") {
+                                const oldWP = this.actor.system.willPoints.value;
+                                const newWP = oldWP - 1;
+                                await this.actor.update({"system.willPoints.value": newWP});
+                                content +=
+                                `<div class="damage-details permission-observer" data-actor-id="${this.actor.uuid}">
+                                    <i class="fa-solid fa-circle-info"></i>
+                                    <div class="expandable" style="text-align: left; margin-left: 0.5em">
+                                        <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${oldWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>
+                                    </div>
+                                </div>`;
+                            }
 
                             ChatMessage.create({
                                 content: content,
