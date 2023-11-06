@@ -288,11 +288,13 @@ Hooks.on("renderChatLog", DoDChat.addChatListeners);
 Hooks.on("getChatLogEntryContext", DoDChat.addChatMessageContextMenuOptions);
 Hooks.on("renderChatMessage", DoDChat.hideChatPermissions);
 
-Hooks.on("renderJournalPageSheet", (obj, html, data) => {
-    html.on('click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
-    html.on("click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);
-    html.on("click", ".treasure-roll", DoDChat.onTreasureRoll);
-});
+for (const sheet of ["ActorSheet", "ItemSheet", "JournalPageSheet"]) {
+    Hooks.on(`render${sheet}`, (app, html, options) => {
+        html.on('click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
+        html.on("click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);
+        html.on("click", ".treasure-roll", DoDChat.onTreasureRoll);
+    });
+}
 
 Hooks.on("dropActorSheetData", DoDCharacterSheet._onDropTable);
 
