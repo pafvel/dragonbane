@@ -1,5 +1,25 @@
 # Change Log
 
+## Version 1.6.0
+- Characters & NPCs
+    - Characters can equip any gear.
+        - Enable this feature using the Equip Items setting.
+        - Equipped gear does not contribute towards encumbrance.
+    - Newly created Characters & NPCs get their skills from the currently active core module
+        - If no core module is active, they get skills from the world as before.
+- Monsters
+    - Monsters can receive and cast spells and magic tricks.
+        - Monsters always succeed when casting spells.
+    - Monsters don't get any skills on creation
+        - Skills can be added manually, as usual
+- Spells
+    - Spells can heal using negative damage
+        - If the spell's damage starts with a "-" sign, it's a healing spell
+    - Spell targets are announced in chat messages.
+    - Added WP change info in chat message for magic tricks.
+- Miscellaneous
+    - Added listeners so that [[/damage \<formula\>]] works in item and actor descriptions.
+
 ## Version 1.5.1
 - Fix for Monster Defend not working.
 - Fix for decks going out of sync if there were drawn cards when the draw deck is re-imported.
