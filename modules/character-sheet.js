@@ -366,9 +366,24 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".death-rolls-failure-label").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
             html.find("[data-action='roll-deathRoll']").click(this._onDeathRoll.bind(this))
 
-            html.find(".rest-round").on("click", this._onRestRound.bind(this));
-            html.find(".rest-stretch").on("click", this._onRestStretch.bind(this));
+            let restRoundButton = html.find(".rest-round");
+            if (this.actor.system.canRestRound == false) {
+                restRoundButton[0].disabled = true;
+            } else {
+                restRoundButton[0].disabled = false;
+                restRoundButton.on("click", this._onRestRound.bind(this));
+            }
+
+            let restStretchButton = html.find(".rest-stretch");
+            if (this.actor.system.canRestStretch == false) {
+                restStretchButton[0].disabled = true;
+            } else {
+                restStretchButton[0].disabled = false;
+                restStretchButton.on("click", this._onRestStretch.bind(this));
+            }
+            
             html.find(".rest-shift").on("click", this._onRestShift.bind(this));
+            html.find(".rest-reset").on("click", this._onRestReset.bind(this));
 
             html.find(".item-create").click(this._onItemCreate.bind(this));
 
@@ -550,6 +565,10 @@ export default class DoDCharacterSheet extends ActorSheet {
         event.preventDefault();
         event.currentTarget?.blur();
 
+        await this.actor.update({["system.canRestRound"]: false});   
+
+        this.actor.system.canRestRound = false;
+
         const roll = await new Roll("D6").roll({async: true});
         const currentWP = this.actor.system.willPoints.value;
         const maxWP = this.actor.system.willPoints.max;
@@ -589,6 +608,8 @@ export default class DoDCharacterSheet extends ActorSheet {
     async _onRestStretch(event) {
         event.preventDefault();
         event.currentTarget?.blur();
+
+        await this.actor.update({["system.canRestStretch"]: false});   
 
         // Make roll
         const roll = await new Roll(`D6[${game.i18n.localize("DoD.secondaryAttributeTypes.hitPoints")}] + D6[${game.i18n.localize("DoD.secondaryAttributeTypes.willPoints")}]`).roll({async: true});
@@ -667,6 +688,11 @@ export default class DoDCharacterSheet extends ActorSheet {
         event.preventDefault();
         event.currentTarget?.blur();
 
+        await this.actor.update({
+            ["system.canRestRound"]: true,
+            ["system.canRestStretch"]: true
+        });   
+
         // Make roll
         const roll = await new Roll("D6[Hit Points] + D6[Willpower Points]").roll({async: true});
 
@@ -705,6 +731,21 @@ export default class DoDCharacterSheet extends ActorSheet {
             ["system.conditions.int.value"]: false,
             ["system.conditions.wil.value"]: false,
             ["system.conditions.cha.value"]: false
+        });
+    }
+
+    async _onRestReset(event) {
+        event.preventDefault();
+        event.currentTarget?.blur();
+
+        await this.actor.update({
+            ["system.canRestRound"]: true,
+            ["system.canRestStretch"]: true
+        });
+
+        ChatMessage.create({
+            user: game.user.id,
+            flavor: game.i18n.format("DoD.ui.character-sheet.restReset", {actor: this.actor.name})
         });
     }
 

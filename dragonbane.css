@@ -184,6 +184,10 @@
   width: 100%;
   height: auto;
 }
+.DoD.sheet.character .rest-actions button:disabled img {
+  opacity: 0.25;
+  width: 90%;
+}
 .DoD.sheet.character .sheet-header {
   top: 4px;
   padding: 8px 8px 0px 8px;
