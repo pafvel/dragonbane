@@ -367,19 +367,23 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find("[data-action='roll-deathRoll']").click(this._onDeathRoll.bind(this))
 
             let restRoundButton = html.find(".rest-round");
-            if (this.actor.system.canRestRound == false) {
-                restRoundButton[0].disabled = true;
-            } else {
-                restRoundButton[0].disabled = false;
-                restRoundButton.on("click", this._onRestRound.bind(this));
+            if (restRoundButton?.length > 0) {
+                if (this.actor.system.canRestRound == false) {
+                    restRoundButton[0].disabled = true;
+                } else {
+                    restRoundButton[0].disabled = false;
+                    restRoundButton.on("click", this._onRestRound.bind(this));
+                }    
             }
 
             let restStretchButton = html.find(".rest-stretch");
-            if (this.actor.system.canRestStretch == false) {
-                restStretchButton[0].disabled = true;
-            } else {
-                restStretchButton[0].disabled = false;
-                restStretchButton.on("click", this._onRestStretch.bind(this));
+            if (restStretchButton?.length > 0) {
+                if (this.actor.system.canRestStretch == false) {
+                    restStretchButton[0].disabled = true;
+                } else {
+                    restStretchButton[0].disabled = false;
+                    restStretchButton.on("click", this._onRestStretch.bind(this));
+                }    
             }
             
             html.find(".rest-shift").on("click", this._onRestShift.bind(this));
