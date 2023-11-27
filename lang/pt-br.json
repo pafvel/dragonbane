@@ -208,6 +208,7 @@
             "attributeRoll": "Teste de atributo para <b>{attribute}</b> <b>{result}</b>",
             "skillRoll": "Teste de perícia para <b>{skill}</b> <b>{result}</b>",
             "spellRoll": "Teste de perícia para <b>{spell}</b> no <b>Nível de Poder {powerLevel}</b> <b>{result}</b>",
+            "spellRollTarget": "<b>{spell}</b> em Nível de Poder <b>{powerLevel}</b> alvejando <b>{target}</b> <b>{result}</b>",
             "weaponRoll": "<b>{action}</b> com <b>{skill}</b> <b>{result}</b>",
             "weaponRollTarget": "<b>{action}</b> com <b>{skill}</b> alvejando <b>{target}</b> <b>{result}</b>",
             "damage": "<b>{actor}</b> infligiu <b>{damage}</b> pontos de <b>{damageType}</b>.",
@@ -216,10 +217,13 @@
             "damageTarget": "<b>{actor}</b> infligiu <b>{damage}</b> pontos de <b>{damageType}</b> em {target}.",
             "damageWeaponTarget": "<b>{actor}</b> infligiu <b>{damage}</b> pontos de <b>{damageType}</b> em {target} usando <b>{weapon}</b>.",
             "damageIgnoreArmorTarget": "<b>{actor}</b> infligiu <b>{damage}</b> pontos de <b>{damageType} em {target} ignorando a armadura</b> usando <b>{weapon}</b>.",
+            "healing": "<b>{actor}</b> cura <b>{damage}</b> HP.",
+            "healingTarget": "<b>{actor}</b> cura <b>{target}</b> em <b>{damage}</b> HP.",
             "pushButtonLabel": "Forçar a rolagem",
             "pushChoiceLabel": "Escolha a condição:",
             "parryWeapon": "<p>Se o dano aparado exceder a durabilidade da sua arma (<b>{durability}</b>), a arma é danificada. Dano perfurante não pode danificar uma arma.</p>",
-            "parryShield": "<p>Se o dano aparado exceder a durabilidade do seu escudo (<b>{durability}</b>), o escudo é danificado. Dano perfurante não pode danificar um escudo.</p>"
+            "parryShield": "<p>Se o dano aparado exceder a durabilidade do seu escudo (<b>{durability}</b>), o escudo é danificado. Dano perfurante não pode danificar um escudo.</p>",
+            "deathRoll": "Teste de Morte <b>{result}</b>"
         },
         "secondaryAttributeTypes": {
             "none": "-",
@@ -317,7 +321,8 @@
             "broken": "Quebrado",
             "brokenTooltip": "Indica se a arma está quebrada",
             "mainHandTooltip": "Segurando a arma na mão principal.",
-            "offHandTooltip": "Segurando a arma na mão inábil."
+            "offHandTooltip": "Segurando a arma na mão inábil.",
+            "belowRequiredStr": "Abaixo da FOR"
         },
         "unit": {
             "meterPlural": "metros"
@@ -371,6 +376,7 @@
                 "deathRolls": "Rolagens da Morte",
                 "description": "Descrição",
                 "encumbrance": "Carga",
+                "equipped": "Equipado",
                 "equipped-armor": "Armadura Equipada",
                 "equipped-helmet": "Elmo Equipado",
                 "equipped-weapon": "Armas Equipadas",
@@ -378,11 +384,13 @@
                 "ferocity": "Ferocidade",
                 "gear": "Equipamento",
                 "heroicAbilities": "Habilidades Heróicas",
+                "heroicAbilitiesTooltip": "Adicione Habilidades Heróicas arrastando-as e soltando-as na ficha de personagem",
                 "hitPoints": "Pontos de Vida",
                 "hp": "PV",
                 "inventory": "Inventário",
                 "kin": "Ascendência",
                 "kinAbilities": "Habilidades de Ascendência",
+                "kinAbilitiesTooltip": "As habilidades de Ascendência são determinadas pela Ascendência do personagem",
                 "main": "Principal",
                 "max-encumbrance": "Carga Máx",
                 "memento": "Recordação",
@@ -395,12 +403,14 @@
                 "notes": "Notas",
                 "profession": "Profissão",
                 "professionAbilities": "Habilidades de Profissão",
+                "professionAbilitiesTooltip": "As habilidades de Profissão são determinadas pela Profissão do personagem",
                 "restRound": "Descanso de Rodada: <b>{actor}</b> descansa uma rodada e recupera <b>{wp}</b> FV.",
                 "restRoundTooltip": "Descanso de Rodada\rUm descanso rápido que dura uma única rodada.\rDurante uma rodada de descanso, você recupera D6 FV.\rVocê só pode ter uma rodada de descanso uma vez por Turno.",
                 "restStretch": "Descanso de Intervalo: <b>{actor}</b> descansa por um Intervalo e recupera <b>{hp}</b> PV, <b>{wp}</b> FV e <b>uma condição de sua escolha</b>.<br>Você pode usar sua Recordação para recuperar uma condição adicional.",
                 "restStretchTooltip": "Descanso de Intervalo\rDescanse por um Intervalo e cure D6 PV, D6 FV e uma condição de sua escolha.\rVocê pode usar sua Recordação para recuperar uma condição adicional.\rVocê só pode ter um descanso de Intervalo uma vez por Turno.",
                 "restShift": "Descanso de Turno: <b>{actor}</b> descansa um turno e cura <b>{hp}</b> PV, <b>{wp}</b> FV e todas as condições.",
                 "restShiftTooltip": "Descanso de Turno\rDescanse um turno inteiro e cure todo o PV, FV e condições",
+                "rollDeathRoll": "Rolar Teste de Morte",
                 "school": "Escola de Magia",
                 "secondarySkills": "Perícias Secundárias",
                 "size": "Tamanho",
@@ -416,13 +426,16 @@
                 "weapons": "Armas",
                 "weaponSkills": "Perícias com Armas",
                 "willPoints": "Força de Vontade",
+                "worn": "Desgastado",
                 "wp": "FV"
             },
             "chat": {
                 "damageApplied": "<b>{damage} dano</b> aplicado a <b>{actor}</b>.",
                 "damageAppliedDetails": "{damage} dano vs {armor} classe de armadura.",
                 "damageAppliedMultiplier": "x{multiplier} multiplicador.",
+                "healingApplied": "<b>{actor}</b> cura <b>{damage}</b> HP.",
                 "rollDamage": "Rolar Dano",
+                "rollHealing": "Rolar Cura",
                 "dealDamage": "Causar dano",
                 "dealHalfDamage": "Causar metade do dano",
                 "dealDoubleDamage": "Causar dobro do dano",
@@ -431,13 +444,23 @@
                 "dealSelectedHalfDamage": "Causar metade do dano (selecionado)",
                 "dealSelectedDoubleDamage": "Causar dobro do dano (selecionado)",
                 "dealSelectedDamageIgnoreArmor": "Causar dano, sem armadura (selecionado)",
+                "healSelectedDamage": "Curar Dano (selected)",
+                "healTarget": "Curar Dano",
+                "undoDamage": "Desfazer Dano",
                 "choose": "Escolher",
                 "takeCondition": "{actor} torna-se {condition}.",
                 "treasureCard": "1 Carta de Tesouro",
                 "treasureCards": "{count} Cartas de Tesouro",
                 "failedDeathRoll": "{actor} falhou em uma jogada de morte devido a receber dano em 0 PV.",
                 "characterDied": "{actor} morreu.",
-                "characterProne": "{actor} atingiu 0 PV e caiu no chão."
+                "characterDiedInstantly": "<b>{actor}</b> morreu instantaneamente.",
+                "characterSurvived": "<b>{actor}</b> escapou da morte e recupera [[/roll D6]] PV.",
+                "characterProne": "{actor} atingiu 0 PV e caiu no chão.",
+                "castMagicTrick": "<b>{actor}</b> lança <b>{spell}</b>.",
+                "damageDetailDamage": "Dano",
+                "damageDetailArmor": "Armadura",
+                "damageDetailMultiplier": "Multiplicador",
+                "damageDetailTotal": "Dano total"
             },
             "dialog": {
                 "banes": "Desgraças",
@@ -460,15 +483,29 @@
                 "useAbility": "Ativar habilidade",
                 "useAbilityWithWP": "Gastar <b>{wp}</b> FV para usar <b>{ability}</b>?",
                 "useAbilityWithoutWP": "Usar <b>{ability}</b>?",
-                "weaponFeatures": "Características de Arma"
+                "weaponFeatures": "Características de Arma",
+                "castMagicTrickTitle": "Lançar Truque Mágico",
+                "castMagicTrickContent": "Gastar <b>1</b> FV para lançar <b>{spell}</b>?",
+                "deleteItemTitle": "Apagar {item}",
+                "deleteItemContent": "Você quer apagar <b>{item}</b>?"
             }
         },
         "INFO": {
             "professionSkillAdded": "Perícia de profissão adicionada: {skill}"
         },
         "SETTINGS": {
+            "automateNpcDeath": "Automatizar a morte dos PNJs",
+            "automateNpcDeathHint": "Se selecionada, marca automaticamente os PNJs como mortos quando eles atingem 0 PV.",
+            "automateMonsterDeath": "Automatizar a morte de Monstros",
+            "automateMonsterDeathHint": "Se selecionada, marca automaticamente os Monstros como mortos quando eles atingem 0 PV.",
+            "automateCharacterDeath": "Automatizar a morte dos Personagens",
+            "automateCharacterDeathHint": "Se selecionada, marca automaticamente os personagens como mortos quando eles falham em 3 testes de morte ou são mortos instantaneamente por dano excessivo.",
+            "canEquipItems": "Equipar Itens",
+            "canEquipItemsHint": "Se selecionada, todos os itens do inventário de um personagem poderão ser equipados. Itens equipados não contam para Carga.",
             "keepOwnershipOnImport": "Mantenha as permissões ao importar aventura",
-            "keepOwnershipOnImportHint": "Não substituir as permissões ao importar conteúdo que já existe no mundo."
+            "keepOwnershipOnImportHint": "Não substituir as permissões ao importar conteúdo que já existe no mundo.",
+            "viewDamagePermission": "Permissão para ver Danos",
+            "viewDamagePermissionHint": "Escolha o nível mínimo de permissão que um usuário deve ter para ver a quantidade de dano que um ator sofre."
         },
         "WARNING": {
             "kinAbility": "Não foi possível encontrar a Habilidade de Ascendência: {ability}",

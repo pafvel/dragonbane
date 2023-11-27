@@ -114,7 +114,10 @@
             "none": "Schaden",
             "bludgeoning": "Wuchtschaden",
             "piercing": "Stichschaden",
-            "slashing": "Hiebschaden"
+            "slashing": "Hiebschaden",
+	    "bludgeoningTooltip": "Wuchtschaden",
+            "piercingTooltip": "Stichschaden",
+            "slashingTooltip": "Hiebschaden"
         },
         "dice": {
             "d": "d",
@@ -124,6 +127,17 @@
             "d10": "d10",
             "d12": "d12",
             "d20": "d20"
+        },
+	    "diceSoNice": {
+            "colorGreen": "Dragonbane Grün",
+            "colorGreenTransparent": "Dragonbane Grün (Transparent)",
+            "colorRed": "Dragonbane Rot",
+            "colorRedTransparent": "Dragonbane Rot (Transparent)",
+            "system": "Dragonbane",
+            "textureTransparent": "Dragonbane (Transparent)"
+        },
+        "item": {
+            "new": "Neues Item"
         },
         "gear": {
             "weight": "Gewicht",
@@ -158,6 +172,7 @@
             "grip2h": "2h"
         },
         "helmet": {
+ 	    "new": "Neuer Helm",
             "rating": "Panzerungswert"
         },
         "itemTypes": {
@@ -193,6 +208,7 @@
             "attributeRoll": "Attributswurf für <b>{attribute}</b> <b>{result}</b>",
             "skillRoll": "Fertigkeitswurf für <b>{skill}</b> <b>{result}</b>",
             "spellRoll": "Fertigkeitswurf für <b>{spell}</b> mit <b>Power Level {powerLevel}</b> <b>{result}</b>",
+            "spellRollTarget": "<b>{spell}</b> at Power Level <b>{powerLevel}</b> targeting <b>{target}</b> <b>{result}</b>",
             "weaponRoll": "<b>{action}</b> mit <b>{skill}</b> <b>{result}</b>",
             "weaponRollTarget": "<b>{action}</b> mit <b>{skill}</b> auf <b>{target}</b> <b>{result}</b>",
             "damage": "<b>{actor}</b> verursacht <b>{damage}</b> Punkte <b>{damageType}</b>.",
@@ -201,11 +217,13 @@
             "damageTarget": "<b>{actor}</b> verursacht <b>{damage}</b> Punkte <b>{damageType}</b> an {target}.",
             "damageWeaponTarget": "<b>{actor}</b> verursacht <b>{damage}</b> Punkte <b>{damageType}</b> an {target} mit <b>{weapon}</b>.",
             "damageIgnoreArmorTarget": "<b>{actor}</b> verursacht <b>{damage}</b> Punkte <b>{damageType} an {target} ignoriert Rüstung</b> mit <b>{weapon}</b>.",
+            "healing": "<b>{actor}</b> heals for <b>{damage}</b> HP.",
+            "healingTarget": "<b>{actor}</b> heals <b>{target}</b> for <b>{damage}</b> HP.",
             "pushButtonLabel": "Wurf strapazieren",
             "pushChoiceLabel": "Wähle einen Zustand:",
             "parryWeapon": "<p>Wenn der parierte Schaden die Haltbarkeit deiner Waffe übersteigt (<b>{durability}</b>), ist die Waffe beschädigt. Stichschaden kann eine Waffe nicht beschädigen.</p>",
-            "parryShield": "<p>Wenn der parierte Schaden die Haltbarkeit deines Schildes übersteigt (<b>{durability}</b>), ist der Schild beschädigt. Stichschaden kann einen Schild nicht beschädigen.</p>"
-
+            "parryShield": "<p>Wenn der parierte Schaden die Haltbarkeit deines Schildes übersteigt (<b>{durability}</b>), ist der Schild beschädigt. Stichschaden kann einen Schild nicht beschädigen.</p>",
+ 	    "deathRoll": "Death Roll <b>{result}</b>"
         },
         "secondaryAttributeTypes": {
             "none": "-",
@@ -221,9 +239,18 @@
             "swarm": "Schwarm"
         },
         "skill": {
-            "advance": "Vorteil",
+            "advance": "Fortschritt",
+            "advanceTooltip": "Markiert, dass du einen Fortschrittswurf durchführen darfst",
+            "advancementFail": "Konnte <b>{skill}</b> nicht verbessern.",
+            "advancementSuccess": "<b>{skill}</b> increased from <b>{old}</b> to <b>{new}</b>.",
             "attribute": "Attribut",
-            "type": "Art"
+            "attributeTooltip": "Das Attribut der Fertigkeit",
+            "hide": "Verstecken",
+            "hideTooltip": "Versteckt die Fertigkeit von der Liste der ausgebildeten Fertigkeiten",
+            "markAdvancement": "Markiere Fertigkeit für Fortschritt",
+            "rollAdvancement": "Würfle um die Fertigkeit am Ende der sitzung zu verbessern",
+            "type": "Typ",
+            "typeTooltip": "Der Fertigkeitentyp"
         },
         "skillTypes": {
             "core": "Grundfertigkeit",
@@ -238,7 +265,7 @@
             "damagePerPowerlevel": "Schaden pro Machtstufe",
             "duration": "Dauer",
             "general": "Allgemein",
-            "memorized": "Vorbereited",
+            "memorized": "Vorbereitet",
             "prerequisite": "Voraussetzung",
             "range": "Entfernung",
             "rangeType": "Reichweite",
@@ -273,6 +300,7 @@
             "mishapRanged": "Missgeschick - Fernkampf"
         },
         "weapon": {
+	    "new": "Neue Waffe",
             "grip": "Griff",
             "gripTooltip": "Ob du eine oder zwei Hände brauchst, um die Waffe zu führen.",
             "str": "STÄ",
@@ -290,9 +318,11 @@
             "skill": "Fertigkeiten",
             "skillValue": "Fertigkeit",
             "skillValueTooltip": "Fertigkeitswert bei der Verwendung der Waffe.",
+	    "broken": "Broken",
             "brokenTooltip": "Zeigt an, ob die Waffe beschädigt ist",
             "mainHandTooltip": "Die Waffe wird in der Haupthand geführt.",
-            "offHandTooltip": "Die Waffe wird in der Nebenhand geführt."
+            "offHandTooltip": "Die Waffe wird in der Nebenhand geführt.",
+	    "belowRequiredStr": "Below STR"
         },
         "unit": {
             "meterPlural": "Meter"
@@ -363,12 +393,12 @@
                 "notes": "Notizen",
                 "profession": "Beruf",
                 "professionAbilities": "Berufsfähigkeiten",
-                "restRound": "Runde Rast: <b>{actor}</b> rastet eine Runde und stellt <b>{wp}</b> WP her.",
-                "restRoundTooltip": "Runde Rast\rEine kurze Rast, die nur eine Runde dauert.\rWährend einer Runde Rast erholst du W6 WP zurück.\rDu kannst nur einmal pro Schicht eine Runde Rast einlegen.",
-                "restStretch": "Zeitspanne Rast: <b>{actor}</b> rastet eine Zeitspanne und stellt <b>{hp}</b> TP, <b>{wp}</b> WP her und entfernt <b>einen Zustand nach Wahl</b>.<br>Du kannst dein Memento benutzen, um einen weiteren Zustand zu entfernen.",
-                "restStretchTooltip": "Zeitspanne Rast\rRast für eine Zeitspanne und heilt W6 TP, W6 WP und entfernt einen Zustand deiner Wahl.\rDu kannst dein Memento benutzen, um einen zusätzlichen Zustand zu entfernen.\rDu kannst nur einmal pro Schicht eine Zeitspanne Rast einlegen.",
-                "restShift": "Schicht Rast: <b>{actor}</b> rastet für eine Schicht und heilt <b>{hp}</b> TP, <b>{wp}</b> WP and entfernt alle Zustände.",
-                "restShiftTooltip": "Schicht Rast\rEine Schicht rasten und alle TP, WP zurückerhalten und alle Zustände entfernen",
+                "restRound": "Durchschnaufen: <b>{actor}</b> rastet eine Runde und stellt <b>{wp}</b> WP her.",
+                "restRoundTooltip": "Durchschnaufen\rEine kurze Rast, die nur eine Runde dauert.\rWährend einer Runde Rast erholst du W6 WP zurück.\rDu kannst nur einmal pro Schicht eine Runde Rast einlegen.",
+                "restStretch": "Kurze Rast: <b>{actor}</b> rastet eine Zeitspanne und stellt <b>{hp}</b> TP, <b>{wp}</b> WP her und entfernt <b>einen Zustand nach Wahl</b>.<br>Du kannst dein Memento benutzen, um einen weiteren Zustand zu entfernen.",
+                "restStretchTooltip": "Kurze Rast\rRast für eine Zeitspanne und heilt W6 TP, W6 WP und entfernt einen Zustand deiner Wahl.\rDu kannst dein Memento benutzen, um einen zusätzlichen Zustand zu entfernen.\rDu kannst nur einmal pro Schicht eine Zeitspanne Rast einlegen.",
+                "restShift": "Lange Rast: <b>{actor}</b> rastet für eine Schicht und heilt <b>{hp}</b> TP, <b>{wp}</b> WP and entfernt alle Zustände.",
+                "restShiftTooltip": "Lange Rast\rEine Schicht rasten und alle TP, WP zurückerhalten und alle Zustände entfernen",
                 "school": "Magieschule",
                 "secondarySkills": "Sekundäre Fertigkeiten",
                 "size": "Größe",
