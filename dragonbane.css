@@ -803,6 +803,15 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-spell span {
   color: black;
 }
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-ability h3 {
+  font-size: large;
+  font-weight: normal;
+  text-transform: uppercase;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-ability h3 .content-link {
+  border: 0px solid transparent;
+  background-color: transparent;
+}
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-ability h4 {
   font-size: large;
   font-weight: bold;

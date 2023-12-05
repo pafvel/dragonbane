@@ -300,7 +300,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         // WP widget data
         if (this.actor.type == "character" || this.actor.type == "npc") {
-            sheetData.hasWillpower = sheetData.actor.type != "monster" || sheetData.abilities.length > 0 || sheetData.spells.length > 0;
+            sheetData.hasWillpower = sheetData.actor.type == "character" || sheetData.abilities.length > 0 || sheetData.spells.length > 0;
             if (sheetData.hasWillpower) {
                 sheetData.maxWP = sheetData.actor.system.willPoints.max;
                 sheetData.currentWP = sheetData.actor.system.willPoints.value;

@@ -7,15 +7,32 @@ export async function enrichDisplayAbility (match, options) {
     if (ability) {
         const requirement = ability.system.requirement?.length > 0 ? ability.system.requirement : "-";
         const wp = ability.system.wp ?? "-";
-        let html = `
-        <div class="display-ability">
-            <h4>@UUID[${match[1]}]{${ability.name}}</h4>
-            <ul>
-                <li><b>${game.i18n.localize("DoD.ability.requirement")}: </b><span>${requirement}</span>
-                <li><b>${game.i18n.localize("DoD.ability.wp")}: </b><span>${wp}</span>
-            </ul>
-            ${ability.system.description}
-        </div>`;
+        let html = "";
+        if (options.box) {
+            html += `
+            <blockquote class="info">
+            <div class="display-ability">
+                <h3>@UUID[${match[1]}]{${abilityName}}</h3>
+                <p></p>
+                <ul>`;
+        } else {
+            html += `
+            <div class="display-ability">
+                <h4>@UUID[${match[1]}]{${abilityName}}</h4>
+                <ul>`;
+        }
+        if (ability.system.abilityType != "kin") {
+            html += `
+                    <li><b>${game.i18n.localize("DoD.ability.requirement")}: </b><span>${requirement}</span>`;
+        }
+        html += `
+                    <li><b>${game.i18n.localize("DoD.ability.wp")}: </b><span>${wp}</span>
+                </ul>
+                ${ability.system.description}
+            </div>`;
+        if (options.box) {
+            html += `</blockquote>`;
+        }
         a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
     } else {
         a.dataset.abilityId = match[1];
@@ -25,6 +42,10 @@ export async function enrichDisplayAbility (match, options) {
         a.innerHTML = `<i class="fas fa-unlink"></i> ${abilityName}`;
     }
     return a;
+}
+export async function enrichDisplayAbilityBox (match, options = {}) {
+    options.box = true;
+    return enrichDisplayAbility(match, options);
 }
 
 export async function enrichDisplayMonsterCard (match, options) {
@@ -57,7 +78,7 @@ export async function enrichDisplayMonster (match, options) {
                 </tr>
                 <tr>
                     <td><b>${game.i18n.localize("DoD.ui.character-sheet.size")}: </b>${game.i18n.localize("DoD.sizeTypes." + monster.system.size)}</td>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.armor")}: </b>${monster.system.armor}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.armor")}: </b>${monster.getArmorValue()}</td>
                     <td><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}: </b>${monster.system.hitPoints.max}</td>
                 </tr>
             </table>
@@ -98,7 +119,7 @@ export async function enrichDisplayMonsterDescriptionCard (match, options) {
                 </tr>
                 <tr>
                     <td><b>${game.i18n.localize("DoD.ui.character-sheet.size")}: </b>${game.i18n.localize("DoD.sizeTypes." + monster.system.size)}</td>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.armor")}: </b>${monster.system.armor}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.armor")}: </b>${monster.getArmorValue()}</td>
                     <td><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}: </b>${monster.system.hitPoints.max}</td>
                 </tr>
             </table>
@@ -180,7 +201,7 @@ export async function enrichDisplayNpcCard(match, options) {
                     <div class="flexrow">
                         <div><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}:&nbsp</b>${npc.system.hitPoints.max}</div>`;
         
-        if (npc.hasAbilities) {
+        if (npc.hasAbilities || npc.hasSpells) {
             html += `<div><b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:&nbsp</b>${npc.system.willPoints.max}</div>`;
         }
         html += `

@@ -499,6 +499,10 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
         enricher: DoDJournal.enrichDisplayAbility
     },
     {
+        pattern: /@DisplayAbilityBox\[(.+?)\](?:{(.+?)})?/gm,
+        enricher: DoDJournal.enrichDisplayAbilityBox
+    },
+    {
         pattern: /@DisplayMonster\[(.+?)\](?:{(.+?)})?/gm,
         enricher: DoDJournal.enrichDisplayMonster
     },
