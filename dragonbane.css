@@ -912,6 +912,9 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption .table-roll i {
   color: inherit;
 }
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption h3 {
+  border-bottom: 0px solid transparent;
+}
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table tr {
   color: #4a2407;
   border-bottom: 1px solid #4a2407;
