@@ -195,7 +195,15 @@ function registerSettings() {
         scope: "world",
         config: true,
         default: false,
-        reload: true,
+        type: Boolean
+    });
+    // If true, hides WP gadget if NPC has 0 WP and no spells or abilities
+    game.settings.register("dragonbane", "hideNpcWpWidget", {
+        name: "DoD.SETTINGS.hideNpcWpWidget",
+        hint: "DoD.SETTINGS.hideNpcWpWidgetHint",
+        scope: "world",
+        config: true,
+        default: false,
         type: Boolean
     });
 }

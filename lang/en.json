@@ -386,6 +386,8 @@
                 "heroicAbilities": "Heroic Abilities",
                 "heroicAbilitiesTooltip": "Add Heroic Abilies by dragging and dropping them onto the character sheet",
                 "hitPoints": "Hit Points",
+                "hitPointsCurrent": "Current HP",
+                "hitPointsMax": "Maximum HP",
                 "hp": "HP",
                 "inventory": "Inventory",
                 "kin": "Kin",
@@ -428,6 +430,8 @@
                 "weapons": "Weapons",
                 "weaponSkills": "Weapon Skills",
                 "willPoints": "Willpower Points",
+                "willPointsCurrent": "Current WP",
+                "willPointsMax": "Maximum WP",
                 "worn": "Worn",
                 "wp": "WP"
             },
@@ -493,6 +497,7 @@
             }
         },
         "INFO": {
+            "monsterAttackUpdated": "Updated monster attack table for {actor}.",
             "professionSkillAdded": "Added Profession Skill: {skill}"
         },
         "SETTINGS": {
@@ -504,6 +509,8 @@
             "automateCharacterDeathHint": "If checked, automatically marks Characters as dead when they fail 3 death rolls or get instantly killed by excessive damage.",
             "canEquipItems": "Equip Items",
             "canEquipItemsHint": "If checked, all items in a Character's inventory can be equipped. Equipped items do not count towards Encumbrance.",
+            "hideNpcWpWidget": "Hide NPC Willpower",
+            "hideNpcWpWidgetHint": "Hide NPC Willpower from the NPC sheet if the NPC has zero Willpower and no spells or abilities.",
             "keepOwnershipOnImport": "Keep ownership",
             "keepOwnershipOnImportHint": "Do not overwrite ownership rights when importing adventure content that already exists in the world.",
             "viewDamagePermission": "Permission to see Damage",

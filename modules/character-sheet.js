@@ -300,7 +300,8 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         // WP widget data
         if (this.actor.type == "character" || this.actor.type == "npc") {
-            sheetData.hasWillpower = sheetData.actor.type == "character" || sheetData.abilities.length > 0 || sheetData.spells.length > 0;
+            sheetData.hasWillpower = this.actor.type == "character" || sheetData.actor.system.willPoints.max > 0 || sheetData.abilities.length > 0 || sheetData.spells.length > 0 || !game.settings.get("dragonbane", "hideNpcWpWidget");
+            //sheetData.hasWillpower = sheetData.actor.type != "monster" || sheetData.abilities.length > 0 || sheetData.spells.length > 0;
             if (sheetData.hasWillpower) {
                 sheetData.maxWP = sheetData.actor.system.willPoints.max;
                 sheetData.currentWP = sheetData.actor.system.willPoints.value;
@@ -1292,6 +1293,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
     static async _onDropTable(actor, _sheet, data) {
         if (data.type === "RollTable" && actor.isOwner && actor.type === "monster") {
+            DoD_Utility.INFO("DoD.INFO.monsterAttackUpdated", {actor: actor.name});
             actor.update({ ["system.attackTable"]: data.uuid});
             return false; // Stop
         }

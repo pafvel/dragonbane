@@ -388,6 +388,8 @@
                 "heroicAbilities": "Hjälteförmågor",
                 "heroicAbilitiesTooltip": "Lägg till hjälteförmågor genom att dra och släppa dom på karaktärsarket",
                 "hitPoints": "Kroppspoäng",
+                "hitPointsCurrent": "Antal KP kvar",
+                "hitPointsMax": "Maximalt antal KP",
                 "hp": "KP",
                 "inventory": "Packning",
                 "kin": "Släkte",
@@ -433,6 +435,8 @@
                 "weaponFeatures": "Vapenegenskaper",
                 "weaponSkills": "Vapenfärdigheter",
                 "willPoints": "Viljepoäng",
+                "willPointsCurrent": "Antal VP kvar",
+                "willPointsMax": "Maximalt antal VP",
                 "wp": "VP"
             },
             "chat":{
@@ -497,6 +501,7 @@
            }
         },
         "INFO": {
+            "monsterAttackUpdated": "Uppdaterade monster attacker för {actor}.",
             "professionSkillAdded": "Lade till Yrkesfärdighet: {skill}"
         },
         "SETTINGS": {
@@ -508,6 +513,8 @@
             "automateCharacterDeathHint": "Markera rollpersoner som döda när de misslyckas med 3 dödsslag eller om de dör omedelbart på grund av hög skada.",
             "canEquipItems": "Utrustning till hands",
             "canEquipItemsHint": "Alla sorters utrustning kan vara till hands eller bäras (som t.ex. kläder). Utrustning som är till hands räknas inte som belastning.",
+            "hideNpcWpWidget": "Dölj viljepoäng från SLP-arket",
+            "hideNpcWpWidgetHint": "Dölj viljepoäng från SLP-arket om SLPn har noll viljepoäng och varken har besvärjelser eller förmågor.",
             "keepOwnershipOnImport": "Behåll ägande vid import",
             "keepOwnershipOnImportHint": "Skriv inte över äganderättigheter vid import av innehåll i äventyr som redan finns i världen.",
             "viewDamagePermission": "Rättighet att se skada",
