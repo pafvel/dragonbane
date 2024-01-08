@@ -501,7 +501,7 @@
            }
         },
         "INFO": {
-            "monsterAttackUpdated": "Uppdaterade monster attacker för {actor}.",
+            "monsterAttackUpdated": "Uppdaterade monsterattacker för {actor}.",
             "professionSkillAdded": "Lade till Yrkesfärdighet: {skill}"
         },
         "SETTINGS": {
