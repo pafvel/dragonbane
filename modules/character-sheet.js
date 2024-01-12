@@ -1278,16 +1278,15 @@ export default class DoDCharacterSheet extends ActorSheet {
         await skillItem.update({ "system.advance": false })
     }
 
-    _onConditionClick(event) {
+    async _onConditionClick(event) {
         if (event.target.className == "condition-input") {
-            return; // event has alrady been handled by input element
+            return; // event is handled by input element
         }
-        event.preventDefault();
         const elements = event.currentTarget.getElementsByClassName("condition-input");
         if (elements.length > 0) {
             let name = elements[0].name;
-            name = name.replace("data.", "system.");
-            this.actor.update({[name]: !getProperty(this.actor, name)});
+            await this.actor.update({[name]: !elements[0].checked});
+            event.stopPropagation();
         }
     }
 
