@@ -11,7 +11,7 @@ export async function migrateWorld() {
             let updateData = migrateItemData(item.toObject());
             if (!foundry.utils.isEmpty(updateData)) {
                 console.log(`Migrating Item ${item.name}`);
-                await item.update(updateData);
+                item.update(updateData);
             }
         } catch (err) {
             err.message = `Failed system migration for Item ${item.name}: ${err.message}`;
@@ -22,10 +22,10 @@ export async function migrateWorld() {
     // Migrate World Actors
     for (let actor of game.actors.contents) {
         try {
-          let updateData = await migrateActorData(actor);
+          let updateData = migrateActorData(actor);
           if (!foundry.utils.isEmpty(updateData)) {
             console.log(`Migrating Actor ${actor.name}`);
-            await actor.update(updateData);
+            actor.update(updateData);
           }
         } catch (err) {
           err.message = `Failed system migration for Actor ${actor.name}: ${err.message}`;
@@ -39,7 +39,7 @@ export async function migrateWorld() {
             let updateData = migrateSceneData(scene);
             if (!foundry.utils.isEmpty(updateData)) {
                 console.log(`Migrating Scene ${scene.name}`);
-                await scene.update(updateData);
+                scene.update(updateData);
                 
                 // Clear cached actor data
                 scene.tokens.contents.forEach(t => t._actor = null);
@@ -70,16 +70,16 @@ export async function migrateWorld() {
     console.log("Migration completed");
 }
 
-async function migrateSceneData(scene) {
+function migrateSceneData(scene) {
     let tokensUpdate = [];
 
     for (let token of scene.tokens) {
         const t = token.toJSON();
         if (!t.actorLink) {
             // Migrate unlinked actors
-            const actor = duplicate(t.actorData);
-            actor.type = t.actor?.type;
-            const actorUpdate = migrateActorData(actor);
+            const actorData = duplicate(t.actorData);
+            actorData.type = token.actor?.type;
+            const actorUpdate = migrateActorData(actorData);
             mergeObject(t.actorData, actorUpdate);
         }
         tokensUpdate.push(t);
@@ -87,19 +87,15 @@ async function migrateSceneData(scene) {
     return { tokens: tokensUpdate };
 }
 
-async function migrateActorData(actor) {
+function migrateActorData(actor) {
 
     let updateData = {};
     let itemArray = [];
 
     // migrate from damageBonus.agi to damageBonus.agl
     if (actor?.system?.damageBonus?.agi) {
-        if (actor.system.damageBonus.agi != actor.system.damageBonus.agl) {
-            updateData["system.damageBonus.agl"] = actor.system.damageBonus.agi;
-            console.log(actor.name + ` AGI: ${actor.system.damageBonus.agi} -> AGL: ${actor.system.damageBonus.agl}`);
-        }
-        updateData["system.damageBonus.agi"] = null;
-        console.log("system.damageBonus.agi = null");
+        updateData["system.damageBonus.agl"] = actor.system.damageBonus.agi;
+        updateData["system.damageBonus.-=agi"] = null;
     }
 
     // Migrate Owned Items

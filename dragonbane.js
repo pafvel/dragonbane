@@ -320,9 +320,11 @@ Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
         }
     }
     // Don't update "drawn" status on cards.
-    for (let deck of toUpdate.Cards) {
-        for (let card of deck.cards) {
-            delete card.drawn;
+    if (toUpdate?.Cards) {
+        for (let deck of toUpdate.Cards) {
+            for (let card of deck.cards) {
+                delete card.drawn;
+            }
         }
     }
     return true;
@@ -330,7 +332,7 @@ Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
 
 // Re-generate thumbnails when importing scenes
 Hooks.on('importAdventure', async (created, updated) => {
-    if (created) {
+    if (created?.scenes?.size > 0) {
         console.log("Dragonbane: Re-generating thumbnails for " + created.name);
         created.scenes.forEach(async s => {
             const scene = game.scenes.get(s.id);
