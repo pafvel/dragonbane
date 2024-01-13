@@ -42,6 +42,10 @@ export function rollItemMacro(itemName, itemType, options = {}) {
         return;
     }
 
+    if (game.user.targets.size > 0) {
+        options.targets = Array.from(game.user.targets);
+    }
+
     const items = actor.items.filter(i => i.name == itemName && i.type == itemType);
 
     if (items.length > 1) {
