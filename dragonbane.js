@@ -231,7 +231,7 @@ Hooks.once("init", function () {
 
     game.dragonbane = {
         migrateWorld: DoDMigrate.migrateWorld,
-        //updateSpells: DoDMigrate.updateSpellsOnActors,
+        updateSpells: DoDMigrate.updateSpellsOnActors,
         //updateSkills: DoDMigrate.updateSkillsOnActors,
         //updateItems: DoDMigrate.updateItemsOnActors,
         //updateImages: DoDMigrate.updateItemImagesOnActors,

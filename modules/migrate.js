@@ -201,7 +201,10 @@ async function migrateCompendium(pack) {
         for (const actorSpell of actorSpells) {
             const worldSpell = worldSpells.find(i => i.name == actorSpell.name);
             if (worldSpell) {
-                const template = { system: worldSpell.system, img: "" };
+                let spellTemplate = duplicate(worldSpell.system);
+                delete spellTemplate.memorized;
+                delete spellTemplate.school; // General spells will not update correctly
+                const template = { system: spellTemplate, img: "" };
                 const diff = diffObject(filterObject(actorSpell, template), filterObject(worldSpell, template));
                 if (!isEmpty(diff)) {
                     console.log("Updating spell in " + actor.name + " : " + actorSpell.name);
