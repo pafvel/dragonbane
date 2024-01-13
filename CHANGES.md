@@ -1,5 +1,27 @@
 # Change Log
 
+## Version 1.7.0
+- Characters & NPCs
+    - Added rest tracking and rest reset button on the Character sheet.
+    - The WP box for NPCs will be visible even if the NPC doesn't have have abilities or spells. This was unintentionally added already in version 1.6.0.
+    - Setting for hiding WP box on NPCs when WP is zero and the NPC doesn't have abilities or spells (enabled by default).
+- Journals
+    - Added box style for abilitiy enrichment: @DisplayAbilityBox.
+    - Support for h3 tag in @DisplayTable.
+- Miscellaneous
+    - The rollItem macro now correctly considers targets.
+    - Added helper function to update spells on actors: game.dragonbane.updateSpells(). Running this command in the console will check all spells on actors and overwrite each spell with the first found spell in the world that has the same name. The magic school will not be changed due to localization of the General spell school. Backing up the world before running this command is recommended.
+- Bug fixes
+    - Fix for weapon rolls not working without an active scene.
+    - Fix for incorrect checkbox behavior when wearing memento.
+    - Corrected input validation formula for spell damage.
+    - Gracefully handle missing or incorrect magic school on spells.
+- Updated/added localization
+    - ES by Tarot
+    - GE by @KaiderWeise
+    - PT-BR by Roberto Pedroso | Shaolin
+    - ZH-TW by Marc (YBY)
+
 ## Version 1.6.0
 - Characters & NPCs
     - Characters can equip any gear.
