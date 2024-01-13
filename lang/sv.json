@@ -534,6 +534,7 @@
             "noPermissionToModifyActor": "Saknar behörighet att modifiera karaktären",
             "cannotEvaluateFormula": "Kan ej evaluera formeln",
             "missingMonsterAttackTable": "Saknar tabell för monsterattacker. Dra och släpp en tabell på karaktärsarket.",
+            "missingMagicSchool": "Saknar magiskola för {spell}.",
             "attributeOutOfRange": "Grundegenskaper kan inte ha högre värde än 18 och inte lägre värde än 1.",
             "macroNoActor": "Saknar karaktär att utföra makro med.",
             "macroNoItem": "Saknar föremål för makro. Namn: {item}. Typ: {type}.",

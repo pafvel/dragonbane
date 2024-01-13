@@ -534,6 +534,7 @@
             "macroNoActor": "Missing actor for macro.",
             "macroNoItem": "Missing item for macro. Name: {item}. Type: {type}.",
             "macroMultipleItems": "Multiple items of the same type ({type}) and name ({item}). The first found item will be used by the macro.",
+            "missingMagicSchool": "Missing magic school for {spell}.",
             "noTreasureTable": "Missing treasure table.",
             "noMeleeMishapTable": "Missing the misphap table for melee weapons.",
             "noRangedMishapTable": "Missing the misphap table for ranged weapons.",

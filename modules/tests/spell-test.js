@@ -18,6 +18,10 @@ export default class DoDSpellTest extends DoDSkillTest  {
 
     async getRollOptions() {
 
+        if (!this.skill) {
+            DoD_Utility.WARNING("DoD.WARNING.missingMagicSchool", {spell: this.spell.name});
+            return {cancelled: true};
+        }
         const label = game.i18n.localize("DoD.ui.dialog.skillRollLabel");
         const title = game.i18n.localize("DoD.ui.dialog.skillRollTitle") + ": " + this.spell.name;
 
