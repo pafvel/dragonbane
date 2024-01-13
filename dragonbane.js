@@ -203,7 +203,7 @@ function registerSettings() {
         hint: "DoD.SETTINGS.hideNpcWpWidgetHint",
         scope: "world",
         config: true,
-        default: false,
+        default: true,
         type: Boolean
     });
 }
