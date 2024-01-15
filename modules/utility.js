@@ -107,13 +107,15 @@ export default class DoD_Utility {
         let table = game.tables.find(i => i.name.toLowerCase() == name.toLowerCase()) || fromUuidSync(name);
         if (!table) {
             if (!options?.noWarnings){
-                DoD_Utility.WARNING("DoD.WARNING.tableNotFound", {id: name});
+                console.log(game.i18n.format(game.i18n.localize("DoD.WARNING.tableNotFound"), {id: name}));
+                //DoD_Utility.WARNING("DoD.WARNING.tableNotFound", {id: name});
             }
             return null;    
         }
         if (!table instanceof RollTable) {
             if (!options?.noWarning){
-                DoD_Utility.WARNING("DoD.WARNING.typeMismatch", {id: name});
+                console.log(game.i18n.format(game.i18n.localize("DoD.WARNING.typeMismatch"), {id: name}));
+                //DoD_Utility.WARNING("DoD.WARNING.typeMismatch", {id: name});
             }
             return null;    
         }
