@@ -74,10 +74,10 @@ export async function enrichDisplayMonster (match, options) {
             <table>
                 <tr>
                     <td><b>${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity}</td>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}: </b>${monster.system.movement}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.size")}: </b>${game.i18n.localize("DoD.sizeTypes." + monster.system.size)}</td>
                 </tr>
                 <tr>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.size")}: </b>${game.i18n.localize("DoD.sizeTypes." + monster.system.size)}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}: </b>${monster.system.movement}</td>
                     <td><b>${game.i18n.localize("DoD.ui.character-sheet.armor")}: </b>${monster.getArmorValue()}</td>
                     <td><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}: </b>${monster.system.hitPoints.max}</td>
                 </tr>
@@ -201,7 +201,7 @@ export async function enrichDisplayNpcCard(match, options) {
                     <div class="flexrow">
                         <div><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}:&nbsp</b>${npc.system.hitPoints.max}</div>`;
         
-        if (npc.hasAbilities || npc.hasSpells) {
+        if (npc.hasAbilities || npc.hasSpells || npc.system.willPoints.max > 0) {
             html += `<div><b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:&nbsp</b>${npc.system.willPoints.max}</div>`;
         }
         html += `
@@ -218,6 +218,7 @@ export async function enrichDisplayNpcCard(match, options) {
             return true;
         });
         if (skills.length > 0) {
+            skills.sort(DoD_Utility.nameSorter);
             html += `
                 <tr><td>
                     <div class="flexrow list-row">
