@@ -386,6 +386,8 @@
                 "heroicAbilities": "Talentos Heroicos",
 		"heroicAbilitiesTooltip": "Añade Talentos Heroicos arrastrándolos y soltándolos sobre la hoja de personaje",
                 "hitPoints": "Puntos de Golpe",
+                "hitPointsCurrent": "PG Actuales",
+                "hitPointsMax": "PG Máximos",
                 "hp": "PG",
                 "inventory": "Inventario",
                 "kin": "Especie",
@@ -406,10 +408,12 @@
 		"professionAbilitiesTooltip": "Los Talentos Profesionales son determinados por el OFICIO del personaje",
                 "restRound": "Respiro: <b>{actor}</b> descansa un asalto y recupera <b>{wp}</b> PV.",
                 "restRoundTooltip": "Respiro\rUn descanso rápido que dura un asalto.\rDurante un respiro recuperas D6 PV.\rSólo puedes tomarte un Respiro por cada Jornada.",
-                "restStretch": "Descansar un Rato: <b>{actor}</b> descansas durante un rato (15 min) y recuperas <b>{hp}</b> PG, <b>{wp}</b> PV y eliminas una <b>condición a tu elección/b>.<br>Puedes utilizar tu Recuerdo para recuperarte de una condición adicional.",
+                "restStretch": "Descansar un Rato: <b>{actor}</b> descansa durante un rato (15 min) y recupera <b>{hp}</b> PG, <b>{wp}</b> PV y eliminas una <b>condición a tu elección</b>.<br><b>Recuerda:</b>Puedes utilizar tu Recuerdo para recuperarte de una condición adicional.",
                 "restStretchTooltip": "Descansar un Rato\rDescansa durante un rato (15 min) y recupera D6 PG, D6 PV, y elimina una condición a tu elección.\rPuedes utilizar tu Recuerdo para eliminar una condición adicional.\rSólo puedes descansar un Rato por cada Jornada.",
                 "restShift": "Descansar una Jornada: <b>{actor}</b> descansa una jornada de 6h y recupera <b>{hp}</b> PG, <b>{wp}</b> PV y elimina todas las condiciones.",
                 "restShiftTooltip": "Descansar una Jornada\rDescansa una jornada (6h) para recuperar todos los PG, PV, y eliminar todas las condiciones",
+                "restReset": "Pasa una Jornada de tiempo para <b>{actor}</b>.",
+                "restResetTooltip": "Pasa una Jornada de tiempo\rRestaura el uso de los descansos de Respiro y de un Rato",
                 "rollDeathRoll": "Hacer Tirada de Agonía",
                 "school": "Escuela de Magia",
                 "secondarySkills": "Habilidades Secundarias",
@@ -426,6 +430,8 @@
                 "weapons": "Armas",
                 "weaponSkills": "Habilidades con Armas",
                 "willPoints": "Puntos de Voluntad",
+                "willPointsCurrent": "PV Actuales",
+                "willPointsMax": "PV Máximos",
 		"worn": "Equipado",
                 "wp": "PV"
             },
@@ -491,6 +497,7 @@
             }
         },
         "INFO": {
+            "monsterAttackUpdated": "Tabla de ataque de monstruo actualizada para {actor}.",
             "professionSkillAdded": "Habilidad Profesional Añadida: {skill}"
         },
         "SETTINGS": {
@@ -502,6 +509,8 @@
             "automateCharacterDeathHint": "Si se selecciona, marca automáticamente como muertos a los Personajes que fallen 3 tiradas de Agonía o que reciban daño excesivo.",
 	    "canEquipItems": "Equipar objetos",
             "canEquipItemsHint": "Si se selecciona, todos los objetos del inventario de un personaje podrán ser equipados. Los objetos equipados no cuentan para la Carga.",
+            "hideNpcWpWidget": "Oculta la Voluntad del PNJ",
+            "hideNpcWpWidgetHint": "Oculta la Voluntad del PNJ de la hoja de personaje si tiene Voluntad cero y no posee ni Conjuros ni Talentos.",
             "keepOwnershipOnImport": "Mantener la propiedad al importar la aventura",
             "keepOwnershipOnImportHint": "No sobreescribir los derechos de propiedad al importar contenido que ya existe en el mundo.",
 	    "viewDamagePermission": "Permiso para ver el daño",
@@ -525,6 +534,7 @@
             "macroNoActor": "Falta un actor para esa macro.",
             "macroNoItem": "Falta un objeto para esa macro. Nombre: {item}. Tipo: {type}.",
             "macroMultipleItems": "Múltiples objetos del mismo tipo ({type}) y nombre ({item}). El primer objeto encontrado será utilizado por la macro.",
+            "missingMagicSchool": "Falta una escuela de magia para el conjuro {spell}.",
             "noTreasureTable": "Falta tabla de tesoros.",
             "noMeleeMishapTable": "Falta la tabla de pifias para armas cuerpo a cuerpo.",
             "noRangedMishapTable": "Falta la tabla de pifias para proyectiles.",
