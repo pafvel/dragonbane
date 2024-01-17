@@ -1,5 +1,15 @@
 # Change Log
 
+## Version 1.7.1
+- Journals
+    - Show WP on NPCs in Journals, even if they don't have spells or abilities.
+    - Minor layout change for NPCs in Journals.
+- Localization
+    - Updated ES (by Tarot)
+    - Changed from "zh-TW" to "zh-tw" in order to match with Foundry's localization.
+- Miscellaneous
+    - Changed warning for missing table link to a log message in order to avoid spammin warning messages. This could happen if the upcoming Bestiary is imported without the Core module, for example.
+
 ## Version 1.7.0
 - Characters & NPCs
     - Added rest tracking and rest reset button on the Character sheet.
