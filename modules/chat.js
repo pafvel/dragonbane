@@ -239,6 +239,9 @@ export function addChatMessageContextMenuOptions(html, options) {
 }
 
 export async function onInlineDamageRoll(event) {
+    if (event.detail === 2) { // double-click
+        return;
+    };
     event.stopPropagation();
     event.preventDefault();
 
@@ -266,6 +269,9 @@ export async function onInlineDamageRoll(event) {
     }
 }
 export async function onTreasureRoll(event) {
+    if (event.detail === 2) { // double-click
+        return;
+    };
     event.stopPropagation();
     event.preventDefault();
 
@@ -276,6 +282,9 @@ export async function onTreasureRoll(event) {
 }
 
 async function onWeaponDamageRoll(event) {
+    if (event.detail === 2) { // double-click
+        return;
+    };
     const element = event.currentTarget;
     const actorId = element.dataset.actorId;
     const actor = DoD_Utility.getActorFromUUID(actorId);
@@ -345,6 +354,9 @@ async function onWeaponDamageRoll(event) {
 }
 
 async function onMagicDamageRoll(event) {
+    if (event.detail === 2) { // double-click
+        return;
+    };
     const element = event.currentTarget;
     const actorId = element.dataset.actorId;
     const actor = DoD_Utility.getActorFromUUID(actorId);
@@ -427,7 +439,9 @@ async function onMagicDamageRoll(event) {
 }
 
 function onPushRoll(event) {
-    console.log("onPushRoll");
+    if (event.detail === 2) { // double-click
+        return;
+    };
     const element = event.currentTarget;
     const actorId = element.dataset.actorId;
     const actor = DoD_Utility.getActorFromUUID(actorId);
@@ -492,7 +506,6 @@ function onPushRoll(event) {
 
 export async function inflictDamageMessage(damageData) {
   
-
     let formula = damageData.damage;
 
     let isHealing = false;
