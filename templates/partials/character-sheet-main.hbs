@@ -63,7 +63,7 @@
         <div class="text-box">
             <table>
                 <tr>
-                    <th><b>{{localize "DoD.ui.character-sheet.trained-skills"}}</b></th>
+                    <th title="{{localize "DoD.ui.character-sheet.trained-skillsTooltip"}}"><b>{{localize "DoD.ui.character-sheet.trained-skills"}}</b></th>
                     <td class="comma-list item-list">
                         {{#each trainedSkills as |skill skillId|}}
                         <a class="rollable-skill sheet-table-data item" data-item-id="{{skill.id}}">{{skill.name}} {{skill.system.value}}</a>
@@ -72,7 +72,7 @@
                 </tr>
                 {{#if spells}}
                 <tr>
-                    <th><b>{{localize "DoD.ui.character-sheet.spells"}}</b></th>
+                    <th title="{{localize "DoD.ui.character-sheet.spellsTooltip"}}"><b>{{localize "DoD.ui.character-sheet.spells"}}</b></th>
                     <td class="comma-list item-list">
                         {{#each memorizedSpells as |spell spellId|}}
                         <a class="rollable-skill sheet-table-data item" data-item-id="{{spell.id}}">
@@ -87,7 +87,7 @@
                 </tr>
                 {{/if}}
                 <tr>
-                    <th><b>{{localize "DoD.ui.character-sheet.abilities"}}</b></th>
+                    <th title="{{localize "DoD.ui.character-sheet.abilitiesTooltip"}}"><b>{{localize "DoD.ui.character-sheet.abilities"}}</b></th>
                     <td class="comma-list item-list">
                         {{#each abilities as |ability abilityId|}}
                         <a class="sheet-table-data use-item item" data-item-id="{{ability.id}}">{{ability.name}}</a>
@@ -102,7 +102,7 @@
             <tr class="sheet-table-header">
                 <th>&nbsp</th>
                 <th>&nbsp</th>
-                <th class="text-header">{{localize "DoD.ui.character-sheet.weapons"}}</th>
+                <th class="text-header" title="{{localize "DoD.ui.character-sheet.equipped-weapon"}}">{{localize "DoD.ui.character-sheet.weapons"}}</th>
                 <th class="number-header" title="{{localize "DoD.weapon.skillValueTooltip"}}">{{localize "DoD.weapon.skillValue"}}</th>
                 <th class="number-header" title="{{localize "DoD.weapon.gripTooltip"}}">{{localize "DoD.weapon.grip"}}</th>
                 <th class="thumbnail-header">

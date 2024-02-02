@@ -989,6 +989,9 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info p:first-of-type {
   padding-top: 16px;
 }
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info p:last-of-type {
+  margin-bottom: 16px;
+}
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info table {
   margin-left: 1em;
 }
