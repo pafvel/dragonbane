@@ -698,9 +698,6 @@ export default class DoDCharacterSheet extends ActorSheet {
             ["system.canRestStretch"]: true
         });   
 
-        // Make roll
-        const roll = await new Roll("D6[Hit Points] + D6[Willpower Points]").roll({async: true});
-
         // Calc HP
         const currentHP = this.actor.system.hitPoints.value;
         const maxHP = this.actor.system.hitPoints.max;
