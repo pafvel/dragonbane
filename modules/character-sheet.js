@@ -1271,7 +1271,9 @@ export default class DoDCharacterSheet extends ActorSheet {
             maxTrainedSkills += 4;
         }
 
-        if (this.actor.system.trainedSkills.length < maxTrainedSkills && skillValue == baseChance) {
+        const advancedSkillsCount = this.actor.system.trainedSkills.filter(skill => skill.system.value > 0).length;
+
+        if (advancedSkillsCount < maxTrainedSkills && (skillValue == baseChance || skillValue == 0)) {
 
             // result: 0 -> Cancel
             // result: 1 -> Mark
