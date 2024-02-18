@@ -181,6 +181,30 @@ export default class DoD_Utility {
         event.stopPropagation();
     }
     
+    static async monsterAttackTable(actor, table)
+    {
+        if (!actor) {
+            return;
+        }
+
+        if (!table) {
+            table = actor.system.attackTable ? fromUuidSync(actor.system.attackTable) : null; 
+            if (!table) {
+                DoD_Utility.WARNING("DoD.WARNING.missingMonsterAttackTable");
+                return;
+            }    
+        }
+
+        let attacks = [];
+        for (let tableResult of table.results) {
+            attacks.push({result: tableResult, skip: tableResult.uuid == actor.system.previousMonsterAttack});
+        }
+        console.log(attacks);
+
+
+        return table.sheet.render(true);
+    }
+
     static async monsterAttack(actor, table) {
 
         if (!actor) {

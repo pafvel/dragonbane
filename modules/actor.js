@@ -631,9 +631,9 @@ export class DoDActor extends Actor {
         const table = t || (this.system.attackTable ? fromUuidSync(this.system.attackTable) : null); 
         if (!table) return null;
 
-        const draw = await table.draw({displayChat: false});
-        const results = draw.results;
-        const roll = draw.roll;
+        let draw = await table.draw({displayChat: false});
+        let results = draw.results;
+        let roll = draw.roll;
 
         if (results[0]) {
             // Monsters never draw the same attack twice in a row - if that happens pick next attack in the table
@@ -654,7 +654,8 @@ export class DoDActor extends Actor {
                     }
                     found = results[0].uuid == tableResult.uuid;
                 }
-                results[0] = newResult;
+                draw = await table.draw({displayChat: false, results: [newResult]});
+                results = draw.results;
             }
             await this.update({["system.previousMonsterAttack"]: results[0].uuid});
         }

@@ -427,7 +427,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         if (event.type == "click") { // left click
             return DoD_Utility.monsterAttack(this.actor, table);
         } else { // right click
-            return table.sheet.render(true);
+            return DoD_Utility.monsterAttackTable(this.actor, table);
         }
     }
 
@@ -575,6 +575,18 @@ export default class DoDCharacterSheet extends ActorSheet {
         this.actor.system.canRestRound = false;
 
         const roll = await new Roll("D6").roll({async: true});
+
+        if (game.dice3d) {
+            // Green for WP
+            roll.dice[0].options.appearance = {
+                name: 'inline green',
+                foreground: '#ffffff',
+                background: '#00a000',
+                edge: '#00a000',
+            };
+        }
+
+
         const currentWP = this.actor.system.willPoints.value;
         const maxWP = this.actor.system.willPoints.max;
         const newWP = Math.min(maxWP, currentWP + roll.total);
