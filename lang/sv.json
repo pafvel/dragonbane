@@ -250,7 +250,7 @@
             "hide": "Dölj",
             "hideTooltip": "Dölj från listan med Färdigheter på karaktärens översiktsflik",
             "markAdvancement": "Sätt förbättringskryss",
-            "rollAdvancement": "Slå förbättringsslag i slutet av spelpasset",
+            "rollAdvancement": "Slå förbättringsslag i slutet av spelpasset.\rHögerklicka för att ta bort markeringen utan att slå förbättringsslag.",
             "type": "Typ",
             "typeTooltip": "Färdighetens typ"
         },
@@ -500,7 +500,11 @@
                 "castMagicTrickTitle": "Utför trolleritrick",
                 "castMagicTrickContent": "Spendera <b>1</b> VP och utför trolleritricket <b>{spell}</b>?",
                 "deleteItemTitle": "Radera {item}",
-                "deleteItemContent": "Vill du radera <b>{item}</b>?"
+                "deleteItemContent": "Vill du radera <b>{item}</b>?",
+                "trainSkillTitle": "Träna färdighet?",
+                "trainSkillContent": "<p>Du satte ett förbättringskryss på <b>{skill}</b>, men antalet förbättrade färdigheter är färre än antalet tränade färdigheter som karaktären kan ha.</p><p>Vill du välja <b>{skill}</b> som en tränad färdighet?</p><p style=\"font-size:smaller\"><b>Anmärkning:</b> Färdigheter tränas genom att sätta färdighetsvärdet till dubbla baschansen. Återställ till baschansen genom att rensa färdighetsvärdet.</p>",
+                "trainLabel": "Träna färdighet",
+                "markLabel": "Förbättringskryss"
            }
         },
         "INFO": {

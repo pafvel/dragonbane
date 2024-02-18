@@ -140,7 +140,15 @@
                 </table>    
             </div>
 
-            {{!-- Inventory --}}
+            {{!-- Encumbrance --}}
+            <table class="derived-stat">
+                <tr>
+                    <th>{{localize "DoD.ui.character-sheet.encumbrance"}}</th>
+                    <td>{{encumbrance}}</td>
+                </tr>
+            </table>
+
+            {{!-- Inventory --}}            
             <table class="sheet-table item-list" data-droptarget="inventory">
                 <tr class="sheet-table-header">
                     <th></th>

@@ -29,12 +29,12 @@ export default class DoDCharacterSheet extends ActorSheet {
             case "character":
                 break;
             case "monster":
-                options.width = 480;
+                options.width = 580;
                 options.height = 670;
                 break;
             case "npc":
-                options.width = 480;
-                options.height = 600;
+                options.width = 580;
+                options.height = 640;
                 break;
             default:
                 break;
@@ -318,13 +318,17 @@ export default class DoDCharacterSheet extends ActorSheet {
             if (sheetData.inventory.find(item => item.system.type == "backpack")) {
                 sheetData.maxEncumbrance += 2;
             }
-            sheetData.encumbrance = 0;
-            if (sheetData.inventory) {
-                sheetData.inventory.forEach(item => sheetData.encumbrance += item.totalWeight);
-            }
+        }
+        sheetData.encumbrance = 0;
+        if (sheetData.inventory) {
+            sheetData.inventory.forEach(item => sheetData.encumbrance += item.totalWeight);
+        }
+        if (sheetData.actor.system.currency) {
             let coins = sheetData.actor.system.currency.gc + sheetData.actor.system.currency.sc + sheetData.actor.system.currency.cc;
-            sheetData.encumbrance += Math.floor(coins/100);
+            sheetData.encumbrance += Math.floor(coins/100);    
+        }
 
+        if (this.actor.type == "character") {
             sheetData.overEncumbered = sheetData.encumbrance > sheetData.maxEncumbrance;
         }
     }
@@ -352,6 +356,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".rollable-damage").on("click contextmenu", this._onDamageRoll.bind(this));
             html.find(".use-item").on("click contextmenu", this._onUseItem.bind(this));
             html.find("[data-action='roll-advancement']").on("click contextmenu", this._onAdvancementRoll.bind(this))
+            html.find(".mark-advancement").on("click", this._onMarkAdvancement.bind(this))
 
             html.find(".hit-points-max-label").change(this._onEditHp.bind(this));
             html.find(".hit-points-current-label").change(this._onEditCurrentHp.bind(this));
@@ -1254,6 +1259,62 @@ export default class DoDCharacterSheet extends ActorSheet {
         let attributeName = event.currentTarget.dataset.attribute;
         let test = new DoDAttributeTest(this.actor, attributeName, options);
         await test.roll();
+    }
+
+    async _onMarkAdvancement(event) {
+        event.preventDefault();
+        const itemId = event.currentTarget.closest("tr").dataset.itemId;
+        const skillItem = this.actor.items.get(itemId);
+        const skillValue = skillItem.system.value;
+        const baseChance = this.actor._getBaseChance(skillItem);
+        let maxTrainedSkills = 8; // young
+        if (this.actor.system.age == "adult") {
+            maxTrainedSkills += 2;
+        } else if (this.actor.system.age == "old") {
+            maxTrainedSkills += 4;
+        }
+
+        if (this.actor.system.trainedSkills.length < maxTrainedSkills && skillValue == baseChance) {
+
+            // result: 0 -> Cancel
+            // result: 1 -> Mark
+            // result: 2 -> Train
+            const result = await new Promise(
+                resolve => {
+                    const data = {
+                        title: game.i18n.localize("DoD.ui.dialog.trainSkillTitle"),
+                        content: game.i18n.format("DoD.ui.dialog.trainSkillContent", {skill: skillItem.name}),
+                        buttons: {
+                            train: {
+                                icon: '<i class="fas fa-check"></i>',
+                                label: game.i18n.localize("DoD.ui.dialog.trainLabel"),
+                                callback: () => resolve(2)
+                            },
+                            mark: {
+                                icon: '<i class="fas fa-times"></i>',
+                                label: game.i18n.localize("DoD.ui.dialog.markLabel"),
+                                callback: html => resolve(1)
+                            }
+                        },
+                        default: "train",
+                        close: () => resolve(0)
+                    };
+                    new Dialog(data, null).render(true);
+                }
+            );
+            switch (result) {
+                case 0: // Cancel
+                    return;
+                case 1: // Mark
+                    await skillItem.update({ "system.advance": true });
+                    return;
+                case 2: // Train
+                    await skillItem.update({ "system.value": baseChance * 2 });
+                    return;
+            }
+        } else {
+            await skillItem.update({ "system.advance": true });
+        }
     }
 
     async _onAdvancementRoll(event) {

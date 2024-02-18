@@ -248,7 +248,7 @@
             "hide": "Hide",
             "hideTooltip": "Hides skill from the list of Skills on the character's main tab",
             "markAdvancement": "Mark skill for advancement",
-            "rollAdvancement": "Roll to advance skill at end of session",
+            "rollAdvancement": "Roll to advance skill at end of session.\rRight-click to remove mark without rolling.",
             "type": "Type",
             "typeTooltip": "The skill's Type"
         },
@@ -496,7 +496,11 @@
                 "castMagicTrickTitle": "Cast Magic Trick",
                 "castMagicTrickContent": "Spend <b>1</b> WP to cast <b>{spell}</b>?",
                 "deleteItemTitle": "Delete {item}",
-                "deleteItemContent": "Do you want to delete <b>{item}</b>?"
+                "deleteItemContent": "Do you want to delete <b>{item}</b>?",
+                "trainSkillTitle": "Train skill?",
+                "trainSkillContent": "<p>You are marking <b>{skill}</b> for improvement, but you have improved fewer skills than your maximum number of trained skills.</p><p>Would you like to select <b>{skill}</b> as one of your trained skills?</p><p style=\"font-size:smaller\"><b>Note:</b> Skills are trained by editing the skill value to twice the base chance. Reset to base chance by deleting the skill value.</p>",
+                "trainLabel": "Train",
+                "markLabel": "Mark"
             }
         },
         "INFO": {
