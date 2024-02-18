@@ -13,13 +13,13 @@
                     <table class="derived-stat">
                         <tr>                            
                             <th>{{localize "DoD.ui.character-sheet.ferocity"}}</th>
-                            <td><input name="system.ferocity" type="text" value="{{data.ferocity}}" data-dtype="Number" /></td>
+                            <td><input name="system.ferocity" type="text" value="{{system.ferocity}}" data-dtype="Number" /></td>
                         </tr>
                         <tr>
                             <th>{{localize "DoD.ui.character-sheet.size"}}</th>
                             <td>
                                 <select name="system.size">
-                                    {{#select data.size}}
+                                    {{#select system.size}}
                                     {{#each config.sizeTypes as |name type|}}
                                     <option value="{{type}}">{{localize name}}</option>
                                     {{/each}}
@@ -29,11 +29,11 @@
                         </tr>
                         <tr>
                             <th>{{localize "DoD.ui.character-sheet.movement"}}</th>
-                            <td><input name="system.movement" type="text" value="{{data.movement}}" data-dtype="Number" /></td>
+                            <td><input name="system.movement" type="text" value="{{system.movement}}" data-dtype="Number" /></td>
                         </tr>
                         <tr>
                             <th>{{localize "DoD.ui.character-sheet.armor"}}</th>
-                            <td><input name="system.armor" type="text" value="{{data.armor}}" data-dtype="Number" /></td>
+                            <td><input name="system.armor" type="text" value="{{system.armor}}" data-dtype="Number" /></td>
                         </tr>
                     </table>
                 </div>
@@ -47,7 +47,7 @@
                         {{localize "DoD.ui.character-sheet.description"}}
                     </label>
                 </div>
-                {{editor data.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
+                {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
             </div>        
             {{/unless}}
         </div>

@@ -21,11 +21,11 @@ export default class DoDItemSheet extends ItemSheet {
             owner: this.item.isOwner,
             editable: this.isEditable,
             item: baseData.item,
-            data: baseData.data.system,
+            system: baseData.data.system,
             config: CONFIG.DoD
         };
 
-        sheetData.data.description = await TextEditor.enrichHTML(sheetData.data.description, { async: true, secrets: game.user.isGM });
+        sheetData.system.description = await TextEditor.enrichHTML(sheetData.system.description, { async: true, secrets: game.user.isGM });
 
         if (this.item.type == "weapon") {
             let weaponFeatures = [];
@@ -62,7 +62,7 @@ export default class DoDItemSheet extends ItemSheet {
                     break;
             }
             if(!sheetData.enableRange) {
-                sheetData.data.range = "";
+                sheetData.system.range = "";
             }
         }
 

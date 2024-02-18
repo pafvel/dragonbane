@@ -16,7 +16,7 @@
                     <th>{{localize "DoD.ui.character-sheet.age"}}</th>
                     <td>
                         <select class="age-edit" name="system.age">
-                            {{#select data.age}}
+                            {{#select system.age}}
                             {{#each config.ageTypes as |name type|}}
                             <option value="{{type}}">{{localize name}}</option>
                             {{/each}}
@@ -34,7 +34,7 @@
                         {{localize "DoD.ui.character-sheet.weakness"}}
                     </label>
                 </div>
-                {{editor data.weakness target="system.weakness" engine="prosemirror" button=true owner=owner editable=editable}}
+                {{editor system.weakness target="system.weakness" engine="prosemirror" button=true owner=owner editable=editable}}
             </div>
             <div class="dod-text-container">
                 <div class="dod-text-container-label">
@@ -42,7 +42,7 @@
                         {{localize "DoD.ui.character-sheet.appearance"}}
                     </label>
                 </div>
-                {{editor data.appearance target="system.appearance" engine="prosemirror" button=true owner=owner editable=editable}}
+                {{editor system.appearance target="system.appearance" engine="prosemirror" button=true owner=owner editable=editable}}
             </div>
         </div>
         <div>
@@ -52,7 +52,7 @@
                         {{localize "DoD.ui.character-sheet.notes"}}
                     </label>
                 </div>
-                {{editor data.notes target="system.notes" engine="prosemirror" button=true owner=owner editable=editable}}
+                {{editor system.notes target="system.notes" engine="prosemirror" button=true owner=owner editable=editable}}
             </div>
         </div>
     </div>

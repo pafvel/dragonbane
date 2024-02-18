@@ -13,17 +13,17 @@
             </tr>
             <tr>
                 <td>
-                    <input name="system.weight" type="text" value="{{data.weight}}" data-dtype="Number" />
+                    <input name="system.weight" type="text" value="{{system.weight}}" data-dtype="Number" />
                 </td>
                 <td>
-                    <input name="system.quantity" type="text" value="{{data.quantity}}" data-dtype="Number" />
+                    <input name="system.quantity" type="text" value="{{system.quantity}}" data-dtype="Number" />
                 </td>
                 <td>
-                    <input name="system.cost" type="text" value="{{data.cost}}" />
+                    <input name="system.cost" type="text" value="{{system.cost}}" />
                 </td>
                 <td>
                     <select name="system.supply">
-                        {{#select data.supply}}
+                        {{#select system.supply}}
                         {{#each config.supplyTypes as |name type|}}
                         <option value="{{type}}">{{localize name}}</option>
                         {{/each}}
@@ -40,7 +40,7 @@
             <tr>
                 <td>
                     <select name="system.type">
-                        {{#select data.type}}
+                        {{#select system.type}}
                         {{#each config.itemTypes as |name type|}}
                         <option value="{{type}}">{{localize name}}</option>
                         {{/each}}
@@ -48,7 +48,7 @@
                     </select>
                 </td>
                 <td>
-                    <input class="inline-edit edit-memento" name="system.memento" data-field="data.memento" type="checkbox" {{checked data.memento}} />
+                    <input class="inline-edit edit-memento" name="system.memento" data-field="system.memento" type="checkbox" {{checked system.memento}} />
                 </td>
             </tr>
         </table>
@@ -59,14 +59,14 @@
             </tr>
             <tr>
                 <td>
-                    <input name="system.boons" type="text" value="{{data.boons}}" />
+                    <input name="system.boons" type="text" value="{{system.boons}}" />
                 </td>
                 <td>
-                    <input name="system.banes" type="text" value="{{data.banes}}" />
+                    <input name="system.banes" type="text" value="{{system.banes}}" />
                 </td>
         </table>
 
-        {{editor data.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
+        {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
     </div>
 </form>
 

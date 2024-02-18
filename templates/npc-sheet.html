@@ -16,7 +16,7 @@
                             <th>{{localize "DoD.ui.character-sheet.damageBonusSTR"}}</th>
                             <td>
                                 <select name="system.damageBonus.str">
-                                    {{#select data.damageBonus.str}}
+                                    {{#select system.damageBonus.str}}
                                     {{#each config.dice as |name type|}}
                                     <option value="{{type}}">{{localize name}}</option>
                                     {{/each}}
@@ -28,7 +28,7 @@
                             <th>{{localize "DoD.ui.character-sheet.damageBonusAGL"}}</th>
                             <td>
                                 <select name="system.damageBonus.agl">
-                                    {{#select data.damageBonus.agl}}
+                                    {{#select system.damageBonus.agl}}
                                     {{#each config.dice as |name type|}}
                                     <option value="{{type}}">{{localize name}}</option>
                                     {{/each}}
@@ -38,7 +38,7 @@
                         </tr>
                         <tr>
                             <th>{{localize "DoD.ui.character-sheet.movement"}}</th>
-                            <td><input name="system.movement" type="text" value="{{data.movement}}" data-dtype="Number" /></td>
+                            <td><input name="system.movement" type="text" value="{{system.movement}}" data-dtype="Number" /></td>
                         </tr>
                     </table>
                 </div>
@@ -52,7 +52,7 @@
                         {{localize "DoD.ui.character-sheet.description"}}
                     </label>
                 </div>
-                {{editor data.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
+                {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
             </div>        
             {{/unless}}
         </div>

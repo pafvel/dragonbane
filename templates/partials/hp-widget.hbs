@@ -19,12 +19,12 @@
             {{#if actor.isCharacter}}
             <label class="resource-points-max-label" title="{{localize "DoD.ui.character-sheet.hitPointsMax"}}">{{maxHP}}</label>
             {{else}}
-            <input class="resource-points-max-label hit-points-max-label" title="{{localize "DoD.ui.character-sheet.hitPointsMax"}}" type="number" value="{{data.hitPoints.max}}" data-dtype="Number" />
+            <input class="resource-points-max-label hit-points-max-label" title="{{localize "DoD.ui.character-sheet.hitPointsMax"}}" type="number" value="{{system.hitPoints.max}}" data-dtype="Number" />
             {{/if}}
         </div>
         {{#if largeHP}}
         <div class="resource-points-current-box">
-            <input class="resource-points-current-label hit-points-current-label" title="{{localize "DoD.ui.character-sheet.hitPointsCurrent"}}" type="number" value="{{data.hitPoints.value}}" data-dtype="Number" />
+            <input class="resource-points-current-label hit-points-current-label" title="{{localize "DoD.ui.character-sheet.hitPointsCurrent"}}" type="number" value="{{system.hitPoints.value}}" data-dtype="Number" />
         </div>
         {{else}}
         <div class="resource-points-box hit-points-box">

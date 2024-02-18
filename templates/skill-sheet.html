@@ -25,7 +25,7 @@
             <tr>
                 <td>
                     <select name="system.skillType">
-                        {{#select data.skillType}}
+                        {{#select system.skillType}}
                         {{#each config.skillTypes as |name skillType|}}
                         <option value="{{skillType}}">{{localize name}}</option>
                         {{/each}}
@@ -34,7 +34,7 @@
                 </td>
                 <td>
                     <select name="system.attribute">
-                        {{#select data.attribute}}
+                        {{#select system.attribute}}
                         {{#each config.attributes as |name attribute|}}
                         <option value="{{attribute}}">{{localize name}}</option>
                         {{/each}}
@@ -42,11 +42,11 @@
                     </select>
                 </td>
                 <td>
-                    <input class="inline-edit" name="system.hideTrained" data-field="data.hideTrained" type="checkbox" {{checked data.hideTrained}} />
+                    <input class="inline-edit" name="system.hideTrained" data-field="system.hideTrained" type="checkbox" {{checked system.hideTrained}} />
                 </td>
             </tr>
         </table>
 
-        {{editor data.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
+        {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
     </div>
 </form>

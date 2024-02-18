@@ -13,14 +13,14 @@
             </tr>
             <tr>
                 <td>
-                    <input name="system.requirement" type="text" value="{{data.requirement}}" />
+                    <input name="system.requirement" type="text" value="{{system.requirement}}" />
                 </td>
                 <td>
-                    <input name="system.wp" type="text" value="{{data.wp}}" data-dtype="Number" />
+                    <input name="system.wp" type="text" value="{{system.wp}}" data-dtype="Number" />
                 </td>
                 <td>
                     <select name="system.abilityType">
-                        {{#select data.abilityType}}
+                        {{#select system.abilityType}}
                         {{#each config.abilityTypes as |name abilityType|}}
                         <option value="{{abilityType}}">{{localize name}}</option>
                         {{/each}}
@@ -37,11 +37,11 @@
             </tr>
             <tr>
                 <td>
-                    <input name="system.boons" type="text" value="{{data.boons}}" />
+                    <input name="system.boons" type="text" value="{{system.boons}}" />
                 </td>
                 <td>
                     <select name="system.secondaryAttribute">
-                        {{#select data.secondaryAttribute}}
+                        {{#select system.secondaryAttribute}}
                         {{#each config.secondaryAttributeTypes as |name attribute|}}
                         <option value="{{attribute}}">{{localize name}}</option>
                         {{/each}}
@@ -51,6 +51,6 @@
             </tr>
         </table>
 
-        {{editor data.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
+        {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
     </div>
 </form>

@@ -88,7 +88,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             observer: baseData.actor.isObserver,
             editable: this.isEditable,
             actor: baseData.actor,
-            data: baseData.data.system,
+            system: baseData.data.system,
             config: CONFIG.DoD
         };
 
@@ -103,11 +103,11 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
         }
 
-        sheetData.data.appearance = await enrich(sheetData.data.appearance);
-        sheetData.data.description = await enrich(sheetData.data.description);
-        sheetData.data.notes = await enrich(sheetData.data.notes);
-        sheetData.data.weakness = await enrich(sheetData.data.weakness);
-        sheetData.data.traits = await enrich(sheetData.data.traits);
+        sheetData.system.appearance = await enrich(sheetData.system.appearance);
+        sheetData.system.description = await enrich(sheetData.system.description);
+        sheetData.system.notes = await enrich(sheetData.system.notes);
+        sheetData.system.weakness = await enrich(sheetData.system.weakness);
+        sheetData.system.traits = await enrich(sheetData.system.traits);
 
         // Prepare character data and items.
         this._prepareItems(sheetData);

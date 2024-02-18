@@ -15,15 +15,15 @@
                 </th>
             <tr class="sheet-table-data" data-item-id="{{ability.id}}">
                 <td>
-                    <input class="edit-kin-abilities" name="system.abilities" type="text" value="{{data.abilities}}" />
+                    <input class="edit-kin-abilities" name="system.abilities" type="text" value="{{system.abilities}}" />
                 </td>
                 <td>
-                    <input name="system.movement" type="text" value="{{data.movement}}" data-dtype="Number" />
+                    <input name="system.movement" type="text" value="{{system.movement}}" data-dtype="Number" />
                 </td>
             </tr>
         </table>
 
-        {{editor data.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
+        {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
     </div>
 </form>
 
