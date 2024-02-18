@@ -5,7 +5,7 @@
         "TypeMonster": "Monster"
     },
     "ITEM": {
-        "TypeAbility": "Fähigkeit",
+        "TypeAbility": "Talent",
         "TypeArmor": "Rüstung",
         "TypeHelmet": "Helm",
         "TypeItem": "Gegenstand",
@@ -22,7 +22,7 @@
             "monster": "Monster"
         },
         "Item": {
-            "ability": "Fähigkeit",
+            "ability": "Talent",
             "armor": "Rüstung",
             "helmet": "Helm",
             "item": "Gegenstand",
@@ -45,7 +45,7 @@
         "abilityTypes": {
             "kin": "Volk",
             "profession": "Beruf",
-            "heroic": "Heldenhaft"
+            "heroic": "Heroisch"
         },
         "ageTypes": {
             "young": "Jung",
@@ -59,8 +59,8 @@
         },
         "armor": {
             "banes": "Flüche",
-            "rating": "Panzerungswert",
-            "bonuses": "Bonus Rüstung"
+            "rating": "Rüstungswert",
+            "bonuses": "Rüstungsbonus"
 
         },
         "attackTypes": {
@@ -86,7 +86,7 @@
         "attributes": {
             "str": "STÄ",
             "con": "KON",
-            "agl": "GES",
+            "agl": "GEW",
             "int": "INT",
             "wil": "WIL",
             "cha": "CHA"
@@ -94,16 +94,16 @@
         "castingTimeTypes": {
             "action": "Aktion",
             "reaction": "Reaktion",
-            "stretch": "Zeitspanne",
+            "stretch": "Viertel",
             "shift": "Schicht"
         },
         "conditions": {
             "str": "Erschöpft",
-            "con": "Kränklich",
-            "agl": "Verwirrt",
+            "con": "Kränkelnd",
+            "agl": "Benommen",
             "int": "Wütend",
             "wil": "Verängstigt",
-            "cha": "Entmutigt"
+            "cha": "Verzagt"
         },
         "currency": {
             "gold": "Gold",
@@ -153,17 +153,17 @@
             "animal": "Tier",
             "armor": "Rüstung",
             "clothes": "Kleidung",
-            "container": "Gegenstand",
-            "hunting": "Gegenstand",
-            "instrument": "Gegenstand",
-            "knowledge": "Gegenstand",
-            "light": "Gegenstand",
-            "medicine": "Gegenstand",
-            "melee": "Waffe",
-            "ranged": "Waffe",
+            "container": "Behälter",
+            "hunting": "Jagen",
+            "instrument": "Instrument",
+            "knowledge": "Wissen",
+            "light": "Lichtquelle",
+            "medicine": "Medizin",
+            "melee": "Nahkampfwaffe",
+            "ranged": "Fernkampfwaffe",
             "service": "Dienstleistung",
             "tool": "Werkzeug",
-            "trade": "Gegenstand",
+            "trade": "Handelsgut",
             "travel": "Fahrzeug"
         },
         "gripTypes": {
@@ -173,7 +173,7 @@
         },
         "helmet": {
  	    "new": "Neuer Helm",
-            "rating": "Panzerungswert"
+            "rating": "Rüstungsswert"
         },
         "itemTypes": {
             "item": "Gegenstand",
@@ -276,7 +276,7 @@
         "spellDurationTypes": {
             "instant": "Sofort",
             "round": "Runde",
-            "stretch": "Zeitspanne",
+            "stretch": "Viertel",
             "shift": "Schicht",
             "concentration": "Konzentration",
             "permanent": "Permanent"
@@ -318,7 +318,7 @@
             "skill": "Fertigkeiten",
             "skillValue": "Fertigkeit",
             "skillValueTooltip": "Fertigkeitswert bei der Verwendung der Waffe.",
-	    "broken": "Broken",
+	    "broken": "Beschädigt",
             "brokenTooltip": "Zeigt an, ob die Waffe beschädigt ist",
             "mainHandTooltip": "Die Waffe wird in der Haupthand geführt.",
             "offHandTooltip": "Die Waffe wird in der Nebenhand geführt.",
@@ -338,7 +338,7 @@
             "quiver": "Köcher",
             "quiverTooltip": "Erfordert Köcher",
             "slashing": "Hieb",
-            "subtle": "Subtil",
+            "subtle": "Raffiniert",
             "thrown": "Geworfen",
             "toppling": "Umwerfen",
             "shield": "Schild",
@@ -348,14 +348,14 @@
             "noparryTooltip": "Kann nicht zum Parieren verwendet werden",
             "piercingTooltip": "Stich",
             "slashingTooltip": "Hieb",
-            "subtleTooltip": "Subtil",
+            "subtleTooltip": "Raffiniert",
             "thrownTooltip": "kann geworfen werden",
             "topplingTooltip": "Umwerfen",
             "shieldTooltip": "Schild"    
         },    
         "ui": {
             "character-sheet": {
-                "abilities": "Fähigkeiten",
+                "abilities": "Talente",
                 "age": "Alter",
                 "appearance": "Aussehen",
                 "armor": "Rüstung",
@@ -364,7 +364,7 @@
                 "combat": "Kampf",
                 "coreSkills": "Grundfertigkeiten",
                 "currency": "Münze",
-                "damageBonusAGL": "Schadenbonus GES",
+                "damageBonusAGL": "Schadenbonus GEW",
                 "damageBonusSTR": "Schadenbonus STÄ",
                 "deathRolls": "Todeswürfe",
                 "description": "Beschreibung",
@@ -373,18 +373,18 @@
                 "equipped-helmet": "Getragener Helm",
                 "equipped-weapon": "Ausgerüstete Waffen",
                 "failures": "Fehlschläge",
-                "ferocity": "Wildheit",
+                "ferocity": "Grimmigkeit",
                 "gear": "Ausrüstung",
-                "heroicAbilities": "Heldenfähigkeiten",
+                "heroicAbilities": "Heroisches Talent",
                 "hitPoints": "Trefferpunkte",
                 "hp": "TP",
                 "inventory": "Inventar",
                 "kin": "Volk",
-                "kinAbilities": "Volksfähigkeit",
+                "kinAbilities": "Volkstalent",
                 "main": "Allgemein",
                 "max-encumbrance": "Max Traglast",
                 "memento": "Memento",
-                "memorized": "P",
+                "memorized": "V",
                 "monsterAttackFlavor": "<b>{actor}</b> führt einen Monsterangriff von <b>{table} aus</b>.",
                 "monsterAttackTooltip": "Monsterangriff",
                 "monsterDefendSkillFlavor": "Ausweichen oder Parieren",
@@ -392,11 +392,11 @@
                 "movement": "Bewegung",
                 "notes": "Notizen",
                 "profession": "Beruf",
-                "professionAbilities": "Berufsfähigkeiten",
-                "restRound": "Durchschnaufen: <b>{actor}</b> rastet eine Runde und stellt <b>{wp}</b> WP her.",
-                "restRoundTooltip": "Durchschnaufen\rEine kurze Rast, die nur eine Runde dauert.\rWährend einer Runde Rast erholst du W6 WP zurück.\rDu kannst nur einmal pro Schicht eine Runde Rast einlegen.",
-                "restStretch": "Kurze Rast: <b>{actor}</b> rastet eine Zeitspanne und stellt <b>{hp}</b> TP, <b>{wp}</b> WP her und entfernt <b>einen Zustand nach Wahl</b>.<br>Du kannst dein Memento benutzen, um einen weiteren Zustand zu entfernen.",
-                "restStretchTooltip": "Kurze Rast\rRast für eine Zeitspanne und heilt W6 TP, W6 WP und entfernt einen Zustand deiner Wahl.\rDu kannst dein Memento benutzen, um einen zusätzlichen Zustand zu entfernen.\rDu kannst nur einmal pro Schicht eine Zeitspanne Rast einlegen.",
+                "professionAbilities": "Berufstalente",
+                "restRound": "Schnelle Rast: <b>{actor}</b> rastet eine Runde und stellt <b>{wp}</b> WP her.",
+                "restRoundTooltip": "Schnelle Rast\rEine schnelle Rast, die nur eine Runde dauert.\rWährend einer Runde Rast erholst du W6 WP zurück.\rDu kannst nur einmal pro Schicht eine Runde Rast einlegen.",
+                "restStretch": "Kurze Rast: <b>{actor}</b> rastet ein Viertel und stellt <b>{hp}</b> TP, <b>{wp}</b> WP her und entfernt <b>einen Zustand nach Wahl</b>.<br>Du kannst dein Memento benutzen, um einen weiteren Zustand zu entfernen.",
+                "restStretchTooltip": "Kurze Rast\rRast für ein Viertel und heilt W6 TP, W6 WP und entfernt einen Zustand deiner Wahl.\rDu kannst dein Memento benutzen, um einen zusätzlichen Zustand zu entfernen.\rDu kannst nur einmal pro Schicht ein Viertel-Rast einlegen.",
                 "restShift": "Lange Rast: <b>{actor}</b> rastet für eine Schicht und heilt <b>{hp}</b> TP, <b>{wp}</b> WP and entfernt alle Zustände.",
                 "restShiftTooltip": "Lange Rast\rEine Schicht rasten und alle TP, WP zurückerhalten und alle Zustände entfernen",
                 "school": "Magieschule",
@@ -453,7 +453,7 @@
                 "labelCancel": "Abbrechen",
                 "labelOk": "Ok",
                 "chooseAction": "Wähle Handlung",
-                "useAbility": "Aktiviere Fähigkeit",
+                "useAbility": "Aktiviere Talent",
                 "useAbilityWithWP": "Bezahle <b>{wp}</b> WP um <b>{ability}</b> zu nutzen?",
                 "useAbilityWithoutWP": "Nutze <b>{ability}</b>?",
                 "weaponFeatures": "Waffeneigenschaften"
@@ -461,17 +461,17 @@
 
         },
         "INFO": {
-            "professionSkillAdded": "Hinzugefügte Berufsfähigkeit: {skill}"
+            "professionSkillAdded": "Hinzugefügtes Berufstalent: {skill}"
         },
         "SETTINGS": {
             "keepOwnershipOnImport": "Besitzer bleiben beim Importieren von Abenteuern",
             "keepOwnershipOnImportHint": "Eigentumsrechte dürfen beim Importieren von Inhalten, die bereits in der Welt existieren, nicht überschrieben werden."
         },
         "WARNING": {
-            "kinAbility": "Konnte Volksfähigkeit nicht finden: {ability}",
+            "kinAbility": "Konnte angeborenes Talent nicht finden: {ability}",
             "kin": "Konnte Volk nicht finden: {kin}",
             "profession": "Konnte Beruf nicht finden: {profession}",
-            "professionAbility": "Konnte Berufsfähigkeit nicht finden: {ability}",
+            "professionAbility": "Konnte Berufstalent nicht finden: {ability}",
             "professionSkill": "Konnte Berufsfertigkeit nicht finden: {skill}",
             "notEnoughWPForSpell": "Nicht genug Willenskraftpunkt um den Zauber zu wirken",
             "notEnoughWPForAbility": "Nicht genug Willenskraftpunkte um die Fähigkeit zu aktivieren",
