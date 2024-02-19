@@ -199,8 +199,6 @@ export default class DoD_Utility {
         for (let tableResult of table.results) {
             attacks.push({result: tableResult, skip: tableResult.uuid == actor.system.previousMonsterAttack});
         }
-        console.log(attacks);
-
 
         return table.sheet.render(true);
     }

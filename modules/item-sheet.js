@@ -160,8 +160,6 @@ export default class DoDItemSheet extends ItemSheet {
         }
         featureData = featureData.sort((a, b) => { return a.localizedName < b.localizedName ? -1 : 1; });
 
-        console.log(featureData);
-
         let dialogData = {features: featureData};
 
         const template = "systems/dragonbane/templates/partials/weapon-features-dialog.hbs";
@@ -226,7 +224,6 @@ export default class DoDItemSheet extends ItemSheet {
                 });
             }
         }
-        console.log(damageData);
 
         let dialogData = {bonuses: damageData};
 
