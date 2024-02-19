@@ -54,20 +54,20 @@ export default class DoD_Utility {
     }
 
     static async getBaseSkills() {
-        // Get skills from core module compendium
-        
-        const compendiumName = game.settings.get("dragonbane", "coreModuleCompendium");
-        const pack = game.packs.get(compendiumName + "." + compendiumName);
-        if (pack) {
-            let skills = [];
-            for (let content of pack.index.contents) {
-                const adventure = await pack.getDocument(content._id);
-                skills = skills.concat(Array.from(adventure.items.filter(i => i.type == "skill" && (i.system.skillType == "core" || i.system.skillType == "weapon"))));
+        if (!game.settings.get("dragonbane", "useWorldSkillsOnCreateActor")) {
+            // Get skills from core module compendium
+            const compendiumName = game.settings.get("dragonbane", "coreModuleCompendium");
+            const pack = game.packs.get(compendiumName + "." + compendiumName);
+            if (pack) {
+                let skills = [];
+                for (let content of pack.index.contents) {
+                    const adventure = await pack.getDocument(content._id);
+                    skills = skills.concat(Array.from(adventure.items.filter(i => i.type == "skill" && (i.system.skillType == "core" || i.system.skillType == "weapon"))));
+                }
+                skills = Array.from(skills);
+                return skills.map(skill => skill.toObject());
             }
-            skills = Array.from(skills);
-            return skills.map(skill => skill.toObject());
-        }
-        
+        }        
        
         // If no compendium, look for skills in the active game
         let skills = game.items.filter(i => i.type == "skill" && (i.system.skillType == "core" || i.system.skillType == "weapon"));

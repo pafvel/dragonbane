@@ -531,6 +531,8 @@
             "hideNpcWpWidgetHint": "Dölj viljepoäng från SLP-arket om SLPn har noll viljepoäng och varken har besvärjelser eller förmågor.",
             "keepOwnershipOnImport": "Behåll ägande vid import",
             "keepOwnershipOnImportHint": "Skriv inte över äganderättigheter vid import av innehåll i äventyr som redan finns i världen.",
+            "useWorldSkillsOnCreateActor": "Använd färdigheter i världen",
+            "useWorldSkillsOnCreateActorHint": "Använd färdigheter definierade i världen istället för i grundmodulen när nya karaktärer skapas.",
             "viewDamagePermission": "Rättighet att se skada",
             "viewDamagePermissionHint": "Välj den lägsta nivån av rättighet som krävs för att en spelare ska se hur mycket skada en karaktär tar."
         },

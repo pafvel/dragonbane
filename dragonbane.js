@@ -84,6 +84,16 @@ function registerSettings() {
         type: Boolean
     });
 
+    // If true, looks for skills in the world instead of the module when creating a new Actor.
+    game.settings.register("dragonbane", "useWorldSkillsOnCreateActor", {
+        name: "DoD.SETTINGS.useWorldSkillsOnCreateActor",
+        hint: "DoD.SETTINGS.useWorldSkillsOnCreateActorHint",
+        scope: "world",
+        config: true,
+        default: false,
+        type: Boolean
+    });
+
     // Most recent system version
     game.settings.register("dragonbane", "systemVersion", {
         config: false,

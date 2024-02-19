@@ -527,6 +527,8 @@
             "hideNpcWpWidgetHint": "Hide NPC Willpower from the NPC sheet if the NPC has zero Willpower and no spells or abilities.",
             "keepOwnershipOnImport": "Keep ownership",
             "keepOwnershipOnImportHint": "Do not overwrite ownership rights when importing adventure content that already exists in the world.",
+            "useWorldSkillsOnCreateActor": "Use world skills for new Actors",
+            "useWorldSkillsOnCreateActorHint": "If true, looks for skills in the world instead of the core module when creating new Actors.",
             "viewDamagePermission": "Permission to see Damage",
             "viewDamagePermissionHint": "Choose the minimum permission level a user must have to see the amount of damage an actor takes."
         },
