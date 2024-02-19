@@ -86,7 +86,28 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             }
         }
         this.dialogData.actions = actions;
+
+        if (this.weapon.hasWeaponFeature("enchanted1")) {
+            this.dialogData.enchantedWeapon = 1;
+        }
+        if (this.weapon.hasWeaponFeature("enchanted2")) {
+            this.dialogData.enchantedWeapon = 2;
+        }
+        if (this.weapon.hasWeaponFeature("enchanted3")) {
+            this.dialogData.enchantedWeapon = 3;
+        }
     }   
+
+    async getRollOptionsFromDialog(title, label) {
+        if (this.skipDialog) {
+            const defaultOptions = {"enchantedWeapon": this.dialogData.enchantedWeapon};
+            const options = await super.getRollOptionsFromDialog(title, label);
+            return {...defaultOptions, ...options};
+        } else {
+            return super.getRollOptionsFromDialog(title, label);
+        }
+
+    }
 
     async getRollOptions() {
 

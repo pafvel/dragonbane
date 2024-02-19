@@ -332,6 +332,12 @@
         "weaponFeatureTypes": {
             "bludgeoning": "Krossande",
             "bludgeoningTooltip": "Krossande",
+            "enchanted1": "Förtrollad (1)",
+            "enchanted1Tooltip": "Påverkat av Förtrolla Vapen effektgrad 1",
+            "enchanted2": "Förtrollad (2)",
+            "enchanted2Tooltip": "Påverkat av Förtrolla Vapen effektgrad 2",
+            "enchanted3": "Förtrollad (3)",
+            "enchanted3Tooltip": "Påverkat av Förtrolla Vapen effektgrad 3",
             "long": "Lång",
             "longTooltip": "Lång",
             "mounted": "Riddjur",

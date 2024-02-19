@@ -330,6 +330,12 @@
         "weaponFeatureTypes": {
             "bludgeoning": "Bludgeoning",
             "bludgeoningTooltip": "Bludgeoning",
+            "enchanted1": "Enchanted (1)",
+            "enchanted1Tooltip": "Affected by Enchanted Weapon at Power Level 1",
+            "enchanted2": "Enchanted (2)",
+            "enchanted2Tooltip": "Affected by Enchanted Weapon at Power Level 2",
+            "enchanted3": "Enchanted (3)",
+            "enchanted3Tooltip": "Affected by Enchanted Weapon at Power Level 3",
             "long": "Long",
             "longTooltip": "Long",
             "mounted": "Mounted",

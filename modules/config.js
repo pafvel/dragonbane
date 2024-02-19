@@ -114,7 +114,10 @@ DoD.weaponFeatureTypes = {
     thrown: "DoD.weaponFeatureTypes.thrown",
     toppling: "DoD.weaponFeatureTypes.toppling",
     shield: "DoD.weaponFeatureTypes.shield",
-    unarmed: "DoD.weaponFeatureTypes.unarmed"
+    unarmed: "DoD.weaponFeatureTypes.unarmed",
+    enchanted1: "DoD.weaponFeatureTypes.enchanted1",
+    enchanted2: "DoD.weaponFeatureTypes.enchanted2",
+    enchanted3: "DoD.weaponFeatureTypes.enchanted3"
 };
 
 DoD.attributes = {
