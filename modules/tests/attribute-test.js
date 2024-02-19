@@ -30,9 +30,39 @@ export default class DoDAttributeTest extends DoDTest {
                 this.preRollData.target = this.actor.system.hitPoints.max - 2 * this.actor.items.filter(i => i.type == "ability" && i.system.secondaryAttribute == "hitPoints").length;
             } else if (this.attribute == "wil") {
                 this.preRollData.target = this.actor.system.willPoints.max - 2 * this.actor.items.filter(i => i.type == "ability" && i.system.secondaryAttribute == "willPoints").length;
+            } else if (this.attribute == "str") {
+                switch (this.actor.system.damageBonus.str) {
+                    case "d4":
+                        this.preRollData.target = 14;
+                        break;
+                    case "d6":
+                    case "d8":
+                    case "d10":
+                    case "d12":
+                    case "d20":
+                        this.preRollData.target = 17;
+                        break;
+                    default:
+                        this.preRollData.target = 10;
+                }
+            } else if (this.attribute == "agl") {
+                switch (this.actor.system.damageBonus.agl) {
+                    case "d4":
+                        this.preRollData.target = 14;
+                        break;
+                    case "d6":
+                    case "d8":
+                    case "d10":
+                    case "d12":
+                    case "d20":
+                        this.preRollData.target = 17;
+                        break;
+                    default:
+                        this.preRollData.target = 10;
+                }
             } else {
-                this.preRollData.target = 0;
-                console.log("NPCs can not roll against " + this.attribute);
+                // INT and CHA
+                this.preRollData.target = 10;
             }
             this.preRollData.canPush = false;
         } else {
