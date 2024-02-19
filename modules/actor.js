@@ -4,6 +4,32 @@ import DoDSkillTest from "./tests/skill-test.js";
 export class DoDActor extends Actor {
 
     /** @override */
+    async deleteDialog(options={}) {
+        // Warn if there are tokens referring to this actor
+        let scenes = [];
+        for (let scene of game.scenes.contents) {
+            let t = scene.tokens.find(t=>t.actorId == this.id);
+            if (t) scenes.push(scene.name);
+        }
+        let tokenMessage = "";
+        if (scenes.length > 0){
+            tokenMessage = `<blockquote class="info"><p>${game.i18n.localize("DoD.ui.dialog.deleteActorTokenOnScene")}:</p><ul>`;
+            for (let scene of scenes) {
+                tokenMessage += `<li>${scene}</li>`;
+            }
+            tokenMessage += "</ul></blockquote>";
+        }
+
+        const type = game.i18n.localize(this.constructor.metadata.label);
+        return Dialog.confirm({
+          title: `${game.i18n.format("DOCUMENT.Delete", {type})}: ${this.name}`,
+          content: `<h4>${game.i18n.localize("AreYouSure")}</h4><p>${game.i18n.format("SIDEBAR.DeleteWarning", {type})}</p>${tokenMessage}`,
+          yes: this.delete.bind(this),
+          options: options
+        });
+    }    
+
+    /** @override */
     async _preCreate(data, options, user) {
 
         await super._preCreate(data, options, user);

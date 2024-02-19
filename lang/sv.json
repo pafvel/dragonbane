@@ -504,7 +504,8 @@
                 "trainSkillTitle": "Träna färdighet?",
                 "trainSkillContent": "<p>Du satte ett förbättringskryss på <b>{skill}</b>, men antalet förbättrade färdigheter är färre än antalet tränade färdigheter som karaktären kan ha.</p><p>Vill du välja <b>{skill}</b> som en tränad färdighet?</p><p style=\"font-size:smaller\"><b>Anmärkning:</b> Färdigheter tränas genom att sätta färdighetsvärdet till dubbla baschansen. Återställ till baschansen genom att rensa färdighetsvärdet.</p>",
                 "trainLabel": "Träna färdighet",
-                "markLabel": "Förbättringskryss"
+                "markLabel": "Förbättringskryss",
+                "deleteActorTokenOnScene": "Scener med Spelfigurer som refererar till Karaktären"
            }
         },
         "INFO": {

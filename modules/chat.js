@@ -4,6 +4,7 @@ import DoDSkillTest from "./tests/skill-test.js";
 import DoDWeaponTest from "./tests/weapon-test.js";
 import DoDSpellTest from "./tests/spell-test.js";
 import { DoD } from "./config.js";
+import { DoDActor } from "./actor.js";
 
 export function addChatListeners(app, html, data) {
     html.on("click", ".inline-damage-roll", onInlineDamageRoll);
@@ -38,10 +39,13 @@ export function addChatMessageContextMenuOptions(html, options) {
         damageData.multiplier = multiplier;
         damageData.ignoreArmor = ignoreArmor || element.dataset.ignoreArmor;
 
-        if (damageData.actor.isOwner) {
-            applyDamageMessage(damageData);
-        } else {
+        if (!(damageData.actor instanceof DoDActor)) {
+            DoD_Utility.WARNING("TOKEN.WarningNoActor");
+        }
+        else if (!damageData.actor.isOwner) {
             DoD_Utility.WARNING("DoD.WARNING.noPermissionToModifyActor");
+        } else {
+            applyDamageMessage(damageData);
         }
     }
 
@@ -62,10 +66,13 @@ export function addChatMessageContextMenuOptions(html, options) {
         healingData.damage = element.dataset.healing;
         healingData.actor = DoD_Utility.getActorFromUUID(element.dataset.targetId);
 
-        if (healingData.actor.isOwner) {
-            applyHealingMessage(healingData);
-        } else {
+        if (!(healingData.actor instanceof DoDActor)){
+            DoD_Utility.WARNING("TOKEN.WarningNoActor");
+        }
+        else if (!healingData.actor.isOwner) {
             DoD_Utility.WARNING("DoD.WARNING.noPermissionToModifyActor");
+        } else {
+            applyHealingMessage(healingData);
         }
     }
 
@@ -102,11 +109,14 @@ export function addChatMessageContextMenuOptions(html, options) {
 
         const targets = canvas.tokens.controlled;
         for (const target of targets) {
-            if (target.actor.isOwner) {
+            if (!target.actor) {
+                DoD_Utility.WARNING("TOKEN.WarningNoActor");
+            }
+            else if (!target.actor.isOwner) {
+                DoD_Utility.WARNING("DoD.WARNING.noPermissionToModifyActor");
+            } else {
                 damageData.actor = target.actor;              
                 applyDamageMessage(damageData);
-            } else {
-                DoD_Utility.WARNING("DoD.WARNING.noPermissionToModifyActor");
             }
         }
     }
@@ -139,11 +149,14 @@ export function addChatMessageContextMenuOptions(html, options) {
         healingData.damage = Number(element.innerText);
 
         for (const target of canvas.tokens.controlled) {
-            if (target.actor.isOwner) {
+            if (!target.actor) {
+                DoD_Utility.WARNING("TOKEN.WarningNoActor");
+            }
+            else if (!target.actor.isOwner) {
+                DoD_Utility.WARNING("DoD.WARNING.noPermissionToModifyActor");
+            } else {
                 healingData.actor = target.actor;              
                 applyHealingMessage(healingData);
-            } else {
-                DoD_Utility.WARNING("DoD.WARNING.noPermissionToModifyActor");
             }
         }
     }
