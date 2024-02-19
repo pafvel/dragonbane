@@ -235,6 +235,7 @@ Hooks.once("init", function () {
         //updateSkills: DoDMigrate.updateSkillsOnActors,
         //updateItems: DoDMigrate.updateItemsOnActors,
         //updateImages: DoDMigrate.updateItemImagesOnActors,
+        rollAttribute: DoDMacro.rollAttributeMacro,
         rollItem: DoDMacro.rollItemMacro,
         monsterAttack: DoDMacro.monsterAttackMacro,
         monsterDefend: DoDMacro.monsterDefendMacro,

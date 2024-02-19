@@ -1,7 +1,9 @@
 import DoD_Utility from "./utility.js";
+import DoDAttributeTest from "./tests/attribute-test.js";
 import DoDSkillTest from "./tests/skill-test.js";
 import DoDSpellTest from "./tests/spell-test.js";
 import DoDWeaponTest from "./tests/weapon-test.js";
+import { DoDActor } from "./actor.js";
 
 
 export async function createItemMacro(data, slot) {
@@ -30,6 +32,17 @@ export async function createItemMacro(data, slot) {
     if (macro) {
         game.user.assignHotbarMacro(macro, slot);
     }
+}
+
+export async function rollAttributeMacro(actor, attributeName, options = {}) {
+
+    if (!actor || !(actor instanceof DoDActor)) {
+        DoD_Utility.WARNING("DoD.WARNING.macroNoActor");
+        return;
+    }
+    
+    let test = new DoDAttributeTest(actor, attributeName, { defaultBanesBoons: true });
+    await test.roll();
 }
 
 export function rollItemMacro(itemName, itemType, options = {}) {

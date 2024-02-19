@@ -5,7 +5,7 @@ export default class DoDAttributeTest extends DoDTest {
 
     constructor(actor, attribute, options) {
         super(actor, options);
-        this.attribute = attribute;
+        this.attribute = attribute?.toLowerCase();
         if (this.options.canPush === undefined) {
             this.options.canPush = true;
         }
@@ -22,9 +22,24 @@ export default class DoDAttributeTest extends DoDTest {
         super.updatePreRollData();
         this.preRollData.actor = this.actor;
         this.preRollData.attribute = this.attribute;
-        this.preRollData.target = this.actor.system.attributes[this.attribute].value;
-        this.preRollData.canPush = this.options.canPush;
-        
+        if (this.actor.type == "character") {
+            this.preRollData.target = this.actor.system.attributes[this.attribute].value;
+            this.preRollData.canPush = this.options.canPush;
+        } else if (this.actor.type == "npc") {
+            if (this.attribute == "con") {
+                this.preRollData.target = this.actor.system.hitPoints.max - 2 * this.actor.items.filter(i => i.type == "ability" && i.system.secondaryAttribute == "hitPoints").length;
+            } else if (this.attribute == "wil") {
+                this.preRollData.target = this.actor.system.willPoints.max - 2 * this.actor.items.filter(i => i.type == "ability" && i.system.secondaryAttribute == "willPoints").length;
+            } else {
+                this.preRollData.target = 0;
+                console.log("NPCs can not roll against " + this.attribute);
+            }
+            this.preRollData.canPush = false;
+        } else {
+            // monster
+            this.preRollData.target = 15;
+            this.preRollData.canPush = false;
+        }
     }
 
     updatePostRollData() {
