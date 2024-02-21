@@ -181,6 +181,21 @@ export default class DoD_Utility {
         event.stopPropagation();
     }
     
+    static async expandTableResult(tableResult)
+    {
+        // Recursive roll if the result is a table
+        if (tableResult && tableResult.type === CONST.TABLE_RESULT_TYPES.DOCUMENT) {
+            if ( tableResult.documentCollection === "RollTable" ) {
+                const innerTable = game.tables.get(tableResult.documentId);
+                if (innerTable) {
+                    const innerRoll = await innerTable.roll();
+                    return innerRoll.results;
+                }
+            }
+        }
+        return [tableResult];
+    }
+
     static async monsterAttackTable(actor, table)
     {
         if (!actor) {
@@ -203,7 +218,7 @@ export default class DoD_Utility {
         return table.sheet.render(true);
     }
 
-    static async monsterAttack(actor, table) {
+    static async monsterAttack(actor, table, tableResult = null) {
 
         if (!actor) {
             return;
@@ -217,7 +232,7 @@ export default class DoD_Utility {
             }    
         }
 
-        const draw = await actor.drawMonsterAttack(table);
+        const draw = await actor.drawMonsterAttack(table, tableResult);
         const results = draw.results;
         const roll = draw.roll;
 

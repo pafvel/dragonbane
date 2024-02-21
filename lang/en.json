@@ -507,7 +507,10 @@
                 "trainSkillContent": "<p>You are marking <b>{skill}</b> for improvement, but you have improved fewer skills than your maximum number of trained skills.</p><p>Would you like to select <b>{skill}</b> as one of your trained skills?</p><p style=\"font-size:smaller\"><b>Note:</b> Skills are trained by editing the skill value to twice the base chance. Reset to base chance by deleting the skill value.</p>",
                 "trainLabel": "Train",
                 "markLabel": "Mark",
-                "deleteActorTokenOnScene": "Scenes with Tokens referring to the Actor"
+                "deleteActorTokenOnScene": "Scenes with Tokens referring to the Actor",
+                "monsterAttack": "Attack",
+                "monsterAttackRandom": "Random",
+                "monsterAttackTitle": "Select Monster Attack"
             }
         },
         "INFO": {
@@ -528,9 +531,11 @@
             "keepOwnershipOnImport": "Keep ownership",
             "keepOwnershipOnImportHint": "Do not overwrite ownership rights when importing adventure content that already exists in the world.",
             "useWorldSkillsOnCreateActor": "Use world skills for new Actors",
-            "useWorldSkillsOnCreateActorHint": "If true, looks for skills in the world instead of the core module when creating new Actors.",
+            "useWorldSkillsOnCreateActorHint": "If checked, looks for skills in the world instead of the core module when creating new Actors.",
             "viewDamagePermission": "Permission to see Damage",
-            "viewDamagePermissionHint": "Choose the minimum permission level a user must have to see the amount of damage an actor takes."
+            "viewDamagePermissionHint": "Choose the minimum permission level a user must have to see the amount of damage an actor takes.",
+            "monsterAttackDialogIsDefault": "Select Monster Attack",
+            "monsterAttackDialogIsDefaultHint": "If checked, the \"Select Monster Attack\" dialog is shown by default when left-clicking the Attack button on the Monster sheet. The dialog is skipped if SHIFT or CTRL is pressed when left-clicking. If un-checked, the behavior is the opposite."
         },
         "WARNING": {
             "kinAbility": "Could not find Kin Ability: {ability}",

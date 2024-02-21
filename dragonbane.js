@@ -171,6 +171,16 @@ function registerSettings() {
         choices: permissionLevels
     });
 
+    // If true, showing the "Select Monster Attack" dialog is default when making a monster attack.
+    game.settings.register("dragonbane", "monsterAttackDialogIsDefault", {
+        name: "DoD.SETTINGS.monsterAttackDialogIsDefault",
+        hint: "DoD.SETTINGS.monsterAttackDialogIsDefaultHint",
+        scope: "world",
+        config: true,
+        default: true,
+        type: Boolean
+    });
+    
     // If true, autmatically marks Characters as dead when they fail 3 death rolls or get instantly killed
     game.settings.register("dragonbane", "automateCharacterDeath", {
         name: "DoD.SETTINGS.automateCharacterDeath",
@@ -471,7 +481,7 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
             if (options.actor) a.dataset.actorId = options.actor.uuid;
             if (match[3]) a.dataset.action = match[3];
 
-            a.innerHTML = `<i class="fas fa-dice-d20"></i>` + match[1] + " " + game.i18n.localize(a.dataset.damageType);
+            a.innerHTML = `<i class="fas fa-dice-d20" style="float:none"></i>` + match[1] + " " + game.i18n.localize(a.dataset.damageType);
             return a;
         }
     },
@@ -487,13 +497,13 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
                 a.classList.add("table-roll");
                 a.dataset.tableId = table.uuid;
                 a.dataset.tableName = table.name;
-                a.innerHTML = `<i class="fas fa-dice-d20"></i><i class="fas fa-th-list"></i> ${tableName}`;
+                a.innerHTML = `<i class="fas fa-dice-d20" style="float:none"></i><i class="fas fa-th-list" style="float:none"></i> ${tableName}`;
             } else {
                 a.dataset.tableId = match[1];
                 if (match[2]) a.dataset.tableName = match[2];
                 a.classList.add("content-link");
                 a.classList.add("broken");
-                a.innerHTML = `<i class="fas fa-unlink"></i> ${tableName}`;
+                a.innerHTML = `<i class="fas fa-unlink" style="float:none"></i> ${tableName}`;
             }
             return a;
         }

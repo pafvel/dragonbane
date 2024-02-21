@@ -418,6 +418,25 @@ export default class DoDCharacterSheet extends ActorSheet {
         super.activateListeners(html);
     }
 
+    _processSelectMonsterAttack(form, table) {
+        let elements = form.getElementsByClassName("selectMonsterAttack");
+        console.log(elements);
+        let element = elements.length > 0 ? elements[0] : null;
+        if (element) {
+            const value = parseInt(element.value);
+            if (value > 0) {
+                for (let tableResult of table.results) {
+                    if (value == tableResult.range[0]) {
+                        DoD_Utility.monsterAttack(this.actor, table, tableResult);
+                        return;
+                    }
+                }
+            } else {
+                DoD_Utility.monsterAttack(this.actor, table);
+            }
+        }
+    }
+
     async _onMonsterAttack(event) {
         event.preventDefault();
         event.currentTarget?.blur();
@@ -428,9 +447,71 @@ export default class DoDCharacterSheet extends ActorSheet {
             return;
         }
 
-
         if (event.type == "click") { // left click
-            return DoD_Utility.monsterAttack(this.actor, table);
+            let skipDialog = event.shiftKey || event.ctrlKey;
+            if (!game.settings.get("dragonbane", "monsterAttackDialogIsDefault")) {
+                skipDialog = !skipDialog;
+            }
+            if (skipDialog) {
+                return DoD_Utility.monsterAttack(this.actor, table);
+            }
+            let dialogData = { };
+            dialogData.attacks = [];
+            for (let result of table.results) {
+                // Find attack description
+                let attack = {name: "", description: "", index: result.range[0]};
+                if (result.documentCollection == "RollTable") {
+                    let subTable = DoD_Utility.findTable(result.text);
+                    if (subTable?.uuid != table.uuid) {
+                        attack.description = subTable?.description;
+                    } else {
+                        attack.description = result.text;
+                    }
+                } else {
+                    attack.description = result.text;
+                }
+                attack.description = await TextEditor.enrichHTML(attack.description, { async: true });
+
+                // Split attack name and description
+                const match = attack.description.match(/<b>(.*?)<\/b>(.*)/);
+                if (match) {
+                    attack.name = match[1];
+                    attack.description = match[2]
+                } else {
+                    attack.name = attack.index;
+                }
+                dialogData.attacks.push(attack);
+            }
+            console.log(dialogData);
+
+            const template = "systems/dragonbane/templates/partials/monster-attack-dialog.hbs";
+            const html = await renderTemplate(template, dialogData);
+            const labelOk = game.i18n.localize("DoD.ui.dialog.labelOk");
+            const labelCancel = game.i18n.localize("DoD.ui.dialog.labelCancel");
+            
+            return await new Promise(
+                resolve => {
+                    const data = {
+                        item: this.item,
+                        title: game.i18n.localize("DoD.ui.dialog.monsterAttackTitle"),
+                        content: html,
+                        buttons: {
+                            ok: {
+                                label: labelOk,
+                                callback: html => resolve(this._processSelectMonsterAttack(html[0].querySelector("form"), table))
+                                //callback: html => resolve({cancelled: false})
+                            },
+                            cancel: {
+                                label: labelCancel,
+                                callback: html => resolve({cancelled: true})
+                            }
+                        },
+                        default: "ok",
+                        close: () => resolve({cancelled: true})
+                    };
+                    new Dialog(data, null).render(true);
+                }
+            );
         } else { // right click
             return DoD_Utility.monsterAttackTable(this.actor, table);
         }

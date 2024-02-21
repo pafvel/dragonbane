@@ -653,11 +653,14 @@ export class DoDActor extends Actor {
         return this.updateProfessionSkills();
     }
 
-    async drawMonsterAttack(t) {
+    async drawMonsterAttack(t, tableResult = null) {
         const table = t || (this.system.attackTable ? fromUuidSync(this.system.attackTable) : null); 
         if (!table) return null;
 
-        let draw = await table.draw({displayChat: false});
+        // Recursive roll if the result is a table
+        let draw = tableResult ? 
+            await table.draw({displayChat: false, results: await DoD_Utility.expandTableResult(tableResult)}) : 
+            await table.draw({displayChat: false});
         let results = draw.results;
         let roll = draw.roll;
 
@@ -665,7 +668,7 @@ export class DoDActor extends Actor {
             // Monsters never draw the same attack twice in a row - if that happens pick next attack in the table
             let newResult = null;
             let found = false;
-            if (results[0].uuid == this.system.previousMonsterAttack) {
+            if (!tableResult && results[0].uuid == this.system.previousMonsterAttack) {
                 // Find next attack
                 for (let tableResult of table.results)
                 {
@@ -680,7 +683,8 @@ export class DoDActor extends Actor {
                     }
                     found = results[0].uuid == tableResult.uuid;
                 }
-                draw = await table.draw({displayChat: false, results: [newResult]});
+                // Recursive roll if the result is a table
+                draw = await table.draw({displayChat: false, results: await DoD_Utility.expandTableResult(newResult)});
                 results = draw.results;
             }
             await this.update({["system.previousMonsterAttack"]: results[0].uuid});

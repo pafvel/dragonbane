@@ -511,7 +511,10 @@
                 "trainSkillContent": "<p>Du satte ett förbättringskryss på <b>{skill}</b>, men antalet förbättrade färdigheter är färre än antalet tränade färdigheter som karaktären kan ha.</p><p>Vill du välja <b>{skill}</b> som en tränad färdighet?</p><p style=\"font-size:smaller\"><b>Anmärkning:</b> Färdigheter tränas genom att sätta färdighetsvärdet till dubbla baschansen. Återställ till baschansen genom att rensa färdighetsvärdet.</p>",
                 "trainLabel": "Träna färdighet",
                 "markLabel": "Förbättringskryss",
-                "deleteActorTokenOnScene": "Scener med Spelfigurer som refererar till Karaktären"
+                "deleteActorTokenOnScene": "Scener med Spelfigurer som refererar till Karaktären",
+                "monsterAttack": "Attack",
+                "monsterAttackRandom": "Slump",
+                "monsterAttackTitle": "Välj monsterattack"
            }
         },
         "INFO": {
@@ -534,7 +537,9 @@
             "useWorldSkillsOnCreateActor": "Använd färdigheter i världen",
             "useWorldSkillsOnCreateActorHint": "Använd färdigheter definierade i världen istället för i grundmodulen när nya karaktärer skapas.",
             "viewDamagePermission": "Rättighet att se skada",
-            "viewDamagePermissionHint": "Välj den lägsta nivån av rättighet som krävs för att en spelare ska se hur mycket skada en karaktär tar."
+            "viewDamagePermissionHint": "Välj den lägsta nivån av rättighet som krävs för att en spelare ska se hur mycket skada en karaktär tar.",
+            "monsterAttackDialogIsDefault": "Välj monsterattack",
+            "monsterAttackDialogIsDefaultHint": "Dialogen för att välja monsterattack visas när man vänsterklickar på Attack-knappen på karaktärsarket för Monster. Hoppa över dialogen genom att samtidigt hålla ner SHIFT eller CTRL. Om detta alternativ ej är ikryssat, så är funktionen den omvända, dvs att dialogen visas om man håller ner SHIFT eller CTRL."
         },
         "WARNING": {
             "kinAbility": "Kan ej hitta Släktesförmåga: {ability}",
