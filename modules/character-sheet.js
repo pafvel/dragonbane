@@ -420,7 +420,6 @@ export default class DoDCharacterSheet extends ActorSheet {
 
     _processSelectMonsterAttack(form, table) {
         let elements = form.getElementsByClassName("selectMonsterAttack");
-        console.log(elements);
         let element = elements.length > 0 ? elements[0] : null;
         if (element) {
             const value = parseInt(element.value);
@@ -482,7 +481,6 @@ export default class DoDCharacterSheet extends ActorSheet {
                 }
                 dialogData.attacks.push(attack);
             }
-            console.log(dialogData);
 
             const template = "systems/dragonbane/templates/partials/monster-attack-dialog.hbs";
             const html = await renderTemplate(template, dialogData);

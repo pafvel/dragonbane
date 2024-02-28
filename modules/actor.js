@@ -1,5 +1,6 @@
 import DoD_Utility from "./utility.js";
 import DoDSkillTest from "./tests/skill-test.js";
+import DoDRoll from "./roll.js";
 
 export class DoDActor extends Actor {
 
@@ -657,12 +658,42 @@ export class DoDActor extends Actor {
         const table = t || (this.system.attackTable ? fromUuidSync(this.system.attackTable) : null); 
         if (!table) return null;
 
-        // Recursive roll if the result is a table
-        let draw = tableResult ? 
-            await table.draw({displayChat: false, results: await DoD_Utility.expandTableResult(tableResult)}) : 
-            await table.draw({displayChat: false});
-        let results = draw.results;
-        let roll = draw.roll;
+        let draw = null;
+        let results = null;
+        let roll = null;
+
+        if (tableResult) {
+            // Create a roll with the desired result
+            roll = DoDRoll.create(t.formula);
+            const minRoll = (await roll.reroll({minimize: true, async: true})).total;
+            const maxRoll = (await roll.reroll({maximize: true, async: true})).total;
+            if ( (tableResult.range[0] > maxRoll) || (tableResult.range[1] < minRoll) ) {
+                ui.notifications.warn("Result can not possibly be drawn from this table and formula.");
+                return {roll, results};
+            }
+            // Continue rolling until one or more results are recovered
+            roll = await roll.reroll({async: true});
+            let iter = 0;
+            while ( !(tableResult.range[0] >= roll.total && roll.total <= tableResult.range[1]) ) {
+                if ( iter >= 10000 ) {
+                    ui.notifications.error(`Failed to draw an available entry from Table ${t.name}, maximum iteration reached`);
+                    break;
+                }
+                roll = await roll.reroll({async: true});
+                iter++;
+            }
+
+            // Recursive roll if the result is a table
+            results = await DoD_Utility.expandTableResult(tableResult);
+            
+            // Draw from table
+            draw = await table.draw({roll, displayChat: false, results});
+            
+        } else {
+            draw = await table.draw({displayChat: false});
+        }
+        results = draw.results;
+        roll = draw.roll;
 
         if (results[0]) {
             // Monsters never draw the same attack twice in a row - if that happens pick next attack in the table
