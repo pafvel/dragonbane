@@ -665,18 +665,23 @@ export class DoDActor extends Actor {
         if (tableResult) {
             // Create a roll with the desired result
             roll = DoDRoll.create(t.formula);
+
+            // Check range
             const minRoll = (await roll.reroll({minimize: true, async: true})).total;
             const maxRoll = (await roll.reroll({maximize: true, async: true})).total;
             if ( (tableResult.range[0] > maxRoll) || (tableResult.range[1] < minRoll) ) {
-                ui.notifications.warn("Result can not possibly be drawn from this table and formula.");
-                return {roll, results};
+                // Create a roll that guarantees the result
+                roll = DoDRoll.create(tableResult.range[0].toString());
             }
-            // Continue rolling until one or more results are recovered
+
+            // Continue rolling until the desired result is rolled
+            // This is preferred if the roll is shown
             roll = await roll.reroll({async: true});
             let iter = 0;
             while ( !(tableResult.range[0] >= roll.total && roll.total <= tableResult.range[1]) ) {
-                if ( iter >= 10000 ) {
-                    ui.notifications.error(`Failed to draw an available entry from Table ${t.name}, maximum iteration reached`);
+                if ( iter >= 100 ) {
+                    // Stop rolling and create a roll that guarantees the result
+                    roll = DoDRoll.create(tableResult.range[0].toString());
                     break;
                 }
                 roll = await roll.reroll({async: true});
