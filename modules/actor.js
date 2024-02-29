@@ -47,8 +47,8 @@ export class DoDActor extends Actor {
             }
             switch (this.type) {
                 case "character":
-                    this.updateSource({
-                        "system.age": "adult",
+                    await this.updateSource({
+                        "system.age": data.system ? data.system.age : "adult",
                         "prototypeToken.actorLink": true,
                         "prototypeToken.disposition": 1, // Friendly
                         "prototypeToken.bar1.attribute": "hitPoints",
@@ -58,15 +58,15 @@ export class DoDActor extends Actor {
                     });
                     break;
                 case "npc":
-                    this.updateSource({
+                    await this.updateSource({
                         "prototypeToken.disposition": 0, // Neutral
                         "prototypeToken.bar1.attribute": "hitPoints",
                         "prototypeToken.displayBars": 20, // Hovered by Owner
                     });
                     break;
                 case "monster":
-                    this.updateSource({
-                        "system.size": "normal",
+                    await this.updateSource({
+                        "system.size": data.system ? data.system.size : "normal",
                         "prototypeToken.disposition": -1, // Hostile
                         "prototypeToken.bar1.attribute": "hitPoints",
                         "prototypeToken.displayBars": 20, // Hovered by Owner
