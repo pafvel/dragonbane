@@ -330,6 +330,12 @@
         "weaponFeatureTypes": {
             "bludgeoning": "Contundente",
             "bludgeoningTooltip": "Daño contundente",
+            "enchanted1": "Encantada (1)",
+            "enchanted1Tooltip": "Mismo efecto que un arma Encantada a Nivel de Poder 1",
+            "enchanted2": "Encantada (2)",
+            "enchanted2Tooltip": "Mismo efecto que un arma Encantada a Nivel de Poder 2",
+            "enchanted3": "Encantada (3)",
+            "enchanted3Tooltip": "Mismo efecto que un arma Encantada a Nivel de Poder 3",
             "long": "Larga",
             "longTooltip": "Este arma tiene un alcance mayor de lo normal",
             "mounted": "Mountura",
@@ -358,6 +364,7 @@
         "ui": {
             "character-sheet": {
                 "abilities": "Talentos",
+                "abilitiesTooltip": "Talentos Heroicos, Profesionales y por Especie",
                 "age": "Edad",
                 "and": "y",
                 "appearance": "Aspecto",
@@ -422,10 +429,12 @@
                 "skillValue": "",
                 "spell": "Conjuro",
                 "spells": "Conjuros",
+                "spellsTooltip": "Conjuros preparados",
                 "successes": "Éxitos",
                 "tiny-items": "Objetos Diminutos",
                 "traits": "Rasgos",
                 "trained-skills": "Habilidades Entrenadas",
+                "trained-skillsTooltip": "Habilidades con un valor superior a su posibilidad de base",
                 "weakness": "Debilidades",
                 "weapons": "Armas",
                 "weaponSkills": "Habilidades con Armas",
@@ -493,7 +502,15 @@
                 "castMagicTrickTitle": "Lanza un Truco Mágico",
                 "castMagicTrickContent": "¿Gastar <b>1</b> PV para lanzar <b>{spell}</b>?",
                 "deleteItemTitle": "Eliminar {item}",
-                "deleteItemContent": "¿Quieres eliminar <b>{item}</b>?"
+                "deleteItemContent": "¿Quieres eliminar <b>{item}</b>?",
+ 		"trainSkillTitle": "¿Entrenar la habilidad?",
+                "trainSkillContent": "<p>Estás marcando la habilidad <b>{skill}</b> para mejorarla, pero todavía puedes escoger habilidades como Habilidades Entrenadas.</p><p>¿Te gustaría seleccionar <b>{skill}</b> como una de tus Habilidades Entrenadas en lugar de marcarla para mejora?</p><p style=\"font-size:smaller\"><b>Nota:</b> Las habilidades entrenadas duplican su valor base. Para reiniciar una habilidad a su valor base, borra su valor actual.</p>",
+                "trainLabel": "Entrenar",
+                "markLabel": "Marcar",
+                "deleteActorTokenOnScene": "Escenas con Tokens con referencia al Actor",
+                "monsterAttack": "Atacar",
+                "monsterAttackRandom": "Aleatorio",
+                "monsterAttackTitle": "Escoger el ataque del Monstruo"
             }
         },
         "INFO": {
@@ -513,8 +530,12 @@
             "hideNpcWpWidgetHint": "Oculta la Voluntad del PNJ de la hoja de personaje si tiene Voluntad cero y no posee ni Conjuros ni Talentos.",
             "keepOwnershipOnImport": "Mantener la propiedad al importar la aventura",
             "keepOwnershipOnImportHint": "No sobreescribir los derechos de propiedad al importar contenido que ya existe en el mundo.",
+            "useWorldSkillsOnCreateActor": "Usar habilidades del mundo cuando se creen Actores nuevos",
+            "useWorldSkillsOnCreateActorHint": "Si se selecciona, se buscarán habilidades en el mundo en lugar de en el módulo principal cuando se creen nuevos Actores.",
 	    "viewDamagePermission": "Permiso para ver el daño",
-            "viewDamagePermissionHint": "Escoge el nivel mínimo necesario de permiso para que un usuario pueda ver la cantidad de daño que sufre un actor."
+            "viewDamagePermissionHint": "Escoge el nivel mínimo necesario de permiso para que un usuario pueda ver la cantidad de daño que sufre un actor.",
+            "monsterAttackDialogIsDefault": "Escoger ataque de los Monstruos",
+            "monsterAttackDialogIsDefaultHint": "Si se marca, se mostrará por defecto una opción de \"Escoger el ataque del Monstruo\" cuando hagas click izquierdo en el botón de Ataque en las hojas de los Monstruos. Puedes saltarte la opción pulsando MAYÚSCULAS or CTRL junto al click izquierdo. Si no se marca la opción, funcionará justo al contrario."
         },
         "WARNING": {
             "kinAbility": "No se ha encontrado el Talento de Especie: {ability}",
