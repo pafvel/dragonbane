@@ -1,5 +1,12 @@
 # Change Log
 
+## Version 1.8.1
+- Monsters & Characters
+    - Fix for Monster size and Character age being incorrect when importing them for the first time.
+    - NOTE! If you already imported the Bestiary, you must re-import it to get the correct size on Monsters.
+- Localization
+    - Updated ES localization (by Tarot).
+
 ## Version 1.8.0
 - Monsters
     - Select Monster Attack. The default behavior when clicking the Monster Attack button is to open a dialog where you can choose to make a specific attack or a random attack. Skip the dialog and make a random attack by holding SHIFT or CTRL while clicking the button. The default behavior can be reversed in Game Settings.
