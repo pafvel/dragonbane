@@ -504,7 +504,7 @@
                 "deleteItemTitle": "Delete {item}",
                 "deleteItemContent": "Do you want to delete <b>{item}</b>?",
                 "trainSkillTitle": "Train skill?",
-                "trainSkillContent": "<p>You are marking <b>{skill}</b> for improvement, but you have improved fewer skills than your maximum number of trained skills.</p><p>Would you like to select <b>{skill}</b> as one of your trained skills?</p><p style=\"font-size:smaller\"><b>Note:</b> Skills are trained by editing the skill value to twice the base chance. Reset to base chance by deleting the skill value.</p>",
+                "trainSkillContent": "<p>You are marking <b>{skill}</b> for advancement, but you have advanced fewer skills than your allowed number of trained skills.</p><p>Would you like to select <b>{skill}</b> as one of your trained skills instead?</p><p style=\"font-size:smaller\"><b>Note:</b> Skills are trained by editing the skill value to twice the base chance. Reset to base chance by clearing the skill value.</p>",
                 "trainLabel": "Train",
                 "markLabel": "Mark",
                 "deleteActorTokenOnScene": "Scenes with Tokens referring to the Actor",

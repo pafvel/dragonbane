@@ -1,5 +1,33 @@
 # Change Log
 
+## Version 1.8.0
+- Monsters
+    - Select Monster Attack. The default behavior when clicking the Monster Attack button is to open a dialog where you can choose to make a specific attack or a random attack. Skip the dialog and make a random attack by holding SHIFT or CTRL while clicking the button. The default behavior can be reversed in Game Settings.
+- Characters
+    - Training skills
+        - Added dialog box when marking a skill for improvement when the intent probably was to train the skill.
+        - Changed labels and added tooltips on character sheet.
+    - Setting for using world skills for new characters.
+    - Removed HP/WP roll on shift rest (by @rayners).
+    - DSN die when resting a round is now always green.
+- NPCs
+    - Added Encumbrance to NPCs.
+- Items
+    - Added Enchanted weapon feature.
+- Macros
+    - Added macros for attribute tests. The macros also work for NPCs & Monsters.
+- Journal
+    - Fixed spelling errors in Introduction journal.
+    - Adjusted bottom margin on info box.
+- Localization
+    - Updated german localization (by @KaiderWeise).
+    - Added french localization (by @Harfang).
+- Miscellaneous
+    - Prevent double-clicks when clicking on buttons in chat messages.
+    - Warning when deleting actor that has tokens on scenes.
+    - Graceful handling of damage application on token without actor.
+    - Replaced .data with .system in handlebars.
+
 ## Version 1.7.1
 - Journals
     - Show WP on NPCs in Journals, even if they don't have spells or abilities.
