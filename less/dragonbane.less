@@ -21,6 +21,7 @@
   --color-border-highlight-alt: #007544;
   --color-underline-header: #237262;
   --color-text-dark-header: #237262;
+  scrollbar-color: var(--color-text-dark-header) #111;
 }
 
 @font-face {
@@ -516,9 +517,9 @@
     .sheet-table-header {
         color: whitesmoke;            
         background-image: url("art/ui/title-bar.webp");
-        background-size: contain;
+        background-size: calc(100% - 4em) 32px;
+        background-repeat: no-repeat;
         background-clip: content-box;
-        background-repeat: repeat-x;
         background-position: center center;
         height: 36px;
         th {
@@ -773,7 +774,7 @@
             background-size: contain, contain, contain;
             background-clip: border-box, border-box, content-box;
             background-repeat: no-repeat, no-repeat, repeat-x;
-            background-position: right -8px center, left center, center center;
+            background-position: right -8px center, left +4px center, center center;
             height: 2.5em;
             padding-left: 30px;
             min-width: 160px;
