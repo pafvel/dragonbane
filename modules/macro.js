@@ -34,6 +34,14 @@ export async function createItemMacro(data, slot) {
     }
 }
 
+/**
+ * Roll an attribute test
+ * @param {Actor} actor - Actor performing the test
+ * @param {('STR'|'CON'|'AGL'|'INT'|'WIL'|'CHA')} attributeName - Attribute being tested ('STR', 'CON', 'AGL', 'INT', 'WIL', 'CHA')
+ * @param {Object} [options] - options for the test
+ * @param {number} [options.manualBanes] - Number of manual (set outside the system) banes to apply
+ * @param {number] [options.manualBoons] - Number of manual (set outside the system) boons to apply
+ */
 export async function rollAttributeMacro(actor, attributeName, options = {}) {
 
     if (!actor || !(actor instanceof DoDActor)) {
@@ -41,7 +49,7 @@ export async function rollAttributeMacro(actor, attributeName, options = {}) {
         return;
     }
     
-    let test = new DoDAttributeTest(actor, attributeName, { defaultBanesBoons: true });
+    let test = new DoDAttributeTest(actor, attributeName, { defaultBanesBoons: true, ...options });
     await test.roll();
 }
 

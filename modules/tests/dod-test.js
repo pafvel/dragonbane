@@ -1,8 +1,16 @@
 import DoD_Utility from "../utility.js";
 import DoDRoll from "../roll.js";
 
+/** A Dragonbane test roll */
 export default class DoDTest {
 
+    /**
+     * Create a Test
+     * @param {Actor} actor - Actor performing the test
+     * @param {Object} [options] - Options for the test
+     * @param {number} [options.manualBanes] - Number of manual (set outside the system) banes to apply
+     * @param {number] [options.manualBoons] - Number of manual (set outside the system) boons to apply
+     */
     constructor(actor, options = {}) {
         this.actor = actor;
         this.options = options;
@@ -13,6 +21,10 @@ export default class DoDTest {
         this.defaultBanesBoons = options?.defaultBanesBoons;
         this.skipDialog = options?.skipDialog || this.noBanesBoons || this.defaultBanesBoons;
         this.autoSuccess = options?.autoSuccess;
+
+        // support manually passed banes/boons
+        this.manualBanes = options?.manualBanes;
+        this.manualBoons = options?.manualBoons;
     }
 
     async roll() {
@@ -123,6 +135,15 @@ export default class DoDTest {
                     boons.push( {source: item.name, value: value});
                 }
             }
+        }
+
+        // Maybe shorten these to "Manual (x<number>)" in the future
+        if (this.manualBanes) {
+            for(let i = 0; i < this.manualBanes; i++) { banes.push({ source: 'Manual', value: true }); }
+        }
+
+        if (this.manualBoons) {
+            for(let i = 0; i < this.manualBoons; i++) { boons.push({ source: 'Manual', value: true }); }
         }
 
         this.dialogData.banes = banes;
