@@ -98,8 +98,8 @@ export default class DoDTest {
             return;
         }
 
-        let banes = [];
-        let boons = [];
+        let banes = this.options.banes ?? [];
+        let boons = this.options.boons ?? [];
 
         if (this.attribute && this.actor.hasCondition(this.attribute)) {
             banes.push( {source: game.i18n.localize("DoD.conditions." + this.attribute), value: true});
