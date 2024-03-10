@@ -60,7 +60,7 @@ export default class DoDCharacterSheet extends ActorSheet {
      }
 
      #onKeydown(event) {
-        if (event.code === "Delete" && this.#focusElement) {
+        if ((event.code === "Delete" || event.code === "Backspace") && this.#focusElement) {
             // Don't delete items if an input element has focus
             if (event.currentTarget?.activeElement.nodeName.toLowerCase() === "input") {
                 return;
