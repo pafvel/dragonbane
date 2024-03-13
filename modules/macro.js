@@ -42,7 +42,7 @@ export async function rollAttributeMacro(actor, attributeName, options = {}) {
     }
     
     let test = new DoDAttributeTest(actor, attributeName, {...{ defaultBanesBoons: true }, ...options});
-    await test.roll();
+    return await test.roll();
 }
 
 export function rollItemMacro(itemName, itemType, options = {}) {
