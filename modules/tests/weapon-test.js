@@ -35,7 +35,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             });
         }
 
-        const actorToken = canvas.scene?.tokens?.find(t => t.actor.uuid == this.actor.uuid);
+        const actorToken = canvas.scene?.tokens?.find(t => t.actor?.uuid == this.actor.uuid);
         const targetToken = this.options.targets?.length > 0 ? this.options.targets[0].document : null;
         const distance = (actorToken && targetToken) ? canvas.grid.measureDistance(actorToken, targetToken, {gridSpaces: true}) : 0;
         const isInRange = distance <= this.weapon.system.calculatedRange;
