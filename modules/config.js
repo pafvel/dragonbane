@@ -136,4 +136,6 @@ DoD.activeEffectChanges = {
     "system.attributes.int.value" : "DoD.attributes.int",
     "system.attributes.wil.value" : "DoD.attributes.wil",
     "system.attributes.cha.value" : "DoD.attributes.cha",
+    "damageBonus.agl" : "DoD.ui.character-sheet.damageBonusAGL",
+    "damageBonus.str" : "DoD.ui.character-sheet.damageBonusSTR",
 };

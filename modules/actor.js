@@ -309,8 +309,8 @@ export class DoDActor extends Actor {
         this.system.attributes.cha.value = DoD_Utility.clamp(this.system.attributes.cha.value, 3, 18);
 
         // Damage Bonus
-        this.system.damageBonus.agl = DoD_Utility.calculateDamageBonus(this.system.attributes.agl.value);
-        this.system.damageBonus.str = DoD_Utility.calculateDamageBonus(this.system.attributes.str.value);
+        this.system.damageBonus.agl = DoD_Utility.calculateDamageBonus(this.system.attributes.agl.value, this.system.damageBonus.aglModifiers);
+        this.system.damageBonus.str = DoD_Utility.calculateDamageBonus(this.system.attributes.str.value, this.system.damageBonus.strModifiers);
 
         // Will Points
         let maxWillPoints = this.system.attributes.wil.value;

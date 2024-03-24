@@ -1,3 +1,4 @@
+import { DoD } from "./config.js";
 import DoDSkillTest from "./tests/skill-test.js";
 
 export default class DoD_Utility {
@@ -35,10 +36,92 @@ export default class DoD_Utility {
         return 7;
     }
 
-    static calculateDamageBonus(attribute) {
-        if (attribute <=12) return "0";
-        if (attribute <=16) return game.i18n.localize("DoD.dice.d4");
-        return game.i18n.localize("DoD.dice.d6");
+    static calculateDamageBonus(attribute, modifiers = null) {
+
+        let value;
+        if (attribute <=12) {
+            value = DoD.dice.none;
+        } else if (attribute <=16) {
+            value = DoD.dice.d4;
+        } else {
+            value = DoD.dice.d6;
+        }
+        const entries = Object.entries(DoD.dice);
+        let index = entries.findIndex(e => e[1] == value);
+
+        // Apply modifiers from active effects after calculating value derived from attribute
+        if (modifiers) {
+            for (let modifier of modifiers) {
+                const modes = CONST.ACTIVE_EFFECT_MODES;
+                switch ( modifier.mode ) {
+                    case modes.ADD:
+                        let i = parseInt(modifier.value);
+                        if(!isNaN(i)) {
+                            index += i;
+                        }
+                        index = DoD_Utility.clamp(index, 0, entries.length);
+                        value = entries[index][1];
+                        break;
+                    case modes.OVERRIDE:
+                        value = DoD.dice[String(modifier.value).toLowerCase()];
+                        index = entries.findIndex(e => e[1] == value);
+                        index = DoD_Utility.clamp(index, 0, entries.length);
+                        return index > 0 ? game.i18n.localize(value) : "0";
+                    case modes.UPGRADE:
+                        let upgradeValue = DoD.dice[String(modifier.value).toLowerCase()];
+                        let upgradeIndex = entries.findIndex(e => e[1] == upgradeValue);
+                        index = Math.max(index, upgradeIndex);
+                        index = DoD_Utility.clamp(index, 0, entries.length);
+                        value = entries[index][1];
+                        break;
+                    case modes.DOWNGRADE:
+                        let downgradeValue = DoD.dice[String(modifier.value).toLowerCase()];
+                        let downgradeIndex = entries.findIndex(e => e[1] == downgradeValue);
+                        index = Math.min(index, downgradeIndex);
+                        index = DoD_Utility.clamp(index, 0, entries.length);
+                        value = entries[index][1];
+                        break;
+                    case modes.MULTIPLY:
+                    default:
+                        break;
+                }
+            }
+        }
+        return index > 0 ? game.i18n.localize(value) : "0";
+
+        /*
+        let bonus;
+        if (attribute <=12) {
+            bonus = 0;
+        } else if (attribute <=16) {
+            bonus = 1;
+        } else {
+            bonus = 2;
+        }
+
+        for (let modifier of modifiers) {
+            if (modifier) {
+                const modes = CONST.ACTIVE_EFFECT_MODES;
+                switch ( modifier.mode ) {
+                    case modes.ADD:
+                        bonus += parseInt(modifier.value);
+                        break;
+                    case modes.OVERRIDE:
+                        const value = DoD.dice[String(modifier.value).toLowerCase()];
+                        return value ? game.i18n.localize(value) : "0";
+                    case modes.UPGRADE:
+                    case modes.DOWNGRADE:
+                    case modes.MULTIPLY:
+                        default:
+                        break;
+                }
+            }
+        }
+        const entries = Object.entries(DoD.dice);
+        bonus = DoD_Utility.clamp(bonus, 0, entries.length);
+        const value = bonus > 0 ? entries[bonus][1] : "0";
+        return game.i18n.localize(value);
+        */
     }
 
     static calculateMovementModifier(attribute) {
