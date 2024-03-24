@@ -539,7 +539,9 @@
             "viewDamagePermission": "Rättighet att se skada",
             "viewDamagePermissionHint": "Välj den lägsta nivån av rättighet som krävs för att en spelare ska se hur mycket skada en karaktär tar.",
             "monsterAttackDialogIsDefault": "Välj monsterattack",
-            "monsterAttackDialogIsDefaultHint": "Dialogen för att välja monsterattack visas när man vänsterklickar på Attack-knappen på karaktärsarket för Monster. Hoppa över dialogen genom att samtidigt hålla ner SHIFT eller CTRL. Om detta alternativ ej är ikryssat, så är funktionen den omvända, dvs att dialogen visas om man håller ner SHIFT eller CTRL."
+            "monsterAttackDialogIsDefaultHint": "Dialogen för att välja monsterattack visas när man vänsterklickar på Attack-knappen på karaktärsarket för Monster. Hoppa över dialogen genom att samtidigt hålla ner SHIFT eller CTRL. Om detta alternativ ej är ikryssat, så är funktionen den omvända, dvs att dialogen visas om man håller ner SHIFT eller CTRL.",
+            "allowDealDamageOnSelected": "Skada på vald spelfigur",
+            "allowDealDamageOnSelectedHint": "Spelledaren (GM) kan tillfoga skada (och hela skada) på vald spelfigur om ingen spelfigur satts som mål."
         },
         "WARNING": {
             "kinAbility": "Kan ej hitta Släktesförmåga: {ability}",

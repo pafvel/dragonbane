@@ -228,6 +228,15 @@ function registerSettings() {
         default: true,
         type: Boolean
     });
+    // If true, allows dealing damage using the selection method
+    game.settings.register("dragonbane", "allowDealDamageOnSelected", {
+        name: "DoD.SETTINGS.allowDealDamageOnSelected",
+        hint: "DoD.SETTINGS.allowDealDamageOnSelectedHint",
+        scope: "world",
+        config: true,
+        default: false,
+        type: Boolean
+    });
 }
 
 Hooks.once("init", function () {

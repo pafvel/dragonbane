@@ -1,6 +1,7 @@
 {{> "systems/dragonbane/templates/partials/roll.hbs"}}
 
-<div class="permission-owner skill-roll" data-actor-id="{{actor.uuid}}">
+<div class="skill-roll" data-actor-id="{{actor.uuid}}" data-skill-id="{{skill.id}}" data-target="{{target}}" data-result="{{result}}">
+<div class="permission-owner" data-actor-id="{{actor.uuid}}">
 
 {{#if success}}
 
@@ -113,4 +114,5 @@
 
 {{/if}}  <!-- success -->
 
+</div>
 </div>

@@ -98,8 +98,8 @@ export default class DoDTest {
             return;
         }
 
-        let banes = [];
-        let boons = [];
+        let banes = this.options.banes ?? [];
+        let boons = this.options.boons ?? [];
 
         if (this.attribute && this.actor.hasCondition(this.attribute)) {
             banes.push( {source: game.i18n.localize("DoD.conditions." + this.attribute), value: true});
@@ -138,8 +138,8 @@ export default class DoDTest {
 
         if (this.skipDialog) {
             return {
-                banes: this.options.defaultBanesBoons ? this.dialogData.banes.map((e) => e.source) : [],
-                boons: this.options.defaultBanesBoons ? this.dialogData.boons.map((e) => e.source) : [],
+                banes: this.options.noBanesBoons ? [] : this.dialogData.banes.map((e) => e.source),
+                boons: this.options.noBanesBoons ? [] : this.dialogData.boons.map((e) => e.source),
                 extraBanes: 0,
                 extraBoons: 0
             }

@@ -60,7 +60,7 @@ export default class DoDCharacterSheet extends ActorSheet {
      }
 
      #onKeydown(event) {
-        if (event.code === "Delete" && this.#focusElement) {
+        if ((event.code === "Delete" || event.code === "Backspace") && this.#focusElement) {
             // Don't delete items if an input element has focus
             if (event.currentTarget?.activeElement.nodeName.toLowerCase() === "input") {
                 return;
@@ -327,6 +327,8 @@ export default class DoDCharacterSheet extends ActorSheet {
             let coins = sheetData.actor.system.currency.gc + sheetData.actor.system.currency.sc + sheetData.actor.system.currency.cc;
             sheetData.encumbrance += Math.floor(coins/100);    
         }
+        // Maximum 2 decimals
+        sheetData.encumbrance = Math.round(100 * sheetData.encumbrance) / 100;
 
         if (this.actor.type == "character") {
             sheetData.overEncumbered = sheetData.encumbrance > sheetData.maxEncumbrance;

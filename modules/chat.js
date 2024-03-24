@@ -19,23 +19,42 @@ export function addChatListeners(app, html, data) {
 
 export function addChatMessageContextMenuOptions(html, options) {
 
+    const getTarget = function(element)
+    {
+        let target = null;
+        if (element) {
+            // Get target from message data
+            if (element.dataset.targetId) {
+                target = DoD_Utility.getActorFromUUID(element.dataset.targetId);
+            }
+            // Get target from user target
+            if (!target) {
+                const targets = Array.from(game.user.targets);
+                if (targets.length > 0) {
+                    target = targets[0].actor;
+                }
+            }    
+        }
+        return target;
+    }
+
     const canDealTargetDamage = li =>
     {
-        const element = li.find(".damage-roll")[0];
-        if (element?.dataset.targetId) {
-            const target = DoD_Utility.getActorFromUUID(element.dataset.targetId);
-            return target?.isOwner;
+        if (li.find(".healing-roll").length > 0) {
+            return false;
         }
-        return false;
+        const element = li.find(".damage-roll")[0] || li.find(".dice-total")[0]
+        const target = getTarget(element);
+        return target ? target.isOwner : false;
     }
 
     const dealTargetDamage = function(li, multiplier = 1, ignoreArmor = false) {
         const damageData = {};
-        const element = li.find(".damage-roll")[0];
+        const element = li.find(".damage-roll")[0] || li.find(".dice-total")[0];
 
-        damageData.damage = element.dataset.damage;
-        damageData.damageType = element.dataset.damageType.substr(String("DoD.damageTypes.").length);
-        damageData.actor = DoD_Utility.getActorFromUUID(element.dataset.targetId);
+        damageData.damage = element.dataset.damage ?? Number(element.innerText);
+        damageData.damageType = element.dataset.damageType?.substr(String("DoD.damageTypes.").length);
+        damageData.actor = getTarget(element);
         damageData.multiplier = multiplier;
         damageData.ignoreArmor = ignoreArmor || element.dataset.ignoreArmor;
 
@@ -51,20 +70,20 @@ export function addChatMessageContextMenuOptions(html, options) {
 
     const canHealTarget = li =>
     {
-        const element = li.find(".healing-roll")[0];
-        if (element?.dataset.targetId) {
-            const target = DoD_Utility.getActorFromUUID(element.dataset.targetId);
-            return target?.isOwner;
+        if (li.find(".damage-roll").length > 0) {
+            return false;
         }
-        return false;
+        const element = li.find(".healing-roll")[0] || li.find(".dice-total")[0]
+        const target = getTarget(element);
+        return target ? target.isOwner : false;
     }
 
     const healTarget = function(li, multiplier = 1, ignoreArmor = false) {
         const healingData = {};
-        const element = li.find(".healing-roll")[0];
+        const element = li.find(".healing-roll")[0] || li.find(".dice-total")[0];
 
-        healingData.damage = element.dataset.healing;
-        healingData.actor = DoD_Utility.getActorFromUUID(element.dataset.targetId);
+        healingData.damage = element.dataset.healing ?? Number(element.innerText);
+        healingData.actor = getTarget(element);
 
         if (!(healingData.actor instanceof DoDActor)){
             DoD_Utility.WARNING("TOKEN.WarningNoActor");
@@ -78,15 +97,19 @@ export function addChatMessageContextMenuOptions(html, options) {
 
     const canDealSelectedDamage = li =>
     {
-        if(canDealTargetDamage(li)) {
+        if(!game.user.isGM || canDealTargetDamage(li)) {
             return false;
         }
         
+        if (!game.settings.get("dragonbane", "allowDealDamageOnSelected")) {
+            return false;
+        }
+
         if (canvas.tokens.controlled.length == 0 || li.find(".healing-roll").length > 0 || li.find(".skill-roll").length > 0) {
             return false;
         }
 
-        if ((li.find(".damage-roll").length > 0 || li.find(".dice-total").length)) {
+        if ((li.find(".damage-roll").length > 0)) {
             for (const token of canvas.tokens.controlled) {
                 if (!token.isOwner) {
                     return false;
@@ -99,9 +122,9 @@ export function addChatMessageContextMenuOptions(html, options) {
 
     const dealSelectedDamage = function(li, multiplier = 1, ignoreArmor = false) {
         const damageData = {};
-        const element = li.find(".damage-roll")[0] || li.find(".dice-total")[0];
+        const element = li.find(".damage-roll")[0];
 
-        damageData.damage = element.dataset.damage ?? Number(element.innerText);
+        damageData.damage = element.dataset.damage;
         damageData.damageType = element.dataset.damageType?.substr(String("DoD.damageTypes.").length);
         damageData.actor = canvas.tokens.controlled[0].actor;
         damageData.multiplier = multiplier;
@@ -123,7 +146,7 @@ export function addChatMessageContextMenuOptions(html, options) {
 
     const canHealSelectedDamage = li =>
     {
-        if (canHealTarget(li)) {
+        if (!game.user.isGM || canHealTarget(li)) {
             return false;
         }
 
@@ -131,7 +154,7 @@ export function addChatMessageContextMenuOptions(html, options) {
             return false;
         }
 
-        if (li.find(".healing-roll").length > 0 || li.find(".dice-total").length > 0) {
+        if (li.find(".healing-roll").length > 0) {
             for (const token of canvas.tokens.controlled) {
                 if (!token.isOwner) {
                     return false;

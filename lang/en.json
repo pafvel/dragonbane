@@ -535,7 +535,9 @@
             "viewDamagePermission": "Permission to see Damage",
             "viewDamagePermissionHint": "Choose the minimum permission level a user must have to see the amount of damage an actor takes.",
             "monsterAttackDialogIsDefault": "Select Monster Attack",
-            "monsterAttackDialogIsDefaultHint": "If checked, the \"Select Monster Attack\" dialog is shown by default when left-clicking the Attack button on the Monster sheet. The dialog is skipped if SHIFT or CTRL is pressed when left-clicking. If un-checked, the behavior is the opposite."
+            "monsterAttackDialogIsDefaultHint": "If checked, the \"Select Monster Attack\" dialog is shown by default when left-clicking the Attack button on the Monster sheet. The dialog is skipped if SHIFT or CTRL is pressed when left-clicking. If un-checked, the behavior is the opposite.",
+            "allowDealDamageOnSelected": "Damage selected token",
+            "allowDealDamageOnSelectedHint": "If checked, the GM may deal damage (and heal) the selected token if no token has been targeted."
         },
         "WARNING": {
             "kinAbility": "Could not find Kin Ability: {ability}",

@@ -1,5 +1,21 @@
 # Change Log
 
+## Version 1.8.2
+- Combat
+    - Players can no longer use the selection method for dealing damage. This was a source of confusion and frequently made players deal damage to their own characters.
+    - Setting to allow GMs to use the selection method for dealing damage.
+- NPC & Monster sheets
+    - Look for Backspace key as well as Delete. This will allow Mac users to use the Delete key without modifiers when deleting items from the main tab of the NPC and Monster sheets. (by @rayners)
+- Bug fixes
+    - Fix for weapon tests not working if a token on the scene is missing its actor.
+    - Fix for floating point precision when calculating encumbrance.
+    - Minor visual fixes
+- Localization
+    - Updated FR localization. (by @Harfang)
+- Miscellaneous
+    - A few minor improvements for module and macro creators (see github for details)
+
+
 ## Version 1.8.1
 - Monsters & Characters
     - Fix for Monster size and Character age being incorrect when importing them for the first time.
