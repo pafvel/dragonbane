@@ -9,6 +9,8 @@ import * as DoDMacro from "./modules/macro.js";
 import * as DoDMigrate from "./modules/migrate.js";
 import DoD_Utility from "./modules/utility.js";
 import DoDRoll from "./modules/roll.js";
+import DoDActiveEffect from "./modules/active-effect.js";
+import DoDActiveEffectConfig from "./modules/active-effect-config.js";
 
 function registerHandlebarsHelpers() {
 
@@ -235,6 +237,7 @@ Hooks.once("init", function () {
 
     CONFIG.Actor.documentClass = DoDActor;
     CONFIG.Item.documentClass = DoDItem;
+    CONFIG.ActiveEffect.documentClass = DoDActiveEffect;
 
     CONFIG.Dice.rolls.unshift(DoDRoll);
 
@@ -243,6 +246,8 @@ Hooks.once("init", function () {
 
     Items.unregisterSheet("core", ItemSheet);
     Items.registerSheet("DoD", DoDItemSheet, { makeDefault: true });
+
+    DocumentSheetConfig.registerSheet(ActiveEffect, "DoD", DoDActiveEffectConfig, {makeDefault :true});
 
     registerHandlebarsHelpers();
     preloadHandlebarsTemplates();

@@ -128,3 +128,12 @@ DoD.attributes = {
     "wil": "DoD.attributes.wil",
     "cha": "DoD.attributes.cha"
 };
+
+DoD.activeEffectChanges = {
+    "system.attributes.str.value" : "DoD.attributes.str",
+    "system.attributes.con.value" : "DoD.attributes.con",
+    "system.attributes.agl.value" : "DoD.attributes.agl",
+    "system.attributes.int.value" : "DoD.attributes.int",
+    "system.attributes.wil.value" : "DoD.attributes.wil",
+    "system.attributes.cha.value" : "DoD.attributes.cha",
+};

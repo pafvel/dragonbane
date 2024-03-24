@@ -3,70 +3,117 @@
         <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
         <h1><input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'Name' }}"/></h1>
     </header>
-    <div class="sheet-content">
-        <table>
-            <tr>
-                <th>{{localize "DoD.gear.weight"}}</th>
-                <th>{{localize "DoD.gear.quantity"}}</th>
-                <th>{{localize "DoD.gear.cost"}}</th>
-                <th>{{localize "DoD.gear.supply"}}</th>
-            </tr>
-            <tr>
-                <td>
-                    <input name="system.weight" type="text" value="{{system.weight}}" data-dtype="Number" />
-                </td>
-                <td>
-                    <input name="system.quantity" type="text" value="{{system.quantity}}" data-dtype="Number" />
-                </td>
-                <td>
-                    <input name="system.cost" type="text" value="{{system.cost}}" />
-                </td>
-                <td>
-                    <select name="system.supply">
-                        {{#select system.supply}}
-                        {{#each config.supplyTypes as |name type|}}
-                        <option value="{{type}}">{{localize name}}</option>
-                        {{/each}}
-                        {{/select}}
-                    </select>
-                </td>
-            </tr>
-        </table>
-        <table>
-            <tr>
-                <th>{{localize "DoD.gear.type"}}</th>
-                <th>{{localize "DoD.gear.memento"}}</th>
-            </tr>
-            <tr>
-                <td>
-                    <select name="system.type">
-                        {{#select system.type}}
-                        {{#each config.itemTypes as |name type|}}
-                        <option value="{{type}}">{{localize name}}</option>
-                        {{/each}}
-                        {{/select}}
-                    </select>
-                </td>
-                <td>
-                    <input class="inline-edit edit-memento" name="system.memento" data-field="system.memento" type="checkbox" {{checked system.memento}} />
-                </td>
-            </tr>
-        </table>
-        <table>
-            <tr>
-                <th>{{localize "DoD.ui.dialog.boons"}}</th>
-                <th>{{localize "DoD.ui.dialog.banes"}}</th>
-            </tr>
-            <tr>
-                <td>
-                    <input name="system.boons" type="text" value="{{system.boons}}" />
-                </td>
-                <td>
-                    <input name="system.banes" type="text" value="{{system.banes}}" />
-                </td>
-        </table>
 
-        {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
+    <div class="sheet-content">
+        {{!-- Sheet Tab Navigation --}}
+        <nav class="sheet-tabs tabs" data-group="primary">
+          {{!-- Default tab is specified in item-sheet.js --}}
+          <a class="item" data-tab="description">description</a>
+          <a class="item" data-tab="details">details</a>
+          <a class="item" data-tab="effects">effects</a>
+        </nav>
+
+        {{!-- Sheet Body --}}
+        <section class="sheet-body" style="height: 100%">
+            {{!-- Description Tab --}}
+            <div class="tab" data-group="primary" data-tab="description" style="height: 100%">
+                {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
+            </div>
+            
+            {{!-- Details Tab --}}
+            <div class="tab" data-group="primary" data-tab="details">
+                <table>
+                    <tr>
+                        <th>{{localize "DoD.gear.weight"}}</th>
+                        <th>{{localize "DoD.gear.quantity"}}</th>
+                        <th>{{localize "DoD.gear.cost"}}</th>
+                        <th>{{localize "DoD.gear.supply"}}</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input name="system.weight" type="text" value="{{system.weight}}" data-dtype="Number" />
+                        </td>
+                        <td>
+                            <input name="system.quantity" type="text" value="{{system.quantity}}" data-dtype="Number" />
+                        </td>
+                        <td>
+                            <input name="system.cost" type="text" value="{{system.cost}}" />
+                        </td>
+                        <td>
+                            <select name="system.supply">
+                                {{#select system.supply}}
+                                {{#each config.supplyTypes as |name type|}}
+                                <option value="{{type}}">{{localize name}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <th>{{localize "DoD.gear.type"}}</th>
+                        <th>{{localize "DoD.gear.memento"}}</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <select name="system.type">
+                                {{#select system.type}}
+                                {{#each config.itemTypes as |name type|}}
+                                <option value="{{type}}">{{localize name}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                        </td>
+                        <td>
+                            <input class="inline-edit edit-memento" name="system.memento" data-field="system.memento" type="checkbox" {{checked system.memento}} />
+                        </td>
+                    </tr>
+                </table>
+                <table>
+                    <tr>
+                        <th>{{localize "DoD.ui.dialog.boons"}}</th>
+                        <th>{{localize "DoD.ui.dialog.banes"}}</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input name="system.boons" type="text" value="{{system.boons}}" />
+                        </td>
+                        <td>
+                            <input name="system.banes" type="text" value="{{system.banes}}" />
+                        </td>
+                </table>                
+            </div>
+
+            {{!-- Effects Tab --}}
+            <div class="tab" data-group="primary" data-tab="effects">
+                <table class="item-list effects-list">
+                    <tr>
+                        <th>Effect</th>
+                        <th>
+                            <a class="effect-control" data-action="create">
+                                <i class="fas fa-plus"></i>
+                            </a>
+                        </th>
+                    </tr>
+                    {{#each effects as |effect|}}
+                    <tr class="item effect" data-effect-id="{{effect.id}}">
+                        <td class="item-name effect-name">
+                            <h4>{{effect.label}}</h4>
+                        </td>
+                        <td class="effect-controls">
+                            <a class="effect-control" data-action="edit" title="{{localize 'DoD.EffectEdit'}}">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a class="effect-control" data-action="delete" title="{{localize 'DoD.EffectDelete'}}">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    {{/each}}
+                </table>
+            </div>
+        </section>
     </div>
 </form>
 

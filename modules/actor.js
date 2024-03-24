@@ -300,6 +300,14 @@ export class DoDActor extends Actor {
     }
 
     _prepareCharacterStats() {
+        // Clamp attributes
+        this.system.attributes.str.value = DoD_Utility.clamp(this.system.attributes.str.value, 3, 18);
+        this.system.attributes.con.value = DoD_Utility.clamp(this.system.attributes.con.value, 3, 18);
+        this.system.attributes.agl.value = DoD_Utility.clamp(this.system.attributes.agl.value, 3, 18);
+        this.system.attributes.int.value = DoD_Utility.clamp(this.system.attributes.int.value, 3, 18);
+        this.system.attributes.wil.value = DoD_Utility.clamp(this.system.attributes.wil.value, 3, 18);
+        this.system.attributes.cha.value = DoD_Utility.clamp(this.system.attributes.cha.value, 3, 18);
+
         // Damage Bonus
         this.system.damageBonus.agl = DoD_Utility.calculateDamageBonus(this.system.attributes.agl.value);
         this.system.damageBonus.str = DoD_Utility.calculateDamageBonus(this.system.attributes.str.value);
