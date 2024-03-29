@@ -3,6 +3,16 @@ import DoDRoll from "../roll.js";
 
 export default class DoDTest {
 
+/*
+    DoDTest options:
+    @param {Boolean} noBanesBoons : make the roll without any banes or boons applied, skips dialog
+    @param {Boolean} defaultBanesBoons : make the roll with the default banes and boons applied, skips dialog
+    @param {Boolean} autoSuccess : the test will automatically succeed (used by Monsters casting spells)
+    @param {Array} banes : array of Objects with {src: <localized string of source>; value: <true, to check by default in the dialog; false otherwise>}
+    @param {Array} boons : array of Objects with {src: <localized string of source>; value: <true, to check by default in the dialog; false otherwise>}
+    @param {Integer} extraBanes : the number of additional banes to apply
+    @param {Integer} extraBoons : the number of additional boons to apply
+*/
     constructor(actor, options = {}) {
         this.actor = actor;
         this.options = options;
