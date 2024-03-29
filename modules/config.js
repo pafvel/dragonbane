@@ -46,7 +46,7 @@ DoD.castingTimeTypes = {
 };
 
 DoD.dice = {
-    none: "",
+    none: "0",
     d4: "DoD.dice.d4",
     d6: "DoD.dice.d6",
     d8: "DoD.dice.d8",

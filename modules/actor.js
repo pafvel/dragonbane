@@ -1,3 +1,4 @@
+import { DoD } from "./config.js";
 import DoD_Utility from "./utility.js";
 import DoDSkillTest from "./tests/skill-test.js";
 import DoDRoll from "./roll.js";
@@ -299,6 +300,49 @@ export class DoDActor extends Actor {
         }
     }
 
+    static #modifyDamageBonus(value, modifiers) {
+        const entries = Object.entries(DoD.dice);
+        let index = entries.findIndex(e => e[1] == value);
+
+        // Apply modifiers from active effects
+        for (let modifier of modifiers) {
+            const modes = CONST.ACTIVE_EFFECT_MODES;
+            switch ( modifier.mode ) {
+                case modes.ADD:
+                    let i = parseInt(modifier.value);
+                    if(!isNaN(i)) {
+                        index += i;
+                    }
+                    index = DoD_Utility.clamp(index, 0, entries.length);
+                    value = entries[index][1];
+                    break;
+                case modes.OVERRIDE:
+                    value = DoD.dice[String(modifier.value).toLowerCase()];
+                    index = entries.findIndex(e => e[1] == value);
+                    index = DoD_Utility.clamp(index, 0, entries.length);
+                    return index > 0 ? value : DoD.dice.none;
+                case modes.UPGRADE:
+                    let upgradeValue = DoD.dice[String(modifier.value).toLowerCase()];
+                    let upgradeIndex = entries.findIndex(e => e[1] == upgradeValue);
+                    index = Math.max(index, upgradeIndex);
+                    index = DoD_Utility.clamp(index, 0, entries.length);
+                    value = entries[index][1];
+                    break;
+                case modes.DOWNGRADE:
+                    let downgradeValue = DoD.dice[String(modifier.value).toLowerCase()];
+                    let downgradeIndex = entries.findIndex(e => e[1] == downgradeValue);
+                    index = Math.min(index, downgradeIndex);
+                    index = DoD_Utility.clamp(index, 0, entries.length);
+                    value = entries[index][1];
+                    break;
+                case modes.MULTIPLY:
+                default:
+                    break;
+            }
+        }
+        return value;
+    }
+
     _prepareCharacterStats() {
         // Clamp attributes
         this.system.attributes.str.value = DoD_Utility.clamp(this.system.attributes.str.value, 3, 18);
@@ -308,9 +352,21 @@ export class DoDActor extends Actor {
         this.system.attributes.wil.value = DoD_Utility.clamp(this.system.attributes.wil.value, 3, 18);
         this.system.attributes.cha.value = DoD_Utility.clamp(this.system.attributes.cha.value, 3, 18);
 
-        // Damage Bonus
-        this.system.damageBonus.agl = DoD_Utility.calculateDamageBonus(this.system.attributes.agl.value, this.system.damageBonus.aglModifiers);
-        this.system.damageBonus.str = DoD_Utility.calculateDamageBonus(this.system.attributes.str.value, this.system.damageBonus.strModifiers);
+        // Damage Bonus AGL
+        let damageBonusAgl = DoD_Utility.calculateDamageBonus(this.system.attributes.agl.value);
+        if (this.system.damageBonus.aglModifiers) {
+            damageBonusAgl = DoDActor.#modifyDamageBonus(damageBonusAgl, this.system.damageBonus.aglModifiers)
+            delete this.system.damageBonus.aglModifiers;
+        }
+        this.system.damageBonus.agl = game.i18n.localize(damageBonusAgl);
+
+        // Damage Bonus STR
+        let damageBonusStr = DoD_Utility.calculateDamageBonus(this.system.attributes.str.value);
+        if (this.system.damageBonus.strModifiers) {
+            damageBonusStr = DoDActor.#modifyDamageBonus(damageBonusStr, this.system.damageBonus.strModifiers)
+            delete this.system.damageBonus.strModifiers;
+        }
+        this.system.damageBonus.str = game.i18n.localize(damageBonusStr);
 
         // Will Points
         let maxWillPoints = this.system.attributes.wil.value;
@@ -367,7 +423,19 @@ export class DoDActor extends Actor {
     }
 
     _prepareNpcStats() {
+        // Damage Bonus AGL
+        if (this.system.damageBonus.aglModifiers) {
+            let upgradeValue = DoD.dice[String(this.system.damageBonus.agl).toLowerCase()];
+            let damageBonusAgl = DoDActor.#modifyDamageBonus(upgradeValue, this.system.damageBonus.aglModifiers)
+            this.system.damageBonus.agl = game.i18n.localize(damageBonusAgl);
+        }
 
+        // Damage Bonus STR
+        if (this.system.damageBonus.strModifiers) {
+            let upgradeValue = DoD.dice[String(this.system.damageBonus.str).toLowerCase()];
+            let damageBonusStr = DoDActor.#modifyDamageBonus(upgradeValue, this.system.damageBonus.strModifiers)
+            this.system.damageBonus.str = game.i18n.localize(damageBonusStr);
+        }
     }
 
     _getBaseChance(skill) {

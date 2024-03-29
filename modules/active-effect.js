@@ -15,6 +15,9 @@ export default class DoDActiveEffect extends ActiveEffect {
             }
             return;
         }
+        if(actor.type == "npc" && key[0] == "system" && key[1] == "attributes") {
+            return;
+        }
         super.apply(actor, change);
     }
 }
