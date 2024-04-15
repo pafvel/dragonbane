@@ -112,10 +112,10 @@
         },
         "damageTypes": {
             "none": "Dano",
-            "bludgeoning": "Dano de Concussão",
+            "bludgeoning": "Dano Contundente",
             "piercing": "Dano Perfurante",
             "slashing": "Dano Cortante",
-            "bludgeoningTooltip": "Dano de Concussão",
+            "bludgeoningTooltip": "Dano Contundente",
             "piercingTooltip": "Dano Perfurante",
             "slashingTooltip": "Dano Cortante"
         },
@@ -330,6 +330,12 @@
         "weaponFeatureTypes": {
             "bludgeoning": "Contundente",
             "bludgeoningTooltip": "Contundente",
+            "enchanted1": "Encantado (1)",
+            "enchanted1Tooltip": "Mesmo efeito da Arma Encantada no Nível de Poder 1",
+            "enchanted2": "Encantado (2)",
+            "enchanted2Tooltip": "Mesmo efeito da Arma Encantada no Nível de Poder 2",
+            "enchanted3": "Encantado (3)",
+            "enchanted3Tooltip": "Mesmo efeito da Arma Encantada no Nível de Poder 3",
             "long": "Longo",
             "longTooltip": "Longo",
             "mounted": "Montado",
@@ -358,6 +364,7 @@
         "ui": {
             "character-sheet": {
                 "abilities": "Habilidades",
+                "abilitiesTooltip": "Habilidades Heróicas, de Ascendência e de Profissão",
                 "age": "Idade",
                 "and": "&",
                 "appearance": "Aparência",
@@ -386,6 +393,8 @@
                 "heroicAbilities": "Habilidades Heróicas",
                 "heroicAbilitiesTooltip": "Adicione Habilidades Heróicas arrastando-as e soltando-as na ficha de personagem",
                 "hitPoints": "Pontos de Vida",
+                "hitPointsCurrent": "PV Atual",
+                "hitPointsMax": "PV Máximo",
                 "hp": "PV",
                 "inventory": "Inventário",
                 "kin": "Ascendência",
@@ -410,6 +419,8 @@
                 "restStretchTooltip": "Descanso de Intervalo\rDescanse por um Intervalo e cure D6 PV, D6 FV e uma condição de sua escolha.\rVocê pode usar sua Recordação para recuperar uma condição adicional.\rVocê só pode ter um descanso de Intervalo uma vez por Turno.",
                 "restShift": "Descanso de Turno: <b>{actor}</b> descansa um turno e cura <b>{hp}</b> PV, <b>{wp}</b> FV e todas as condições.",
                 "restShiftTooltip": "Descanso de Turno\rDescanse um turno inteiro e cure todo o PV, FV e condições",
+                "restReset": "Uma turno passa por <b>{actor}</b>.",
+                "restResetTooltip": "Passa um turno de tempo\rRedefine o descanso de rodada e o descanso de intervalo",
                 "rollDeathRoll": "Rolar Teste de Morte",
                 "school": "Escola de Magia",
                 "secondarySkills": "Perícias Secundárias",
@@ -418,14 +429,18 @@
                 "skillValue": "",
                 "spell": "Magia",
                 "spells": "Magias",
+                "spellsTooltip": "Magias preparadas",
                 "successes": "Sucessos",
                 "tiny-items": "Itens Minúsculos",
                 "traits": "Características",
                 "trained-skills": "Perícias Treinadas",
+                "trained-skillsTooltip": "Perícias com valor de habilidade superior à chance base",
                 "weakness": "Fraqueza",
                 "weapons": "Armas",
                 "weaponSkills": "Perícias com Armas",
                 "willPoints": "Força de Vontade",
+                "willPointsCurrent": "FV Atual",
+                "willPointsMax": "FV Máximo",
                 "worn": "Desgastado",
                 "wp": "FV"
             },
@@ -491,6 +506,7 @@
             }
         },
         "INFO": {
+            "monsterAttackUpdated": "Tabela de ataque de monstros atualizada para {actor}.",
             "professionSkillAdded": "Perícia de profissão adicionada: {skill}"
         },
         "SETTINGS": {
@@ -502,10 +518,18 @@
             "automateCharacterDeathHint": "Se selecionada, marca automaticamente os personagens como mortos quando eles falham em 3 testes de morte ou são mortos instantaneamente por dano excessivo.",
             "canEquipItems": "Equipar Itens",
             "canEquipItemsHint": "Se selecionada, todos os itens do inventário de um personagem poderão ser equipados. Itens equipados não contam para Carga.",
+            "hideNpcWpWidget": "Ocultar a Força de Vontade do PNJ",
+            "hideNpcWpWidgetHint": "Oculta a Força de Vontade do PNJ da ficha do PNJ se o PNJ tiver zero Força de Vontade e nenhum feitiço ou habilidade.",
             "keepOwnershipOnImport": "Mantenha as permissões ao importar aventura",
             "keepOwnershipOnImportHint": "Não substituir as permissões ao importar conteúdo que já existe no mundo.",
+            "useWorldSkillsOnCreateActor": "Use perícias do mundo para novos atores",
+            "useWorldSkillsOnCreateActorHint": "Se marcada, procura perícias no mundo em vez do módulo principal ao criar novos Atores.",
             "viewDamagePermission": "Permissão para ver Danos",
-            "viewDamagePermissionHint": "Escolha o nível mínimo de permissão que um usuário deve ter para ver a quantidade de dano que um ator sofre."
+            "viewDamagePermissionHint": "Escolha o nível mínimo de permissão que um usuário deve ter para ver a quantidade de dano que um ator sofre.",
+            "monsterAttackDialogIsDefault": "Selecionar Ataque de Monstro",
+            "monsterAttackDialogIsDefaultHint": "Se marcado, a caixa de diálogo \"Selecionar Ataque de Monstro\" é mostrada por padrão ao clicar com o botão esquerdo no botão Ataque na ficha do Monstro. A caixa de diálogo será ignorada se SHIFT ou CTRL forem pressionados ao clicar com o botão esquerdo. Se desmarcado, o comportamento é o oposto.",
+            "allowDealDamageOnSelected": "Dano ao Token selecionado",
+            "allowDealDamageOnSelectedHint": "Se marcado, o Mestre pode causar dano (e curar) o token selecionado se nenhum token tiver sido alvo."
         },
         "WARNING": {
             "kinAbility": "Não foi possível encontrar a Habilidade de Ascendência: {ability}",
@@ -525,6 +549,7 @@
             "macroNoActor": "Ator ausente para macro.",
             "macroNoItem": "Item ausente para macro. Nome: {item}. Tipo: {type}.",
             "macroMultipleItems": "Vários itens do mesmo tipo ({type}) e nome ({item}). O primeiro item encontrado será utilizado pela macro.",
+            "missingMagicSchool": "Faltando escola de magia para {spell}.",
             "noTreasureTable": "Tabela de tesouro não encontrada.",
             "noMeleeMishapTable": "Faltando a tabela de acidentes para armas corpo a corpo.",
             "noRangedMishapTable": "Faltando a tabela de acidentes para armas de longo alcance.",
