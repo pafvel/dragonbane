@@ -9,7 +9,7 @@ import DoD_Utility from "./utility.js";
 export default class DoDCharacterSheet extends ActorSheet {
 
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions,  {
+        return foundry.utils.mergeObject(super.defaultOptions,  {
             width: 700,
             height: 775,
             classes: ["DoD", "sheet", "character"],
@@ -660,7 +660,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         this.actor.system.canRestRound = false;
 
-        const roll = await new Roll("D6").roll({async: true});
+        const roll = await new Roll("D6").roll(game.release.generation < 12 ? {async: true} : {});
 
         if (game.dice3d) {
             // Green for WP
@@ -715,7 +715,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         await this.actor.update({["system.canRestStretch"]: false});   
 
         // Make roll
-        const roll = await new Roll(`D6[${game.i18n.localize("DoD.secondaryAttributeTypes.hitPoints")}] + D6[${game.i18n.localize("DoD.secondaryAttributeTypes.willPoints")}]`).roll({async: true});
+        const roll = await new Roll(`D6[${game.i18n.localize("DoD.secondaryAttributeTypes.hitPoints")}] + D6[${game.i18n.localize("DoD.secondaryAttributeTypes.willPoints")}]`).roll(game.release.generation < 12 ? {async: true} : {});
 
         if (game.dice3d) {
             // Red for HP
@@ -924,7 +924,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         let result = await item.update({ [field]: Number(element.value) });
         
         // Skill values may reset to their base chance. 
-        let value = getProperty(item, field);
+        let value = foundry.utils.getProperty(item, field);
         element.value = value;
         return result;
     }
@@ -1053,7 +1053,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         let newValues = {"system.age": newAge};
 
         for (const key in modifiers[currentAge]) {
-            newValues[key] = modifiers[newAge][key] - modifiers[currentAge][key] + getProperty(this.actor, key);
+            newValues[key] = modifiers[newAge][key] - modifiers[currentAge][key] + foundry.utils.getProperty(this.actor, key);
             if (newValues[key] < 1 || newValues[key] > 18) {
                 DoD_Utility.WARNING("DoD.WARNING.attributeOutOfRange");
             }
@@ -1406,7 +1406,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         if (event.type == "click") { 
 
             // Make roll
-            const roll = await new Roll("D20").roll({async: true});
+            const roll = await new Roll("D20").roll(game.release.generation < 12 ? {async: true} : {});
             const advance = Math.min(DoD.skillMaximum , roll.result) > skillItem.system.value;
             const flavorText = advance ? 
                 game.i18n.format("DoD.skill.advancementSuccess", {skill: skillItem.name, old: skillItem.system.value, new: skillItem.system.value + 1}) :

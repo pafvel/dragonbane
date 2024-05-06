@@ -285,7 +285,7 @@ Hooks.once("ready", async function () {
     if (game.user.isGM) {
         const SYSTEM_MIGRATION_VERSION = 0.01;
         const currentVersion = game.settings.get("dragonbane", "systemMigrationVersion");
-        const needsMigration = !currentVersion || isNewerVersion(SYSTEM_MIGRATION_VERSION, currentVersion);
+        const needsMigration = !currentVersion || foundry.utils.isNewerVersion(SYSTEM_MIGRATION_VERSION, currentVersion);
 
         if (needsMigration) {
             DoDMigrate.migrateWorld();
@@ -296,7 +296,7 @@ Hooks.once("ready", async function () {
     // If this is a new version, prompt adventure import
     if (game.user.isGM) {
         const systemVersion = game.settings.get("dragonbane", "systemVersion");
-        if (!systemVersion || isNewerVersion(game.system.version, systemVersion)) {
+        if (!systemVersion || foundry.utils.isNewerVersion(game.system.version, systemVersion)) {
             const pack = game.packs.get("dragonbane.dragonbane-drakar-och-demoner-system");
             const adventureId = pack?.index.contents[0]._id;
             if (adventureId) {

@@ -60,7 +60,7 @@ export class DoDItem extends Item {
         if (this.actor) {
             let r = new Roll(String(this.system.range), {str: this.actor.system.attributes?.str.value});
             try {
-                await r.evaluate({async: true});
+                await r.evaluate(game.release.generation < 12 ? {async: true} : {});
                 this.system.calculatedRange = r.total;
             } catch {
                 DoD_Utility.WARNING("DoD.WARNING.cannotEvaluateFormula");

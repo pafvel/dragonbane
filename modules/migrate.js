@@ -80,7 +80,7 @@ function migrateSceneData(scene) {
             const actorData = duplicate(t.actorData);
             actorData.type = token.actor?.type;
             const actorUpdate = migrateActorData(actorData);
-            mergeObject(t.actorData, actorUpdate);
+            foundry.utils.mergeObject(t.actorData, actorUpdate);
         }
         tokensUpdate.push(t);
     }

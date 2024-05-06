@@ -78,19 +78,19 @@ export class DoDActor extends Actor {
     static onPreUpdateActorEvent(actor, data, options, userId) {
         console.log("onUpdateActorEvent", actor);
 
-        if (hasProperty(data, "system.hitPoints.value")) {
+        if (foundry.utils.hasProperty(data, "system.hitPoints.value")) {
             const options = {
                 anchor: CONST.TEXT_ANCHOR_POINTS.LEFT,
                 fill: "0xFF0000"
             };
-            actor._displayScrollingText(getProperty(data, "system.hitPoints.value") - actor.system.hitPoints.value, options);
+            actor._displayScrollingText(foundry.utils.getProperty(data, "system.hitPoints.value") - actor.system.hitPoints.value, options);
         }
-        if (hasProperty(data, "system.willPoints.value")) {
+        if (foundry.utils.hasProperty(data, "system.willPoints.value")) {
             const options = {
                 anchor: CONST.TEXT_ANCHOR_POINTS.RIGHT,
                 fill: "0x00FF00"
             };
-            actor._displayScrollingText(getProperty(data, "system.willPoints.value") - actor.system.willPoints.value, options);
+            actor._displayScrollingText(foundry.utils.getProperty(data, "system.willPoints.value") - actor.system.willPoints.value, options);
         }
 
     }
@@ -99,11 +99,11 @@ export class DoDActor extends Actor {
     async _preUpdate(data, options, user) {
         await super._preUpdate(data, options, user);
     
-        if (hasProperty(data, "system.hitPoints.value")) {
-            options._deltaHP = getProperty(data, "system.hitPoints.value") - this.system.hitPoints.value;
+        if (foundry.utils.hasProperty(data, "system.hitPoints.value")) {
+            options._deltaHP = foundry.utils.getProperty(data, "system.hitPoints.value") - this.system.hitPoints.value;
         }
-        if (hasProperty(data, "system.willPoints.value")) {
-            options._deltaWP = getProperty(data, "system.willPoints.value") - this.system.willPoints.value, options;
+        if (foundry.utils.hasProperty(data, "system.willPoints.value")) {
+            options._deltaWP = foundry.utils.getProperty(data, "system.willPoints.value") - this.system.willPoints.value, options;
         }
     }
 
@@ -676,7 +676,7 @@ export class DoDActor extends Actor {
 
             // Continue rolling until the desired result is rolled
             // This is preferred if the roll is shown
-            roll = await roll.reroll({async: true});
+            roll = await roll.reroll(game.release.generation < 12 ? {async: true} : {});
             let iter = 0;
             while ( !(tableResult.range[0] >= roll.total && roll.total <= tableResult.range[1]) ) {
                 if ( iter >= 100 ) {
@@ -684,7 +684,7 @@ export class DoDActor extends Actor {
                     roll = DoDRoll.create(tableResult.range[0].toString());
                     break;
                 }
-                roll = await roll.reroll({async: true});
+                roll = await roll.reroll(game.release.generation < 12 ? {async: true} : {});
                 iter++;
             }
 

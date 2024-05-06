@@ -3,7 +3,7 @@ import { DoD } from "./config.js";
 export default class DoDItemSheet extends ItemSheet {
     
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions,  {
+        return foundry.utils.mergeObject(super.defaultOptions,  {
             width: 560,
             dragDrop: [{ dragSelector: null, dropSelector: null}],
             classes: ["DoD", "sheet", "item"]

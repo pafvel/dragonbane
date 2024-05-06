@@ -316,7 +316,7 @@ export default class DoD_Utility {
                 results.push(draw.results[0]);
             }
             // Construct a Roll object using the constructed pool
-            const pool = PoolTerm.fromRolls(rolls);
+            const pool = game.release.generation < 12 ? PoolTerm.fromRolls(rolls) : foundry.dice.terms.PoolTerm.fromRolls(rolls);
             const roll = Roll.defaultImplementation.fromTerms([pool]);
 
             // Display results and reset table

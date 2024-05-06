@@ -564,7 +564,7 @@ export async function inflictDamageMessage(damageData) {
         }
     }
 
-    await roll.roll({async: true});
+    await roll.roll(game.release.generation < 12 ? {async: true} : {});
 
     const weaponName = damageData.weapon?.name ?? damageData.action;
     let msg = isHealing ? 

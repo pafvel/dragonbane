@@ -38,7 +38,7 @@ export default class DoDTest {
             extraBoons: this.options.extraBoons,
             extraBanes: this.options.extraBanes
         }
-        this.roll = await new DoDRoll(formula, {}, rollOptions).roll({async: true});
+        this.roll = await new DoDRoll(formula, {}, rollOptions).roll(game.release.generation < 12 ? {async: true} : {});
 
         this.updatePostRollData();
         const messageData = this.formatRollMessage(this.postRollData);
@@ -262,7 +262,7 @@ export default class DoDTest {
     }
 
     async renderRoll(roll, template, templateContext) {
-        if ( !roll._evaluated ) await roll.evaluate({async: true});
+        if ( !roll._evaluated ) await roll.evaluate(game.release.generation < 12 ? {async: true} : {});
 
         const defaultContext = {
             formula: roll.formula,
