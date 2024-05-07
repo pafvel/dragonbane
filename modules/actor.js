@@ -667,8 +667,10 @@ export class DoDActor extends Actor {
             roll = DoDRoll.create(t.formula);
 
             // Check range
-            const minRoll = (await roll.reroll({minimize: true, async: true})).total;
-            const maxRoll = (await roll.reroll({maximize: true, async: true})).total;
+            const minOption = game.release.generation < 12 ? {minimize: true, async: true} : {minimize: true};
+            const minRoll = (await roll.reroll(minOption)).total;
+            const maxOption = game.release.generation < 12 ? {maximize: true, async: true} : {maximize: true};
+            const maxRoll = (await roll.reroll(maxOption)).total;
             if ( (tableResult.range[0] > maxRoll) || (tableResult.range[1] < minRoll) ) {
                 // Create a roll that guarantees the result
                 roll = DoDRoll.create(tableResult.range[0].toString());
@@ -678,7 +680,7 @@ export class DoDActor extends Actor {
             // This is preferred if the roll is shown
             roll = await roll.reroll(game.release.generation < 12 ? {async: true} : {});
             let iter = 0;
-            while ( !(tableResult.range[0] >= roll.total && roll.total <= tableResult.range[1]) ) {
+            while ( !(tableResult.range[0] <= roll.total && roll.total <= tableResult.range[1]) ) {
                 if ( iter >= 100 ) {
                     // Stop rolling and create a roll that guarantees the result
                     roll = DoDRoll.create(tableResult.range[0].toString());

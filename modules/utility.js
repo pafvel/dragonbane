@@ -246,8 +246,6 @@ export default class DoD_Utility {
             flavor: game.i18n.format(flavorKey, {actor: actor.name, table: table.name}),
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({token: this.token}),
-            type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-            roll: roll,
             sound: CONFIG.sounds.dice,
             flags: {"core.RollTable": table.id}
         };

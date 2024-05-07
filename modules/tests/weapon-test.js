@@ -37,7 +37,14 @@ export default class DoDWeaponTest extends DoDSkillTest  {
 
         const actorToken = canvas.scene?.tokens?.find(t => t.actor?.uuid == this.actor.uuid);
         const targetToken = this.options.targets?.length > 0 ? this.options.targets[0].document : null;
-        const distance = (actorToken && targetToken) ? canvas.grid.measureDistance(actorToken, targetToken, {gridSpaces: true}) : 0;
+        let distance = 0;
+        if (actorToken && targetToken) {
+            if (game.release.generation < 12) {
+                distance = canvas.grid.measureDistance(actorToken, targetToken, {gridSpaces: true});
+            } else {
+                distance = canvas.grid.measurePath([actorToken, targetToken]).distance;
+            }
+        }
         const isInRange = distance <= this.weapon.system.calculatedRange;
         const isInMeleeRange = distance <= (isMeleeWeapon ? this.weapon.system.calculatedRange : (isLongWeapon ? 4 : 2));
         

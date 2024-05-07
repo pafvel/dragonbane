@@ -639,7 +639,12 @@ export async function applyDamageMessage(damageData) {
         if (oldHP > 0 && damageToApply >= oldHP) {
             if (token && !token.hasStatusEffect("prone")) {
                 const status = CONFIG.statusEffects.find(a => a.id === 'prone');
-                token.toggleActiveEffect(status, {active: true});
+                if (game.release.generation < 12) {
+                    token.toggleActiveEffect(status, {active: true});
+                } else {
+                    token.actor.toggleStatusEffect(status.id, {active: true});
+                }
+
                 message += "<p>" + game.i18n.format("DoD.ui.chat.characterProne", {actor: actorName}) + "</p>";
             }
         }
@@ -680,7 +685,12 @@ export async function applyDamageMessage(damageData) {
         {
             const status = CONFIG.statusEffects.find(a => a.id === 'dead');
             if (token && !token.hasStatusEffect("dead")) {
-                token.toggleActiveEffect(status, {active: true, overlay: true});
+                if (game.release.generation < 12) {
+                    token.toggleActiveEffect(status, {active: true, overlay: true});
+                } else {
+                    token.actor.toggleStatusEffect(status.id, {active: true, overlay: true});
+                }
+                
             }
             if (instantDeath) {
                 message += "<p>" + game.i18n.format("DoD.ui.chat.characterDiedInstantly", {actor: actorName}) + "</p>";
@@ -744,7 +754,12 @@ export async function applyHealingMessage(damageData) {
         const token = canvas.scene.tokens.find(t => t.actor.uuid == actor.uuid);
         if (token && token.hasStatusEffect("dead")) {
             const status = CONFIG.statusEffects.find(a => a.id === 'dead');
-            token.toggleActiveEffect(status);
+            if (game.release.generation < 12) {
+                token.toggleActiveEffect(status);
+            } else {
+                token.actor.toggleStatusEffect(status.id);
+            }
+            
         }
     }
 
