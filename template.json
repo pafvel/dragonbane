@@ -7,7 +7,7 @@
             },
             "characterDescription": {
                 "kin": "",
-                "age": "",
+                "age": "adult",
                 "profession": "",
                 "motivation": ""
             },
@@ -74,7 +74,7 @@
                 }
             },
             "characterBio": {
-                "age": "",
+                "age": "adult",
                 "appearance": "",
                 "weakness": "",
                 "notes": ""
