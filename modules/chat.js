@@ -33,7 +33,7 @@ export function addChatMessageContextMenuOptions(html, options) {
                 if (targets.length > 0) {
                     target = targets[0].actor;
                 }
-            }    
+            }
         }
         return target;
     }
@@ -53,7 +53,7 @@ export function addChatMessageContextMenuOptions(html, options) {
         const element = li.find(".damage-roll")[0] || li.find(".dice-total")[0];
 
         damageData.damage = element.dataset.damage ?? Number(element.innerText);
-        damageData.damageType = element.dataset.damageType?.substr(String("DoD.damageTypes.").length);
+        damageData.damageType = element.dataset.damageType?.substring(String("DoD.damageTypes.").length);
         damageData.actor = getTarget(element);
         damageData.multiplier = multiplier;
         damageData.ignoreArmor = ignoreArmor || element.dataset.ignoreArmor;
@@ -100,12 +100,12 @@ export function addChatMessageContextMenuOptions(html, options) {
         if(!game.user.isGM || canDealTargetDamage(li)) {
             return false;
         }
-        
+
         if (!game.settings.get("dragonbane", "allowDealDamageOnSelected")) {
             return false;
         }
 
-        if (canvas.tokens.controlled.length == 0 || li.find(".healing-roll").length > 0 || li.find(".skill-roll").length > 0) {
+        if (canvas.tokens.controlled.length === 0 || li.find(".healing-roll").length > 0 || li.find(".skill-roll").length > 0) {
             return false;
         }
 
@@ -125,7 +125,7 @@ export function addChatMessageContextMenuOptions(html, options) {
         const element = li.find(".damage-roll")[0];
 
         damageData.damage = element.dataset.damage;
-        damageData.damageType = element.dataset.damageType?.substr(String("DoD.damageTypes.").length);
+        damageData.damageType = element.dataset.damageType?.substring(String("DoD.damageTypes.").length);
         damageData.actor = canvas.tokens.controlled[0].actor;
         damageData.multiplier = multiplier;
         damageData.ignoreArmor = ignoreArmor || element.dataset.ignoreArmor;
@@ -138,7 +138,7 @@ export function addChatMessageContextMenuOptions(html, options) {
             else if (!target.actor.isOwner) {
                 DoD_Utility.WARNING("DoD.WARNING.noPermissionToModifyActor");
             } else {
-                damageData.actor = target.actor;              
+                damageData.actor = target.actor;
                 applyDamageMessage(damageData);
             }
         }
@@ -150,7 +150,7 @@ export function addChatMessageContextMenuOptions(html, options) {
             return false;
         }
 
-        if (canvas.tokens.controlled.length == 0 || li.find(".damage-roll").length > 0 || li.find(".skill-roll").length > 0) {
+        if (canvas.tokens.controlled.length === 0 || li.find(".damage-roll").length > 0 || li.find(".skill-roll").length > 0) {
             return false;
         }
 
@@ -178,7 +178,7 @@ export function addChatMessageContextMenuOptions(html, options) {
             else if (!target.actor.isOwner) {
                 DoD_Utility.WARNING("DoD.WARNING.noPermissionToModifyActor");
             } else {
-                healingData.actor = target.actor;              
+                healingData.actor = target.actor;
                 applyHealingMessage(healingData);
             }
         }
@@ -189,7 +189,7 @@ export function addChatMessageContextMenuOptions(html, options) {
         const element = li.find(".damage-message")[0];
         if (element?.dataset.actorId) {
             const target = DoD_Utility.getActorFromUUID(element.dataset.actorId);
-            return target?.isOwner && Number(element?.dataset.damage) != 0;
+            return target?.isOwner && Number(element?.dataset.damage) !== 0;
         }
         return false;
     }
@@ -293,15 +293,15 @@ export async function onInlineDamageRoll(event) {
         damage: damage,
         damageType: damageType
     };
-    
+
     const targets = Array.from(game.user.targets)
     if (targets.length > 0) {
         for (const target of targets) {
             damageData.target = target.actor;
-            await inflictDamageMessage(damageData);    
+            await inflictDamageMessage(damageData);
         }
      } else {
-        await inflictDamageMessage(damageData);    
+        await inflictDamageMessage(damageData);
     }
 }
 export async function onTreasureRoll(event) {
@@ -324,8 +324,8 @@ async function onWeaponDamageRoll(event) {
     const element = event.currentTarget;
     const actorId = element.dataset.actorId;
     const actor = DoD_Utility.getActorFromUUID(actorId);
-    if (!actor) return;    
-    
+    if (!actor) return;
+
     const weaponId = element.dataset.weaponId;
     const damageType = element.dataset.damageType;
     const ignoreArmor = element.dataset.ignoreArmor;
@@ -334,7 +334,7 @@ async function onWeaponDamageRoll(event) {
     const skill = weapon ? actor.findSkill(weapon.system.skill.name) : null;
     const attribute = skill ? skill.system.attribute : null;
     let damageBonus = attribute ? actor.system.damageBonus[attribute] : 0;
-    if (damageBonus == "" && attribute == "agl") {
+    if (damageBonus === "" && attribute === "agl") {
         damageBonus = actor.system.damageBonus["agl"];
     }
     if (weapon.hasWeaponFeature("noDamageBonus")) {
@@ -343,10 +343,10 @@ async function onWeaponDamageRoll(event) {
     const extraDamage = element.dataset.extraDamage;
 
     let damage = weaponDamage;
-    if (damageBonus && damageBonus != "0" && damageBonus != "none") {
+    if (damageBonus && damageBonus !== "0" && damageBonus !== "none") {
         damage += " + " + damageBonus;
     }
-    if (extraDamage && extraDamage != "0") {
+    if (extraDamage && extraDamage !== "0") {
         damage += " + " + extraDamage;
     }
 
@@ -361,11 +361,11 @@ async function onWeaponDamageRoll(event) {
         ignoreArmor: ignoreArmor,
         target: target
     };
- 
+
     if (element.dataset.isMeleeCrit) {
         const parent = element.parentElement;
         const critChoices = parent.getElementsByTagName("input");
-        const choice = Array.from(critChoices).find(e => e.name=="critChoice" && e.checked);
+        const choice = Array.from(critChoices).find(e => e.name==="critChoice" && e.checked);
 
         damageData[choice.value] = true;
 
@@ -381,12 +381,12 @@ async function onWeaponDamageRoll(event) {
         if (targets.length > 0) {
             for (const target of targets) {
                 damageData.target = target.actor;
-                await inflictDamageMessage(damageData);    
+                await inflictDamageMessage(damageData);
             }
             return;
         }
     }
-    inflictDamageMessage(damageData);    
+    inflictDamageMessage(damageData);
 }
 
 async function onMagicDamageRoll(event) {
@@ -405,10 +405,10 @@ async function onMagicDamageRoll(event) {
     let doubleDamage = false;
 
     if (isMagicCrit) {
-    
+
         const parent = element.parentElement;
         const critChoices = parent.getElementsByTagName("input");
-        const choice = Array.from(critChoices).find(e => e.name=="magicCritChoice" && e.checked);
+        const choice = Array.from(critChoices).find(e => e.name==="magicCritChoice" && e.checked);
 
         const message = {
             flavor: game.i18n.localize("DoD.magicCritChoices.choiceLabel") + ": "+ game.i18n.localize("DoD.magicCritChoices." + choice.value),
@@ -416,7 +416,7 @@ async function onMagicDamageRoll(event) {
             speaker: ChatMessage.getSpeaker({ actor: actor }),
         };
 
-        if (choice.value == "noCost") {
+        if (choice.value === "noCost") {
             const wpOld = actor.system.willPoints.value;
             const wpCost = Number(element.dataset.wpCost);
             const wpNew = Math.min(actor.system.willPoints.max, wpOld + wpCost);
@@ -430,11 +430,11 @@ async function onMagicDamageRoll(event) {
                 </div>
             </div>`;
         }
-        if (choice.value == "doubleDamage") {
+        if (choice.value === "doubleDamage") {
             doubleDamage = true;
         }
 
-        ChatMessage.create(message);        
+        ChatMessage.create(message);
     }
 
     if (spell?.isDamaging) {
@@ -465,12 +465,12 @@ async function onMagicDamageRoll(event) {
             if (targets.length > 0) {
                 for (const target of targets) {
                     damageData.target = target.actor;
-                    await inflictDamageMessage(damageData);    
+                    await inflictDamageMessage(damageData);
                 }
                 return;
             }
-        }    
-        inflictDamageMessage(damageData);    
+        }
+        inflictDamageMessage(damageData);
     }
 }
 
@@ -481,20 +481,20 @@ function onPushRoll(event) {
     const element = event.currentTarget;
     const actorId = element.dataset.actorId;
     const actor = DoD_Utility.getActorFromUUID(actorId);
-    if (!actor) return;    
+    if (!actor) return;
 
     // Take condition
     const parent = element.parentElement;
     const pushChoices = parent.getElementsByTagName("input");
-    const choice = Array.from(pushChoices).find(e => e.name=="pushRollChoice" && e.checked);
+    const choice = Array.from(pushChoices).find(e => e.name==="pushRollChoice" && e.checked);
     if (!actor.hasCondition(choice.value)) {
         actor.updateCondition(choice.value, true);
-        const msg = game.i18n.format("DoD.ui.chat.takeCondition", 
+        const msg = game.i18n.format("DoD.ui.chat.takeCondition",
             {
                 actor: actor.name,
                 condition: game.i18n.localize("DoD.conditions." + choice.value)
             });
-        ChatMessage.create({ 
+        ChatMessage.create({
             content: msg,
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: actor })
@@ -541,17 +541,17 @@ function onPushRoll(event) {
 }
 
 export async function inflictDamageMessage(damageData) {
-  
+
     let formula = damageData.damage;
 
     let isHealing = false;
-    if (formula[0] == "-") {
+    if (formula[0] === "-") {
         isHealing = true;
-        formula = formula.substr(1);
+        formula = formula.substring(1);
     }
 
     // Add "1" in front of D to make sure the first roll term is a Die.
-    if (formula[0] == "d" || formula[0] == "D") {
+    if (formula[0] === "d" || formula[0] === "D") {
         formula = "1" + formula;
     }
 
@@ -567,7 +567,7 @@ export async function inflictDamageMessage(damageData) {
     await roll.roll(game.release.generation < 12 ? {async: true} : {});
 
     const weaponName = damageData.weapon?.name ?? damageData.action;
-    let msg = isHealing ? 
+    let msg = isHealing ?
         "DoD.roll.healing" :
         (weaponName ? (damageData.ignoreArmor ? "DoD.roll.damageIgnoreArmor" : "DoD.roll.damageWeapon") : "DoD.roll.damage");
 
@@ -585,7 +585,7 @@ export async function inflictDamageMessage(damageData) {
         weapon: weaponName,
         target: targetName
     });
-    
+
     const template = "systems/dragonbane/templates/partials/damage-roll-message.hbs";
     const templateContext = {
         formula: damageData.doubleSpellDamage ? "2 x (" + roll.formula + ")" : roll.formula,
@@ -626,7 +626,7 @@ export async function applyDamageMessage(damageData) {
     const damageTaken = oldHP - newHP;
 
     const actorName = actor.isToken ? actor.token.name : actor.name;
-    const token = canvas.scene.tokens.find(t => t.actor.uuid == actor.uuid);
+    const token = canvas.scene.tokens.find(t => t.actor.uuid === actor.uuid);
 
     const permissionKey = DoD_Utility.getViewDamagePermission().toLowerCase();
 
@@ -635,7 +635,7 @@ export async function applyDamageMessage(damageData) {
     let instantDeath = false;
 
     // Automate Character going prone when reaching 0 HP
-    if (actor.type == "character") {
+    if (actor.type === "character") {
         if (oldHP > 0 && damageToApply >= oldHP) {
             if (token && !token.hasStatusEffect("prone")) {
                 const status = CONFIG.statusEffects.find(a => a.id === 'prone');
@@ -654,24 +654,24 @@ export async function applyDamageMessage(damageData) {
     if (damageToApply - oldHP >= actor.system.hitPoints.max) {
         isDead = true;
         instantDeath = true;
-    } 
+    }
 
     // Automate NPC & Monster death
-    if (!isDead && (actor.type == "npc" || actor.type == "monster")) {
+    if (!isDead && (actor.type === "npc" || actor.type === "monster")) {
         if (oldHP > 0 && damageToApply >= oldHP) {
             isDead = true;
         }
     }
 
     // Automate Character death
-    if (!isDead && actor.type == "character") {
+    if (!isDead && actor.type === "character") {
         // Characters add death roll when at 0 HP and taking damage
-        if (oldHP == 0 && damageToApply > 0) {
+        if (oldHP === 0 && damageToApply > 0) {
             let failures = actor.system.deathRolls.failures;
             if (failures < 3) {
                 await actor.update({["system.deathRolls.failures"]: ++failures});
                 message += "<p>" + game.i18n.format("DoD.ui.chat.failedDeathRoll", {actor: actorName}) + "</p>";
-                if (failures == 3) {
+                if (failures === 3) {
                     isDead = true;
                 }
             }
@@ -679,9 +679,9 @@ export async function applyDamageMessage(damageData) {
     }
 
     if (isDead) {
-        if (actor.type == "npc" && game.settings.get("dragonbane", "automateNpcDeath")
-        || actor.type == "monster" && game.settings.get("dragonbane", "automateMonsterDeath")
-        || actor.type == "character" && game.settings.get("dragonbane", "automateCharacterDeath"))
+        if (actor.type === "npc" && game.settings.get("dragonbane", "automateNpcDeath")
+        || actor.type === "monster" && game.settings.get("dragonbane", "automateMonsterDeath")
+        || actor.type === "character" && game.settings.get("dragonbane", "automateCharacterDeath"))
         {
             const status = CONFIG.statusEffects.find(a => a.id === 'dead');
             if (token && !token.hasStatusEffect("dead")) {
@@ -690,13 +690,13 @@ export async function applyDamageMessage(damageData) {
                 } else {
                     token.actor.toggleStatusEffect(status.id, {active: true, overlay: true});
                 }
-                
+
             }
             if (instantDeath) {
                 message += "<p>" + game.i18n.format("DoD.ui.chat.characterDiedInstantly", {actor: actorName}) + "</p>";
             } else {
                 message += "<p>" + game.i18n.format("DoD.ui.chat.characterDied", {actor: actorName}) + "</p>";
-            }    
+            }
         }
     }
 
@@ -732,7 +732,7 @@ export async function applyHealingMessage(damageData) {
     if (damage > 0) {
         newHP = await actor.applyDamage(-damage);
     }
-    
+
     const actorName = actor.isToken ? actor.token.name : actor.name;
     const permissionKey = DoD_Utility.getViewDamagePermission().toLowerCase();
 
@@ -750,8 +750,8 @@ export async function applyHealingMessage(damageData) {
         ${game.i18n.format(game.i18n.localize("DoD.ui.chat.healingApplied"), {damage: "???", actor: actorName})}
     </div>`;
 
-    if (oldHP == 0 && newHP > 0) {
-        const token = canvas.scene.tokens.find(t => t.actor.uuid == actor.uuid);
+    if (oldHP === 0 && newHP > 0) {
+        const token = canvas.scene.tokens.find(t => t.actor.uuid === actor.uuid);
         if (token && token.hasStatusEffect("dead")) {
             const status = CONFIG.statusEffects.find(a => a.id === 'dead');
             if (game.release.generation < 12) {
@@ -759,7 +759,7 @@ export async function applyHealingMessage(damageData) {
             } else {
                 token.actor.toggleStatusEffect(status.id);
             }
-            
+
         }
     }
 

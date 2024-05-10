@@ -121,15 +121,15 @@ export default class DoDTest {
         for (let item of this.actor.items.contents) {
             if (item.system.banes?.length) {
                 let itemBanes = DoD_Utility.splitAndTrimString(item.system.banes.toLowerCase());
-                if (itemBanes.find(element => element.toLowerCase() == rollTarget || element.toLowerCase() == rollAttribute)) {
-                    let value = item.system.worn ? true : false;
+                if (itemBanes.find(element => element.toLowerCase() === rollTarget || element.toLowerCase() === rollAttribute)) {
+                    let value = !!item.system.worn;
                     banes.push( {source: item.name, value: value});
                 }
             }
             if (item.system.boons?.length) {
                 let itemBoons = DoD_Utility.splitAndTrimString(item.system.boons.toLowerCase());
-                if (itemBoons.find(element => element.toLowerCase() == rollTarget || element.toLowerCase() == rollAttribute)) {
-                    let value = item.system.worn ? true : false;
+                if (itemBoons.find(element => element.toLowerCase() === rollTarget || element.toLowerCase() === rollAttribute)) {
+                    let value = !!item.system.worn;
                     boons.push( {source: item.name, value: value});
                 }
             }
@@ -196,7 +196,7 @@ export default class DoDTest {
         let element = elements ? elements[0] : null;
         let inputs = element?.getElementsByTagName("input");
         for (let input of inputs) {
-            if (input.type == "checkbox" && input.checked) {
+            if (input.type === "checkbox" && input.checked) {
                 banes.push(input.name);
             }
         }
@@ -211,7 +211,7 @@ export default class DoDTest {
         element = elements ? elements[0] : null;
         inputs = element?.getElementsByTagName("input");
         for (let input of inputs) {
-            if (input.type == "checkbox" && input.checked) {
+            if (input.type === "checkbox" && input.checked) {
                 boons.push(input.name);
             }
         }

@@ -22,15 +22,15 @@ export default class DoDAttributeTest extends DoDTest {
         super.updatePreRollData();
         this.preRollData.actor = this.actor;
         this.preRollData.attribute = this.attribute;
-        if (this.actor.type == "character") {
+        if (this.actor.type === "character") {
             this.preRollData.target = this.actor.system.attributes[this.attribute].value;
             this.preRollData.canPush = this.options.canPush;
-        } else if (this.actor.type == "npc") {
-            if (this.attribute == "con") {
-                this.preRollData.target = this.actor.system.hitPoints.max - 2 * this.actor.items.filter(i => i.type == "ability" && i.system.secondaryAttribute == "hitPoints").length;
-            } else if (this.attribute == "wil") {
-                this.preRollData.target = this.actor.system.willPoints.max - 2 * this.actor.items.filter(i => i.type == "ability" && i.system.secondaryAttribute == "willPoints").length;
-            } else if (this.attribute == "str") {
+        } else if (this.actor.type === "npc") {
+            if (this.attribute === "con") {
+                this.preRollData.target = this.actor.system.hitPoints.max - 2 * this.actor.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "hitPoints").length;
+            } else if (this.attribute === "wil") {
+                this.preRollData.target = this.actor.system.willPoints.max - 2 * this.actor.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "willPoints").length;
+            } else if (this.attribute === "str") {
                 switch (this.actor.system.damageBonus.str) {
                     case "d4":
                         this.preRollData.target = 14;
@@ -45,7 +45,7 @@ export default class DoDAttributeTest extends DoDTest {
                     default:
                         this.preRollData.target = 10;
                 }
-            } else if (this.attribute == "agl") {
+            } else if (this.attribute === "agl") {
                 switch (this.actor.system.damageBonus.agl) {
                     case "d4":
                         this.preRollData.target = 14;
@@ -75,10 +75,10 @@ export default class DoDAttributeTest extends DoDTest {
     updatePostRollData() {
         super.updatePostRollData();
         this.postRollData.success = this.postRollData.result <= this.preRollData.target;
-        this.postRollData.canPush = this.preRollData.canPush && !this.postRollData.success && this.postRollData.result != 20;
+        this.postRollData.canPush = this.preRollData.canPush && !this.postRollData.success && this.postRollData.result !== 20;
         this.postRollData.isDragon = this.postRollData.result <= 1 + (this.preRollData.extraDragons ?? 0);
         this.postRollData.isDemon = this.postRollData.result >= 20 - (this.preRollData.extraDemons ?? 0);
-        
+
         if (this.postRollData.canPush) {
             this.updatePushRollChoices();
         }
