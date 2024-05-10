@@ -96,9 +96,9 @@ export class DoDItem extends Item {
     }
 
     get isDamaging() {
-        if (this.type = "spell") {
+        if (this.type === "spell") {
             return this.system.damage?.length > 0 || this.system.damagePerPowerlevel?.length > 0;
-        } else if (this.type = "weapon") {
+        } else if (this.type === "weapon") {
             return this.system.damage?.length > 0;
         }
         return false;
