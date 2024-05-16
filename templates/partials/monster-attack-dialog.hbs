@@ -6,7 +6,8 @@
                 <td>
                     <select name="selectMonsterAttack" class="selectMonsterAttack">
                         <option value="0" selected>&lt {{localize "DoD.ui.dialog.monsterAttackRandom"}} &gt</option>
-                        {{selectOptions attacks localize=true nameAttr="index" labelAttr="name"}}
+                        <!-- nameAttr is deprecated since version 12, replaced with valueAttr -->
+                        {{selectOptions attacks localize=true valueAttr="index" nameAttr="index" labelAttr="name"}}
                     </select>
                 </td>
             </tr>
