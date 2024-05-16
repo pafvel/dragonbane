@@ -76,6 +76,10 @@
         }
     ],
     "initiative": "1d20",
+    "grid": {
+      "distance": 2,
+      "units": "m"
+    },
     "gridDistance": 2,
     "gridUnits": "m",
     "primaryTokenAttribute": "hitPoints",
