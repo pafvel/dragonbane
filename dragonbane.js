@@ -238,7 +238,7 @@ function registerSettings() {
     // If true, automatically set skill advancement mark on a Dragon or Demon roll
     game.settings.register("dragonbane", "automaticSkillAdvancementMark", {
         name: "DoD.SETTINGS.automaticSkillAdvancementMark",
-        hint: "DoD.SETTINGS.automaticSkillAdvancementMark",
+        hint: "DoD.SETTINGS.automaticSkillAdvancementMarkHint",
         scope: "world",
         config: true,
         default: true,

@@ -538,7 +538,8 @@
             "monsterAttackDialogIsDefaultHint": "If checked, the \"Select Monster Attack\" dialog is shown by default when left-clicking the Attack button on the Monster sheet. The dialog is skipped if SHIFT or CTRL is pressed when left-clicking. If un-checked, the behavior is the opposite.",
             "allowDealDamageOnSelected": "Damage selected token",
             "allowDealDamageOnSelectedHint": "If checked, the GM may deal damage (and heal) the selected token if no token has been targeted.",
-            "automaticSkillAdvancementMark": "Automatically set improvement checkmark on Dragon and Demon rolls."
+            "automaticSkillAdvancementMark": "Automate skill checkmark",
+            "automaticSkillAdvancementMarkHint": "Automatically set improvement checkmark on Dragon and Demon rolls."
         },
         "WARNING": {
             "kinAbility": "Could not find Kin Ability: {ability}",

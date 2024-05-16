@@ -542,7 +542,8 @@
             "monsterAttackDialogIsDefaultHint": "Dialogen för att välja monsterattack visas när man vänsterklickar på Attack-knappen på karaktärsarket för Monster. Hoppa över dialogen genom att samtidigt hålla ner SHIFT eller CTRL. Om detta alternativ ej är ikryssat, så är funktionen den omvända, dvs att dialogen visas om man håller ner SHIFT eller CTRL.",
             "allowDealDamageOnSelected": "Skada på vald spelfigur",
             "allowDealDamageOnSelectedHint": "Spelledaren (GM) kan tillfoga skada (och hela skada) på vald spelfigur om ingen spelfigur satts som mål.",
-            "automaticSkillAdvancementMark": "Sätt automatiskt förbättringskryss vid Drakslag eller Demonslag."
+            "automaticSkillAdvancementMark": "Automatiskt förbättringskryss",
+            "automaticSkillAdvancementMarkHint": "Sätt automatiskt förbättringskryss vid Drakslag eller Demonslag."
         },
         "WARNING": {
             "kinAbility": "Kan ej hitta Släktesförmåga: {ability}",
