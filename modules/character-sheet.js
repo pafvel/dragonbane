@@ -132,7 +132,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         for (let item of sheetData.actor.items.contents) {
 
             // any item can be a memento
-            if (item.system.memento && this.actor.type == "character") {
+            if (item.system.memento && this.actor.type === "character") {
                 if(!memento) {
                     memento = item;
                     continue;
@@ -142,17 +142,17 @@ export default class DoDCharacterSheet extends ActorSheet {
                 }
             }
 
-            if (item.type == 'skill') {
+            if (item.type === 'skill') {
                 // moved to actor
                 continue;
             }
 
-            if (item.type == 'ability') {
+            if (item.type === 'ability') {
                 let ability = item;
 
-                if (ability.system.abilityType == 'kin') {
+                if (ability.system.abilityType === 'kin') {
                     kinAbilities.push(ability);
-                } else if (ability.system.abilityType == 'profession') {
+                } else if (ability.system.abilityType === 'profession') {
                     professionAbilities.push(ability);
                 } else {
                     heroicAbilities.push(ability);
@@ -160,7 +160,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                 continue;
             }
 
-            if (item.type == 'spell')
+            if (item.type === 'spell')
             {
                 let spell = item;
 
@@ -173,17 +173,17 @@ export default class DoDCharacterSheet extends ActorSheet {
                 continue;
             }
 
-            if (item.type == "weapon") {
+            if (item.type === "weapon") {
                 if (item.system.worn) {
                     // TODO limit 3
                     equippedWeapons.push(item);
-                } else if (item.system.weight == 0 && this.actor.type == "character") {
+                } else if (item.system.weight === 0 && this.actor.type === "character") {
                     smallItems.push(item);
                 } else {
                     inventory.push(item);
                 }
                 // weapons can be mementos
-                if (item.system.memento && this.actor.type == "character") {
+                if (item.system.memento && this.actor.type === "character") {
                     if(!memento) {
                         memento = item;
                     } else {
@@ -195,36 +195,36 @@ export default class DoDCharacterSheet extends ActorSheet {
                 continue;
             }
 
-            if (item.type == "armor") {
+            if (item.type === "armor") {
                 if (!item.system.worn) {
-                    if (item.system.weight == 0 && this.actor.type == "character") {
+                    if (item.system.weight === 0 && this.actor.type === "character") {
                         smallItems.push(item);
-                    } else {                   
+                    } else {
                         inventory.push(item);
                     }
                 }
                 continue;
             }
 
-            if (item.type == "helmet") {
+            if (item.type === "helmet") {
                 if (!item.system.worn) {
-                    if (item.system.weight == 0 && this.actor.type == "character") {
+                    if (item.system.weight === 0 && this.actor.type === "character") {
                         smallItems.push(item);
-                    } else {                   
+                    } else {
                         inventory.push(item);
                     }
                 }
                 continue;
             }
 
-            if (item.type == "item") {
-                if (item.system.weight == 0 && item.system.type != "backpack" && this.actor.type == "character")
+            if (item.type === "item") {
+                if (item.system.weight === 0 && item.system.type !== "backpack" && this.actor.type === "character")
                 {
                     smallItems.push(item);
                     continue;
                 }
                 inventory.push(item);
-                continue;
+
             }
         }
 
@@ -235,11 +235,11 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.professionName = sheetData.profession?.name;
 
         // Items (skills, abilities, spells)
-        sheetData.coreSkills = sheetData.actor.system.coreSkills?.sort(DoD_Utility.nameSorter);;
+        sheetData.coreSkills = sheetData.actor.system.coreSkills?.sort(DoD_Utility.nameSorter);
         sheetData.magicSkills = sheetData.actor.system.magicSkills?.sort(DoD_Utility.nameSorter);
         sheetData.secondarySkills = sheetData.actor.system.secondarySkills?.sort(DoD_Utility.nameSorter);
         sheetData.weaponSkills = sheetData.actor.system.weaponSkills?.sort(DoD_Utility.nameSorter);
-        sheetData.trainedSkills = sheetData.actor.system.trainedSkills?.sort(DoD_Utility.nameSorter).filter(s => s.system.hideTrained == false);
+        sheetData.trainedSkills = sheetData.actor.system.trainedSkills?.sort(DoD_Utility.nameSorter).filter(s => s.system.hideTrained === false);
 
         sheetData.heroicAbilities = heroicAbilities.sort(DoD_Utility.nameSorter);
         sheetData.kinAbilities = kinAbilities.sort(DoD_Utility.nameSorter);
@@ -261,7 +261,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             // Push first unique ability. Add ability count in parenthesis (if multiple)
             formattedAbilities.push({
                 id: sheetData.abilities[i].id,
-                name: count == 1 ? sheetData.abilities[i].name : sheetData.abilities[i].name + " (" + count + ")"
+                name: count === 1 ? sheetData.abilities[i].name : sheetData.abilities[i].name + " (" + count + ")"
             });
         }
         sheetData.abilities = formattedAbilities;
@@ -291,7 +291,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.largeHP = sheetData.maxHP > 40; // switch to large hp widget
 
         // Death rolls widget data
-        if (this.actor.type == "character") {
+        if (this.actor.type === "character") {
             sheetData.deathRollsSuccesses = sheetData.actor.system.deathRolls.successes;
             sheetData.deathRollsSuccessesRemaining = 3 - sheetData.deathRollsSuccesses;
             sheetData.deathRollsFailures = sheetData.actor.system.deathRolls.failures;
@@ -299,8 +299,8 @@ export default class DoDCharacterSheet extends ActorSheet {
         }
 
         // WP widget data
-        if (this.actor.type == "character" || this.actor.type == "npc") {
-            sheetData.hasWillpower = this.actor.type == "character" || sheetData.actor.system.willPoints.max > 0 || sheetData.abilities.length > 0 || sheetData.spells.length > 0 || !game.settings.get("dragonbane", "hideNpcWpWidget");
+        if (this.actor.type === "character" || this.actor.type === "npc") {
+            sheetData.hasWillpower = this.actor.type === "character" || sheetData.actor.system.willPoints.max > 0 || sheetData.abilities.length > 0 || sheetData.spells.length > 0 || !game.settings.get("dragonbane", "hideNpcWpWidget");
             //sheetData.hasWillpower = sheetData.actor.type != "monster" || sheetData.abilities.length > 0 || sheetData.spells.length > 0;
             if (sheetData.hasWillpower) {
                 sheetData.maxWP = sheetData.actor.system.willPoints.max;
@@ -313,9 +313,9 @@ export default class DoDCharacterSheet extends ActorSheet {
     }
 
     _updateEncumbrance(sheetData) {
-        if (this.actor.type == "character") {
+        if (this.actor.type === "character") {
             sheetData.maxEncumbrance = Math.ceil(0.5 * this.actor.system.attributes.str.value);
-            if (sheetData.inventory.find(item => item.system.type == "backpack")) {
+            if (sheetData.inventory.find(item => item.system.type === "backpack")) {
                 sheetData.maxEncumbrance += 2;
             }
         }
@@ -325,12 +325,12 @@ export default class DoDCharacterSheet extends ActorSheet {
         }
         if (sheetData.actor.system.currency) {
             let coins = sheetData.actor.system.currency.gc + sheetData.actor.system.currency.sc + sheetData.actor.system.currency.cc;
-            sheetData.encumbrance += Math.floor(coins/100);    
+            sheetData.encumbrance += Math.floor(coins/100);
         }
         // Maximum 2 decimals
         sheetData.encumbrance = Math.round(100 * sheetData.encumbrance) / 100;
 
-        if (this.actor.type == "character") {
+        if (this.actor.type === "character") {
             sheetData.overEncumbered = sheetData.encumbrance > sheetData.maxEncumbrance;
         }
     }
@@ -376,24 +376,24 @@ export default class DoDCharacterSheet extends ActorSheet {
 
             let restRoundButton = html.find(".rest-round");
             if (restRoundButton?.length > 0) {
-                if (this.actor.system.canRestRound == false) {
+                if (this.actor.system.canRestRound === false) {
                     restRoundButton[0].disabled = true;
                 } else {
                     restRoundButton[0].disabled = false;
                     restRoundButton.on("click", this._onRestRound.bind(this));
-                }    
+                }
             }
 
             let restStretchButton = html.find(".rest-stretch");
             if (restStretchButton?.length > 0) {
-                if (this.actor.system.canRestStretch == false) {
+                if (this.actor.system.canRestStretch === false) {
                     restStretchButton[0].disabled = true;
                 } else {
                     restStretchButton[0].disabled = false;
                     restStretchButton.on("click", this._onRestStretch.bind(this));
-                }    
+                }
             }
-            
+
             html.find(".rest-shift").on("click", this._onRestShift.bind(this));
             html.find(".rest-reset").on("click", this._onRestReset.bind(this));
 
@@ -427,7 +427,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             const value = parseInt(element.value);
             if (value > 0) {
                 for (let tableResult of table.results) {
-                    if (value == tableResult.range[0]) {
+                    if (value === tableResult.range[0]) {
                         DoD_Utility.monsterAttack(this.actor, table, tableResult);
                         return;
                     }
@@ -448,7 +448,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             return;
         }
 
-        if (event.type == "click") { // left click
+        if (event.type === "click") { // left click
             let skipDialog = event.shiftKey || event.ctrlKey;
             if (!game.settings.get("dragonbane", "monsterAttackDialogIsDefault")) {
                 skipDialog = !skipDialog;
@@ -461,9 +461,9 @@ export default class DoDCharacterSheet extends ActorSheet {
             for (let result of table.results) {
                 // Find attack description
                 let attack = {name: "", description: "", index: result.range[0]};
-                if (result.documentCollection == "RollTable") {
+                if (result.documentCollection === "RollTable") {
                     let subTable = DoD_Utility.findTable(result.text);
-                    if (subTable?.uuid != table.uuid) {
+                    if (subTable?.uuid !== table.uuid) {
                         attack.description = subTable?.description;
                     } else {
                         attack.description = result.text;
@@ -488,7 +488,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             const html = await renderTemplate(template, dialogData);
             const labelOk = game.i18n.localize("DoD.ui.dialog.labelOk");
             const labelCancel = game.i18n.localize("DoD.ui.dialog.labelCancel");
-            
+
             return await new Promise(
                 resolve => {
                     const data = {
@@ -535,7 +535,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         event.preventDefault();
 
         let hp = this.actor.system.hitPoints;
-        if (event.type == "click") { // left click
+        if (event.type === "click") { // left click
             if (hp.value > 0) {
                 return this.actor.update({ ["system.hitPoints.value"]: hp.value-1});
             }
@@ -550,7 +550,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         event.preventDefault();
 
         let wp = this.actor.system.willPoints;
-        if (event.type == "click") { // left click
+        if (event.type === "click") { // left click
             if (wp.value > 0) {
                 return this.actor.update({ ["system.willPoints.value"]: wp.value-1});
             }
@@ -566,7 +566,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         let successes = this.actor.system.deathRolls.successes;
         console.assert(successes >= 0 && successes <= 3, "Dragonbane: system.deathRolls.successes out of range for " + this.actor.uuid);
-        if (event.type == "click") { // left click
+        if (event.type === "click") { // left click
             if (successes < 3) {
                 return await this.actor.update({ ["system.deathRolls.successes"]: successes+1});
             }
@@ -582,7 +582,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         let failures = this.actor.system.deathRolls.failures;
         console.assert(failures >= 0 && failures <= 3, "Dragonbane: system.deathRolls.failures out of range for " + this.actor.uuid);
-        if (event.type == "click") { // left click
+        if (event.type === "click") { // left click
             if (failures < 3) {
                 return await this.actor.update({ ["system.deathRolls.failures"]: failures+1});
             }
@@ -614,10 +614,10 @@ export default class DoDCharacterSheet extends ActorSheet {
         const success = test.postRollData.success;
         const isDragon = test.postRollData.isDragon;
         const isDemon = test.postRollData.isDemon;
-        
+
         async function updateDeathRolls(actor) {
             if (success) {
-                if (actor.system.deathRolls.successes < 3) {            
+                if (actor.system.deathRolls.successes < 3) {
                     await actor.update({ ["system.deathRolls.successes"]: Math.min(3, actor.system.deathRolls.successes + (isDragon ? 2 : 1))});
                 }
             } else {
@@ -625,17 +625,17 @@ export default class DoDCharacterSheet extends ActorSheet {
                     await actor.update({ ["system.deathRolls.failures"]: Math.min(3, actor.system.deathRolls.failures + (isDemon ? 2 : 1))});
                 }
             }
-            if (actor.system.deathRolls.failures == 3 && game.settings.get("dragonbane", "automateCharacterDeath")) {
-                const token = canvas.scene.tokens.find(t => t.actor.uuid == actor.uuid);
+            if (actor.system.deathRolls.failures === 3 && game.settings.get("dragonbane", "automateCharacterDeath")) {
+                const token = canvas.scene.tokens.find(t => t.actor.uuid === actor.uuid);
                 if (token) {
                     const status = CONFIG.statusEffects.find(a => a.id === 'dead');
-                    token.toggleActiveEffect(status, {active: true, overlay: true});    
+                    token.toggleActiveEffect(status, {active: true, overlay: true});
                 }
                 const actorName = actor.isToken ? actor.token.name : actor.name;
                 const msg = "<p>" + game.i18n.format("DoD.ui.chat.characterDied", {actor: actorName}) + "</p>";
                 ChatMessage.create({ content: msg });
             }
-            if (actor.system.deathRolls.successes == 3) {
+            if (actor.system.deathRolls.successes === 3) {
                 const actorName = actor.isToken ? actor.token.name : actor.name;
                 const msg = "<p>" + game.i18n.format("DoD.ui.chat.characterSurvived", {actor: actorName}) + "</p>";
                 ChatMessage.create({ content: msg });
@@ -656,7 +656,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         event.preventDefault();
         event.currentTarget?.blur();
 
-        await this.actor.update({["system.canRestRound"]: false});   
+        await this.actor.update({["system.canRestRound"]: false});
 
         this.actor.system.canRestRound = false;
 
@@ -680,7 +680,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         let formula = `
         <i class="fa-solid fa-circle-info"></i>
         <div class="permission-observer dice-tooltip" data-actor-id="${this.actor.uuid}" style="text-align: left; margin-left: 0.5em">`;
-        if (newWP != currentWP) {
+        if (newWP !== currentWP) {
             formula += `<b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${currentWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>`;
         }
         formula += "</div>";
@@ -712,7 +712,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         event.preventDefault();
         event.currentTarget?.blur();
 
-        await this.actor.update({["system.canRestStretch"]: false});   
+        await this.actor.update({["system.canRestStretch"]: false});
 
         // Make roll
         const roll = await new Roll(`D6[${game.i18n.localize("DoD.secondaryAttributeTypes.hitPoints")}] + D6[${game.i18n.localize("DoD.secondaryAttributeTypes.willPoints")}]`).roll(game.release.generation < 12 ? {async: true} : {});
@@ -747,10 +747,10 @@ export default class DoDCharacterSheet extends ActorSheet {
         let formula = `
         <i class="fa-solid fa-circle-info"></i>
         <div class="permission-observer dice-tooltip" data-actor-id="${this.actor.uuid}" style="text-align: left; margin-left: 0.5em">`;
-        if (newHP != currentHP) {
+        if (newHP !== currentHP) {
             formula += `<b>${game.i18n.localize("DoD.ui.character-sheet.hp")}:</b> ${currentHP} <i class="fa-solid fa-arrow-right"></i> ${newHP}<br>`;
         }
-        if (newWP != currentWP) {
+        if (newWP !== currentWP) {
             formula += `<b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${currentWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>`;
         }
         formula += "</div>";
@@ -794,7 +794,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         await this.actor.update({
             ["system.canRestRound"]: true,
             ["system.canRestStretch"]: true
-        });   
+        });
 
         // Calc HP
         const currentHP = this.actor.system.hitPoints.value;
@@ -870,41 +870,41 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         event.currentTarget.blur();
 
-        if (element.type == "checkbox") {
+        if (element.type === "checkbox") {
 
             // Handle wearing armor, helmet and weapons
-            if (field == "system.worn" && element.checked) {
-                if (item.type == "weapon" && !item.hasWeaponFeature("unarmed")) {
+            if (field === "system.worn" && element.checked) {
+                if (item.type === "weapon" && !item.hasWeaponFeature("unarmed")) {
                     const actorData = await this.getData();
                     if (!actorData.canEquipWeapon) {
                         element.checked = false;
                         DoD_Utility.WARNING("DoD.WARNING.maxWeaponsEquipped");
                         return;
                     }
-                } else if (item.type=="armor" && this.actor.system.equippedArmor) {
+                } else if (item.type==="armor" && this.actor.system.equippedArmor) {
                     await this.actor.system.equippedArmor.update({
                         ["system.worn"]: true,
                         ["system.memento"]: false
                     });
-                } else if (item.type=="helmet" && this.actor.system.equippedHelmet) {
+                } else if (item.type==="helmet" && this.actor.system.equippedHelmet) {
                     await this.actor.system.equippedHelmet.update({
                         ["system.worn"]: true,
                         ["system.memento"]: false
                     });
-                }                    
+                }
             }
 
             // Handle equipping & unequipping weapons
-            if (field == "system.mainHand" || field == "system.offHand") {
-                const twoHanded = item.system.grip.value == "grip2h";
+            if (field === "system.mainHand" || field === "system.offHand") {
+                const twoHanded = item.system.grip.value === "grip2h";
                 if (element.checked) {
                     // Un-equip weapons in same hand or both hands if equipping 2-handed weapon
                     for (let actorItem of this.actor.items) {
-                        if (actorItem.type == "weapon") {
-                            if (actorItem.uuid != item.uuid) {
+                        if (actorItem.type === "weapon") {
+                            if (actorItem.uuid !== item.uuid) {
                                 // Equipping a different weapon
                                 // Un-eqiup weapon in same hand or if any of the weapons is two-handed
-                                if (twoHanded || actorItem.system.grip.value == "grip2h") {
+                                if (twoHanded || actorItem.system.grip.value === "grip2h") {
                                     actorItem.update({["system.mainHand"]: false, ["system.offHand"]: false});
                                 } else {
                                     actorItem.update({[field]: false});
@@ -922,8 +922,8 @@ export default class DoDCharacterSheet extends ActorSheet {
         }
 
         let result = await item.update({ [field]: Number(element.value) });
-        
-        // Skill values may reset to their base chance. 
+
+        // Skill values may reset to their base chance.
         let value = foundry.utils.getProperty(item, field);
         element.value = value;
         return result;
@@ -1070,7 +1070,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         const ok = await new Promise(
             resolve => {
                 const data = {
-                    title: game.i18n.format("DoD.ui.dialog.deleteItemTitle", 
+                    title: game.i18n.format("DoD.ui.dialog.deleteItemTitle",
                         {item: game.i18n.localize("TYPES.Item." + item.type)}),
                     content: game.i18n.format("DoD.ui.dialog.deleteItemContent", {item: item.name}),
                     buttons: {
@@ -1110,7 +1110,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         event.preventDefault();
 
         // Del key
-        if (event.keyCode == 46) {
+        if (event.keyCode === 46) {
             let element = event.currentTarget;
             let itemId = element.dataset.itemId;
             return this.actor.deleteEmbeddedDocuments("Item", [itemId]);
@@ -1124,7 +1124,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         let itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
         let item = this.actor.items.get(itemId);
 
-        if (event.type == "click") { // left click - skill roll
+        if (event.type === "click") { // left click - skill roll
             let test = null;
             let options = {};
             if (event.shiftKey || event.ctrlKey) {
@@ -1136,13 +1136,13 @@ export default class DoDCharacterSheet extends ActorSheet {
             if (game.user.targets.size > 0) {
                 options.targets = Array.from(game.user.targets);
             }
-            if (item.type == "skill") {
+            if (item.type === "skill") {
                 test = new DoDSkillTest(this.actor, item, options);
-            } else if (item.type == "spell") {
+            } else if (item.type === "spell") {
                 if (item.system.rank > 0) {
-                    if (this.actor.type == "monster") {
+                    if (this.actor.type === "monster") {
                         options.autoSuccess = true;
-                    };
+                    }
                     test = new DoDSpellTest(this.actor, item, options);
                 } else {
                     const use = await new Promise(
@@ -1169,7 +1169,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                         }
                     );
                     if (use) {
-                        if (this.actor.type != "monster" && this.actor.system.willPoints.value < 1) {
+                        if (this.actor.type !== "monster" && this.actor.system.willPoints.value < 1) {
                             DoD_Utility.WARNING("DoD.WARNING.notEnoughWPForSpell");
                             return;
                         } else {
@@ -1178,7 +1178,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                                 spell: item.name,
                                 uuid: item.uuid
                             }) + "</p>";
-                            if (this.actor.type != "monster") {
+                            if (this.actor.type !== "monster") {
                                 const oldWP = this.actor.system.willPoints.value;
                                 const newWP = oldWP - 1;
                                 await this.actor.update({"system.willPoints.value": newWP});
@@ -1195,9 +1195,9 @@ export default class DoDCharacterSheet extends ActorSheet {
                                 content: content,
                             });
                             }
-                    }                    
+                    }
                 }
-            } else if (item.type == "weapon") {
+            } else if (item.type === "weapon") {
                 test = new DoDWeaponTest(this.actor, item, options);
             }
             if (test) {
@@ -1214,13 +1214,13 @@ export default class DoDCharacterSheet extends ActorSheet {
         const itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
         const item = this.actor.items.get(itemId);
 
-        if (event.type == "click") { // left click - use item
-            if (item.type == "ability") {
+        if (event.type === "click") { // left click - use item
+            if (item.type === "ability") {
                 let wp = Number(item.system.wp);
                 wp = isNaN(wp) ? 0 : wp;
 
                 const use = await new Promise(
-                    resolve => {        
+                    resolve => {
                         const data = {
                             title: game.i18n.localize("DoD.ui.dialog.useAbility"),
                             content: wp > 0 ? game.i18n.format("DoD.ui.dialog.useAbilityWithWP", {wp: wp, ability: item.name}) : game.i18n.format("DoD.ui.dialog.useAbilityWithoutWP", {ability: item.name}),
@@ -1286,7 +1286,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         const itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
         const weapon = this.actor.items.get(itemId);
 
-        if (event.type == "click") { // left click - roll damage
+        if (event.type === "click") { // left click - roll damage
 
             const weaponDamage = weapon.system.damage;
             const skill = this.actor.findSkill(weapon.system.skill.name);
@@ -1346,15 +1346,15 @@ export default class DoDCharacterSheet extends ActorSheet {
         const skillValue = skillItem.system.value;
         const baseChance = this.actor._getBaseChance(skillItem);
         let maxTrainedSkills = 8; // young
-        if (this.actor.system.age == "adult") {
+        if (this.actor.system.age === "adult") {
             maxTrainedSkills += 2;
-        } else if (this.actor.system.age == "old") {
+        } else if (this.actor.system.age === "old") {
             maxTrainedSkills += 4;
         }
 
         const advancedSkillsCount = this.actor.system.trainedSkills.filter(skill => skill.system.value > 0).length;
 
-        if (advancedSkillsCount < maxTrainedSkills && (skillValue == baseChance || skillValue == 0)) {
+        if (advancedSkillsCount < maxTrainedSkills && (skillValue === baseChance || skillValue === 0)) {
 
             // result: 0 -> Cancel
             // result: 1 -> Mark
@@ -1403,12 +1403,12 @@ export default class DoDCharacterSheet extends ActorSheet {
         const skillItem = this.actor.items.get(itemId);
 
         // left click to roll, right-click to clear
-        if (event.type == "click") { 
+        if (event.type === "click") {
 
             // Make roll
             const roll = await new Roll("D20").roll(game.release.generation < 12 ? {async: true} : {});
             const advance = Math.min(DoD.skillMaximum , roll.result) > skillItem.system.value;
-            const flavorText = advance ? 
+            const flavorText = advance ?
                 game.i18n.format("DoD.skill.advancementSuccess", {skill: skillItem.name, old: skillItem.system.value, new: skillItem.system.value + 1}) :
                 game.i18n.format("DoD.skill.advancementFail", {skill: skillItem.name});
 
@@ -1417,7 +1417,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                 speaker: ChatMessage.getSpeaker({ actor: this.actor }),
                 flavor: flavorText
             });
-        
+
             if (advance) {
                 if(game.dice3d) {
                     game.dice3d.waitFor3DAnimationByMessageID(msg.id).then(
@@ -1432,7 +1432,7 @@ export default class DoDCharacterSheet extends ActorSheet {
     }
 
     async _onConditionClick(event) {
-        if (event.target.className == "condition-input") {
+        if (event.target.className === "condition-input") {
             return; // event is handled by input element
         }
         const elements = event.currentTarget.getElementsByClassName("condition-input");
@@ -1464,7 +1464,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             let dropTarget = event.target.closest(".item-list")?.dataset.droptarget;
 
             if (dropTarget) {
-                if (dropTarget == "weapon" && itemData.type == "weapon")
+                if (dropTarget === "weapon" && itemData.type === "weapon")
                 {
                     const worn = item.system.worn || actorData.canEquipWeapon || item.hasWeaponFeature("unarmed");
                     if(!worn) {
@@ -1475,36 +1475,36 @@ export default class DoDCharacterSheet extends ActorSheet {
                             // split item
                             itemData.system.quantity = 1;
                             itemData.system.worn = true;
-                            await item.update({["system.quantity"]: item.system.quantity - 1 });                            
+                            await item.update({["system.quantity"]: item.system.quantity - 1 });
                             return await this._onDropItemCreate(itemData);
                         } else {
                             await item.update({
                                 ["system.worn"]: worn,
                                 ["system.memento"]: false
                             });
-                            return this._onSortItem(event, itemData);                         
-                        }    
+                            return this._onSortItem(event, itemData);
+                        }
                     }
                 }
-                else if (dropTarget == "armor" && itemData.type == "armor") {
+                else if (dropTarget === "armor" && itemData.type === "armor") {
                     await actorData.equippedArmor?.update({ ["system.worn"]: false});
                     await item.update({
                         ["system.worn"]: true,
                         ["system.memento"]: false
                     });
                 }
-                else if (dropTarget == "helmet" && itemData.type == "helmet") {
+                else if (dropTarget === "helmet" && itemData.type === "helmet") {
                     await actorData.equippedHelmet?.update({ ["system.worn"]: false});
                     await item.update({
                         ["system.worn"]: true,
                         ["system.memento"]: false
                     });
                 }
-                else if (dropTarget == "memento") {
+                else if (dropTarget === "memento") {
                     await actorData.memento?.update({ ["system.memento"]: false });
                     await item.update({ ["system.memento"]: true});
                 }
-                else if (dropTarget == "inventory" || dropTarget == "tiny") {
+                else if (dropTarget === "inventory" || dropTarget === "tiny") {
                     await item.update({
                         ["system.worn"]: false,
                         ["system.memento"]: false
@@ -1515,37 +1515,37 @@ export default class DoDCharacterSheet extends ActorSheet {
         }
 
         // Remove kin and kin abilities
-        if (itemData.type == "kin") {
+        if (itemData.type === "kin") {
             await this.actor.removeKin();
         }
 
         // Remove profession and profession abilities
-        if (itemData.type == "profession") {
+        if (itemData.type === "profession") {
             await this.actor.removeProfession();
         }
 
         // If there are available slots, equip weapons, armor and helmet
-        if (item.type == "weapon" || item.type == "armor" || item.type == "helmet") {
+        if (item.type === "weapon" || item.type === "armor" || item.type === "helmet") {
             itemData.system.worn =
-                item.type == "weapon" && (actorData.canEquipWeapon || item.hasWeaponFeature("unarmed"))
-                || item.type == "armor" && !actorData.equippedArmor
-                || item.type == "helmet" && !actorData.equippedHelmet;
+                item.type === "weapon" && (actorData.canEquipWeapon || item.hasWeaponFeature("unarmed"))
+                || item.type === "armor" && !actorData.equippedArmor
+                || item.type === "helmet" && !actorData.equippedHelmet;
         }
 
         // Create the owned item
         let returnValue = await this._onDropItemCreate(itemData);
 
         // Update kin and kin abilities
-        if (itemData.type == "kin") {
+        if (itemData.type === "kin") {
             await this.actor.updateKinAbilities();
         }
 
         // Update profession and profession abilities
-        if (itemData.type == "profession") {
+        if (itemData.type === "profession") {
             let missingSkills = await this.actor.updateProfession();
             for (const skillName of missingSkills) {
                 const skill = await DoD_Utility.findSkill(skillName);
-                if (skill && (skill.system.skillType == "secondary" || skill.system.skillType == "magic")) {
+                if (skill && (skill.system.skillType === "secondary" || skill.system.skillType === "magic")) {
                     await this._onDropItemCreate(skill.toObject());
                     DoD_Utility.INFO("DoD.INFO.professionSkillAdded", {skill: skillName});
                 } else {
@@ -1567,13 +1567,13 @@ export default class DoDCharacterSheet extends ActorSheet {
         };
 
         // If there are available slots, equip weapons, armor and helmet
-        if (type == "weapon" || type == "armor" || type == "helmet") {
+        if (type === "weapon" || type === "armor" || type === "helmet") {
             const actorData = await this.getData();
             itemData.system = {};
             itemData.system.worn =
-                itemData.type == "weapon" && actorData.canEquipWeapon
-                || itemData.type == "armor" && !actorData.equippedArmor
-                || itemData.type == "helmet" && !actorData.equippedHelmet;
+                itemData.type === "weapon" && actorData.canEquipWeapon
+                || itemData.type === "armor" && !actorData.equippedArmor
+                || itemData.type === "helmet" && !actorData.equippedHelmet;
         }
 
         return this.actor.createEmbeddedDocuments("Item", [itemData]);

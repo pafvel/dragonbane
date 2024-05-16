@@ -8,13 +8,13 @@ import { DoDActor } from "./actor.js";
 
 export async function createItemMacro(data, slot) {
 
-    if (data.type != "Item") {
+    if (data.type !== "Item") {
         return;
     }
     let document = await fromUuid(data.uuid);
     let macro = null;
     let command = "";
-    if (document.type == "skill" || document.type == "spell" || document.type == "weapon") {
+    if (document.type === "skill" || document.type === "spell" || document.type === "weapon") {
         command = `game.dragonbane.rollItem("${document.name}", "${document.type}");`;
     } else {
         command = `Hotbar.toggleDocumentSheet("${document.uuid}");`;
@@ -40,7 +40,7 @@ export async function rollAttributeMacro(actor, attributeName, options = {}) {
         DoD_Utility.WARNING("DoD.WARNING.macroNoActor");
         return;
     }
-    
+
     let test = new DoDAttributeTest(actor, attributeName, {...{ defaultBanesBoons: true }, ...options});
     return await test.roll();
 }
@@ -59,11 +59,11 @@ export function rollItemMacro(itemName, itemType, options = {}) {
         options.targets = Array.from(game.user.targets);
     }
 
-    const items = actor.items.filter(i => i.name == itemName && i.type == itemType);
+    const items = actor.items.filter(i => i.name === itemName && i.type === itemType);
 
     if (items.length > 1) {
         DoD_Utility.WARNING("DoD.WARNING.macroMultipleItems", {item: itemName, type: itemType});
-    } else if (items.length == 0) {
+    } else if (items.length === 0) {
         DoD_Utility.WARNING("DoD.WARNING.macroNoItem", {item: itemName, type: itemType});
         return;
     }
@@ -87,19 +87,19 @@ export function rollItemMacro(itemName, itemType, options = {}) {
     let actor;
     if (speaker.token) actor = game.actors.tokens[speaker.token];
     if (!actor) actor = game.actors.get(speaker.actor);
-    if (!actor || actor.type != "monster") {
+    if (!actor || actor.type !== "monster") {
         DoD_Utility.WARNING("DoD.WARNING.macroNoActor");
         return;
     }
     return DoD_Utility.monsterAttack(actor);
   }
-  
+
   export function monsterDefendMacro() {
     const speaker = ChatMessage.getSpeaker();
     let actor;
     if (speaker.token) actor = game.actors.tokens[speaker.token];
     if (!actor) actor = game.actors.get(speaker.actor);
-    if (!actor || actor.type != "monster") {
+    if (!actor || actor.type !== "monster") {
         DoD_Utility.WARNING("DoD.WARNING.macroNoActor");
         return;
     }

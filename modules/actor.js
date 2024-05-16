@@ -9,7 +9,7 @@ export class DoDActor extends Actor {
         // Warn if there are tokens referring to this actor
         let scenes = [];
         for (let scene of game.scenes.contents) {
-            let t = scene.tokens.find(t=>t.actorId == this.id);
+            let t = scene.tokens.find(t=>t.actorId === this.id);
             if (t) scenes.push(scene.name);
         }
         let tokenMessage = "";
@@ -28,22 +28,22 @@ export class DoDActor extends Actor {
           yes: this.delete.bind(this),
           options: options
         });
-    }    
+    }
 
     /** @override */
     async _preCreate(data, options, user) {
 
         await super._preCreate(data, options, user);
-    
+
         // If the created actor has items (only applicable to duplicated actors) bypass the new actor creation logic
         if (!data.items?.length)
         {
-            if (this.type != "monster") {
+            if (this.type !== "monster") {
                 let baseSkills = await DoD_Utility.getBaseSkills();
                 if (baseSkills) {
                     data.items = baseSkills;
                     this.updateSource(data);
-                }    
+                }
             }
             switch (this.type) {
                 case "character":
@@ -72,10 +72,10 @@ export class DoDActor extends Actor {
                         "prototypeToken.displayBars": 20, // Hovered by Owner
                     });
                     break;
-            }    
+            }
         }
     }
-    static onPreUpdateActorEvent(actor, data, options, userId) {
+    static onPreUpdateActorEvent(actor, data, _options, _userId) {
         console.log("onUpdateActorEvent", actor);
 
         if (foundry.utils.hasProperty(data, "system.hitPoints.value")) {
@@ -98,7 +98,7 @@ export class DoDActor extends Actor {
     /** @override */
     async _preUpdate(data, options, user) {
         await super._preUpdate(data, options, user);
-    
+
         if (foundry.utils.hasProperty(data, "system.hitPoints.value")) {
             options._deltaHP = foundry.utils.getProperty(data, "system.hitPoints.value") - this.system.hitPoints.value;
         }
@@ -120,17 +120,17 @@ export class DoDActor extends Actor {
                 anchor: CONST.TEXT_ANCHOR_POINTS.LEFT,
                 fill: "0xFF0000",
                 hidden: !hasPermission
-            });      
+            });
         }
         if (options._deltaWP) {
             this._displayScrollingText(options._deltaWP, {
                 anchor: CONST.TEXT_ANCHOR_POINTS.RIGHT,
                 fill: "0x00FF00",
                 hidden: !hasPermission
-            });      
-        }    
+            });
+        }
     }
-    
+
     _displayScrollingText(change, options = {}) {
         if (!change) return;
         const tokens = this.isToken ? [this.token?.object] : this.getActiveTokens(true);
@@ -152,7 +152,7 @@ export class DoDActor extends Actor {
             }
         }
     }
-    
+
     /** @override */
     prepareData() {
         // Prepare data for the actor. Calling the super version of this executes
@@ -175,7 +175,7 @@ export class DoDActor extends Actor {
 
     prepareEmbeddedDocuments() {
         super.prepareEmbeddedDocuments();
-        
+
         switch(this.type)
         {
             case "character":
@@ -241,7 +241,7 @@ export class DoDActor extends Actor {
         let helmet = null;
 
         for (let item of this.items.contents) {
-            if (item.type == 'armor' && item.system.worn) {
+            if (item.type === 'armor' && item.system.worn) {
                 if (armor) {
                     // Already wearing armor
                     item.update({ ["system.worn"]: false });
@@ -249,7 +249,7 @@ export class DoDActor extends Actor {
                     armor = item;
                 }
             }
-            if (item.type == 'helmet' && item.system.worn) {
+            if (item.type === 'helmet' && item.system.worn) {
                 if (helmet) {
                     // Already wearing helmet
                     item.update({ ["system.worn"]: false });
@@ -259,7 +259,7 @@ export class DoDActor extends Actor {
             }
         }
         this.system.equippedArmor = armor;
-        this.system.equippedHelmet = helmet;        
+        this.system.equippedHelmet = helmet;
     }
 
     _prepareSkills() {
@@ -270,23 +270,23 @@ export class DoDActor extends Actor {
         this.system.magicSkills = [];
         this.system.secondarySkills = [];
         this.system.trainedSkills = [];
-        
+
         for (let item of this.items.contents) {
-            if (item.type == 'skill') {
+            if (item.type === 'skill') {
                 let skill = item;
                 skill.system.isProfessionSkill = false;
                 this.system.skills.push(skill);
-                if (skill.system.skillType == 'core') {
+                if (skill.system.skillType === 'core') {
                     this.system.coreSkills.push(skill);
                     if(skill.system.value > this._getBaseChance(skill)) {
                         this.system.trainedSkills.push(skill);
                     }
-                }  else if (skill.system.skillType == 'weapon') {
+                }  else if (skill.system.skillType === 'weapon') {
                     this.system.weaponSkills.push(skill);
                     if(skill.system.value > this._getBaseChance(skill)) {
                         this.system.trainedSkills.push(skill);
                     }
-                } else if (skill.system.skillType == 'magic') {
+                } else if (skill.system.skillType === 'magic') {
                     // schools of magic are secondary skills
                     this.system.magicSkills.push(skill);
                     this.system.secondarySkills.push(skill);
@@ -306,10 +306,10 @@ export class DoDActor extends Actor {
 
         // Will Points
         let maxWillPoints = this.system.attributes.wil.value;
-        const wpBonuses = this.items.filter(i => i.type == "ability" && i.system.secondaryAttribute == "willPoints").length;
+        const wpBonuses = this.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "willPoints").length;
         maxWillPoints += 2 * wpBonuses;
 
-        if (this.system.willPoints.max != maxWillPoints) {
+        if (this.system.willPoints.max !== maxWillPoints) {
             // Attribute changed - keep spent amount (damage) and update max value
             let damage = this.system.willPoints.max - this.system.willPoints.value;
             if (damage < 0) {
@@ -317,17 +317,17 @@ export class DoDActor extends Actor {
             } else if (damage > maxWillPoints) {
                 damage = maxWillPoints;
             }
-            this.update({ 
+            this.update({
                 ["system.willPoints.max"]: maxWillPoints,
                 ["system.willPoints.value"]: maxWillPoints - damage });
         }
-        
+
         // Hit Points
         let maxHitPoints = this.system.attributes.con.value;
-        const hpBonuses = this.items.filter(i => i.type == "ability" && i.system.secondaryAttribute == "hitPoints").length;
+        const hpBonuses = this.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "hitPoints").length;
         maxHitPoints += 2 * hpBonuses;
-        
-        if (this.system.hitPoints.max != maxHitPoints) {
+
+        if (this.system.hitPoints.max !== maxHitPoints) {
             // Attribute changed - keep damage and update max value
             let damage = this.system.hitPoints.max - this.system.hitPoints.value;
             if (damage < 0) {
@@ -343,7 +343,7 @@ export class DoDActor extends Actor {
         // Movement
         const baseMovement = Number(this.system.kin ? this.system.kin.system.movement : 10);
         const movementModifier =  DoD_Utility.calculateMovementModifier(this.system.attributes.agl.value);
-        const moveBonuses = this.items.filter(i => i.type == "ability" && i.system.secondaryAttribute == "movement").length;
+        const moveBonuses = this.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "movement").length;
 
         this.system.movement = baseMovement + movementModifier + 2 * moveBonuses;
     }
@@ -352,7 +352,7 @@ export class DoDActor extends Actor {
 
         // Will Points
         if (!this.system.willPoints || !Number.isInteger(this.system.willPoints.max)) {
-            this.update({ 
+            this.update({
                 ["system.willPoints.max"]: 10,
                 ["system.willPoints.value"]: 10 });
         }
@@ -384,10 +384,10 @@ export class DoDActor extends Actor {
 
     _prepareBaseChances() {
         for (const item of this.items.contents) {
-            if (item.type == "skill") {
+            if (item.type === "skill") {
                 const skill = item;
                 const baseChance = this._getBaseChance(skill);
-                if ((skill.system.skillType == "core" || skill.system.skillType == "weapon") && skill.system.value < 1) {
+                if ((skill.system.skillType === "core" || skill.system.skillType === "weapon") && skill.system.value < 1) {
                     skill.system.value = baseChance;
                 }
             }
@@ -395,15 +395,15 @@ export class DoDActor extends Actor {
     }
 
     get isCharacter() {
-        return this.type == "character";
+        return this.type === "character";
     }
 
     get isNpc() {
-        return this.type == "npc";
+        return this.type === "npc";
     }
 
     get isMonster() {
-        return this.type == "monster";
+        return this.type === "monster";
     }
 
     get isObserver() {
@@ -415,11 +415,11 @@ export class DoDActor extends Actor {
     }
 
     get hasAbilities() {
-        return this.items.find(i => i.type == "ability") != null;
+        return this.items.find(i => i.type === "ability") != null;
     }
 
     get hasSpells() {
-        return this.items.find(i => i.type == "spell") != null;
+        return this.items.find(i => i.type === "spell") != null;
     }
 
     get hasSkills() {
@@ -427,7 +427,7 @@ export class DoDActor extends Actor {
     }
 
     getEquippedWeapons() {
-        return this.items.filter(i => i.type == "weapon" && i.system.worn == true);
+        return this.items.filter(i => i.type === "weapon" && i.system.worn === true);
     }
 
     getArmorValue(damageType) {
@@ -438,14 +438,14 @@ export class DoDActor extends Actor {
         if (this.system.equippedHelmet) {
             armorValue += this.system.equippedHelmet.getArmorValue(damageType);
         }
-        if (this.type == "monster") {
+        if (this.type === "monster") {
             armorValue += this.system.armor;
         }
         return armorValue;
     }
 
     getDamageBonus(attribute) {
-        if (attribute && this.system.damageBonus && this.system.damageBonus[attribute] != "none") {
+        if (attribute && this.system.damageBonus && this.system.damageBonus[attribute] !== "none") {
             return this.system.damageBonus[attribute];
         } else {
             return "";
@@ -458,7 +458,7 @@ export class DoDActor extends Actor {
         let newValue = DoD_Utility.clamp(value - damage, 0, max);
 
         // Update HP
-        if (value != newValue) {
+        if (value !== newValue) {
             await this.update({["system.hitPoints.value"]: newValue});
         }
         return newValue;
@@ -466,12 +466,12 @@ export class DoDActor extends Actor {
 
     findAbility(abilityName) {
         let name = abilityName.toLowerCase();
-        return this.items.find(item => item.type == "ability" && item.name.toLowerCase() == name);
+        return this.items.find(item => item.type === "ability" && item.name.toLowerCase() === name);
     }
 
     findSkill(skillName) {
         let name = skillName.toLowerCase();
-        return this.items.find(item => item.type == "skill" && item.name.toLowerCase() == name);
+        return this.items.find(item => item.type === "skill" && item.name.toLowerCase() === name);
     }
 
     testSkill(skillName, options = {defaultBanesBoons: true}) {
@@ -485,11 +485,11 @@ export class DoDActor extends Actor {
     }
 
     findMagicSkill(schoolName) {
-        if (schoolName == "DoD.spell.general") {
+        if (schoolName === "DoD.spell.general") {
             // find magic skill with highest skill value
             let bestSkill = null;
             for (let item of this.items.contents) {
-                if (item.type == "skill" && item.system.skillType == "magic") {
+                if (item.type === "skill" && item.system.skillType === "magic") {
                     if (!bestSkill || bestSkill.system.value < item.system.value) {
                         bestSkill = item;
                     }
@@ -503,7 +503,7 @@ export class DoDActor extends Actor {
 
     findSpell(spellName) {
         let name = spellName.toLowerCase();
-        return this.items.find(item => item.type == "spell" && item.name.toLowerCase() == name);
+        return this.items.find(item => item.type === "spell" && item.name.toLowerCase() === name);
     }
 
     hasCondition(attributeName) {
@@ -519,11 +519,11 @@ export class DoDActor extends Actor {
         let ids = [];
         //  kin items
         this.items.contents.forEach(i => {
-            if (i.type == "kin") ids.push(i.id)
+            if (i.type === "kin") ids.push(i.id)
         });
         //  kin ability items
         this.items.contents.forEach(i => {
-            if (i.type == "ability" && i.system.abilityType == "kin") ids.push(i.id)
+            if (i.type === "ability" && i.system.abilityType === "kin") ids.push(i.id)
         });
         // delete items and clear kin
         await this.deleteEmbeddedDocuments("Item", ids);
@@ -534,9 +534,9 @@ export class DoDActor extends Actor {
         let ids = [];
         //  profession items
         this.items.contents.forEach(i => {
-            if ((i.type == "profession") 
-            || (i.type == "ability" && i.system.abilityType == "profession")
-            || (i.type == "skill" && (i.system.skillType == "secondary" || i.system.skillType == "magic") && i.system.value == 0))
+            if ((i.type === "profession")
+            || (i.type === "ability" && i.system.abilityType === "profession")
+            || (i.type === "skill" && (i.system.skillType === "secondary" || i.system.skillType === "magic") && i.system.value === 0))
             {
                 ids.push(i.id)
             }
@@ -549,10 +549,10 @@ export class DoDActor extends Actor {
 
     async updateKinAbilities() {
         // Character's abilities
-        const abilities = this.items.filter(item => item.type == "ability");
+        const abilities = this.items.filter(item => item.type === "ability");
 
         // Ability names defined in the current kin
-        const kinAbilityNames = 
+        const kinAbilityNames =
             (this.system.kin && this.system.kin.system.abilities.length)
                 ? DoD_Utility.splitAndTrimString(this.system.kin.system.abilities) : [];
 
@@ -590,10 +590,10 @@ export class DoDActor extends Actor {
 
     async updateProfessionAbilities() {
         // Character's abilities
-        const abilities = this.items.filter(item => item.type == "ability");
+        const abilities = this.items.filter(item => item.type === "ability");
 
         // Ability names defined in the current profession
-        const proAbilityNames = 
+        const proAbilityNames =
             (this.system.profession && this.system.profession.system.abilities.length)
                 ? DoD_Utility.splitAndTrimString(this.system.profession.system.abilities) : [];
 
@@ -655,7 +655,7 @@ export class DoDActor extends Actor {
     }
 
     async drawMonsterAttack(t, tableResult = null) {
-        const table = t || (this.system.attackTable ? fromUuidSync(this.system.attackTable) : null); 
+        const table = t || (this.system.attackTable ? fromUuidSync(this.system.attackTable) : null);
         if (!table) return null;
 
         let draw = null;
@@ -692,10 +692,10 @@ export class DoDActor extends Actor {
 
             // Recursive roll if the result is a table
             results = await DoD_Utility.expandTableResult(tableResult);
-            
+
             // Draw from table
             draw = await table.draw({roll, displayChat: false, results});
-            
+
         } else {
             draw = await table.draw({displayChat: false});
         }
@@ -706,7 +706,7 @@ export class DoDActor extends Actor {
             // Monsters never draw the same attack twice in a row - if that happens pick next attack in the table
             let newResult = null;
             let found = false;
-            if (!tableResult && results[0].uuid == this.system.previousMonsterAttack) {
+            if (!tableResult && results[0].uuid === this.system.previousMonsterAttack) {
                 // Find next attack
                 for (let tableResult of table.results)
                 {
@@ -719,7 +719,7 @@ export class DoDActor extends Actor {
                         newResult = tableResult;
                         break;
                     }
-                    found = results[0].uuid == tableResult.uuid;
+                    found = results[0].uuid === tableResult.uuid;
                 }
                 // Recursive roll if the result is a table
                 draw = await table.draw({displayChat: false, results: await DoD_Utility.expandTableResult(newResult)});
@@ -731,11 +731,11 @@ export class DoDActor extends Actor {
     }
 
     _prepareKin() {
-        this.system.kin = this.items.find(item => item.type == "kin");
+        this.system.kin = this.items.find(item => item.type === "kin");
     }
 
     _prepareProfession() {
-        this.system.profession = this.items.find(item => item.type == "profession");
+        this.system.profession = this.items.find(item => item.type === "profession");
         this.updateProfessionSkills();
     }
 
@@ -745,7 +745,7 @@ export class DoDActor extends Actor {
 
         // find skill values for schools of magic
         for (let item of this.items.contents) {
-            if (item.type == "skill" && item.system.skillType == "magic") {
+            if (item.type === "skill" && item.system.skillType === "magic") {
                 let skill = item;
                 magicSchools.set(skill.name, skill.system.value);
                 if (skill.system.value > maxValue) {
@@ -761,11 +761,11 @@ export class DoDActor extends Actor {
         let generalSchoolLocalized = game.i18n.localize(generalSchool);
 
         for (let item of this.items.contents) {
-            if (item.type == "spell") {
+            if (item.type === "spell") {
                 let spell = item;
 
                 // replace general spells school name with localized string if it matches
-                if (spell.system.school == generalSchoolLocalized) {
+                if (spell.system.school === generalSchoolLocalized) {
                     spell.system.school = generalSchool;
                     spell.update({ ["system.school"]: generalSchool});
                 }

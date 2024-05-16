@@ -9,7 +9,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         super(actor, actor.findSkill(weapon.system.skill?.name), options);
         this.weapon = weapon;
     }
-   
+
     updateDialogData() {
         super.updateDialogData();
 
@@ -35,7 +35,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             });
         }
 
-        const actorToken = canvas.scene?.tokens?.find(t => t.actor?.uuid == this.actor.uuid);
+        const actorToken = canvas.scene?.tokens?.find(t => t.actor?.uuid === this.actor.uuid);
         const targetToken = this.options.targets?.length > 0 ? this.options.targets[0].document : null;
         let distance = 0;
         if (actorToken && targetToken) {
@@ -47,7 +47,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         }
         const isInRange = distance <= this.weapon.system.calculatedRange;
         const isInMeleeRange = distance <= (isMeleeWeapon ? this.weapon.system.calculatedRange : (isLongWeapon ? 4 : 2));
-        
+
         if(isRangedWeapon) {
             pushAction("ranged");
         }
@@ -68,10 +68,10 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         }
         if(hasDisarmAttack && !isRangedWeapon) {
             pushAction("disarm");
-        }        
+        }
         if(isThrownWeapon && !isRangedWeapon) {
             pushAction("throw");
-        }        
+        }
         if(hasParry && !isRangedWeapon) {
             pushAction("parry");
         }
@@ -80,7 +80,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             actions[0].checked = true;
         }
 
-        if (this.actor.type == "character" && this.weapon.requiredStr > this.actor.system.attributes.str.value) {
+        if (this.actor.type === "character" && this.weapon.requiredStr > this.actor.system.attributes.str.value) {
             this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.belowRequiredStr"), value: true});
         }
 
@@ -104,7 +104,8 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         if (this.weapon.hasWeaponFeature("enchanted3")) {
             this.dialogData.enchantedWeapon = 3;
         }
-        this.dialogData.enchantedWeaponLevels ={"0": "-", "1": 1, "2": 2, "3": 3};
+      
+        this.dialogData.enchantedWeaponLevels = {"0": "-", "1": 1, "2": 2, "3": 3};
     }   
 
     async getRollOptionsFromDialog(title, label) {
@@ -135,7 +136,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
                                 icon: '<i class="fas fa-check"></i>',
                                 label: game.i18n.localize("DoD.ui.dialog.performAction"),
                                 callback: () => {
-                                    resolve(this.getRollOptionsFromDialog(title, label));              
+                                    resolve(this.getRollOptionsFromDialog(title, label));
                                 }
                             }                            ,
                             cancel: {
@@ -162,15 +163,15 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         let weapon = postRollData.weapon.name;
 
         // Add durability info to message
-        if (postRollData.action == "parry" && postRollData.success) {
+        if (postRollData.action === "parry" && postRollData.success) {
             const durability = this.postRollData.weapon.system.durability ?? 0;
             weapon += `<span class="permission-observer" data-actor-id="${this.postRollData.actor.uuid}" style="font-weight:normal;"> (${game.i18n.localize("DoD.weapon.durability")} ${durability})</span>`;
         }
 
-        let label = game.i18n.format(game.i18n.localize(locString), 
+        let label = game.i18n.format(game.i18n.localize(locString),
             {
                 action: game.i18n.localize("DoD.attackTypes." + postRollData.action),
-                skill: weapon, 
+                skill: weapon,
                 result: result,
                 target: this.postRollData.targetActor?.isToken ? this.postRollData.targetActor.token.name : this.postRollData.targetActor?.name
             }
@@ -199,11 +200,11 @@ export default class DoDWeaponTest extends DoDSkillTest  {
                 }
             }
         }
-        if (options.action == "weakpoint") {
+        if (options.action === "weakpoint") {
             options.banes.push(game.i18n.localize("DoD.attackTypes.weakpoint"));
         }
 
-        if (options.action == "topple" && this.weapon.hasWeaponFeature("toppling")) {
+        if (options.action === "topple" && this.weapon.hasWeaponFeature("toppling")) {
             options.boons.push(game.i18n.localize("DoD.attackTypes.topple"));
         }
         ;
@@ -217,7 +218,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             } else {
                 DoD_Utility.WARNING("DoD.WARNING.cannotEvaluateFormula");
             }
-        }       
+        }
 
         // Process enchanted weapon
         elements = form.getElementsByClassName("enchanted-weapon");
@@ -227,7 +228,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             if (value > 0) {
                 options.enchantedWeapon = value;
             }
-        }       
+        }
 
 
         return options;
@@ -254,7 +255,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
                 this.postRollData.damageType = DoD.damageTypes.piercing;
                 this.postRollData.isDamaging = true;
                 break;
-    
+
             case "weakpoint":
                 this.postRollData.damageType = DoD.damageTypes.piercing;
                 this.postRollData.isDamaging = true;
@@ -267,7 +268,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
                 this.postRollData.damageType = DoD.damageTypes.none;
                 this.postRollData.isDamaging = false;
                 break;
-            
+
             case "normal":
                 if (this.postRollData.weapon.hasWeaponFeature("bludgeoning")) {
                     this.postRollData.damageType = DoD.damageTypes.bludgeoning;
@@ -314,10 +315,10 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             }
         }
 
-        if (this.postRollData.isDragon && this.postRollData.action != "parry") {
+        if (this.postRollData.isDragon && this.postRollData.action !== "parry") {
             this.postRollData.isMeleeCrit = true;
             this.postRollData.meleeCritGroup = "critChoice"
-            this.postRollData.critChoices = {};            
+            this.postRollData.critChoices = {};
 
             // populate crit choices
             if (this.postRollData.isDamaging) {
@@ -326,7 +327,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             if (!this.postRollData.isRanged) {
                 this.postRollData.critChoices.extraAttack = game.i18n.localize("DoD.critChoices.extraAttack");
             }
-            if (this.postRollData.damageType == DoD.damageTypes.piercing && this.postRollData.action != "weakpoint") {
+            if (this.postRollData.damageType === DoD.damageTypes.piercing && this.postRollData.action !== "weakpoint") {
                 this.postRollData.critChoices.ignoreArmor = game.i18n.localize("DoD.critChoices.ignoreArmor");
             }
 

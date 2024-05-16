@@ -16,7 +16,7 @@ function registerHandlebarsHelpers() {
     * Repeat given markup with n times
     */
     Handlebars.registerHelper("times", function (n, block) {
-        var result = "";
+        let result = "";
         for (let i = 0; i < n; ++i) {
             result += block.fn(i);
         }
@@ -28,9 +28,9 @@ function registerHandlebarsHelpers() {
     * provides @index for the repeated iteraction
     */
     Handlebars.registerHelper("range", function (from, to, block) {
-        var result = "";
-        var i;
-        var data = {};
+        let result = "";
+        let i;
+        const data = {};
 
         if (from < to) {
             for (i = from; i <= to; i += 1) {
@@ -284,7 +284,7 @@ Hooks.once("init", function () {
 Hooks.once("ready", async function () {
 
     Hooks.on("hotbarDrop", (bar, data, slot) => {
-        if (data.type == "Item") {
+        if (data.type === "Item") {
             DoDMacro.createItemMacro(data, slot);
             return false;
         }
@@ -319,7 +319,7 @@ Hooks.once("ready", async function () {
     // Show welcome journal when importing the adventure
     Hooks.on('importAdventure', async (created, updated) => {
         const ADVENTURE_NAME = "Dragonbane / Drakar och Demoner - System";
-        if (created?.name == ADVENTURE_NAME) {
+        if (created?.name === ADVENTURE_NAME) {
             const title = "(" + game.i18n.lang.toLowerCase() + ")";
             const adventureJournal = created.journal.find(j => j.name.toLowerCase().includes(title));
             if (adventureJournal) {

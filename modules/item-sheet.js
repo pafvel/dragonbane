@@ -1,7 +1,7 @@
 import { DoD } from "./config.js";
 
 export default class DoDItemSheet extends ItemSheet {
-    
+
     static get defaultOptions() {
         return foundry.utils.mergeObject(super.defaultOptions,  {
             width: 560,
@@ -16,7 +16,7 @@ export default class DoDItemSheet extends ItemSheet {
 
     async getData() {
         const baseData = super.getData();
-   
+
         let sheetData = {
             owner: this.item.isOwner,
             editable: this.isEditable,
@@ -27,7 +27,7 @@ export default class DoDItemSheet extends ItemSheet {
 
         sheetData.system.description = await TextEditor.enrichHTML(sheetData.system.description, { async: true, secrets: game.user.isGM });
 
-        if (this.item.type == "weapon") {
+        if (this.item.type === "weapon") {
             let weaponFeatures = [];
 
             this.item.system.features.forEach( feature => {
@@ -39,7 +39,7 @@ export default class DoDItemSheet extends ItemSheet {
             sheetData.weaponFeatures = weaponFeatures;
         }
 
-        if (this.item.type == "armor") {
+        if (this.item.type === "armor") {
             let armorBonuses = [];
 
             this.item.system.bonuses.forEach( damageType => {
@@ -47,11 +47,11 @@ export default class DoDItemSheet extends ItemSheet {
                     name: "DoD.damageTypes." + damageType,
                     tooltip: "DoD.damageTypes." + damageType + "Tooltip"
                 })
-            });            
+            });
             sheetData.armorBonuses = armorBonuses;
         }
 
-        if (this.item.type == "spell") {
+        if (this.item.type === "spell") {
             switch(this.item.system.rangeType) {
                 case "touch":
                 case "personal":
@@ -133,7 +133,7 @@ export default class DoDItemSheet extends ItemSheet {
 
         // replace input with localized string if it matches general school name
         let generalSchool = game.i18n.localize("DoD.spell.general");
-        if (generalSchool == element.value) {
+        if (generalSchool === element.value) {
             element.value = "DoD.spell.general";
         }
 
@@ -201,7 +201,7 @@ export default class DoDItemSheet extends ItemSheet {
         let features = [];
 
         for (let input of inputs) {
-            if (input.type == "checkbox" && input.checked) {
+            if (input.type === "checkbox" && input.checked) {
                 features.push(input.id);
             }
         }
@@ -215,7 +215,7 @@ export default class DoDItemSheet extends ItemSheet {
         let damageData = [];
         for (let damageType in DoD.damageTypes)
         {
-            if (damageType != "none") {
+            if (damageType !== "none") {
                 damageData.push( {
                     name: "DoD.damageTypes." + damageType,
                     tooltip: "DoD.damageTypes." + damageType + "Tooltip",
@@ -266,7 +266,7 @@ export default class DoDItemSheet extends ItemSheet {
         let bonuses = [];
 
         for (let input of inputs) {
-            if (input.type == "checkbox" && input.checked) {
+            if (input.type === "checkbox" && input.checked) {
                 bonuses.push(input.id);
             }
         }
@@ -275,7 +275,7 @@ export default class DoDItemSheet extends ItemSheet {
 
     async _onDrop(event) {
 
-        if (this.item.type == "profession")
+        if (this.item.type === "profession")
         {
             const data = TextEditor.getDragEventData(event);
             if (data.type === "Item") {
@@ -287,7 +287,7 @@ export default class DoDItemSheet extends ItemSheet {
             }
         }
 
-        if (this.item.type == "kin")
+        if (this.item.type === "kin")
         {
             const data = TextEditor.getDragEventData(event);
             if (data.type === "Item") {
