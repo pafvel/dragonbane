@@ -165,7 +165,7 @@ export default class DoDItemSheet extends ItemSheet {
         const template = "systems/dragonbane/templates/partials/weapon-features-dialog.hbs";
         const html = await renderTemplate(template, dialogData);
         const labelOk = game.i18n.localize("DoD.ui.dialog.labelOk");
-        const labelCancel = game.i18n.localize("DoD.ui.dialog.labelCancel");
+        //const labelCancel = game.i18n.localize("DoD.ui.dialog.labelCancel");
 
 
         return new Promise(
@@ -230,7 +230,7 @@ export default class DoDItemSheet extends ItemSheet {
         const template = "systems/dragonbane/templates/partials/armor-bonuses-dialog.hbs";
         const html = await renderTemplate(template, dialogData);
         const labelOk = game.i18n.localize("DoD.ui.dialog.labelOk");
-        const labelCancel = game.i18n.localize("DoD.ui.dialog.labelCancel");
+        //const labelCancel = game.i18n.localize("DoD.ui.dialog.labelCancel");
 
 
         return new Promise(

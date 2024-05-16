@@ -1,4 +1,3 @@
-import DoD_Utility from "../utility.js";
 import DoDTest from "./dod-test.js";
 
 export default class DoDAttributeTest extends DoDTest {

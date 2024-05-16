@@ -6,7 +6,7 @@ import DoDSpellTest from "./tests/spell-test.js";
 import { DoD } from "./config.js";
 import { DoDActor } from "./actor.js";
 
-export function addChatListeners(app, html, data) {
+export function addChatListeners(_app, html, _data) {
     html.on("click", ".inline-damage-roll", onInlineDamageRoll);
     html.on("click", ".treasure-roll", onTreasureRoll);
     html.on("click", "button.weapon-roll", onWeaponDamageRoll);
@@ -17,7 +17,7 @@ export function addChatListeners(app, html, data) {
     html.on('click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
 }
 
-export function addChatMessageContextMenuOptions(html, options) {
+export function addChatMessageContextMenuOptions(_html, options) {
 
     const getTarget = function(element)
     {
@@ -78,7 +78,7 @@ export function addChatMessageContextMenuOptions(html, options) {
         return target ? target.isOwner : false;
     }
 
-    const healTarget = function(li, multiplier = 1, ignoreArmor = false) {
+    const healTarget = function(li, _multiplier = 1, _ignoreArmor = false) {
         const healingData = {};
         const element = li.find(".healing-roll")[0] || li.find(".dice-total")[0];
 
@@ -766,7 +766,7 @@ export async function applyHealingMessage(damageData) {
     ChatMessage.create({ content: msg });
 }
 
-export function hideChatPermissions(app, html, data) {
+export function hideChatPermissions(_app, html, _data) {
 
     if (!game.user.isGM) {
         html.find(".permission-gm").remove();
@@ -775,7 +775,7 @@ export function hideChatPermissions(app, html, data) {
     }
 
     let elements = html.find(".permission-owner");
-    elements.each((i, element) => {
+    elements.each((_i, element) => {
         const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId, {noWarnings: true});
         if (actor && !actor.isOwner) {
             element.remove();
@@ -783,7 +783,7 @@ export function hideChatPermissions(app, html, data) {
     });
 
     elements = html.find(".permission-not-owner");
-    elements.each((i, element) => {
+    elements.each((_i, element) => {
         const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId, {noWarnings: true});
         if (actor && actor.isOwner) {
             element.remove();
@@ -791,7 +791,7 @@ export function hideChatPermissions(app, html, data) {
     });
 
     elements = html.find(".permission-observer");
-    elements.each((i, element) => {
+    elements.each((_i, element) => {
         const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId, {noWarnings: true});
         if (actor && !actor.isObserver) {
             element.remove();
@@ -799,7 +799,7 @@ export function hideChatPermissions(app, html, data) {
     });
 
     elements = html.find(".permission-not-observer");
-    elements.each((i, element) => {
+    elements.each((_i, element) => {
         const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId, {noWarnings: true});
         if (actor && actor.isObserver) {
             element.remove();
@@ -807,7 +807,7 @@ export function hideChatPermissions(app, html, data) {
     });
 
     elements = html.find(".permission-limited");
-    elements.each((i, element) => {
+    elements.each((_i, element) => {
         const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId, {noWarnings: true});
         if (actor && !actor.isLimited) {
             element.remove();
@@ -815,7 +815,7 @@ export function hideChatPermissions(app, html, data) {
     });
 
     elements = html.find(".permission-not-limited");
-    elements.each((i, element) => {
+    elements.each((_i, element) => {
         const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId, {noWarnings: true});
         if (actor && actor.isLimited) {
             element.remove();

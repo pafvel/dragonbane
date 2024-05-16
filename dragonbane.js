@@ -283,7 +283,7 @@ Hooks.once("init", function () {
 
 Hooks.once("ready", async function () {
 
-    Hooks.on("hotbarDrop", (bar, data, slot) => {
+    Hooks.on("hotbarDrop", (_bar, data, slot) => {
         if (data.type === "Item") {
             DoDMacro.createItemMacro(data, slot);
             return false;
@@ -317,7 +317,7 @@ Hooks.once("ready", async function () {
     }
 
     // Show welcome journal when importing the adventure
-    Hooks.on('importAdventure', async (created, updated) => {
+    Hooks.on('importAdventure', async (created, _updated) => {
         const ADVENTURE_NAME = "Dragonbane / Drakar och Demoner - System";
         if (created?.name === ADVENTURE_NAME) {
             const title = "(" + game.i18n.lang.toLowerCase() + ")";
@@ -336,7 +336,7 @@ Hooks.on("getChatLogEntryContext", DoDChat.addChatMessageContextMenuOptions);
 Hooks.on("renderChatMessage", DoDChat.hideChatPermissions);
 
 for (const sheet of ["ActorSheet", "ItemSheet", "JournalPageSheet"]) {
-    Hooks.on(`render${sheet}`, (app, html, options) => {
+    Hooks.on(`render${sheet}`, (_app, html, _options) => {
         html.on('click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
         html.on("click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);
         html.on("click", ".treasure-roll", DoDChat.onTreasureRoll);
@@ -370,7 +370,7 @@ Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
 });
 
 // Re-generate thumbnails when importing scenes
-Hooks.on('importAdventure', async (created, updated) => {
+Hooks.on('importAdventure', async (created, _updated) => {
     if (created?.scenes?.size > 0) {
         console.log("Dragonbane: Re-generating thumbnails for " + created.name);
         created.scenes.forEach(async s => {
@@ -463,7 +463,7 @@ Hooks.once('diceSoNiceReady', (dice3d) => {
         ],
         bumpMaps: [
             "systems/dragonbane/art/ui/dsn/dod-ikon-drake-bump.png",
-            , , , , , , , , , , , , , , , , , ,
+            null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
             "systems/dragonbane/art/ui/dsn/dod-ikon-demon-bump.png"
         ],
         system: 'dragonbane',
@@ -506,7 +506,7 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     {
         // Rollable table
         pattern: /@Table\[(.+?)\](?:{(.+?)})?/gm,
-        enricher: (match, options) => {
+        enricher: (match, _options) => {
             const table = DoD_Utility.findTable(match[1]);
             const tableName = match[2] ?? table?.name;
             const a = document.createElement("a");
@@ -530,7 +530,7 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
         // Rollable treasure
         // Format [[/treasure <number>]]
         pattern: /\[\[\/treasure(\s[\d]+)?\]\]/gm,
-        enricher: (match, options) => {
+        enricher: (match, _options) => {
             const count = match[1] ?? 1;
             const a = document.createElement("a");
             a.classList.add("inline-roll");

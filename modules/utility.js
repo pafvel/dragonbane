@@ -112,7 +112,7 @@ export default class DoD_Utility {
             }
             return null;
         }
-        if (!table instanceof RollTable) {
+        if (!(table instanceof RollTable)) {
             if (!options?.noWarning){
                 console.log(game.i18n.format(game.i18n.localize("DoD.WARNING.typeMismatch"), {id: name}));
                 //DoD_Utility.WARNING("DoD.WARNING.typeMismatch", {id: name});

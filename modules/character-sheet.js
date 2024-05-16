@@ -343,7 +343,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
             // // Elements need focus for the keydown event to to work
             html.find(".item-delete-key").mouseenter(event => { this.#focusElement = event.currentTarget; });
-            html.find(".item-delete-key").mouseleave(event => { this.#focusElement = null; });
+            html.find(".item-delete-key").mouseleave(_event => { this.#focusElement = null; });
 
             html.find(".attribute-input").change(this._onEditAttribute.bind(this));
             html.find(".inline-edit").change(this._onInlineEdit.bind(this));
@@ -410,7 +410,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
             // Enable dragging items from this sheet
             let handler = this._onDragStart.bind(this);
-            html.find('.draggable-item').each((i, li) => {
+            html.find('.draggable-item').each((_i, li) => {
                 li.setAttribute("draggable", true);
                 li.addEventListener("dragstart", handler, false);
             });
@@ -503,7 +503,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                             },
                             cancel: {
                                 label: labelCancel,
-                                callback: html => resolve({cancelled: true})
+                                callback: _html => resolve({cancelled: true})
                             }
                         },
                         default: "ok",
@@ -1082,7 +1082,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                         cancel: {
                             icon: '<i class="fas fa-times"></i>',
                             label: game.i18n.localize("No"),
-                            callback: html => resolve(false)
+                            callback: _html => resolve(false)
                         }
                     },
                     default: "cancel",
@@ -1159,7 +1159,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                                     cancel: {
                                         icon: '<i class="fas fa-times"></i>',
                                         label: game.i18n.localize("No"),
-                                        callback: html => resolve(false)
+                                        callback: _html => resolve(false)
                                     }
                                 },
                                 default: "cancel",
@@ -1233,7 +1233,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                                 cancel: {
                                     icon: '<i class="fas fa-times"></i>',
                                     label: game.i18n.localize("No"),
-                                    callback: html => resolve(false)
+                                    callback: _html => resolve(false)
                                 }
                             },
                             default: "cancel",
@@ -1373,7 +1373,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                             mark: {
                                 icon: '<i class="fas fa-times"></i>',
                                 label: game.i18n.localize("DoD.ui.dialog.markLabel"),
-                                callback: html => resolve(1)
+                                callback: _html => resolve(1)
                             }
                         },
                         default: "train",

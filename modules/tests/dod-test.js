@@ -45,7 +45,6 @@ export default class DoDTest {
         const messageTemplate = this.getMessageTemplate();
         if (messageTemplate) {
             let renderedMessage = await this.renderRoll(this.roll, messageTemplate, this.postRollData);
-            let enrichedMessage = await TextEditor.enrichHTML(renderedMessage, { async: true });
             if (messageData.content) {
                 messageData.content += renderedMessage;
             } else {

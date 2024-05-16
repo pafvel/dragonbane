@@ -1,7 +1,3 @@
-import { DoD } from "./config.js";
-import DoD_Utility from "./utility.js";
-
-
 export async function migrateWorld() {
     console.log("Migrating World to newer version");
 
@@ -123,7 +119,7 @@ function migrateItemData(item, name) {
     return updateData;
 }
 
-function migrateSpellData(spell, name) {
+function migrateSpellData(spell, _name) {
     let updateData = {};
 
     // Added field rangeType

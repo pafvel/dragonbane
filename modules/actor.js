@@ -365,8 +365,10 @@ export class DoDActor extends Actor {
     _getBaseChance(skill) {
         switch (this.type) {
             case "character":
-                const value = this._getAttributeValueFromName(skill.system.attribute);
-                return DoD_Utility.calculateBaseChance(value);
+                {
+                    const value = this._getAttributeValueFromName(skill.system.attribute);
+                    return DoD_Utility.calculateBaseChance(value);    
+                }
             case "npc":
                 return 5;
             case "monster":

@@ -45,7 +45,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
                 distance = canvas.grid.measurePath([actorToken, targetToken]).distance;
             }
         }
-        const isInRange = distance <= this.weapon.system.calculatedRange;
+        //const isInRange = distance <= this.weapon.system.calculatedRange;
         const isInMeleeRange = distance <= (isMeleeWeapon ? this.weapon.system.calculatedRange : (isLongWeapon ? 4 : 2));
 
         if(isRangedWeapon) {
@@ -142,7 +142,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
                             cancel: {
                                 icon: '<i class="fas fa-times"></i>',
                                 label: game.i18n.localize("DoD.ui.dialog.cancelAction"),
-                                callback: html => resolve({cancelled: true})
+                                callback: _html => resolve({cancelled: true})
                             }
                         },
                         default: "cancel",
