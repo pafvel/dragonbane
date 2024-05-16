@@ -152,7 +152,7 @@ function registerSettings() {
         type: Boolean,
         default: false
     });
-    
+
     // User permission levels
     const permissionLevels = {};
     permissionLevels[CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE] = "OWNERSHIP.NONE";
@@ -180,7 +180,7 @@ function registerSettings() {
         default: true,
         type: Boolean
     });
-    
+
     // If true, autmatically marks Characters as dead when they fail 3 death rolls or get instantly killed
     game.settings.register("dragonbane", "automateCharacterDeath", {
         name: "DoD.SETTINGS.automateCharacterDeath",
@@ -233,6 +233,15 @@ function registerSettings() {
         scope: "world",
         config: true,
         default: false,
+        type: Boolean
+    });
+    // If true, automatically set skill advancement mark on a Dragon or Demon roll
+    game.settings.register("dragonbane", "automaticSkillAdvancementMark", {
+        name: "DoD.SETTINGS.automaticSkillAdvancementMark",
+        hint: "DoD.SETTINGS.automaticSkillAdvancementMark",
+        scope: "world",
+        config: true,
+        default: true,
         type: Boolean
     });
 }

@@ -42,7 +42,7 @@ export default class DoDSkillTest extends DoDTest {
             this.postRollData.targetActor = this.options.targets[0].actor;
         }
 
-        if (this.postRollData.isDemon || this.postRollData.isDragon) {
+        if (game.settings.get("dragonbane","automaticSkillAdvancementMark") && (this.postRollData.isDemon || this.postRollData.isDragon)) {
             this.setAdvancementMark();
         }
     }
