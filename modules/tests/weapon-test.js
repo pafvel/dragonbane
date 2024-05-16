@@ -94,6 +94,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         }
         this.dialogData.actions = actions;
 
+        this.dialogData.enchantedWeapon = 0;
         if (this.weapon.hasWeaponFeature("enchanted1")) {
             this.dialogData.enchantedWeapon = 1;
         }
@@ -103,6 +104,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         if (this.weapon.hasWeaponFeature("enchanted3")) {
             this.dialogData.enchantedWeapon = 3;
         }
+        this.dialogData.enchantedWeaponLevels ={"0": "-", "1": 1, "2": 2, "3": 3};
     }   
 
     async getRollOptionsFromDialog(title, label) {

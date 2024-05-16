@@ -5,12 +5,8 @@
                 <th>{{localize "DoD.ui.dialog.monsterAttack"}}</th>
                 <td>
                     <select name="selectMonsterAttack" class="selectMonsterAttack">
-                        {{#select selectMonsterAttack}}
-                        <option value="0">&lt {{localize "DoD.ui.dialog.monsterAttackRandom"}} &gt</option>
-                        {{#each attacks as | attack |}}
-                        <option value="{{attack.index}}">{{attack.name}}</option>
-                        {{/each}}
-                        {{/select}}
+                        <option value="0" selected>&lt {{localize "DoD.ui.dialog.monsterAttackRandom"}} &gt</option>
+                        {{selectOptions attacks localize=true nameAttr="index" labelAttr="name"}}
                     </select>
                 </td>
             </tr>

@@ -25,20 +25,12 @@
             <tr>
                 <td>
                     <select name="system.skillType">
-                        {{#select system.skillType}}
-                        {{#each config.skillTypes as |name skillType|}}
-                        <option value="{{skillType}}">{{localize name}}</option>
-                        {{/each}}
-                        {{/select}}
+                        {{selectOptions config.skillTypes selected=system.skillType localize=true}}
                     </select>
                 </td>
                 <td>
                     <select name="system.attribute">
-                        {{#select system.attribute}}
-                        {{#each config.attributes as |name attribute|}}
-                        <option value="{{attribute}}">{{localize name}}</option>
-                        {{/each}}
-                        {{/select}}
+                        {{selectOptions config.attributes selected=system.attribute localize=true}}
                     </select>
                 </td>
                 <td>

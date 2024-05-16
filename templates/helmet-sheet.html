@@ -37,11 +37,7 @@
                 </td>
                 <td>
                     <select name="system.supply">
-                        {{#select system.supply}}
-                        {{#each config.supplyTypes as |name type|}}
-                        <option value="{{type}}">{{localize name}}</option>
-                        {{/each}}
-                        {{/select}}
+                        {{selectOptions config.supplyTypes selected=system.supply localize=true}}
                     </select>
                 </td>
             </tr>

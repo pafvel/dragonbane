@@ -20,11 +20,7 @@
                 </td>
                 <td>
                     <select name="system.abilityType">
-                        {{#select system.abilityType}}
-                        {{#each config.abilityTypes as |name abilityType|}}
-                        <option value="{{abilityType}}">{{localize name}}</option>
-                        {{/each}}
-                        {{/select}}
+                        {{selectOptions config.abilityTypes selected=system.abilityType localize=true}}
                     </select>
                 </td>
             </tr>
@@ -41,11 +37,7 @@
                 </td>
                 <td>
                     <select name="system.secondaryAttribute">
-                        {{#select system.secondaryAttribute}}
-                        {{#each config.secondaryAttributeTypes as |name attribute|}}
-                        <option value="{{attribute}}">{{localize name}}</option>
-                        {{/each}}
-                        {{/select}}
+                        {{selectOptions config.secondaryAttributeTypes selected=system.secondaryAttribute localize=true}}
                     </select>
                 </td>
             </tr>
