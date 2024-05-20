@@ -559,7 +559,8 @@ export async function inflictDamageMessage(damageData) {
 
     if (damageData.doubleWeaponDamage && roll.terms.length > 0) {
         let term = roll.terms[0];
-        if (term instanceof Die) {
+        const isDie = game.release.generation < 12 && term instanceof Die || term instanceof foundry.dice.terms.Die;
+        if (isDie) {
             term.number *= 2;
         }
     }
