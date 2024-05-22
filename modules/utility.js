@@ -273,8 +273,9 @@ export default class DoD_Utility {
             rollHTML: table.displayRoll && roll ? await roll.render() : null,
             table: table
         });
-
+  
         // Create the chat message
+        ChatMessage.applyRollMode(messageData, game.settings.get("core", "rollMode"));
         return ChatMessage.create(messageData);
     }
 
