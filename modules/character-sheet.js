@@ -1254,9 +1254,9 @@ export default class DoDCharacterSheet extends ActorSheet {
                             this.actor.update({"system.willPoints.value": newWP});
                             //content = game.i18n.format("DoD.ability.useWithWP", {actor: this.actor.name, uuid: item.uuid, wp: wp});
                             content = `
-                            <p>
-                                ${game.i18n.format("DoD.ability.useWithWP", {actor: this.actor.name, uuid: item.uuid, wp: wp})}
-                            </p>
+                            <div>
+                                <p class="ability-use" data-ability-id="${item.id}">${game.i18n.format("DoD.ability.useWithWP", {actor: this.actor.name, uuid: item.uuid, wp: wp})}</p>
+                            </div>
                             <div class="damage-details permission-observer" data-actor-id="${this.actor.uuid}">
                                 <i class="fa-solid fa-circle-info"></i>
                                 <div class="expandable" style="text-align: left; margin-left: 0.5em">
