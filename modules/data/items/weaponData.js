@@ -9,7 +9,7 @@ export default class DoDWeaponData extends DoDGearBaseData {
                 value: new fields.StringField({ required: true, initial: "" }),
             }),
             str: new fields.NumberField({ required: true, initial: 0 }),
-            range: new fields.NumberField({ required: false, initial: 0 }),
+            range: new fields.StringField({ required: true, initial: "" }),
             damage: new fields.StringField({ required: true, initial: "" }),
             durability: new fields.NumberField({ required: true, initial: 0 }),
             skill: new fields.SchemaField({

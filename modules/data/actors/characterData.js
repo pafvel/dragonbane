@@ -62,7 +62,7 @@ export default class DoDCharacterData extends DoDCharacterBaseData {
             }),
             conditions: new fields.SchemaField({
                 str: new fields.SchemaField({
-                    name: new fields.StringField({ required: true, initial: "dazed" }),
+                    name: new fields.StringField({ required: true, initial: "exhausted" }),
                     value: new fields.BooleanField({ required: false, initial: false, label: "DoD.conditions.str" }),
                 }),
                 con: new fields.SchemaField({

@@ -4,8 +4,8 @@ export default class DoDMonsterData extends DoDActorBaseData {
     static defineSchema() {
         const { fields } = foundry.data;
         return this.mergeSchema(super.defineSchema(), {
-            armor: new fields.StringField({ required: true, initial: "" }),
-            ferocity: new fields.StringField({ required: true, initial: "" }),
+            armor: new fields.NumberField({ required: true, initial: 0 }),
+            ferocity: new fields.NumberField({ required: true, initial: 1 }),
             size: new fields.StringField({ required: true, initial: "" }),
             traits: new fields.StringField({ required: true, initial: "" }),
             attackTable: new fields.StringField({ required: true, initial: "" }),
