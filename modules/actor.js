@@ -129,6 +129,34 @@ export class DoDActor extends Actor {
                 hidden: !hasPermission
             });
         }
+        if (data?.system?.size) {
+            let size;
+            let scale;
+            switch (data.system.size) {
+                case "small":
+                    size = 1;
+                    scale = 0.8;
+                    break;
+                case "large":
+                    size = 2;
+                    scale = 1;
+                    break;
+                case "huge":
+                    size = 4;
+                    scale = 1;
+                    break;
+                default:
+                    size = 1;
+                    scale = 1;
+                    break;
+            }
+            await this.update({
+                "prototypeToken.height": size,
+                "prototypeToken.width": size,
+                "prototypeToken.texture.scaleX": scale,
+                "prototypeToken.texture.scaleY": scale
+            });
+        }
     }
 
     _displayScrollingText(change, options = {}) {
