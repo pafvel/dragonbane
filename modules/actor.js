@@ -471,6 +471,66 @@ export class DoDActor extends Actor {
         return this.items.find(item => item.type === "ability" && item.name.toLowerCase() === name);
     }
 
+    async useAbility(ability) {
+        let wp = Number(ability.system.wp);
+        wp = isNaN(wp) ? 0 : wp;
+
+        const use = await new Promise(
+            resolve => {
+                const data = {
+                    title: game.i18n.localize("DoD.ui.dialog.useAbility"),
+                    content: wp > 0 ? game.i18n.format("DoD.ui.dialog.useAbilityWithWP", {wp: wp, ability: ability.name}) : game.i18n.format("DoD.ui.dialog.useAbilityWithoutWP", {ability: ability.name}),
+                    buttons: {
+                        ok: {
+                            icon: '<i class="fas fa-check"></i>',
+                            label: game.i18n.localize("Yes"),
+                            callback: () => resolve(true)
+                        },
+                        cancel: {
+                            icon: '<i class="fas fa-times"></i>',
+                            label: game.i18n.localize("No"),
+                            callback: _html => resolve(false)
+                        }
+                    },
+                    default: "cancel",
+                    close: () => resolve(false)
+                };
+                new Dialog(data, null).render(true);
+            }
+        );
+        if (use) {
+            let content;
+            if (wp > 0) {
+                const oldWP = this.system.willPoints.value;
+                if (oldWP < wp) {
+                    DoD_Utility.WARNING("DoD.WARNING.notEnoughWPForAbility");
+                    return;
+                } else {
+                    const newWP = oldWP - wp;
+                    this.update({"system.willPoints.value": newWP});
+                    content = `
+                    <div>
+                        <p class="ability-use" data-ability-id="${ability.id}">${game.i18n.format("DoD.ability.useWithWP", {actor: this.name, uuid: ability.uuid, wp: wp})}</p>
+                    </div>
+                    <div class="damage-details permission-observer" data-actor-id="${this.uuid}">
+                        <i class="fa-solid fa-circle-info"></i>
+                        <div class="expandable" style="text-align: left; margin-left: 0.5em">
+                            <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${oldWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>
+                        </div>
+                    </div>`;
+                }
+            } else {
+                content = `
+                <div>
+                    <p class="ability-use" data-ability-id="${ability.id}">${game.i18n.format("DoD.ability.useWithoutWP", {actor: this.name, uuid: ability.uuid})}</p>
+                </div>`;
+            }
+            ChatMessage.create({
+                content: content,
+            });
+        }
+    }
+
     findSkill(skillName) {
         let name = skillName.toLowerCase();
         return this.items.find(item => item.type === "skill" && item.name.toLowerCase() === name);

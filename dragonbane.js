@@ -305,6 +305,7 @@ Hooks.once("init", function () {
         //updateImages: DoDMigrate.updateItemImagesOnActors,
         rollAttribute: DoDMacro.rollAttributeMacro,
         rollItem: DoDMacro.rollItemMacro,
+        useItem: DoDMacro.useItemMacro,
         monsterAttack: DoDMacro.monsterAttackMacro,
         monsterDefend: DoDMacro.monsterDefendMacro,
         drawTreasureCards: DoD_Utility.drawTreasureCards
