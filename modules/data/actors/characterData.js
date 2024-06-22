@@ -62,32 +62,22 @@ export default class DoDCharacterData extends DoDCharacterBaseData {
             }),
             conditions: new fields.SchemaField({
                 str: new fields.SchemaField({
-                    name: new fields.StringField({ required: true, initial: "exhausted" }),
                     value: new fields.BooleanField({ required: false, initial: false, label: "DoD.conditions.str" }),
                 }),
                 con: new fields.SchemaField({
-                    name: new fields.StringField({ required: true, initial: "sickly" }),
                     value: new fields.BooleanField({ required: false, initial: false, label: "DoD.conditions.con" }),
                 }),
                 agl: new fields.SchemaField({
-                    name: new fields.StringField({ required: true, initial: "dazed" }),
                     value: new fields.BooleanField({ required: false, initial: false, label: "DoD.conditions.agl" }),
-
                 }),
                 int: new fields.SchemaField({
-                    name: new fields.StringField({ required: true, initial: "angry" }),
                     value: new fields.BooleanField({ required: false, initial: false, label: "DoD.conditions.int" }),
-
                 }),
                 wil: new fields.SchemaField({
-                    name: new fields.StringField({ required: true, initial: "scared" }),
                     value: new fields.BooleanField({ required: false, initial: false, label: "DoD.conditions.wil" }),
-
                 }),
                 cha: new fields.SchemaField({
-                    name: new fields.StringField({ required: true, initial: "disheartened" }),
                     value: new fields.BooleanField({ required: false, initial: false, label: "DoD.conditions.cha" }),
-
                 }),
             }),
             age: new fields.StringField({ required: true, initial: "adult" }),
