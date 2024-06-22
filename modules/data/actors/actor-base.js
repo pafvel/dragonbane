@@ -10,6 +10,12 @@ export default class DoDActorBaseData extends DragonbaneDataModel {
                 value: new fields.NumberField({ required: true, initial: 10 }),
                 max: new fields.NumberField({ required: true, initial: 10 }),
             }),
+            currency: new fields.SchemaField({
+                gc: new fields.NumberField({ required: true, initial: 0 }),
+                sc: new fields.NumberField({ required: true, initial: 0 }),
+                cc: new fields.NumberField({ required: true, initial: 0 })
+            }),
+
         });
     };
 

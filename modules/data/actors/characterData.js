@@ -90,11 +90,6 @@ export default class DoDCharacterData extends DoDCharacterBaseData {
 
                 }),
             }),
-            currency: new fields.SchemaField({
-                gc: new fields.NumberField({ required: true, initial: 0 }),
-                sc: new fields.NumberField({ required: true, initial: 0 }),
-                cc: new fields.NumberField({ required: true, initial: 0 })
-            }),
             age: new fields.StringField({ required: true, initial: "adult" }),
             appearance: new fields.StringField({ required: true, initial: "" }),
             weakness: new fields.StringField({ required: true, initial: "" }),
