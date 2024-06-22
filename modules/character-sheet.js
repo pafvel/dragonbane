@@ -1252,7 +1252,6 @@ export default class DoDCharacterSheet extends ActorSheet {
                         } else {
                             const newWP = oldWP - wp;
                             this.actor.update({"system.willPoints.value": newWP});
-                            //content = game.i18n.format("DoD.ability.useWithWP", {actor: this.actor.name, uuid: item.uuid, wp: wp});
                             content = `
                             <div>
                                 <p class="ability-use" data-ability-id="${item.id}">${game.i18n.format("DoD.ability.useWithWP", {actor: this.actor.name, uuid: item.uuid, wp: wp})}</p>
@@ -1265,10 +1264,10 @@ export default class DoDCharacterSheet extends ActorSheet {
                             </div>`;
                         }
                     } else {
-                        content = game.i18n.format("DoD.ability.useWithoutWP", {
-                            actor: this.actor.name,
-                            uuid: item.uuid
-                        });
+                        content = `
+                        <div>
+                            <p class="ability-use" data-ability-id="${item.id}">${game.i18n.format("DoD.ability.useWithoutWP", {actor: this.actor.name, uuid: item.uuid})}</p>
+                        </div>`;
                 }
                     ChatMessage.create({
                         content: content,
