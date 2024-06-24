@@ -1,2 +1,5 @@
 node_modules/
 .vscode/
+
+# Ignore directories in packs to remove v11 dbs
+packs/*/
