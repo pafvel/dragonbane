@@ -3,7 +3,9 @@
     <!-- Effect Header -->
     <header class="sheet-header">
         <img class="effect-icon" src="{{ data.icon }}" data-edit="icon">
-        <h1 class="effect-title">{{ data.label }}</h1>
+        <h1 class="effect-title">
+            <input name="name" type="text" value="{{data.name}}" placeholder="{{ localize 'Name' }}"/>
+        </h1>
     </header>
 
     <!-- Effect Configuration Tabs -->
@@ -15,27 +17,16 @@
 
     <!-- Details Tab -->
     <section class="tab" data-tab="details">
-
-        <div class="form-group">
-            <label>{{ localize "EFFECT.Label" }}</label>
-            <div class="form-fields">
-                <input type="text" name="label" value="{{ data.label }}"/>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>{{ localize "EFFECT.Icon" }}</label>
-            <div class="form-fields">
-                {{filePicker target="icon" type="image"}}
-                <input class="image" type="text" name="icon" placeholder="path/image.png" value="{{data.icon}}"/>
-            </div>
-        </div>
-
         <div class="form-group">
             <label>{{ localize "EFFECT.IconTint" }}</label>
             <div class="form-fields">
                 {{colorPicker name="tint" value=data.tint}}
             </div>
+        </div>
+
+        <div class="form-group stacked">
+            <label>{{ localize "EFFECT.Description" }}</label>
+            {{editor descriptionHTML target="description" button=false editable=editable engine="prosemirror" collaborate=false}}
         </div>
 
         <div class="form-group">
@@ -54,10 +45,11 @@
 
         {{#if isItemEffect}}
         <div class="form-group">
-            <label>{{ localize "EFFECT.Transfer" }}</label>
+            <label>{{ labels.transfer.name }}</label>
             <div class="form-fields">
                 <input type="checkbox" name="transfer" {{checked data.transfer}}/>
             </div>
+            <p class="hint">{{ labels.transfer.hint }}</p>
         </div>
         {{/if}}
     </section>
@@ -116,7 +108,7 @@
         </header>
         <ol class="changes-list">
             {{#each data.changes as |change i|}}
-            <li class="effect-change flexrow" data-index="{{i}}">
+            <li class="effect-change flexrow" data-index="{{i}}">              
                 <div class="key">
                     <select name="changes.{{i}}.key">
                         {{selectOptions ../config.activeEffectChanges selected=change.key localize=true}}

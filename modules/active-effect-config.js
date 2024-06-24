@@ -5,8 +5,8 @@ export default class DoDActiveEffectConfig extends ActiveEffectConfig {
         return "systems/dragonbane/templates/active-effect-config.html";
     }
 
-    getData() {
-        const sheetData = super.getData();
+    async getData() {
+        const sheetData = await super.getData();
 
         sheetData.config = DoD;
 
