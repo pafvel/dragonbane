@@ -535,7 +535,11 @@
 	    "viewDamagePermission": "Permiso para ver el daño",
             "viewDamagePermissionHint": "Escoge el nivel mínimo necesario de permiso para que un usuario pueda ver la cantidad de daño que sufre un actor.",
             "monsterAttackDialogIsDefault": "Escoger ataque de los Monstruos",
-            "monsterAttackDialogIsDefaultHint": "Si se marca, se mostrará por defecto una opción de \"Escoger el ataque del Monstruo\" cuando hagas click izquierdo en el botón de Ataque en las hojas de los Monstruos. Puedes saltarte la opción pulsando MAYÚSCULAS or CTRL junto al click izquierdo. Si no se marca la opción, funcionará justo al contrario."
+            "monsterAttackDialogIsDefaultHint": "Si se marca, se mostrará por defecto una opción de \"Escoger el ataque del Monstruo\" cuando hagas click izquierdo en el botón de Ataque en las hojas de los Monstruos. Puedes saltarte la opción pulsando MAYÚSCULAS or CTRL junto al click izquierdo. Si no se marca la opción, funcionará justo al contrario.",
+            "allowDealDamageOnSelected": "Causa daño al token seleccionado",
+            "allowDealDamageOnSelectedHint": "Si se selecciona, el GM puede causar daño (y sanar) al token seleccionado si no se ha apuntado a ningún token.",
+            "automaticSkillAdvancementMark": "Automatizar las marcas de mejora de habilidad",
+            "automaticSkillAdvancementMarkHint": "Coloca una marca de mejora de habilidad automáticamente con los resultados de Dragón y Demonio."
         },
         "WARNING": {
             "kinAbility": "No se ha encontrado el Talento de Especie: {ability}",

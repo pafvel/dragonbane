@@ -3,7 +3,12 @@
     "build": "gulp build"
   },
   "dependencies": {
-    "gulp": "^4.0.2",
+    "gulp": "^5.0.0",
     "gulp-less": "^5.0.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.2.0",
+    "eslint": "^9.2.0",
+    "globals": "^15.2.0"
   }
 }

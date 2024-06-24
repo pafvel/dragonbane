@@ -1,217 +1,36 @@
 {
-    "Actor": {
-        "types": ["character", "npc", "monster"],
-        "templates": {
-            "actorDescripton": {
-                "description": ""
-            },
-            "characterDescription": {
-                "kin": "",
-                "age": "",
-                "profession": "",
-                "motivation": ""
-            },
-            "attributes": {
-                "attributes": {
-                    "str": { "value": 10 },
-                    "con": { "value": 10 },
-                    "agl": { "value": 10 },
-                    "int": { "value": 10 },
-                    "wil": { "value": 10 },
-                    "cha": { "value": 10 }
-                }
-            },
-            "conditions": {
-                "conditions": {
-                    "str": {
-                        "value": false,
-                        "name": "dazed"
-                    },
-                    "con": {
-                        "value": false,
-                        "name": "sickly"
-                    },
-                    "agl": {
-                        "value": false,
-                        "name": "exhausted"
-                    },
-                    "int": {
-                        "value": false,
-                        "name": "angry"
-                    },
-                    "wil": {
-                        "value": false,
-                        "name": "scared"
-                    },
-                    "cha": {
-                        "value": false,
-                        "name": "disheartened"
-                    }
-                }
-            },
-            "actorStats": {
-                "movement": 10,
-                "hitPoints": {
-                    "value": 10,
-                    "max": 10
-                }
-            },
-            "characterStats": {
-                "willPoints": {
-                    "value": 10,
-                    "max": 10
-                },
-                "damageBonus": {
-                    "agl": "",
-                    "str": ""
-                }
-            },
-            "currency": {
-                "currency": {
-                    "gc": 0,
-                    "sc": 0,
-                    "cc": 0
-                }
-            },
-            "characterBio": {
-                "age": "",
-                "appearance": "",
-                "weakness": "",
-                "notes": ""
-            },
-            "deathRolls": {
-                "deathRolls": {
-                    "successes": 0,
-                    "failures": 0
-                }
-            }
-        },
-        "character": {
-            "templates": [
-                "actorDescripton", 
-                "characterDescripton",
-                "attributes",
-                "conditions",
-                "actorStats",
-                "characterStats",
-                "currency",
-                "characterBio",
-                "deathRolls"
-            ]
-        },
-        "npc": {
-            "templates": [
-                "actorDescripton",
-                "characterDescripton",
-                "actorStats",
-                "characterStats"
-            ],
-            "traits": ""
-        },
-        "monster": {
-            "templates": [
-                "actorDescripton",
-                "actorStats"
-            ],
-            "armor": 0,
-            "ferocity": 1,
-            "size": "",
-            "traits": "",
-            "attackTable": ""
-        }
-    },
-    "Item": {
-        "types": ["ability", "armor", "helmet", "item", "kin", "profession", "skill", "spell", "weapon"],
-        "templates": {
-            "itemDescripton": {
-                "description": ""
-            },
-            "gear": {
-                "weight": 1,
-                "quantity": 1,
-                "cost": "",
-                "supply": "",
-                "worn": false,
-                "memento": false,
-                "boons": "",
-                "banes": ""
-            }
-        },
-        "weapon": {
-            "templates": ["gear", "itemDescripton"],
-            "grip": {
-                "label": "",
-                "value": ""
-            },
-            "str": 0,
-            "range": 0,
-            "damage": "",
-            "durability": 0,
-            "skill": {
-                "name": "",
-                "value": 0
-            },
-            "features": [],
-            "broken": false,
-            "mainHand": false,
-            "offHand": false
-        },
-        "armor": {
-            "templates": ["gear", "itemDescripton"],
-            "rating": 0,
-            "banes": "",
-            "bonuses": []
-        },
-        "helmet": {
-            "templates": ["gear", "itemDescripton"],
-            "rating": 0
-        },
-        "item": {
-            "templates": ["gear", "itemDescripton"],
-            "type": ""
-        },
-        "kin": {
-            "templates": ["itemDescripton"],
-            "abilities": "",
-            "movement": 10
-        },
-        "profession": {
-            "templates": ["itemDescripton"],
-            "attribute": "",
-            "skills": "",
-            "abilities": ""
-        },
-        "skill": {
-            "templates": ["itemDescripton"],
-            "skillType": "",
-            "attribute": "",
-            "value": 0,
-            "advance": 0,
-            "hideTrained": false
-        },
-        "ability": {
-            "templates": ["itemDescripton"],
-            "type": "",
-            "requirement": "",
-            "wp": "",
-            "boons": "",
-            "secondaryAttribute": "",
-            "secondaryAttributeBonus": 0
-        },
-        "spell": {
-            "templates": ["itemDescripton"],
-            "school": "",
-            "rank": 0,
-            "prerequisite": "",
-            "requirement": "",
-            "castingTime": "",
-            "rangeType": "",
-            "range": 0,
-            "areaOfEffect": "",
-            "duration": "",
-            "damage": "",
-            "damagePerPowerlevel": "",
-            "memorized": false
-        }
-    }
+  "Actor": {
+    "types": [
+      "character",
+      "npc",
+      "monster"
+    ],
+    "htmlFields": [
+    ],
+    "character": {},
+    "npc": {},
+    "monster": {}
+  },
+  "Item": {
+    "types": [
+      "ability",
+      "armor",
+      "helmet",
+      "item",
+      "kin",
+      "profession",
+      "skill",
+      "spell",
+      "weapon"
+    ],
+    "ability": {},
+    "armor": {},
+    "helmet": {},
+    "item": {},
+    "kin": {},
+    "profession": {},
+    "skill": {},
+    "spell": {},
+    "weapon": {}
+  }
 }

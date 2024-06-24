@@ -19,11 +19,7 @@
                             <th>{{localize "DoD.ui.character-sheet.size"}}</th>
                             <td>
                                 <select name="system.size">
-                                    {{#select system.size}}
-                                    {{#each config.sizeTypes as |name type|}}
-                                    <option value="{{type}}">{{localize name}}</option>
-                                    {{/each}}
-                                    {{/select}}
+                                    {{selectOptions config.sizeTypes selected=system.size localize=true}}
                                 </select>
                             </td>
                         </tr>

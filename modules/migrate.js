@@ -1,7 +1,3 @@
-import { DoD } from "./config.js";
-import DoD_Utility from "./utility.js";
-
-
 export async function migrateWorld() {
     console.log("Migrating World to newer version");
 
@@ -32,7 +28,7 @@ export async function migrateWorld() {
           console.error(err);
         }
     }
- 
+
     // Migrate Scenes
     for (let scene of game.scenes.contents) {
         try {
@@ -40,7 +36,7 @@ export async function migrateWorld() {
             if (!foundry.utils.isEmpty(updateData)) {
                 console.log(`Migrating Scene ${scene.name}`);
                 scene.update(updateData);
-                
+
                 // Clear cached actor data
                 scene.tokens.contents.forEach(t => t._actor = null);
             }
@@ -52,17 +48,17 @@ export async function migrateWorld() {
 
     // Migrate Compendiums
     for (let p of game.packs) {
-        if (p.metadata.type == "Item" && p.metadata.packageType == "world") {
+        if (p.metadata.type === "Item" && p.metadata.packageType === "world") {
             await migrateCompendium(p);
         }
     }
     for (let p of game.packs) {
-        if (p.metadata.type == "Actor" && p.metadata.packageType == "world") {
+        if (p.metadata.type === "Actor" && p.metadata.packageType === "world") {
             await migrateCompendium(p);
         }
     }
     for (let p of game.packs) {
-        if (p.metadata.type == "Scene" && p.metadata.packageType == "world") {
+        if (p.metadata.type === "Scene" && p.metadata.packageType === "world") {
             await migrateCompendium(p);
         }
     }
@@ -80,7 +76,7 @@ function migrateSceneData(scene) {
             const actorData = duplicate(t.actorData);
             actorData.type = token.actor?.type;
             const actorUpdate = migrateActorData(actorData);
-            mergeObject(t.actorData, actorUpdate);
+            foundry.utils.mergeObject(t.actorData, actorUpdate);
         }
         tokensUpdate.push(t);
     }
@@ -104,7 +100,7 @@ function migrateActorData(actor) {
             let itemUpdateData = migrateItemData(item, actor.name);
             if (!foundry.utils.isEmpty(itemUpdateData)) {
                 itemUpdateData._id = item.id;
-                itemArray.push(foundry.utils.expandObject(itemUpdateData));     
+                itemArray.push(foundry.utils.expandObject(itemUpdateData));
             }
         }
     }
@@ -117,13 +113,13 @@ function migrateActorData(actor) {
 
 function migrateItemData(item, name) {
     let updateData = {};
-    if (item.type == "spell") {
+    if (item.type === "spell") {
         updateData = migrateSpellData(item, name);
     }
     return updateData;
 }
 
-function migrateSpellData(spell, name) {
+function migrateSpellData(spell, _name) {
     let updateData = {};
 
     // Added field rangeType
@@ -193,13 +189,13 @@ async function migrateCompendium(pack) {
   };
 
   export async function updateSpellsOnActors() {
-    const worldSpells = game.items.filter(i => i.type == "spell");
+    const worldSpells = game.items.filter(i => i.type === "spell");
 
     // World Actors
     for (let actor of game.actors.contents) {
-        const actorSpells = actor.items.filter(i => i.type == "spell");
+        const actorSpells = actor.items.filter(i => i.type === "spell");
         for (const actorSpell of actorSpells) {
-            const worldSpell = worldSpells.find(i => i.name == actorSpell.name);
+            const worldSpell = worldSpells.find(i => i.name === actorSpell.name);
             if (worldSpell) {
                 let spellTemplate = duplicate(worldSpell.system);
                 delete spellTemplate.memorized;
@@ -216,15 +212,15 @@ async function migrateCompendium(pack) {
         }
     }
 }
-    
+
 export async function updateItemsOnActors() {
-    const worldItems = game.items.filter(i => i.type == "item" || i.type == "weapon");
+    const worldItems = game.items.filter(i => i.type === "item" || i.type === "weapon");
 
     // World Actors
     for (let actor of game.actors.contents) {
-        const actorItems = actor.items.filter(i => (i.type == "item"));
+        const actorItems = actor.items.filter(i => (i.type === "item"));
         for (const actorItem of actorItems) {
-            const worldItem = worldItems.find(i => i.name == actorItem.name);
+            const worldItem = worldItems.find(i => i.name === actorItem.name);
             if (worldItem) {
                 const template = { system: worldItem.system, img: "" };
                 const diff = diffObject(filterObject(actorItem, template), filterObject(worldItem, template));
@@ -246,17 +242,17 @@ export async function updateItemsOnActors() {
         }
     }
 }
-    
+
 export async function updateSkillsOnActors() {
-    const worldSkills = game.items.filter(i => i.type == "skill");
-    
+    const worldSkills = game.items.filter(i => i.type === "skill");
+
     // World Actors
     for (let actor of game.actors.contents) {
-        const actorSkills = actor.items.filter(i => i.type == "skill");
+        const actorSkills = actor.items.filter(i => i.type === "skill");
         for (const actorSkill of actorSkills) {
-            const worldSkill = worldSkills.find(i => i.name == actorSkill.name);
+            const worldSkill = worldSkills.find(i => i.name === actorSkill.name);
             if (worldSkill) {
-                // only look for differences in system or img 
+                // only look for differences in system or img
                 let template = { system: duplicate(worldSkill.system), img: "" };
                 // these are set by the actor, ignore them
                 delete template.system.advance;
@@ -278,8 +274,8 @@ export async function updateItemImagesOnActors() {
     // World Actors
     for (let actor of game.actors.contents) {
         for (const actorItem of actor.items) {
-            const worldItem = game.items.find(i => i.type == actorItem.type && i.name == actorItem.name);
-            if (worldItem && worldItem.img != actorItem.img) {
+            const worldItem = game.items.find(i => i.type === actorItem.type && i.name === actorItem.name);
+            if (worldItem && worldItem.img !== actorItem.img) {
                 console.log("Updating item image in " + actor.name + " : " + actorItem.name);
                 console.log(actorItem.img + " -> " + worldItem.img);
                 await actorItem.update({img: worldItem.img});

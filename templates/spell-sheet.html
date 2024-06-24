@@ -37,20 +37,12 @@
             <tr>
                 <td>
                     <select name="system.castingTime">
-                        {{#select system.castingTime}}
-                        {{#each config.castingTimeTypes as |name castingTime|}}
-                        <option value="{{castingTime}}">{{localize name}}</option>
-                        {{/each}}
-                        {{/select}}
+                        {{selectOptions config.castingTimeTypes selected=system.castingTime localize=true}}
                     </select>
                 </td>
                 <td>
                     <select name="system.rangeType">
-                        {{#select system.rangeType}}
-                        {{#each config.spellRangeTypes as |name rangeType|}}
-                        <option value="{{rangeType}}">{{localize name}}</option>
-                        {{/each}}
-                        {{/select}}
+                        {{selectOptions config.spellRangeTypes selected=system.rangeType localize=true}}
                     </select>
                 </td>
                 <td>
@@ -62,11 +54,7 @@
                 </td>
                 <td>
                     <select name="system.duration">
-                        {{#select system.duration}}
-                        {{#each config.spellDurationTypes as |name duration|}}
-                        <option value="{{duration}}">{{localize name}}</option>
-                        {{/each}}
-                        {{/select}}
+                        {{selectOptions config.spellDurationTypes selected=system.duration localize=true}}
                     </select>
                 </td>
             </tr>

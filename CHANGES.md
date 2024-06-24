@@ -1,5 +1,25 @@
 # Change Log
 
+## Version 1.8.3
+
+- Characters Sheet / Settings
+    - Added option to disable automatic improvement checkmarks on Dragon and Demon rolls (by @xdy).
+
+- Localization
+    - Updated ES translation (by Tarot).
+    - Updated PT-BR translation (by Roberto Pedroso).
+
+- Foundry v12 compatibility
+    - Fix for incorrect default age when creating a character in v12.
+    - Fixed a number of deprecation warnings.
+
+- Miscellaneous (for developers)
+    - Added eslint to vscode project.
+    - Fixed lint warnings (contributions by @xdy).
+    - Updated gulp to 5.0.0 (by @xdy).
+    - Added documentation of DoDTest option parameters.
+
+
 ## Version 1.8.2
 - Combat
     - Players can no longer use the selection method for dealing damage. This was a source of confusion and frequently made players deal damage to their own characters.

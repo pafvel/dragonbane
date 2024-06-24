@@ -1,5 +1,5 @@
-var gulp = require('gulp');
-var less = require('gulp-less');
+const gulp = require('gulp');
+const less = require('gulp-less');
 
 gulp.task('less', function (cb) {
     gulp

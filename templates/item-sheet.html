@@ -41,12 +41,7 @@
                         </td>
                         <td>
                             <select name="system.supply">
-                                {{#select system.supply}}
-                                {{#each config.supplyTypes as |name type|}}
-                                <option value="{{type}}">{{localize name}}</option>
-                                {{/each}}
-                                {{/select}}
-                            </select>
+                                {{selectOptions config.supplyTypes selected=system.supply localize=true}}                            </select>
                         </td>
                     </tr>
                 </table>
@@ -58,11 +53,7 @@
                     <tr>
                         <td>
                             <select name="system.type">
-                                {{#select system.type}}
-                                {{#each config.itemTypes as |name type|}}
-                                <option value="{{type}}">{{localize name}}</option>
-                                {{/each}}
-                                {{/select}}
+                                {{selectOptions config.itemTypes selected=system.type localize=true}}
                             </select>
                         </td>
                         <td>

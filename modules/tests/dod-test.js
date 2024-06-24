@@ -3,6 +3,16 @@ import DoDRoll from "../roll.js";
 
 export default class DoDTest {
 
+/*
+    DoDTest options:
+    @param {Boolean} noBanesBoons : make the roll without any banes or boons applied, skips dialog
+    @param {Boolean} defaultBanesBoons : make the roll with the default banes and boons applied, skips dialog
+    @param {Boolean} autoSuccess : the test will automatically succeed (used by Monsters casting spells)
+    @param {Array} banes : array of Objects with {src: <localized string of source>; value: <true, to check by default in the dialog; false otherwise>}
+    @param {Array} boons : array of Objects with {src: <localized string of source>; value: <true, to check by default in the dialog; false otherwise>}
+    @param {Integer} extraBanes : the number of additional banes to apply
+    @param {Integer} extraBoons : the number of additional boons to apply
+*/
     constructor(actor, options = {}) {
         this.actor = actor;
         this.options = options;
@@ -28,14 +38,13 @@ export default class DoDTest {
             extraBoons: this.options.extraBoons,
             extraBanes: this.options.extraBanes
         }
-        this.roll = await new DoDRoll(formula, {}, rollOptions).roll({async: true});
+        this.roll = await new DoDRoll(formula, {}, rollOptions).roll(game.release.generation < 12 ? {async: true} : {});
 
         this.updatePostRollData();
         const messageData = this.formatRollMessage(this.postRollData);
         const messageTemplate = this.getMessageTemplate();
         if (messageTemplate) {
             let renderedMessage = await this.renderRoll(this.roll, messageTemplate, this.postRollData);
-            let enrichedMessage = await TextEditor.enrichHTML(renderedMessage, { async: true });
             if (messageData.content) {
                 messageData.content += renderedMessage;
             } else {
@@ -111,15 +120,15 @@ export default class DoDTest {
         for (let item of this.actor.items.contents) {
             if (item.system.banes?.length) {
                 let itemBanes = DoD_Utility.splitAndTrimString(item.system.banes.toLowerCase());
-                if (itemBanes.find(element => element.toLowerCase() == rollTarget || element.toLowerCase() == rollAttribute)) {
-                    let value = item.system.worn ? true : false;
+                if (itemBanes.find(element => element.toLowerCase() === rollTarget || element.toLowerCase() === rollAttribute)) {
+                    let value = !!item.system.worn;
                     banes.push( {source: item.name, value: value});
                 }
             }
             if (item.system.boons?.length) {
                 let itemBoons = DoD_Utility.splitAndTrimString(item.system.boons.toLowerCase());
-                if (itemBoons.find(element => element.toLowerCase() == rollTarget || element.toLowerCase() == rollAttribute)) {
-                    let value = item.system.worn ? true : false;
+                if (itemBoons.find(element => element.toLowerCase() === rollTarget || element.toLowerCase() === rollAttribute)) {
+                    let value = !!item.system.worn;
                     boons.push( {source: item.name, value: value});
                 }
             }
@@ -186,7 +195,7 @@ export default class DoDTest {
         let element = elements ? elements[0] : null;
         let inputs = element?.getElementsByTagName("input");
         for (let input of inputs) {
-            if (input.type == "checkbox" && input.checked) {
+            if (input.type === "checkbox" && input.checked) {
                 banes.push(input.name);
             }
         }
@@ -201,7 +210,7 @@ export default class DoDTest {
         element = elements ? elements[0] : null;
         inputs = element?.getElementsByTagName("input");
         for (let input of inputs) {
-            if (input.type == "checkbox" && input.checked) {
+            if (input.type === "checkbox" && input.checked) {
                 boons.push(input.name);
             }
         }
@@ -252,7 +261,7 @@ export default class DoDTest {
     }
 
     async renderRoll(roll, template, templateContext) {
-        if ( !roll._evaluated ) await roll.evaluate({async: true});
+        if ( !roll._evaluated ) await roll.evaluate(game.release.generation < 12 ? {async: true} : {});
 
         const defaultContext = {
             formula: roll.formula,

@@ -16,11 +16,7 @@
                             <th>{{localize "DoD.ui.character-sheet.damageBonusSTR"}}</th>
                             <td>
                                 <select name="system.damageBonus.str">
-                                    {{#select system.damageBonus.str}}
-                                    {{#each config.dice as |name type|}}
-                                    <option value="{{type}}">{{localize name}}</option>
-                                    {{/each}}
-                                    {{/select}}
+                                    {{selectOptions config.dice selected=system.damageBonus.str localize=true}}
                                 </select>
                             </td>
                             </tr>
@@ -28,11 +24,7 @@
                             <th>{{localize "DoD.ui.character-sheet.damageBonusAGL"}}</th>
                             <td>
                                 <select name="system.damageBonus.agl">
-                                    {{#select system.damageBonus.agl}}
-                                    {{#each config.dice as |name type|}}
-                                    <option value="{{type}}">{{localize name}}</option>
-                                    {{/each}}
-                                    {{/select}}
+                                    {{selectOptions config.dice selected=system.damageBonus.agl localize=true}}
                                 </select>
                             </td>
                         </tr>

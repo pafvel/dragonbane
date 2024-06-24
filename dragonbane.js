@@ -9,6 +9,18 @@ import * as DoDMacro from "./modules/macro.js";
 import * as DoDMigrate from "./modules/migrate.js";
 import DoD_Utility from "./modules/utility.js";
 import DoDRoll from "./modules/roll.js";
+import DoDCharacterData from "./modules/data/actors/characterData.js";
+import DoDNPCData from "./modules/data/actors/NPCData.js";
+import DoDMonsterData from "./modules/data/actors/monsterData.js";
+import DoDAbilityData from "./modules/data/items/abilityData.js";
+import DoDArmorData from "./modules/data/items/armorData.js";
+import DoDHelmetData from "./modules/data/items/helmetData.js";
+import DoDItemData from "./modules/data/items/itemData.js";
+import DoDKinData from "./modules/data/items/kinData.js";
+import DoDProfessionData from "./modules/data/items/professionData.js";
+import DoDSkillData from "./modules/data/items/skillData.js";
+import DoDWeaponData from "./modules/data/items/weaponData.js";
+import DoDSpellData from "./modules/data/items/spellData.js";
 import DoDActiveEffect from "./modules/active-effect.js";
 import DoDActiveEffectConfig from "./modules/active-effect-config.js";
 
@@ -18,7 +30,7 @@ function registerHandlebarsHelpers() {
     * Repeat given markup with n times
     */
     Handlebars.registerHelper("times", function (n, block) {
-        var result = "";
+        let result = "";
         for (let i = 0; i < n; ++i) {
             result += block.fn(i);
         }
@@ -30,9 +42,9 @@ function registerHandlebarsHelpers() {
     * provides @index for the repeated iteraction
     */
     Handlebars.registerHelper("range", function (from, to, block) {
-        var result = "";
-        var i;
-        var data = {};
+        let result = "";
+        let i;
+        const data = {};
 
         if (from < to) {
             for (i = from; i <= to; i += 1) {
@@ -154,7 +166,7 @@ function registerSettings() {
         type: Boolean,
         default: false
     });
-    
+
     // User permission levels
     const permissionLevels = {};
     permissionLevels[CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE] = "OWNERSHIP.NONE";
@@ -182,7 +194,7 @@ function registerSettings() {
         default: true,
         type: Boolean
     });
-    
+
     // If true, autmatically marks Characters as dead when they fail 3 death rolls or get instantly killed
     game.settings.register("dragonbane", "automateCharacterDeath", {
         name: "DoD.SETTINGS.automateCharacterDeath",
@@ -237,6 +249,15 @@ function registerSettings() {
         default: false,
         type: Boolean
     });
+    // If true, automatically set skill advancement mark on a Dragon or Demon roll
+    game.settings.register("dragonbane", "automaticSkillAdvancementMark", {
+        name: "DoD.SETTINGS.automaticSkillAdvancementMark",
+        hint: "DoD.SETTINGS.automaticSkillAdvancementMarkHint",
+        scope: "world",
+        config: true,
+        default: true,
+        type: Boolean
+    });
 }
 
 Hooks.once("init", function () {
@@ -249,6 +270,24 @@ Hooks.once("init", function () {
     CONFIG.ActiveEffect.documentClass = DoDActiveEffect;
 
     CONFIG.Dice.rolls.unshift(DoDRoll);
+
+    foundry.utils.mergeObject(CONFIG.Actor.dataModels, {
+        character: DoDCharacterData,
+        monster:DoDMonsterData,
+        npc: DoDNPCData
+    });
+
+    foundry.utils.mergeObject(CONFIG.Item.dataModels, {
+        ability: DoDAbilityData,
+        armor: DoDArmorData,
+        helmet: DoDHelmetData,
+        item: DoDItemData,
+        kin: DoDKinData,
+        profession: DoDProfessionData,
+        skill: DoDSkillData,
+        spell: DoDSpellData,
+        weapon: DoDWeaponData
+    });
 
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("DoD", DoDCharacterSheet, { makeDefault: true });
@@ -271,6 +310,7 @@ Hooks.once("init", function () {
         //updateImages: DoDMigrate.updateItemImagesOnActors,
         rollAttribute: DoDMacro.rollAttributeMacro,
         rollItem: DoDMacro.rollItemMacro,
+        useItem: DoDMacro.useItemMacro,
         monsterAttack: DoDMacro.monsterAttackMacro,
         monsterDefend: DoDMacro.monsterDefendMacro,
         drawTreasureCards: DoD_Utility.drawTreasureCards
@@ -279,8 +319,8 @@ Hooks.once("init", function () {
 
 Hooks.once("ready", async function () {
 
-    Hooks.on("hotbarDrop", (bar, data, slot) => {
-        if (data.type == "Item") {
+    Hooks.on("hotbarDrop", (_bar, data, slot) => {
+        if (data.type === "Item") {
             DoDMacro.createItemMacro(data, slot);
             return false;
         }
@@ -290,7 +330,7 @@ Hooks.once("ready", async function () {
     if (game.user.isGM) {
         const SYSTEM_MIGRATION_VERSION = 0.01;
         const currentVersion = game.settings.get("dragonbane", "systemMigrationVersion");
-        const needsMigration = !currentVersion || isNewerVersion(SYSTEM_MIGRATION_VERSION, currentVersion);
+        const needsMigration = !currentVersion || foundry.utils.isNewerVersion(SYSTEM_MIGRATION_VERSION, currentVersion);
 
         if (needsMigration) {
             DoDMigrate.migrateWorld();
@@ -301,7 +341,7 @@ Hooks.once("ready", async function () {
     // If this is a new version, prompt adventure import
     if (game.user.isGM) {
         const systemVersion = game.settings.get("dragonbane", "systemVersion");
-        if (!systemVersion || isNewerVersion(game.system.version, systemVersion)) {
+        if (!systemVersion || foundry.utils.isNewerVersion(game.system.version, systemVersion)) {
             const pack = game.packs.get("dragonbane.dragonbane-drakar-och-demoner-system");
             const adventureId = pack?.index.contents[0]._id;
             if (adventureId) {
@@ -313,9 +353,9 @@ Hooks.once("ready", async function () {
     }
 
     // Show welcome journal when importing the adventure
-    Hooks.on('importAdventure', async (created, updated) => {
+    Hooks.on('importAdventure', async (created, _updated) => {
         const ADVENTURE_NAME = "Dragonbane / Drakar och Demoner - System";
-        if (created?.name == ADVENTURE_NAME) {
+        if (created?.name === ADVENTURE_NAME) {
             const title = "(" + game.i18n.lang.toLowerCase() + ")";
             const adventureJournal = created.journal.find(j => j.name.toLowerCase().includes(title));
             if (adventureJournal) {
@@ -332,7 +372,7 @@ Hooks.on("getChatLogEntryContext", DoDChat.addChatMessageContextMenuOptions);
 Hooks.on("renderChatMessage", DoDChat.hideChatPermissions);
 
 for (const sheet of ["ActorSheet", "ItemSheet", "JournalPageSheet"]) {
-    Hooks.on(`render${sheet}`, (app, html, options) => {
+    Hooks.on(`render${sheet}`, (_app, html, _options) => {
         html.on('click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
         html.on("click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);
         html.on("click", ".treasure-roll", DoDChat.onTreasureRoll);
@@ -366,7 +406,7 @@ Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
 });
 
 // Re-generate thumbnails when importing scenes
-Hooks.on('importAdventure', async (created, updated) => {
+Hooks.on('importAdventure', async (created, _updated) => {
     if (created?.scenes?.size > 0) {
         console.log("Dragonbane: Re-generating thumbnails for " + created.name);
         created.scenes.forEach(async s => {
@@ -459,7 +499,7 @@ Hooks.once('diceSoNiceReady', (dice3d) => {
         ],
         bumpMaps: [
             "systems/dragonbane/art/ui/dsn/dod-ikon-drake-bump.png",
-            , , , , , , , , , , , , , , , , , ,
+            null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
             "systems/dragonbane/art/ui/dsn/dod-ikon-demon-bump.png"
         ],
         system: 'dragonbane',
@@ -502,7 +542,7 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     {
         // Rollable table
         pattern: /@Table\[(.+?)\](?:{(.+?)})?/gm,
-        enricher: (match, options) => {
+        enricher: (match, _options) => {
             const table = DoD_Utility.findTable(match[1]);
             const tableName = match[2] ?? table?.name;
             const a = document.createElement("a");
@@ -526,7 +566,7 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
         // Rollable treasure
         // Format [[/treasure <number>]]
         pattern: /\[\[\/treasure(\s[\d]+)?\]\]/gm,
-        enricher: (match, options) => {
+        enricher: (match, _options) => {
             const count = match[1] ?? 1;
             const a = document.createElement("a");
             a.classList.add("inline-roll");

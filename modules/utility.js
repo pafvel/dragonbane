@@ -2,7 +2,7 @@ import { DoD } from "./config.js";
 import DoDSkillTest from "./tests/skill-test.js";
 
 export default class DoD_Utility {
-    
+
     static clamp(value, min, max) {
         if(value < min) {
             return min;
@@ -68,15 +68,15 @@ export default class DoD_Utility {
                 let skills = [];
                 for (let content of pack.index.contents) {
                     const adventure = await pack.getDocument(content._id);
-                    skills = skills.concat(Array.from(adventure.items.filter(i => i.type == "skill" && (i.system.skillType == "core" || i.system.skillType == "weapon"))));
+                    skills = skills.concat(Array.from(adventure.items.filter(i => i.type === "skill" && (i.system.skillType === "core" || i.system.skillType === "weapon"))));
                 }
                 skills = Array.from(skills);
                 return skills.map(skill => skill.toObject());
             }
-        }        
-       
+        }
+
         // If no compendium, look for skills in the active game
-        let skills = game.items.filter(i => i.type == "skill" && (i.system.skillType == "core" || i.system.skillType == "weapon"));
+        let skills = game.items.filter(i => i.type === "skill" && (i.system.skillType === "core" || i.system.skillType === "weapon"));
         return skills.map(skill => skill.toObject());
     }
 
@@ -110,20 +110,20 @@ export default class DoD_Utility {
     }
 
     static findTable(name, options) {
-        let table = game.tables.find(i => i.name.toLowerCase() == name.toLowerCase()) || fromUuidSync(name);
+        let table = game.tables.find(i => i.name.toLowerCase() === name.toLowerCase()) || fromUuidSync(name);
         if (!table) {
             if (!options?.noWarnings){
                 console.log(game.i18n.format(game.i18n.localize("DoD.WARNING.tableNotFound"), {id: name}));
                 //DoD_Utility.WARNING("DoD.WARNING.tableNotFound", {id: name});
             }
-            return null;    
+            return null;
         }
-        if (!table instanceof RollTable) {
+        if (!(table instanceof RollTable)) {
             if (!options?.noWarning){
                 console.log(game.i18n.format(game.i18n.localize("DoD.WARNING.typeMismatch"), {id: name}));
                 //DoD_Utility.WARNING("DoD.WARNING.typeMismatch", {id: name});
             }
-            return null;    
+            return null;
         }
         return table;
     }
@@ -140,7 +140,7 @@ export default class DoD_Utility {
 
     static async findItem(itemName, itemType, collection) {
         let name = itemName.toLowerCase();
-        let item = collection.find(i => i.type == itemType && i.name.toLowerCase() == name);
+        let item = collection.find(i => i.type === itemType && i.name.toLowerCase() === name);
         return item?.clone();
     }
 
@@ -152,21 +152,21 @@ export default class DoD_Utility {
             if(!options.noWarnings) {
                 DoD_Utility.WARNING(err.message);
             }
-            
+
         }
         let actor = doc?.actor ?? doc;
         if (!actor) {
             if(!options.noWarnings) {
                 DoD_Utility.WARNING("DoD.WARNING.actorNotFound", {id: uuid});
             }
-            return null;    
+            return null;
         }
         return actor;
     }
-    
+
     static splitAndTrimString(str) {
         let result = str?.split(',');
-        for (var i = 0; i < result.length; i++) {
+        for (let i = 0; i < result.length; i++) {
             result[i] = result[i].replace(/^\s+|\s+$/gm,'');
         }
         return result;
@@ -177,7 +177,7 @@ export default class DoD_Utility {
         const tableName = event.currentTarget.dataset.tableName;
         const table = fromUuidSync(tableId) || this.findTable(tableName);
         if (table) {
-            if (event.type == "click") { // left click
+            if (event.type === "click") { // left click
                 table.draw();
             } else { // right click
                 table.sheet.render(true);
@@ -186,7 +186,7 @@ export default class DoD_Utility {
         event.preventDefault();
         event.stopPropagation();
     }
-    
+
     static async expandTableResult(tableResult)
     {
         // Recursive roll if the result is a table
@@ -209,16 +209,16 @@ export default class DoD_Utility {
         }
 
         if (!table) {
-            table = actor.system.attackTable ? fromUuidSync(actor.system.attackTable) : null; 
+            table = actor.system.attackTable ? fromUuidSync(actor.system.attackTable) : null;
             if (!table) {
                 DoD_Utility.WARNING("DoD.WARNING.missingMonsterAttackTable");
                 return;
-            }    
+            }
         }
 
         let attacks = [];
         for (let tableResult of table.results) {
-            attacks.push({result: tableResult, skip: tableResult.uuid == actor.system.previousMonsterAttack});
+            attacks.push({result: tableResult, skip: tableResult.uuid === actor.system.previousMonsterAttack});
         }
 
         return table.sheet.render(true);
@@ -231,20 +231,20 @@ export default class DoD_Utility {
         }
 
         if (!table) {
-            table = actor.system.attackTable ? fromUuidSync(actor.system.attackTable) : null; 
+            table = actor.system.attackTable ? fromUuidSync(actor.system.attackTable) : null;
             if (!table) {
                 DoD_Utility.WARNING("DoD.WARNING.missingMonsterAttackTable");
                 return;
-            }    
+            }
         }
 
         const draw = await actor.drawMonsterAttack(table, tableResult);
         const results = draw.results;
         const roll = draw.roll;
 
-        if (results.length == 0) {
+        if (results.length === 0) {
             return;
-        }          
+        }
 
         // Construct chat data
         const flavorKey = "DoD.ui.character-sheet.monsterAttackFlavor";
@@ -252,8 +252,6 @@ export default class DoD_Utility {
             flavor: game.i18n.format(flavorKey, {actor: actor.name, table: table.name}),
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({token: this.token}),
-            type: CONST.CHAT_MESSAGE_TYPES.ROLL,
-            roll: roll,
             sound: CONFIG.sounds.dice,
             flags: {"core.RollTable": table.id}
         };
@@ -261,7 +259,7 @@ export default class DoD_Utility {
         // Copy results to avoid modifying table
         let messageResults = await results.map(result => {
             const r = result.toObject(false);
-            if (result.parent.id != table.id) {
+            if (result.parent.id !== table.id) {
                 r.text = result.parent.description + "<p>" + result.getChatText() + "</p>";
             } else {
                 r.text = result.getChatText();
@@ -271,7 +269,7 @@ export default class DoD_Utility {
         });
         // Enrich HTML with knowledge of actor
         for (let r of messageResults) {
-            r.text = await TextEditor.enrichHTML(r.text, {actor: actor, async: true});                
+            r.text = await TextEditor.enrichHTML(r.text, {actor: actor, async: true});
         }
 
         // Render the chat card which combines the dice roll with the drawn results
@@ -281,9 +279,10 @@ export default class DoD_Utility {
             rollHTML: table.displayRoll && roll ? await roll.render() : null,
             table: table
         });
-
+  
         // Create the chat message
-        return ChatMessage.create(messageData);     
+        ChatMessage.applyRollMode(messageData, game.settings.get("core", "rollMode"));
+        return ChatMessage.create(messageData);
     }
 
     static async monsterDefend(actor) {
@@ -299,15 +298,15 @@ export default class DoD_Utility {
     }
 
     static async drawTreasureCards(number) {
-        
+
         const tableId = game.settings.get("dragonbane", "treasureTable");
         const table = DoD_Utility.findTable("RollTable." + tableId);
 
-        if (!table) { 
+        if (!table) {
             DoD_Utility.WARNING(game.i18n.localize("DoD.WARNING.noTreasureTable"));
             return;
         }
-        
+
         const count = DoD_Utility.clamp(number, 1, table.results.size);
 
         // RollTable.drawMany doesn't work with nested tables, using this as workaround
@@ -322,12 +321,12 @@ export default class DoD_Utility {
                 results.push(draw.results[0]);
             }
             // Construct a Roll object using the constructed pool
-            const pool = PoolTerm.fromRolls(rolls);
+            const pool = game.release.generation < 12 ? PoolTerm.fromRolls(rolls) : foundry.dice.terms.PoolTerm.fromRolls(rolls);
             const roll = Roll.defaultImplementation.fromTerms([pool]);
 
             // Display results and reset table
             await t.toMessage(results, {roll: roll});
-            await t.resetResults();        
+            await t.resetResults();
         };
         drawMany(table, count);
     }
@@ -340,7 +339,7 @@ export default class DoD_Utility {
         }
         return getKeyByValue(CONST.DOCUMENT_OWNERSHIP_LEVELS, permissionValue);
     }
-    
+
     static INFO(msg, params) {
         if (!params) {
             return ui.notifications.info(game.i18n.localize(msg));

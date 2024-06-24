@@ -30,7 +30,7 @@ export class DoDItem extends Item {
         if (!Array.isArray(this.system.features)) {
             this.system.features = [];
         }
-    
+
         // Grip label
         if (this.system.grip.value) {
             this.system.grip.label = "DoD.gripTypes." + this.system.grip.value;
@@ -44,9 +44,9 @@ export class DoDItem extends Item {
         // Shield skill is same as best strength weapon skill
         if (this.actor && this.hasWeaponFeature("shield")) {
             for (let item of this.actor.items) {
-                if (item.type == "skill" 
-                && item.system.skillType == "weapon" 
-                && item.system.attribute == "str"
+                if (item.type === "skill"
+                && item.system.skillType === "weapon"
+                && item.system.attribute === "str"
                 && item.system.value > this.system.skill.value)
                 {
                     this.system.skill.name = item.name;
@@ -60,12 +60,12 @@ export class DoDItem extends Item {
         if (this.actor) {
             let r = new Roll(String(this.system.range), {str: this.actor.system.attributes?.str.value});
             try {
-                await r.evaluate({async: true});
+                await r.evaluate(game.release.generation < 12 ? {async: true} : {});
                 this.system.calculatedRange = r.total;
             } catch {
                 DoD_Utility.WARNING("DoD.WARNING.cannotEvaluateFormula");
                 this.system.range = "";
-                this.system.calculatedRange = "";    
+                this.system.calculatedRange = "";
             }
         } else {
             let r = new Roll(String(this.system.range), {str: game.i18n.localize("DoD.attributes.str")});
@@ -74,7 +74,7 @@ export class DoDItem extends Item {
     }
 
     get displayName() {
-        if (this.system.quantity == 1) {
+        if (this.system.quantity === 1) {
             return this.name;
         }
         return this.name + " (" + this.system.quantity + ")";
@@ -90,30 +90,30 @@ export class DoDItem extends Item {
 
     getSpellCost(powerLevel)
     {
-        if (this.type != "spell") return 0;
-        if (this.system.rank == 0) return 1; // Trick cost
+        if (this.type !== "spell") return 0;
+        if (this.system.rank === 0) return 1; // Trick cost
         return powerLevel * 2; // Spell cost
     }
 
     get isDamaging() {
-        if (this.type = "spell") {
+        if (this.type === "spell") {
             return this.system.damage?.length > 0 || this.system.damagePerPowerlevel?.length > 0;
-        } else if (this.type = "weapon") {
+        } else if (this.type === "weapon") {
             return this.system.damage?.length > 0;
         }
         return false;
     }
 
     get isHealing() {
-        return this.isDamaging && this.system.damage[0] == "-";
+        return this.isDamaging && this.system.damage[0] === "-";
     }
 
     hasWeaponFeature(feature) {
-        return this.system.features.find(e => e == feature) ? true : false;
+        return !!this.system.features.find(e => e === feature);
     }
 
     hasDamageBonus(damageType) {
-        return this.system.bonuses?.find(e => e == damageType) ? true : false;
+        return !!this.system.bonuses?.find(e => e === damageType);
     }
 
     getArmorValue(damageType) {
@@ -123,7 +123,7 @@ export class DoDItem extends Item {
 
     get requiredStr() {
         let str = Number(this.system.str);
-        if (this.system.grip.value == "grip1h" && this.system.mainHand && this.system.offHand) {
+        if (this.system.grip.value === "grip1h" && this.system.mainHand && this.system.offHand) {
             str = Math.max(0, str - 3);
         }
         return str;
@@ -133,4 +133,3 @@ export class DoDItem extends Item {
         return this.system.value < DoD.skillMaximum;
     }
 }
-  

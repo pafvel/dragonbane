@@ -9,7 +9,7 @@ export default class DoDSpellTest extends DoDSkillTest  {
         this.spell = spell;
         this.hasPowerLevel = spell.system.rank > 0;
     }
-   
+
     updateDialogData() {
         super.updateDialogData();
         this.dialogData.spell = this.spell;
@@ -27,7 +27,7 @@ export default class DoDSpellTest extends DoDSkillTest  {
 
         let options = await this.getRollOptionsFromDialog(title, label);
         if (options.cancelled) return options;
-       
+
         if (!this.isReRoll && !this.autoSuccess) {
             // Check if the character has enough WP to cast spell
             let powerLevel = this.hasPowerLevel ? 1 : 0;
@@ -54,7 +54,7 @@ export default class DoDSpellTest extends DoDSkillTest  {
             options.powerLevel = Number(element.value);
         }
         return options;
-    }    
+    }
 
     updatePreRollData() {
         super.updatePreRollData();
@@ -66,20 +66,20 @@ export default class DoDSpellTest extends DoDSkillTest  {
     updatePostRollData() {
         super.updatePostRollData();
 
-        if (this.actor.type != "monster") {
+        if (this.actor.type !== "monster") {
             this.postRollData.wpOld = this.postRollData.actor.system.willPoints.value;
             this.postRollData.wpNew = this.isReRoll ? this.postRollData.wpOld : this.postRollData.actor.system.willPoints.value - this.postRollData.wpCost;
-            if (this.postRollData.wpNew != this.postRollData.wpOld) {
+            if (this.postRollData.wpNew !== this.postRollData.wpOld) {
                 // Pay WP cost
                 this.postRollData.actor.update({ ["system.willPoints.value"]: this.postRollData.wpNew});
 
                 // Add info to chat card
-                this.postRollData.formulaInfo = 
+                this.postRollData.formulaInfo =
                 `<div class="permission-observer dice-tooltip" data-actor-id="${this.postRollData.actor.uuid}" style="text-align: left">
                         <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${this.postRollData.wpOld} <i class="fa-solid fa-arrow-right"></i> ${this.postRollData.wpNew}<br>
                 </div>`;
             }
-        }        
+        }
 
         this.postRollData.isDamaging = this.spell.isDamaging;
         this.postRollData.isHealing = this.spell.isHealing;
@@ -98,7 +98,7 @@ export default class DoDSpellTest extends DoDSkillTest  {
         if (this.postRollData.isDragon) {
             this.postRollData.isMagicCrit = true;
             this.postRollData.magicCritGroup = "magicCritChoice"
-            this.postRollData.magicCritChoices = {};            
+            this.postRollData.magicCritChoices = {};
 
             // populate crit choices
             this.postRollData.magicCritChoices.noCost = game.i18n.localize("DoD.magicCritChoices.noCost");
@@ -111,17 +111,17 @@ export default class DoDSpellTest extends DoDSkillTest  {
             // set default choice
             this.postRollData.magicCritChoice = "noCost";
         }
-    }    
+    }
 
     formatRollMessage(postRollData) {
         const target = postRollData.targetActor;
         const result = this.formatRollResult(postRollData);
         const locString = postRollData.powerLevel > 0 ? (target ? "DoD.roll.spellRollTarget" : "DoD.roll.spellRoll") : "DoD.roll.skillRoll";
         const label = game.i18n.format(
-            game.i18n.localize(locString), 
+            game.i18n.localize(locString),
             {
-                skill: postRollData.spell.name, 
-                spell: postRollData.spell.name, 
+                skill: postRollData.spell.name,
+                spell: postRollData.spell.name,
                 powerLevel: postRollData.powerLevel,
                 target: postRollData.targetActor?.isToken ? postRollData.targetActor.token.name : postRollData.targetActor?.name,
                 result: result

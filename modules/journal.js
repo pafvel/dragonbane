@@ -21,7 +21,7 @@ export async function enrichDisplayAbility (match, options) {
                 <h4>@UUID[${match[1]}]{${abilityName}}</h4>
                 <ul>`;
         }
-        if (ability.system.abilityType != "kin") {
+        if (ability.system.abilityType !== "kin") {
             html += `
                     <li><b>${game.i18n.localize("DoD.ability.requirement")}: </b><span>${requirement}</span>`;
         }
@@ -48,7 +48,7 @@ export async function enrichDisplayAbilityBox (match, options = {}) {
     return enrichDisplayAbility(match, options);
 }
 
-export async function enrichDisplayMonsterCard (match, options) {
+export async function enrichDisplayMonsterCard (match, _options) {
     return enrichDisplayMonster(match, {skipImage: true});
 }
 
@@ -97,12 +97,10 @@ export async function enrichDisplayMonster (match, options) {
     return a;
 }
 
-export async function enrichDisplayMonsterDescriptionCard (match, options) {
+export async function enrichDisplayMonsterDescriptionCard (match, _options) {
     const monster = await DoD_Utility.findMonster(match[1]);
     const monsterName = match[2] ?? monster?.name;
-    const skipImage = options?.skipImage || false;
     const table = monster?.system.attackTable ? fromUuidSync(monster.system.attackTable) : null;
-    const tableName = table?.name;
 
     const a = document.createElement("div");
     if (monster) {
@@ -141,10 +139,10 @@ export async function enrichDisplayMonsterDescriptionCard (match, options) {
     return a;
 }
 
-export async function enrichDisplayMonsterDescription (match, options) {
+export async function enrichDisplayMonsterDescription (match, _options) {
     const monster = await DoD_Utility.findMonster(match[1]);
     const monsterName = match[2] ?? monster?.name;
-    
+
     const a = document.createElement("div");
     if (monster) {
         let html = `
@@ -165,9 +163,9 @@ export async function enrichDisplayMonsterDescription (match, options) {
     return a;
 }
 
-export async function enrichDisplayNpc(match, options) {
+export async function enrichDisplayNpc(match, _options) {
     return enrichDisplayNpcCard(match, {skipDescription: false});
-}  
+}
 export async function enrichDisplayNpcCard(match, options) {
     const npc = await DoD_Utility.getActorFromUUID(match[1]);
     const npcName = match[2] ?? npc?.name;
@@ -179,7 +177,7 @@ export async function enrichDisplayNpcCard(match, options) {
             <div class="npc-title">@UUID[${npc.uuid}]{${npcName}}</div>`;
         if (!skipDescription) {
             html += `${npc.system.description}`;
-        }        
+        }
         html += `
             <table>
                 <tr><td>
@@ -187,20 +185,20 @@ export async function enrichDisplayNpcCard(match, options) {
                     <div class="flexrow">
                         <div><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}:&nbsp</b>${npc.system.movement}</div>`
 
-        if (npc.getDamageBonus("str") != "") {
+        if (npc.getDamageBonus("str") !== "") {
             html += `<div><b>${game.i18n.localize("DoD.ui.character-sheet.damageBonusSTR")}:&nbsp</b><span style="text-transform:uppercase">${npc.getDamageBonus("str")}</span></div>`;
         }
-        if (npc.getDamageBonus("agl") != "") {
+        if (npc.getDamageBonus("agl") !== "") {
             html += `<div><b>${game.i18n.localize("DoD.ui.character-sheet.damageBonusAGL")}:&nbsp</b><span style="text-transform:uppercase">${npc.getDamageBonus("agl")}</span></div>`;
         }
-        
+
         html += `
                     </div>
                 </td></tr>
                 <tr><td>
                     <div class="flexrow">
                         <div><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}:&nbsp</b>${npc.system.hitPoints.max}</div>`;
-        
+
         if (npc.hasAbilities || npc.hasSpells || npc.system.willPoints.max > 0) {
             html += `<div><b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:&nbsp</b>${npc.system.willPoints.max}</div>`;
         }
@@ -213,9 +211,9 @@ export async function enrichDisplayNpcCard(match, options) {
         // Only show skills if there is no weapon equipped using that skill
         const equippedWeapons = npc.getEquippedWeapons();
         const skills = npc.system.trainedSkills.filter(s => {
-            if (s.system.skillType != "weapon") return true;
-            if (equippedWeapons.find(w => w.system.skill.name == s.name) != null) return false;
-            return true;
+            if (s.system.skillType !== "weapon") return true;
+            return equippedWeapons.find(w => w.system.skill.name === s.name) == null;
+
         });
         if (skills.length > 0) {
             skills.sort(DoD_Utility.nameSorter);
@@ -231,11 +229,11 @@ export async function enrichDisplayNpcCard(match, options) {
                         </span></div>
                     </div>
                 </td></tr>`
-        }                
+        }
 
-        // Abilities        
+        // Abilities
         if (npc.hasAbilities) {
-            let abilities = npc.items.filter(i => i.type == "ability").sort(DoD_Utility.nameSorter);
+            let abilities = npc.items.filter(i => i.type === "ability").sort(DoD_Utility.nameSorter);
             // Format duplicate abilities
             let formattedAbilities = [];
             for (let i=0, j; i < abilities.length; i=j) {
@@ -250,7 +248,7 @@ export async function enrichDisplayNpcCard(match, options) {
                 }
                 // Push first unique ability. Add ability count in parenthesis (if multiple)
                 formattedAbilities.push({
-                    name: count == 1 ? abilities[i].name : abilities[i].name + " (" + count + ")"
+                    name: count === 1 ? abilities[i].name : abilities[i].name + " (" + count + ")"
                 });
             }
             abilities = formattedAbilities;
@@ -267,11 +265,11 @@ export async function enrichDisplayNpcCard(match, options) {
                         </span></div>
                     </div>
                 </td></tr>`
-        }                
-        
+        }
+
         // Spells
         if (npc.hasSpells) {
-            const spells = npc.items.filter(i => i.type == "spell");
+            const spells = npc.items.filter(i => i.type === "spell");
             html += `
                 <tr><td>
                     <div class="flexrow list-row">
@@ -284,7 +282,7 @@ export async function enrichDisplayNpcCard(match, options) {
                         </span></div>
                     </div>
                 </td></tr>`
-        }                
+        }
 
         // Weapons
         if (equippedWeapons.length > 0) {
@@ -300,7 +298,7 @@ export async function enrichDisplayNpcCard(match, options) {
                         </span></div>
                     </div>
                 </td></tr>`
-        }                
+        }
 
         // Armor
         let armor = "";
@@ -341,7 +339,7 @@ export async function enrichDisplayNpcCard(match, options) {
     return a;
 }
 
-export async function enrichDisplayNpcDescription (match, options) {
+export async function enrichDisplayNpcDescription (match, _options) {
     const npc = await DoD_Utility.getActorFromUUID(match[1]);
     const npcName = match[2] ?? npc?.name;
     const a = document.createElement("div");
@@ -359,7 +357,7 @@ export async function enrichDisplayNpcDescription (match, options) {
 }
 
 
-export async function enrichDisplaySkill (match, options) {
+export async function enrichDisplaySkill (match, _options) {
     const skill = fromUuidSync(match[1]);
     const skillName = match[2] ?? skill?.name;
     const a = document.createElement("div");
@@ -380,7 +378,7 @@ export async function enrichDisplaySkill (match, options) {
     return a;
 }
 
-export async function enrichDisplaySpell (match, options) {
+export async function enrichDisplaySpell (match, _options) {
     const spell = fromUuidSync(match[1]);
     const spellName = match[2] ?? spell?.name;
     const a = document.createElement("div");
@@ -403,14 +401,14 @@ export async function enrichDisplaySpell (match, options) {
                 range = `${spell.system.range} ${game.i18n.localize("DoD.unit.meterPlural")} (${game.i18n.localize("DoD.spellRangeTypes.sphere")})`;
                 break;
         }
-        
+
         let html = `
         <div class="display-spell">
             <h4>@UUID[${match[1]}]{${spell.name}}</h4>
             <ul>
             <li><b>${game.i18n.localize("DoD.spell.rank")}: </b><span>${spell.system.rank}</span>
-            <li><b>${game.i18n.localize("DoD.spell.prerequisite")}: </b><span>${spell.system.prerequisite != "" ? spell.system.prerequisite : "-"}</span>
-            <li><b>${game.i18n.localize("DoD.spell.requirement")}: </b><span>${spell.system.requirement != "" ? spell.system.requirement : "-"}</span>
+            <li><b>${game.i18n.localize("DoD.spell.prerequisite")}: </b><span>${spell.system.prerequisite !== "" ? spell.system.prerequisite : "-"}</span>
+            <li><b>${game.i18n.localize("DoD.spell.requirement")}: </b><span>${spell.system.requirement !== "" ? spell.system.requirement : "-"}</span>
             <li><b>${game.i18n.localize("DoD.spell.castingTime")}: </b><span>${game.i18n.localize("DoD.castingTimeTypes." + spell.system.castingTime)}</span>
             <li><b>${game.i18n.localize("DoD.spell.rangeType")}: </b><span>${range}</span>
             <li><b>${game.i18n.localize("DoD.spell.duration")}: </b><span>${game.i18n.localize("DoD.spellDurationTypes." + spell.system.duration)}</span>
@@ -443,7 +441,7 @@ function displayTable(uuid, table, tableName) {
             <th>${game.i18n.localize("DoD.journal.tableResult")}</th>
         </tr>`;
     */
-    
+
     // Rollable table in roll column header
     let html = `
     <table>
@@ -452,17 +450,17 @@ function displayTable(uuid, table, tableName) {
             <th style="text-transform: uppercase;">@Table[${uuid}]{${table.formula}}</th>
             <th>${game.i18n.localize("DoD.journal.tableResult")}</th>
         </tr>`;
-    
+
     for (let result of table.results) {
         html += `
         <tr>
             <td>${result.range[0]}`;
-        if (result.range[1] != result.range[0]) {
+        if (result.range[1] !== result.range[0]) {
             html += ` - ${result.range[1]}`;
         }
-        if (result.documentCollection == "RollTable") {
+        if (result.documentCollection === "RollTable") {
             let subTable = DoD_Utility.findTable(result.text);
-            if (subTable?.uuid != table.uuid) {
+            if (subTable?.uuid !== table.uuid) {
                 let subTableName = result.text;
                 if(subTableName.startsWith(table.name)) {
                     subTableName = subTableName.slice(table.name.length);
@@ -472,16 +470,16 @@ function displayTable(uuid, table, tableName) {
                 }
                 html += `</td>
                     <td>${subTable?.description} @DisplayTable[RollTable.${result.documentId}]{${subTableName}}</td>
-                </tr>`;    
+                </tr>`;
             } else {
                 html += `</td>
                     <td>${result.text}</td>
-                </tr>`;    
+                </tr>`;
             }
-        } else if (result.documentCollection == "Item") {
+        } else if (result.documentCollection === "Item") {
             html += `</td>
                 <td>@UUID[Item.${result.documentId}]{${result.text}}</td>
-            </tr>`;    
+            </tr>`;
         } else {
             html += `</td>
                 <td>${result.text}</td>
@@ -492,7 +490,7 @@ function displayTable(uuid, table, tableName) {
     return html;
 }
 
-export async function enrichDisplayTable (match, options) {
+export async function enrichDisplayTable (match, _options) {
     const table = DoD_Utility.findTable(match[1]);
     const tableName = match[2] ?? table?.name;
     const a = document.createElement("div");
@@ -510,11 +508,11 @@ export async function enrichDisplayTable (match, options) {
     return a;
 }
 
-export async function enrichDisplayTrick(match, options) {
+export async function enrichDisplayTrick(match, _options) {
     const spell = fromUuidSync(match[1]);
     const spellName = match[2] ?? spell?.name;
     const a = document.createElement("div");
-    if (spell) {               
+    if (spell) {
         let html = `
         <div class="display-spell">
             <h4>@UUID[${match[1]}]{${spellName}}</h4>
@@ -531,7 +529,7 @@ export async function enrichDisplayTrick(match, options) {
     return a;
 }
 
-export async function enrichGearTable(match, options) {
+export async function enrichGearTable(match, _options) {
     const type = match[1];
     const name = match[2];
     const content = match[3];
@@ -539,7 +537,7 @@ export async function enrichGearTable(match, options) {
     const div = document.createElement("div");
     div.classList.add("display-table");
     div.classList.add("gear-table");
-    
+
     // Table and caption
     let html = `
         <table>
@@ -589,7 +587,7 @@ export async function enrichGearTable(match, options) {
                 <th>${game.i18n.localize("DoD.gear.effect")}</th>
             </tr>`;
             break;
-            
+
         case "melee":
         case "ranged":
                     html += `
@@ -606,8 +604,8 @@ export async function enrichGearTable(match, options) {
             </tr>`;
             break;
     }
-    
-    
+
+
     // Gear
     const regexp = /@Gear\[(.+?)\](?:{(.+?)})?/gm;
     const matches = content.matchAll(regexp);
@@ -662,29 +660,31 @@ export async function enrichGearTable(match, options) {
 
             case "melee":
             case "ranged":
-                let range = item.system.range.toString() ?? "";
-                range = range.replace("@str", game.i18n.localize("DoD.attributes.str"));
-
-                html += `
-                <tr>
-                    <td style="text-align:left">@UUID[${uuid}]{${itemName}}</td>
-                    <td style="text-align:center">${game.i18n.localize(item.system.grip.label)}</td>
-                    <td style="text-align:center">${item.system.str > 0 ? item.system.str : "-"}</td>
-                    <td style="text-align:center">${range}</td>
-                    <td style="text-align:center">${item.system.damage}</td>
-                    <td style="text-align:center">${item.system.durability > 0 ? item.system.durability : "-"}</td>
-                    <td style="text-align:center">${item.system.cost != "" ? item.system.cost : "-"}</td>
-                    <td>${game.i18n.localize("DoD.supplyTypes." + item.system.supply)}</td>
-                    <td class="comma-list">`;
-                
-                for (const feature of item.system.features) {
-                    html += `<span>${game.i18n.localize("DoD.weaponFeatureTypes." + feature)}</span>`;
+                {
+                    let range = item.system.range.toString() ?? "";
+                    range = range.replace("@str", game.i18n.localize("DoD.attributes.str"));
+    
+                    html += `
+                    <tr>
+                        <td style="text-align:left">@UUID[${uuid}]{${itemName}}</td>
+                        <td style="text-align:center">${game.i18n.localize(item.system.grip.label)}</td>
+                        <td style="text-align:center">${item.system.str > 0 ? item.system.str : "-"}</td>
+                        <td style="text-align:center">${range}</td>
+                        <td style="text-align:center">${item.system.damage}</td>
+                        <td style="text-align:center">${item.system.durability > 0 ? item.system.durability : "-"}</td>
+                        <td style="text-align:center">${item.system.cost !== "" ? item.system.cost : "-"}</td>
+                        <td>${game.i18n.localize("DoD.supplyTypes." + item.system.supply)}</td>
+                        <td class="comma-list">`;
+    
+                    for (const feature of item.system.features) {
+                        html += `<span>${game.i18n.localize("DoD.weaponFeatureTypes." + feature)}</span>`;
+                    }
+    
+                    html += `
+                        </td>
+                    </tr>`;
+                    break;    
                 }
-
-                html += `
-                    </td>
-                </tr>`;
-                break;
         }
     }
 

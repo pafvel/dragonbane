@@ -1,87 +1,90 @@
 {
-    "id": "dragonbane",
-    "name": "dragonbane",
-    "title": "Dragonbane / Drakar och Demoner",
-    "description": "System for playing Dragonbane / Drakar och Demoner",
-    "version": "1.8.2",
-    "compatibility": {
-      "minimum": "10",
-      "verified": "11"
+  "id": "dragonbane",
+  "title": "Dragonbane / Drakar och Demoner",
+  "description": "System for playing Dragonbane / Drakar och Demoner",
+  "version": "1.8.3",
+  "compatibility": {
+    "minimum": "10",
+    "verified": "12"
+  },
+  "authors": [
+    {
+      "name": "PatrikP",
+      "url": "www.patrikp.com",
+      "email": "patrik@patrikp.com"
+    }
+  ],
+  "esmodules": [
+    "dragonbane.js"
+  ],
+  "styles": [
+    "dragonbane.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
     },
-    "authors": [
-      {
-        "name": "PatrikP",
-        "url": "www.patrikp.com",
-        "email": "patrik@patrikp.com"
-      }
-    ],
-    "esmodules": [
-      "dragonbane.js"
-    ],
-    "styles": [
-      "dragonbane.css"
-    ],
-    "languages": [
-      {
-        "lang": "en",
-        "name": "English",
-        "path": "lang/en.json"
-      },
-      {
-        "lang": "sv",
-        "name": "Svenska",
-        "path": "lang/sv.json"
-      },
-      {
-        "lang": "pt-BR",
-        "name": "Português Brasileiro",
-        "path": "lang/pt-br.json"
-      },
-      {
-        "lang": "de",
-        "name": "Deutsch",
-        "path": "lang/de.json"
-      },
-      {
-          "lang": "it",
-          "name": "Italiano",
-          "path": "lang/it.json"
-      },
-      {
-        "lang": "es",
-        "name": "Español",
-        "path": "lang/es.json"
-      },
-      {
-        "lang": "zh-tw",
-        "name": "正體中文",
-        "path": "lang/zh-tw.json"
-      },
-      {
-        "lang": "fr",
-        "name": "Français",
-        "path": "lang/fr.json"
-      }
-    ],
-    "packs": [
-        {
-            "name": "dragonbane-drakar-och-demoner-system",
-            "label": "Dragonbane / Drakar och Demoner",
-            "path": "packs/dragonbane-drakar-och-demoner-system.db",
-            "type": "Adventure",
-            "module": "Dragonbane",
-            "private": false,
-            "system": "dragonbane",
-            "banner": "./systems/dragonbane/art/dragonbane-banner.webp"
-        }
-    ],
-    "initiative": "1d20",
-    "gridDistance": 2,
-    "gridUnits": "m",
-    "primaryTokenAttribute": "hitPoints",
-    "secondaryTokenAttribute": "willPoints",
-    "background": "systems/dragonbane/art/dragonbane-splash.webp",
-    "url": "https://github.com/pafvel/dragonbane",
-    "manifest": "https://github.com/pafvel/dragonbane/releases/latest/download/system.json",
-    "download": "https://github.com/pafvel/dragonbane/releases/download/v1.8.2/dragonbane.zip"
-  }
+    {
+      "lang": "sv",
+      "name": "Svenska",
+      "path": "lang/sv.json"
+    },
+    {
+      "lang": "pt-BR",
+      "name": "Português Brasileiro",
+      "path": "lang/pt-br.json"
+    },
+    {
+      "lang": "de",
+      "name": "Deutsch",
+      "path": "lang/de.json"
+    },
+    {
+      "lang": "it",
+      "name": "Italiano",
+      "path": "lang/it.json"
+    },
+    {
+      "lang": "es",
+      "name": "Español",
+      "path": "lang/es.json"
+    },
+    {
+      "lang": "zh-tw",
+      "name": "正體中文",
+      "path": "lang/zh-tw.json"
+    },
+    {
+      "lang": "fr",
+      "name": "Français",
+      "path": "lang/fr.json"
+    }
+  ],
+  "packs": [
+    {
+      "name": "dragonbane-drakar-och-demoner-system",
+      "label": "Dragonbane / Drakar och Demoner",
+      "path": "packs/dragonbane-drakar-och-demoner-system.db",
+      "type": "Adventure",
+      "module": "Dragonbane",
+      "private": false,
+      "system": "dragonbane",
+      "banner": "./systems/dragonbane/art/dragonbane-banner.webp"
+    }
+  ],
+  "initiative": "1d20",
+  "grid": {
+    "distance": 2,
+    "units": "m"
+  },
+  "gridDistance": 2,
+  "gridUnits": "m",
+  "primaryTokenAttribute": "hitPoints",
+  "secondaryTokenAttribute": "willPoints",
+  "background": "systems/dragonbane/art/dragonbane-splash.webp",
+  "url": "https://github.com/pafvel/dragonbane",
+  "manifest": "https://github.com/pafvel/dragonbane/releases/latest/download/system.json",
+  "download": "https://github.com/pafvel/dragonbane/releases/download/v1.8.3/dragonbane.zip"
+}
