@@ -356,7 +356,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".condition-panel").click(this._onConditionClick.bind(this));
             html.find(".rollable-skill").on("click contextmenu", this._onSkillRoll.bind(this));
             html.find(".rollable-damage").on("click contextmenu", this._onDamageRoll.bind(this));
-            html.find(".use-item").on("click contextmenu", this._onUseItem.bind(this));
+            html.find(".use-ability").on("click contextmenu", this._onUseAbility.bind(this));
             html.find("[data-action='roll-advancement']").on("click contextmenu", this._onAdvancementRoll.bind(this))
             html.find(".mark-advancement").on("click", this._onMarkAdvancement.bind(this))
 
@@ -406,7 +406,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         } else if (this.object.isObserver) {
             // Enable right-clicking skills & items
             html.find(".rollable-skill").on("contextmenu", this._onSkillRoll.bind(this));
-            html.find(".use-item").on("contextmenu", this._onUseItem.bind(this));
+            html.find(".use-ability").on("contextmenu", this._onUseAbility.bind(this));
 
             // Enable dragging items from this sheet
             let handler = this._onDragStart.bind(this);
@@ -1208,7 +1208,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         }
     }
 
-    async _onUseItem(event) {
+    async _onUseAbility(event) {
         event.preventDefault();
 
         const itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
@@ -1216,63 +1216,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         if (event.type === "click") { // left click - use item
             if (item.type === "ability") {
-                let wp = Number(item.system.wp);
-                wp = isNaN(wp) ? 0 : wp;
-
-                const use = await new Promise(
-                    resolve => {
-                        const data = {
-                            title: game.i18n.localize("DoD.ui.dialog.useAbility"),
-                            content: wp > 0 ? game.i18n.format("DoD.ui.dialog.useAbilityWithWP", {wp: wp, ability: item.name}) : game.i18n.format("DoD.ui.dialog.useAbilityWithoutWP", {ability: item.name}),
-                            buttons: {
-                                ok: {
-                                    icon: '<i class="fas fa-check"></i>',
-                                    label: game.i18n.localize("Yes"),
-                                    callback: () => resolve(true)
-                                },
-                                cancel: {
-                                    icon: '<i class="fas fa-times"></i>',
-                                    label: game.i18n.localize("No"),
-                                    callback: _html => resolve(false)
-                                }
-                            },
-                            default: "cancel",
-                            close: () => resolve(false)
-                        };
-                        new Dialog(data, null).render(true);
-                    }
-                );
-                if (use) {
-                    let content;
-                    if (wp > 0) {
-                        const oldWP = this.actor.system.willPoints.value;
-                        if (oldWP < wp) {
-                            DoD_Utility.WARNING("DoD.WARNING.notEnoughWPForAbility");
-                            return;
-                        } else {
-                            const newWP = oldWP - wp;
-                            this.actor.update({"system.willPoints.value": newWP});
-                            content = `
-                            <div>
-                                <p class="ability-use" data-ability-id="${item.id}">${game.i18n.format("DoD.ability.useWithWP", {actor: this.actor.name, uuid: item.uuid, wp: wp})}</p>
-                            </div>
-                            <div class="damage-details permission-observer" data-actor-id="${this.actor.uuid}">
-                                <i class="fa-solid fa-circle-info"></i>
-                                <div class="expandable" style="text-align: left; margin-left: 0.5em">
-                                    <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${oldWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>
-                                </div>
-                            </div>`;
-                        }
-                    } else {
-                        content = `
-                        <div>
-                            <p class="ability-use" data-ability-id="${item.id}">${game.i18n.format("DoD.ability.useWithoutWP", {actor: this.actor.name, uuid: item.uuid})}</p>
-                        </div>`;
-                }
-                    ChatMessage.create({
-                        content: content,
-                    });
-                }
+                this.actor.useAbility(item);
             }
         } else { // right click - edit item
             item.sheet.render(true);

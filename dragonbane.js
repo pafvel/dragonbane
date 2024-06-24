@@ -9,6 +9,18 @@ import * as DoDMacro from "./modules/macro.js";
 import * as DoDMigrate from "./modules/migrate.js";
 import DoD_Utility from "./modules/utility.js";
 import DoDRoll from "./modules/roll.js";
+import DoDCharacterData from "./modules/data/actors/characterData.js";
+import DoDNPCData from "./modules/data/actors/NPCData.js";
+import DoDMonsterData from "./modules/data/actors/monsterData.js";
+import DoDAbilityData from "./modules/data/items/abilityData.js";
+import DoDArmorData from "./modules/data/items/armorData.js";
+import DoDHelmetData from "./modules/data/items/helmetData.js";
+import DoDItemData from "./modules/data/items/itemData.js";
+import DoDKinData from "./modules/data/items/kinData.js";
+import DoDProfessionData from "./modules/data/items/professionData.js";
+import DoDSkillData from "./modules/data/items/skillData.js";
+import DoDWeaponData from "./modules/data/items/weaponData.js";
+import DoDSpellData from "./modules/data/items/spellData.js";
 
 function registerHandlebarsHelpers() {
 
@@ -256,6 +268,24 @@ Hooks.once("init", function () {
 
     CONFIG.Dice.rolls.unshift(DoDRoll);
 
+    foundry.utils.mergeObject(CONFIG.Actor.dataModels, {
+        character: DoDCharacterData,
+        monster:DoDMonsterData,
+        npc: DoDNPCData
+    });
+
+    foundry.utils.mergeObject(CONFIG.Item.dataModels, {
+        ability: DoDAbilityData,
+        armor: DoDArmorData,
+        helmet: DoDHelmetData,
+        item: DoDItemData,
+        kin: DoDKinData,
+        profession: DoDProfessionData,
+        skill: DoDSkillData,
+        spell: DoDSpellData,
+        weapon: DoDWeaponData
+    });
+
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("DoD", DoDCharacterSheet, { makeDefault: true });
 
@@ -275,6 +305,7 @@ Hooks.once("init", function () {
         //updateImages: DoDMigrate.updateItemImagesOnActors,
         rollAttribute: DoDMacro.rollAttributeMacro,
         rollItem: DoDMacro.rollItemMacro,
+        useItem: DoDMacro.useItemMacro,
         monsterAttack: DoDMacro.monsterAttackMacro,
         monsterDefend: DoDMacro.monsterDefendMacro,
         drawTreasureCards: DoD_Utility.drawTreasureCards

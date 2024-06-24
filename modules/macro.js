@@ -14,8 +14,8 @@ export async function createItemMacro(data, slot) {
     let document = await fromUuid(data.uuid);
     let macro = null;
     let command = "";
-    if (document.type === "skill" || document.type === "spell" || document.type === "weapon") {
-        command = `game.dragonbane.rollItem("${document.name}", "${document.type}");`;
+    if (document.type === "skill" || document.type === "spell" || document.type === "weapon" || document.type === "ability") {
+        command = `game.dragonbane.useItem("${document.name}", "${document.type}");`;
     } else {
         command = `Hotbar.toggleDocumentSheet("${document.uuid}");`;
     }
@@ -45,7 +45,11 @@ export async function rollAttributeMacro(actor, attributeName, options = {}) {
     return await test.roll();
 }
 
-export function rollItemMacro(itemName, itemType, options = {}) {
+export function rollItemMacro(itemName, itemType = "", options = {}) {
+    return useItemMacro(itemName, itemType, options);
+}
+
+export function useItemMacro(itemName, itemType = "", options = {}) {
     const speaker = ChatMessage.getSpeaker();
     let actor;
     if (speaker.token) actor = game.actors.tokens[speaker.token];
@@ -59,7 +63,7 @@ export function rollItemMacro(itemName, itemType, options = {}) {
         options.targets = Array.from(game.user.targets);
     }
 
-    const items = actor.items.filter(i => i.name === itemName && i.type === itemType);
+    const items = itemType != "" ? actor.items.filter(i => i.name === itemName && i.type === itemType) : actor.items.filter(i => i.name === itemName);
 
     if (items.length > 1) {
         DoD_Utility.WARNING("DoD.WARNING.macroMultipleItems", {item: itemName, type: itemType});
@@ -77,6 +81,8 @@ export function rollItemMacro(itemName, itemType, options = {}) {
             return new DoDWeaponTest(actor, item, options).roll();
         case "spell":
             return new DoDSpellTest(actor, item, options).roll();
+        case "ability":
+            return actor.useAbility(item);
         default:
             break;
     }
