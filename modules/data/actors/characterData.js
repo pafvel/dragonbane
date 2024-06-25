@@ -6,6 +6,13 @@ export default class DoDCharacterData extends DoDCharacterBaseData {
         return this.mergeSchema(super.defineSchema(), {
             attributes: new fields.SchemaField({
                 str: new fields.SchemaField({
+                    base: new fields.NumberField({
+                        required: true,
+                        nullable: false,
+                        integer: true,
+                        initial: 10,
+                        min: 0
+                    }),
                     value: new fields.NumberField({
                         required: true,
                         nullable: false,
@@ -15,6 +22,13 @@ export default class DoDCharacterData extends DoDCharacterBaseData {
                     })
                 }),
                 con: new fields.SchemaField({
+                    base: new fields.NumberField({
+                        required: true,
+                        nullable: false,
+                        integer: true,
+                        initial: 10,
+                        min: 0
+                    }),
                     value: new fields.NumberField({
                         required: true,
                         nullable: false,
@@ -24,6 +38,13 @@ export default class DoDCharacterData extends DoDCharacterBaseData {
                     })
                 }),
                 agl: new fields.SchemaField({
+                    base: new fields.NumberField({
+                        required: true,
+                        nullable: false,
+                        integer: true,
+                        initial: 10,
+                        min: 0
+                    }),
                     value: new fields.NumberField({
                         required: true,
                         nullable: false,
@@ -33,6 +54,13 @@ export default class DoDCharacterData extends DoDCharacterBaseData {
                     })
                 }),
                 int: new fields.SchemaField({
+                    base: new fields.NumberField({
+                        required: true,
+                        nullable: false,
+                        integer: true,
+                        initial: 10,
+                        min: 0
+                    }),
                     value: new fields.NumberField({
                         required: true,
                         nullable: false,
@@ -42,6 +70,13 @@ export default class DoDCharacterData extends DoDCharacterBaseData {
                     })
                 }),
                 wil: new fields.SchemaField({
+                    base: new fields.NumberField({
+                        required: true,
+                        nullable: false,
+                        integer: true,
+                        initial: 10,
+                        min: 0
+                    }),
                     value: new fields.NumberField({
                         required: true,
                         nullable: false,
@@ -51,6 +86,13 @@ export default class DoDCharacterData extends DoDCharacterBaseData {
                     })
                 }),
                 cha: new fields.SchemaField({
+                    base: new fields.NumberField({
+                        required: true,
+                        nullable: false,
+                        integer: true,
+                        initial: 10,
+                        min: 0
+                    }),
                     value: new fields.NumberField({
                         required: true,
                         nullable: false,
@@ -92,6 +134,13 @@ export default class DoDCharacterData extends DoDCharacterBaseData {
     };
 
     static migrateData(source) {
+        
+        for (const attribute in source.attributes) {
+            if (!("base" in source.attributes[attribute]) && ("value" in source.attributes[attribute])) {
+                source.attributes[attribute].base = source.attributes[attribute].value;
+            }
+        }
+        
         return super.migrateData(source);
     }
 }

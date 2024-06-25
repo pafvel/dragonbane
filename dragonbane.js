@@ -268,7 +268,8 @@ Hooks.once("init", function () {
     CONFIG.Actor.documentClass = DoDActor;
     CONFIG.Item.documentClass = DoDItem;
     CONFIG.ActiveEffect.documentClass = DoDActiveEffect;
-
+    CONFIG.ActiveEffect.legacyTransferral = false;
+    
     CONFIG.Dice.rolls.unshift(DoDRoll);
 
     foundry.utils.mergeObject(CONFIG.Actor.dataModels, {

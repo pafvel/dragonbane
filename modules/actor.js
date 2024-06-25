@@ -195,6 +195,11 @@ export class DoDActor extends Actor {
     prepareBaseData() {
         super.prepareBaseData();
 
+        // reset attributes
+        for (const attribute in this.system.attributes) {
+            this.system.attributes[attribute].value = this.system.attributes[attribute].base;
+        }
+
         // prepare skills
         this._prepareSkills();
         this._prepareBaseChances();
@@ -337,12 +342,14 @@ export class DoDActor extends Actor {
             const modes = CONST.ACTIVE_EFFECT_MODES;
             switch ( modifier.mode ) {
                 case modes.ADD:
-                    let i = parseInt(modifier.value);
-                    if(!isNaN(i)) {
-                        index += i;
+                    {
+                        let i = parseInt(modifier.value);
+                        if(!isNaN(i)) {
+                            index += i;
+                        }
+                        index = DoD_Utility.clamp(index, 0, entries.length);
+                        value = entries[index][1];    
                     }
-                    index = DoD_Utility.clamp(index, 0, entries.length);
-                    value = entries[index][1];
                     break;
                 case modes.OVERRIDE:
                     value = DoD.dice[String(modifier.value).toLowerCase()];
@@ -350,18 +357,22 @@ export class DoDActor extends Actor {
                     index = DoD_Utility.clamp(index, 0, entries.length);
                     return index > 0 ? value : DoD.dice.none;
                 case modes.UPGRADE:
-                    let upgradeValue = DoD.dice[String(modifier.value).toLowerCase()];
-                    let upgradeIndex = entries.findIndex(e => e[1] == upgradeValue);
-                    index = Math.max(index, upgradeIndex);
-                    index = DoD_Utility.clamp(index, 0, entries.length);
-                    value = entries[index][1];
+                    {
+                        let upgradeValue = DoD.dice[String(modifier.value).toLowerCase()];
+                        let upgradeIndex = entries.findIndex(e => e[1] == upgradeValue);
+                        index = Math.max(index, upgradeIndex);
+                        index = DoD_Utility.clamp(index, 0, entries.length);
+                        value = entries[index][1];
+                    }
                     break;
                 case modes.DOWNGRADE:
-                    let downgradeValue = DoD.dice[String(modifier.value).toLowerCase()];
-                    let downgradeIndex = entries.findIndex(e => e[1] == downgradeValue);
-                    index = Math.min(index, downgradeIndex);
-                    index = DoD_Utility.clamp(index, 0, entries.length);
-                    value = entries[index][1];
+                    {
+                        let downgradeValue = DoD.dice[String(modifier.value).toLowerCase()];
+                        let downgradeIndex = entries.findIndex(e => e[1] == downgradeValue);
+                        index = Math.min(index, downgradeIndex);
+                        index = DoD_Utility.clamp(index, 0, entries.length);
+                        value = entries[index][1];
+                    }
                     break;
                 case modes.MULTIPLY:
                 default:

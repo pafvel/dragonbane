@@ -73,10 +73,10 @@ function migrateSceneData(scene) {
         const t = token.toJSON();
         if (!t.actorLink) {
             // Migrate unlinked actors
-            const actorData = duplicate(t.actorData);
+            const actorData = duplicate(t.delta);
             actorData.type = token.actor?.type;
             const actorUpdate = migrateActorData(actorData);
-            foundry.utils.mergeObject(t.actorData, actorUpdate);
+            foundry.utils.mergeObject(t.delta, actorUpdate);
         }
         tokensUpdate.push(t);
     }

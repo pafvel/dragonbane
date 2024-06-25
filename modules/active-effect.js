@@ -1,13 +1,13 @@
 export default class DoDActiveEffect extends ActiveEffect {
     apply(actor, change) {
         let key = change.key.split(".");
-        if (key[0] == "damageBonus") {
-            if (key[1] == "agl") {
+        if (key[0] === "damageBonus") {
+            if (key[1] === "agl") {
                 if (!actor.system.damageBonus.aglModifiers) {
                     actor.system.damageBonus.aglModifiers = [];
                 }
                 actor.system.damageBonus.aglModifiers.push(change);
-            } else if (key[1] == "str") {
+            } else if (key[1] === "str") {
                 if (!actor.system.damageBonus.strModifiers) {
                     actor.system.damageBonus.strModifiers = [];
                 }
@@ -15,7 +15,7 @@ export default class DoDActiveEffect extends ActiveEffect {
             }
             return;
         }
-        if(actor.type == "npc" && key[0] == "system" && key[1] == "attributes") {
+        if(actor.type === "npc" && key[0] === "system" && key[1] === "attributes") {
             return;
         }
         super.apply(actor, change);
