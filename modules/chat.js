@@ -333,10 +333,8 @@ async function onWeaponDamageRoll(event) {
     const weaponDamage = weapon ? weapon.system.damage : null;
     const skill = weapon ? actor.findSkill(weapon.system.skill.name) : null;
     const attribute = skill ? skill.system.attribute : null;
-    let damageBonus = attribute ? actor.system.damageBonus[attribute] : 0;
-    if (damageBonus === "" && attribute === "agl") {
-        damageBonus = actor.system.damageBonus["agl"];
-    }
+    let damageBonus = attribute ? actor.system.damageBonus[attribute]?.value : 0;
+
     if (weapon.hasWeaponFeature("noDamageBonus")) {
         damageBonus = 0;
     }

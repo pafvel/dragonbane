@@ -13,13 +13,29 @@ export default class DoDCharacterBaseData extends DoDActorBaseData {
                 max: new fields.NumberField({ required: true, initial: 10 })
             }),
             damageBonus: new fields.SchemaField({
-                agl: new fields.StringField({ required: true, initial: "" }),
-                str: new fields.StringField({ required: true, initial: "" })
+                agl: new fields.SchemaField({
+                    base: new fields.StringField({ required: true, initial: "" }),
+                    value: new fields.StringField({ required: true, initial: "" })
+                }),
+                str: new fields.SchemaField({
+                    base: new fields.StringField({ required: true, initial: "" }),
+                    value: new fields.StringField({ required: true, initial: "" })
+                }),
             }),
         });
     };
 
     static migrateData(source) {
+
+        if (typeof source.damageBonus?.str === "string") {
+            const damageBonus = source.damageBonus.str;
+            source.damageBonus.str = {base: String(damageBonus), value: String(damageBonus)};
+        }
+        if (typeof source.damageBonus?.agl === "string") {
+            const damageBonus = source.damageBonus.agl;
+            source.damageBonus.agl = {base: String(damageBonus), value: String(damageBonus)};
+        }
+
         return super.migrateData(source);
     }
 }

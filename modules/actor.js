@@ -264,10 +264,6 @@ export class DoDActor extends Actor {
     }
 
     _prepareMonsterData() {
-        if (this.system.damageBonus) {
-            this.system.damageBonus.agl = 0;
-            this.system.damageBonus.str = 0;
-        }
     }
 
     _prepareEquippedItems() {
@@ -393,19 +389,21 @@ export class DoDActor extends Actor {
 
         // Damage Bonus AGL
         let damageBonusAgl = DoD_Utility.calculateDamageBonus(this.system.attributes.agl.value);
+        this.system.damageBonus.agl.base = game.i18n.localize(damageBonusAgl);
         if (this.system.damageBonus.aglModifiers) {
             damageBonusAgl = DoDActor.#modifyDamageBonus(damageBonusAgl, this.system.damageBonus.aglModifiers)
             delete this.system.damageBonus.aglModifiers;
         }
-        this.system.damageBonus.agl = game.i18n.localize(damageBonusAgl);
+        this.system.damageBonus.agl.value = game.i18n.localize(damageBonusAgl);
 
         // Damage Bonus STR
         let damageBonusStr = DoD_Utility.calculateDamageBonus(this.system.attributes.str.value);
+        this.system.damageBonus.str.base = game.i18n.localize(damageBonusStr);
         if (this.system.damageBonus.strModifiers) {
             damageBonusStr = DoDActor.#modifyDamageBonus(damageBonusStr, this.system.damageBonus.strModifiers)
             delete this.system.damageBonus.strModifiers;
         }
-        this.system.damageBonus.str = game.i18n.localize(damageBonusStr);
+        this.system.damageBonus.str.value = game.i18n.localize(damageBonusStr);
 
         // Will Points
         let maxWillPoints = this.system.attributes.wil.value;
@@ -464,16 +462,20 @@ export class DoDActor extends Actor {
     _prepareNpcStats() {
         // Damage Bonus AGL
         if (this.system.damageBonus.aglModifiers) {
-            let upgradeValue = DoD.dice[String(this.system.damageBonus.agl).toLowerCase()];
+            let upgradeValue = DoD.dice[String(this.system.damageBonus.agl.base).toLowerCase()];
             let damageBonusAgl = DoDActor.#modifyDamageBonus(upgradeValue, this.system.damageBonus.aglModifiers)
-            this.system.damageBonus.agl = game.i18n.localize(damageBonusAgl);
+            this.system.damageBonus.agl.value = game.i18n.localize(damageBonusAgl);
+        } else {
+            this.system.damageBonus.agl.value = this.system.damageBonus.agl.base;
         }
 
         // Damage Bonus STR
         if (this.system.damageBonus.strModifiers) {
-            let upgradeValue = DoD.dice[String(this.system.damageBonus.str).toLowerCase()];
+            let upgradeValue = DoD.dice[String(this.system.damageBonus.str.base).toLowerCase()];
             let damageBonusStr = DoDActor.#modifyDamageBonus(upgradeValue, this.system.damageBonus.strModifiers)
-            this.system.damageBonus.str = game.i18n.localize(damageBonusStr);
+            this.system.damageBonus.str.value = game.i18n.localize(damageBonusStr);
+        } else {
+            this.system.damageBonus.str.value = this.system.damageBonus.str.base;
         }
     }
 
@@ -562,8 +564,8 @@ export class DoDActor extends Actor {
     }
 
     getDamageBonus(attribute) {
-        if (attribute && this.system.damageBonus && this.system.damageBonus[attribute] !== "none") {
-            return this.system.damageBonus[attribute];
+        if (attribute && this.system.damageBonus && this.system.damageBonus[attribute] && this.system.damageBonus[attribute].value !== "none") {
+            return this.system.damageBonus[attribute].value;
         } else {
             return "";
         }

@@ -15,16 +15,16 @@
                             
                             <th>{{localize "DoD.ui.character-sheet.damageBonusSTR"}}</th>
                             <td>
-                                <select name="system.damageBonus.str">
-                                    {{selectOptions config.dice selected=system.damageBonus.str localize=true}}
+                                <select name="system.damageBonus.str.base" title="{{system.damageBonus.str.value}}">
+                                    {{selectOptions config.dice selected=system.damageBonus.str.base localize=true}}
                                 </select>
                             </td>
                             </tr>
                         <tr>
                             <th>{{localize "DoD.ui.character-sheet.damageBonusAGL"}}</th>
                             <td>
-                                <select name="system.damageBonus.agl">
-                                    {{selectOptions config.dice selected=system.damageBonus.agl localize=true}}
+                                <select name="system.damageBonus.agl.base" title="{{system.damageBonus.agl.value}}">
+                                    {{selectOptions config.dice selected=system.damageBonus.agl.base localize=true}}
                                 </select>
                             </td>
                         </tr>

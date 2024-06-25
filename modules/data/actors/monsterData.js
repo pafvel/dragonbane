@@ -13,6 +13,9 @@ export default class DoDMonsterData extends DoDActorBaseData {
     };
 
     static migrateData(source) {
+        if (source.damageBonus) {
+            delete source.damageBonus;
+        }
         return super.migrateData(source);
     }
 }
