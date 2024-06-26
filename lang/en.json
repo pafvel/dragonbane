@@ -74,7 +74,7 @@
             "stabTooltip": "Perform an attack inflicting piercing damage",
             "slash": "Slash",
             "slashTooltip": "Perform an attack inflicting slashing damage",
-            "weakpoint": "Find weak point",
+            "weakpoint": "Find weak spot",
             "weakpointTooltip": "Stab and try to find a gap in the enemy's armor\nThis attack adds one Bane to the roll",
             "disarm": "Disarm",
             "disarmTooltip": "Disarm the enemy instead of inflicting damage",
