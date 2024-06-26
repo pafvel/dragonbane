@@ -4,27 +4,27 @@
         <h1><input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'Name' }}"/></h1>
     </header>
     <div class="sheet-content">
-        {{!-- Profession --}}
-        <table class="sheet-table">
-            <tr>
-                <th>{{localize "DoD.profession.key-attribute"}}</th>
-                <th>{{localize "DoD.ui.character-sheet.professionAbilities"}}</th>
-            </tr>
-            <tr class="sheet-table-data" data-item-id="{{ability.id}}">
-                <td><input name="system.attribute" type="text" value="{{system.attribute}}" /></td>
-                <td><input class="edit-profession-abilities" name="system.abilities" type="text" value="{{system.abilities}}" /></td>
-            </tr>
-        </table>
+        <div style="padding-left: 8px; padding-right: 8px">
+            <table class="item-table">
+                <tr>
+                    <th>{{localize "DoD.profession.key-attribute"}}</th>
+                    <th>{{localize "DoD.ui.character-sheet.professionAbilities"}}</th>
+                </tr>
+                <tr data-item-id="{{ability.id}}">
+                    <td><input name="system.attribute" type="text" value="{{system.attribute}}" /></td>
+                    <td><input class="edit-profession-abilities" name="system.abilities" type="text" value="{{system.abilities}}" /></td>
+                </tr>
+            </table>
 
-        <table class="sheet-table">
-            <tr>
-                <th>{{localize "DoD.profession.skills"}}</th>
-            </tr>
-            <tr class="sheet-table-data" data-item-id="{{ability.id}}">
-                <td><input name="system.skills" type="text" value="{{system.skills}}" /></td>
-            </tr>
-        </table>
-
+            <table class="item-table">
+                <tr>
+                    <th>{{localize "DoD.profession.skills"}}</th>
+                </tr>
+                <tr data-item-id="{{ability.id}}">
+                    <td><input name="system.skills" type="text" value="{{system.skills}}" /></td>
+                </tr>
+            </table>
+        </div>
         {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
     </div>
 </form>

@@ -1,0 +1,31 @@
+<div class="tab" data-group="primary" data-tab="effects">
+    <table class="sheet-table effects-list">
+
+        <tr class="sheet-table-header">
+            <th></th>
+            <th class="thumbnail-header">
+                <button type="button" class="effect-control" data-action="create" title="{{localize "DoD.ui.character-sheet.create-effect"}}">
+                    <a  class="fas fa-plus"></a>
+                </button>                        
+            </th>
+            <th class="text-header">Effect</th>
+            <th></th>
+        </tr>
+        {{#each effects as |effect|}}
+        <tr class="sheet-table-data effect" data-effect-id="{{effect.id}}">
+            <td></td>
+            <td class="thumbnail-data">
+                <img src="{{effect.img}}" title="{{effect.name}}"/>
+            </td>
+            <td class="text-data">
+                <a class="effect-control" data-action="edit">{{effect.name}}</a>
+            </td>
+            <td class="icon-data">
+                <a class="effect-control" data-action="delete">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+</div>

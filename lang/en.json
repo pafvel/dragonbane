@@ -513,6 +513,11 @@
                 "monsterAttackTitle": "Select Monster Attack"
             }
         },
+        "item-sheet": {
+            "details": "Details",
+            "description": "Description",
+            "effects": "Effects"
+        },
         "INFO": {
             "monsterAttackUpdated": "Updated monster attack table for {actor}.",
             "professionSkillAdded": "Added Profession Skill: {skill}"

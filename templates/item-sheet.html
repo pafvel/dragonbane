@@ -8,21 +8,16 @@
         {{!-- Sheet Tab Navigation --}}
         <nav class="sheet-tabs tabs" data-group="primary">
           {{!-- Default tab is specified in item-sheet.js --}}
-          <a class="item" data-tab="description">description</a>
-          <a class="item" data-tab="details">details</a>
-          <a class="item" data-tab="effects">effects</a>
+          <a class="item" data-tab="details">{{localize "DoD.item-sheet.details"}}</a>
+          <a class="item" data-tab="description">{{localize "DoD.item-sheet.description"}}</a>
+          <a class="item" data-tab="effects">{{localize "DoD.item-sheet.effects"}}</a>
         </nav>
 
         {{!-- Sheet Body --}}
         <section class="sheet-body" style="height: 100%">
-            {{!-- Description Tab --}}
-            <div class="tab" data-group="primary" data-tab="description" style="height: 100%">
-                {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
-            </div>
-            
             {{!-- Details Tab --}}
             <div class="tab" data-group="primary" data-tab="details">
-                <table>
+                <table class="item-table">
                     <tr>
                         <th>{{localize "DoD.gear.weight"}}</th>
                         <th>{{localize "DoD.gear.quantity"}}</th>
@@ -45,7 +40,7 @@
                         </td>
                     </tr>
                 </table>
-                <table>
+                <table class="item-table">
                     <tr>
                         <th>{{localize "DoD.gear.type"}}</th>
                         <th>{{localize "DoD.gear.memento"}}</th>
@@ -61,7 +56,7 @@
                         </td>
                     </tr>
                 </table>
-                <table>
+                <table class="item-table">
                     <tr>
                         <th>{{localize "DoD.ui.dialog.boons"}}</th>
                         <th>{{localize "DoD.ui.dialog.banes"}}</th>
@@ -76,34 +71,13 @@
                 </table>                
             </div>
 
-            {{!-- Effects Tab --}}
-            <div class="tab" data-group="primary" data-tab="effects">
-                <table class="item-list effects-list">
-                    <tr>
-                        <th>Effect</th>
-                        <th>
-                            <a class="effect-control" data-action="create">
-                                <i class="fas fa-plus"></i>
-                            </a>
-                        </th>
-                    </tr>
-                    {{#each effects as |effect|}}
-                    <tr class="item effect" data-effect-id="{{effect.id}}">
-                        <td class="item-name effect-name">
-                            <h4>{{effect.name}}</h4>
-                        </td>
-                        <td class="effect-controls">
-                            <a class="effect-control" data-action="edit" title="{{localize 'DoD.EffectEdit'}}">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                            <a class="effect-control" data-action="delete" title="{{localize 'DoD.EffectDelete'}}">
-                                <i class="fas fa-trash"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    {{/each}}
-                </table>
+            {{!-- Description Tab --}}
+            <div class="tab" data-group="primary" data-tab="description" style="height: 100%">
+                {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
             </div>
+            
+            {{!-- Effects Tab --}}
+            {{> "systems/dragonbane/templates/partials/item-sheet-effects.hbs" }}
         </section>
     </div>
 </form>

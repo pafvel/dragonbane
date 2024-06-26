@@ -4,7 +4,8 @@
         <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
     </header>
     <div class="sheet-content">
-        <table>
+        <div style="padding-left: 8px; padding-right: 8px">
+        <table class="item-table">
             <tr>
                 <th>
                     <label title="{{localize "DoD.skill.typeTooltip"}}">
@@ -38,7 +39,7 @@
                 </td>
             </tr>
         </table>
-
+        </div>
         {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
     </div>
 </form>

@@ -80,6 +80,7 @@ async function preloadHandlebarsTemplates() {
         "templates/dice/roll.html",
         "systems/dragonbane/templates/partials/roll.hbs",
         "systems/dragonbane/templates/partials/roll-no-total.hbs",
+        "systems/dragonbane/templates/partials/item-sheet-effects.hbs",
     ];
 
     return loadTemplates(templatePaths);

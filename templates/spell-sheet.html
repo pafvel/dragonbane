@@ -4,7 +4,8 @@
         <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
     </header>
     <div class="sheet-content">
-        <table>
+        <div style="padding-left: 8px; padding-right: 8px">
+            <table class="item-table">
             <tr>
                 <th>{{localize "DoD.spell.school"}}</th>
                 <th>{{localize "DoD.spell.rank"}}</th>
@@ -27,7 +28,7 @@
             </tr>
         </table>
 
-        <table>
+        <table class="item-table">
             <tr>
                 <th>{{localize "DoD.spell.castingTime"}}</th>
                 <th>{{localize "DoD.spell.rangeType"}}</th>
@@ -60,7 +61,7 @@
             </tr>
         </table>
 
-        <table>
+        <table class="item-table">
             <tr>
                 <th>{{localize "DoD.spell.damage"}}</th>
                 <th>{{localize "DoD.spell.damagePerPowerlevel"}}</th>
@@ -75,7 +76,7 @@
                 </td>    
             </tr>
         </table>
-
+        </div>
         {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
     </div>
 </form>

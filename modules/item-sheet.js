@@ -7,7 +7,7 @@ export default class DoDItemSheet extends ItemSheet {
             width: 560,
             dragDrop: [{ dragSelector: null, dropSelector: null}],
             classes: ["DoD", "sheet", "item"],
-            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
+            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "details" }]
         });
     }
 

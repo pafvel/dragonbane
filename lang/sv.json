@@ -517,6 +517,11 @@
                 "monsterAttackTitle": "Välj monsterattack"
            }
         },
+        "item-sheet": {
+            "details": "Detaljer",
+            "description": "Beskrivning",
+            "effects": "Effekter"
+        },
         "INFO": {
             "monsterAttackUpdated": "Uppdaterade monsterattacker för {actor}.",
             "professionSkillAdded": "Lade till Yrkesfärdighet: {skill}"

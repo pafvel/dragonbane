@@ -29,15 +29,24 @@
   border-color: transparent;
 }
 .DoD.sheet.item .sheet-content {
-  padding: 8px;
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-image: url("art/ui/separator-horizontal.webp"), none;
   background-position: center top, center bottom;
   background-repeat: repeat-x, repeat-x;
   background-size: auto 12px, auto 12px;
   padding-bottom: 0px;
+}
+.DoD.sheet.item .sheet-content .sheet-tabs {
+  width: 100%;
+  background-image: url("art/ui/table-row-banner.webp");
+  background-repeat: repeat-x;
+  background-clip: border-box;
+  background-size: auto 100%;
+  border-color: transparent;
+}
+.DoD.sheet.item .sheet-content .sheet-body {
+  padding: 0px 8px 0px 8px;
 }
 .DoD.sheet.item .sheet-content input:invalid {
   color: red;
@@ -45,19 +54,19 @@
 .DoD.sheet.item .sheet-content input:valid {
   color: black;
 }
-.DoD.sheet.item .sheet-content table {
+.DoD.sheet.item .sheet-content .item-table {
   border: 0px;
   background: none;
 }
-.DoD.sheet.item .sheet-content table th {
+.DoD.sheet.item .sheet-content .item-table th {
   text-align: center;
   padding-left: 12px;
   padding-right: 0px;
 }
-.DoD.sheet.item .sheet-content table th:last-child {
+.DoD.sheet.item .sheet-content .item-table th:last-child {
   padding-right: 20px;
 }
-.DoD.sheet.item .sheet-content table tr:nth-child(1n+2) {
+.DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) {
   background-image: url("art/ui/table-row-left.webp"), url("art/ui/table-row-right.webp"), url("art/ui/table-row-banner.webp");
   background-position: left center, right center, center center;
   background-repeat: no-repeat, no-repeat, repeat-x;
@@ -66,25 +75,25 @@
   border-left: 8px transparent;
   border-right: 8px transparent;
 }
-.DoD.sheet.item .sheet-content table tr:nth-child(1n+2) td {
+.DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) td {
   text-align: center;
   padding-left: 16px;
   padding-right: 0px;
 }
-.DoD.sheet.item .sheet-content table tr:nth-child(1n+2) td input {
+.DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) td input {
   border: 0px;
   background: transparent;
 }
-.DoD.sheet.item .sheet-content table tr:nth-child(1n+2) td:nth-child(1n+2) {
+.DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) td:nth-child(1n+2) {
   background-image: url("art/ui/table-row-separator.webp");
   background-position: left center;
   background-repeat: no-repeat;
   background-size: contain;
 }
-.DoD.sheet.item .sheet-content table tr:nth-child(1n+2) td:last-child {
+.DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) td:last-child {
   padding-right: 20px;
 }
-.DoD.sheet.item .sheet-content table tr:nth-child(1n+2) select {
+.DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) select {
   border: 0px;
 }
 .DoD.sheet.item .sheet-content .editor {
