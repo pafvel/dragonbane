@@ -5,7 +5,10 @@ export default class DoDActorBaseData extends DragonbaneDataModel {
         const fields = foundry.data.fields;
         return this.mergeSchema(super.defineSchema(), {
             description: new fields.StringField({ required: true, initial: "" }),
-            movement: new fields.NumberField({ required: true, initial: 10 }),
+            movement: new fields.SchemaField({
+                base: new fields.NumberField({ required: true, initial: 10 }),
+                value: new fields.NumberField({ required: true, initial: 10 })
+            }),
             hitPoints: new fields.SchemaField({
                 value: new fields.NumberField({ required: true, initial: 10 }),
                 max: new fields.NumberField({ required: true, initial: 10 }),
@@ -20,6 +23,9 @@ export default class DoDActorBaseData extends DragonbaneDataModel {
     };
 
     static migrateData(source) {
+        if ("movement" in source && !(typeof source.movement === "object")) {
+            source.movement = {base: Number(source.movement), value: Number(source.movement)};
+        }
         return super.migrateData(source);
     }
 }
