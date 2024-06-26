@@ -10,6 +10,7 @@ export default class DoDCharacterBaseData extends DoDActorBaseData {
             motivation: new fields.StringField({ required: true, initial: "" }),
             willPoints: new fields.SchemaField({
                 value: new fields.NumberField({ required: true, initial: 10 }),
+                base: new fields.NumberField({ required: true, initial: 10 }),
                 max: new fields.NumberField({ required: true, initial: 10 })
             }),
             damageBonus: new fields.SchemaField({
@@ -35,7 +36,9 @@ export default class DoDCharacterBaseData extends DoDActorBaseData {
             const damageBonus = source.damageBonus.agl;
             source.damageBonus.agl = {base: String(damageBonus), value: String(damageBonus)};
         }
-
+        if (source.willPoints && ("max" in source.willPoints) && !("base" in source.willPoints)) {
+            source.willPoints.base = source.willPoints.max;
+        }
         return super.migrateData(source);
     }
 }

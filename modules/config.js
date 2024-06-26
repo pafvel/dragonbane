@@ -139,4 +139,6 @@ DoD.activeEffectChanges = {
     "damageBonus.agl" : "DoD.ui.character-sheet.damageBonusAGL",
     "damageBonus.str" : "DoD.ui.character-sheet.damageBonusSTR",
     "system.movement.value" : "DoD.ui.character-sheet.movement",
+    "system.hitPoints.max" : "DoD.secondaryAttributeTypes.hitPoints",
+    "system.willPoints.max" : "DoD.secondaryAttributeTypes.willPoints",
 };

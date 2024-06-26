@@ -17,6 +17,10 @@ export default class DoDActiveEffect extends ActiveEffect {
             DoDActiveEffect.deferChange(actor, change);
         } else if (key[0] === "system" && key[1] === "movement") {
             DoDActiveEffect.deferChange(actor, change);
+        } else if (key[0] === "system" && key[1] === "hitPoints") {
+            DoDActiveEffect.deferChange(actor, change);
+        } else if (key[0] === "system" && key[1] === "willPoints") {
+            DoDActiveEffect.deferChange(actor, change);
         } else if(key[0] === "system" && key[1] === "attributes") {
             if (actor.system.attributes) {
                 return super.apply(actor, change);
@@ -59,7 +63,7 @@ export default class DoDActiveEffect extends ActiveEffect {
 
         if (key[0] === "damageBonus") {
             this.applyDamageBonusChange(actor, change, key[1]);
-        } else if (key[0] === "system" && key[1] === "movement") {
+        } else if (key[0] === "system") {
             super.apply(actor, change);
         }
     }

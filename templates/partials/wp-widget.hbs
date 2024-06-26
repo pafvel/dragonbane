@@ -13,7 +13,7 @@
             {{#if actor.isCharacter}}
             <label class="resource-points-max-label will-points-max-label" title="{{localize "DoD.ui.character-sheet.willPointsMax"}}">{{maxWP}}</label>
             {{else}}
-            <input class="resource-points-max-label will-points-max-label" title="{{localize "DoD.ui.character-sheet.willPointsMax"}}" type="number" value="{{system.willPoints.max}}" data-dtype="Number" />
+            <input class="resource-points-max-label will-points-max-label" title="{{localize "DoD.ui.character-sheet.willPointsMax"}}" type="number" value="{{system.willPoints.base}}" data-dtype="Number" />
             {{/if}}
         </div>
         {{#if largeWP}}

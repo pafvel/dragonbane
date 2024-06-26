@@ -934,11 +934,11 @@ export default class DoDCharacterSheet extends ActorSheet {
         event.currentTarget.blur();
 
         const newMax = Math.max(1, Math.floor(event.currentTarget.value));
-        const currentDamage = Math.max(0, this.actor.system.hitPoints.max - this.actor.system.hitPoints.value);
+        const currentDamage = Math.max(0, this.actor.system.hitPoints.base - this.actor.system.hitPoints.value);
         const newValue = Math.max(0, newMax - currentDamage);
 
         return this.actor.update({
-            ["system.hitPoints.max"]: newMax,
+            ["system.hitPoints.base"]: newMax,
             ["system.hitPoints.value"]: newValue
         });
     }
@@ -948,6 +948,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         const newValue = DoD_Utility.clamp(event.currentTarget.value, 0, this.actor.system.hitPoints.max);
 
+        event.currentTarget.value = newValue;
         return this.actor.update({
             ["system.hitPoints.value"]: newValue
         });

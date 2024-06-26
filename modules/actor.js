@@ -245,6 +245,12 @@ export class DoDActor extends Actor {
                 break;
         }
         DoDActiveEffect.applyDeferredChanges(this);
+        if (this.system.hitPoints?.value) {
+            this.system.hitPoints.value = DoD_Utility.clamp(this.system.hitPoints.value, 0, this.system.hitPoints.max);
+        }
+        if (this.system.willPoints?.value) {
+            this.system.willPoints.value = DoD_Utility.clamp(this.system.willPoints.value, 0, this.system.willPoints.max);
+        }
     }
 
     getSkill(name) {
@@ -384,6 +390,7 @@ export class DoDActor extends Actor {
                 damage = maxHitPoints;
             }
             this.update({
+                ["system.hitPoints.base"]: maxHitPoints,
                 ["system.hitPoints.max"]: maxHitPoints,
                 ["system.hitPoints.value"]: maxHitPoints - damage });
         }
@@ -400,6 +407,9 @@ export class DoDActor extends Actor {
         // Movement
         const moveBonuses = this.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "movement").length;
         this.system.movement.value = this.system.movement.base + 2 * moveBonuses;
+
+        // Hit Points
+        this.system.hitPoints.max = this.system.hitPoints.base;
     }
 
     _prepareCharacterBaseStats() {
