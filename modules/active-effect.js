@@ -25,6 +25,10 @@ export default class DoDActiveEffect extends ActiveEffect {
             if (actor.system.attributes) {
                 return super.apply(actor, change);
             }
+        } else if(key[0] === "system" && key[1] === "ferocity") {
+            if (actor.system.ferocity) {
+                return super.apply(actor, change);
+            }
         }
     }
 

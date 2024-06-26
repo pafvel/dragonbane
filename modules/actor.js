@@ -199,12 +199,17 @@ export class DoDActor extends Actor {
         for (const attribute in this.system.attributes) {
             this.system.attributes[attribute].value = this.system.attributes[attribute].base;
         }
+        // reset ferocity
+        if (this.system.ferocity) {
+            this.system.ferocity.value = this.system.ferocity.base;
+        }
 
         // prepare skills
         this._prepareSkills();
         this._prepareBaseChances();
         this._prepareKin();
         this._prepareProfession();
+
     }
 
     prepareEmbeddedDocuments() {
@@ -274,6 +279,12 @@ export class DoDActor extends Actor {
 
     _prepareMonsterData() {
         this._prepareActorStats();
+
+        // Clean ferocity value after active effects
+        const ferocityValueField = this.system.schema.getField("ferocity.value");
+        if (ferocityValueField) {
+            this.system.ferocity.value = ferocityValueField.clean(this.system.ferocity.value);
+        }
     }
 
     _prepareEquippedItems() {

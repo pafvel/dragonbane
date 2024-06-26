@@ -73,7 +73,7 @@ export async function enrichDisplayMonster (match, options) {
             <div class="monster-title">@UUID[${monster.uuid}]{${monsterName}}</div>
             <table>
                 <tr>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity.value}</td>
                     <td><b>${game.i18n.localize("DoD.ui.character-sheet.size")}: </b>${game.i18n.localize("DoD.sizeTypes." + monster.system.size)}</td>
                 </tr>
                 <tr>
@@ -112,7 +112,7 @@ export async function enrichDisplayMonsterDescriptionCard (match, _options) {
             </div>
             <table>
                 <tr>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity.value}</td>
                     <td><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}: </b>${monster.system.movement.value}</td>
                 </tr>
                 <tr>

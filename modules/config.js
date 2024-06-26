@@ -136,9 +136,10 @@ DoD.activeEffectChanges = {
     "system.attributes.int.value" : "DoD.attributes.int",
     "system.attributes.wil.value" : "DoD.attributes.wil",
     "system.attributes.cha.value" : "DoD.attributes.cha",
-    "damageBonus.agl" : "DoD.ui.character-sheet.damageBonusAGL",
-    "damageBonus.str" : "DoD.ui.character-sheet.damageBonusSTR",
-    "system.movement.value" : "DoD.ui.character-sheet.movement",
     "system.hitPoints.max" : "DoD.secondaryAttributeTypes.hitPoints",
     "system.willPoints.max" : "DoD.secondaryAttributeTypes.willPoints",
+    "system.movement.value" : "DoD.ui.character-sheet.movement",
+    "damageBonus.agl" : "DoD.ui.character-sheet.damageBonusAGL",
+    "damageBonus.str" : "DoD.ui.character-sheet.damageBonusSTR",
+    "system.ferocity.value" : "DoD.ui.character-sheet.ferocity",
 };

@@ -269,7 +269,7 @@ Hooks.once("init", function () {
     CONFIG.Item.documentClass = DoDItem;
     CONFIG.ActiveEffect.documentClass = DoDActiveEffect;
     CONFIG.ActiveEffect.legacyTransferral = false;
-    
+
     CONFIG.Dice.rolls.unshift(DoDRoll);
 
     foundry.utils.mergeObject(CONFIG.Actor.dataModels, {
@@ -509,13 +509,19 @@ Hooks.once('diceSoNiceReady', (dice3d) => {
 
 // Set up Year Zero Engine Combat
 Hooks.on("yzeCombatReady", () => {
-    if (game.settings.get("dragonbane", "configuredYzeCombat")) return;
+    if (game.settings.get("dragonbane", "configuredYzeCombat")) {
+        // Update to match new data model
+        if (game.settings.get("yze-combat", "actorSpeedAttribute") === "system.ferocity") {
+            game.settings.set("yze-combat", "actorSpeedAttribute", "system.ferocity.value");    
+        }
+        return;
+    }
     try {
         game.settings.set("yze-combat", "resetEachRound", true);
         game.settings.set("yze-combat", "slowAndFastActions", false);
         game.settings.set("yze-combat", "initAutoDraw", true);
         game.settings.set("yze-combat", "duplicateCombatantOnCombatStart", true);
-        game.settings.set("yze-combat", "actorSpeedAttribute", "system.ferocity");
+        game.settings.set("yze-combat", "actorSpeedAttribute", "system.ferocity.value");
         game.settings.set("dragonbane", "configuredYzeCombat", true);
     } catch (e) {
         console.error("Dragonbane: Could not configure YZE Combat. Try refreshing the page");
