@@ -75,6 +75,7 @@
           {{/if}}
           <a class="item" data-tab="inventory">{{localize "DoD.ui.character-sheet.inventory"}}</a>
           <a class="item" data-tab="background">{{localize "DoD.ui.character-sheet.background"}}</a>
+          <a class="item" data-tab="injuries">{{localize "DoD.ui.character-sheet.injuries"}}</a>
         </nav>
 
         {{!-- Sheet Body --}}
@@ -93,6 +94,9 @@
 
             {{!-- Background Tab --}}
             {{> "systems/dragonbane/templates/partials/character-sheet-background.hbs" }}
+
+            {{!-- Injuries Tab --}}
+            {{> "systems/dragonbane/templates/partials/character-sheet-injuries.hbs" }}
         </section>
     </div>
 </form>

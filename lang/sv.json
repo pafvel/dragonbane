@@ -9,6 +9,7 @@
         "TypeAbility": "Förmåga",
         "TypeArmor": "Rustning",
         "TypeHelmet": "Hjälm",
+        "TypeInjury": "Skada",
         "TypeItem": "Föremål",
         "TypeKin": "Släkte",
         "TypeProfession": "Yrke",
@@ -26,6 +27,7 @@
             "ability": "Förmåga",
             "armor": "Rustning",
             "helmet": "Hjälm",
+            "injury": "Skada",
             "item": "Föremål",
             "kin": "Släkte",
             "profession": "Yrke",
@@ -175,6 +177,9 @@
         "helmet": {
             "new": "Ny hjälm",
             "rating": "Skyddsvärde"
+        },
+        "injury": {
+            "healingTime": "Läkningstid"
         },
         "itemTypes": {
             "item": "Föremål",
@@ -398,6 +403,7 @@
                 "hitPointsCurrent": "Antal KP kvar",
                 "hitPointsMax": "Maximalt antal KP",
                 "hp": "KP",
+                "injuries": "Skador",
                 "inventory": "Packning",
                 "kin": "Släkte",
                 "kinAbilities": "Släktesförmågor",

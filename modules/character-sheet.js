@@ -124,6 +124,8 @@ export default class DoDCharacterSheet extends ActorSheet {
         const schools = {};
         const inventory = [];
         const equippedWeapons = [];
+        const injuries = [];
+
         let equippedArmor = sheetData.actor.system.equippedArmor;
         let equippedHelmet = sheetData.actor.system.equippedHelmet;
         let memento = null;
@@ -191,7 +193,6 @@ export default class DoDCharacterSheet extends ActorSheet {
                         item.update({ ["system.memento"]: false});
                     }
                 }
-
                 continue;
             }
 
@@ -216,7 +217,6 @@ export default class DoDCharacterSheet extends ActorSheet {
                 }
                 continue;
             }
-
             if (item.type === "item") {
                 if (item.system.weight === 0 && item.system.type !== "backpack" && this.actor.type === "character")
                 {
@@ -224,7 +224,9 @@ export default class DoDCharacterSheet extends ActorSheet {
                     continue;
                 }
                 inventory.push(item);
-
+            }
+            if (item.type === "injury") {
+                injuries.push(item);
             }
         }
 
@@ -280,6 +282,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.smallItems = smallItems?.sort(DoD_Utility.itemSorter);
         sheetData.memento = memento;
         sheetData.canEquipItems = game.settings.get("dragonbane", "canEquipItems");
+        sheetData.injuries = injuries?.sort(DoD_Utility.nameSorter);
 
         this._updateEncumbrance(sheetData);
 

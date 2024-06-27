@@ -15,6 +15,7 @@ import DoDMonsterData from "./modules/data/actors/monsterData.js";
 import DoDAbilityData from "./modules/data/items/abilityData.js";
 import DoDArmorData from "./modules/data/items/armorData.js";
 import DoDHelmetData from "./modules/data/items/helmetData.js";
+import DoDInjuryData from "./modules/data/items/injuryData.js";
 import DoDItemData from "./modules/data/items/itemData.js";
 import DoDKinData from "./modules/data/items/kinData.js";
 import DoDProfessionData from "./modules/data/items/professionData.js";
@@ -62,25 +63,26 @@ function registerHandlebarsHelpers() {
 
 async function preloadHandlebarsTemplates() {
     const templatePaths = [
-        "systems/dragonbane/templates/partials/hp-widget.hbs",
-        "systems/dragonbane/templates/partials/wp-widget.hbs",
+        "systems/dragonbane/templates/partials/character-sheet-abilities.hbs",
+        "systems/dragonbane/templates/partials/character-sheet-background.hbs",
+        "systems/dragonbane/templates/partials/character-sheet-injuries.hbs",
+        "systems/dragonbane/templates/partials/character-sheet-inventory.hbs",
         "systems/dragonbane/templates/partials/character-sheet-main.hbs",
         "systems/dragonbane/templates/partials/character-sheet-skills.hbs",
-        "systems/dragonbane/templates/partials/character-sheet-abilities.hbs",
-        "systems/dragonbane/templates/partials/character-sheet-inventory.hbs",
-        "systems/dragonbane/templates/partials/character-sheet-background.hbs",
+        "systems/dragonbane/templates/partials/damage-roll-message.hbs",
+        "systems/dragonbane/templates/partials/hp-widget.hbs",
+        "systems/dragonbane/templates/partials/item-sheet-effects.hbs",
         "systems/dragonbane/templates/partials/monster-sheet-main.hbs",
+        "systems/dragonbane/templates/partials/npc-sheet-inventory.hbs",
         "systems/dragonbane/templates/partials/npc-sheet-main.hbs",
         "systems/dragonbane/templates/partials/npc-sheet-skills.hbs",
-        "systems/dragonbane/templates/partials/npc-sheet-inventory.hbs",
         "systems/dragonbane/templates/partials/roll-dialog.hbs",
-        "systems/dragonbane/templates/partials/damage-roll-message.hbs",
+        "systems/dragonbane/templates/partials/roll-no-total.hbs",
+        "systems/dragonbane/templates/partials/roll.hbs",
         "systems/dragonbane/templates/partials/skill-roll-message.hbs",
         "systems/dragonbane/templates/partials/tooltip.hbs",
+        "systems/dragonbane/templates/partials/wp-widget.hbs",
         "templates/dice/roll.html",
-        "systems/dragonbane/templates/partials/roll.hbs",
-        "systems/dragonbane/templates/partials/roll-no-total.hbs",
-        "systems/dragonbane/templates/partials/item-sheet-effects.hbs",
     ];
 
     return loadTemplates(templatePaths);
@@ -284,6 +286,7 @@ Hooks.once("init", function () {
         armor: DoDArmorData,
         helmet: DoDHelmetData,
         item: DoDItemData,
+        injury: DoDInjuryData,
         kin: DoDKinData,
         profession: DoDProfessionData,
         skill: DoDSkillData,

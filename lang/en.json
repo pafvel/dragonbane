@@ -8,6 +8,7 @@
         "TypeAbility": "Ability",
         "TypeArmor": "Armor",
         "TypeHelmet": "Helmet",
+        "TypeInjury": "Injury",
         "TypeItem": "Item",
         "TypeKin": "Kin",
         "TypeProfession": "Profession",
@@ -25,6 +26,7 @@
             "ability": "Ability",
             "armor": "Armor",
             "helmet": "Helmet",
+            "injury": "Injury",
             "item": "Item",
             "kin": "Kin",
             "profession": "Profession",
@@ -174,6 +176,9 @@
         "helmet": {
             "new": "New Helmet",
             "rating": "Armor Rating"
+        },
+        "injury": {
+            "healingTime": "Healing Time"
         },
         "itemTypes": {
             "item": "Item",
@@ -396,6 +401,7 @@
                 "hitPointsCurrent": "Current HP",
                 "hitPointsMax": "Maximum HP",
                 "hp": "HP",
+                "injuries": "Injuries",
                 "inventory": "Inventory",
                 "kin": "Kin",
                 "kinAbilities": "Kin Abilities",

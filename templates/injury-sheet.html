@@ -1,0 +1,46 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+        <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+    </header>
+    <div class="sheet-content">
+        {{!-- Sheet Tab Navigation --}}
+        <nav class="sheet-tabs tabs" data-group="primary">
+          {{!-- Default tab is specified in item-sheet.js --}}
+          <a class="item" data-tab="details">{{localize "DoD.item-sheet.details"}}</a>
+          <a class="item" data-tab="description">{{localize "DoD.item-sheet.description"}}</a>
+          <a class="item" data-tab="effects">{{localize "DoD.item-sheet.effects"}}</a>
+        </nav>
+
+
+        {{!-- Sheet Body --}}
+        <section class="sheet-body" style="height: 100%">
+            {{!-- Details Tab --}}
+            <div class="tab" data-group="primary" data-tab="details">
+
+                <table class="item-table">
+                    <tr>
+                        <th>{{localize "DoD.injury.healingTime"}}</th>
+                        <th>{{localize "DoD.ui.dialog.banes"}}</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input name="system.healingTime" type="text" value="{{system.healingTime}}" />
+                        </td>
+                        <td>
+                            <input name="system.banes" type="text" value="{{system.banes}}" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            {{!-- Description Tab --}}
+            <div class="tab" data-group="primary" data-tab="description" style="height: 100%">
+                {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
+            </div>
+
+            {{!-- Effects Tab --}}
+            {{> "systems/dragonbane/templates/partials/item-sheet-effects.hbs" }}
+             
+    </div>
+</form>
