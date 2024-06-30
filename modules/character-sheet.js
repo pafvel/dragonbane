@@ -282,7 +282,13 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.smallItems = smallItems?.sort(DoD_Utility.itemSorter);
         sheetData.memento = memento;
         sheetData.canEquipItems = game.settings.get("dragonbane", "canEquipItems");
-        sheetData.injuries = injuries?.sort(DoD_Utility.nameSorter);
+
+        sheetData.injuries = injuries?.sort(DoD_Utility.itemSorter);
+        for (let injury of injuries) {
+            let tooltip = DoD_Utility.removeEnrichment(injury.system.description);
+            injury.system.tooltip = DoD_Utility.removeHtml(tooltip);
+            injury.system.healingTimeTooltip = isNaN(injury.system.healingTime) ? game.i18n.localize("DoD.injury.rollHealingTime") : game.i18n.localize("DoD.injury.clickHealingTime");
+        }
 
         this._updateEncumbrance(sheetData);
 
@@ -359,6 +365,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".condition-panel").click(this._onConditionClick.bind(this));
             html.find(".rollable-skill").on("click contextmenu", this._onSkillRoll.bind(this));
             html.find(".rollable-damage").on("click contextmenu", this._onDamageRoll.bind(this));
+            html.find(".rollable-healingTime").on("click contextmenu", this._onHealingTimeRoll.bind(this));
             html.find(".use-ability").on("click contextmenu", this._onUseAbility.bind(this));
             html.find("[data-action='roll-advancement']").on("click contextmenu", this._onAdvancementRoll.bind(this))
             html.find(".mark-advancement").on("click", this._onMarkAdvancement.bind(this))
@@ -1065,18 +1072,16 @@ export default class DoDCharacterSheet extends ActorSheet {
         await this.actor.update(newValues);
     }
 
-    async _onItemDelete(event) {
-        event.preventDefault();
-        let element = event.currentTarget;
-        let itemId = element.closest(".sheet-table-data").dataset.itemId;
-        let item = this.actor.items.get(itemId);
+    async _itemDeleteDialog(item, flavor = "") {
+        let content = flavor ? "<p>" + flavor + "</p>" : "";
+        content += game.i18n.format("DoD.ui.dialog.deleteItemContent", {item: item.name});
 
-        const ok = await new Promise(
+        return await new Promise(
             resolve => {
                 const data = {
                     title: game.i18n.format("DoD.ui.dialog.deleteItemTitle",
                         {item: game.i18n.localize("TYPES.Item." + item.type)}),
-                    content: game.i18n.format("DoD.ui.dialog.deleteItemContent", {item: item.name}),
+                    content: content,
                     buttons: {
                         ok: {
                             icon: '<i class="fas fa-check"></i>',
@@ -1095,6 +1100,15 @@ export default class DoDCharacterSheet extends ActorSheet {
                 new Dialog(data, null).render(true);
             }
         );
+    }
+
+    async _onItemDelete(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".sheet-table-data").dataset.itemId;
+        let item = this.actor.items.get(itemId);
+
+        const ok = await this._itemDeleteDialog(item);
         if (!ok) {
             return;
         }
@@ -1268,6 +1282,47 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
         } else { // right click - edit item
             weapon.sheet.render(true);
+        }
+    }
+
+    async _onHealingTimeRoll(event) {
+        event.preventDefault();
+
+        const itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
+        const injury = this.actor.items.get(itemId);
+        const healingTime = injury.system.healingTime;
+
+        if (event.type === "click") { // left click    
+            if (isNaN(healingTime)) {
+                // Roll healing time
+                try {
+                    const roll = await new Roll(healingTime).roll(game.release.generation < 12 ? {async: true} : {});
+                    const flavor = game.i18n.format("DoD.injury.healingTimeRollFlavor", {injury: injury.name, days: roll.total});
+                    await roll.toMessage({
+                        user: game.user.id,
+                        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                        flavor,
+                    });
+                    await injury.update({"system.healingTime": roll.total});
+                } catch {
+                    console.log("invalid formula");    
+                }
+            } else {
+                // reduce healing time
+                const newHealingTime = Math.max(Number(healingTime) - 1, 0);
+                await injury.update({"system.healingTime": newHealingTime});
+                if (newHealingTime === 0) {
+                    const remove = await this._itemDeleteDialog(injury, game.i18n.format("DoD.injury.healingTimeExpired", {injury: injury.name}));
+                    if (remove) {
+                        return await this.actor.deleteEmbeddedDocuments("Item", [injury.id]);
+                    }
+                }
+            }
+        } else { // right click
+            if (!isNaN(healingTime)) {
+                // increase healing time
+                await injury.update({"system.healingTime": Number(healingTime) + 1});
+            }
         }
     }
 

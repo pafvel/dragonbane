@@ -121,7 +121,7 @@ export default class DoDTest {
             if (item.system.banes?.length) {
                 let itemBanes = DoD_Utility.splitAndTrimString(item.system.banes.toLowerCase());
                 if (itemBanes.find(element => element.toLowerCase() === rollTarget || element.toLowerCase() === rollAttribute)) {
-                    let value = !!item.system.worn;
+                    let value = !!item.system.worn || item.type === "injury";
                     banes.push( {source: item.name, value: value});
                 }
             }

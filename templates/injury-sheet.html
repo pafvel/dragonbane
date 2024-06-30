@@ -20,12 +20,12 @@
 
                 <table class="item-table">
                     <tr>
-                        <th>{{localize "DoD.injury.healingTime"}}</th>
+                        <th title="{{localize "DoD.injury.healingTimeTooltip"}}">{{localize "DoD.injury.healingTime"}}</th>
                         <th>{{localize "DoD.ui.dialog.banes"}}</th>
                     </tr>
                     <tr>
                         <td>
-                            <input name="system.healingTime" type="text" value="{{system.healingTime}}" />
+                            <input name="system.healingTime" type="text" value="{{system.healingTime}}" pattern="(\d+)?[dD](\d+)([\+\-]\d+)?|(([\+\-])?\d+)?" />
                         </td>
                         <td>
                             <input name="system.banes" type="text" value="{{system.banes}}" />

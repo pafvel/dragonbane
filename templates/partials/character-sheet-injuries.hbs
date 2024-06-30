@@ -6,8 +6,11 @@
                 <tr class="sheet-table-header">
                     <th></th>
                     <th class="thumbnail-header">{{!-- column for icons --}}&nbsp</th>
-                    <th class="text-header" title="{{localize "DoD.ui.character-sheet.injuriesTooltip"}}">
+                    <th class="text-header">
                         {{localize "DoD.ui.character-sheet.injuries"}}
+                    </th>
+                    <th class="text-header" title="{{localize "DoD.injury.healingTimeTooltip"}}">
+                        {{localize "DoD.injury.healingTime"}}
                     </th>
                     <th>{{!-- column for icons --}}&nbsp</th>
                     <th></th>
@@ -19,7 +22,10 @@
                         <img src="{{injury.img}}" title="{{injury.name}}"/>
                     </td>
                     <td class="text-data">
-                        <a class="item-edit" title="{{injury.system.description}}">{{injury.name}}</a>
+                        <a class="item-edit" title="{{injury.system.tooltip}}">{{injury.name}}</a>
+                    </td>
+                    <td class="text-data">
+                        <a class="rollable-healingTime" title="{{injury.system.healingTimeTooltip}}">{{injury.system.healingTime}}</a>
                     </td>
                     <td class="icon-data">
                         <a class="item-delete" data-type="injury">

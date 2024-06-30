@@ -179,7 +179,12 @@
             "rating": "Skyddsvärde"
         },
         "injury": {
-            "healingTime": "Läkningstid"
+            "healingTime": "Läkningstid",
+            "healingTimeTooltip": "Antal dagar som det tar för skadan att läka",
+            "healingTimeExpired": "<b>{injury}</b> har läkt.",
+            "healingTimeRollFlavor": "Läkningstiden för <b>{injury}</b> är <b>{days}</b> dagar.",
+            "rollHealingTime": "Vänsterklicka för att slå för läkningstiden",
+            "clickHealingTime": "Vänsterklicka för att minska läkningstiden\rHögerklicka för att öka läkningstiden"
         },
         "itemTypes": {
             "item": "Föremål",

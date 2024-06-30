@@ -178,7 +178,12 @@
             "rating": "Armor Rating"
         },
         "injury": {
-            "healingTime": "Healing Time"
+            "healingTime": "Healing Time",
+            "healingTimeTooltip": "The number of days it takes to heal the injury",
+            "healingTimeExpired": "<b>{injury}</b> has healed.",
+            "healingTimeRollFlavor": "Healing time for <b>{injury}</b> is <b>{days}</b> days.",
+            "rollHealingTime": "Left-click to roll healing time",
+            "clickHealingTime": "Left-click to decrease healing time\rRight-click to increase healing time"
         },
         "itemTypes": {
             "item": "Item",
