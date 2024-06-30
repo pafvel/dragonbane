@@ -656,197 +656,28 @@ export default class DoDCharacterSheet extends ActorSheet {
         event.preventDefault();
         event.currentTarget?.blur();
 
-        await this.actor.update({["system.canRestRound"]: false});
-
-        this.actor.system.canRestRound = false;
-
-        const roll = await new Roll("D6").roll(game.release.generation < 12 ? {async: true} : {});
-
-        if (game.dice3d) {
-            // Green for WP
-            roll.dice[0].options.appearance = {
-                name: 'inline green',
-                foreground: '#ffffff',
-                background: '#00a000',
-                edge: '#00a000',
-            };
-        }
-
-
-        const currentWP = this.actor.system.willPoints.value;
-        const maxWP = this.actor.system.willPoints.max;
-        const newWP = Math.min(maxWP, currentWP + roll.total);
-
-        let formula = `
-        <i class="fa-solid fa-circle-info"></i>
-        <div class="permission-observer dice-tooltip" data-actor-id="${this.actor.uuid}" style="text-align: left; margin-left: 0.5em">`;
-        if (newWP !== currentWP) {
-            formula += `<b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${currentWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>`;
-        }
-        formula += "</div>";
-
-        // Render message
-        const context =  {
-            formula: formula,
-            user: game.user.id,
-            tooltip: await roll.getTooltip()
-        };
-        const template = "systems/dragonbane/templates/partials/roll-no-total.hbs";
-        const content = await renderTemplate(template, context);
-        const msg = await roll.toMessage({
-            user: game.user.id,
-            actor: this.actor,
-            flavor: game.i18n.format("DoD.ui.character-sheet.restRound", {actor: this.actor.name, wp: newWP - currentWP}),
-            content: content
-        });
-
-        if (game.dice3d) {
-            game.dice3d.waitFor3DAnimationByMessageID(msg.id).then(
-                () => this.actor.update({["system.willPoints.value"]: newWP })
-            );
-        } else {
-            await this.actor.update({["system.willPoints.value"]: newWP });
-        }
+        await this.actor.restRound();
     }
+
     async _onRestStretch(event) {
         event.preventDefault();
         event.currentTarget?.blur();
 
-        await this.actor.update({["system.canRestStretch"]: false});
-
-        // Make roll
-        const roll = await new Roll(`D6[${game.i18n.localize("DoD.secondaryAttributeTypes.hitPoints")}] + D6[${game.i18n.localize("DoD.secondaryAttributeTypes.willPoints")}]`).roll(game.release.generation < 12 ? {async: true} : {});
-
-        if (game.dice3d) {
-            // Red for HP
-            roll.dice[0].options.appearance = {
-                name: 'inline red',
-                foreground: '#ffffff',
-                background: '#6F0000',
-                edge: '#6F0000',
-            };
-            // Green for WP
-            roll.dice[1].options.appearance = {
-                name: 'inline green',
-                foreground: '#ffffff',
-                background: '#00a000',
-                edge: '#00a000',
-            };
-        }
-
-        // Calc HP
-        const currentHP = this.actor.system.hitPoints.value;
-        const maxHP = this.actor.system.hitPoints.max;
-        const newHP = Math.min(maxHP, currentHP + Number(roll.terms[0].total));
-
-        // Calc WP
-        const currentWP = this.actor.system.willPoints.value;
-        const maxWP = this.actor.system.willPoints.max;
-        const newWP = Math.min(maxWP, currentWP + Number(roll.terms[2].total));
-
-        let formula = `
-        <i class="fa-solid fa-circle-info"></i>
-        <div class="permission-observer dice-tooltip" data-actor-id="${this.actor.uuid}" style="text-align: left; margin-left: 0.5em">`;
-        if (newHP !== currentHP) {
-            formula += `<b>${game.i18n.localize("DoD.ui.character-sheet.hp")}:</b> ${currentHP} <i class="fa-solid fa-arrow-right"></i> ${newHP}<br>`;
-        }
-        if (newWP !== currentWP) {
-            formula += `<b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${currentWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>`;
-        }
-        formula += "</div>";
-
-        // Render message
-        const context =  {
-            formula: formula,
-            user: game.user.id,
-            tooltip: await roll.getTooltip()
-        };
-        const template = "systems/dragonbane/templates/partials/roll-no-total.hbs";
-        const content = await renderTemplate(template, context);
-        const msg = await roll.toMessage({
-            user: game.user.id,
-            actor: this.actor,
-            flavor: game.i18n.format("DoD.ui.character-sheet.restStretch", {actor: this.actor.name, hp: newHP - currentHP, wp: newWP - currentWP}),
-            content: content
-        });
-
-        // Wait for dice and update actor
-        if (game.dice3d) {
-            game.dice3d.waitFor3DAnimationByMessageID(msg.id).then(
-                () => this.actor.update({
-                    ["system.hitPoints.value"]: newHP,
-                    ["system.willPoints.value"]: newWP
-                })
-            );
-        } else {
-            await this.actor.update({
-                ["system.hitPoints.value"]: newHP,
-                ["system.willPoints.value"]: newWP
-            });
-        }
-
+        await this.actor.restStretch();
     }
 
     async _onRestShift(event) {
         event.preventDefault();
         event.currentTarget?.blur();
 
-        await this.actor.update({
-            ["system.canRestRound"]: true,
-            ["system.canRestStretch"]: true
-        });
-
-        // Calc HP
-        const currentHP = this.actor.system.hitPoints.value;
-        const maxHP = this.actor.system.hitPoints.max;
-        const newHP = maxHP;
-
-        // Calc WP
-        const currentWP = this.actor.system.willPoints.value;
-        const maxWP = this.actor.system.willPoints.max;
-        const newWP = maxWP;
-
-        // Prepare chat message
-        const msg = `
-            <div class="damage-details permission-observer" data-actor-id="${this.actor.uuid}">
-                <i class="fa-solid fa-circle-info"></i>
-                <div class="expandable" style="text-align: left; margin-left: 0.5em">
-                <b>${game.i18n.localize("DoD.ui.character-sheet.hp")}:</b> ${currentHP} <i class="fa-solid fa-arrow-right"></i> ${newHP}<br>
-                <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${currentWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>
-                </div>
-            </div>`;
-
-        ChatMessage.create({
-            user: game.user.id,
-            flavor: game.i18n.format("DoD.ui.character-sheet.restShift", {actor: this.actor.name, hp: newHP - currentHP, wp: newWP - currentWP}),
-            content: msg
-        });
-
-        this.actor.update({
-            ["system.hitPoints.value"]: newHP,
-            ["system.willPoints.value"]: newWP,
-            ["system.conditions.str.value"]: false,
-            ["system.conditions.con.value"]: false,
-            ["system.conditions.agl.value"]: false,
-            ["system.conditions.int.value"]: false,
-            ["system.conditions.wil.value"]: false,
-            ["system.conditions.cha.value"]: false
-        });
+        await this.actor.restShift();
     }
 
     async _onRestReset(event) {
         event.preventDefault();
         event.currentTarget?.blur();
 
-        await this.actor.update({
-            ["system.canRestRound"]: true,
-            ["system.canRestStretch"]: true
-        });
-
-        ChatMessage.create({
-            user: game.user.id,
-            flavor: game.i18n.format("DoD.ui.character-sheet.restReset", {actor: this.actor.name})
-        });
+        await this.actor.restReset();
     }
 
     _onEditAttribute(event) {
