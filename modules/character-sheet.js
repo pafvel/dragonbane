@@ -479,7 +479,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                     attack.name = match[1];
                     attack.description = match[2]
                 } else {
-                    attack.name = attack.index;
+                    attack.name = String(attack.index);
                 }
                 dialogData.attacks.push(attack);
             }
