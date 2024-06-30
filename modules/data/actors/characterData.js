@@ -130,6 +130,8 @@ export default class DoDCharacterData extends DoDCharacterBaseData {
                 successes: new fields.NumberField({ required: true, initial: 0 }),
                 failures: new fields.NumberField({ required: true, initial: 0 })
             }),
+            canRestRound: new fields.BooleanField({ required: false, initial: true }),
+            canRestStretch: new fields.BooleanField({ required: false, initial: true }),
         });
     };
 
