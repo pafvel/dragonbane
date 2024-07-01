@@ -1136,11 +1136,7 @@ export class DoDActor extends Actor {
             );
             if (heal) {
                 for (let injury of healingInjuries) {
-                    const newHealingTime = Math.max(injury.system.healingTime - 1, 0);
-                    await injury.update({"system.healingTime": newHealingTime});
-                    if (newHealingTime === 0) {
-                        this.deleteItemDialog(injury, game.i18n.format("DoD.injury.healingTimeExpired", {injury: injury.name}));
-                    }
+                    injury.reduceHealingTime();
                 }
             }    
         }        

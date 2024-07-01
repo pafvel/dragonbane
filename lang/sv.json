@@ -184,7 +184,8 @@
             "healingTimeExpired": "<b>{injury}</b> har läkt.",
             "healingTimeRollFlavor": "Läkningstiden för <b>{injury}</b> är <b>{days}</b> dagar.",
             "rollHealingTime": "Vänsterklicka för att slå för läkningstiden",
-            "clickHealingTime": "Vänsterklicka för att minska läkningstiden\rHögerklicka för att öka läkningstiden"
+            "clickHealingTime": "Vänsterklicka för att minska läkningstiden\rHögerklicka för att öka läkningstiden",
+            "healingTimeChanged": "Läkningstiden för <b>{injury}</b> ändrades från <b>{from}</b> till <b>{to}</b> dagar."
         },
         "itemTypes": {
             "item": "Föremål",

@@ -132,4 +132,58 @@ export class DoDItem extends Item {
     get canImproveSkill() {
         return this.system.value < DoD.skillMaximum;
     }
+
+    /**
+     * 
+     * @param {Boolean} options.remove      true: Remove injury if healing time = 0; false: Don't remove injury; undefined: Popup dialog to ask if injury should be deleted
+     * @param {Boolean} options.silent      true: Don't create chat message
+     * @returns 
+     */
+    async reduceHealingTime(options = {}) {
+        if(this.type !== "injury" || isNaN(this.system.healingTime)) {
+            return;
+        }
+        const newHealingTime = Math.max(Number(this.system.healingTime) - 1, 0);
+
+        if (!options.silent) {
+            ChatMessage.create({
+                user: game.user.id,
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                content: game.i18n.format("DoD.injury.healingTimeChanged", {injury: this.name, from: this.system.healingTime, to: newHealingTime})
+            });
+        }
+
+        await this.update({"system.healingTime": newHealingTime});
+
+        if (newHealingTime === 0) {
+            if ("remove" in options) {
+                if (options.remove) {
+                    return await this.actor.deleteEmbeddedDocuments("Item", [this.id]);
+                }
+            } else {
+                return await this.actor.deleteItemDialog(this, game.i18n.format("DoD.injury.healingTimeExpired", {injury: this.name}));
+            }
+        }
+    }
+    /**
+     * 
+     * @param {Boolean} options.silent      true: Don't create chat message
+     * @returns 
+     */
+    async increaseHealingTime(options = {}) {
+        if(this.type !== "injury" || isNaN(this.system.healingTime)) {
+            return;
+        }
+        const newHealingTime = Number(this.system.healingTime) + 1;
+
+        if (!options.silent) {
+            ChatMessage.create({
+                user: game.user.id,
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                content: game.i18n.format("DoD.injury.healingTimeChanged", {injury: this.name, from: this.system.healingTime, to: newHealingTime})
+            });
+        }
+
+        return await this.update({"system.healingTime": newHealingTime});
+    }
 }

@@ -1146,19 +1146,12 @@ export default class DoDCharacterSheet extends ActorSheet {
                 }
             } else {
                 // reduce healing time
-                const newHealingTime = Math.max(Number(healingTime) - 1, 0);
-                await injury.update({"system.healingTime": newHealingTime});
-                if (newHealingTime === 0) {
-                    const remove = await this._itemDeleteDialog(injury, game.i18n.format("DoD.injury.healingTimeExpired", {injury: injury.name}));
-                    if (remove) {
-                        return await this.actor.deleteEmbeddedDocuments("Item", [injury.id]);
-                    }
-                }
+                return await injury.reduceHealingTime({silent: true});
             }
         } else { // right click
             if (!isNaN(healingTime)) {
                 // increase healing time
-                await injury.update({"system.healingTime": Number(healingTime) + 1});
+                return await injury.increaseHealingTime({silent: true});
             }
         }
     }

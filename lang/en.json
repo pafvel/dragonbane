@@ -183,7 +183,8 @@
             "healingTimeExpired": "<b>{injury}</b> has healed.",
             "healingTimeRollFlavor": "Healing time for <b>{injury}</b> is <b>{days}</b> days.",
             "rollHealingTime": "Left-click to roll healing time",
-            "clickHealingTime": "Left-click to decrease healing time\rRight-click to increase healing time"
+            "clickHealingTime": "Left-click to decrease healing time\rRight-click to increase healing time",
+            "healingTimeChanged": "Healing time for <b>{injury}</b> changed from <b>{from}</b> to <b>{to}</b> days."
         },
         "itemTypes": {
             "item": "Item",
