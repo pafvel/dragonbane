@@ -521,7 +521,9 @@
                 "deleteActorTokenOnScene": "Scenes with Tokens referring to the Actor",
                 "monsterAttack": "Attack",
                 "monsterAttackRandom": "Random",
-                "monsterAttackTitle": "Select Monster Attack"
+                "monsterAttackTitle": "Select Monster Attack",
+                "healInjuriesTitle": "Heal Injuries",
+                "healInjuriesMessage": "Reduce the healing time for all un-healed injuries by one day?"
             }
         },
         "item-sheet": {

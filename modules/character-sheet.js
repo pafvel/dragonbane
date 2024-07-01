@@ -287,7 +287,13 @@ export default class DoDCharacterSheet extends ActorSheet {
         for (let injury of injuries) {
             let tooltip = DoD_Utility.removeEnrichment(injury.system.description);
             injury.system.tooltip = DoD_Utility.removeHtml(tooltip);
-            injury.system.healingTimeTooltip = isNaN(injury.system.healingTime) ? game.i18n.localize("DoD.injury.rollHealingTime") : game.i18n.localize("DoD.injury.clickHealingTime");
+            if (isNaN(injury.system.healingTime)) {
+                injury.system.healingTimeTooltip = game.i18n.localize("DoD.injury.rollHealingTime");
+            } else {
+                injury.system.healingTimeTooltip = game.i18n.localize("DoD.injury.clickHealingTime");
+
+            }
+            
         }
 
         this._updateEncumbrance(sheetData);

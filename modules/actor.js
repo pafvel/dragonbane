@@ -1089,6 +1089,8 @@ export class DoDActor extends Actor {
             ["system.conditions.wil.value"]: false,
             ["system.conditions.cha.value"]: false
         });
+
+        await this.healInjuriesDialog();
     }
 
     async restReset() {
@@ -1102,5 +1104,78 @@ export class DoDActor extends Actor {
             user: game.user.id,
             flavor: game.i18n.format("DoD.ui.character-sheet.restReset", {actor: this.name})
         });
-    }    
+
+       await this.healInjuriesDialog();
+    }
+
+    async healInjuriesDialog() {
+        const healingInjuries = this.items.filter(i => i.type === "injury" && i.system.healingTime != "" && !isNaN(i.system.healingTime));
+        if (healingInjuries.length > 0) {
+            const heal = await new Promise(
+                resolve => {
+                    const data = {
+                        title: game.i18n.localize("DoD.ui.dialog.healInjuriesTitle"),
+                        content: game.i18n.format("DoD.ui.dialog.healInjuriesMessage"),
+                        buttons: {
+                            ok: {
+                                icon: '<i class="fas fa-check"></i>',
+                                label: game.i18n.localize("Yes"),
+                                callback: () => resolve(true)
+                            },
+                            cancel: {
+                                icon: '<i class="fas fa-times"></i>',
+                                label: game.i18n.localize("No"),
+                                callback: _html => resolve(false)
+                            }
+                        },
+                        default: "cancel",
+                        close: () => resolve(false)
+                    };
+                    new Dialog(data, null).render(true);
+                }
+            );
+            if (heal) {
+                for (let injury of healingInjuries) {
+                    const newHealingTime = Math.max(injury.system.healingTime - 1, 0);
+                    await injury.update({"system.healingTime": newHealingTime});
+                    if (newHealingTime === 0) {
+                        this.deleteItemDialog(injury, game.i18n.format("DoD.injury.healingTimeExpired", {injury: injury.name}));
+                    }
+                }
+            }    
+        }        
+    }
+
+    async deleteItemDialog(item, flavor = "") {
+        let content = flavor ? "<p>" + flavor + "</p>" : "";
+        content += game.i18n.format("DoD.ui.dialog.deleteItemContent", {item: item.name});
+
+        const ok = await new Promise(
+            resolve => {
+                const data = {
+                    title: game.i18n.format("DoD.ui.dialog.deleteItemTitle",
+                        {item: game.i18n.localize("TYPES.Item." + item.type)}),
+                    content: content,
+                    buttons: {
+                        ok: {
+                            icon: '<i class="fas fa-check"></i>',
+                            label: game.i18n.localize("Yes"),
+                            callback: () => resolve(true)
+                        },
+                        cancel: {
+                            icon: '<i class="fas fa-times"></i>',
+                            label: game.i18n.localize("No"),
+                            callback: _html => resolve(false)
+                        }
+                    },
+                    default: "cancel",
+                    close: () => resolve(false)
+                };
+                new Dialog(data, null).render(true);
+            }
+        );
+        if (ok) {
+            await this.deleteEmbeddedDocuments("Item", [item.id])
+        }
+    }
 }

@@ -525,7 +525,10 @@
                 "deleteActorTokenOnScene": "Scener med Spelfigurer som refererar till Karaktären",
                 "monsterAttack": "Attack",
                 "monsterAttackRandom": "Slump",
-                "monsterAttackTitle": "Välj monsterattack"
+                "monsterAttackTitle": "Välj monsterattack",
+                "healInjuriesTitle": "Läk skador",
+                "healInjuriesMessage": "Minska läkningstiden för alla oläkta skador med en dag?"
+
            }
         },
         "item-sheet": {
