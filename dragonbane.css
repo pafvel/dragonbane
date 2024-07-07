@@ -736,6 +736,8 @@
 }
 .system-dragonbane {
   --dod-color-text-dark-title: #00604D;
+  --dod-color-direction: #4a2407;
+  --dod-color-secret: #E83031;
   background-image: url(art/ui/dragonbane.jpg);
   background-repeat: no-repeat;
   background-position-x: center;
@@ -748,22 +750,58 @@
 .system-dragonbane #pause img {
   content: url(art/icons/symbol-red.webp);
 }
+.system-dragonbane ul .description {
+  list-style-type: "✦ ";
+  font-weight: bold;
+  color: var(--color-text-dark-header);
+}
+.system-dragonbane ul .description p {
+  font-weight: normal;
+  color: black;
+}
+.system-dragonbane ul .direction {
+  list-style-type: "✦ ";
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--dod-color-direction);
+}
+.system-dragonbane ul .direction p {
+  font-weight: normal;
+  text-transform: none;
+  color: black;
+}
+.system-dragonbane ul .secret {
+  list-style-type: "✦ ";
+  font-weight: bold;
+  color: var(--dod-color-secret);
+}
+.system-dragonbane ul .secret p {
+  font-weight: normal;
+  font-style: italic;
+  color: black;
+}
+.system-dragonbane .sheet.journal-entry .scrollable {
+  padding-right: 0;
+}
 .system-dragonbane .sheet.journal-entry .journal-entry-content {
   background: url("art/ui/journal-page-bg.webp");
   background-size: 100% auto;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .journal-header {
-  background: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/border-horizontal.webp");
-  background-position: -12px bottom, calc(100% + 12px) bottom, center calc(100% - 6px);
-  background-repeat: no-repeat, no-repeat, repeat-x;
-  background-size: auto 24px, auto 24px, 100% 12px;
-  background-clip: border-box, border-box, padding-box;
+  background: url("art/ui/header-dragon.webp"), url("art/ui/arrow-wide-left.webp"), url("art/ui/arrow-wide-right.webp"), url("art/ui/border-horizontal.webp");
+  background-position: center calc(100% + 16px), -12px bottom, calc(100% + 12px) bottom, center calc(100% - 6px);
+  background-repeat: no-repeat, no-repeat, no-repeat, repeat-x;
+  background-size: auto 60px, auto 24px, auto 24px, 100% 12px;
+  background-clip: border-box, border-box, border-box, padding-box;
   border-left: 12px solid transparent;
   border-right: 12px solid transparent;
+  border-bottom: 12px solid transparent;
   padding-left: 12px;
   padding-right: 12px;
-  padding-bottom: 20px;
+  padding-bottom: 36px;
   margin-bottom: 0px;
+  margin-left: 0px;
+  z-index: 1;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .journal-header .title {
   font-size: 2em;
@@ -776,9 +814,44 @@
   background-color: transparent;
   border-color: transparent;
 }
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages {
+  top: -24px;
+  margin: 0rem 0.5rem 0rem 0rem;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page:first-child {
+  margin-top: 24px;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page.image {
+  margin-top: 0;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page.image figure {
+  margin-top: 0;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page {
+  padding-left: 12px;
+  padding-right: 12px;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page:not(.image):last-child {
+  background: url("art/ui/pagination-half-demon.webp");
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  background-size: auto 60px;
+  background-clip: padding-box;
+  padding-bottom: 60px;
+  margin-bottom: 0px;
+  min-height: calc(100% - 36px);
+}
 .system-dragonbane .sheet.journal-entry .journal-entry-content img {
   display: block;
   margin: auto;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content img.dropcap {
+  float: left;
+  height: 4em;
+  width: auto;
+  pointer-events: none;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-skill h4 {
   font-size: large;
