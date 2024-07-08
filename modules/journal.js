@@ -1,5 +1,22 @@
 import DoD_Utility from "./utility.js";
 
+/**
+ * Used to parse e.g. the brackets part of @DisplayNpc[Actor.gwFbDqFlJJrjeM3a named] to get {uuid: Actor.gwFbDqFlJJrjeM3a , named: true}
+ * @param {String} match            The part of regexp match between brackets, contains UUID and optional flags, space delimited
+ * @returns {uuid: String, <flags>} The uuid and each flag as a boolean set to true
+ */
+function parseMatch(match) {
+    const words = match.split(" ");
+    let result = {};
+    if (words.length) {
+        result.uuid = words[0];
+    }
+    for (let i=1; i<words.length; i++) {
+        result[words[i]] = true;
+    }
+    return result;
+}
+
 export async function enrichDisplayAbility (match, options) {
     const ability = fromUuidSync(match[1]);
     const abilityName = match[2] ?? ability?.name;
@@ -53,9 +70,14 @@ export async function enrichDisplayMonsterCard (match, _options) {
 }
 
 export async function enrichDisplayMonster (match, options) {
-    const monster = await DoD_Utility.findMonster(match[1]);
+    const parsedMatch = parseMatch(match[1]);
+    const monster = await DoD_Utility.findMonster(parsedMatch.uuid);
     const monsterName = match[2] ?? monster?.name;
     const skipImage = options?.skipImage || false;
+    let titleClasses = "monster-title";
+    if(parsedMatch.named) {
+        titleClasses += " named";
+    }
 
     const a = document.createElement("div");
     if (monster) {
@@ -70,7 +92,7 @@ export async function enrichDisplayMonster (match, options) {
         }
         html += `
         <div class="display-monster">
-            <div class="monster-title">@UUID[${monster.uuid}]{${monsterName}}</div>
+            <div class="${titleClasses}">@UUID[${monster.uuid}]{${monsterName}}</div>
             <table>
                 <tr>
                     <td><b>${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity}</td>
@@ -88,7 +110,7 @@ export async function enrichDisplayMonster (match, options) {
         </div>`;
         a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
     } else {
-        a.dataset.monsterId = match[1];
+        a.dataset.monsterId = parsedMatch.uuid;
         if (match[2]) a.dataset.monsterName = match[2];
         a.classList.add("content-link");
         a.classList.add("broken");
@@ -98,15 +120,20 @@ export async function enrichDisplayMonster (match, options) {
 }
 
 export async function enrichDisplayMonsterDescriptionCard (match, _options) {
-    const monster = await DoD_Utility.findMonster(match[1]);
+    const parsedMatch = parseMatch(match[1]);
+    const monster = await DoD_Utility.findMonster(parsedMatch.uuid);
     const monsterName = match[2] ?? monster?.name;
     const table = monster?.system.attackTable ? fromUuidSync(monster.system.attackTable) : null;
+    let titleClasses = "monster-title";
+    if(parsedMatch.named) {
+        titleClasses += " named";
+    }
 
     const a = document.createElement("div");
     if (monster) {
         let html = `
         <div class="display-monster">
-            <div class="monster-title">@UUID[${monster.uuid}]{${monsterName}}</div>
+            <div class="${titleClasses}">@UUID[${monster.uuid}]{${monsterName}}</div>
             <div>
                 ${monster.system.description}
             </div>
@@ -130,7 +157,7 @@ export async function enrichDisplayMonsterDescriptionCard (match, _options) {
         </div>`;
         a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
     } else {
-        a.dataset.monsterId = match[1];
+        a.dataset.monsterId = parsedMatch.uuid;
         if (match[2]) a.dataset.monsterName = match[2];
         a.classList.add("content-link");
         a.classList.add("broken");
@@ -140,21 +167,26 @@ export async function enrichDisplayMonsterDescriptionCard (match, _options) {
 }
 
 export async function enrichDisplayMonsterDescription (match, _options) {
-    const monster = await DoD_Utility.findMonster(match[1]);
+    const parsedMatch = parseMatch(match[1]);
+    const monster = await DoD_Utility.findMonster(parsedMatch.uuid);
     const monsterName = match[2] ?? monster?.name;
+    let titleClasses = "monster-title";
+    if(parsedMatch.named) {
+        titleClasses += " named";
+    }
 
     const a = document.createElement("div");
     if (monster) {
         let html = `
         <div class="display-monster">
-            <div class="monster-title">@UUID[${monster.uuid}]{${monsterName}}</div>
+            <div class="${titleClasses}">@UUID[${monster.uuid}]{${monsterName}}</div>
             <div>
                 ${monster.system.description}
             </div>
         </div>`;
         a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
     } else {
-        a.dataset.monsterId = match[1];
+        a.dataset.monsterId = parsedMatch.uuid;
         if (match[2]) a.dataset.monsterName = match[2];
         a.classList.add("content-link");
         a.classList.add("broken");
@@ -167,14 +199,19 @@ export async function enrichDisplayNpc(match, _options) {
     return enrichDisplayNpcCard(match, {skipDescription: false});
 }
 export async function enrichDisplayNpcCard(match, options) {
-    const npc = await DoD_Utility.getActorFromUUID(match[1]);
+    const parsedMatch = parseMatch(match[1]);
+    const npc = await DoD_Utility.getActorFromUUID(parsedMatch.uuid);
     const npcName = match[2] ?? npc?.name;
     const skipDescription = options?.skipDescription != null ? options.skipDescription : true;
     const a = document.createElement("div");
+    let titleClasses = "npc-title";
+    if(parsedMatch.named) {
+        titleClasses += " named";
+    }
     if (npc) {
         let html = `
         <div class="display-npc">
-            <div class="npc-title">@UUID[${npc.uuid}]{${npcName}}</div>`;
+            <div class="${titleClasses}">@UUID[${npc.uuid}]{${npcName}}</div>`;
         if (!skipDescription) {
             html += `${npc.system.description}`;
         }
@@ -330,7 +367,7 @@ export async function enrichDisplayNpcCard(match, options) {
         </div>`;
         a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
     } else {
-        a.dataset.npcId = match[1];
+        a.dataset.npcId = parsedMatch.uuid;
         if (match[2]) a.dataset.npcName = match[2];
         a.classList.add("content-link");
         a.classList.add("broken");
