@@ -89,8 +89,8 @@
   "download": "https://github.com/pafvel/dragonbane/releases/download/v1.8.3/dragonbane.zip",
   "flags": {
     "hotReload": {
-      "extensions": ["less", "hbs", "json"],
-      "paths": ["dragonbane.css", "templates", "lang", "less"]
+      "extensions": ["css", "html", "hbs", "json"],
+      "paths": ["dragonbane.css", "templates", "lang"]
     }
   }
 }
