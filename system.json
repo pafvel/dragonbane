@@ -86,5 +86,11 @@
   "background": "systems/dragonbane/art/dragonbane-splash.webp",
   "url": "https://github.com/pafvel/dragonbane",
   "manifest": "https://github.com/pafvel/dragonbane/releases/latest/download/system.json",
-  "download": "https://github.com/pafvel/dragonbane/releases/download/v1.8.3/dragonbane.zip"
+  "download": "https://github.com/pafvel/dragonbane/releases/download/v1.8.3/dragonbane.zip",
+  "flags": {
+    "hotReload": {
+      "extensions": ["css", "html", "hbs", "json"],
+      "paths": ["dragonbane.css", "templates", "lang"]
+    }
+  }
 }

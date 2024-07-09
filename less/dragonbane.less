@@ -232,6 +232,10 @@
                     color: black;
                 }
             }
+
+            div:has(> .monster-title.named) {
+                border-top: 2.75em solid transparent;
+            }
             .display-monster {
                 background-image: url("art/ui/separator-bottom.webp"), url("art/ui/separator-monster.webp"), url("art/ui/parchment-2columns.webp");
                 background-size: auto 20px, 100% 10px, 100% auto;
@@ -249,10 +253,33 @@
                         background-color: transparent;
                     }
                 }
+                .monster-title.named {
+                    .content-link {
+                        background: url("art/ui/npc-banner-left.webp"), url("art/ui/npc-banner-right.webp"), url("art/ui/npc-banner.webp");
+                        background-size: auto 100%, auto 100%, auto 100%;
+                        background-position: -1rem center, calc(100% + 1rem) center, center center;
+                        background-repeat: no-repeat, no-repeat, no-repeat;
+                        background-clip: border-box, border-box, padding-box;
+                        padding-left: 1em;
+                        padding-right: 1em;
+                        font-size: 1em;
+                        padding-top: 1.75em;
+                        padding-bottom: 1em;
+                        border-left: 1em solid transparent;
+                        border-right: 1em solid transparent;
+                        position: relative;
+                        top: -1em;  
+                    }
+                }
                 table {
                     border-color: rgb(63, 35, 6);
                 }
             }
+
+            div:has(> .npc-title.named) {
+                border-top: 2.75em solid transparent;
+            }
+
             .display-npc {
                 background-image: url("art/ui/separator-bottom.webp"), url("art/ui/separator-monster.webp"), url("art/ui/parchment-2columns.webp");
                 background-size: auto 20px, 100% 10px, 100% auto;
@@ -268,6 +295,24 @@
                     .content-link {
                         border: 0px solid transparent;
                         background-color: transparent;
+                    }
+                }
+                .npc-title.named {
+                    .content-link {
+                        background: url("art/ui/npc-banner-left.webp"), url("art/ui/npc-banner-right.webp"), url("art/ui/npc-banner.webp");
+                        background-size: auto 100%, auto 100%, auto 100%;
+                        background-position: -1rem center, calc(100% + 1rem) center, center center;
+                        background-repeat: no-repeat, no-repeat, no-repeat;
+                        background-clip: border-box, border-box, padding-box;
+                        padding-left: 1em;
+                        padding-right: 1em;
+                        font-size: 1em;
+                        padding-top: 1.75em;
+                        padding-bottom: 1em;
+                        border-left: 1em solid transparent;
+                        border-right: 1em solid transparent;
+                        position: relative;
+                        top: -1em;
                     }
                 }
                 table {
