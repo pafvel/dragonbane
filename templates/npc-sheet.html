@@ -57,6 +57,7 @@
           <a class="item" data-tab="main">{{localize "DoD.ui.character-sheet.main"}}</a>
           <a class="item" data-tab="skills">{{localize "DoD.ui.character-sheet.skills"}}</a>
           <a class="item" data-tab="inventory">{{localize "DoD.ui.character-sheet.inventory"}}</a>
+          <a class="item" data-tab="effects">{{localize "DoD.ui.character-sheet.effects"}}</a>
         </nav>
 
         {{!-- Sheet Body --}}
@@ -69,6 +70,9 @@
 
             {{!-- Inventory Tab --}}
             {{> "systems/dragonbane/templates/partials/npc-sheet-inventory.hbs" }}
+
+            {{!-- Effects Tab --}}
+            {{> "systems/dragonbane/templates/partials/character-sheet-effects.hbs" }}
         </section>
         {{/if}}
     </div>

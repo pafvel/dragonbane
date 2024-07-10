@@ -282,7 +282,9 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.smallItems = smallItems?.sort(DoD_Utility.itemSorter);
         sheetData.memento = memento;
         sheetData.canEquipItems = game.settings.get("dragonbane", "canEquipItems");
+        sheetData.effects = Array.from(this.actor.allApplicableEffects());
 
+        // Injuries
         sheetData.injuries = injuries?.sort(DoD_Utility.itemSorter);
         for (let injury of injuries) {
             let tooltip = DoD_Utility.removeEnrichment(injury.system.description);
@@ -390,6 +392,10 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".death-rolls-failure-label").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
             html.find("[data-action='roll-deathRoll']").click(this._onDeathRoll.bind(this))
 
+            html.find(".effect-edit").on("click contextmenu", this._onEffectEdit.bind(this));
+            html.find(".effect-delete").click(this._onEffectDelete.bind(this));
+
+            
             let restRoundButton = html.find(".rest-round");
             if (restRoundButton?.length > 0) {
                 if (this.actor.system.canRestRound === false) {
@@ -765,6 +771,14 @@ export default class DoDCharacterSheet extends ActorSheet {
                     return item.update({["system.mainHand"]: element.checked, "system.offHand": element.checked});
                 }
             }
+
+            // Handle enable/disable effect
+            if (field === "effect.disabled") {
+                const effectId = element.closest(".sheet-table-data").dataset.effectId;
+                const effects = Array.from(this.actor.allApplicableEffects());
+                let effect = effects.find((e) => e.id === effectId);
+                return await effect.update({ ["disabled"]: element.checked });
+            }
             return await item.update({ [field]: element.checked });
         }
 
@@ -913,11 +927,13 @@ export default class DoDCharacterSheet extends ActorSheet {
         let content = flavor ? "<p>" + flavor + "</p>" : "";
         content += game.i18n.format("DoD.ui.dialog.deleteItemContent", {item: item.name});
 
+        const itemType = item.documentName === "ActiveEffect" ? game.i18n.localize("DoD.ui.character-sheet.effect") : game.i18n.localize("TYPES.Item." + item.type);
+
         return await new Promise(
             resolve => {
                 const data = {
                     title: game.i18n.format("DoD.ui.dialog.deleteItemTitle",
-                        {item: game.i18n.localize("TYPES.Item." + item.type)}),
+                        {item: itemType}),
                     content: content,
                     buttons: {
                         ok: {
@@ -958,7 +974,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         let itemId = element.closest(".sheet-table-data").dataset.itemId;
         let item = this.actor.items.get(itemId);
 
-        item.sheet.render(true);
+        item?.sheet.render(true);
     }
 
     _onItemKeyDown(event) {
@@ -1392,7 +1408,19 @@ export default class DoDCharacterSheet extends ActorSheet {
     async _onItemCreate(event) {
         event.preventDefault();
         const element = event.currentTarget;
-        const type = element.dataset.type
+        const type = element.dataset.type;
+
+        // Create effect
+        if (type === "effect") {
+            return this.actor.createEmbeddedDocuments("ActiveEffect", [{
+                label: game.i18n.localize("New Effect"),
+                icon: "icons/svg/aura.svg",
+                origin: this.actor.uuid,
+                disabled: false
+            }]);
+        }
+
+        // Create item
         let itemData = {
             name: game.i18n.localize(`DoD.${type}.new`),
             type: element.dataset.type
@@ -1410,5 +1438,26 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         return this.actor.createEmbeddedDocuments("Item", [itemData]);
     }
-}
 
+    async _onEffectEdit(event) {
+        event.preventDefault();
+        const element = event.currentTarget;
+        const effectId = element.closest(".sheet-table-data").dataset.effectId;
+        const effect = Array.from(this.actor.allApplicableEffects()).find(e => e.id === effectId);
+        
+        effect?.sheet.render(true);
+    }
+    async _onEffectDelete(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let effectId = element.closest(".sheet-table-data").dataset.effectId;
+        let effect = this.actor.effects.get(effectId);
+
+        const ok = await this._itemDeleteDialog(effect);
+        if (!ok) {
+            return;
+        }
+        return effect.delete();
+    }
+
+}

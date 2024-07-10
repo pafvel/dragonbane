@@ -1,7 +1,12 @@
+import { DoDActor } from "./actor.js";
 import { DoD } from "./config.js";
 import DoD_Utility from "./utility.js";
 
 export default class DoDActiveEffect extends ActiveEffect {
+
+    get canDeleteFromCharacterSheet() {
+        return this.isOwner && this.parent instanceof DoDActor;
+    }
 
     /**
     * 

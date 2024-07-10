@@ -65,7 +65,7 @@ async function preloadHandlebarsTemplates() {
     const templatePaths = [
         "systems/dragonbane/templates/partials/character-sheet-abilities.hbs",
         "systems/dragonbane/templates/partials/character-sheet-background.hbs",
-        "systems/dragonbane/templates/partials/character-sheet-injuries.hbs",
+        "systems/dragonbane/templates/partials/character-sheet-effects.hbs",
         "systems/dragonbane/templates/partials/character-sheet-inventory.hbs",
         "systems/dragonbane/templates/partials/character-sheet-main.hbs",
         "systems/dragonbane/templates/partials/character-sheet-skills.hbs",

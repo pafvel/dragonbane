@@ -1,0 +1,84 @@
+<div class="tab effects" data-group="primary" data-tab="effects">
+    <div class="effects-tab flexcol">
+        {{!-- Injuries --}}
+        <div>
+            <table class="sheet-table injuries item-list">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th class="thumbnail-header">{{!-- column for icons --}}&nbsp</th>
+                    <th class="text-header">
+                        {{localize "DoD.ui.character-sheet.injuries"}}
+                    </th>
+                    <th class="text-header" title="{{localize "DoD.injury.healingTimeTooltip"}}">
+                        {{localize "DoD.injury.healingTime"}}
+                    </th>
+                    <th>{{!-- column for icons --}}&nbsp</th>
+                    <th></th>
+                </tr>
+                {{#each injuries as |injury injuryId|}}
+                <tr class="sheet-table-data item" data-item-id="{{injury.id}}">
+                    <td></td>
+                    <td class="thumbnail-data">
+                        <img src="{{injury.img}}" title="{{injury.name}}"/>
+                    </td>
+                    <td class="text-data">
+                        <a class="item-edit" title="{{injury.system.tooltip}}">{{injury.name}}</a>
+                    </td>
+                    <td class="text-data">
+                        <a class="rollable-healingTime" title="{{injury.system.healingTimeTooltip}}">{{injury.system.healingTime}}</a>
+                    </td>
+                    <td class="icon-data">
+                        <a class="item-delete" data-type="injury">
+                            <i class="fas fa-trash"></i>
+                        </a>    
+                    </td>
+                    <td></td>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+        {{!-- Effects --}}
+        <div>
+            <table class="sheet-table effects-list">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th class="thumbnail-header">
+                        <button type="button" class="item-create" data-type="effect" title="{{localize "DoD.ui.character-sheet.create-effect"}}">
+                            <a  class="fas fa-plus"></a>
+                        </button>                        
+                    </th>
+                    <th class="text-header">{{localize "DoD.ui.character-sheet.effect"}}</th>
+                    <th class="text-header">{{localize "DoD.ui.character-sheet.source"}}</th>
+                    <th>{{localize "DoD.ui.character-sheet.disabled"}}</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                {{#each effects as |effect|}}
+                <tr class="sheet-table-data effect" data-effect-id="{{effect.id}}" data-item-id="{{effect.parent.id}}">
+                    <td></td>
+                    <td class="thumbnail-data">
+                        <img src="{{effect.img}}"/>
+                    </td>
+                    <td class="text-data">
+                        <a class="effect-edit">{{effect.name}}</a>
+                    </td>
+                    <td class="text-data">
+                        <a class="item-edit">{{effect.parent.name}}</a>
+                    </td>
+                    <td class="checkbox-data">
+                        <input class="inline-edit" data-field="effect.disabled"  type="checkbox" {{checked effect.disabled}} />
+                    </td>
+                    <td class="icon-data">
+                        {{#if effect.canDeleteFromCharacterSheet}}
+                        <a class="effect-delete" data-type="effect">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                        {{/if}}
+                    </td>
+                    <td></td>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+    </div>
+</div>
