@@ -75,6 +75,14 @@ export default class DoDCharacterSheet extends ActorSheet {
             let max =  foundry.utils.getProperty(this.actor, propertyName + ".max");
             let base =  foundry.utils.getProperty(this.actor, propertyName + ".base");
 
+            // Style if affected by active effect
+            // If the property has a max value, then use it to compare with base ("value" is the current value)
+            if (max) {
+                value = max;
+            }
+
+            if (value === base) continue;
+
             // Set title
             let title = $(e).attr("title");
             if (title == undefined) {
@@ -84,16 +92,8 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
             title += game.i18n.format("DoD.ui.character-sheet.baseValue", {value: base});
             $(e).attr("title", title);
-
-            // Style if affected by active effect
-
-            // If the property has a max value, then use it to compare with base ("value" is the current value)
-            if (max) {
-                value = max;
-            }
-
-            if (value === base) continue;
-
+            
+            // Prepare strings
             if (typeof value === "string" || value instanceof String) {
                 value = value.toLowerCase();
             }
@@ -101,8 +101,8 @@ export default class DoDCharacterSheet extends ActorSheet {
                 base = base.toLowerCase();
             }
 
+            // Hande damage bonus special case
             if (propertyName.startsWith("system.damageBonus")) {
-                // Convert string to index to fix sorting/comparison
                 const entries = Object.entries(DoD.dice);
                 value = entries.findIndex(e => e[0] == value);
                 base = entries.findIndex(e => e[0] == base);
