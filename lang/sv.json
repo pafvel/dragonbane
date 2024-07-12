@@ -384,6 +384,7 @@
                 "armor": "Skydd",
                 "background": "Bakgrund",
                 "banes": "Nackdel på",
+                "baseValue": "Grundvärde: {value}",
                 "create-armor": "Skapa rustning",
                 "create-effect": "Skapa effekt",
                 "create-helmet": "Skapa hjälm",

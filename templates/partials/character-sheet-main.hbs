@@ -46,15 +46,15 @@
             <table class="derived-stat">
                 <tr>
                     <th>{{localize "DoD.ui.character-sheet.damageBonusSTR"}}</th>
-                    <td title="{{system.damageBonus.str.value}}">{{system.damageBonus.str.base}}</td>
+                    <td style="text-transform:uppercase" class="active-effect-value" id="system.damageBonus.str.value">{{system.damageBonus.str.value}}</td>
                 </tr>
                 <tr>
                     <th>{{localize "DoD.ui.character-sheet.damageBonusAGL"}}</th>
-                    <td title="{{system.damageBonus.agl.value}}">{{system.damageBonus.agl.base}}</td>
+                    <td style="text-transform:uppercase" class="active-effect-value" id="system.damageBonus.agl.value">{{system.damageBonus.agl.value}}</td>
                 </tr>
                 <tr>
                     <th>{{localize "DoD.ui.character-sheet.movement"}}</th>
-                    <td>{{system.movement.value}}</td>
+                    <td class="active-effect-value" id="system.movement.value">{{system.movement.value}}</td>
                 </tr>
             </table>
         </div>

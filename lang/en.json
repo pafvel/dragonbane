@@ -380,6 +380,7 @@
                 "and": "&",
                 "appearance": "Appearance",
                 "armor": "Armor",
+                "baseValue": "Base value: {value}",
                 "background": "Background",
                 "banes": "Bane on",
                 "combat": "Combat",

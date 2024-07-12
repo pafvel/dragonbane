@@ -59,6 +59,59 @@ export default class DoDCharacterSheet extends ActorSheet {
         return super.render(force, options);
      }
 
+     async _render(force, options) {
+        let result = await super._render(force, options);
+
+        // Attributes
+        let attributes = this.element.find("input.attribute-input");
+        // Damage bonus, movement, hp, wp
+        let effects = this.element.find(".active-effect-value");
+
+        // Format if affected by active effects
+        let elements = $.merge(attributes, effects);
+        for (let i = 0; i < elements.length; i++) {
+            const e = elements[i];
+            const propertyName = e.id !== "" ? e.id : e.name;
+            if (!propertyName) {
+                continue;
+            }
+            let value = foundry.utils.getProperty(this.actor, propertyName);
+            let max =  foundry.utils.getProperty(this.actor, propertyName.replace(".value", ".max"));
+            let base =  foundry.utils.getProperty(this.actor, propertyName.replace(".value", ".base"));
+           
+            // If the property has a max value, then use it to compare with base ("value" is the current value)
+            if (max) {
+                value = max;
+            }
+           
+            if (typeof value === "string" || value instanceof String) {
+                value = value.toUpperCase();
+            }
+            if (typeof base === "string" || base instanceof String) {
+                base = base.toUpperCase();
+            }
+
+            // Style if affected by active effect
+            if(value > base) {
+                $(e).addClass("value-increased");
+            } else if (value < base) {
+                $(e).addClass("value-decreased");
+            }
+
+            // Set title
+            let title = $(e).attr("title");
+            if (title == undefined) {
+                title = "";
+            } else {
+                title += "\r";
+            }
+            title += game.i18n.format("DoD.ui.character-sheet.baseValue", {value: base});
+            $(e).attr("title", title);
+
+        }
+        return result;
+     }
+
      #onKeydown(event) {
         if ((event.code === "Delete" || event.code === "Backspace") && this.#focusElement) {
             // Don't delete items if an input element has focus
@@ -363,6 +416,9 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".item-delete-key").mouseleave(_event => { this.#focusElement = null; });
 
             html.find(".attribute-input").change(this._onEditAttribute.bind(this));
+            html.find(".attribute-input").focus(this._onFocusAttribute.bind(this));
+            html.find(".attribute-input").blur(this._onBlurAttribute.bind(this));
+
             html.find(".inline-edit").change(this._onInlineEdit.bind(this));
             html.find(".kin-edit").change(this._onKinEdit.bind(this));
             html.find(".profession-edit").change(this._onProfessionEdit.bind(this));
@@ -702,16 +758,56 @@ export default class DoDCharacterSheet extends ActorSheet {
         await this.actor.restReset();
     }
 
-    _onEditAttribute(event) {
+    _getSubmitData(updateData = {}) {
+        // Prevents updating the base value (due to data migration)
+        // - if the input field still has focus when the sheet closes
+        // - if the input field has changed
+        // - if the value is unaffected by active effects
+        // If the field is affected by active effects, it will be ignored by the super implementation.
+        // Thus, the same behaviour us enforeced wether or not the attribute is affected by AE.
+        const data = super._getSubmitData(updateData);
+        const attributes = [
+            "system.attributes.str.value",
+            "system.attributes.con.value",
+            "system.attributes.agl.value",
+            "system.attributes.int.value",
+            "system.attributes.wil.value",
+            "system.attributes.cha.value",
+        ];
+        for ( let a of attributes ) {
+          delete data[a];
+        }
+        return data;
+    }
+
+    _onFocusAttribute(event) {
+        // Edit base
+        const element = event.currentTarget;
+        const property = element.name.replace(".value", ".base");
+        const value = foundry.utils.getProperty(this.actor, property);
+
+        element.value = value;
+    }
+
+    _onBlurAttribute(event) {
+        // Show value
+        const element = event.currentTarget;
+        element.value = foundry.utils.getProperty(this.actor, element.name); 
+    }
+
+    async _onEditAttribute(event) {
         event.preventDefault();
+
+        const element = event.currentTarget;
+        const newValue = element.value;
         event.currentTarget.blur();
 
-        let element = event.currentTarget;
-        if (element.value < 1 || element.value > 18) {
+        if (newValue < 1 || newValue > 18) {
             element.value = element.defaultValue;
             DoD_Utility.WARNING("DoD.WARNING.attributeOutOfRange")
-            return false;
         }
+        const property = element.name.replace(".value", ".base");
+        await this.actor.update({[property]: newValue});
     }
 
     async _onInlineEdit(event) {

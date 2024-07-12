@@ -446,7 +446,6 @@
 .DoD.sheet.character .resource-points .resource-points-max-box .resource-points-max-label {
   display: inline-block;
   text-align: center;
-  color: black;
   width: 100%;
   height: 100%;
   font-size: 18px;
@@ -706,6 +705,15 @@
   min-height: 80px;
   position: static;
 }
+.DoD.sheet.character input:focus {
+  color: black;
+}
+.DoD.sheet.character .value-increased {
+  color: var(--dod-color-positive-effect);
+}
+.DoD.sheet.character .value-decreased {
+  color: var(--dod-color-negative-effect);
+}
 #logo:lang(en) {
   content: url("art/ui/logo-en.webp");
   width: 120px;
@@ -747,6 +755,8 @@
   --dod-color-text-dark-title: #00604D;
   --dod-color-direction: #4a2407;
   --dod-color-secret: #E83031;
+  --dod-color-positive-effect: #00604D;
+  --dod-color-negative-effect: #E83031;
   background-image: url(art/ui/dragonbane.jpg);
   background-repeat: no-repeat;
   background-position-x: center;
