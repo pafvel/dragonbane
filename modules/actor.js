@@ -407,17 +407,17 @@ export class DoDActor extends Actor {
         }
 
         // Movement
-        this.system.movement.base = Number(this.system.kin ? this.system.kin.system.movement : 10);
+        const defaultMovement = Number(this.system.kin ? this.system.kin.system.movement : 10);
         const movementModifier =  DoD_Utility.calculateMovementModifier(this.system.attributes.agl.value);
         const moveBonuses = this.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "movement").length;
 
-        this.system.movement.value = this.system.movement.base + movementModifier + 2 * moveBonuses;
+        this.system.movement.base = defaultMovement + movementModifier + moveBonuses;
+        this.system.movement.value = this.system.movement.base;
     }
 
     _prepareActorStats() {
         // Movement
-        const moveBonuses = this.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "movement").length;
-        this.system.movement.value = this.system.movement.base + 2 * moveBonuses;
+        this.system.movement.value = this.system.movement.base;
 
         // Hit Points
         this.system.hitPoints.max = this.system.hitPoints.base;
