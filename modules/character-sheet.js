@@ -74,25 +74,6 @@ export default class DoDCharacterSheet extends ActorSheet {
             let value = foundry.utils.getProperty(this.actor, propertyName + ".value");
             let max =  foundry.utils.getProperty(this.actor, propertyName + ".max");
             let base =  foundry.utils.getProperty(this.actor, propertyName + ".base");
-           
-            // If the property has a max value, then use it to compare with base ("value" is the current value)
-            if (max) {
-                value = max;
-            }
-           
-            if (typeof value === "string" || value instanceof String) {
-                value = value.toUpperCase();
-            }
-            if (typeof base === "string" || base instanceof String) {
-                base = base.toUpperCase();
-            }
-
-            // Style if affected by active effect
-            if(value > base) {
-                $(e).addClass("value-increased");
-            } else if (value < base) {
-                $(e).addClass("value-decreased");
-            }
 
             // Set title
             let title = $(e).attr("title");
@@ -104,6 +85,35 @@ export default class DoDCharacterSheet extends ActorSheet {
             title += game.i18n.format("DoD.ui.character-sheet.baseValue", {value: base});
             $(e).attr("title", title);
 
+            // Style if affected by active effect
+
+            // If the property has a max value, then use it to compare with base ("value" is the current value)
+            if (max) {
+                value = max;
+            }
+
+            if (value === base) continue;
+
+            if (typeof value === "string" || value instanceof String) {
+                value = value.toLowerCase();
+            }
+            if (typeof base === "string" || base instanceof String) {
+                base = base.toLowerCase();
+            }
+
+            if (propertyName.startsWith("system.damageBonus")) {
+                // Convert string to index to fix sorting/comparison
+                const entries = Object.entries(DoD.dice);
+                value = entries.findIndex(e => e[0] == value);
+                base = entries.findIndex(e => e[0] == base);
+            }
+
+            // Apply styling
+            if(value > base) {
+                $(e).addClass("value-increased");
+            } else if (value < base) {
+                $(e).addClass("value-decreased");
+            }
         }
         return result;
      }

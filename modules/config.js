@@ -47,12 +47,12 @@ DoD.castingTimeTypes = {
 
 DoD.dice = {
     none: "0",
-    d4: "DoD.dice.d4",
-    d6: "DoD.dice.d6",
-    d8: "DoD.dice.d8",
-    d10: "DoD.dice.d10",
-    d12: "DoD.dice.d12",
-    d20: "DoD.dice.d20"
+    d4: "D4",
+    d6: "D6",
+    d8: "D8",
+    d10: "D10",
+    d12: "D12",
+    d20: "D20"
 };
 
 DoD.damageTypes = {
@@ -139,7 +139,7 @@ DoD.activeEffectChanges = {
     "system.hitPoints.max" : "DoD.secondaryAttributeTypes.hitPoints",
     "system.willPoints.max" : "DoD.secondaryAttributeTypes.willPoints",
     "system.movement.value" : "DoD.ui.character-sheet.movement",
-    "damageBonus.agl" : "DoD.ui.character-sheet.damageBonusAGL",
-    "damageBonus.str" : "DoD.ui.character-sheet.damageBonusSTR",
+    "system.damageBonus.agl.value" : "DoD.ui.character-sheet.damageBonusAGL",
+    "system.damageBonus.str.value" : "DoD.ui.character-sheet.damageBonusSTR",
     "system.ferocity.value" : "DoD.ui.character-sheet.ferocity",
 };

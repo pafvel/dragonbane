@@ -18,22 +18,24 @@ export default class DoDActiveEffect extends ActiveEffect {
         
         let key = change.key.split(".");
 
-        if (key[0] === "damageBonus") {
-            DoDActiveEffect.deferChange(actor, change);
-        } else if (key[0] === "system" && key[1] === "movement") {
-            DoDActiveEffect.deferChange(actor, change);
-        } else if (key[0] === "system" && key[1] === "hitPoints") {
-            DoDActiveEffect.deferChange(actor, change);
-        } else if (key[0] === "system" && key[1] === "willPoints") {
-            DoDActiveEffect.deferChange(actor, change);
-        } else if(key[0] === "system" && key[1] === "attributes") {
-            if (actor.system.attributes) {
-                return super.apply(actor, change);
-            }
-        } else if(key[0] === "system" && key[1] === "ferocity") {
-            if (actor.system.ferocity) {
-                return super.apply(actor, change);
-            }
+        if (key[0] === "system") {
+            if (key[1] === "damageBonus") {
+                DoDActiveEffect.deferChange(actor, change);
+            } else if (key[1] === "movement") {
+                DoDActiveEffect.deferChange(actor, change);
+            } else if (key[1] === "hitPoints") {
+                DoDActiveEffect.deferChange(actor, change);
+            } else if (key[1] === "willPoints") {
+                DoDActiveEffect.deferChange(actor, change);
+            } else if(key[1] === "attributes") {
+                if (actor.system.attributes) {
+                    return super.apply(actor, change);
+                }
+            } else if(key[1] === "ferocity") {
+                if (actor.system.ferocity) {
+                    return super.apply(actor, change);
+                }
+            }    
         }
     }
 
@@ -59,7 +61,7 @@ export default class DoDActiveEffect extends ActiveEffect {
                 change.effect.applyDeferredChange(actor, change);
                 
                 // Clean up the value
-                const fieldName = change.key.substring(String("system.").length);
+                const fieldName = change.key.replace("system.", "");
                 const field = actor.system.schema.getField(fieldName);
                 const newValue = foundry.utils.getProperty(actor, change.key);
                 const cleanValue = field.clean(newValue);
@@ -79,9 +81,9 @@ export default class DoDActiveEffect extends ActiveEffect {
     applyDeferredChange(actor, change) {
         let key = change.key.split(".");
 
-        if (key[0] === "damageBonus") {
-            this.applyDamageBonusChange(actor, change, key[1]);
-        } else if (key[0] === "system") {
+        if (key[1] === "damageBonus") {
+            this.applyDamageBonusChange(actor, change, key[2]);
+        } else {
             super.apply(actor, change);
         }
     }
@@ -106,21 +108,21 @@ export default class DoDActiveEffect extends ActiveEffect {
                     if(!isNaN(i)) {
                         index += i;
                     }
-                    index = DoD_Utility.clamp(index, 0, entries.length);
+                    index = DoD_Utility.clamp(index, 0, entries.length-1);
                     value = entries[index][0];    
                 }
                 break;
             case modes.OVERRIDE:
                 value = DoD.dice[String(change.value).toLowerCase()];
                 index = entries.findIndex(e => e[1] == value);
-                index = DoD_Utility.clamp(index, 0, entries.length);
+                index = DoD_Utility.clamp(index, 0, entries.length-1);
                 value = index > 0 ? value : DoD.dice.none;
             case modes.UPGRADE:
                 {
                     let upgradeValue = DoD.dice[String(change.value).toLowerCase()];
                     let upgradeIndex = entries.findIndex(e => e[1] == upgradeValue);
                     index = Math.max(index, upgradeIndex);
-                    index = DoD_Utility.clamp(index, 0, entries.length);
+                    index = DoD_Utility.clamp(index, 0, entries.length-1);
                     value = entries[index][0];
                 }
                 break;
@@ -129,7 +131,7 @@ export default class DoDActiveEffect extends ActiveEffect {
                     let downgradeValue = DoD.dice[String(change.value).toLowerCase()];
                     let downgradeIndex = entries.findIndex(e => e[1] == downgradeValue);
                     index = Math.min(index, downgradeIndex);
-                    index = DoD_Utility.clamp(index, 0, entries.length);
+                    index = DoD_Utility.clamp(index, 0, entries.length-1);
                     value = entries[index][0];
                 }
                 break;
