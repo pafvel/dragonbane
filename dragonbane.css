@@ -708,6 +708,9 @@
 .DoD.sheet.character input:focus {
   color: black;
 }
+.DoD.sheet.character select:focus {
+  color: black;
+}
 .DoD.sheet.character .value-increased {
   color: var(--dod-color-positive-effect);
 }

@@ -62,22 +62,18 @@ export default class DoDCharacterSheet extends ActorSheet {
      async _render(force, options) {
         let result = await super._render(force, options);
 
-        // Attributes
-        let attributes = this.element.find("input.attribute-input");
-        // Damage bonus, movement, hp, wp
-        let effects = this.element.find(".active-effect-value");
-
         // Format if affected by active effects
-        let elements = $.merge(attributes, effects);
+        const elements = this.element.find(".active-effect-property");
+
         for (let i = 0; i < elements.length; i++) {
             const e = elements[i];
-            const propertyName = e.id !== "" ? e.id : e.name;
+            const propertyName = e.dataset.property;
             if (!propertyName) {
                 continue;
             }
-            let value = foundry.utils.getProperty(this.actor, propertyName);
-            let max =  foundry.utils.getProperty(this.actor, propertyName.replace(".value", ".max"));
-            let base =  foundry.utils.getProperty(this.actor, propertyName.replace(".value", ".base"));
+            let value = foundry.utils.getProperty(this.actor, propertyName + ".value");
+            let max =  foundry.utils.getProperty(this.actor, propertyName + ".max");
+            let base =  foundry.utils.getProperty(this.actor, propertyName + ".base");
            
             // If the property has a max value, then use it to compare with base ("value" is the current value)
             if (max) {
@@ -434,9 +430,14 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find("[data-action='roll-advancement']").on("click contextmenu", this._onAdvancementRoll.bind(this))
             html.find(".mark-advancement").on("click", this._onMarkAdvancement.bind(this))
 
-            html.find(".hit-points-max-label").change(this._onEditHp.bind(this));
+            html.find(".hit-points-max-label").focus(this._onFocusResource.bind(this));
+            html.find(".hit-points-max-label").blur(this._onBlurResource.bind(this));
+            html.find(".hit-points-max-label").change(this._onEditResource.bind(this));
             html.find(".hit-points-current-label").change(this._onEditCurrentHp.bind(this));
-            html.find(".will-points-max-label").change(this._onEditWp.bind(this));
+
+            html.find(".will-points-max-label").focus(this._onFocusResource.bind(this));
+            html.find(".will-points-max-label").blur(this._onBlurResource.bind(this));
+            html.find(".will-points-max-label").change(this._onEditResource.bind(this));
             html.find(".will-points-current-label").change(this._onEditCurrentWp.bind(this));
 
             html.find(".hit-points-box").on("click contextmenu", this._onHitPointClick.bind(this));
@@ -783,31 +784,41 @@ export default class DoDCharacterSheet extends ActorSheet {
     _onFocusAttribute(event) {
         // Edit base
         const element = event.currentTarget;
-        const property = element.name.replace(".value", ".base");
-        const value = foundry.utils.getProperty(this.actor, property);
-
-        element.value = value;
+        const propertyBase = element.dataset.property + ".base";
+        const valueBase = foundry.utils.getProperty(this.actor, propertyBase);
+        element.value = valueBase;
     }
 
     _onBlurAttribute(event) {
         // Show value
         const element = event.currentTarget;
-        element.value = foundry.utils.getProperty(this.actor, element.name); 
+        const propertyValue = element.dataset.property + ".value";
+        element.value = foundry.utils.getProperty(this.actor, propertyValue); 
     }
 
     async _onEditAttribute(event) {
-        event.preventDefault();
 
         const element = event.currentTarget;
-        const newValue = element.value;
+        const newValue = element.dataset.dtype == "Number" ? Number(element.value) : element.value;
+
+        event.preventDefault();
         event.currentTarget.blur();
 
-        if (newValue < 1 || newValue > 18) {
-            element.value = element.defaultValue;
-            DoD_Utility.WARNING("DoD.WARNING.attributeOutOfRange")
+        // get the property
+        const propertyBase = element.dataset.property + ".base";
+        const fieldName = propertyBase.substring(String("system.").length);
+
+        // validate the value
+        const field = this.actor.system.schema.getField(fieldName);
+        const failure = field.validate(newValue);
+
+        if (failure) {
+            DoD_Utility.WARNING(failure.message);
+            return;
         }
-        const property = element.name.replace(".value", ".base");
-        await this.actor.update({[property]: newValue});
+
+        // set new value
+        await this.actor.update({[propertyBase]: newValue});
     }
 
     async _onInlineEdit(event) {
@@ -886,19 +897,47 @@ export default class DoDCharacterSheet extends ActorSheet {
         return result;
     }
 
-    _onEditHp(event) {
+    _onFocusResource(event) {
+        // Edit base
+        const property = event.currentTarget.dataset.property;
+        const propertyBase = property + ".base";
+        const valueBase = foundry.utils.getProperty(this.actor, propertyBase);
+        event.currentTarget.value = valueBase;
+    }
+    _onBlurResource(event) {
+        // Show value
+        const property = event.currentTarget.dataset.property;
+        const propertyMax = property + ".max";
+        event.currentTarget.value = foundry.utils.getProperty(this.actor, propertyMax); 
+    }
+    _onEditResource(event) {
+
+        const inputValue = event.currentTarget.value;
+
+        if (isNaN(inputValue)) {
+            return;
+        }
+        
         event.preventDefault();
         event.currentTarget.blur();
 
-        const newMax = Math.max(1, Math.floor(event.currentTarget.value));
-        const currentDamage = Math.max(0, this.actor.system.hitPoints.base - this.actor.system.hitPoints.value);
-        const newValue = Math.max(0, newMax - currentDamage);
+        const property = event.currentTarget.dataset.property;
+        const propertyBase = property + ".base";
+        const propertyValue = property + ".value";
+
+        const currentBase = foundry.utils.getProperty(this.actor, propertyBase);
+        const currentValue = foundry.utils.getProperty(this.actor, propertyValue);
+        const currentDelta = Math.max(0, currentBase - currentValue);
+
+        const newBase = Math.max(1, Math.floor(inputValue));
+        const newValue = Math.max(0, newBase - currentDelta);
 
         return this.actor.update({
-            ["system.hitPoints.base"]: newMax,
-            ["system.hitPoints.value"]: newValue
+            [propertyBase]: newBase,
+            [propertyValue]: newValue
         });
     }
+
     _onEditCurrentHp(event) {
         event.preventDefault();
         event.currentTarget.blur();

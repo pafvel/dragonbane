@@ -425,11 +425,7 @@ export class DoDActor extends Actor {
 
     _prepareCharacterBaseStats() {
         // Will Points
-        if (!this.system.willPoints || !Number.isInteger(this.system.willPoints.max)) {
-            this.update({
-                ["system.willPoints.max"]: 10,
-                ["system.willPoints.value"]: 10 });
-        }
+        this.system.willPoints.max = this.system.willPoints.base;
     }
 
     _prepareNpcStats() {

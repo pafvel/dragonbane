@@ -57,8 +57,17 @@ export default class DoDActiveEffect extends ActiveEffect {
         if (actor.system.deferredChanges) {
             for (let change of actor.system.deferredChanges) {
                 change.effect.applyDeferredChange(actor, change);
+                
+                // Clean up the value
+                const fieldName = change.key.substring(String("system.").length);
+                const field = actor.system.schema.getField(fieldName);
+                const newValue = foundry.utils.getProperty(actor, change.key);
+                const cleanValue = field.clean(newValue);
+                if (cleanValue !== newValue) {
+                    foundry.utils.setProperty(actor, change.key, cleanValue);
+                }
             }
-            delete actor.system.deferredChanges;    
+            delete actor.system.deferredChanges;
         }
     }
 

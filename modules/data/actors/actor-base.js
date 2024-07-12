@@ -6,8 +6,20 @@ export default class DoDActorBaseData extends DragonbaneDataModel {
         return this.mergeSchema(super.defineSchema(), {
             description: new fields.StringField({ required: true, initial: "" }),
             movement: new fields.SchemaField({
-                base: new fields.NumberField({ required: true, initial: 10 }),
-                value: new fields.NumberField({ required: true, initial: 10 })
+                base: new fields.NumberField({ 
+                    required: true,
+                    nullable: false,
+                    integer: true,
+                    initial: 10,
+                    min: 1,
+                    }),
+                value: new fields.NumberField({
+                    required: true,
+                    nullable: false,
+                    integer: true,
+                    initial: 10,
+                    min: 1,
+                })
             }),
             hitPoints: new fields.SchemaField({
                 value: new fields.NumberField({ required: true, initial: 10 }),
