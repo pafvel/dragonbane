@@ -33,8 +33,8 @@
                         </tr>
                         {{#if isItemEffect}}
                         <tr>
-                            <th title="{{ labels.transfer.hint }}">{{ labels.transfer.name }}</th>
-                            <td><input type="checkbox" name="transfer" {{checked data.transfer}}/></td>
+                            <th title="{{localize "DoD.effect.applyWhenEquippedTooltip"}}">{{localize "DoD.effect.applyWhenEquipped"}}</th>
+                            <td><input type="checkbox" name="applyOnlyWhenEquipped" {{checked data.applyOnlyWhenEquipped}}/></td>
                         </tr>
                         {{/if}}
                     </table>    

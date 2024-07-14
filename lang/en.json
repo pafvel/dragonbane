@@ -138,6 +138,10 @@
             "system": "Dragonbane",
             "textureTransparent": "Dragonbane (Transparent)"
         },
+        "effect": {
+            "applyWhenEquipped": "Apply only when equipped",
+            "applyWhenEquippedTooltip": "If checked, this effect will only be enabled if the item is equipped"
+        },
         "item": {
             "new": "New Item"
         },

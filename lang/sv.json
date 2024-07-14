@@ -139,6 +139,10 @@
             "system": "Drakar och Demoner",
             "textureTransparent": "Drakar och Demoner (Genomskinlig)"
         },
+        "effect": {
+            "applyWhenEquipped": "Applicera om föremålet är till hands",
+            "applyWhenEquippedTooltip": "Effekten appliceras endast om aktören har föremålet till hands eller har på sig föremålet"
+        },
         "item": {
             "new": "Nytt föremål"
         },

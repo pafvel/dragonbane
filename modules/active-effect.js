@@ -8,6 +8,36 @@ export default class DoDActiveEffect extends ActiveEffect {
         return this.isOwner && this.parent instanceof DoDActor;
     }
 
+    get applyOnlyWhenEquipped() {
+        const flag = this.getFlag(game.system.id, "applyOnlyWhenEquipped");
+        return !!flag;
+    }
+    set applyOnlyWhenEquipped(value) {
+        this.setFlag(game.system.id, "applyOnlyWhenEquipped", value);
+    }
+
+    toObject(source=true) {
+        const data = super.toObject(source);
+        data.applyOnlyWhenEquipped = this.applyOnlyWhenEquipped;
+        return data;
+    }
+  
+    async update(data={}, context={}) {
+        if ("applyOnlyWhenEquipped" in data) {
+            await this.setFlag(game.system.id, "applyOnlyWhenEquipped", data.applyOnlyWhenEquipped);
+        }
+        return super.update(data, context);
+    }
+  
+    get isSuppressed() {
+        // If applyOnlyWhenEquipped is true, check if the item is equipped
+        // NPCs and Monsters don't have equip checkboxes - assume that items are always equipped. Disable on effects tab instead.
+        if (this.parent instanceof Item && !this.parent.system.worn && this.applyOnlyWhenEquipped && this.target?.type === "character") {
+            return true;
+        }
+        return false;
+    }
+
     /**
     * 
     * @param {Actor} actor                   The Actor to whom this effect should be applied
