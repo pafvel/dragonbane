@@ -390,7 +390,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
     _updateEncumbrance(sheetData) {
         if (this.actor.type === "character") {
-            sheetData.maxEncumbrance = Math.ceil(0.5 * this.actor.system.attributes.str.value);
+            sheetData.maxEncumbrance = this.actor.system.maxEncumbrance.value;
             if (sheetData.inventory.find(item => item.system.type === "backpack")) {
                 sheetData.maxEncumbrance += 2;
             }

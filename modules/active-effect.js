@@ -57,6 +57,8 @@ export default class DoDActiveEffect extends ActiveEffect {
                 DoDActiveEffect.deferChange(actor, change);
             } else if (key[1] === "willPoints") {
                 DoDActiveEffect.deferChange(actor, change);
+            } else if (key[1] === "maxEncumbrance") {
+                DoDActiveEffect.deferChange(actor, change);
             } else if(key[1] === "attributes") {
                 if (actor.system.attributes) {
                     return super.apply(actor, change);

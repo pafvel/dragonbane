@@ -413,6 +413,9 @@ export class DoDActor extends Actor {
 
         this.system.movement.base = defaultMovement + movementModifier + moveBonuses;
         this.system.movement.value = this.system.movement.base;
+
+        this.system.maxEncumbrance.base = Math.ceil(0.5 * this.system.attributes.str.value);
+        this.system.maxEncumbrance.value = this.system.maxEncumbrance.base;
     }
 
     _prepareActorStats() {

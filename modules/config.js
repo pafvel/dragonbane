@@ -142,4 +142,5 @@ DoD.activeEffectChanges = {
     "system.damageBonus.agl.value" : "DoD.ui.character-sheet.damageBonusAGL",
     "system.damageBonus.str.value" : "DoD.ui.character-sheet.damageBonusSTR",
     "system.ferocity.value" : "DoD.ui.character-sheet.ferocity",
+    "system.maxEncumbrance.value" : "DoD.ui.character-sheet.max-encumbrance",
 };
