@@ -1,17 +1,21 @@
-.DoD.sheet.item form {
+.DoD.sheet.item form,
+.DoD.sheet.active-effect-sheet form {
   display: flex;
   flex-direction: column;
   font-family: QTFrizQuad;
 }
-.DoD.sheet.item .window-content {
+.DoD.sheet.item .window-content,
+.DoD.sheet.active-effect-sheet .window-content {
   background: url(art/ui/item-sheet-bg.webp) repeat;
   background-position: top center;
   padding: 0px;
 }
-.DoD.sheet.item .sheet-header {
+.DoD.sheet.item .sheet-header,
+.DoD.sheet.active-effect-sheet .sheet-header {
   padding: 8px;
 }
-.DoD.sheet.item .sheet-header h1 {
+.DoD.sheet.item .sheet-header h1,
+.DoD.sheet.active-effect-sheet .sheet-header h1 {
   background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/title-bar.webp");
   background-position: left center, right center, center center;
   background-repeat: no-repeat, no-repeat, repeat-x;
@@ -20,15 +24,18 @@
   padding-left: 48px;
   padding-right: 48px;
 }
-.DoD.sheet.item .sheet-header input {
+.DoD.sheet.item .sheet-header input,
+.DoD.sheet.active-effect-sheet .sheet-header input {
   color: whitesmoke;
   text-align: center;
   border: 0px;
 }
-.DoD.sheet.item .sheet-header img {
+.DoD.sheet.item .sheet-header img,
+.DoD.sheet.active-effect-sheet .sheet-header img {
   border-color: transparent;
 }
-.DoD.sheet.item .sheet-content {
+.DoD.sheet.item .sheet-content,
+.DoD.sheet.active-effect-sheet .sheet-content {
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -37,7 +44,8 @@
   background-size: auto 12px, auto 12px;
   padding-bottom: 0px;
 }
-.DoD.sheet.item .sheet-content .sheet-tabs {
+.DoD.sheet.item .sheet-content .sheet-tabs,
+.DoD.sheet.active-effect-sheet .sheet-content .sheet-tabs {
   width: 100%;
   background-image: url("art/ui/table-row-banner.webp");
   background-repeat: repeat-x;
@@ -45,28 +53,35 @@
   background-size: auto 100%;
   border-color: transparent;
 }
-.DoD.sheet.item .sheet-content .sheet-body {
+.DoD.sheet.item .sheet-content .sheet-body,
+.DoD.sheet.active-effect-sheet .sheet-content .sheet-body {
   padding: 0px 8px 0px 8px;
 }
-.DoD.sheet.item .sheet-content input:invalid {
+.DoD.sheet.item .sheet-content input:invalid,
+.DoD.sheet.active-effect-sheet .sheet-content input:invalid {
   color: red;
 }
-.DoD.sheet.item .sheet-content input:valid {
+.DoD.sheet.item .sheet-content input:valid,
+.DoD.sheet.active-effect-sheet .sheet-content input:valid {
   color: black;
 }
-.DoD.sheet.item .sheet-content .item-table {
+.DoD.sheet.item .sheet-content .item-table,
+.DoD.sheet.active-effect-sheet .sheet-content .item-table {
   border: 0px;
   background: none;
 }
-.DoD.sheet.item .sheet-content .item-table th {
+.DoD.sheet.item .sheet-content .item-table th,
+.DoD.sheet.active-effect-sheet .sheet-content .item-table th {
   text-align: center;
   padding-left: 12px;
   padding-right: 0px;
 }
-.DoD.sheet.item .sheet-content .item-table th:last-child {
+.DoD.sheet.item .sheet-content .item-table th:last-child,
+.DoD.sheet.active-effect-sheet .sheet-content .item-table th:last-child {
   padding-right: 20px;
 }
-.DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) {
+.DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2),
+.DoD.sheet.active-effect-sheet .sheet-content .item-table tr:nth-child(1n+2) {
   background-image: url("art/ui/table-row-left.webp"), url("art/ui/table-row-right.webp"), url("art/ui/table-row-banner.webp");
   background-position: left center, right center, center center;
   background-repeat: no-repeat, no-repeat, repeat-x;
@@ -75,31 +90,37 @@
   border-left: 8px transparent;
   border-right: 8px transparent;
 }
-.DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) td {
+.DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) td,
+.DoD.sheet.active-effect-sheet .sheet-content .item-table tr:nth-child(1n+2) td {
   text-align: center;
   padding-left: 16px;
   padding-right: 0px;
 }
-.DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) td input {
+.DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) td input,
+.DoD.sheet.active-effect-sheet .sheet-content .item-table tr:nth-child(1n+2) td input {
   border: 0px;
   background: transparent;
 }
-.DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) td:nth-child(1n+2) {
+.DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) td:nth-child(1n+2),
+.DoD.sheet.active-effect-sheet .sheet-content .item-table tr:nth-child(1n+2) td:nth-child(1n+2) {
   background-image: url("art/ui/table-row-separator.webp");
   background-position: left center;
   background-repeat: no-repeat;
   background-size: contain;
 }
-.DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) td:last-child {
+.DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) td:last-child,
+.DoD.sheet.active-effect-sheet .sheet-content .item-table tr:nth-child(1n+2) td:last-child {
   padding-right: 20px;
 }
-.DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) select {
+.DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) select,
+.DoD.sheet.active-effect-sheet .sheet-content .item-table tr:nth-child(1n+2) select {
   border: 0px;
 }
-.DoD.sheet.item .sheet-content .editor {
+.DoD.sheet.item .sheet-content .editor,
+.DoD.sheet.active-effect-sheet .sheet-content .editor {
   height: 100%;
   width: 100%;
-  min-height: 100px;
+  min-height: 160px;
   align-self: center;
   background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/parchment-vertical.webp");
   background-position: left -16px bottom, right -16px bottom, center bottom 4px, left -16px top, right -16px top, center top 4px, center center;
@@ -112,17 +133,20 @@
   border-color: transparent;
   border-width: 16px;
 }
-.DoD.sheet.item .sheet-content .editor-content {
+.DoD.sheet.item .sheet-content .editor-content,
+.DoD.sheet.active-effect-sheet .sheet-content .editor-content {
   border-left: 12px;
   border-right: 12px;
   border-style: solid;
   border-color: transparent;
 }
-.DoD.sheet.item .sheet-content .editor-edit {
+.DoD.sheet.item .sheet-content .editor-edit,
+.DoD.sheet.active-effect-sheet .sheet-content .editor-edit {
   top: 21px;
   right: 12px;
 }
-.DoD.sheet.item .sheet-content .tox.tox-tinymce {
+.DoD.sheet.item .sheet-content .tox.tox-tinymce,
+.DoD.sheet.active-effect-sheet .sheet-content .tox.tox-tinymce {
   padding-left: 12px;
   padding-right: 12px;
 }
@@ -1254,7 +1278,8 @@
   font-family: QTFrizQuad;
   color: black;
 }
-.system-dragonbane .dialog .dialog-buttons .dialog-button {
+.system-dragonbane .dialog .dialog-buttons .dialog-button,
+.system-dragonbane .dod-button {
   background: url("art/ui/button-bg.webp");
   background-repeat: repeat-x;
   background-size: contain;
@@ -1284,6 +1309,9 @@
   margin-left: auto;
   float: right;
   color: #505050;
+}
+.system-dragonbane .effect-change {
+  border-bottom: 0px solid transparent;
 }
 .system-dragonbane .sheet-table-header {
   color: whitesmoke;
@@ -1549,6 +1577,9 @@
 .system-dragonbane .derived-stat option {
   text-align: center;
   text-align-last: center;
+}
+.system-dragonbane .derived-stat input[type="checkbox"] {
+  margin: 4px 5px;
 }
 .system-dragonbane .text-box {
   position: relative;
