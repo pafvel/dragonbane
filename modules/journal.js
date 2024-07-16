@@ -268,6 +268,40 @@ export async function enrichDisplayNpcCard(match, options) {
                 </td></tr>`
         }
 
+        // Magic tricks
+        const tricks = npc.items.filter(i => i.type === "spell" && !(i.system.rank > 0));
+        if (tricks.length > 0) {
+            html += `
+            <tr><td>
+                <div class="flexrow list-row">
+                    <div><b>${game.i18n.localize("DoD.ui.character-sheet.tricks")}:&nbsp</b></div>
+                    <div><span class="comma-list">`;
+            for (const trick of tricks) {
+                html += `<span>${trick.name}</span>`
+            }
+            html += `
+                        </span></div>
+                    </div>
+                </td></tr>`
+        }
+
+        // Spells
+        const spells = npc.items.filter(i => i.type === "spell" && i.system.rank > 0);
+        if (spells.length) {
+            html += `
+            <tr><td>
+                <div class="flexrow list-row">
+                    <div><b>${game.i18n.localize("DoD.ui.character-sheet.spells")}:&nbsp</b></div>
+                    <div><span class="comma-list">`;
+            for (const spell of spells) {
+                html += `<span>${spell.name}</span>`
+            }
+            html += `
+                        </span></div>
+                    </div>
+                </td></tr>`            
+        }
+
         // Abilities
         if (npc.hasAbilities) {
             let abilities = npc.items.filter(i => i.type === "ability").sort(DoD_Utility.nameSorter);
@@ -297,23 +331,6 @@ export async function enrichDisplayNpcCard(match, options) {
                         <div ><span class="comma-list">`;
             for (const ability of abilities) {
                 html += `<span>${ability.name}</span>`
-            }
-            html += `
-                        </span></div>
-                    </div>
-                </td></tr>`
-        }
-
-        // Spells
-        if (npc.hasSpells) {
-            const spells = npc.items.filter(i => i.type === "spell");
-            html += `
-                <tr><td>
-                    <div class="flexrow list-row">
-                        <div><b>${game.i18n.localize("DoD.ui.character-sheet.spells")}:&nbsp</b></div>
-                        <div><span class="comma-list">`;
-            for (const spell of spells) {
-                html += `<span>${spell.name}</span>`
             }
             html += `
                         </span></div>
