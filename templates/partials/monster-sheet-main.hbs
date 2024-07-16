@@ -28,16 +28,22 @@
                         {{/each}}
                     </td>
                 </tr>
+                {{#if tricks}}
+                <tr class="item-list">
+                    <th><b>{{localize "DoD.ui.character-sheet.tricks"}}</b></th>
+                    <td class="comma-list">
+                        {{#each tricks as |spell spellId|}}
+                        <a class="rollable-skill sheet-table-data item-delete-key item" data-item-id="{{spell.id}}">{{spell.name}}</a>
+                        {{/each}}
+                    </td>
+                </tr>
+                {{/if}}
                 {{#if spells}}
                 <tr class="item-list">
                     <th><b>{{localize "DoD.ui.character-sheet.spells"}}</b></th>
                     <td class="comma-list">
                         {{#each spells as |spell spellId|}}
-                        {{#if spell.system.rank}}
-                        <a class="rollable-skill sheet-table-data item-delete-key item" data-item-id="{{spell.id}}">{{spell.name}} {{spell.system.skillValue}}</a>
-                        {{else}}
                         <a class="rollable-skill sheet-table-data item-delete-key item" data-item-id="{{spell.id}}">{{spell.name}}</a>
-                        {{/if}}
                         {{/each}}
                     </td>
                 </tr>

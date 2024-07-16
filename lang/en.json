@@ -435,6 +435,8 @@
                 "traits": "Traits",
                 "trained-skills": "Skills",
                 "trained-skillsTooltip": "Skills with skill value higher than the base chance",
+                "trick": "Magic Trick",
+                "tricks": "Magic Tricks",
                 "weakness": "Weakness",
                 "weapons": "Weapons",
                 "weaponSkills": "Weapon Skills",

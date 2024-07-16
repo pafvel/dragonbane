@@ -84,6 +84,43 @@
                 </table>
             </div>
         </div>
+        <div class="flexrow">
+        {{#if hasTricks }}
+        <div>
+            {{!-- Spells --}}
+            <table class="sheet-table item-list spells">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th class="text-header">
+                        {{localize "DoD.ui.character-sheet.trick"}}
+                    </th>
+                    <th></th>
+                    {{#unless hasSpells}}
+                    <th></th>
+                    {{/unless}}
+                </tr>
+                {{#each tricks as |spell spellId|}}
+                <tr class="sheet-table-data item" data-item-id="{{spell.id}}">
+                    <td></td>
+                    <td class="text-data">
+                        <a class="rollable-skill">{{spell.name}}</a>
+                    </td>
+                    <td class="icon-data">
+                        <a class="item-delete" data-type="spell">
+                            <i class="fas fa-trash"></i>
+                        </a>    
+                        <a class="item-edit" data-type="spell">
+                            <i class="fas fa-edit"></i>
+                        </a>            
+                    </td>
+                    {{#unless hasSpells}}
+                    <td></td>
+                    {{/unless}}
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+        {{/if}}
         {{#if hasSpells }}
         <div>
             {{!-- Spells --}}
@@ -94,7 +131,7 @@
                         {{localize "DoD.ui.character-sheet.skillValue"}}
                     </th>
                     <th class="text-header">
-                        {{localize "DoD.ui.character-sheet.spell"}}
+                        {{localize "DoD.ui.character-sheet.spell"}}&nbsp
                     </th>
                     <th class="number-header">
                         {{localize "DoD.spell.rank"}}
@@ -108,7 +145,9 @@
                         {{localize "DoD.ui.character-sheet.school"}}
                     </th>
                     <th></th>
+                    {{#unless hasTricks}}
                     <th></th>
+                    {{/unless}}
                 </tr>
                 {{#each spells as |spell spellId|}}
                 <tr class="sheet-table-data item" data-item-id="{{spell.id}}">
@@ -140,11 +179,14 @@
                             <i class="fas fa-edit"></i>
                         </a>            
                     </td>
+                    {{#unless ../hasTricks}}
                     <td></td>
+                    {{/unless}}
                 </tr>
                 {{/each}}
             </table>
         </div>
         {{/if}}
+        </div>
     </div>
 </div>

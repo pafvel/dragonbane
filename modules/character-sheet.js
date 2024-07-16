@@ -121,6 +121,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         const kinAbilities = [];
         const professionAbilities = [];
         const spells = [];
+        const tricks = [];
         const schools = {};
         const inventory = [];
         const equippedWeapons = [];
@@ -164,8 +165,12 @@ export default class DoDCharacterSheet extends ActorSheet {
             {
                 let spell = item;
 
-                spells.push(spell);
-
+                if (spell.system.rank > 0) {
+                    spells.push(spell);
+                } else {
+                    tricks.push(spell);
+                }
+                
                 if (!schools[spell.system.school]) {
                     schools[spell.system.school] = [];
                 }
@@ -270,6 +275,9 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.spells = spells?.sort(DoD_Utility.nameSorter);
         sheetData.hasSpells = spells.length > 0;
         sheetData.memorizedSpells = sheetData.spells?.filter(s => s.system.memorized);
+        sheetData.tricks = tricks?.sort(DoD_Utility.nameSorter);
+        sheetData.hasTricks = tricks.length > 0;
+        sheetData.hasSpellsOrTricks = sheetData.hasSpells || sheetData.hasTricks;
 
         sheetData.inventory = inventory?.sort(DoD_Utility.itemSorter);
         sheetData.equippedWeapons = equippedWeapons?.sort(DoD_Utility.itemSorter);

@@ -68,7 +68,7 @@
           {{!-- Default tab is specified in dod-character-sheet.js --}}
           <a class="item" data-tab="main">{{localize "DoD.ui.character-sheet.main"}}</a>
           <a class="item" data-tab="skills">{{localize "DoD.ui.character-sheet.skills"}}</a>
-          {{#if hasSpells}}
+          {{#if hasSpellsOrTricks}}
           <a class="item" data-tab="abilities">{{localize "DoD.ui.character-sheet.abilities"}} {{localize "DoD.ui.character-sheet.and"}} {{localize "DoD.ui.character-sheet.spells"}}</a>
           {{else}}
           <a class="item" data-tab="abilities">{{localize "DoD.ui.character-sheet.abilities"}}</a>
