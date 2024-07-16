@@ -18,7 +18,7 @@ export default class DoDSpellTest extends DoDSkillTest  {
 
     async getRollOptions() {
 
-        if (!this.skill) {
+        if (!this.skill && !this.autoSuccess) {
             DoD_Utility.WARNING("DoD.WARNING.missingMagicSchool", {spell: this.spell.name});
             return {cancelled: true};
         }

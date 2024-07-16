@@ -440,7 +440,7 @@ async function onMagicDamageRoll(event) {
     if (spell?.isDamaging) {
 
         let damage = spell.system.damage;
-        if (powerLevel > 1 && spell.system.damagePerPowerlevel.length > 0) {
+        if (powerLevel > 1 && spell.system.damagePerPowerlevel?.length > 0) {
             for (let i = 1; i < powerLevel; ++i) {
                 if (damage.length > 0) {
                     damage += " + ";
