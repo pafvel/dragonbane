@@ -720,7 +720,10 @@ export async function applyDamageMessage(damageData) {
             ${game.i18n.format(game.i18n.localize("DoD.ui.chat.damageApplied"), {damage: "???", actor: actorName})}
             ${message}
         </div>`;
-    ChatMessage.create({ content: html });
+    ChatMessage.create({ 
+        user: game.user.id,
+        content: html
+    });
 }
 
 export async function applyHealingMessage(damageData) {
@@ -764,7 +767,10 @@ export async function applyHealingMessage(damageData) {
         }
     }
 
-    ChatMessage.create({ content: msg });
+    ChatMessage.create({
+        user: game.user.id,
+        content: msg
+    });
 }
 
 export function hideChatPermissions(_app, html, _data) {

@@ -641,12 +641,20 @@ export default class DoDCharacterSheet extends ActorSheet {
                 }
                 const actorName = actor.isToken ? actor.token.name : actor.name;
                 const msg = "<p>" + game.i18n.format("DoD.ui.chat.characterDied", {actor: actorName}) + "</p>";
-                ChatMessage.create({ content: msg });
+                ChatMessage.create({ 
+                    user: game.user.id,
+                    speaker: ChatMessage.getSpeaker({ actor }),
+                    content: msg
+                });
             }
             if (actor.system.deathRolls.successes === 3) {
                 const actorName = actor.isToken ? actor.token.name : actor.name;
                 const msg = "<p>" + game.i18n.format("DoD.ui.chat.characterSurvived", {actor: actorName}) + "</p>";
-                ChatMessage.create({ content: msg });
+                ChatMessage.create({
+                    user: game.user.id,
+                    speaker: ChatMessage.getSpeaker({ actor }),
+                    content: msg
+                });
                 await actor.update({["system.deathRolls.failures"]: 0, ["system.deathRolls.successes"]: 0});
             }
 
@@ -1031,6 +1039,8 @@ export default class DoDCharacterSheet extends ActorSheet {
                             }
 
                             ChatMessage.create({
+                                user: game.user.id,
+                                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
                                 content: content,
                             });
                             }

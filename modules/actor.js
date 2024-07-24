@@ -554,6 +554,8 @@ export class DoDActor extends Actor {
                 </div>`;
             }
             ChatMessage.create({
+                user: game.user.id,
+                speaker: ChatMessage.getSpeaker({ actor: this }),
                 content: content,
             });
         }
@@ -908,6 +910,7 @@ export class DoDActor extends Actor {
         const content = await renderTemplate(template, context);
         const msg = await roll.toMessage({
             user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this }),
             actor: this,
             flavor: game.i18n.format("DoD.ui.character-sheet.restRound", {actor: this.name, wp: newWP - currentWP}),
             content: content
@@ -977,6 +980,7 @@ export class DoDActor extends Actor {
         const content = await renderTemplate(template, context);
         const msg = await roll.toMessage({
             user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this }),
             actor: this,
             flavor: game.i18n.format("DoD.ui.character-sheet.restStretch", {actor: this.name, hp: newHP - currentHP, wp: newWP - currentWP}),
             content: content
@@ -1027,6 +1031,7 @@ export class DoDActor extends Actor {
 
         ChatMessage.create({
             user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this }),
             flavor: game.i18n.format("DoD.ui.character-sheet.restShift", {actor: this.name, hp: newHP - currentHP, wp: newWP - currentWP}),
             content: msg
         });
@@ -1052,6 +1057,7 @@ export class DoDActor extends Actor {
 
         ChatMessage.create({
             user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this }),
             flavor: game.i18n.format("DoD.ui.character-sheet.restReset", {actor: this.name})
         });
     }    
