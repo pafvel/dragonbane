@@ -891,9 +891,9 @@ export default class DoDCharacterSheet extends ActorSheet {
 
             // Handle enable/disable effect
             if (field === "effect.disabled") {
-                const effectId = element.closest(".sheet-table-data").dataset.effectId;
+                const effectUuid = element.closest(".sheet-table-data").dataset.effectUuid;
                 const effects = Array.from(this.actor.allApplicableEffects());
-                let effect = effects.find((e) => e.id === effectId);
+                let effect = effects.find((e) => e.uuid === effectUuid);
                 return await effect.update({ ["disabled"]: element.checked });
             }
             return await item.update({ [field]: element.checked });
@@ -1587,16 +1587,16 @@ export default class DoDCharacterSheet extends ActorSheet {
     async _onEffectEdit(event) {
         event.preventDefault();
         const element = event.currentTarget;
-        const effectId = element.closest(".sheet-table-data").dataset.effectId;
-        const effect = Array.from(this.actor.allApplicableEffects()).find(e => e.id === effectId);
+        const effectUuid = element.closest(".sheet-table-data").dataset.effectUuid;
+        const effect = Array.from(this.actor.allApplicableEffects()).find(e => e.uuid === effectUuid);
         
         effect?.sheet.render(true);
     }
     async _onEffectDelete(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let effectId = element.closest(".sheet-table-data").dataset.effectId;
-        let effect = this.actor.effects.get(effectId);
+        let effectUuid = element.closest(".sheet-table-data").dataset.effectUuid;
+        let effect = fromUuidSync(effectUuid);
 
         const ok = await this._itemDeleteDialog(effect);
         if (!ok) {
