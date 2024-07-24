@@ -700,6 +700,10 @@ export default class DoDCharacterSheet extends ActorSheet {
         let test = new DoDAttributeTest(this.actor, "con", options);
         await test.roll();
 
+        if (test.options.cancelled) {
+            return;
+        }
+        
         const success = test.postRollData.success;
         const isDragon = test.postRollData.isDragon;
         const isDemon = test.postRollData.isDemon;
