@@ -226,12 +226,13 @@ function registerSettings() {
         type: Boolean
     });
     // If true, autmatically marks Monsters as dead when the reach 0 HP
-    game.settings.register("dragonbane", "canEquipItems", {
+    // canEquipItems2 replaces canEquipItems to ensure the new default value
+    game.settings.register("dragonbane", "canEquipItems2", {
         name: "DoD.SETTINGS.canEquipItems",
         hint: "DoD.SETTINGS.canEquipItemsHint",
         scope: "world",
         config: true,
-        default: false,
+        default: true,
         type: Boolean
     });
     // If true, hides WP gadget if NPC has 0 WP and no spells or abilities

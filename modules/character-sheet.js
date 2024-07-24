@@ -340,7 +340,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.hasArmor = equippedArmor || equippedHelmet;
         sheetData.smallItems = smallItems?.sort(DoD_Utility.itemSorter);
         sheetData.memento = memento;
-        sheetData.canEquipItems = game.settings.get("dragonbane", "canEquipItems");
+        sheetData.canEquipItems = game.settings.get("dragonbane", "canEquipItems2");
         sheetData.effects = Array.from(this.actor.allApplicableEffects());
 
         // Injuries
