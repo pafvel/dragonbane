@@ -9,6 +9,7 @@
         "TypeAbility": "Förmåga",
         "TypeArmor": "Rustning",
         "TypeHelmet": "Hjälm",
+        "TypeInjury": "Skada",
         "TypeItem": "Föremål",
         "TypeKin": "Släkte",
         "TypeProfession": "Yrke",
@@ -26,6 +27,7 @@
             "ability": "Förmåga",
             "armor": "Rustning",
             "helmet": "Hjälm",
+            "injury": "Skada",
             "item": "Föremål",
             "kin": "Släkte",
             "profession": "Yrke",
@@ -137,6 +139,10 @@
             "system": "Drakar och Demoner",
             "textureTransparent": "Drakar och Demoner (Genomskinlig)"
         },
+        "effect": {
+            "applyWhenEquipped": "Applicera om föremålet är till hands",
+            "applyWhenEquippedTooltip": "Effekten appliceras endast om aktören har föremålet till hands eller har på sig föremålet"
+        },
         "item": {
             "new": "Nytt föremål"
         },
@@ -175,6 +181,15 @@
         "helmet": {
             "new": "Ny hjälm",
             "rating": "Skyddsvärde"
+        },
+        "injury": {
+            "healingTime": "Läkningstid",
+            "healingTimeTooltip": "Antal dagar som det tar för skadan att läka",
+            "healingTimeExpired": "<b>{injury}</b> har läkt.",
+            "healingTimeRollFlavor": "Läkningstiden för <b>{injury}</b> är <b>{days}</b> dagar.",
+            "rollHealingTime": "Vänsterklicka för att slå för läkningstiden",
+            "clickHealingTime": "Vänsterklicka för att minska läkningstiden\rHögerklicka för att öka läkningstiden",
+            "healingTimeChanged": "Läkningstiden för <b>{injury}</b> ändrades från <b>{from}</b> till <b>{to}</b> dagar."
         },
         "itemTypes": {
             "item": "Föremål",
@@ -373,7 +388,9 @@
                 "armor": "Skydd",
                 "background": "Bakgrund",
                 "banes": "Nackdel på",
+                "baseValue": "Grundvärde: {value}",
                 "create-armor": "Skapa rustning",
+                "create-effect": "Skapa effekt",
                 "create-helmet": "Skapa hjälm",
                 "create-item": "Skapa föremål",
                 "create-weapon": "Skapa vapen",
@@ -384,6 +401,9 @@
                 "damageBonusSTR": "Skadebonus STY",
                 "deathRolls": "Döds-\nslag",
                 "description": "Beskrivning",
+                "disabled": "Inaktiv",
+                "effect": "Effekt",
+                "effects": "Effekter",
                 "encumbrance": "Belastning",
                 "equipped": "Till hands / Har på sig",
                 "equipped-armor": "Rustning",
@@ -398,6 +418,7 @@
                 "hitPointsCurrent": "Antal KP kvar",
                 "hitPointsMax": "Maximalt antal KP",
                 "hp": "KP",
+                "injuries": "Skador",
                 "inventory": "Packning",
                 "kin": "Släkte",
                 "kinAbilities": "Släktesförmågor",
@@ -431,6 +452,7 @@
                 "size": "Storlek",
                 "skills": "Färdigheter",
                 "skillValue": "FV",
+                "source": "Källa",
                 "spell": "Besvärjelse",
                 "spells": "Besvärjelser",
                 "spellsTooltip": "Förberedda besvärjelser",
@@ -516,8 +538,16 @@
                 "deleteActorTokenOnScene": "Scener med Spelfigurer som refererar till Karaktären",
                 "monsterAttack": "Attack",
                 "monsterAttackRandom": "Slump",
-                "monsterAttackTitle": "Välj monsterattack"
+                "monsterAttackTitle": "Välj monsterattack",
+                "healInjuriesTitle": "Läk skador",
+                "healInjuriesMessage": "Minska läkningstiden för alla oläkta skador med en dag?"
+
            }
+        },
+        "item-sheet": {
+            "details": "Detaljer",
+            "description": "Beskrivning",
+            "effects": "Effekter"
         },
         "INFO": {
             "monsterAttackUpdated": "Uppdaterade monsterattacker för {actor}.",

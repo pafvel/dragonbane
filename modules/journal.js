@@ -95,11 +95,11 @@ export async function enrichDisplayMonster (match, options) {
             <div class="${titleClasses}">@UUID[${monster.uuid}]{${monsterName}}</div>
             <table>
                 <tr>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity.value}</td>
                     <td><b>${game.i18n.localize("DoD.ui.character-sheet.size")}: </b>${game.i18n.localize("DoD.sizeTypes." + monster.system.size)}</td>
                 </tr>
                 <tr>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}: </b>${monster.system.movement}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}: </b>${monster.system.movement.value}</td>
                     <td><b>${game.i18n.localize("DoD.ui.character-sheet.armor")}: </b>${monster.getArmorValue()}</td>
                     <td><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}: </b>${monster.system.hitPoints.max}</td>
                 </tr>
@@ -139,8 +139,8 @@ export async function enrichDisplayMonsterDescriptionCard (match, _options) {
             </div>
             <table>
                 <tr>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity}</td>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}: </b>${monster.system.movement}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity.value}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}: </b>${monster.system.movement.value}</td>
                 </tr>
                 <tr>
                     <td><b>${game.i18n.localize("DoD.ui.character-sheet.size")}: </b>${game.i18n.localize("DoD.sizeTypes." + monster.system.size)}</td>
@@ -220,7 +220,7 @@ export async function enrichDisplayNpcCard(match, options) {
                 <tr><td>
                     
                     <div class="flexrow">
-                        <div><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}:&nbsp</b>${npc.system.movement}</div>`
+                        <div><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}:&nbsp</b>${npc.system.movement.value}</div>`
 
         if (npc.getDamageBonus("str") !== "") {
             html += `<div><b>${game.i18n.localize("DoD.ui.character-sheet.damageBonusSTR")}:&nbsp</b><span style="text-transform:uppercase">${npc.getDamageBonus("str")}</span></div>`;

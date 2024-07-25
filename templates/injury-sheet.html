@@ -1,7 +1,7 @@
 <form class="{{cssClass}}" autocomplete="off">
     <header class="sheet-header">
         <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
-        <h1><input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'Name' }}"/></h1>
+        <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
     </header>
     <div class="sheet-content">
         {{!-- Sheet Tab Navigation --}}
@@ -12,45 +12,23 @@
           <a class="item" data-tab="effects">{{localize "DoD.item-sheet.effects"}}</a>
         </nav>
 
+
         {{!-- Sheet Body --}}
         <section class="sheet-body" style="height: 100%">
             {{!-- Details Tab --}}
             <div class="tab" data-group="primary" data-tab="details">
+
                 <table class="item-table">
                     <tr>
-                        <th>{{localize "DoD.armor.rating"}}</th>
-                        <th>{{localize "DoD.armor.banes"}}</th>
+                        <th title="{{localize "DoD.injury.healingTimeTooltip"}}">{{localize "DoD.injury.healingTime"}}</th>
+                        <th>{{localize "DoD.ui.dialog.banes"}}</th>
                     </tr>
                     <tr>
                         <td>
-                            <input name="system.rating" type="text" value="{{system.rating}}" data-dtype="Number" />
+                            <input name="system.healingTime" type="text" value="{{system.healingTime}}" pattern="(\d+)?[dD](\d+)([\+\-]\d+)?|(([\+\-])?\d+)?" />
                         </td>
                         <td>
                             <input name="system.banes" type="text" value="{{system.banes}}" />
-                        </td>
-                    </tr>
-                </table>
-                <table class="item-table">
-                    <tr>
-                        <th>{{localize "DoD.gear.weight"}}</th>
-                        <th>{{localize "DoD.gear.quantity"}}</th>
-                        <th>{{localize "DoD.gear.cost"}}</th>
-                        <th>{{localize "DoD.gear.supply"}}</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <input name="system.weight" type="text" value="{{system.weight}}" data-dtype="Number" />
-                        </td>
-                        <td>
-                            <input name="system.quantity" type="text" value="{{system.quantity}}" data-dtype="Number" />
-                        </td>
-                        <td>
-                            <input name="system.cost" type="text" value="{{system.cost}}" />
-                        </td>
-                        <td>
-                            <select name="system.supply">
-                                {{selectOptions config.supplyTypes selected=system.supply localize=true}}
-                            </select>
                         </td>
                     </tr>
                 </table>
@@ -60,11 +38,9 @@
             <div class="tab" data-group="primary" data-tab="description" style="height: 100%">
                 {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
             </div>
-            
+
             {{!-- Effects Tab --}}
             {{> "systems/dragonbane/templates/partials/item-sheet-effects.hbs" }}
-        </section>
-    
+             
     </div>
 </form>
-

@@ -4,25 +4,25 @@
         <h1><input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'Name' }}"/></h1>
     </header>
     <div class="sheet-content">
-        {{!-- Kin Abilities --}}
-        <table class="sheet-table kin-abilities">
-            <tr>
-                <th>
-                    {{localize "DoD.ui.character-sheet.kinAbilities"}}
-                </th>
-                <th>
-                    {{localize "DoD.ui.character-sheet.movement"}}
-                </th>
-            <tr class="sheet-table-data" data-item-id="{{ability.id}}">
-                <td>
-                    <input class="edit-kin-abilities" name="system.abilities" type="text" value="{{system.abilities}}" />
-                </td>
-                <td>
-                    <input name="system.movement" type="text" value="{{system.movement}}" data-dtype="Number" />
-                </td>
-            </tr>
-        </table>
-
+        <div style="padding-left: 8px; padding-right: 8px">
+            <table class="item-table kin-abilities">
+                <tr>
+                    <th>
+                        {{localize "DoD.ui.character-sheet.kinAbilities"}}
+                    </th>
+                    <th>
+                        {{localize "DoD.ui.character-sheet.movement"}}
+                    </th>
+                <tr data-item-id="{{ability.id}}">
+                    <td>
+                        <input class="edit-kin-abilities" name="system.abilities" type="text" value="{{system.abilities}}" />
+                    </td>
+                    <td>
+                        <input name="system.movement" type="text" value="{{system.movement}}" data-dtype="Number" />
+                    </td>
+                </tr>
+            </table>
+        </div>
         {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
     </div>
 </form>

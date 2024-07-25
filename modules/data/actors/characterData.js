@@ -3,62 +3,33 @@ import DoDCharacterBaseData from "./character-base.js";
 export default class DoDCharacterData extends DoDCharacterBaseData {
     static defineSchema() {
         const { fields } = foundry.data;
+
+        function attributeField() {
+            return new fields.NumberField({
+                required: true,
+                nullable: false,
+                integer: true,
+                initial: 10,
+                min: 1,
+                max: 18
+            });
+        }
+
+        function attributeSchema() {
+            return new fields.SchemaField({
+                base: attributeField(),
+                value: attributeField(),
+            });
+        }
+
         return this.mergeSchema(super.defineSchema(), {
             attributes: new fields.SchemaField({
-                str: new fields.SchemaField({
-                    value: new fields.NumberField({
-                        required: true,
-                        nullable: false,
-                        integer: true,
-                        initial: 10,
-                        min: 0
-                    })
-                }),
-                con: new fields.SchemaField({
-                    value: new fields.NumberField({
-                        required: true,
-                        nullable: false,
-                        integer: true,
-                        initial: 10,
-                        min: 0
-                    })
-                }),
-                agl: new fields.SchemaField({
-                    value: new fields.NumberField({
-                        required: true,
-                        nullable: false,
-                        integer: true,
-                        initial: 10,
-                        min: 0
-                    })
-                }),
-                int: new fields.SchemaField({
-                    value: new fields.NumberField({
-                        required: true,
-                        nullable: false,
-                        integer: true,
-                        initial: 10,
-                        min: 0
-                    })
-                }),
-                wil: new fields.SchemaField({
-                    value: new fields.NumberField({
-                        required: true,
-                        nullable: false,
-                        integer: true,
-                        initial: 10,
-                        min: 0
-                    })
-                }),
-                cha: new fields.SchemaField({
-                    value: new fields.NumberField({
-                        required: true,
-                        nullable: false,
-                        integer: true,
-                        initial: 10,
-                        min: 0
-                    })
-                }),
+                str: attributeSchema(),
+                con: attributeSchema(),
+                agl: attributeSchema(),
+                int: attributeSchema(),
+                wil: attributeSchema(),
+                cha: attributeSchema(),
             }),
             conditions: new fields.SchemaField({
                 str: new fields.SchemaField({
@@ -90,10 +61,30 @@ export default class DoDCharacterData extends DoDCharacterBaseData {
             }),
             canRestRound: new fields.BooleanField({ required: false, initial: true }),
             canRestStretch: new fields.BooleanField({ required: false, initial: true }),
+            maxEncumbrance:  new fields.SchemaField({
+                base: new fields.NumberField({
+                    required: true, 
+                    integer: true,
+                    initial: 0,
+                    min: 0,
+                }),
+                value: new fields.NumberField({
+                    required: true, 
+                    integer: true,
+                    initial: 0,
+                    min: 0,
+                })
+            }),
         });
     };
 
     static migrateData(source) {
+        
+        for (const attribute in source.attributes) {
+            if (!("base" in source.attributes[attribute]) && ("value" in source.attributes[attribute])) {
+                source.attributes[attribute].base = source.attributes[attribute].value;
+            }
+        }
         return super.migrateData(source);
     }
 }

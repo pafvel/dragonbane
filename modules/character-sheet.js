@@ -59,6 +59,65 @@ export default class DoDCharacterSheet extends ActorSheet {
         return super.render(force, options);
      }
 
+     async _render(force, options) {
+        let result = await super._render(force, options);
+
+        // Format if affected by active effects
+        const elements = this.element.find(".active-effect-property");
+
+        for (let i = 0; i < elements.length; i++) {
+            const e = elements[i];
+            const propertyName = e.dataset.property;
+            if (!propertyName) {
+                continue;
+            }
+            let value = foundry.utils.getProperty(this.actor, propertyName + ".value");
+            let max =  foundry.utils.getProperty(this.actor, propertyName + ".max");
+            let base =  foundry.utils.getProperty(this.actor, propertyName + ".base");
+
+            // Style if affected by active effect
+            // If the property has a max value, then use it to compare with base ("value" is the current value)
+            if (max) {
+                value = max;
+            }
+
+            if (value === base) continue;
+
+            // Set title
+            let title = $(e).attr("title");
+            if (title == undefined) {
+                title = "";
+            } else {
+                title += "\r";
+            }
+            title += game.i18n.format("DoD.ui.character-sheet.baseValue", {value: base});
+            $(e).attr("title", title);
+            
+            // Prepare strings
+            if (typeof value === "string" || value instanceof String) {
+                value = value.toLowerCase();
+            }
+            if (typeof base === "string" || base instanceof String) {
+                base = base.toLowerCase();
+            }
+
+            // Hande damage bonus special case
+            if (propertyName.startsWith("system.damageBonus")) {
+                const entries = Object.entries(DoD.dice);
+                value = entries.findIndex(e => e[0] == value);
+                base = entries.findIndex(e => e[0] == base);
+            }
+
+            // Apply styling
+            if(value > base) {
+                $(e).addClass("value-increased");
+            } else if (value < base) {
+                $(e).addClass("value-decreased");
+            }
+        }
+        return result;
+     }
+
      #onKeydown(event) {
         if ((event.code === "Delete" || event.code === "Backspace") && this.#focusElement) {
             // Don't delete items if an input element has focus
@@ -125,6 +184,8 @@ export default class DoDCharacterSheet extends ActorSheet {
         const schools = {};
         const inventory = [];
         const equippedWeapons = [];
+        const injuries = [];
+
         let equippedArmor = sheetData.actor.system.equippedArmor;
         let equippedHelmet = sheetData.actor.system.equippedHelmet;
         let memento = null;
@@ -196,7 +257,6 @@ export default class DoDCharacterSheet extends ActorSheet {
                         item.update({ ["system.memento"]: false});
                     }
                 }
-
                 continue;
             }
 
@@ -221,7 +281,6 @@ export default class DoDCharacterSheet extends ActorSheet {
                 }
                 continue;
             }
-
             if (item.type === "item") {
                 if (item.system.weight === 0 && item.system.type !== "backpack" && this.actor.type === "character")
                 {
@@ -229,7 +288,9 @@ export default class DoDCharacterSheet extends ActorSheet {
                     continue;
                 }
                 inventory.push(item);
-
+            }
+            if (item.type === "injury") {
+                injuries.push(item);
             }
         }
 
@@ -287,7 +348,22 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.hasArmor = equippedArmor || equippedHelmet;
         sheetData.smallItems = smallItems?.sort(DoD_Utility.itemSorter);
         sheetData.memento = memento;
-        sheetData.canEquipItems = game.settings.get("dragonbane", "canEquipItems");
+        sheetData.canEquipItems = game.settings.get("dragonbane", "canEquipItems2");
+        sheetData.effects = Array.from(this.actor.allApplicableEffects());
+
+        // Injuries
+        sheetData.injuries = injuries?.sort(DoD_Utility.itemSorter);
+        for (let injury of injuries) {
+            let tooltip = DoD_Utility.removeEnrichment(injury.system.description);
+            injury.system.tooltip = DoD_Utility.removeHtml(tooltip);
+            if (isNaN(injury.system.healingTime)) {
+                injury.system.healingTimeTooltip = game.i18n.localize("DoD.injury.rollHealingTime");
+            } else {
+                injury.system.healingTimeTooltip = game.i18n.localize("DoD.injury.clickHealingTime");
+
+            }
+            
+        }
 
         this._updateEncumbrance(sheetData);
 
@@ -322,7 +398,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
     _updateEncumbrance(sheetData) {
         if (this.actor.type === "character") {
-            sheetData.maxEncumbrance = Math.ceil(0.5 * this.actor.system.attributes.str.value);
+            sheetData.maxEncumbrance = this.actor.system.maxEncumbrance.value;
             if (sheetData.inventory.find(item => item.system.type === "backpack")) {
                 sheetData.maxEncumbrance += 2;
             }
@@ -354,6 +430,9 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".item-delete-key").mouseleave(_event => { this.#focusElement = null; });
 
             html.find(".attribute-input").change(this._onEditAttribute.bind(this));
+            html.find(".attribute-input").focus(this._onFocusAttribute.bind(this));
+            html.find(".attribute-input").blur(this._onBlurAttribute.bind(this));
+
             html.find(".inline-edit").change(this._onInlineEdit.bind(this));
             html.find(".kin-edit").change(this._onKinEdit.bind(this));
             html.find(".profession-edit").change(this._onProfessionEdit.bind(this));
@@ -364,13 +443,19 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".condition-panel").click(this._onConditionClick.bind(this));
             html.find(".rollable-skill").on("click contextmenu", this._onSkillRoll.bind(this));
             html.find(".rollable-damage").on("click contextmenu", this._onDamageRoll.bind(this));
+            html.find(".rollable-healingTime").on("click contextmenu", this._onHealingTimeRoll.bind(this));
             html.find(".use-ability").on("click contextmenu", this._onUseAbility.bind(this));
             html.find("[data-action='roll-advancement']").on("click contextmenu", this._onAdvancementRoll.bind(this))
             html.find(".mark-advancement").on("click", this._onMarkAdvancement.bind(this))
 
-            html.find(".hit-points-max-label").change(this._onEditHp.bind(this));
+            html.find(".hit-points-max-label").focus(this._onFocusResource.bind(this));
+            html.find(".hit-points-max-label").blur(this._onBlurResource.bind(this));
+            html.find(".hit-points-max-label").change(this._onEditResource.bind(this));
             html.find(".hit-points-current-label").change(this._onEditCurrentHp.bind(this));
-            html.find(".will-points-max-label").change(this._onEditWp.bind(this));
+
+            html.find(".will-points-max-label").focus(this._onFocusResource.bind(this));
+            html.find(".will-points-max-label").blur(this._onBlurResource.bind(this));
+            html.find(".will-points-max-label").change(this._onEditResource.bind(this));
             html.find(".will-points-current-label").change(this._onEditCurrentWp.bind(this));
 
             html.find(".hit-points-box").on("click contextmenu", this._onHitPointClick.bind(this));
@@ -382,6 +467,10 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".death-rolls-failure-label").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
             html.find("[data-action='roll-deathRoll']").click(this._onDeathRoll.bind(this))
 
+            html.find(".effect-edit").on("click contextmenu", this._onEffectEdit.bind(this));
+            html.find(".effect-delete").click(this._onEffectDelete.bind(this));
+
+            
             let restRoundButton = html.find(".rest-round");
             if (restRoundButton?.length > 0) {
                 if (this.actor.system.canRestRound === false) {
@@ -619,6 +708,10 @@ export default class DoDCharacterSheet extends ActorSheet {
         let test = new DoDAttributeTest(this.actor, "con", options);
         await test.roll();
 
+        if (test.options.cancelled) {
+            return;
+        }
+        
         const success = test.postRollData.success;
         const isDragon = test.postRollData.isDragon;
         const isDemon = test.postRollData.isDemon;
@@ -696,16 +789,66 @@ export default class DoDCharacterSheet extends ActorSheet {
         await this.actor.restReset();
     }
 
-    _onEditAttribute(event) {
+    _getSubmitData(updateData = {}) {
+        // Prevents updating the base value (due to data migration)
+        // - if the input field still has focus when the sheet closes
+        // - if the input field has changed
+        // - if the value is unaffected by active effects
+        // If the field is affected by active effects, it will be ignored by the super implementation.
+        // Thus, the same behaviour us enforeced wether or not the attribute is affected by AE.
+        const data = super._getSubmitData(updateData);
+        const attributes = [
+            "system.attributes.str.value",
+            "system.attributes.con.value",
+            "system.attributes.agl.value",
+            "system.attributes.int.value",
+            "system.attributes.wil.value",
+            "system.attributes.cha.value",
+        ];
+        for ( let a of attributes ) {
+          delete data[a];
+        }
+        return data;
+    }
+
+    _onFocusAttribute(event) {
+        // Edit base
+        const element = event.currentTarget;
+        const propertyBase = element.dataset.property + ".base";
+        const valueBase = foundry.utils.getProperty(this.actor, propertyBase);
+        element.value = valueBase;
+    }
+
+    _onBlurAttribute(event) {
+        // Show value
+        const element = event.currentTarget;
+        const propertyValue = element.dataset.property + ".value";
+        element.value = foundry.utils.getProperty(this.actor, propertyValue); 
+    }
+
+    async _onEditAttribute(event) {
+
+        const element = event.currentTarget;
+        const newValue = element.dataset.dtype == "Number" ? Number(element.value) : element.value;
+
         event.preventDefault();
         event.currentTarget.blur();
 
-        let element = event.currentTarget;
-        if (element.value < 1 || element.value > 18) {
-            element.value = element.defaultValue;
-            DoD_Utility.WARNING("DoD.WARNING.attributeOutOfRange")
-            return false;
+        // get the property
+        const propertyBase = element.dataset.property + ".base";
+        const fieldName = propertyBase.substring(String("system.").length);
+
+        // validate the value
+        const field = this.actor.system.schema.getField(fieldName);
+        const failure = field.validate(newValue);
+
+        if (failure) {
+            DoD_Utility.WARNING(failure.message);
+            return;
         }
+
+        // set new value
+        await this.actor.update({[propertyBase]: newValue});
     }
 
     async _onInlineEdit(event) {
@@ -765,6 +908,14 @@ export default class DoDCharacterSheet extends ActorSheet {
                     return item.update({["system.mainHand"]: element.checked, "system.offHand": element.checked});
                 }
             }
+
+            // Handle enable/disable effect
+            if (field === "effect.disabled") {
+                const effectUuid = element.closest(".sheet-table-data").dataset.effectUuid;
+                const effects = Array.from(this.actor.allApplicableEffects());
+                let effect = effects.find((e) => e.uuid === effectUuid);
+                return await effect.update({ ["disabled"]: element.checked });
+            }
             return await item.update({ [field]: element.checked });
         }
 
@@ -776,25 +927,54 @@ export default class DoDCharacterSheet extends ActorSheet {
         return result;
     }
 
-    _onEditHp(event) {
+    _onFocusResource(event) {
+        // Edit base
+        const property = event.currentTarget.dataset.property;
+        const propertyBase = property + ".base";
+        const valueBase = foundry.utils.getProperty(this.actor, propertyBase);
+        event.currentTarget.value = valueBase;
+    }
+    _onBlurResource(event) {
+        // Show value
+        const property = event.currentTarget.dataset.property;
+        const propertyMax = property + ".max";
+        event.currentTarget.value = foundry.utils.getProperty(this.actor, propertyMax); 
+    }
+    _onEditResource(event) {
+
+        const inputValue = event.currentTarget.value;
+
+        if (isNaN(inputValue)) {
+            return;
+        }
+        
         event.preventDefault();
         event.currentTarget.blur();
 
-        const newMax = Math.max(1, Math.floor(event.currentTarget.value));
-        const currentDamage = Math.max(0, this.actor.system.hitPoints.max - this.actor.system.hitPoints.value);
-        const newValue = Math.max(0, newMax - currentDamage);
+        const property = event.currentTarget.dataset.property;
+        const propertyBase = property + ".base";
+        const propertyValue = property + ".value";
+
+        const currentBase = foundry.utils.getProperty(this.actor, propertyBase);
+        const currentValue = foundry.utils.getProperty(this.actor, propertyValue);
+        const currentDelta = Math.max(0, currentBase - currentValue);
+
+        const newBase = Math.max(1, Math.floor(inputValue));
+        const newValue = Math.max(0, newBase - currentDelta);
 
         return this.actor.update({
-            ["system.hitPoints.max"]: newMax,
-            ["system.hitPoints.value"]: newValue
+            [propertyBase]: newBase,
+            [propertyValue]: newValue
         });
     }
+
     _onEditCurrentHp(event) {
         event.preventDefault();
         event.currentTarget.blur();
 
         const newValue = DoD_Utility.clamp(event.currentTarget.value, 0, this.actor.system.hitPoints.max);
 
+        event.currentTarget.value = newValue;
         return this.actor.update({
             ["system.hitPoints.value"]: newValue
         });
@@ -908,18 +1088,18 @@ export default class DoDCharacterSheet extends ActorSheet {
         await this.actor.update(newValues);
     }
 
-    async _onItemDelete(event) {
-        event.preventDefault();
-        let element = event.currentTarget;
-        let itemId = element.closest(".sheet-table-data").dataset.itemId;
-        let item = this.actor.items.get(itemId);
+    async _itemDeleteDialog(item, flavor = "") {
+        let content = flavor ? "<p>" + flavor + "</p>" : "";
+        content += game.i18n.format("DoD.ui.dialog.deleteItemContent", {item: item.name});
 
-        const ok = await new Promise(
+        const itemType = item.documentName === "ActiveEffect" ? game.i18n.localize("DoD.ui.character-sheet.effect") : game.i18n.localize("TYPES.Item." + item.type);
+
+        return await new Promise(
             resolve => {
                 const data = {
                     title: game.i18n.format("DoD.ui.dialog.deleteItemTitle",
-                        {item: game.i18n.localize("TYPES.Item." + item.type)}),
-                    content: game.i18n.format("DoD.ui.dialog.deleteItemContent", {item: item.name}),
+                        {item: itemType}),
+                    content: content,
                     buttons: {
                         ok: {
                             icon: '<i class="fas fa-check"></i>',
@@ -938,6 +1118,15 @@ export default class DoDCharacterSheet extends ActorSheet {
                 new Dialog(data, null).render(true);
             }
         );
+    }
+
+    async _onItemDelete(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".sheet-table-data").dataset.itemId;
+        let item = this.actor.items.get(itemId);
+
+        const ok = await this._itemDeleteDialog(item);
         if (!ok) {
             return;
         }
@@ -950,7 +1139,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         let itemId = element.closest(".sheet-table-data").dataset.itemId;
         let item = this.actor.items.get(itemId);
 
-        item.sheet.render(true);
+        item?.sheet.render(true);
     }
 
     _onItemKeyDown(event) {
@@ -1113,6 +1302,40 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
         } else { // right click - edit item
             weapon.sheet.render(true);
+        }
+    }
+
+    async _onHealingTimeRoll(event) {
+        event.preventDefault();
+
+        const itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
+        const injury = this.actor.items.get(itemId);
+        const healingTime = injury.system.healingTime;
+
+        if (event.type === "click") { // left click    
+            if (isNaN(healingTime)) {
+                // Roll healing time
+                try {
+                    const roll = await new Roll(healingTime).roll(game.release.generation < 12 ? {async: true} : {});
+                    const flavor = game.i18n.format("DoD.injury.healingTimeRollFlavor", {injury: injury.name, days: roll.total});
+                    await roll.toMessage({
+                        user: game.user.id,
+                        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                        flavor,
+                    });
+                    await injury.update({"system.healingTime": roll.total});
+                } catch {
+                    console.log("invalid formula");    
+                }
+            } else {
+                // reduce healing time
+                return await injury.reduceHealingTime({silent: true});
+            }
+        } else { // right click
+            if (!isNaN(healingTime)) {
+                // increase healing time
+                return await injury.increaseHealingTime({silent: true});
+            }
         }
     }
 
@@ -1352,7 +1575,19 @@ export default class DoDCharacterSheet extends ActorSheet {
     async _onItemCreate(event) {
         event.preventDefault();
         const element = event.currentTarget;
-        const type = element.dataset.type
+        const type = element.dataset.type;
+
+        // Create effect
+        if (type === "effect") {
+            return this.actor.createEmbeddedDocuments("ActiveEffect", [{
+                label: game.i18n.localize("New Effect"),
+                icon: "icons/svg/aura.svg",
+                origin: this.actor.uuid,
+                disabled: false
+            }]);
+        }
+
+        // Create item
         let itemData = {
             name: game.i18n.localize(`DoD.${type}.new`),
             type: element.dataset.type
@@ -1370,5 +1605,26 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         return this.actor.createEmbeddedDocuments("Item", [itemData]);
     }
-}
 
+    async _onEffectEdit(event) {
+        event.preventDefault();
+        const element = event.currentTarget;
+        const effectUuid = element.closest(".sheet-table-data").dataset.effectUuid;
+        const effect = Array.from(this.actor.allApplicableEffects()).find(e => e.uuid === effectUuid);
+        
+        effect?.sheet.render(true);
+    }
+    async _onEffectDelete(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let effectUuid = element.closest(".sheet-table-data").dataset.effectUuid;
+        let effect = fromUuidSync(effectUuid);
+
+        const ok = await this._itemDeleteDialog(effect);
+        if (!ok) {
+            return;
+        }
+        return effect.delete();
+    }
+
+}

@@ -1,0 +1,91 @@
+<form autocomplete="off">
+
+    <!-- Effect Header -->
+    <header class="sheet-header">
+        <img class="effect-icon" src="{{ data.icon }}" data-edit="icon">
+        <h1 class="effect-title">
+            <input name="name" type="text" value="{{data.name}}" placeholder="{{ localize 'Name' }}"/>
+        </h1>
+    </header>
+
+    <div class="sheet-content">
+    <!-- Effect Configuration Tabs -->
+        <nav class="sheet-tabs tabs" aria-role="{{localize 'SHEETS.FormNavLabel'}}">
+            <a class="item" data-tab="description"><i class="fas fa-book"></i> {{localize "DoD.item-sheet.description"}}</a>
+            <a class="item" data-tab="effects"><i class="fas fa-cogs"></i> {{localize "EFFECT.TabEffects"}}</a>
+        </nav>
+
+        {{!-- Sheet Body --}}
+        <section class="sheet-body" style="height: 100%">        
+
+            <!-- Details Tab -->
+            <div class="tab" data-tab="description">
+
+                <div class="form-group stacked" style="height: 100%">
+                    {{editor descriptionHTML target="description" button=true editable=editable engine="prosemirror" collaborate=false}}
+                </div>
+
+                <div class="derived-stat-box">
+                    <table class="derived-stat">
+                        <tr>
+                            <th>{{localize "EFFECT.Disabled"}}</th>
+                            <td><input type="checkbox" name="disabled" {{ checked data.disabled }} /></td>
+                        </tr>
+                        {{#if isItemEffect}}
+                        <tr>
+                            <th title="{{localize "DoD.effect.applyWhenEquippedTooltip"}}">{{localize "DoD.effect.applyWhenEquipped"}}</th>
+                            <td><input type="checkbox" name="applyOnlyWhenEquipped" {{checked data.applyOnlyWhenEquipped}}/></td>
+                        </tr>
+                        {{/if}}
+                    </table>    
+                </div>
+
+            </div>
+
+            <!-- Effects Tab -->
+            <div class="tab" data-tab="effects">
+
+                <table class="sheet-table changes-list">
+                    <tr class="sheet-table-header">
+                        <th></th>
+                        <th class="text-header">{{ localize "EFFECT.ChangeKey" }}</th>
+                        <th class="text-header">{{ localize "EFFECT.ChangeMode" }}</th>
+                        <th class="text-header">{{ localize "EFFECT.ChangeValue" }}</th>
+                        <th>
+                            <button type="button" class="effect-control" data-action="add">
+                                <a  class="fas fa-plus"></a>
+                            </button>                        
+                        </th>
+                        <th></th>
+                    </tr>
+                    {{#each data.changes as |change i|}}
+                    <tr class="effect-change" data-index="{{i}}">
+                        <td></td>
+                        <td class="key">
+                            <select name="changes.{{i}}.key">
+                                {{selectOptions ../config.activeEffectChanges selected=change.key localize=true}}
+                            </select>
+                        </td>
+                        <td class="mode">
+                            <select name="changes.{{i}}.mode" data-dtype="Number">
+                                {{selectOptions ../modes selected=change.mode}}
+                            </select>
+                        </td>
+                        <td class="value">
+                            <input type="text" name="changes.{{i}}.value" value="{{change.value}}"/>
+                        </td>
+                        <td class="effect-controls">
+                            <a class="effect-control" data-action="delete"><i class="fas fa-trash"></i></a>
+                        </td>
+                        <td></td>
+                    </tr>
+                    {{/each}}
+                </table>
+
+            </div>
+        </section>
+    </div>
+    <footer class="sheet-footer">
+        <button class="dod-button" type="submit"><i class="fas fa-save"></i> {{localize submitText}}</button>
+    </footer>
+</form>

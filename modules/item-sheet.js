@@ -6,7 +6,8 @@ export default class DoDItemSheet extends ItemSheet {
         return foundry.utils.mergeObject(super.defaultOptions,  {
             width: 560,
             dragDrop: [{ dragSelector: null, dropSelector: null}],
-            classes: ["DoD", "sheet", "item"]
+            classes: ["DoD", "sheet", "item"],
+            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "details" }]
         });
     }
 
@@ -22,6 +23,7 @@ export default class DoDItemSheet extends ItemSheet {
             editable: this.isEditable,
             item: baseData.item,
             system: baseData.data.system,
+            effects: baseData.item.effects.contents,
             config: CONFIG.DoD
         };
 
@@ -71,6 +73,9 @@ export default class DoDItemSheet extends ItemSheet {
 
     activateListeners(html) {
         if (this.object.isOwner) {
+
+            html.find(".effect-control").click(this._onEffectControl.bind(this));
+
             if (this.object.type === "spell") {
                 html.find(".edit-school").change(this._onEditSchool.bind(this));
             }
@@ -91,6 +96,27 @@ export default class DoDItemSheet extends ItemSheet {
             }
         }
         super.activateListeners(html);
+    }
+
+    _onEffectControl(event) {
+        event.preventDefault();
+        const owner = this.item;
+        const a = event.currentTarget;
+        const tr = a.closest("tr");
+        const effect = tr.dataset.effectId ? owner.effects.get(tr.dataset.effectId) : null;
+        switch (a.dataset.action) {
+            case "create":
+                return owner.createEmbeddedDocuments("ActiveEffect", [{
+                    label: game.i18n.localize("New Effect"),
+                    icon: "icons/svg/aura.svg",
+                    origin: owner.uuid,
+                    disabled: false
+                }]);
+            case "edit":
+                return effect.sheet.render(true);
+            case "delete":
+                return effect.delete();
+        }
     }
 
     async _onEditMemento(event) {

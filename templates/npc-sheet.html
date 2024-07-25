@@ -15,22 +15,22 @@
                             
                             <th>{{localize "DoD.ui.character-sheet.damageBonusSTR"}}</th>
                             <td>
-                                <select name="system.damageBonus.str">
-                                    {{selectOptions config.dice selected=system.damageBonus.str localize=true}}
+                                <select class="attribute-input active-effect-property" data-property="system.damageBonus.str" name="system.damageBonus.str.value">
+                                    {{selectOptions config.dice selected=system.damageBonus.str.value localize=true}}
                                 </select>
                             </td>
                             </tr>
                         <tr>
                             <th>{{localize "DoD.ui.character-sheet.damageBonusAGL"}}</th>
                             <td>
-                                <select name="system.damageBonus.agl">
-                                    {{selectOptions config.dice selected=system.damageBonus.agl localize=true}}
+                                <select class="attribute-input active-effect-property" data-property="system.damageBonus.agl" name="system.damageBonus.agl.value">
+                                    {{selectOptions config.dice selected=system.damageBonus.agl.value localize=true}}
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <th>{{localize "DoD.ui.character-sheet.movement"}}</th>
-                            <td><input name="system.movement" type="text" value="{{system.movement}}" data-dtype="Number" /></td>
+                            <td><input class="attribute-input active-effect-property" data-property="system.movement" name="system.movement.value" type="text" value="{{system.movement.value}}" data-dtype="Number" /></td>
                         </tr>
                     </table>
                 </div>
@@ -57,6 +57,7 @@
           <a class="item" data-tab="main">{{localize "DoD.ui.character-sheet.main"}}</a>
           <a class="item" data-tab="skills">{{localize "DoD.ui.character-sheet.skills"}}</a>
           <a class="item" data-tab="inventory">{{localize "DoD.ui.character-sheet.inventory"}}</a>
+          <a class="item" data-tab="effects">{{localize "DoD.ui.character-sheet.effects"}}</a>
         </nav>
 
         {{!-- Sheet Body --}}
@@ -69,6 +70,9 @@
 
             {{!-- Inventory Tab --}}
             {{> "systems/dragonbane/templates/partials/npc-sheet-inventory.hbs" }}
+
+            {{!-- Effects Tab --}}
+            {{> "systems/dragonbane/templates/partials/character-sheet-effects.hbs" }}
         </section>
         {{/if}}
     </div>

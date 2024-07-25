@@ -30,7 +30,7 @@ export default class DoDAttributeTest extends DoDTest {
             } else if (this.attribute === "wil") {
                 this.preRollData.target = this.actor.system.willPoints.max - 2 * this.actor.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "willPoints").length;
             } else if (this.attribute === "str") {
-                switch (this.actor.system.damageBonus.str) {
+                switch (this.actor.system.damageBonus.str.value) {
                     case "d4":
                         this.preRollData.target = 14;
                         break;
@@ -45,7 +45,7 @@ export default class DoDAttributeTest extends DoDTest {
                         this.preRollData.target = 10;
                 }
             } else if (this.attribute === "agl") {
-                switch (this.actor.system.damageBonus.agl) {
+                switch (this.actor.system.damageBonus.agl.value) {
                     case "d4":
                         this.preRollData.target = 14;
                         break;

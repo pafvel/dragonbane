@@ -15,12 +15,15 @@ import DoDMonsterData from "./modules/data/actors/monsterData.js";
 import DoDAbilityData from "./modules/data/items/abilityData.js";
 import DoDArmorData from "./modules/data/items/armorData.js";
 import DoDHelmetData from "./modules/data/items/helmetData.js";
+import DoDInjuryData from "./modules/data/items/injuryData.js";
 import DoDItemData from "./modules/data/items/itemData.js";
 import DoDKinData from "./modules/data/items/kinData.js";
 import DoDProfessionData from "./modules/data/items/professionData.js";
 import DoDSkillData from "./modules/data/items/skillData.js";
 import DoDWeaponData from "./modules/data/items/weaponData.js";
 import DoDSpellData from "./modules/data/items/spellData.js";
+import DoDActiveEffect from "./modules/active-effect.js";
+import DoDActiveEffectConfig from "./modules/active-effect-config.js";
 
 function registerHandlebarsHelpers() {
 
@@ -60,24 +63,26 @@ function registerHandlebarsHelpers() {
 
 async function preloadHandlebarsTemplates() {
     const templatePaths = [
-        "systems/dragonbane/templates/partials/hp-widget.hbs",
-        "systems/dragonbane/templates/partials/wp-widget.hbs",
+        "systems/dragonbane/templates/partials/character-sheet-abilities.hbs",
+        "systems/dragonbane/templates/partials/character-sheet-background.hbs",
+        "systems/dragonbane/templates/partials/character-sheet-effects.hbs",
+        "systems/dragonbane/templates/partials/character-sheet-inventory.hbs",
         "systems/dragonbane/templates/partials/character-sheet-main.hbs",
         "systems/dragonbane/templates/partials/character-sheet-skills.hbs",
-        "systems/dragonbane/templates/partials/character-sheet-abilities.hbs",
-        "systems/dragonbane/templates/partials/character-sheet-inventory.hbs",
-        "systems/dragonbane/templates/partials/character-sheet-background.hbs",
+        "systems/dragonbane/templates/partials/damage-roll-message.hbs",
+        "systems/dragonbane/templates/partials/hp-widget.hbs",
+        "systems/dragonbane/templates/partials/item-sheet-effects.hbs",
         "systems/dragonbane/templates/partials/monster-sheet-main.hbs",
+        "systems/dragonbane/templates/partials/npc-sheet-inventory.hbs",
         "systems/dragonbane/templates/partials/npc-sheet-main.hbs",
         "systems/dragonbane/templates/partials/npc-sheet-skills.hbs",
-        "systems/dragonbane/templates/partials/npc-sheet-inventory.hbs",
         "systems/dragonbane/templates/partials/roll-dialog.hbs",
-        "systems/dragonbane/templates/partials/damage-roll-message.hbs",
+        "systems/dragonbane/templates/partials/roll-no-total.hbs",
+        "systems/dragonbane/templates/partials/roll.hbs",
         "systems/dragonbane/templates/partials/skill-roll-message.hbs",
         "systems/dragonbane/templates/partials/tooltip.hbs",
+        "systems/dragonbane/templates/partials/wp-widget.hbs",
         "templates/dice/roll.html",
-        "systems/dragonbane/templates/partials/roll.hbs",
-        "systems/dragonbane/templates/partials/roll-no-total.hbs",
     ];
 
     return loadTemplates(templatePaths);
@@ -221,12 +226,13 @@ function registerSettings() {
         type: Boolean
     });
     // If true, autmatically marks Monsters as dead when the reach 0 HP
-    game.settings.register("dragonbane", "canEquipItems", {
+    // canEquipItems2 replaces canEquipItems to ensure the new default value
+    game.settings.register("dragonbane", "canEquipItems2", {
         name: "DoD.SETTINGS.canEquipItems",
         hint: "DoD.SETTINGS.canEquipItemsHint",
         scope: "world",
         config: true,
-        default: false,
+        default: true,
         type: Boolean
     });
     // If true, hides WP gadget if NPC has 0 WP and no spells or abilities
@@ -265,6 +271,8 @@ Hooks.once("init", function () {
 
     CONFIG.Actor.documentClass = DoDActor;
     CONFIG.Item.documentClass = DoDItem;
+    CONFIG.ActiveEffect.documentClass = DoDActiveEffect;
+    CONFIG.ActiveEffect.legacyTransferral = false;
 
     CONFIG.Dice.rolls.unshift(DoDRoll);
 
@@ -279,6 +287,7 @@ Hooks.once("init", function () {
         armor: DoDArmorData,
         helmet: DoDHelmetData,
         item: DoDItemData,
+        injury: DoDInjuryData,
         kin: DoDKinData,
         profession: DoDProfessionData,
         skill: DoDSkillData,
@@ -291,6 +300,8 @@ Hooks.once("init", function () {
 
     Items.unregisterSheet("core", ItemSheet);
     Items.registerSheet("DoD", DoDItemSheet, { makeDefault: true });
+
+    DocumentSheetConfig.registerSheet(ActiveEffect, "DoD", DoDActiveEffectConfig, {makeDefault :true});
 
     registerHandlebarsHelpers();
     preloadHandlebarsTemplates();
@@ -503,13 +514,19 @@ Hooks.once('diceSoNiceReady', (dice3d) => {
 
 // Set up Year Zero Engine Combat
 Hooks.on("yzeCombatReady", () => {
-    if (game.settings.get("dragonbane", "configuredYzeCombat")) return;
+    if (game.settings.get("dragonbane", "configuredYzeCombat")) {
+        // Update to match new data model
+        if (game.settings.get("yze-combat", "actorSpeedAttribute") === "system.ferocity") {
+            game.settings.set("yze-combat", "actorSpeedAttribute", "system.ferocity.value");    
+        }
+        return;
+    }
     try {
         game.settings.set("yze-combat", "resetEachRound", true);
         game.settings.set("yze-combat", "slowAndFastActions", false);
         game.settings.set("yze-combat", "initAutoDraw", true);
         game.settings.set("yze-combat", "duplicateCombatantOnCombatStart", true);
-        game.settings.set("yze-combat", "actorSpeedAttribute", "system.ferocity");
+        game.settings.set("yze-combat", "actorSpeedAttribute", "system.ferocity.value");
         game.settings.set("dragonbane", "configuredYzeCombat", true);
     } catch (e) {
         console.error("Dragonbane: Could not configure YZE Combat. Try refreshing the page");

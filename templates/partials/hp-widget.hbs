@@ -17,9 +17,9 @@
         </div>
         <div class="resource-points-max-box">
             {{#if actor.isCharacter}}
-            <label class="resource-points-max-label" title="{{localize "DoD.ui.character-sheet.hitPointsMax"}}">{{maxHP}}</label>
+            <label class="resource-points-max-label active-effect-property" data-property="system.hitPoints" title="{{localize "DoD.ui.character-sheet.hitPointsMax"}}">{{maxHP}}</label>
             {{else}}
-            <input class="resource-points-max-label hit-points-max-label" title="{{localize "DoD.ui.character-sheet.hitPointsMax"}}" type="number" value="{{system.hitPoints.max}}" data-dtype="Number" />
+            <input class="resource-points-max-label hit-points-max-label active-effect-property" data-property="system.hitPoints" title="{{localize "DoD.ui.character-sheet.hitPointsMax"}}" type="number" value="{{system.hitPoints.max}}" data-dtype="Number" />
             {{/if}}
         </div>
         {{#if largeHP}}

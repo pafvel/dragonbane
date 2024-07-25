@@ -10,27 +10,27 @@
             <div class="attributes">
                 <div class="attribute-panel attribute1">
                     <label class="attribute-label rollable-attribute" data-attribute="str"><a>{{localize "DoD.attributes.str"}}</a></label>
-                    <input class="attribute-input" name="system.attributes.str.value" type="text" value="{{system.attributes.str.value}}" data-dtype="Number" />
+                    <input class="attribute-input active-effect-property" data-property="system.attributes.str" name="system.attributes.str.value" type="text" value="{{system.attributes.str.value}}" data-dtype="Number" />
                 </div>
                 <div class="attribute-panel attribute2">
                     <label class="attribute-label rollable-attribute" data-attribute="con"><a>{{localize "DoD.attributes.con"}}</a></label>
-                    <input class="attribute-input" name="system.attributes.con.value" type="text" value="{{system.attributes.con.value}}" data-dtype="Number" />
+                    <input class="attribute-input active-effect-property" data-property="system.attributes.con" name="system.attributes.con.value" type="text" value="{{system.attributes.con.value}}" data-dtype="Number" />
                 </div>
                 <div class="attribute-panel attribute3">
                     <label class="attribute-label rollable-attribute" data-attribute="agl"><a>{{localize "DoD.attributes.agl"}}</a></label>
-                    <input class="attribute-input" name="system.attributes.agl.value" type="text" value="{{system.attributes.agl.value}}" data-dtype="Number" />
+                    <input class="attribute-input active-effect-property" data-property="system.attributes.agl" name="system.attributes.agl.value" type="text" value="{{system.attributes.agl.value}}" data-dtype="Number" />
                 </div>
                 <div class="attribute-panel attribute4">
                     <label class="attribute-label rollable-attribute" data-attribute="int"><a>{{localize "DoD.attributes.int"}}</a></label>
-                    <input class="attribute-input" name="system.attributes.int.value" type="text" value="{{system.attributes.int.value}}" data-dtype="Number" />
+                    <input class="attribute-input active-effect-property" data-property="system.attributes.int" name="system.attributes.int.value" type="text" value="{{system.attributes.int.value}}" data-dtype="Number" />
                 </div>
                 <div class="attribute-panel attribute5">
                     <label class="attribute-label rollable-attribute" data-attribute="wil"><a>{{localize "DoD.attributes.wil"}}</a></label>
-                    <input class="attribute-input" name="system.attributes.wil.value" type="text" value="{{system.attributes.wil.value}}" data-dtype="Number" />
+                    <input class="attribute-input active-effect-property" data-property="system.attributes.wil" name="system.attributes.wil.value" type="text" value="{{system.attributes.wil.value}}" data-dtype="Number" />
                 </div>
                 <div class="attribute-panel attribute6">
                     <label class="attribute-label rollable-attribute" data-attribute="cha"><a>{{localize "DoD.attributes.cha"}}</a></label>
-                    <input class="attribute-input" name="system.attributes.cha.value" type="text" value="{{system.attributes.cha.value}}" data-dtype="Number" />
+                    <input class="attribute-input active-effect-property" data-property="system.attributes.cha" name="system.attributes.cha.value" type="text" value="{{system.attributes.cha.value}}" data-dtype="Number" />
                 </div>
 
                 <div class="conditions">
@@ -75,6 +75,7 @@
           {{/if}}
           <a class="item" data-tab="inventory">{{localize "DoD.ui.character-sheet.inventory"}}</a>
           <a class="item" data-tab="background">{{localize "DoD.ui.character-sheet.background"}}</a>
+          <a class="item" data-tab="effects">{{localize "DoD.ui.character-sheet.effects"}}</a>
         </nav>
 
         {{!-- Sheet Body --}}
@@ -93,6 +94,9 @@
 
             {{!-- Background Tab --}}
             {{> "systems/dragonbane/templates/partials/character-sheet-background.hbs" }}
+
+            {{!-- Effects Tab --}}
+            {{> "systems/dragonbane/templates/partials/character-sheet-effects.hbs" }}
         </section>
     </div>
 </form>

@@ -1,3 +1,4 @@
+import { DoD } from "./config.js";
 import DoDSkillTest from "./tests/skill-test.js";
 
 export default class DoD_Utility {
@@ -36,9 +37,14 @@ export default class DoD_Utility {
     }
 
     static calculateDamageBonus(attribute) {
-        if (attribute <=12) return "0";
-        if (attribute <=16) return game.i18n.localize("DoD.dice.d4");
-        return game.i18n.localize("DoD.dice.d6");
+
+        if (attribute <=12) {
+            return DoD.dice.none;
+        } else if (attribute <=16) {
+            return DoD.dice.d4;
+        } else {
+            return DoD.dice.d6;
+        }
     }
 
     static calculateMovementModifier(attribute) {
@@ -334,6 +340,12 @@ export default class DoD_Utility {
         return getKeyByValue(CONST.DOCUMENT_OWNERSHIP_LEVELS, permissionValue);
     }
 
+    static removeEnrichment(text) {
+        return text.replace(/@(.+?)\[(.+?)\]{(.+?)}/gm, "$3");
+    }
+    static removeHtml(html) {
+        return html.replace(/(<([^>]+)>)/gi, "");
+    }
     static INFO(msg, params) {
         if (!params) {
             return ui.notifications.info(game.i18n.localize(msg));

@@ -1,6 +1,7 @@
 import DoD_Utility from "./utility.js";
 import DoDSkillTest from "./tests/skill-test.js";
 import DoDRoll from "./roll.js";
+import DoDActiveEffect from "./active-effect.js";
 
 export class DoDActor extends Actor {
 
@@ -194,11 +195,21 @@ export class DoDActor extends Actor {
     prepareBaseData() {
         super.prepareBaseData();
 
+        // reset attributes
+        for (const attribute in this.system.attributes) {
+            this.system.attributes[attribute].value = this.system.attributes[attribute].base;
+        }
+        // reset ferocity
+        if (this.system.ferocity) {
+            this.system.ferocity.value = this.system.ferocity.base;
+        }
+
         // prepare skills
         this._prepareSkills();
         this._prepareBaseChances();
         this._prepareKin();
         this._prepareProfession();
+
     }
 
     prepareEmbeddedDocuments() {
@@ -238,6 +249,13 @@ export class DoDActor extends Actor {
             default:
                 break;
         }
+        DoDActiveEffect.applyDeferredChanges(this);
+        if (this.system.hitPoints?.value) {
+            this.system.hitPoints.value = DoD_Utility.clamp(this.system.hitPoints.value, 0, this.system.hitPoints.max);
+        }
+        if (this.system.willPoints?.value) {
+            this.system.willPoints.value = DoD_Utility.clamp(this.system.willPoints.value, 0, this.system.willPoints.max);
+        }
     }
 
     getSkill(name) {
@@ -247,20 +265,25 @@ export class DoDActor extends Actor {
 
     _prepareCharacterData() {
         this._prepareActorStats();
+        this._prepareCharacterBaseStats();
         this._prepareCharacterStats();
         this._prepareSpellValues();
     }
 
     _prepareNpcData() {
         this._prepareActorStats();
+        this._prepareCharacterBaseStats();
         this._prepareNpcStats();
         this._prepareSpellValues();
     }
 
     _prepareMonsterData() {
-        if (this.system.damageBonus) {
-            this.system.damageBonus.agl = 0;
-            this.system.damageBonus.str = 0;
+        this._prepareActorStats();
+
+        // Clean ferocity value after active effects
+        const ferocityValueField = this.system.schema.getField("ferocity.value");
+        if (ferocityValueField) {
+            this.system.ferocity.value = ferocityValueField.clean(this.system.ferocity.value);
         }
     }
 
@@ -328,9 +351,23 @@ export class DoDActor extends Actor {
     }
 
     _prepareCharacterStats() {
-        // Damage Bonus
-        this.system.damageBonus.agl = DoD_Utility.calculateDamageBonus(this.system.attributes.agl.value);
-        this.system.damageBonus.str = DoD_Utility.calculateDamageBonus(this.system.attributes.str.value);
+        // Clamp attributes
+        this.system.attributes.str.value = DoD_Utility.clamp(this.system.attributes.str.value, 1, 18);
+        this.system.attributes.con.value = DoD_Utility.clamp(this.system.attributes.con.value, 1, 18);
+        this.system.attributes.agl.value = DoD_Utility.clamp(this.system.attributes.agl.value, 1, 18);
+        this.system.attributes.int.value = DoD_Utility.clamp(this.system.attributes.int.value, 1, 18);
+        this.system.attributes.wil.value = DoD_Utility.clamp(this.system.attributes.wil.value, 1, 18);
+        this.system.attributes.cha.value = DoD_Utility.clamp(this.system.attributes.cha.value, 1, 18);
+
+        // Damage Bonus AGL
+        let damageBonusAgl = DoD_Utility.calculateDamageBonus(this.system.attributes.agl.value);
+        this.system.damageBonus.agl.base = game.i18n.localize(damageBonusAgl);
+        this.system.damageBonus.agl.value = this.system.damageBonus.agl.base;
+
+        // Damage Bonus STR
+        let damageBonusStr = DoD_Utility.calculateDamageBonus(this.system.attributes.str.value);
+        this.system.damageBonus.str.base = game.i18n.localize(damageBonusStr);
+        this.system.damageBonus.str.value = this.system.damageBonus.str.base;
 
         // Will Points
         let maxWillPoints = this.system.attributes.wil.value;
@@ -364,30 +401,40 @@ export class DoDActor extends Actor {
                 damage = maxHitPoints;
             }
             this.update({
+                ["system.hitPoints.base"]: maxHitPoints,
                 ["system.hitPoints.max"]: maxHitPoints,
                 ["system.hitPoints.value"]: maxHitPoints - damage });
         }
 
         // Movement
-        const baseMovement = Number(this.system.kin ? this.system.kin.system.movement : 10);
+        const defaultMovement = Number(this.system.kin ? this.system.kin.system.movement : 10);
         const movementModifier =  DoD_Utility.calculateMovementModifier(this.system.attributes.agl.value);
         const moveBonuses = this.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "movement").length;
 
-        this.system.movement = baseMovement + movementModifier + 2 * moveBonuses;
+        this.system.movement.base = defaultMovement + movementModifier + moveBonuses;
+        this.system.movement.value = this.system.movement.base;
+
+        this.system.maxEncumbrance.base = Math.ceil(0.5 * this.system.attributes.str.value);
+        this.system.maxEncumbrance.value = this.system.maxEncumbrance.base;
     }
 
     _prepareActorStats() {
+        // Movement
+        this.system.movement.value = this.system.movement.base;
 
+        // Hit Points
+        this.system.hitPoints.max = this.system.hitPoints.base;
+    }
+
+    _prepareCharacterBaseStats() {
         // Will Points
-        if (!this.system.willPoints || !Number.isInteger(this.system.willPoints.max)) {
-            this.update({
-                ["system.willPoints.max"]: 10,
-                ["system.willPoints.value"]: 10 });
-        }
+        this.system.willPoints.max = this.system.willPoints.base;
     }
 
     _prepareNpcStats() {
-
+        // Damage Bonus
+        this.system.damageBonus.agl.value = this.system.damageBonus.agl.base;
+        this.system.damageBonus.str.value = this.system.damageBonus.str.base;
     }
 
     _getBaseChance(skill) {
@@ -475,8 +522,8 @@ export class DoDActor extends Actor {
     }
 
     getDamageBonus(attribute) {
-        if (attribute && this.system.damageBonus && this.system.damageBonus[attribute] !== "none") {
-            return this.system.damageBonus[attribute];
+        if (attribute && this.system.damageBonus && this.system.damageBonus[attribute] && this.system.damageBonus[attribute].value !== "none") {
+            return this.system.damageBonus[attribute].value;
         } else {
             return "";
         }
@@ -1046,6 +1093,8 @@ export class DoDActor extends Actor {
             ["system.conditions.wil.value"]: false,
             ["system.conditions.cha.value"]: false
         });
+
+        await this.healInjuriesDialog();
     }
 
     async restReset() {
@@ -1060,5 +1109,74 @@ export class DoDActor extends Actor {
             speaker: ChatMessage.getSpeaker({ actor: this }),
             flavor: game.i18n.format("DoD.ui.character-sheet.restReset", {actor: this.name})
         });
-    }    
+
+       await this.healInjuriesDialog();
+    }
+
+    async healInjuriesDialog() {
+        const healingInjuries = this.items.filter(i => i.type === "injury" && i.system.healingTime != "" && !isNaN(i.system.healingTime));
+        if (healingInjuries.length > 0) {
+            const heal = await new Promise(
+                resolve => {
+                    const data = {
+                        title: game.i18n.localize("DoD.ui.dialog.healInjuriesTitle"),
+                        content: game.i18n.format("DoD.ui.dialog.healInjuriesMessage"),
+                        buttons: {
+                            ok: {
+                                icon: '<i class="fas fa-check"></i>',
+                                label: game.i18n.localize("Yes"),
+                                callback: () => resolve(true)
+                            },
+                            cancel: {
+                                icon: '<i class="fas fa-times"></i>',
+                                label: game.i18n.localize("No"),
+                                callback: _html => resolve(false)
+                            }
+                        },
+                        default: "cancel",
+                        close: () => resolve(false)
+                    };
+                    new Dialog(data, null).render(true);
+                }
+            );
+            if (heal) {
+                for (let injury of healingInjuries) {
+                    injury.reduceHealingTime();
+                }
+            }    
+        }        
+    }
+
+    async deleteItemDialog(item, flavor = "") {
+        let content = flavor ? "<p>" + flavor + "</p>" : "";
+        content += game.i18n.format("DoD.ui.dialog.deleteItemContent", {item: item.name});
+
+        const ok = await new Promise(
+            resolve => {
+                const data = {
+                    title: game.i18n.format("DoD.ui.dialog.deleteItemTitle",
+                        {item: game.i18n.localize("TYPES.Item." + item.type)}),
+                    content: content,
+                    buttons: {
+                        ok: {
+                            icon: '<i class="fas fa-check"></i>',
+                            label: game.i18n.localize("Yes"),
+                            callback: () => resolve(true)
+                        },
+                        cancel: {
+                            icon: '<i class="fas fa-times"></i>',
+                            label: game.i18n.localize("No"),
+                            callback: _html => resolve(false)
+                        }
+                    },
+                    default: "cancel",
+                    close: () => resolve(false)
+                };
+                new Dialog(data, null).render(true);
+            }
+        );
+        if (ok) {
+            await this.deleteEmbeddedDocuments("Item", [item.id])
+        }
+    }
 }

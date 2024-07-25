@@ -46,13 +46,13 @@ DoD.castingTimeTypes = {
 };
 
 DoD.dice = {
-    none: "",
-    d4: "DoD.dice.d4",
-    d6: "DoD.dice.d6",
-    d8: "DoD.dice.d8",
-    d10: "DoD.dice.d10",
-    d12: "DoD.dice.d12",
-    d20: "DoD.dice.d20"
+    none: "0",
+    d4: "D4",
+    d6: "D6",
+    d8: "D8",
+    d10: "D10",
+    d12: "D12",
+    d20: "D20"
 };
 
 DoD.damageTypes = {
@@ -127,4 +127,20 @@ DoD.attributes = {
     "int": "DoD.attributes.int",
     "wil": "DoD.attributes.wil",
     "cha": "DoD.attributes.cha"
+};
+
+DoD.activeEffectChanges = {
+    "system.attributes.str.value" : "DoD.attributes.str",
+    "system.attributes.con.value" : "DoD.attributes.con",
+    "system.attributes.agl.value" : "DoD.attributes.agl",
+    "system.attributes.int.value" : "DoD.attributes.int",
+    "system.attributes.wil.value" : "DoD.attributes.wil",
+    "system.attributes.cha.value" : "DoD.attributes.cha",
+    "system.hitPoints.max" : "DoD.secondaryAttributeTypes.hitPoints",
+    "system.willPoints.max" : "DoD.secondaryAttributeTypes.willPoints",
+    "system.movement.value" : "DoD.ui.character-sheet.movement",
+    "system.damageBonus.agl.value" : "DoD.ui.character-sheet.damageBonusAGL",
+    "system.damageBonus.str.value" : "DoD.ui.character-sheet.damageBonusSTR",
+    "system.ferocity.value" : "DoD.ui.character-sheet.ferocity",
+    "system.maxEncumbrance.value" : "DoD.ui.character-sheet.max-encumbrance",
 };
