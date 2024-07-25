@@ -1,8 +1,59 @@
 # Change Log
 
-## Version 1.9
+## Version 1.9.0
 
-- Updated database from v10 to v11. This means that Foundry v10 is no longer supported.
+- Database upgrade
+
+  - Updated database from v10 to v11. This means that Foundry v10 is no longer supported.
+
+- New Item type: Injury.
+
+  - Injuries can have temporary effects, see Active Effects below,
+  - If the healing time is a dice formula, it can be rolled from the character sheet.
+  - The healing time can be reduced/increased by left/right clicking.
+  - When resting or passing a shift of time, the player will be asked if any un-healed inuries should have their healing time reduced.
+  - When the healing time is reduced to zero, the player will be asked if the Injury should be removed.
+
+- Active Effects
+
+  - Active effects can be created directly on Actors or on the following Item sub-types: Ability, Armor, Helmet, Injury, Item and Weapon.
+  - Active effects can be used to modify attributes and derived ratings.
+  - Active effects can be set to only affect the character when the item that has the effect is equipped.
+
+- Character, NPC and Monster sheets
+
+  - Added tab for Effects (& Injuries).
+  - Values directly affected by an active effect are shown in a highlighted color and get a tooltip with the original value.
+  - Magic tricks are now listed separately from spells.
+
+- Journals
+
+  - Magic tricks are now listed separately from spells in NPC descriptions.
+  - NPCs and Monsters can now have special formatting on their name in order to distinguish named NPCs and monsters.
+
+- Bug fixes
+
+  - Fixed bug that death roll failed when closing the roll dialog.
+  - Fix for error when monster attack description is missing &lt;b&gt; tag.
+  - Monster attacks now respect the roll mode.
+  - Changed label from "Find weak point" to "Find weak spot".
+  - Added speaker to some chat messages.
+
+- Miscellaneous
+
+  - Showing the checkbox for equipping all Items is now default true.
+  - Automatic token size based on monster size.
+  - Support for abilities on hotbar.
+
+- Localization
+
+  - Updated ES translation (by Tarot)
+
+- For developers
+  - The system now uses datamodels instead of template.json (contribution by @xdy).
+  - Hot reload is now supported (contribution by @xdy).
+  - Added data to give AA access to ability uses (contribution from @rayners)
+  - maxEncumbrance was moved from the actor sheet to the actor.
 
 ## Version 1.8.3
 
