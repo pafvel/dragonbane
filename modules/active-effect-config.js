@@ -11,6 +11,9 @@ export default class DoDActiveEffectConfig extends ActiveEffectConfig {
     }
 
     get template() {
+        if (game.release.generation < 12) {
+            return "systems/dragonbane/templates/active-effect-config-v11.html";    
+        }
         return "systems/dragonbane/templates/active-effect-config.html";
     }
 
