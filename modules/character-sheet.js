@@ -1580,7 +1580,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         // Create effect
         if (type === "effect") {
             return this.actor.createEmbeddedDocuments("ActiveEffect", [{
-                label: game.i18n.localize("New Effect"),
+                label: game.i18n.localize("DoD.effect.new"),
                 icon: "icons/svg/aura.svg",
                 origin: this.actor.uuid,
                 disabled: false

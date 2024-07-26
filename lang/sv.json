@@ -141,7 +141,8 @@
         },
         "effect": {
             "applyWhenEquipped": "Applicera om föremålet är till hands",
-            "applyWhenEquippedTooltip": "Effekten appliceras endast om aktören har föremålet till hands eller har på sig föremålet"
+            "applyWhenEquippedTooltip": "Effekten appliceras endast om aktören har föremålet till hands eller har på sig föremålet",
+            "new": "Ny effekt"
         },
         "item": {
             "new": "Nytt föremål"

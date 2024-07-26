@@ -140,7 +140,8 @@
         },
         "effect": {
             "applyWhenEquipped": "Apply only when equipped",
-            "applyWhenEquippedTooltip": "If checked, this effect will only be enabled if the item is equipped"
+            "applyWhenEquippedTooltip": "If checked, this effect will only be enabled if the item is equipped",
+            "new": "New Effect"
         },
         "item": {
             "new": "New Item"
