@@ -8,6 +8,7 @@
         "TypeAbility": "Talento",
         "TypeArmor": "Armadura",
         "TypeHelmet": "Casco",
+        "TypeInjury": "Herida",
         "TypeItem": "Objeto",
         "TypeKin": "Especie",
         "TypeProfession": "Oficio",
@@ -25,6 +26,7 @@
             "ability": "Talento",
             "armor": "Armadura",
             "helmet": "Casco",
+            "injury": "Herida",
             "item": "Objeto",
             "kin": "Especie",
             "profession": "Oficio",
@@ -136,6 +138,11 @@
             "system": "Dragonbane",
             "textureTransparent": "Dragonbane (Transparente)"
         },
+        "effect": {
+            "applyWhenEquipped": "Aplicar solamente cuando esté equipado",
+            "applyWhenEquippedTooltip": "Si se marca, este efecto solamente se activará si el objeto está equipado",
+            "new": "Nuevo Efecto"
+        },
         "item": {
             "new": "Nuevo Objeto"
         },
@@ -174,6 +181,15 @@
         "helmet": {
             "new": "Nuevo Casco",
             "rating": "Valor de Armadura"
+        },
+        "injury": {
+            "healingTime": "Días para curación",
+            "healingTimeTooltip": "El número de días que tarda en sanar la herida",
+            "healingTimeExpired": "<b>{injury}</b> se ha curado.",
+            "healingTimeRollFlavor": "La herida grave <b>{injury}</b> necesitará <b>{days}</b> días para curarse.",
+            "rollHealingTime": "Click izquierdo para tirar el tiempo necesario para curación",
+            "clickHealingTime": "Click izquierdo para reducir el tiempo para curación\rClick derecho para incrementar el tiempo para curación",
+            "healingTimeChanged": "El tiempo necesario para la curación de <b>{injury}</b> ha cambiado de <b>{from}</b> a <b>{to}</b> días."
         },
         "itemTypes": {
             "item": "Objeto",
@@ -369,11 +385,13 @@
                 "and": "y",
                 "appearance": "Aspecto",
                 "armor": "Armadura",
+                "baseValue": "Valor base: {value}",
                 "background": "Trasfondo",
                 "banes": "Perdición en",
                 "combat": "Combate",
                 "coreSkills": "Habilidades Básicas",
                 "create-armor": "Crear Armadura",
+                "create-effect": "Crear Efecto",
                 "create-helmet": "Crear Casco",
                 "create-item": "Crear Objeto",
                 "create-weapon": "Crer Arma",
@@ -382,6 +400,9 @@
                 "damageBonusSTR": "Bono Daño FUE",
                 "deathRolls": "Tira. Agonía",
                 "description": "Descripción",
+                "disabled": "Desactivado",
+                "effect": "Efecto",
+                "effects": "Efectos",
                 "encumbrance": "Carga",
 		"equipped": "Equipado",
                 "equipped-armor": "Armadura Equipada",
@@ -396,6 +417,7 @@
                 "hitPointsCurrent": "PG Actuales",
                 "hitPointsMax": "PG Máximos",
                 "hp": "PG",
+                "injuries": "Heridas",
                 "inventory": "Inventario",
                 "kin": "Especie",
                 "kinAbilities": "Talentos de Especie",
@@ -427,6 +449,7 @@
                 "size": "Tamaño",
                 "skills": "Habilidades",
                 "skillValue": "",
+                "source": "Fuente",
                 "spell": "Conjuro",
                 "spells": "Conjuros",
                 "spellsTooltip": "Conjuros preparados",
@@ -435,6 +458,8 @@
                 "traits": "Rasgos",
                 "trained-skills": "Habilidades Entrenadas",
                 "trained-skillsTooltip": "Habilidades con un valor superior a su posibilidad de base",
+                "trick": "Truco Mágico",
+                "tricks": "Trucos Mágicos",
                 "weakness": "Debilidades",
                 "weapons": "Armas",
                 "weaponSkills": "Habilidades con Armas",
@@ -510,8 +535,15 @@
                 "deleteActorTokenOnScene": "Escenas con Tokens con referencia al Actor",
                 "monsterAttack": "Atacar",
                 "monsterAttackRandom": "Aleatorio",
-                "monsterAttackTitle": "Escoger el ataque del Monstruo"
+                "monsterAttackTitle": "Escoger el ataque del Monstruo",
+                "healInjuriesTitle": "Tratar Heridas",
+                "healInjuriesMessage": "¿Reducir en un día el tiempo necesario para la curación de todas las heridas todavía no sanadas?"
             }
+        },
+        "item-sheet": {
+            "details": "Detalles",
+            "description": "Descripción",
+            "effects": "Efectos"
         },
         "INFO": {
             "monsterAttackUpdated": "Tabla de ataque de monstruo actualizada para {actor}.",
