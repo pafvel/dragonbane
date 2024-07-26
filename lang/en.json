@@ -140,7 +140,8 @@
         },
         "effect": {
             "applyWhenEquipped": "Apply only when equipped",
-            "applyWhenEquippedTooltip": "If checked, this effect will only be enabled if the item is equipped"
+            "applyWhenEquippedTooltip": "If checked, this effect will only be enabled if the item is equipped",
+            "new": "New Effect"
         },
         "item": {
             "new": "New Item"
@@ -536,7 +537,9 @@
                 "monsterAttackRandom": "Random",
                 "monsterAttackTitle": "Select Monster Attack",
                 "healInjuriesTitle": "Heal Injuries",
-                "healInjuriesMessage": "Reduce the healing time for all un-healed injuries by one day?"
+                "healInjuriesMessage": "Reduce the healing time for all un-healed injuries by one day?",
+                "yes": "Yes",
+                "no": "No"
             }
         },
         "item-sheet": {

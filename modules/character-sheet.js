@@ -92,7 +92,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
             title += game.i18n.format("DoD.ui.character-sheet.baseValue", {value: base});
             $(e).attr("title", title);
-            
+
             // Prepare strings
             if (typeof value === "string" || value instanceof String) {
                 value = value.toLowerCase();
@@ -231,7 +231,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                 } else {
                     tricks.push(spell);
                 }
-                
+
                 if (!schools[spell.system.school]) {
                     schools[spell.system.school] = [];
                 }
@@ -362,7 +362,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                 injury.system.healingTimeTooltip = game.i18n.localize("DoD.injury.clickHealingTime");
 
             }
-            
+
         }
 
         this._updateEncumbrance(sheetData);
@@ -470,7 +470,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".effect-edit").on("click contextmenu", this._onEffectEdit.bind(this));
             html.find(".effect-delete").click(this._onEffectDelete.bind(this));
 
-            
+
             let restRoundButton = html.find(".rest-round");
             if (restRoundButton?.length > 0) {
                 if (this.actor.system.canRestRound === false) {
@@ -711,7 +711,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         if (test.options.cancelled) {
             return;
         }
-        
+
         const success = test.postRollData.success;
         const isDragon = test.postRollData.isDragon;
         const isDemon = test.postRollData.isDemon;
@@ -734,7 +734,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                 }
                 const actorName = actor.isToken ? actor.token.name : actor.name;
                 const msg = "<p>" + game.i18n.format("DoD.ui.chat.characterDied", {actor: actorName}) + "</p>";
-                ChatMessage.create({ 
+                ChatMessage.create({
                     user: game.user.id,
                     speaker: ChatMessage.getSpeaker({ actor }),
                     content: msg
@@ -823,7 +823,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         // Show value
         const element = event.currentTarget;
         const propertyValue = element.dataset.property + ".value";
-        element.value = foundry.utils.getProperty(this.actor, propertyValue); 
+        element.value = foundry.utils.getProperty(this.actor, propertyValue);
     }
 
     async _onEditAttribute(event) {
@@ -938,7 +938,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         // Show value
         const property = event.currentTarget.dataset.property;
         const propertyMax = property + ".max";
-        event.currentTarget.value = foundry.utils.getProperty(this.actor, propertyMax); 
+        event.currentTarget.value = foundry.utils.getProperty(this.actor, propertyMax);
     }
     _onEditResource(event) {
 
@@ -947,7 +947,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         if (isNaN(inputValue)) {
             return;
         }
-        
+
         event.preventDefault();
         event.currentTarget.blur();
 
@@ -1312,7 +1312,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         const injury = this.actor.items.get(itemId);
         const healingTime = injury.system.healingTime;
 
-        if (event.type === "click") { // left click    
+        if (event.type === "click") { // left click
             if (isNaN(healingTime)) {
                 // Roll healing time
                 try {
@@ -1325,7 +1325,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                     });
                     await injury.update({"system.healingTime": roll.total});
                 } catch {
-                    console.log("invalid formula");    
+                    console.log("invalid formula");
                 }
             } else {
                 // reduce healing time
@@ -1580,7 +1580,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         // Create effect
         if (type === "effect") {
             return this.actor.createEmbeddedDocuments("ActiveEffect", [{
-                label: game.i18n.localize("New Effect"),
+                label: game.i18n.localize("DoD.effect.new"),
                 icon: "icons/svg/aura.svg",
                 origin: this.actor.uuid,
                 disabled: false
@@ -1611,7 +1611,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         const element = event.currentTarget;
         const effectUuid = element.closest(".sheet-table-data").dataset.effectUuid;
         const effect = Array.from(this.actor.allApplicableEffects()).find(e => e.uuid === effectUuid);
-        
+
         effect?.sheet.render(true);
     }
     async _onEffectDelete(event) {

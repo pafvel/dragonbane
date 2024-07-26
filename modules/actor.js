@@ -442,7 +442,7 @@ export class DoDActor extends Actor {
             case "character":
                 {
                     const value = this._getAttributeValueFromName(skill.system.attribute);
-                    return DoD_Utility.calculateBaseChance(value);    
+                    return DoD_Utility.calculateBaseChance(value);
                 }
             case "npc":
                 return 5;
@@ -558,12 +558,12 @@ export class DoDActor extends Actor {
                     buttons: {
                         ok: {
                             icon: '<i class="fas fa-check"></i>',
-                            label: game.i18n.localize("Yes"),
+                            label: game.i18n.localize("DoD.ui.dialog.yes"),
                             callback: () => resolve(true)
                         },
                         cancel: {
                             icon: '<i class="fas fa-times"></i>',
-                            label: game.i18n.localize("No"),
+                            label: game.i18n.localize("DoD.ui.dialog.no"),
                             callback: _html => resolve(false)
                         }
                     },
@@ -1143,8 +1143,8 @@ export class DoDActor extends Actor {
                 for (let injury of healingInjuries) {
                     injury.reduceHealingTime();
                 }
-            }    
-        }        
+            }
+        }
     }
 
     async deleteItemDialog(item, flavor = "") {

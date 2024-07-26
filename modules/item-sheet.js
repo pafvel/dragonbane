@@ -107,7 +107,7 @@ export default class DoDItemSheet extends ItemSheet {
         switch (a.dataset.action) {
             case "create":
                 return owner.createEmbeddedDocuments("ActiveEffect", [{
-                    label: game.i18n.localize("New Effect"),
+                    label: game.i18n.localize("DoD.effect.new"),
                     icon: "icons/svg/aura.svg",
                     origin: owner.uuid,
                     disabled: false
