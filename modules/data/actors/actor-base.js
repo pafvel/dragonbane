@@ -11,14 +11,14 @@ export default class DoDActorBaseData extends DragonbaneDataModel {
                     nullable: false,
                     integer: true,
                     initial: 10,
-                    min: 1,
+                    min: 0,
                     }),
                 value: new fields.NumberField({
                     required: true,
                     nullable: false,
                     integer: true,
                     initial: 10,
-                    min: 1,
+                    min: 0,
                 })
             }),
             hitPoints: new fields.SchemaField({
