@@ -12,6 +12,7 @@ export default class DoDMonsterData extends DoDActorBaseData {
             size: new fields.StringField({ required: true, initial: "" }),
             traits: new fields.StringField({ required: true, initial: "" }),
             attackTable: new fields.StringField({ required: true, initial: "" }),
+            previousMonsterAttack: new fields.StringField({ required: false, initial: "" }),
         });
     };
 
