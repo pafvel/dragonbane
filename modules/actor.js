@@ -414,7 +414,11 @@ export class DoDActor extends Actor {
         this.system.movement.base = defaultMovement + movementModifier + moveBonuses;
         this.system.movement.value = this.system.movement.base;
 
+        // Max Encumbrance
         this.system.maxEncumbrance.base = Math.ceil(0.5 * this.system.attributes.str.value);
+        if (this.items.find(item => item.system.type === "backpack")) {
+            this.system.maxEncumbrance.base += 2;
+        }
         this.system.maxEncumbrance.value = this.system.maxEncumbrance.base;
     }
 

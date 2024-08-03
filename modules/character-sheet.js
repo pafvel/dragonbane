@@ -397,12 +397,6 @@ export default class DoDCharacterSheet extends ActorSheet {
     }
 
     _updateEncumbrance(sheetData) {
-        if (this.actor.type === "character") {
-            sheetData.maxEncumbrance = this.actor.system.maxEncumbrance.value;
-            if (sheetData.inventory.find(item => item.system.type === "backpack")) {
-                sheetData.maxEncumbrance += 2;
-            }
-        }
         sheetData.encumbrance = 0;
         if (sheetData.inventory) {
             sheetData.inventory.forEach(item => sheetData.encumbrance += item.totalWeight);
