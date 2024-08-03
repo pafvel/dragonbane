@@ -411,7 +411,7 @@ export class DoDActor extends Actor {
         const movementModifier =  DoD_Utility.calculateMovementModifier(this.system.attributes.agl.value);
         const moveBonuses = this.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "movement").length;
 
-        this.system.movement.base = defaultMovement + movementModifier + moveBonuses;
+        this.system.movement.base = defaultMovement + movementModifier + 2 * moveBonuses;
         this.system.movement.value = this.system.movement.base;
 
         // Max Encumbrance
