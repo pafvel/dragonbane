@@ -537,7 +537,7 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     {
         // Rollable damage
         // Format [[/damage <formula> [<slashing|piercing|bludgeoning>]]]
-        pattern: /\[\[\/damage\s((?:\d+)?[dD](?:\d+)(?:[\+\-]\d+)?)\s?(slashing|piercing|bludgeoning)?(?:\s(.+))?\]\]/gm,
+        pattern: /\[\[\/damage\s((?:\d+)?[dD](?:\d+)(?:[\+\-]\d+)?)\s?(slashing|piercing|bludgeoning)?(?:\s(.+?))?\]\]/gm,
         enricher: (match, options) => {
             const a = document.createElement("a");
             a.classList.add("inline-roll");
