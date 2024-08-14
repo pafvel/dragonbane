@@ -826,6 +826,11 @@
   font-style: italic;
   color: black;
 }
+.system-dragonbane .sheet.journal-entry h1,
+.system-dragonbane .sheet.journal-entry h2,
+.system-dragonbane .sheet.journal-entry h3 {
+  scroll-margin-top: 20px;
+}
 .system-dragonbane .sheet.journal-entry .scrollable {
   padding-right: 0;
 }
@@ -878,6 +883,9 @@
   padding-right: 12px;
   border-left: 12px solid transparent;
   border-right: 12px solid transparent;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page .editor-edit {
+  z-index: 2;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page:not(.image):last-child {
   background: url("art/ui/pagination-half-demon.webp");
@@ -1097,6 +1105,46 @@
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table th {
   padding: 2px;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-generic-table table {
+  border: 0px solid transparent;
+  background: transparent;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-generic-table table caption {
+  width: 100%;
+  height: 32px;
+  left: calc(50% - 170px);
+  padding: 6px 24px 12px 24px;
+  background-image: url("art/ui/text-box-title-wide-bg.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp");
+  background-size: contain, auto 24px, auto 24px, calc(100% - 24px) 16px;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-position: center center, left center, right center, center center;
+  background-clip: border-box, border-box, border-box, padding-box;
+  color: whitesmoke;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-generic-table table caption h3 {
+  border-bottom: 0px solid transparent;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-generic-table table tr {
+  color: #4a2407;
+  border-bottom: 1px solid #4a2407;
+  background: transparent;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-generic-table table tr:first-child {
+  border-bottom: 2px solid #4a2407;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-generic-table table tr:last-child {
+  border-bottom: 0px solid transparent;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-generic-table table tr:nth-child(2n) {
+  background-color: rgba(74, 36, 7, 0.2);
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-generic-table table th {
+  padding: 2px;
+  padding-left: 1em;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-generic-table table td {
+  padding-left: 1em;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content table th {
   text-align: left;

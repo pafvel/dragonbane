@@ -480,26 +480,18 @@ export async function enrichDisplaySpell (match, _options) {
     return a;
 }
 
-function displayTable(uuid, table, tableName) {
+function displayTable(uuid, table, tableName, showDescription = false) {
     if (!table) {
         return "";
     }
 
-    /*
-    // Rollable table in caption
-    let html = `
-    <table>
-        <caption>@Table[${uuid}]{${tableName}}</caption>
-        <tr>
-            <th>[[/roll ${table.formula}]]</th>
-            <th>${game.i18n.localize("DoD.journal.tableResult")}</th>
-        </tr>`;
-    */
+    const description = showDescription && table.description.length > 0 ? `<tr><td colspan="2" style="text-align:left">${table.description}</td></tr>`: "";
 
     // Rollable table in roll column header
     let html = `
     <table>
         <caption>${tableName}</caption>
+        ${description}
         <tr>
             <th style="text-transform: uppercase;">@Table[${uuid}]{${table.formula}}</th>
             <th>${game.i18n.localize("DoD.journal.tableResult")}</th>
@@ -545,15 +537,18 @@ function displayTable(uuid, table, tableName) {
 }
 
 export async function enrichDisplayTable (match, _options) {
-    const table = DoD_Utility.findTable(match[1]);
+
+    const parsedMatch = parseMatch(match[1]);
+    const table = DoD_Utility.findTable(parsedMatch.uuid);
     const tableName = match[2] ?? table?.name;
     const a = document.createElement("div");
+    
     if (table) {
         a.classList.add("display-table");
-        let html = displayTable(match[1], table, tableName);
+        let html = displayTable(parsedMatch.uuid, table, tableName, parsedMatch.description === true);
         a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
     } else {
-        a.dataset.tableId = match[1];
+        a.dataset.tableId = parsedMatch.uuid;
         if (match[2]) a.dataset.tableName = match[2];
         a.classList.add("content-link");
         a.classList.add("broken");

@@ -101,6 +101,9 @@
     }
 
     .sheet.journal-entry {
+        h1, h2, h3 {
+            scroll-margin-top: 20px;
+        }
         .scrollable {
             padding-right: 0;
         }
@@ -142,6 +145,7 @@
                 top: -24px;
                 margin: 0rem 0.5rem 0rem 0rem;
 
+
                 .journal-entry-page:first-child {
                     margin-top: 24px;
                 }
@@ -156,6 +160,10 @@
                     padding-right: 12px;
                     border-left: 12px solid transparent;
                     border-right: 12px solid transparent;
+
+                    .editor-edit {
+                        z-index: 2;
+                    }
                 }
                 .journal-entry-page:not(.image):last-child {
                     background: url("art/ui/pagination-half-demon.webp");
@@ -397,6 +405,50 @@
                     }
                     th {
                         padding: 2px;
+                    }
+                }
+            }
+
+            .display-generic-table {
+                table {
+                    border: 0px solid transparent;
+                    background: transparent;
+                    caption {
+                        width: 100%;
+                        height: 32px;
+                        left: calc(50% - 170px);
+                        padding: 6px 24px 12px 24px;
+                        background-image: url("art/ui/text-box-title-wide-bg.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp");
+                        background-size: contain, auto 24px, auto 24px, calc(100% - 24px) 16px;
+                        background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+                        background-position: center center, left center, right center, center center;
+                        background-clip: border-box, border-box, border-box, padding-box;
+                        color: whitesmoke;
+                        h3 {
+                            border-bottom: 0px solid transparent;
+                        }
+    
+                    }
+                    tr {
+                        color: rgb(74, 36, 7);
+                        border-bottom: 1px solid rgb(74, 36, 7);
+                        background: transparent;
+                    }
+                    tr:first-child {
+                        border-bottom: 2px solid rgb(74, 36, 7);
+                    }
+                    tr:last-child {
+                        border-bottom: 0px solid transparent;
+                    }
+                    tr:nth-child(2n) {
+                        background-color: rgba(74, 36, 7, 0.2);
+                    }
+                    th {
+                        padding: 2px;
+                        padding-left: 1em;
+                    }
+                    td {
+                        padding-left: 1em;
                     }
                 }
             }
