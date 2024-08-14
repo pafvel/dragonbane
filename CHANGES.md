@@ -1,5 +1,28 @@
 # Change Log
 
+## Version 1.9.1
+
+- Journals
+
+  - Added display options for tables
+
+- Fixes for bugs introduced in 1.9.0
+
+  - Fixed incorrect calculation of movement bonus from ability
+  - Fixed backpacks not working
+  - Fix for same monster attack occuring twice in a row
+  - Added missing localization key (by @xdy)
+
+- Miscellaneous
+
+  - Lowest movement is now 0 instead of 1
+  - Changed drocap styling
+  - Changed table caption header size
+  - Improved regex for damage (by @bithir)
+
+- Localization
+  - Updated ES translation (by Tarot)
+
 ## Version 1.9.0
 
 - Database upgrade
