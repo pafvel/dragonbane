@@ -1080,6 +1080,7 @@
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption h3 {
   border-bottom: 0px solid transparent;
+  font-size: 16px;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table tr {
   color: #4a2407;
@@ -1124,6 +1125,7 @@
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-generic-table table caption h3 {
   border-bottom: 0px solid transparent;
+  font-size: 16px;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-generic-table table tr {
   color: #4a2407;
