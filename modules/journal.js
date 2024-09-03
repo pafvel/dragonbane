@@ -248,6 +248,7 @@ export async function enrichDisplayNpcCard(match, options) {
         // Only show skills if there is no weapon equipped using that skill
         const equippedWeapons = npc.getEquippedWeapons();
         const skills = npc.system.trainedSkills.filter(s => {
+            if (s.system.hideTrained === true) return false;
             if (s.system.skillType !== "weapon") return true;
             return equippedWeapons.find(w => w.system.skill.name === s.name) == null;
 
