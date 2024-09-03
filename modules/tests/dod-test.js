@@ -71,7 +71,7 @@ export default class DoDTest {
 
     updatePostRollData() {
         this.postRollData = this.preRollData;
-        this.postRollData.result = this.roll.result;
+        this.postRollData.result = Number(this.roll.result);
     }
 
     updatePushRollChoices() {
