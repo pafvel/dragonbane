@@ -383,6 +383,7 @@ export class DoDActor extends Actor {
                 damage = maxWillPoints;
             }
             this.update({
+                ["system.willPoints.base"]: maxWillPoints,
                 ["system.willPoints.max"]: maxWillPoints,
                 ["system.willPoints.value"]: maxWillPoints - damage });
         }
