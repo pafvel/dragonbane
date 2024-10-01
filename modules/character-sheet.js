@@ -953,7 +953,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         const currentValue = foundry.utils.getProperty(this.actor, propertyValue);
         const currentDelta = Math.max(0, currentBase - currentValue);
 
-        const newBase = Math.max(1, Math.floor(inputValue));
+        const newBase = Math.max(0, Math.floor(inputValue));
         const newValue = Math.max(0, newBase - currentDelta);
 
         return this.actor.update({
