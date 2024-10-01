@@ -805,6 +805,11 @@
   font-weight: normal;
   color: black;
 }
+.system-dragonbane ul .description ul,
+.system-dragonbane ul .description ol {
+  font-weight: normal;
+  color: black;
+}
 .system-dragonbane ul .direction {
   list-style-type: "✦ ";
   font-weight: bold;
@@ -1078,7 +1083,10 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption .table-roll i {
   color: inherit;
 }
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption h2,
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption h3 {
+  text-transform: none;
+  text-align: center;
   border-bottom: 0px solid transparent;
   font-size: 16px;
 }
@@ -1123,7 +1131,10 @@
   background-clip: border-box, border-box, border-box, padding-box;
   color: whitesmoke;
 }
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-generic-table table caption h2,
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-generic-table table caption h3 {
+  text-align: center;
+  text-transform: none;
   border-bottom: 0px solid transparent;
   font-size: 16px;
 }
@@ -1170,12 +1181,14 @@
   border-color: transparent;
   position: relative;
 }
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h2,
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h3 {
   position: absolute;
   width: 280px;
   height: 32px;
   top: -4px;
   left: calc(50% - 140px);
+  text-transform: none;
   text-align: center;
   vertical-align: middle;
   color: whitesmoke;
