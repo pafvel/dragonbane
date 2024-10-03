@@ -891,6 +891,7 @@
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page .editor-edit {
   z-index: 2;
+  display: unset;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page:not(.image):last-child {
   background: url("art/ui/pagination-half-demon.webp");
