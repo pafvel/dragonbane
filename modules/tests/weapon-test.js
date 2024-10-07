@@ -1,7 +1,5 @@
 import DoDSkillTest from "./skill-test.js";
-import { DoD } from "../config.js";
 import DoD_Utility from "../utility.js";
-
 
 export default class DoDWeaponTest extends DoDSkillTest  {
 
@@ -244,6 +242,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
 
     updatePostRollData() {
         super.updatePostRollData();
+        const DoD = CONFIG.DoD;
 
         switch(this.postRollData.action) {
             case "slash":

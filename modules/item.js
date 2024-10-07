@@ -1,5 +1,4 @@
 import DoD_Utility from "./utility.js";
-import { DoD } from "./config.js";
 
 export class DoDItem extends Item {
     /**
@@ -130,7 +129,7 @@ export class DoDItem extends Item {
     }
 
     get canImproveSkill() {
-        return this.system.value < DoD.skillMaximum;
+        return this.system.value < CONFIG.DoD.skillMaximum;
     }
 
     /**

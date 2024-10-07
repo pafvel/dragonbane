@@ -1,4 +1,3 @@
-import { DoD } from "./config.js";
 
 export default class DoDActiveEffectConfig extends ActiveEffectConfig {
 
@@ -20,7 +19,7 @@ export default class DoDActiveEffectConfig extends ActiveEffectConfig {
     async getData() {
         const sheetData = await super.getData();
 
-        sheetData.config = DoD;
+        sheetData.config = CONFIG.DoD;
 
         return sheetData;
     }

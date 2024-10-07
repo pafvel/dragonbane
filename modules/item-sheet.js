@@ -1,5 +1,3 @@
-import { DoD } from "./config.js";
-
 export default class DoDItemSheet extends ItemSheet {
 
     static get defaultOptions() {
@@ -17,6 +15,7 @@ export default class DoDItemSheet extends ItemSheet {
 
     async getData() {
         const baseData = super.getData();
+        const DoD = CONFIG.DoD;
 
         let sheetData = {
             owner: this.item.isOwner,
@@ -34,8 +33,8 @@ export default class DoDItemSheet extends ItemSheet {
 
             this.item.system.features.forEach( feature => {
                 weaponFeatures.push({
-                    name: "DoD.weaponFeatureTypes." + feature,
-                    tooltip: "DoD.weaponFeatureTypes." + feature + "Tooltip"
+                    name: DoD.weaponFeatureTypes[feature],
+                    tooltip: DoD.weaponFeatureTypes[feature] + "Tooltip"
                 })
             });
             sheetData.weaponFeatures = weaponFeatures;
@@ -46,8 +45,8 @@ export default class DoDItemSheet extends ItemSheet {
 
             this.item.system.bonuses.forEach( damageType => {
                 armorBonuses.push({
-                    name: "DoD.damageTypes." + damageType,
-                    tooltip: "DoD.damageTypes." + damageType + "Tooltip"
+                    name: DoD.damageTypes[damageType],
+                    tooltip: DoD.damageTypes[damageType] + "Tooltip"
                 })
             });
             sheetData.armorBonuses = armorBonuses;
@@ -168,12 +167,13 @@ export default class DoDItemSheet extends ItemSheet {
 
     async _onEditWeaponFeatures(event) {
         event.preventDefault();
+        const DoD = CONFIG.DoD;
 
         // prepare weapon feature data
         let featureData = [];
         for (let feature in DoD.weaponFeatureTypes)
         {
-            const name = "DoD.weaponFeatureTypes." + feature;
+            const name = DoD.weaponFeatureTypes[feature];
             const localizedName = game.i18n.localize(name);
 
             featureData.push( {
@@ -236,6 +236,7 @@ export default class DoDItemSheet extends ItemSheet {
 
     async _onEditArmorBonuses(event) {
         event.preventDefault();
+        const DoD = CONFIG.DoD;
 
         // prepare weapon feature data
         let damageData = [];
@@ -243,8 +244,8 @@ export default class DoDItemSheet extends ItemSheet {
         {
             if (damageType !== "none") {
                 damageData.push( {
-                    name: "DoD.damageTypes." + damageType,
-                    tooltip: "DoD.damageTypes." + damageType + "Tooltip",
+                    name: DoD.damageTypes[damageType],
+                    tooltip: DoD.damageTypes[damageType] + "Tooltip",
                     id: damageType,
                     value: this.item.hasDamageBonus(damageType)
                 });

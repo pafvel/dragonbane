@@ -1,5 +1,4 @@
 import * as DoDChat from "./chat.js";
-import { DoD } from "./config.js";
 import DoDAttributeTest from "./tests/attribute-test.js";
 import DoDSkillTest from "./tests/skill-test.js";
 import DoDSpellTest from "./tests/spell-test.js";
@@ -60,6 +59,7 @@ export default class DoDCharacterSheet extends ActorSheet {
      }
 
      async _render(force, options) {
+        const DoD = CONFIG.DoD;
         let result = await super._render(force, options);
 
         // Format if affected by active effects
@@ -1257,6 +1257,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
     async _onDamageRoll(event) {
         event.preventDefault();
+        const DoD = CONFIG.DoD;
 
         const itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
         const weapon = this.actor.items.get(itemId);
@@ -1408,6 +1409,8 @@ export default class DoDCharacterSheet extends ActorSheet {
 
     async _onAdvancementRoll(event) {
         event.preventDefault();
+        const DoD = CONFIG.DoD;
+        
         const itemId = event.currentTarget.closest("tr").dataset.itemId;
         const skillItem = this.actor.items.get(itemId);
 

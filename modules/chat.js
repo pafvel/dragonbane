@@ -3,7 +3,6 @@ import DoDAttributeTest from "./tests/attribute-test.js";
 import DoDSkillTest from "./tests/skill-test.js";
 import DoDWeaponTest from "./tests/weapon-test.js";
 import DoDSpellTest from "./tests/spell-test.js";
-import { DoD } from "./config.js";
 import { DoDActor } from "./actor.js";
 
 export function addChatListeners(_app, html, _data) {
@@ -391,6 +390,7 @@ async function onMagicDamageRoll(event) {
     if (event.detail === 2) { // double-click
         return;
     };
+    const DoD = CONFIG.DoD;
     const element = event.currentTarget;
     const actorId = element.dataset.actorId;
     const actor = DoD_Utility.getActorFromUUID(actorId);
