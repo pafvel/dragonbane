@@ -5,6 +5,9 @@
             <table class="sheet-table core-skills item-list">
                 <tr class="sheet-table-header">
                     <th></th>
+                    {{#if @root.automaticSkillIntensiveTraining}}
+                        <th></th>
+                    {{/if}}
                     <th class="number-header">
                         {{localize "DoD.ui.character-sheet.skillValue"}}
                     </th>
@@ -21,15 +24,26 @@
                     <td class="checkbox-data icon-data">
                         {{#if skill.canImproveSkill}}
                             {{#if skill.system.advance}}
-                            <button type="button" class="roll-advancement" data-action="roll-advancement"  title="{{localize "DoD.skill.rollAdvancement"}}">
-                                <i class="fas fa-circle-arrow-up"></i>
-                            </button>
+                                <button type="button" class="roll-advancement" data-action="roll-advancement"  title="{{localize "DoD.skill.rollAdvancement"}}">
+                                    <i class="fas fa-circle-arrow-up"></i>
+                                </button>
                             {{else}}
                                 <input  title="{{localize "DoD.skill.markAdvancement"}}" class="mark-advancement" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
                             {{/if}}
+                            {{#if @root.automaticSkillIntensiveTraining}}
+                            <td class="checkbox-data">
+                                {{#if skill.system.taught}}
+                                    <button type="button" class="roll-taught" data-action="roll-taught"  title="{{localize "DoD.skill.rollTaught"}}">
+                                        <i class="fas fa-brain"></i>
+                                    </button>
+                                {{else}}
+                                    <input title="{{localize "DoD.skill.markTaught"}}" class="mark-taught" data-field="system.taught" type=checkbox {{checked skill.system.taught}} />
+                                {{/if}}
+                            </td>
+                            {{/if}}
                         {{/if}}
                     </td>
-                    <td class="number-data narrow">
+                    <td class="number-data narrow" >
                         <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
                     </td>
                     <td class="skill-name text-data">
@@ -57,6 +71,9 @@
             <table class="sheet-table weapon-skills item-list">
                 <tr class="sheet-table-header">
                     <th></th>
+                    {{#if @root.automaticSkillIntensiveTraining}}
+                        <th></th>
+                    {{/if}}
                     <th class="number-header">
                         {{localize "DoD.ui.character-sheet.skillValue"}}
                     </th>
@@ -73,11 +90,22 @@
                     <td class="checkbox-data icon-data">
                         {{#if skill.canImproveSkill}}
                             {{#if skill.system.advance}}
-                            <button type="button" class="roll-advancement" data-action="roll-advancement"  title="{{localize "DoD.skill.rollAdvancement"}}">
-                                <i class="fas fa-circle-arrow-up"></i>
-                            </button>
+                                <button type="button" class="roll-advancement" data-action="roll-advancement"  title="{{localize "DoD.skill.rollAdvancement"}}">
+                                    <i class="fas fa-circle-arrow-up"></i>
+                                </button>
                             {{else}}
                                 <input  title="{{localize "DoD.skill.markAdvancement"}}" class="mark-advancement" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
+                            {{/if}}
+                            {{#if @root.automaticSkillIntensiveTraining}}
+                                <td class="checkbox-data">
+                                    {{#if skill.system.taught}}
+                                        <button type="button" class="roll-taught" data-action="roll-taught"  title="{{localize "DoD.skill.rollTaught"}}">
+                                            <i class="fas fa-brain"></i>
+                                        </button>
+                                    {{else}}
+                                        <input title="{{localize "DoD.skill.markTaught"}}" class="mark-taught" data-field="system.taught" type=checkbox {{checked skill.system.taught}} />
+                                    {{/if}}
+                                </td>
                             {{/if}}
                         {{/if}}
                     </td>
@@ -107,6 +135,9 @@
             <table class="sheet-table secondary-skills item-list">
                 <tr class="sheet-table-header">
                     <th></th>
+                    {{#if @root.automaticSkillIntensiveTraining}}
+                    <th></th>
+                    {{/if}}
                     <th class="number-header">
                         {{localize "DoD.ui.character-sheet.skillValue"}}
                     </th>
@@ -126,10 +157,21 @@
                                 <i class="fas fa-circle-arrow-up"></i>
                             </button>
                             {{else}}
-                                <input  title="{{localize "DoD.skill.markAdvancement"}}" class="mark-advancement" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
+                            <input  title="{{localize "DoD.skill.markAdvancement"}}" class="mark-advancement" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
                             {{/if}}
                         {{/if}}
-                        </td>
+                    </td>
+                    {{#if @root.automaticSkillIntensiveTraining}}
+                    <td class="checkbox-data">
+                        {{#if skill.system.taught}}
+                        <button type="button" class="roll-taught" data-action="roll-taught"  title="{{localize "DoD.skill.rollTaught"}}">
+                            <i class="fas fa-brain"></i>
+                        </button>
+                    {{else}}
+                        <button title="{{localize "DoD.skill.markTaught"}}" class="mark-taught" data-field="system.taught" type="button" {{checked skill.system.taught}} />
+                    {{/if}}
+                    </td>
+                    {{/if}}
                     <td class="number-data narrow">
                         <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
                     </td>

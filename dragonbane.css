@@ -1737,3 +1737,9 @@
   box-shadow: 0 0 2px #FFF inset;
   word-break: break-all;
 }
+.system-dragonbane .checkbox-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}

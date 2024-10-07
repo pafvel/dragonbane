@@ -1,5 +1,5 @@
 import * as DoDChat from "./chat.js";
-import { DoD } from "./config.js";
+import {DoD} from "./config.js";
 import DoDAttributeTest from "./tests/attribute-test.js";
 import DoDSkillTest from "./tests/skill-test.js";
 import DoDSpellTest from "./tests/spell-test.js";
@@ -148,7 +148,8 @@ export default class DoDCharacterSheet extends ActorSheet {
             editable: this.isEditable,
             actor: baseData.actor,
             system: baseData.data.system,
-            config: CONFIG.DoD
+            config: CONFIG.DoD,
+            automaticSkillIntensiveTraining: game.settings.get("dragonbane", "automaticSkillIntensiveTraining") ?? false
         };
 
         async function enrich(html) {
@@ -441,6 +442,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             html.find(".use-ability").on("click contextmenu", this._onUseAbility.bind(this));
             html.find("[data-action='roll-advancement']").on("click contextmenu", this._onAdvancementRoll.bind(this))
             html.find(".mark-advancement").on("click", this._onMarkAdvancement.bind(this))
+            html.find(".mark-taught").on("click", this._onMarkTaught.bind(this))
 
             html.find(".hit-points-max-label").focus(this._onFocusResource.bind(this));
             html.find(".hit-points-max-label").blur(this._onBlurResource.bind(this));
@@ -1395,14 +1397,56 @@ export default class DoDCharacterSheet extends ActorSheet {
                 case 0: // Cancel
                     return;
                 case 1: // Mark
-                    await skillItem.update({ "system.advance": true });
+                    await skillItem.update({ "system.advance": true, "system.taught": false });
                     return;
                 case 2: // Train
                     await skillItem.update({ "system.value": baseChance * 2 });
                     return;
             }
         } else {
-            await skillItem.update({ "system.advance": true });
+            await skillItem.update({ "system.advance": true, "system.taught": false });
+        }
+    }
+
+    async _onMarkTaught(event) {
+        event.preventDefault();
+        const itemId = event.currentTarget.closest("tr").dataset.itemId;
+        const skillItem = this.actor.items.get(itemId);
+
+        // left click to roll, right-click to clear
+        if (event.type === "click") {
+
+            if (skillItem.system.taught) {
+                return;
+            }
+
+            // Make roll
+            const roll = await new Roll("D20").roll(game.release.generation < 12 ? { async: true } : {});
+            const advance = Math.min(DoD.skillMaximum, roll.result) > skillItem.system.value;
+            const flavorText = advance ?
+                game.i18n.format("DoD.skill.advancementSuccess", {
+                    skill: skillItem.name,
+                    old: skillItem.system.value,
+                    new: skillItem.system.value + 1
+                }) :
+                game.i18n.format("DoD.skill.advancementFail", { skill: skillItem.name });
+
+            const msg = await roll.toMessage({
+                user: game.user.id,
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                flavor: flavorText
+            });
+
+            if (advance) {
+                if (game.dice3d) {
+                    game.dice3d.waitFor3DAnimationByMessageID(msg.id).then(
+                        () => skillItem.update({ "system.value": skillItem.system.value + 1, "system.taught": true }));
+                } else {
+                    await skillItem.update({ "system.value": skillItem.system.value + 1, "system.taught": true });
+                }
+            }
+        } else {
+            await skillItem.update({ "system.taught": false })
         }
     }
 
@@ -1437,9 +1481,8 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
         }
         // always clear advancement
-        await skillItem.update({ "system.advance": false })
+        await skillItem.update({ "system.advance": false, "system.taught": false })
     }
-
     async _onConditionClick(event) {
         if (event.target.className === "condition-input") {
             return; // event is handled by input element

@@ -264,7 +264,9 @@
             "hide": "Hide",
             "hideTooltip": "Hides skill from the list of Skills on the character's main tab",
             "markAdvancement": "Mark skill for advancement",
+            "markTaught": "Immediately roll to advance skill due to intense training with a teacher.",
             "rollAdvancement": "Roll to advance skill at end of session.\rRight-click to remove mark without rolling.",
+            "rollTaught": "Has already performed intense training with a teacher.",
             "type": "Type",
             "typeTooltip": "The skill's Type"
         },
@@ -571,7 +573,9 @@
             "allowDealDamageOnSelected": "Damage selected token",
             "allowDealDamageOnSelectedHint": "If checked, the GM may deal damage (and heal) the selected token if no token has been targeted.",
             "automaticSkillAdvancementMark": "Automate skill checkmark",
-            "automaticSkillAdvancementMarkHint": "Automatically set improvement checkmark on Dragon and Demon rolls."
+            "automaticSkillAdvancementMarkHint": "Automatically set improvement checkmark on Dragon and Demon rolls.",
+            "automaticSkillIntensiveTraining": "Handle intensive training with a teacher.",
+            "automaticSkillIntensiveTrainingHint": "Handle intensive training with a teacher (will add a second checkbox to be clicked after intensive training, if that advancement is successful it will be blocked until an advancement check has been filled.)"
         },
         "WARNING": {
             "kinAbility": "Could not find Kin Ability: {ability}",
