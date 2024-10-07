@@ -1,4 +1,3 @@
-import { DoD } from "./config.js";
 import DoDSkillTest from "./tests/skill-test.js";
 
 export default class DoD_Utility {
@@ -37,7 +36,7 @@ export default class DoD_Utility {
     }
 
     static calculateDamageBonus(attribute) {
-
+        const DoD = CONFIG.DoD;
         if (attribute <=12) {
             return DoD.dice.none;
         } else if (attribute <=16) {
