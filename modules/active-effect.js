@@ -1,5 +1,4 @@
 import { DoDActor } from "./actor.js";
-import { DoD } from "./config.js";
 import DoD_Utility from "./utility.js";
 
 export default class DoDActiveEffect extends ActiveEffect {
@@ -127,6 +126,8 @@ export default class DoDActiveEffect extends ActiveEffect {
      * @param {String} attribute        The damage bonus attribute this change should be applied to
      */
     applyDamageBonusChange(actor, change, attribute) {
+        const DoD = CONFIG.DoD;
+
         let value = actor.system.damageBonus[attribute].value.toLowerCase();
         const entries = Object.entries(DoD.dice);
         let index = entries.findIndex(e => e[0] == value);
