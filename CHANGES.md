@@ -1,5 +1,31 @@
 # Change Log
 
+## Version 1.9.2
+
+- Miscellaneous fixes
+
+  - Fix for allowing dragon rolls to be pushed.
+  - Fix for warning when weapon range is an empty string.
+  - Fix for not being able to set WP to 0 on NPCs.
+  - Fix for WP not updating correctly on older Foundry version.
+
+- Journals
+
+  - Edit button always visible in journals.
+    - prevents an issue that sometimes makes the sheet offset a bit when displaying the edit button and that the invisible button doesn't show when you think it should.
+  - Info boxes and tables can now have Header 2 title.
+  - Nested list items now display correctly in room descriptions.
+  - Hide trained flag now also hides the skill in NPC dscriptions.
+
+- Localization
+
+  - Updated localisation for pt-br (by Roberto Pedroso)
+  - Updated localisation for zh-tw (by Marc Ye)
+
+- For developers
+  - Ensured that the CONFIG.DoD localisation values are used and moved everything to look at CONFIG.DoD (by @Bithir)
+    - This makes it possible to programmatically extend weapon features and damage types, with localization support.
+
 ## Version 1.9.1
 
 - Journals
