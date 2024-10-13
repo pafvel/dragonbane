@@ -8,6 +8,7 @@
         "TypeAbility": "Habilidade",
         "TypeArmor": "Armadura",
         "TypeHelmet": "Elmo",
+        "TypeInjury": "Ferimento",
         "TypeItem": "Item",
         "TypeKin": "Ascendência",
         "TypeProfession": "Profissão",
@@ -25,6 +26,7 @@
             "ability": "Habilidade",
             "armor": "Armadura",
             "helmet": "Elmo",
+            "injury": "Ferimento",
             "item": "Item",
             "kin": "Ascendência",
             "profession": "Profissão",
@@ -136,6 +138,11 @@
             "system": "Dragonbane",
             "textureTransparent": "Dragonbane (Transparente)"
         },
+        "effect": {
+            "applyWhenEquipped": "Aplicar somente quando equipado",
+            "applyWhenEquippedTooltip": "Se marcado, este efeito só será ativado se o item estiver equipado",
+            "new": "Novo Efeito"
+        },
         "item": {
             "new": "Novo Item"
         },
@@ -174,6 +181,15 @@
         "helmet": {
             "new": "Novo Elmo",
             "rating": "Classe de Armadura"
+        },
+        "injury": {
+            "healingTime": "Tempo de Cura",
+            "healingTimeTooltip": "O número de dias que leva para curar o ferimento",
+            "healingTimeExpired": "<b>{injury}</b> está curado(a).",
+            "healingTimeRollFlavor": "Tempo de cura para <b>{injury}</b> é de <b>{days}</b> dias.",
+            "rollHealingTime": "Clique com o botão esquerdo para rolar o tempo de cura",
+            "clickHealingTime": "Clique com o botão esquerdo para diminuir o tempo de cura\rClique com o botão direito para aumentar o tempo de cura",
+            "healingTimeChanged": "Tempo de cura para <b>{injury}</b> mudou de <b>{from}</b> para <b>{to}</b> dias."
         },
         "itemTypes": {
             "item": "Item",
@@ -369,11 +385,13 @@
                 "and": "&",
                 "appearance": "Aparência",
                 "armor": "Armadura",
+                "baseValue": "Valor base: {value}",
                 "background": "Biografia",
                 "banes": "Desgraça em",
                 "combat": "Combate",
                 "coreSkills": "Perícias Principais",
                 "create-armor": "Criar Armadura",
+                "create-effect": "Criar Efeito",
                 "create-helmet": "Criar Elmo",
                 "create-item": "Criar Item",
                 "create-weapon": "Criar Arma",
@@ -382,6 +400,9 @@
                 "damageBonusSTR": "Bônus Dano FOR",
                 "deathRolls": "Rolagens da Morte",
                 "description": "Descrição",
+                "disabled": "Desabilitado",
+                "effect": "Efeito",
+                "effects": "Efeitos",
                 "encumbrance": "Carga",
                 "equipped": "Equipado",
                 "equipped-armor": "Armadura Equipada",
@@ -396,6 +417,7 @@
                 "hitPointsCurrent": "PV Atual",
                 "hitPointsMax": "PV Máximo",
                 "hp": "PV",
+                "injuries": "Ferimentos",
                 "inventory": "Inventário",
                 "kin": "Ascendência",
                 "kinAbilities": "Habilidades de Ascendência",
@@ -427,6 +449,7 @@
                 "size": "Tamanho",
                 "skills": "Perícias",
                 "skillValue": "",
+                "source": "Origem",
                 "spell": "Magia",
                 "spells": "Magias",
                 "spellsTooltip": "Magias preparadas",
@@ -435,6 +458,8 @@
                 "traits": "Características",
                 "trained-skills": "Perícias Treinadas",
                 "trained-skillsTooltip": "Perícias com valor de habilidade superior à chance base",
+                "trick": "Truque Mágico",
+                "tricks": "Truques Mágicos",
                 "weakness": "Fraqueza",
                 "weapons": "Armas",
                 "weaponSkills": "Perícias com Armas",
@@ -502,8 +527,23 @@
                 "castMagicTrickTitle": "Lançar Truque Mágico",
                 "castMagicTrickContent": "Gastar <b>1</b> FV para lançar <b>{spell}</b>?",
                 "deleteItemTitle": "Apagar {item}",
-                "deleteItemContent": "Você quer apagar <b>{item}</b>?"
+                "deleteItemContent": "Você quer apagar <b>{item}</b>?",
+                "trainSkillTitle": "Treinar perícia?",
+                "trainSkillContent": "<p>Você está marcando <b>{skill}</b> para avanço, mas você avançou menos perícias do que o número permitido de perícias treinadas.</p><p>Você gostaria de selecionar <b>{skill}</b> como uma de suas perícias treinadas?</p><p style=\"font-size:smaller\"><b>Observação:</b> As perícias são treinadas editando o valor da perícia para o dobro da chance base. Redefina a chance básica limpando o valor da perícia.</p>",
+                "trainLabel": "Treinar",
+                "markLabel": "Marca",
+                "deleteActorTokenOnScene": "Há cenas com Tokens referentes ao Ator",
+                "monsterAttack": "Ataque",
+                "monsterAttackRandom": "Aleatório",
+                "monsterAttackTitle": "Selecionar Ataque Monstruoso",
+                "healInjuriesTitle": "Curar Ferimentos",
+                "healInjuriesMessage": "Reduzir em um dia o tempo de cura de todos os ferimentos não curados?"
             }
+        },
+        "item-sheet": {
+            "details": "Detalhes",
+            "description": "Descrição",
+            "effects": "Efeitos"
         },
         "INFO": {
             "monsterAttackUpdated": "Tabela de ataque de monstros atualizada para {actor}.",
@@ -529,7 +569,9 @@
             "monsterAttackDialogIsDefault": "Selecionar Ataque de Monstro",
             "monsterAttackDialogIsDefaultHint": "Se marcado, a caixa de diálogo \"Selecionar Ataque de Monstro\" é mostrada por padrão ao clicar com o botão esquerdo no botão Ataque na ficha do Monstro. A caixa de diálogo será ignorada se SHIFT ou CTRL forem pressionados ao clicar com o botão esquerdo. Se desmarcado, o comportamento é o oposto.",
             "allowDealDamageOnSelected": "Dano ao Token selecionado",
-            "allowDealDamageOnSelectedHint": "Se marcado, o Mestre pode causar dano (e curar) o token selecionado se nenhum token tiver sido alvo."
+            "allowDealDamageOnSelectedHint": "Se marcado, o Mestre pode causar dano (e curar) o token selecionado se nenhum token tiver sido alvo.",
+            "automaticSkillAdvancementMark": "Marca de avanço de perícia automatizada",
+            "automaticSkillAdvancementMarkHint": "Definir automaticamente uma marca de avanço em resulltados de Dragão e Demônio nos testes."
         },
         "WARNING": {
             "kinAbility": "Não foi possível encontrar a Habilidade de Ascendência: {ability}",
