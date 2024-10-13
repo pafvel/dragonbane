@@ -57,7 +57,7 @@ export class DoDItem extends Item {
 
 
         // Range
-        if (this.actor) {
+        if (this.actor && this.system.range !== "") {
             let r = new Roll(String(this.system.range), {str: this.actor.system.attributes?.str.value});
             try {
                 await r.evaluate(game.release.generation < 12 ? {async: true} : {});
