@@ -778,6 +778,20 @@
   src: url('fonts/Caveat/static/Caveat-Bold.ttf');
   font-weight: bold;
 }
+/* scrollbar
+====================================================== */
+* {
+  scrollbar-color: initial;
+  scrollbar-width: auto;
+}
+::-webkit-scrollbar-thumb {
+  --scrollbar-thumb-background: #237262;
+  --scrollbar-thumb-border-color: #cfbda7;
+  background: var(--scrollbar-thumb-background);
+  border: 1px solid var(--scrollbar-thumb-border-color);
+}
+/* End
+====================================================== */
 .system-dragonbane {
   --dod-color-text-dark-title: #00604D;
   --dod-color-direction: #4a2407;
