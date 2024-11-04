@@ -409,7 +409,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         sheetData.encumbrance = Math.round(100 * sheetData.encumbrance) / 100;
 
         if (this.actor.type === "character") {
-            sheetData.overEncumbered = sheetData.encumbrance > sheetData.maxEncumbrance;
+            sheetData.overEncumbered = sheetData.encumbrance > sheetData.actor.system.maxEncumbrance.value;
         }
     }
 
