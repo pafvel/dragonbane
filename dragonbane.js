@@ -414,12 +414,21 @@ Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
 // Re-generate thumbnails when importing scenes
 Hooks.on('importAdventure', async (created, _updated) => {
     if (created?.scenes?.size > 0) {
-        console.log("Dragonbane: Re-generating thumbnails for " + created.name);
-        created.scenes.forEach(async s => {
+        for (const s of created.scenes) {
             const scene = game.scenes.get(s.id);
-            const thumb = await scene.createThumbnail();
-            scene.update({ "thumb": thumb.thumb });
-        });
+            let exists = false;
+            try {
+                const files = await FilePicker.browse("data", scene.thumb.substring(0, scene.thumb.lastIndexOf('/')));
+                if (files.files.includes(s.thumb)) {
+                    exists = true;
+                }
+            } catch { /* directory doesn't exist */ }
+                    
+            if (!exists) {
+                const thumb = await scene.createThumbnail();
+                await scene.update({ "thumb": thumb.thumb });
+            }
+        }
     }
 });
 
