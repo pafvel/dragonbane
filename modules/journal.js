@@ -95,13 +95,13 @@ export async function enrichDisplayMonster (match, options) {
             <div class="${titleClasses}">@UUID[${monster.uuid}]{${monsterName}}</div>
             <table>
                 <tr>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity.value}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity.base}</td>
                     <td><b>${game.i18n.localize("DoD.ui.character-sheet.size")}: </b>${game.i18n.localize("DoD.sizeTypes." + monster.system.size)}</td>
                 </tr>
                 <tr>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}: </b>${monster.system.movement.value}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}: </b>${monster.system.movement.base}</td>
                     <td><b>${game.i18n.localize("DoD.ui.character-sheet.armor")}: </b>${monster.getArmorValue()}</td>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}: </b>${monster.system.hitPoints.max}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}: </b>${monster.system.hitPoints.base}</td>
                 </tr>
             </table>
             <div>
@@ -139,13 +139,13 @@ export async function enrichDisplayMonsterDescriptionCard (match, _options) {
             </div>
             <table>
                 <tr>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity.value}</td>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}: </b>${monster.system.movement.value}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity.base}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}: </b>${monster.system.movement.base}</td>
                 </tr>
                 <tr>
                     <td><b>${game.i18n.localize("DoD.ui.character-sheet.size")}: </b>${game.i18n.localize("DoD.sizeTypes." + monster.system.size)}</td>
                     <td><b>${game.i18n.localize("DoD.ui.character-sheet.armor")}: </b>${monster.getArmorValue()}</td>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}: </b>${monster.system.hitPoints.max}</td>
+                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}: </b>${monster.system.hitPoints.base}</td>
                 </tr>
             </table>
             <div>
@@ -220,7 +220,7 @@ export async function enrichDisplayNpcCard(match, options) {
                 <tr><td>
                     
                     <div class="flexrow">
-                        <div><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}:&nbsp</b>${npc.system.movement.value}</div>`
+                        <div><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}:&nbsp</b>${npc.system.movement.base}</div>`
 
         if (npc.getDamageBonus("str") !== "") {
             html += `<div><b>${game.i18n.localize("DoD.ui.character-sheet.damageBonusSTR")}:&nbsp</b><span style="text-transform:uppercase">${npc.getDamageBonus("str")}</span></div>`;
@@ -234,10 +234,10 @@ export async function enrichDisplayNpcCard(match, options) {
                 </td></tr>
                 <tr><td>
                     <div class="flexrow">
-                        <div><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}:&nbsp</b>${npc.system.hitPoints.max}</div>`;
+                        <div><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}:&nbsp</b>${npc.system.hitPoints.base}</div>`;
 
         if (npc.hasAbilities || npc.hasSpells || npc.system.willPoints.max > 0) {
-            html += `<div><b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:&nbsp</b>${npc.system.willPoints.max}</div>`;
+            html += `<div><b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:&nbsp</b>${npc.system.willPoints.base}</div>`;
         }
         html += `
                     </div>
