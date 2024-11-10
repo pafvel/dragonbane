@@ -1,4 +1,24 @@
-# Change Log
+1# Change Log
+
+## Version 1.9.3
+
+- Character Sheets
+
+  - Red text if over-encumbered now works again (by @Athemis).
+  - Removed error when active effect tried to modify a missing attribute, for example an active effect modifying WP on a Monster.
+
+- Journals
+
+  - NPCs & Monsters now use base value in journals instead of the value affected by active effects.
+
+- Miscellaneous
+
+  - Increased resolution of splash image.
+  - Added support for pre-generated thumbnails for scenes in adventures.
+
+- Localization
+
+  - Updated FR localization (by @Sasmira).
 
 ## Version 1.9.2
 
@@ -15,7 +35,7 @@
     - prevents an issue that sometimes makes the sheet offset a bit when displaying the edit button and that the invisible button doesn't show when you think it should.
   - Info boxes and tables can now have Header 2 title.
   - Nested list items now display correctly in room descriptions.
-  - Hide trained flag now also hides the skill in NPC dscriptions.
+  - Hide trained flag now also hides the skill in NPC descriptions.
 
 - Localization
 
