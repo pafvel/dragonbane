@@ -100,6 +100,18 @@ export class DoDActor extends Actor {
     async _preUpdate(data, options, user) {
         await super._preUpdate(data, options, user);
 
+        // If base WIL changes, also update current WP.
+        if (foundry.utils.hasProperty(data, "system.attributes.wil.base")) {
+            const deltaWP = data.system.attributes.wil.base - this.system.attributes.wil.base;
+            foundry.utils.setProperty(data, "system.willPoints.value", this.system.willPoints.value + deltaWP);
+        }
+        // If base CON changes, also update current HP.
+        if (foundry.utils.hasProperty(data, "system.attributes.con.base")) {
+            const deltaHP = data.system.attributes.con.base - this.system.attributes.con.base;
+            foundry.utils.setProperty(data, "system.hitPoints.value", this.system.hitPoints.value + deltaHP);
+        }
+
+        // scrolling text
         if (foundry.utils.hasProperty(data, "system.hitPoints.value")) {
             options._deltaHP = foundry.utils.getProperty(data, "system.hitPoints.value") - this.system.hitPoints.value;
         }
@@ -373,39 +385,15 @@ export class DoDActor extends Actor {
         let maxWillPoints = this.system.attributes.wil.value;
         const wpBonuses = this.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "willPoints").length;
         maxWillPoints += 2 * wpBonuses;
-
-        if (this.system.willPoints.max !== maxWillPoints) {
-            // Attribute changed - keep spent amount (damage) and update max value
-            let damage = this.system.willPoints.max - this.system.willPoints.value;
-            if (damage < 0) {
-                damage = 0;
-            } else if (damage > maxWillPoints) {
-                damage = maxWillPoints;
-            }
-            this.update({
-                ["system.willPoints.base"]: maxWillPoints,
-                ["system.willPoints.max"]: maxWillPoints,
-                ["system.willPoints.value"]: maxWillPoints - damage });
-        }
+        this.system.willPoints.base = maxWillPoints;
+        this.system.willPoints.max = maxWillPoints;
 
         // Hit Points
         let maxHitPoints = this.system.attributes.con.value;
         const hpBonuses = this.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "hitPoints").length;
         maxHitPoints += 2 * hpBonuses;
-
-        if (this.system.hitPoints.max !== maxHitPoints) {
-            // Attribute changed - keep damage and update max value
-            let damage = this.system.hitPoints.max - this.system.hitPoints.value;
-            if (damage < 0) {
-                damage = 0;
-            } else if (damage > maxHitPoints) {
-                damage = maxHitPoints;
-            }
-            this.update({
-                ["system.hitPoints.base"]: maxHitPoints,
-                ["system.hitPoints.max"]: maxHitPoints,
-                ["system.hitPoints.value"]: maxHitPoints - damage });
-        }
+        this.system.hitPoints.base = maxHitPoints;
+        this.system.hitPoints.max = maxHitPoints;
 
         // Movement
         const defaultMovement = Number(this.system.kin ? this.system.kin.system.movement : 10);
