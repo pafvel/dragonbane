@@ -185,4 +185,22 @@ export class DoDItem extends Item {
 
         return await this.update({"system.healingTime": newHealingTime});
     }
+
+    get isKinAbility() {
+        return this.type === "ability" && this.system.abilityType === "kin";
+    }
+
+    get isProfessionAbility() {
+        return this.type === "ability" && this.system.abilityType === "profession";
+    }
+
+    async removeAbility(name) {
+        // Ability names defined in the current kin/profession
+        const oldAbilityNames = DoD_Utility.splitAndTrimString(this.system.abilities);
+        const newAbilityNames = oldAbilityNames?.filter(e => e.toUpperCase() !== name.toUpperCase());
+        const newAbilities = newAbilityNames?.join(", ");
+        if (newAbilities !== this.system.abilities) {
+            await this.update({"system.abilities": newAbilities});
+        }
+    }
 }

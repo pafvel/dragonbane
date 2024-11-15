@@ -496,6 +496,14 @@ export class DoDActor extends Actor {
         return this.system.trainedSkills.length > 0;
     }
 
+    get kin() {
+        return this.system.kin;
+    }
+
+    get profession() {
+        return this.system.profession;
+    }
+
     getEquippedWeapons() {
         return this.items.filter(i => i.type === "weapon" && i.system.worn === true);
     }
@@ -720,6 +728,10 @@ export class DoDActor extends Actor {
         }
     }
 
+    get kinAbilities() {
+        return this.items.filter(item => item.type === "ability" && item.system.abilityType === "kin");
+    }
+
     async updateProfessionAbilities() {
         // Character's abilities
         const abilities = this.items.filter(item => item.type === "ability");
@@ -759,6 +771,10 @@ export class DoDActor extends Actor {
         if (createItemData.length) {
             await this.createEmbeddedDocuments("Item", createItemData);
         }
+    }
+
+    get professionAbilities() {
+        return this.items.filter(item => item.type === "ability" && item.system.abilityType === "profession");
     }
 
     updateProfessionSkills() {

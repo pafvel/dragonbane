@@ -134,7 +134,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             if (item.type === "skill") {
                 return item.update({ ["system.value"]: 0});
             } else {
-                return this.actor.deleteEmbeddedDocuments("Item", [itemId]);
+                return this._onDeleteItem(item, itemId);
             }
         }
      }
@@ -1114,17 +1114,34 @@ export default class DoDCharacterSheet extends ActorSheet {
         );
     }
 
+    async _onDeleteItem(item, itemId) {
+        let flavor = "";
+        if (item.isKinAbility) {
+            flavor = game.i18n.localize("DoD.ui.dialog.deleteKinAbility");
+        } else if (item.isProfessionAbility) {
+            flavor = game.i18n.localize("DoD.ui.dialog.deleteProfessionAbility");
+        }
+
+        const ok = await this._itemDeleteDialog(item, flavor);
+        if (!ok) {
+            return;
+        }
+        
+        if (item.isKinAbility) {
+            await item.actor.kin?.removeAbility(item.name);
+        } else if (item.isProfessionAbility) {
+            await item.actor.profession?.removeAbility(item.name);
+        }
+
+        return this.actor.deleteEmbeddedDocuments("Item", [itemId]);
+    }
+
     async _onItemDelete(event) {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".sheet-table-data").dataset.itemId;
         let item = this.actor.items.get(itemId);
-
-        const ok = await this._itemDeleteDialog(item);
-        if (!ok) {
-            return;
-        }
-        return this.actor.deleteEmbeddedDocuments("Item", [itemId]);
+        return await this._onDeleteItem(item, itemId);
     }
 
     _onItemEdit(event) {

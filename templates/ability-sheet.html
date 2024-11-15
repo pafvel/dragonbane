@@ -21,7 +21,6 @@
                     <tr>
                         <th>{{localize "DoD.ability.requirement"}}</th>
                         <th>{{localize "DoD.ability.wp"}}</th>
-                        <th>{{localize "DoD.ability.type"}}</th>
                     </tr>
                     <tr>
                         <td>
@@ -29,11 +28,6 @@
                         </td>
                         <td>
                             <input name="system.wp" type="text" value="{{system.wp}}" data-dtype="Number" />
-                        </td>
-                        <td>
-                            <select name="system.abilityType">
-                                {{selectOptions config.abilityTypes selected=system.abilityType localize=true}}
-                            </select>
                         </td>
                     </tr>
                 </table>

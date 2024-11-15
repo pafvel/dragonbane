@@ -537,7 +537,9 @@
                 "monsterAttackRandom": "Random",
                 "monsterAttackTitle": "Select Monster Attack",
                 "healInjuriesTitle": "Heal Injuries",
-                "healInjuriesMessage": "Reduce the healing time for all un-healed injuries by one day?"
+                "healInjuriesMessage": "Reduce the healing time for all un-healed injuries by one day?",
+                "deleteKinAbility": "Deleting a Kin Ability will also remove the ability from the character's Kin.",
+                "deleteProfessionAbility": "Deleting a Profession Ability will also remove the ability from the character's Profession."
             }
         },
         "item-sheet": {

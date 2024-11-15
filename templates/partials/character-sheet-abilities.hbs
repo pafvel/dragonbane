@@ -21,12 +21,15 @@
                         </th>
                     </tr>
                     {{#each kinAbilities as |ability abilityId|}}
-                    <tr class="sheet-table-data item-edit item" data-item-id="{{ability.id}}">
+                    <tr class="sheet-table-data item" data-item-id="{{ability.id}}">
                         <td></td>
                         <td class="text-data">
-                            <a>{{ability.name}}</a>
+                            <a class="item-edit">{{ability.name}}</a>
                         </td>
-                        <td class="item-data">
+                        <td class="icon-data">
+                            <a class="item-delete" data-type="ability">
+                                <i class="fas fa-trash"></i>
+                            </a>   
                         </td>
                     </tr>
                     {{/each}}
@@ -45,12 +48,15 @@
                         </th>
                     </tr>
                     {{#each professionAbilities as |ability abilityId|}}
-                    <tr class="sheet-table-data item-edit item" data-item-id="{{ability.id}}">
+                    <tr class="sheet-table-data item" data-item-id="{{ability.id}}">
                         <td></td>
-                        <td class="text-name">
-                            <a>{{ability.name}}</a>
+                        <td class="text-data">
+                            <a class="item-edit">{{ability.name}}</a>
                         </td>
-                        <td class="item-data">
+                        <td class="icon-data">
+                            <a class="item-delete" data-type="ability">
+                                <i class="fas fa-trash"></i>
+                            </a>   
                         </td>
                     </tr>
                     {{/each}}
