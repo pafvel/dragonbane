@@ -758,6 +758,9 @@
   --color-border-highlight-alt: #007544;
   --color-underline-header: #237262;
   --color-text-dark-header: #237262;
+}
+* {
+  scrollbar-width: thin;
   scrollbar-color: var(--color-text-dark-header) #111;
 }
 @font-face {
@@ -1343,7 +1346,8 @@
   color: black;
 }
 .system-dragonbane .dialog .dialog-buttons .dialog-button,
-.system-dragonbane .dod-button {
+.system-dragonbane .dod-button,
+.system-dragonbane .standard-form .form-footer > button {
   background: url("art/ui/button-bg.webp");
   background-repeat: repeat-x;
   background-size: contain;
@@ -1351,6 +1355,7 @@
   color: whitesmoke;
   font-family: QTFrizQuad;
   font-weight: normal;
+  --button-focus-outline-color: var(--color-border-highlight);
 }
 .system-dragonbane .mirror {
   -webkit-transform: scaleX(-1);

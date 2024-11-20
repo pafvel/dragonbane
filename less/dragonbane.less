@@ -13,7 +13,6 @@
     height: auto;
 }
 
-
 :root {
   --color-shadow-primary: #007544;
   --color-shadow-highlight: #3e7d63;
@@ -21,7 +20,11 @@
   --color-border-highlight-alt: #007544;
   --color-underline-header: #237262;
   --color-text-dark-header: #237262;
-  scrollbar-color: var(--color-text-dark-header) #111;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-text-dark-header) #111;
 }
 
 @font-face {
@@ -664,14 +667,16 @@
         color: black;
     }
 
-    .dialog .dialog-buttons .dialog-button, .dod-button {
+    .dialog .dialog-buttons .dialog-button, .dod-button, .standard-form .form-footer > button  {
                 background: url("art/ui/button-bg.webp");
                 background-repeat: repeat-x;
                 background-size: contain;
                 background-clip: border-box;
-                color: whitesmoke;            
+                color: whitesmoke;
                 font-family: QTFrizQuad;
-                font-weight: normal;  
+                font-weight: normal;
+                --button-focus-outline-color: var(--color-border-highlight);
+
     }
 
     .mirror {
