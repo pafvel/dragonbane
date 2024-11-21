@@ -417,14 +417,14 @@ export class DoDActor extends Actor {
 
         // Hit Points
         this.system.hitPoints.max = this.system.hitPoints.base;
+
+        // Encumbrance
+        this.system.encumbrance.value = this._calculateEncumbrance();
     }
 
     _prepareCharacterBaseStats() {
         // Will Points
         this.system.willPoints.max = this.system.willPoints.base;
-
-        // Encumbrance
-        this.system.encumbrance.value = this._calculateEncumbrance();
     }
 
     _prepareNpcStats() {

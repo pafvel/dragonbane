@@ -31,7 +31,9 @@ export default class DoDActorBaseData extends DragonbaneDataModel {
                 sc: new fields.NumberField({ required: true, initial: 0 }),
                 cc: new fields.NumberField({ required: true, initial: 0 })
             }),
-
+            encumbrance:  new fields.SchemaField({
+                value: new fields.NumberField({required: true, integer: true, initial: 0, min: 0 })
+            }),
         });
     };
 
