@@ -23,6 +23,9 @@ export default class DoDCharacterBaseData extends DoDActorBaseData {
                     value: new fields.StringField({ required: true, initial: "" })
                 }),
             }),
+            encumbrance:  new fields.SchemaField({
+                value: new fields.NumberField({required: true, integer: true, initial: 0, min: 0 })
+            }),
         });
     };
 

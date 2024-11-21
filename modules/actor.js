@@ -422,6 +422,9 @@ export class DoDActor extends Actor {
     _prepareCharacterBaseStats() {
         // Will Points
         this.system.willPoints.max = this.system.willPoints.base;
+
+        // Encumbrance
+        this.system.encumbrance.value = this._calculateEncumbrance();
     }
 
     _prepareNpcStats() {
@@ -504,7 +507,7 @@ export class DoDActor extends Actor {
         return this.system.profession;
     }
 
-    calculateEncumbrance() {
+    _calculateEncumbrance() {
         let encumbrance = 0;
 
         for (const item of this.items.contents) {
