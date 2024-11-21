@@ -397,16 +397,8 @@ export default class DoDCharacterSheet extends ActorSheet {
     }
 
     _updateEncumbrance(sheetData) {
-        sheetData.encumbrance = 0;
-        if (sheetData.inventory) {
-            sheetData.inventory.forEach(item => sheetData.encumbrance += item.totalWeight);
-        }
-        if (sheetData.actor.system.currency) {
-            let coins = sheetData.actor.system.currency.gc + sheetData.actor.system.currency.sc + sheetData.actor.system.currency.cc;
-            sheetData.encumbrance += Math.floor(coins/100);
-        }
         // Maximum 2 decimals
-        sheetData.encumbrance = Math.round(100 * sheetData.encumbrance) / 100;
+        sheetData.encumbrance = Math.round(100 * this.actor.calculateEncumbrance()) / 100;
 
         if (this.actor.type === "character") {
             sheetData.overEncumbered = sheetData.encumbrance > sheetData.actor.system.maxEncumbrance.value;

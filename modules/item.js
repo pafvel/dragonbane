@@ -80,6 +80,9 @@ export class DoDItem extends Item {
     }
 
     get totalWeight() {
+        if (this.system.worn === undefined || this.system.weight === undefined || this.system.quantity === undefined) {
+            return 0;
+        }
         return this.system.worn ? 0 : Math.round(100 * this.system.weight * this.system.quantity) / 100;
     }
 

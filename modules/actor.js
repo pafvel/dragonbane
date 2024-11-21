@@ -504,6 +504,19 @@ export class DoDActor extends Actor {
         return this.system.profession;
     }
 
+    calculateEncumbrance() {
+        let encumbrance = 0;
+
+        for (const item of this.items.contents) {
+            encumbrance += item.totalWeight;
+        }
+        if (this.system.currency) {
+            let coins = this.system.currency.gc + this.system.currency.sc + this.system.currency.cc;
+            encumbrance += Math.floor(coins/100);
+        }
+        return encumbrance;
+    }
+
     getEquippedWeapons() {
         return this.items.filter(i => i.type === "weapon" && i.system.worn === true);
     }
