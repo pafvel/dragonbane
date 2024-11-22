@@ -550,7 +550,7 @@
             "professionSkillAdded": "Dodaj umiejętnosć profesji: {skill}"
         },
         "SETTINGS": {
-            "SETTINGS": {
+          
                 "automateNpcDeath": "Automatyczna śmierć PN",
                 "automateNpcDeathHint": "Jeżeli zaznaczona, oznacza PN jako martwego, gdy osiągnie 0 WT.",
                 "automateMonsterDeath": "Automatyczna śmierć potworów",
@@ -601,5 +601,5 @@
             }
 
         }
-    }
+    
 }
