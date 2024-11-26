@@ -11,8 +11,12 @@
                     <th>{{localize "DoD.ui.character-sheet.professionAbilities"}}</th>
                 </tr>
                 <tr data-item-id="{{ability.id}}">
-                    <td><input name="system.attribute" type="text" value="{{system.attribute}}" /></td>
-                    <td><input class="edit-profession-abilities" name="system.abilities" type="text" value="{{system.abilities}}" /></td>
+                    <td>
+                        <select name="system.attribute">
+                            {{selectOptions config.attributes selected=system.attribute localize=true}}
+                        </select>
+                    </td>
+                        <td><input class="edit-profession-abilities" name="system.abilities" type="text" value="{{system.abilities}}" /></td>
                 </tr>
             </table>
 
