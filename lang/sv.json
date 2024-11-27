@@ -603,7 +603,8 @@
             "noMeleeMishapTable": "Tabellen för missöde för närstridsvapen saknas.",
             "noRangedMishapTable": "Tabellen för missöde för avståndsvapen saknas.",
             "noMagicMishapTable": "Tabellen för magiska missöden saknas.",
-            "maxWeaponsEquipped": "Högst 3 vapen till hands."
+            "maxWeaponsEquipped": "Högst 3 vapen till hands.",
+            "noSkillsInCompendium": "Den registrerade grundmodulen innehåller inga färdigheter. Modulen kan vara skadad och bör ominstalleras. Försöker att hitta färdigheter i världen istället."
         }
     }
 }

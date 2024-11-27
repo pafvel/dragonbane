@@ -70,7 +70,11 @@ export default class DoD_Utility {
                     skills = skills.concat(Array.from(adventure.items.filter(i => i.type === "skill" && (i.system.skillType === "core" || i.system.skillType === "weapon"))));
                 }
                 skills = Array.from(skills);
-                return skills.map(skill => skill.toObject());
+                if (skills.length > 0) {
+                    return skills.map(skill => skill.toObject());
+                } else {
+                    DoD_Utility.WARNING("DoD.WARNING.noSkillsInCompendium");
+                }
             }
         }
 

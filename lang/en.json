@@ -598,7 +598,8 @@
             "noMeleeMishapTable": "Missing the misphap table for melee weapons.",
             "noRangedMishapTable": "Missing the misphap table for ranged weapons.",
             "noMagicMishapTable": "Missing the magic misphap table.",
-            "maxWeaponsEquipped": "Maximum 3 equipped weapons."
+            "maxWeaponsEquipped": "Maximum 3 equipped weapons.",
+            "noSkillsInCompendium": "The registered core module did not contain any base skills. The core module may be damaged and should be re-installed. Trying to find skills in the world instead."
         }
     }
 }
