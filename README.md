@@ -30,6 +30,8 @@ The system provides support for
   - English
   - Svenska
 
+Music pack is official Dragonbane music created by Andreas Lundström.
+
 ## Official modules
 [Dragonbane Core Rules (English)](https://foundryvtt.com/packages/dragonbane-coreset) - Includes all content from the core rules and the epic campaign Secret of the Dragon Emperor.  
 [Dragonbane Bestiary (English)](https://foundryvtt.com/packages/dragonbane-bestiary) - This Bestiary for the Dragonbane roleplaying game includes no less than 63 wondrous creatures for the player characters to encounter. 
