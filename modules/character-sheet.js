@@ -1531,10 +1531,12 @@ export default class DoDCharacterSheet extends ActorSheet {
                         ["system.memento"]: false
                     });
                 }
+              
             }
-            return this._onSortItem(event, itemData);
-        }
 
+            return this._onSortItem(event, itemData);
+        }       
+   
         // Remove kin and kin abilities
         if (itemData.type === "kin") {
             await this.actor.removeKin();
@@ -1553,8 +1555,19 @@ export default class DoDCharacterSheet extends ActorSheet {
                 || item.type === "helmet" && !actorData.equippedHelmet;
         }
 
-        // Create the owned item
-        let returnValue = await this._onDropItemCreate(itemData);
+        //Increas quantity when droped item arledy exist in inventory 
+        if(itemData.system?.quantity !== undefined ){
+            const items = actorData.actor.items.filter(item =>item.type === "item")
+            const findExistingItem = items.filter(findItem=>findItem.name===itemData.name)
+            if(findExistingItem.length !== 0){
+                const itemQuantity = itemData.system.quantity + findExistingItem[0].system.quantity;
+                findExistingItem[0].update({["system.quantity"]: itemQuantity});
+            }
+            else{                
+                let returnValue = await this._onDropItemCreate(itemData);                
+                return returnValue;
+            }                    
+        }
 
         // Update kin and kin abilities
         if (itemData.type === "kin") {
@@ -1575,7 +1588,6 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
         }
 
-        return returnValue;
     }
 
     async _onItemCreate(event) {
