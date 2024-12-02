@@ -1563,10 +1563,10 @@ export default class DoDCharacterSheet extends ActorSheet {
                 const itemQuantity = itemData.system.quantity + findExistingItem[0].system.quantity;
                 findExistingItem[0].update({["system.quantity"]: itemQuantity});
             }
-            else{                
-                let returnValue = await this._onDropItemCreate(itemData);                
-                return returnValue;
-            }                    
+        }              
+        else{                
+            let returnValue = await this._onDropItemCreate(itemData);                
+            return returnValue;                
         }
 
         // Update kin and kin abilities
@@ -1587,7 +1587,6 @@ export default class DoDCharacterSheet extends ActorSheet {
                 }
             }
         }
-
     }
 
     async _onItemCreate(event) {
