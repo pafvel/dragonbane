@@ -22,14 +22,14 @@ export default class DoDActorBaseData extends DragonbaneDataModel {
                 })
             }),
             hitPoints: new fields.SchemaField({
-                value: new fields.NumberField({ required: true, initial: 10 }),
-                base: new fields.NumberField({ required: true, initial: 10 }),
-                max: new fields.NumberField({ required: true, initial: 10 }),
+                value: new fields.NumberField({ required: true, integer: true, initial: 10, min: 0 }),
+                base: new fields.NumberField({ required: true, integer: true, initial: 10, min: 0 }),
+                max: new fields.NumberField({ required: true, integer: true, initial: 10, min: 0 }),
             }),
             currency: new fields.SchemaField({
-                gc: new fields.NumberField({ required: true, initial: 0 }),
-                sc: new fields.NumberField({ required: true, initial: 0 }),
-                cc: new fields.NumberField({ required: true, initial: 0 })
+                gc: new fields.NumberField({ required: true, integer: true, initial: 0, min: 0 }),
+                sc: new fields.NumberField({ required: true, integer: true, initial: 0, min: 0 }),
+                cc: new fields.NumberField({ required: true, integer: true, initial: 0, min: 0 })
             }),
             encumbrance:  new fields.SchemaField({
                 value: new fields.NumberField({required: true, integer: true, initial: 0, min: 0 })

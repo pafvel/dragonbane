@@ -9,9 +9,9 @@ export default class DoDCharacterBaseData extends DoDActorBaseData {
             profession: new fields.StringField({ required: true, initial: "" }),
             motivation: new fields.StringField({ required: true, initial: "" }),
             willPoints: new fields.SchemaField({
-                value: new fields.NumberField({ required: true, initial: 10 }),
-                base: new fields.NumberField({ required: true, initial: 10 }),
-                max: new fields.NumberField({ required: true, initial: 10 })
+                value: new fields.NumberField({ required: true, integer: true, initial: 10, min: 0 }),
+                base: new fields.NumberField({ required: true, integer: true, initial: 10, min: 0 }),
+                max: new fields.NumberField({ required: true, integer: true, initial: 10, min: 0 })
             }),
             damageBonus: new fields.SchemaField({
                 agl: new fields.SchemaField({
