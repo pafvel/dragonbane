@@ -1555,23 +1555,26 @@ export default class DoDCharacterSheet extends ActorSheet {
                 || item.type === "helmet" && !actorData.equippedHelmet;
         }
 
-        //Increas quantity when droped item arledy exist in inventory 
-        if(itemData.system?.quantity !== undefined ){
-            const items = actorData.actor.items.filter(item =>item.type === "item")
-            const findExistingItem = items.filter(findItem=>findItem.name===itemData.name)
-            if(findExistingItem.length !== 0){
-                const itemQuantity = itemData.system.quantity + findExistingItem[0].system.quantity;
-                findExistingItem[0].update({["system.quantity"]: itemQuantity});
+        // Increase quantity when dropped item already exists in inventory 
+        if(item.type === "item" && itemData.system?.quantity !== undefined ) {
+            const existingItem = actorData.actor.items.filter(item => {
+                // Item exists if it is the same type, has the same name
+                // and has the same system data properties (except quantity)
+                if (item.type === "item" && item.name === itemData.name) {
+                    const itemTemplate = { ...itemData.system };
+                    delete itemTemplate.quantity;
+                    return foundry.utils.objectsEqual(foundry.utils.filterObject(item.system, itemTemplate), itemTemplate);
+                }
+                return false;
+            });
+            if (existingItem.length !== 0) {
+                const itemQuantity = itemData.system.quantity + existingItem[0].system.quantity;
+                return await existingItem[0].update({["system.quantity"]: itemQuantity});
             }
             else{                
-                let returnValue = await this._onDropItemCreate(itemData);                
-                return returnValue;
+                return await this._onDropItemCreate(itemData);                
             }
         }              
-        else{                
-            let returnValue = await this._onDropItemCreate(itemData);                
-            return returnValue;                
-        }
 
         // Update kin and kin abilities
         if (itemData.type === "kin") {
