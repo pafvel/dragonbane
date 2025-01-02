@@ -27,6 +27,40 @@
     scrollbar-color: var(--color-text-dark-header) #111;
 }
 
+  
+@font-face {
+    font-family: "Crimson Text";
+    font-weight: normal;
+    font-style: normal;
+    size-adjust: 105%;
+    src: url('fonts/CrimsonText/CrimsonText-SemiBold.ttf');
+}
+  
+@font-face {
+    font-family: "Crimson Text";
+    font-weight: normal;
+    font-style: italic;
+    size-adjust: 105%;
+    src: url('fonts/CrimsonText/CrimsonText-SemiBoldItalic.ttf');
+}
+
+@font-face {
+    font-family: "Crimson Text";
+    font-weight: bold;
+    font-style: normal;
+    size-adjust: 105%;
+    src: url('fonts/CrimsonText/CrimsonText-Bold.ttf');
+}
+
+@font-face {
+    font-family: "Crimson Text";
+    font-weight: bold;
+    font-style: italic;
+    size-adjust: 105%;
+    src: url('fonts/CrimsonText/CrimsonText-BoldItalic.ttf');
+}
+  
+
 @font-face {
     font-family: "QTFrizQuad";
     src: url('fonts/QTFrizQuad/QTFrizQuad.otf');
@@ -39,7 +73,6 @@
 }
 
 @font-face {
-  
   font-family: "Caveat";
   src: url('fonts/Caveat/static/Caveat-Regular.ttf');
 }
@@ -56,6 +89,17 @@
     --dod-color-secret: #E83031;
     --dod-color-positive-effect: #00604D;
     --dod-color-negative-effect: #E83031;
+
+    --dod-font-primary: "Crimson Text";
+    --dod-font-secondary: "QTFrizQuad";
+    --dod-font-heading: "QTFrizQuad";
+    --dod-font-handwriting: "Caveat";
+
+    :lang(pl) { 
+        --dod-font-secondary: "Crimson Text";
+        --dod-font-heading: "Crimson Text";
+    }
+
 
     background-image: url(art/ui/dragonbane.jpg);
     background-repeat: no-repeat;
@@ -624,7 +668,7 @@
     }
 
     .chat-message {
-        font-family: QTFrizQuad;
+        font-family: var(--dod-font-primary);
         background-image: url(art/ui/chat-card-bg.webp);
         background-size: cover;
         background-position-x: center;
@@ -640,7 +684,6 @@
     }
 
     .chat-message.whisper {
-        font-family: QTFrizQuad;
         background-image: url(art/ui/whisper-chat-card-bg.webp);
         background-size: cover;
         background-position-x: center;
@@ -652,7 +695,7 @@
         background-size: contain;
         background-clip: border-box;
         color: whitesmoke;            
-        font-family: QTFrizQuad;
+        font-family: var(--dod-font-primary);
         font-weight: normal;
     }
     .chat-button:disabled {
@@ -663,20 +706,25 @@
     .window-content {
         background: url(art/ui/dialog-bg.webp) repeat;
         background-position-x: center;
-        font-family: QTFrizQuad;
         color: black;
+        font-family: var(--dod-font-primary);
+        h1, h2, h3, h4, h5, h6, th, blockquote, caption, nav, .title, .heading, .page-title, .npc-title, .monster-title {
+            font-family: var(--dod-font-heading);
+        }
+        b, strong, td, blockquote, .content-link {
+            font-family: var(--dod-font-secondary);
+        }
     }
 
     .dialog .dialog-buttons .dialog-button, .dod-button, .standard-form .form-footer > button  {
-                background: url("art/ui/button-bg.webp");
-                background-repeat: repeat-x;
-                background-size: contain;
-                background-clip: border-box;
-                color: whitesmoke;
-                font-family: QTFrizQuad;
-                font-weight: normal;
-                --button-focus-outline-color: var(--color-border-highlight);
-
+        background: url("art/ui/button-bg.webp");
+        background-repeat: repeat-x;
+        background-size: contain;
+        background-clip: border-box;
+        color: whitesmoke;
+        font-family: var(--dod-font-heading);
+        font-weight: normal;
+        --button-focus-outline-color: var(--color-border-highlight);
     }
 
     .mirror {
@@ -685,7 +733,7 @@
     };
 
     .sheet-table {
-    font-family: QTFrizQuad;
+    font-family: var(--dod-font-primary);
     font-weight: normal;
     background-image: url("art/ui/parchment-column.webp");
     background-repeat:  no-repeat;

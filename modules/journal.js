@@ -95,13 +95,13 @@ export async function enrichDisplayMonster (match, options) {
             <div class="${titleClasses}">@UUID[${monster.uuid}]{${monsterName}}</div>
             <table>
                 <tr>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity.base}</td>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.size")}: </b>${game.i18n.localize("DoD.sizeTypes." + monster.system.size)}</td>
+                    <th><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity.base}</td>
+                    <td><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.size")}: </b>${game.i18n.localize("DoD.sizeTypes." + monster.system.size)}</td>
                 </tr>
                 <tr>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}: </b>${monster.system.movement.base}</td>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.armor")}: </b>${monster.getArmorValue()}</td>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}: </b>${monster.system.hitPoints.base}</td>
+                    <td><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.movement")}: </b>${monster.system.movement.base}</td>
+                    <td><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.armor")}: </b>${monster.getArmorValue()}</td>
+                    <td><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.hp")}: </b>${monster.system.hitPoints.base}</td>
                 </tr>
             </table>
             <div>
@@ -139,13 +139,13 @@ export async function enrichDisplayMonsterDescriptionCard (match, _options) {
             </div>
             <table>
                 <tr>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity.base}</td>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}: </b>${monster.system.movement.base}</td>
+                    <td><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity.base}</td>
+                    <td><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.movement")}: </b>${monster.system.movement.base}</td>
                 </tr>
                 <tr>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.size")}: </b>${game.i18n.localize("DoD.sizeTypes." + monster.system.size)}</td>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.armor")}: </b>${monster.getArmorValue()}</td>
-                    <td><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}: </b>${monster.system.hitPoints.base}</td>
+                    <td><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.size")}: </b>${game.i18n.localize("DoD.sizeTypes." + monster.system.size)}</td>
+                    <td><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.armor")}: </b>${monster.getArmorValue()}</td>
+                    <td><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.hp")}: </b>${monster.system.hitPoints.base}</td>
                 </tr>
             </table>
             <div>
@@ -223,10 +223,10 @@ export async function enrichDisplayNpcCard(match, options) {
                         <div><b>${game.i18n.localize("DoD.ui.character-sheet.movement")}:&nbsp</b>${npc.system.movement.base}</div>`
 
         if (npc.getDamageBonus("str") !== "") {
-            html += `<div><b>${game.i18n.localize("DoD.ui.character-sheet.damageBonusSTR")}:&nbsp</b><span style="text-transform:uppercase">${npc.getDamageBonus("str")}</span></div>`;
+            html += `<div><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.damageBonusSTR")}:&nbsp</b><span style="text-transform:uppercase">${npc.getDamageBonus("str")}</span></div>`;
         }
         if (npc.getDamageBonus("agl") !== "") {
-            html += `<div><b>${game.i18n.localize("DoD.ui.character-sheet.damageBonusAGL")}:&nbsp</b><span style="text-transform:uppercase">${npc.getDamageBonus("agl")}</span></div>`;
+            html += `<div><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.damageBonusAGL")}:&nbsp</b><span style="text-transform:uppercase">${npc.getDamageBonus("agl")}</span></div>`;
         }
 
         html += `
@@ -234,10 +234,10 @@ export async function enrichDisplayNpcCard(match, options) {
                 </td></tr>
                 <tr><td>
                     <div class="flexrow">
-                        <div><b>${game.i18n.localize("DoD.ui.character-sheet.hp")}:&nbsp</b>${npc.system.hitPoints.base}</div>`;
+                        <div><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.hp")}:&nbsp</b>${npc.system.hitPoints.base}</div>`;
 
         if (npc.hasAbilities || npc.hasSpells || npc.system.willPoints.max > 0) {
-            html += `<div><b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:&nbsp</b>${npc.system.willPoints.base}</div>`;
+            html += `<div><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.wp")}:&nbsp</b>${npc.system.willPoints.base}</div>`;
         }
         html += `
                     </div>
@@ -258,7 +258,7 @@ export async function enrichDisplayNpcCard(match, options) {
             html += `
                 <tr><td>
                     <div class="flexrow list-row">
-                        <div style="flex-shrink:0;flex-grow:0"><b>${game.i18n.localize("DoD.ui.character-sheet.skills")}:&nbsp</b></div>
+                        <div style="flex-shrink:0;flex-grow:0"><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.skills")}:&nbsp</b></div>
                         <div style="flex-shrink:0;flex-grow:1"><span class="comma-list">`;
             for (const skill of skills) {
                 html += `<span>${skill.name} ${skill.system.value}</span>`
@@ -275,7 +275,7 @@ export async function enrichDisplayNpcCard(match, options) {
             html += `
             <tr><td>
                 <div class="flexrow list-row">
-                    <div><b>${game.i18n.localize("DoD.ui.character-sheet.tricks")}:&nbsp</b></div>
+                    <div><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.tricks")}:&nbsp</b></div>
                     <div><span class="comma-list">`;
             for (const trick of tricks) {
                 html += `<span>${trick.name}</span>`
@@ -292,7 +292,7 @@ export async function enrichDisplayNpcCard(match, options) {
             html += `
             <tr><td>
                 <div class="flexrow list-row">
-                    <div><b>${game.i18n.localize("DoD.ui.character-sheet.spells")}:&nbsp</b></div>
+                    <div><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.spells")}:&nbsp</b></div>
                     <div><span class="comma-list">`;
             for (const spell of spells) {
                 html += `<span>${spell.name}</span>`
@@ -328,7 +328,7 @@ export async function enrichDisplayNpcCard(match, options) {
             html += `
                 <tr><td>
                     <div class="flexrow list-row">
-                        <div><b>${game.i18n.localize("DoD.ui.character-sheet.abilities")}:&nbsp</b></div>
+                        <div><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.abilities")}:&nbsp</b></div>
                         <div ><span class="comma-list">`;
             for (const ability of abilities) {
                 html += `<span>${ability.name}</span>`
@@ -344,7 +344,7 @@ export async function enrichDisplayNpcCard(match, options) {
             html += `
                 <tr><td>
                     <div class="flexrow list-row">
-                        <div><b>${game.i18n.localize("DoD.ui.character-sheet.weapons")}:&nbsp</b></div>
+                        <div><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.weapons")}:&nbsp</b></div>
                         <div><span class="comma-list">`;
             for (const weapon of equippedWeapons) {
                 html += `<span>${weapon.name} ${weapon.system.skill.value} (${weapon.system.damage})</span>`
@@ -372,7 +372,7 @@ export async function enrichDisplayNpcCard(match, options) {
         html += `
         <tr><td>
         <div class="flexrow list-row">
-            <div><b>${game.i18n.localize("DoD.ui.character-sheet.armor")}:&nbsp</b></div>
+            <div><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.armor")}:&nbsp</b></div>
             <div>${armor}</div>
         </div>
         </td></tr>`;
@@ -461,12 +461,12 @@ export async function enrichDisplaySpell (match, _options) {
         <div class="display-spell">
             <h4>@UUID[${match[1]}]{${spell.name}}</h4>
             <ul>
-            <li><b>${game.i18n.localize("DoD.spell.rank")}: </b><span>${spell.system.rank}</span>
-            <li><b>${game.i18n.localize("DoD.spell.prerequisite")}: </b><span>${spell.system.prerequisite !== "" ? spell.system.prerequisite : "-"}</span>
-            <li><b>${game.i18n.localize("DoD.spell.requirement")}: </b><span>${spell.system.requirement !== "" ? spell.system.requirement : "-"}</span>
-            <li><b>${game.i18n.localize("DoD.spell.castingTime")}: </b><span>${game.i18n.localize("DoD.castingTimeTypes." + spell.system.castingTime)}</span>
-            <li><b>${game.i18n.localize("DoD.spell.rangeType")}: </b><span>${range}</span>
-            <li><b>${game.i18n.localize("DoD.spell.duration")}: </b><span>${game.i18n.localize("DoD.spellDurationTypes." + spell.system.duration)}</span>
+            <li><b class="heading">${game.i18n.localize("DoD.spell.rank")}: </b><span>${spell.system.rank}</span>
+            <li><b class="heading">${game.i18n.localize("DoD.spell.prerequisite")}: </b><span>${spell.system.prerequisite !== "" ? spell.system.prerequisite : "-"}</span>
+            <li><b class="heading">${game.i18n.localize("DoD.spell.requirement")}: </b><span>${spell.system.requirement !== "" ? spell.system.requirement : "-"}</span>
+            <li><b class="heading">${game.i18n.localize("DoD.spell.castingTime")}: </b><span>${game.i18n.localize("DoD.castingTimeTypes." + spell.system.castingTime)}</span>
+            <li><b class="heading">${game.i18n.localize("DoD.spell.rangeType")}: </b><span>${range}</span>
+            <li><b class="heading">${game.i18n.localize("DoD.spell.duration")}: </b><span>${game.i18n.localize("DoD.spellDurationTypes." + spell.system.duration)}</span>
             </ul>
             ${spell.system.description}
         </div>`;

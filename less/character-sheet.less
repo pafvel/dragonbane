@@ -2,7 +2,7 @@
     form {
         display: flex;
         flex-direction: column;
-        font-family: QTFrizQuad;
+        font-family: var(--dod-font-primary);
     }
     .window-content {
         background:url(art/ui/item-sheet-bg.webp) repeat;
@@ -102,7 +102,7 @@
                 background-size: contain;
                 background-clip: border-box;
                 font-size: 16px;
-                font-family: Caveat;
+                font-family: var(--dod-font-handwriting);
                 font-weight: bold;
                 input {
                     color: black;
@@ -157,7 +157,7 @@
                     top: 38%;
                     left: -6px;
                     width: 100%;
-                    font-family: Caveat;
+                    font-family: var(--dod-font-handwriting);
                     font-size: 2em;
                     font-weight: bold;
                     text-align: center;
@@ -294,7 +294,6 @@
     }
 
     .weapon-table {
-        font-family: QTFrizQuad;
         font-weight: normal;
         background-image: url("art/ui/parchment-vertical.webp");
         background-repeat:  no-repeat;
@@ -323,6 +322,7 @@
             left: 24px;
             text-align: center;
             font-size: 12px;
+            font-family: var(--dod-font-heading);
             color: white;
             text-transform: uppercase;
         }
@@ -415,7 +415,7 @@
                 text-align: center;
             }
             button {
-                font-family: QTFrizQuad;
+                font-family: var(--dod-font-primary);
                 font-size: 12px;
                 font-weight: bold;
                 padding: 0px;
@@ -564,6 +564,7 @@
 
         .dod-text-container-label {
             position: relative;
+            font-family: var(--dod-font-heading);
             text-align: center;
             label {
                 width: 274px;

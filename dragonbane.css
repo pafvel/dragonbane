@@ -2,7 +2,7 @@
 .DoD.sheet.active-effect-sheet form {
   display: flex;
   flex-direction: column;
-  font-family: QTFrizQuad;
+  font-family: var(--dod-font-primary);
 }
 .DoD.sheet.item .window-content,
 .DoD.sheet.active-effect-sheet .window-content {
@@ -153,7 +153,7 @@
 .DoD.sheet.character form {
   display: flex;
   flex-direction: column;
-  font-family: QTFrizQuad;
+  font-family: var(--dod-font-primary);
 }
 .DoD.sheet.character .window-content {
   background: url(art/ui/item-sheet-bg.webp) repeat;
@@ -252,7 +252,7 @@
   background-size: contain;
   background-clip: border-box;
   font-size: 16px;
-  font-family: Caveat;
+  font-family: var(--dod-font-handwriting);
   font-weight: bold;
 }
 .DoD.sheet.character .sheet-header .image-container h1 input {
@@ -304,7 +304,7 @@
   top: 38%;
   left: -6px;
   width: 100%;
-  font-family: Caveat;
+  font-family: var(--dod-font-handwriting);
   font-size: 2em;
   font-weight: bold;
   text-align: center;
@@ -428,7 +428,6 @@
   flex-direction: column;
 }
 .DoD.sheet.character .weapon-table {
-  font-family: QTFrizQuad;
   font-weight: normal;
   background-image: url("art/ui/parchment-vertical.webp");
   background-repeat: no-repeat;
@@ -456,6 +455,7 @@
   left: 24px;
   text-align: center;
   font-size: 12px;
+  font-family: var(--dod-font-heading);
   color: white;
   text-transform: uppercase;
 }
@@ -549,7 +549,7 @@
   text-align: center;
 }
 .DoD.sheet.character .resource-points .death-rolls-box button {
-  font-family: QTFrizQuad;
+  font-family: var(--dod-font-primary);
   font-size: 12px;
   font-weight: bold;
   padding: 0px;
@@ -694,6 +694,7 @@
 }
 .DoD.sheet.character .dod-text-container .dod-text-container-label {
   position: relative;
+  font-family: var(--dod-font-heading);
   text-align: center;
 }
 .DoD.sheet.character .dod-text-container .dod-text-container-label label {
@@ -764,6 +765,34 @@
   scrollbar-color: var(--color-text-dark-header) #111;
 }
 @font-face {
+  font-family: "Crimson Text";
+  font-weight: normal;
+  font-style: normal;
+  size-adjust: 105%;
+  src: url('fonts/CrimsonText/CrimsonText-SemiBold.ttf');
+}
+@font-face {
+  font-family: "Crimson Text";
+  font-weight: normal;
+  font-style: italic;
+  size-adjust: 105%;
+  src: url('fonts/CrimsonText/CrimsonText-SemiBoldItalic.ttf');
+}
+@font-face {
+  font-family: "Crimson Text";
+  font-weight: bold;
+  font-style: normal;
+  size-adjust: 105%;
+  src: url('fonts/CrimsonText/CrimsonText-Bold.ttf');
+}
+@font-face {
+  font-family: "Crimson Text";
+  font-weight: bold;
+  font-style: italic;
+  size-adjust: 105%;
+  src: url('fonts/CrimsonText/CrimsonText-BoldItalic.ttf');
+}
+@font-face {
   font-family: "QTFrizQuad";
   src: url('fonts/QTFrizQuad/QTFrizQuad.otf');
 }
@@ -787,11 +816,19 @@
   --dod-color-secret: #E83031;
   --dod-color-positive-effect: #00604D;
   --dod-color-negative-effect: #E83031;
+  --dod-font-primary: "Crimson Text";
+  --dod-font-secondary: "QTFrizQuad";
+  --dod-font-heading: "QTFrizQuad";
+  --dod-font-handwriting: "Caveat";
   background-image: url(art/ui/dragonbane.jpg);
   background-repeat: no-repeat;
   background-position-x: center;
   background-size: auto 100vh;
   background-color: black;
+}
+.system-dragonbane :lang(pl) {
+  --dod-font-secondary: "Crimson Text";
+  --dod-font-heading: "Crimson Text";
 }
 .system-dragonbane #pause {
   background: url();
@@ -1305,7 +1342,7 @@
   border-bottom: 0px solid transparent;
 }
 .system-dragonbane .chat-message {
-  font-family: QTFrizQuad;
+  font-family: var(--dod-font-primary);
   background-image: url(art/ui/chat-card-bg.webp);
   background-size: cover;
   background-position-x: center;
@@ -1320,7 +1357,6 @@
   user-select: text;
 }
 .system-dragonbane .chat-message.whisper {
-  font-family: QTFrizQuad;
   background-image: url(art/ui/whisper-chat-card-bg.webp);
   background-size: cover;
   background-position-x: center;
@@ -1332,7 +1368,7 @@
   background-size: contain;
   background-clip: border-box;
   color: whitesmoke;
-  font-family: QTFrizQuad;
+  font-family: var(--dod-font-primary);
   font-weight: normal;
 }
 .system-dragonbane .chat-button:disabled {
@@ -1342,8 +1378,32 @@
 .system-dragonbane .window-content {
   background: url(art/ui/dialog-bg.webp) repeat;
   background-position-x: center;
-  font-family: QTFrizQuad;
   color: black;
+  font-family: var(--dod-font-primary);
+}
+.system-dragonbane .window-content h1,
+.system-dragonbane .window-content h2,
+.system-dragonbane .window-content h3,
+.system-dragonbane .window-content h4,
+.system-dragonbane .window-content h5,
+.system-dragonbane .window-content h6,
+.system-dragonbane .window-content th,
+.system-dragonbane .window-content blockquote,
+.system-dragonbane .window-content caption,
+.system-dragonbane .window-content nav,
+.system-dragonbane .window-content .title,
+.system-dragonbane .window-content .heading,
+.system-dragonbane .window-content .page-title,
+.system-dragonbane .window-content .npc-title,
+.system-dragonbane .window-content .monster-title {
+  font-family: var(--dod-font-heading);
+}
+.system-dragonbane .window-content b,
+.system-dragonbane .window-content strong,
+.system-dragonbane .window-content td,
+.system-dragonbane .window-content blockquote,
+.system-dragonbane .window-content .content-link {
+  font-family: var(--dod-font-secondary);
 }
 .system-dragonbane .dialog .dialog-buttons .dialog-button,
 .system-dragonbane .dod-button,
@@ -1353,7 +1413,7 @@
   background-size: contain;
   background-clip: border-box;
   color: whitesmoke;
-  font-family: QTFrizQuad;
+  font-family: var(--dod-font-heading);
   font-weight: normal;
   --button-focus-outline-color: var(--color-border-highlight);
 }
@@ -1362,7 +1422,7 @@
   transform: scaleX(-1);
 }
 .system-dragonbane .sheet-table {
-  font-family: QTFrizQuad;
+  font-family: var(--dod-font-primary);
   font-weight: normal;
   background-image: url("art/ui/parchment-column.webp");
   background-repeat: no-repeat;
