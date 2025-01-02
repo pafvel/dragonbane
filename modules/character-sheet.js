@@ -1531,10 +1531,12 @@ export default class DoDCharacterSheet extends ActorSheet {
                         ["system.memento"]: false
                     });
                 }
+              
             }
-            return this._onSortItem(event, itemData);
-        }
 
+            return this._onSortItem(event, itemData);
+        }       
+   
         // Remove kin and kin abilities
         if (itemData.type === "kin") {
             await this.actor.removeKin();
@@ -1553,8 +1555,26 @@ export default class DoDCharacterSheet extends ActorSheet {
                 || item.type === "helmet" && !actorData.equippedHelmet;
         }
 
-        // Create the owned item
-        let returnValue = await this._onDropItemCreate(itemData);
+        // Increase quantity when dropped item already exists in inventory 
+        if(item.type === "item" && itemData.system?.quantity !== undefined ) {
+            const existingItem = actorData.actor.items.filter(item => {
+                // Item exists if it is the same type, has the same name
+                // and has the same system data properties (except quantity)
+                if (item.type === "item" && item.name === itemData.name) {
+                    const itemTemplate = { ...itemData.system };
+                    delete itemTemplate.quantity;
+                    return foundry.utils.objectsEqual(foundry.utils.filterObject(item.system, itemTemplate), itemTemplate);
+                }
+                return false;
+            });
+            if (existingItem.length !== 0) {
+                const itemQuantity = itemData.system.quantity + existingItem[0].system.quantity;
+                return await existingItem[0].update({["system.quantity"]: itemQuantity});
+            }
+            else{                
+                return await this._onDropItemCreate(itemData);                
+            }
+        }              
 
         // Update kin and kin abilities
         if (itemData.type === "kin") {
@@ -1574,8 +1594,6 @@ export default class DoDCharacterSheet extends ActorSheet {
                 }
             }
         }
-
-        return returnValue;
     }
 
     async _onItemCreate(event) {
