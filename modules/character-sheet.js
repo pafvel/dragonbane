@@ -394,6 +394,11 @@ export default class DoDCharacterSheet extends ActorSheet {
                 sheetData.largeWP = sheetData.maxWP > 40; // switch to large wp widget
             }
         }
+
+        // Don't show conditions as effects
+        sheetData.effects = sheetData.effects.filter((effect) => {
+            return effect.statuses.first().startsWith("dragonbane.") === false;
+        });
     }
 
     _updateEncumbrance(sheetData) {

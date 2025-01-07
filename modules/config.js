@@ -144,3 +144,48 @@ DoD.activeEffectChanges = {
     "system.ferocity.value" : "DoD.ui.character-sheet.ferocity",
     "system.maxEncumbrance.value" : "DoD.ui.character-sheet.max-encumbrance",
 };
+
+DoD.conditionEffects = {
+    "system.conditions.str.value" :
+    {
+        id: "dragonbane.exhausted",
+        name: "DoD.conditions.str",
+        icon: "systems/dragonbane/art/icons/back-pain.svg",
+        tint: "#cccccc",
+    },
+    "system.conditions.con.value" :
+    {
+        id: "dragonbane.sickly",
+        name: "DoD.conditions.con",
+        icon: "systems/dragonbane/art/icons/death-juice.svg",
+        tint: "#cccccc",
+    },
+    "system.conditions.agl.value" :
+    {
+        id: "dragonbane.dazed",
+        name: "DoD.conditions.agl",
+        icon: "systems/dragonbane/art/icons/surprised.svg",
+        tint: "#cccccc",
+    },
+    "system.conditions.int.value" :
+    {
+        id: "dragonbane.angry",
+        name: "DoD.conditions.int",
+        icon: "systems/dragonbane/art/icons/angry-eyes.svg",
+        tint: "#cccccc",
+    },
+    "system.conditions.wil.value" :
+    {
+        id: "dragonbane.scared",
+        name: "DoD.conditions.wil",
+        icon: "systems/dragonbane/art/icons/terror.svg",
+        tint: "#cccccc",
+    },
+    "system.conditions.cha.value" :
+    {
+        id: "dragonbane.disheartened",
+        name: "DoD.conditions.cha",
+        icon: "systems/dragonbane/art/icons/worried-eyes.svg",
+        tint: "#cccccc",
+    }
+};

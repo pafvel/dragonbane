@@ -2,6 +2,7 @@ import DoD_Utility from "./utility.js";
 import DoDSkillTest from "./tests/skill-test.js";
 import DoDRoll from "./roll.js";
 import DoDActiveEffect from "./active-effect.js";
+import { DoD } from "./config.js";
 
 export class DoDActor extends Actor {
 
@@ -125,9 +126,9 @@ export class DoDActor extends Actor {
         await super._onUpdate(data, options, user);
 
         const hasPermission = this.testUserPermission(game.user, DoD_Utility.getViewDamagePermission());
-
         if (!hasPermission) return;
 
+        // Scrolling text
         if (options._deltaHP) {
             this._displayScrollingText(options._deltaHP, {
                 anchor: CONST.TEXT_ANCHOR_POINTS.LEFT,
@@ -142,6 +143,8 @@ export class DoDActor extends Actor {
                 hidden: !hasPermission
             });
         }
+
+        // Token size
         if (data?.system?.size) {
             let size;
             let scale;
@@ -169,6 +172,20 @@ export class DoDActor extends Actor {
                 "prototypeToken.texture.scaleX": scale,
                 "prototypeToken.texture.scaleY": scale
             });
+        }
+
+        // Conditions as status effects
+        for (let condition in DoD.conditionEffects) {
+            if (foundry.utils.hasProperty(data, condition)) {
+                const status = CONFIG.statusEffects.find(a => a.id === DoD.conditionEffects[condition].id);
+                if (status) {
+                    const tokens = this.getActiveTokens();
+                    for (let t of tokens) {
+                        const value = foundry.utils.getProperty(data, condition);
+                        t.document.toggleActiveEffect(status, {active: value});
+                    }    
+                }
+            }
         }
     }
 

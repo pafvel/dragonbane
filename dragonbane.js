@@ -321,6 +321,18 @@ Hooks.once("init", function () {
         monsterDefend: DoDMacro.monsterDefendMacro,
         drawTreasureCards: DoD_Utility.drawTreasureCards
     };
+
+    // Add status effects for conditions
+    for (const [_key, value] of Object.entries(DoD.conditionEffects)) {
+        CONFIG.statusEffects.push(value);
+    }
+    // Don't show conditions on the TokenHUD
+    Hooks.on('renderTokenHUD', (_app, html, _options) => {
+        for (const [_key, value] of Object.entries(DoD.conditionEffects)) {
+            const effects = html.find(`.effect-control[data-status-id="${value.id}"]`);
+            effects.remove();
+        }
+    });    
 });
 
 Hooks.once("ready", async function () {
