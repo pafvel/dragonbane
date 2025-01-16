@@ -22,6 +22,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         const hasToppleAttack = true; //this.weapon.hasWeaponFeature("toppling");
         const hasDisarmAttack = true;
         const hasParry = !this.weapon.hasWeaponFeature("noparry");
+        const isShield = this.weapon.hasWeaponFeature("shield");
 
         let actions = [];
 
@@ -75,7 +76,12 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         }
 
         if (actions.length > 0) {
-            actions[0].checked = true;
+            if (isShield) {
+                // Default action for shields is parry
+                actions[actions.length - 1].checked = true;    
+            } else {
+                actions[0].checked = true;
+            }
         }
 
         if (this.actor.type === "character" && this.weapon.requiredStr > this.actor.system.attributes.str.value) {
