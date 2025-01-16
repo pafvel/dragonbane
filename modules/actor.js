@@ -179,10 +179,10 @@ export class DoDActor extends Actor {
             if (foundry.utils.hasProperty(data, condition)) {
                 const status = CONFIG.statusEffects.find(a => a.id === DoD.conditionEffects[condition].id);
                 if (status) {
-                    const tokens = this.getActiveTokens();
-                    for (let t of tokens) {
+                    const tokens = this.getActiveTokens();                    
+                    if (tokens.length > 0) {
                         const value = foundry.utils.getProperty(data, condition);
-                        t.document.toggleActiveEffect(status, {active: value});
+                        tokens[0].document.toggleActiveEffect(status, {active: value});
                     }    
                 }
             }
