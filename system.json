@@ -77,7 +77,18 @@
       "private": false,
       "system": "dragonbane",
       "banner": "./systems/dragonbane/art/dragonbane-banner.webp"
+    },
+    {
+    "name": "official-soundtrack-by-andreas-lundstrom",
+      "label": "Official Soundtrack by Andreas Lundström",
+      "path": "packs/official-soundtrack-by-andreas-lundstrom",
+      "type": "Playlist",
+      "module": "Dragonbane",
+      "private": false,
+      "system": "dragonbane",
+      "banner": "./systems/dragonbane/art/audio/ost/ost-banner.webp"
     }
+
   ],
   "initiative": "1d20",
   "grid": {
