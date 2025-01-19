@@ -67,23 +67,23 @@
         },
         "attackTypes": {
             "ranged": "Disparar proyectil",
-            "rangedTooltip": "Ataque con arma de proyectiles",
-            "parry": "Parada ",
-            "parryTooltip": "Parar un ataque",
+            "rangedTooltip": "Ataca con un arma de proyectiles",
+            "parry": "Parar",
+            "parryTooltip": "Para un ataque",
             "normal": "Golpear",
-            "normalTooltip": "Realizar un ataque causando daño contundente",
+            "normalTooltip": "Realiza un ataque causando daño contundente",
             "stab": "Apuñalar",
-            "stabTooltip": "Realizar un ataque causando daño perforante",
+            "stabTooltip": "Realiza un ataque causando daño perforante",
             "slash": "Cortar",
-            "slashTooltip": "Realizar un ataque causando daño cortante",
+            "slashTooltip": "Realiza un ataque causando daño cortante",
             "weakpoint": "Buscar punto débil",
-            "weakpointTooltip": "Apuñalar e intentar encontrar una vulnerabilidad en la armadura del enemigo\nEste ataque añade una Desventaja a la tirada",
-            "disarm": "Desarmar ",
-            "disarmTooltip": "Desarmar al enemigo en lugar de causarle daño\nHaz una tirada enfrentada al objetivo\nSi el objetivo sujeta un arma a dos manos añade una Desventaja",
+            "weakpointTooltip": "Apuñala e intenta encontrar una vulnerabilidad en la armadura del enemigo\nSi tienes éxito, este ataque ignora el Nivel de Armadura del objetivo\nEste ataque añade una Desventaja a la tirada",
+            "disarm": "Desarmar",
+            "disarmTooltip": "Desarma al enemigo en lugar de causarle daño\nHaz una tirada enfrentada al objetivo\nSi el objetivo sujeta un arma a dos manos añade una Desventaja",
             "topple": "Derribar",
-            "toppleTooltip": "Derribar al enemigo contra el suelo en lugar de causarle daño\nLas armas con DERRIBO obtienen una Ventaja a la tirada",
+            "toppleTooltip": "Derriba al enemigo contra el suelo en lugar de causarle daño\nLas armas con DERRIBO obtienen una Ventaja a la tirada",
             "throw": "Arrojar",
-            "throwTooltip": "Atacar arrojando un arma"
+            "throwTooltip": "Ataca arrojando un arma"
         },
         "attributes": {
             "str": "FUE",
@@ -380,7 +380,7 @@
         "ui": {
             "character-sheet": {
                 "abilities": "Capacidades",
-                "abilitiesTooltip": "Capacidades Heroicas, Profesionales y Raciales",
+                "abilitiesTooltip": "Capacidades Heroicas, Profesionales e Innatas",
                 "age": "Edad",
                 "and": "y",
                 "appearance": "Apariencia",
@@ -407,7 +407,7 @@
 		"equipped": "Equipado",
                 "equipped-armor": "Armadura Equipada",
                 "equipped-helmet": "Casco Equipado",
-                "equipped-weapon": "Armas Equipadas",
+                "equipped-weapon": "Armas a Mano",
                 "failures": "Fallos",
                 "ferocity": "Ferocidad",
                 "gear": "Equipo",
@@ -420,8 +420,8 @@
                 "injuries": "Heridas",
                 "inventory": "Inventario",
                 "kin": "Raza",
-                "kinAbilities": "Capacidades Raciales",
-		"kinAbilitiesTooltip": "Las Capacidades Raciales son determinadas por la RAZA del personaje",
+                "kinAbilities": "Capacidades Innatas",
+		"kinAbilitiesTooltip": "Las Capacidades Innatas son determinadas por la RAZA del personaje",
                 "main": "Principal",
                 "max-encumbrance": "Límite de Carga",
                 "memento": "Recuerdo",
@@ -503,8 +503,8 @@
                 "damageDetailTotal": "Daño total"
             },
             "dialog": {
-                "banes": "Perdiciones",
-                "boons": "Bendiciones",
+                "banes": "Desventajas",
+                "boons": "Ventajas",
                 "brokenWeaponTitle": "Arma Rota",
                 "brokenWeaponContent": "El arma está rota. ¿Estás seguro/a de querer usarla para realizar una acción?",
                 "performAction": "Realizar Acción",
@@ -574,7 +574,7 @@
             "automaticSkillAdvancementMarkHint": "Coloca una marca de mejora de habilidad automáticamente con los resultados de Dragón y Demonio."
         },
         "WARNING": {
-            "kinAbility": "No se ha encontrado la Capacidad Racial: {ability}",
+            "kinAbility": "No se ha encontrado la Capacidad Innata: {ability}",
             "kin": "No se ha encontrado la Raza: {kin}",
             "profession": "No se ha encontrado el Oficio: {profession}",
             "professionAbility": "No se ha encontrado la Capacidad Profesional: {ability}",
@@ -596,7 +596,7 @@
             "noMeleeMishapTable": "Falta la tabla de pifias para armas cuerpo a cuerpo.",
             "noRangedMishapTable": "Falta la tabla de pifias para proyectiles.",
             "noMagicMishapTable": "Falta la tabla de pifias para magia.",
-            "maxWeaponsEquipped": "Máximo de 3 armas equipadas."
+            "maxWeaponsEquipped": "Máximo de 3 armas a mano (incluyendo escudos)."
         }
     }
 }
