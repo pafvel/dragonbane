@@ -1,8 +1,9 @@
 # Dragonbane / Drakar och Demoner
+
 The official system for playing Dragonbane / Drakar och Demoner on Foundry VTT.
- 
-	
+
 ## Overview
+
 The system provides support for
 
 - Character, NPC and Monster sheets
@@ -30,11 +31,12 @@ The system provides support for
   - English
   - Svenska
 
-Music pack is official Dragonbane music created by Andreas Lundström.
+Also includes the official Dragonbane soundtrack, composed by Andreas Lundström and included with his permission. © 2023 Andreas Lundström. All rights reserved.
 
 ## Official modules
-[Dragonbane Core Rules (English)](https://foundryvtt.com/packages/dragonbane-coreset) - Includes all content from the core rules and the epic campaign Secret of the Dragon Emperor.  
-[Dragonbane Bestiary (English)](https://foundryvtt.com/packages/dragonbane-bestiary) - This Bestiary for the Dragonbane roleplaying game includes no less than 63 wondrous creatures for the player characters to encounter. 
 
-[Drakar och Demoner Grundspel (Svenska)](https://foundryvtt.com/packages/dragonbane-grundspel) - Allt innehåll från grundreglerna och den episka kampanjen  Drakkejsarens hemlighet.  
-[Drakar och Demoner Monsterboken (Svenska)](https://foundryvtt.com/packages/dragonbane-monsterboken) -  Innehåller inte mindre än 63 fantastiska varelser för spelarnas rollpersoner att möta. 
+[Dragonbane Core Rules (English)](https://foundryvtt.com/packages/dragonbane-coreset) - Includes all content from the core rules and the epic campaign Secret of the Dragon Emperor.  
+[Dragonbane Bestiary (English)](https://foundryvtt.com/packages/dragonbane-bestiary) - This Bestiary for the Dragonbane roleplaying game includes no less than 63 wondrous creatures for the player characters to encounter.
+
+[Drakar och Demoner Grundspel (Svenska)](https://foundryvtt.com/packages/dragonbane-grundspel) - Allt innehåll från grundreglerna och den episka kampanjen Drakkejsarens hemlighet.  
+[Drakar och Demoner Monsterboken (Svenska)](https://foundryvtt.com/packages/dragonbane-monsterboken) - Innehåller inte mindre än 63 fantastiska varelser för spelarnas rollpersoner att möta.
