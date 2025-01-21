@@ -397,7 +397,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         // Don't show conditions as effects
         sheetData.effects = sheetData.effects.filter((effect) => {
-            return effect.statuses.first().startsWith("dragonbane.") === false;
+            return !effect.statuses.first()?.startsWith("dragonbane.");
         });
     }
 
@@ -1581,10 +1581,10 @@ export default class DoDCharacterSheet extends ActorSheet {
                 const itemQuantity = itemData.system.quantity + existingItem[0].system.quantity;
                 return await existingItem[0].update({["system.quantity"]: itemQuantity});
             }
-            else{                
-                return await this._onDropItemCreate(itemData);                
-            }
         }              
+
+        // Create the owned item
+        const returnValue = await this._onDropItemCreate(itemData);                
 
         // Update kin and kin abilities
         if (itemData.type === "kin") {
@@ -1604,6 +1604,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                 }
             }
         }
+        return returnValue;
     }
 
     async _onItemCreate(event) {
