@@ -396,9 +396,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         }
 
         // Don't show conditions as effects
-        sheetData.effects = sheetData.effects.filter((effect) => {
-            return !effect.statuses.first()?.startsWith("dragonbane.");
-        });
+        sheetData.effects = sheetData.effects.filter((effect) => !effect.isCondition);
     }
 
     _updateEncumbrance(sheetData) {

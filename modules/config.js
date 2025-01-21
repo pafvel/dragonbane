@@ -148,7 +148,7 @@ DoD.activeEffectChanges = {
 DoD.conditionEffects = {
     "system.conditions.str.value" :
     {
-        id: "dragonbane.exhausted",
+        id: "dragonbane.condition.exhausted",
         name: "DoD.conditions.str",
         icon: "systems/dragonbane/art/icons/back-pain.svg",
         img: "systems/dragonbane/art/icons/back-pain.svg",
@@ -156,7 +156,7 @@ DoD.conditionEffects = {
     },
     "system.conditions.con.value" :
     {
-        id: "dragonbane.sickly",
+        id: "dragonbane.condition.sickly",
         name: "DoD.conditions.con",
         icon: "systems/dragonbane/art/icons/death-juice.svg",
         img: "systems/dragonbane/art/icons/death-juice.svg",
@@ -164,7 +164,7 @@ DoD.conditionEffects = {
     },
     "system.conditions.agl.value" :
     {
-        id: "dragonbane.dazed",
+        id: "dragonbane.condition.dazed",
         name: "DoD.conditions.agl",
         icon: "systems/dragonbane/art/icons/surprised.svg",
         img: "systems/dragonbane/art/icons/surprised.svg",
@@ -172,7 +172,7 @@ DoD.conditionEffects = {
     },
     "system.conditions.int.value" :
     {
-        id: "dragonbane.angry",
+        id: "dragonbane.condition.angry",
         name: "DoD.conditions.int",
         icon: "systems/dragonbane/art/icons/angry-eyes.svg",
         img: "systems/dragonbane/art/icons/angry-eyes.svg",
@@ -180,7 +180,7 @@ DoD.conditionEffects = {
     },
     "system.conditions.wil.value" :
     {
-        id: "dragonbane.scared",
+        id: "dragonbane.condition.scared",
         name: "DoD.conditions.wil",
         icon: "systems/dragonbane/art/icons/terror.svg",
         img: "systems/dragonbane/art/icons/terror.svg",
@@ -188,7 +188,7 @@ DoD.conditionEffects = {
     },
     "system.conditions.cha.value" :
     {
-        id: "dragonbane.disheartened",
+        id: "dragonbane.condition.disheartened",
         name: "DoD.conditions.cha",
         icon: "systems/dragonbane/art/icons/worried-eyes.svg",
         img: "systems/dragonbane/art/icons/worried-eyes.svg",

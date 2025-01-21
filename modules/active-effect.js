@@ -37,6 +37,10 @@ export default class DoDActiveEffect extends ActiveEffect {
         return false;
     }
 
+    get isCondition() {
+        return this.statuses.first()?.startsWith("dragonbane.condition");
+    }
+
     /**
     * 
     * @param {Actor} actor                   The Actor to whom this effect should be applied
