@@ -182,7 +182,11 @@ export class DoDActor extends Actor {
                     const tokens = this.getActiveTokens();                    
                     if (tokens.length > 0) {
                         const value = foundry.utils.getProperty(data, condition);
-                        tokens[0].document.toggleActiveEffect(status, {active: value});
+                        if (game.release.generation < 12) {
+                            tokens[0].document.toggleActiveEffect(status, {active: value});
+                        } else {
+                            this.toggleStatusEffect(status.id, {active: value});
+                        }
                     }    
                 }
             }
