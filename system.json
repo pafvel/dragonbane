@@ -108,5 +108,14 @@
       "extensions": ["css", "html", "hbs", "json"],
       "paths": ["dragonbane.css", "templates", "lang"]
     }
+  },
+  "relationships": {
+    "recommends": [
+      {
+        "id": "yze-combat",
+        "type": "module",
+        "compatibility": {}
+      }
+    ]
   }
 }
