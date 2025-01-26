@@ -114,6 +114,7 @@
       {
         "id": "yze-combat",
         "type": "module",
+        "manifest": "https://github.com/fvtt-fria-ligan/yearzero-combat-fvtt/releases/latest/download/module.json",
         "compatibility": {}
       }
     ]
