@@ -9,14 +9,13 @@
 - Character Sheets
 
   - Conditions show as status effects on tokens.
-  - Items in the inventory stack automatically when dropped if they are identical.
+  - Items in the inventory stack automatically when dropped if they are identical (by BartekB).
   - Kin and Profession abilities can be deleted directly from character sheet.
   - Fix for profession's Key attribute resetting.
   - HP, WP and currency can no longer be negative.
 
 - Miscellaneous
 
-  - Added CrimsonText font for regular text.
   - Fix for color on scroll bar and standard dialog buttons on v12.
 
 - Localization
