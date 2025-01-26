@@ -549,7 +549,7 @@
   text-align: center;
 }
 .DoD.sheet.character .resource-points .death-rolls-box button {
-  font-family: var(--dod-font-primary);
+  font-family: var(--dod-font-heading);
   font-size: 12px;
   font-weight: bold;
   padding: 0px;
@@ -816,19 +816,48 @@
   --dod-color-secret: #E83031;
   --dod-color-positive-effect: #00604D;
   --dod-color-negative-effect: #E83031;
-  --dod-font-primary: "Crimson Text";
+  --dod-font-primary: "QTFrizQuad";
   --dod-font-secondary: "QTFrizQuad";
   --dod-font-heading: "QTFrizQuad";
   --dod-font-handwriting: "Caveat";
+  font-family: var(--dod-font-primary);
   background-image: url(art/ui/dragonbane.jpg);
   background-repeat: no-repeat;
   background-position-x: center;
   background-size: auto 100vh;
   background-color: black;
 }
-.system-dragonbane :lang(pl) {
-  --dod-font-secondary: "Crimson Text";
-  --dod-font-heading: "Crimson Text";
+.system-dragonbane h1,
+.system-dragonbane h2,
+.system-dragonbane h3,
+.system-dragonbane h4,
+.system-dragonbane h5,
+.system-dragonbane h6,
+.system-dragonbane th,
+.system-dragonbane blockquote,
+.system-dragonbane button,
+.system-dragonbane caption,
+.system-dragonbane nav,
+.system-dragonbane .dice-roll,
+.system-dragonbane .header-button,
+.system-dragonbane .title,
+.system-dragonbane .heading,
+.system-dragonbane .page-title,
+.system-dragonbane .npc-title,
+.system-dragonbane .monster-title {
+  font-family: var(--dod-font-heading);
+}
+.system-dragonbane b,
+.system-dragonbane strong,
+.system-dragonbane td,
+.system-dragonbane blockquote,
+.system-dragonbane .content-link,
+.system-dragonbane .inline-roll {
+  font-family: var(--dod-font-secondary);
+}
+.system-dragonbane .content-link,
+.system-dragonbane .inline-roll {
+  font-style: normal;
 }
 .system-dragonbane #pause {
   background: url();
@@ -1342,7 +1371,6 @@
   border-bottom: 0px solid transparent;
 }
 .system-dragonbane .chat-message {
-  font-family: var(--dod-font-primary);
   background-image: url(art/ui/chat-card-bg.webp);
   background-size: cover;
   background-position-x: center;
@@ -1368,7 +1396,7 @@
   background-size: contain;
   background-clip: border-box;
   color: whitesmoke;
-  font-family: var(--dod-font-primary);
+  font-family: var(--dod-font-heading);
   font-weight: normal;
 }
 .system-dragonbane .chat-button:disabled {
@@ -1379,31 +1407,6 @@
   background: url(art/ui/dialog-bg.webp) repeat;
   background-position-x: center;
   color: black;
-  font-family: var(--dod-font-primary);
-}
-.system-dragonbane .window-content h1,
-.system-dragonbane .window-content h2,
-.system-dragonbane .window-content h3,
-.system-dragonbane .window-content h4,
-.system-dragonbane .window-content h5,
-.system-dragonbane .window-content h6,
-.system-dragonbane .window-content th,
-.system-dragonbane .window-content blockquote,
-.system-dragonbane .window-content caption,
-.system-dragonbane .window-content nav,
-.system-dragonbane .window-content .title,
-.system-dragonbane .window-content .heading,
-.system-dragonbane .window-content .page-title,
-.system-dragonbane .window-content .npc-title,
-.system-dragonbane .window-content .monster-title {
-  font-family: var(--dod-font-heading);
-}
-.system-dragonbane .window-content b,
-.system-dragonbane .window-content strong,
-.system-dragonbane .window-content td,
-.system-dragonbane .window-content blockquote,
-.system-dragonbane .window-content .content-link {
-  font-family: var(--dod-font-secondary);
 }
 .system-dragonbane .dialog .dialog-buttons .dialog-button,
 .system-dragonbane .dod-button,
@@ -1422,7 +1425,6 @@
   transform: scaleX(-1);
 }
 .system-dragonbane .sheet-table {
-  font-family: var(--dod-font-primary);
   font-weight: normal;
   background-image: url("art/ui/parchment-column.webp");
   background-repeat: no-repeat;

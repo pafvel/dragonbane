@@ -90,16 +90,23 @@
     --dod-color-positive-effect: #00604D;
     --dod-color-negative-effect: #E83031;
 
-    --dod-font-primary: "Crimson Text";
+    --dod-font-primary: "QTFrizQuad";
     --dod-font-secondary: "QTFrizQuad";
     --dod-font-heading: "QTFrizQuad";
     --dod-font-handwriting: "Caveat";
 
-    :lang(pl) { 
-        --dod-font-secondary: "Crimson Text";
-        --dod-font-heading: "Crimson Text";
+    font-family: var(--dod-font-primary);
+
+    h1, h2, h3, h4, h5, h6, th, blockquote, button, caption, nav, .dice-roll, .header-button, .title, .heading, .page-title, .npc-title, .monster-title {
+        font-family: var(--dod-font-heading);
+    }
+    b, strong, td, blockquote, .content-link, .inline-roll {
+        font-family: var(--dod-font-secondary);
     }
 
+    .content-link, .inline-roll {
+        font-style: normal;
+    }
 
     background-image: url(art/ui/dragonbane.jpg);
     background-repeat: no-repeat;
@@ -420,7 +427,6 @@
                         background-position: center center, left center, right center, center center;
                         background-clip: border-box, border-box, border-box, padding-box;
                         color: whitesmoke;
-                        //text-transform: uppercase;
                         .content-link, .table-roll {
                             border: 0px solid transparent;
                             background-color: transparent;
@@ -668,7 +674,6 @@
     }
 
     .chat-message {
-        font-family: var(--dod-font-primary);
         background-image: url(art/ui/chat-card-bg.webp);
         background-size: cover;
         background-position-x: center;
@@ -695,7 +700,7 @@
         background-size: contain;
         background-clip: border-box;
         color: whitesmoke;            
-        font-family: var(--dod-font-primary);
+        font-family: var(--dod-font-heading);
         font-weight: normal;
     }
     .chat-button:disabled {
@@ -707,13 +712,6 @@
         background: url(art/ui/dialog-bg.webp) repeat;
         background-position-x: center;
         color: black;
-        font-family: var(--dod-font-primary);
-        h1, h2, h3, h4, h5, h6, th, blockquote, caption, nav, .title, .heading, .page-title, .npc-title, .monster-title {
-            font-family: var(--dod-font-heading);
-        }
-        b, strong, td, blockquote, .content-link {
-            font-family: var(--dod-font-secondary);
-        }
     }
 
     .dialog .dialog-buttons .dialog-button, .dod-button, .standard-form .form-footer > button  {
@@ -733,7 +731,6 @@
     };
 
     .sheet-table {
-    font-family: var(--dod-font-primary);
     font-weight: normal;
     background-image: url("art/ui/parchment-column.webp");
     background-repeat:  no-repeat;
