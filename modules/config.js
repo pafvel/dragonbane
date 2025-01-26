@@ -150,48 +150,48 @@ DoD.conditionEffects = {
     {
         id: "dragonbane.condition.exhausted",
         name: "DoD.conditions.str",
-        icon: "systems/dragonbane/art/icons/back-pain.svg",
-        img: "systems/dragonbane/art/icons/back-pain.svg",
+        icon: "systems/dragonbane/art/icons/back-pain.webp",
+        img: "systems/dragonbane/art/icons/back-pain.webp",
         tint: "#cccccc",
     },
     "system.conditions.con.value" :
     {
         id: "dragonbane.condition.sickly",
         name: "DoD.conditions.con",
-        icon: "systems/dragonbane/art/icons/death-juice.svg",
-        img: "systems/dragonbane/art/icons/death-juice.svg",
+        icon: "systems/dragonbane/art/icons/death-juice.webp",
+        img: "systems/dragonbane/art/icons/death-juice.webp",
         tint: "#cccccc",
     },
     "system.conditions.agl.value" :
     {
         id: "dragonbane.condition.dazed",
         name: "DoD.conditions.agl",
-        icon: "systems/dragonbane/art/icons/surprised.svg",
-        img: "systems/dragonbane/art/icons/surprised.svg",
+        icon: "systems/dragonbane/art/icons/surprised.webp",
+        img: "systems/dragonbane/art/icons/surprised.webp",
         tint: "#cccccc",
     },
     "system.conditions.int.value" :
     {
         id: "dragonbane.condition.angry",
         name: "DoD.conditions.int",
-        icon: "systems/dragonbane/art/icons/angry-eyes.svg",
-        img: "systems/dragonbane/art/icons/angry-eyes.svg",
+        icon: "systems/dragonbane/art/icons/angry-eyes.webp",
+        img: "systems/dragonbane/art/icons/angry-eyes.webp",
         tint: "#cccccc",
     },
     "system.conditions.wil.value" :
     {
         id: "dragonbane.condition.scared",
         name: "DoD.conditions.wil",
-        icon: "systems/dragonbane/art/icons/terror.svg",
-        img: "systems/dragonbane/art/icons/terror.svg",
+        icon: "systems/dragonbane/art/icons/terror.webp",
+        img: "systems/dragonbane/art/icons/terror.webp",
         tint: "#cccccc",
     },
     "system.conditions.cha.value" :
     {
         id: "dragonbane.condition.disheartened",
         name: "DoD.conditions.cha",
-        icon: "systems/dragonbane/art/icons/worried-eyes.svg",
-        img: "systems/dragonbane/art/icons/worried-eyes.svg",
+        icon: "systems/dragonbane/art/icons/worried-eyes.webp",
+        img: "systems/dragonbane/art/icons/worried-eyes.webp",
         tint: "#cccccc",
     }
 };
