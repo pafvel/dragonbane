@@ -301,6 +301,7 @@ Hooks.once("init", function () {
     Items.unregisterSheet("core", ItemSheet);
     Items.registerSheet("DoD", DoDItemSheet, { makeDefault: true });
 
+    DocumentSheetConfig.unregisterSheet(ActiveEffect, "core", ActiveEffectConfig);
     DocumentSheetConfig.registerSheet(ActiveEffect, "DoD", DoDActiveEffectConfig, {makeDefault :true});
 
     registerHandlebarsHelpers();
@@ -310,7 +311,7 @@ Hooks.once("init", function () {
 
     game.dragonbane = {
         migrateWorld: DoDMigrate.migrateWorld,
-        updateSpells: DoDMigrate.updateSpellsOnActors,
+        //updateSpells: DoDMigrate.updateSpellsOnActors,
         //updateSkills: DoDMigrate.updateSkillsOnActors,
         //updateItems: DoDMigrate.updateItemsOnActors,
         //updateImages: DoDMigrate.updateItemImagesOnActors,
