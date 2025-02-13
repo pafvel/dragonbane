@@ -835,7 +835,7 @@
 .system-dragonbane h6,
 .system-dragonbane th,
 .system-dragonbane blockquote,
-.system-dragonbane button,
+.system-dragonbane button:not(.header-control),
 .system-dragonbane caption,
 .system-dragonbane nav,
 .system-dragonbane .dice-roll,
