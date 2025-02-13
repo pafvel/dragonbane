@@ -175,19 +175,21 @@ export class DoDActor extends Actor {
         }
 
         // Conditions as status effects
-        for (let condition in DoD.conditionEffects) {
-            if (foundry.utils.hasProperty(data, condition)) {
-                const status = CONFIG.statusEffects.find(a => a.id === DoD.conditionEffects[condition].id);
-                if (status) {
-                    const tokens = this.getActiveTokens();                    
-                    if (tokens.length > 0) {
-                        const value = foundry.utils.getProperty(data, condition);
-                        if (game.release.generation < 12) {
-                            tokens[0].document.toggleActiveEffect(status, {active: value});
-                        } else {
-                            this.toggleStatusEffect(status.id, {active: value});
-                        }
-                    }    
+        if (game.user.id === user) {
+            for (let condition in DoD.conditionEffects) {
+                if (foundry.utils.hasProperty(data, condition)) {
+                    const status = CONFIG.statusEffects.find(a => a.id === DoD.conditionEffects[condition].id);
+                    if (status) {
+                        const tokens = this.getActiveTokens();                    
+                        if (tokens.length > 0) {
+                            const value = foundry.utils.getProperty(data, condition);
+                            if (game.release.generation < 12) {
+                                tokens[0].document.toggleActiveEffect(status, {active: value});
+                            } else {
+                                this.toggleStatusEffect(status.id, {active: value});
+                            }
+                        }    
+                    }
                 }
             }
         }
