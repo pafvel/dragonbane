@@ -1,5 +1,20 @@
 # Change Log
 
+## Version 1.9.5
+
+- Character Sheets
+
+  - Fix for conditions as status effects being duplicated on tokens.
+
+- Official Soundtrack
+
+  - Changed file format from mp3 to ogg. (Conversion by @Sasmira)
+
+- Miscellaneous
+  - Replaced non-viewboxed svg icons with webp.
+  - The default Foundry active effect config sheet has been disabled.
+  - Fix for button visibility in header controls in AppV2 dark mode.
+
 ## Version 1.9.4
 
 - Official Soundtrack

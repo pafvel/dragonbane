@@ -1,3 +1,24 @@
-2025/01/26-16:29:26.788 44a4 Recovering log #365
-2025/01/26-16:29:26.791 44a4 Delete type=0 #365
-2025/01/26-16:29:26.791 44a4 Delete type=3 #363
+2025/02/13-20:56:33.634 91e4 Recovering log #369
+2025/02/13-20:56:33.634 91e4 Level-0 table #371: started
+2025/02/13-20:56:33.636 91e4 Level-0 table #371: 23039 bytes OK
+2025/02/13-20:56:33.638 91e4 Delete type=0 #369
+2025/02/13-20:56:33.638 91e4 Delete type=3 #368
+2025/02/13-20:59:05.527 64a4 Level-0 table #374: started
+2025/02/13-20:59:05.529 64a4 Level-0 table #374: 23261 bytes OK
+2025/02/13-20:59:05.530 64a4 Delete type=0 #372
+2025/02/13-20:59:05.531 64a4 Manual compaction at level-0 from '!adventures!vsdhUE4l5CfVXDDj' @ 72057594037927935 : 1 .. '!adventures!vsdhUE4l5CfVXDDj' @ 0 : 0; will stop at '!adventures!vsdhUE4l5CfVXDDj' @ 6 : 1
+2025/02/13-20:59:05.531 64a4 Compacting 2@0 + 0@1 files
+2025/02/13-20:59:05.534 64a4 Generated table #375@0: 1 keys, 23261 bytes
+2025/02/13-20:59:05.535 64a4 Compacted 2@0 + 0@1 files => 23261 bytes
+2025/02/13-20:59:05.536 64a4 compacted to: files[ 0 1 1 0 0 0 0 ]
+2025/02/13-20:59:05.536 64a4 Delete type=2 #371
+2025/02/13-20:59:05.536 64a4 Delete type=2 #374
+2025/02/13-20:59:05.537 64a4 Manual compaction at level-0 from '!adventures!vsdhUE4l5CfVXDDj' @ 6 : 1 .. '!adventures!vsdhUE4l5CfVXDDj' @ 0 : 0; will stop at (end)
+2025/02/13-20:59:05.537 64a4 Manual compaction at level-1 from '!adventures!vsdhUE4l5CfVXDDj' @ 72057594037927935 : 1 .. '!adventures!vsdhUE4l5CfVXDDj' @ 0 : 0; will stop at '!adventures!vsdhUE4l5CfVXDDj' @ 7 : 1
+2025/02/13-20:59:05.537 64a4 Compacting 1@1 + 1@2 files
+2025/02/13-20:59:05.538 64a4 Generated table #376@1: 1 keys, 23261 bytes
+2025/02/13-20:59:05.538 64a4 Compacted 1@1 + 1@2 files => 23261 bytes
+2025/02/13-20:59:05.538 64a4 compacted to: files[ 0 0 1 0 0 0 0 ]
+2025/02/13-20:59:05.538 64a4 Delete type=2 #367
+2025/02/13-20:59:05.539 64a4 Delete type=2 #375
+2025/02/13-20:59:05.539 64a4 Manual compaction at level-1 from '!adventures!vsdhUE4l5CfVXDDj' @ 7 : 1 .. '!adventures!vsdhUE4l5CfVXDDj' @ 0 : 0; will stop at (end)
