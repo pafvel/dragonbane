@@ -662,79 +662,86 @@ export async function enrichGearTable(match, _options) {
     for (const match of matches) {
         const uuid = match[1];
         const item = fromUuidSync(uuid);
-        const itemName = match[2] ?? item.name;
+        const itemName = match[2] ?? item?.name;
 
-        switch (type) {
-            case "armor":
-                html += `
-                <tr>
-                    <td style="text-align:left">@UUID[${uuid}]{${itemName}}</td>
-                    <td style="text-align:center">${item.system.rating}</td>
-                    <td style="text-align:center">${item.system.cost}</td>
-                    <td>${game.i18n.localize("DoD.supplyTypes." + item.system.supply)}</td>
-                    <td>${item.system.banes}</td>
-                </tr>`;
-                break;
-
-            case "clothes":
-            case "service":
-            case "travel":
-            case "animal":
-                html += `
-                <tr>
-                    <td style="text-align:left">@UUID[${uuid}]{${itemName}}</td>
-                    <td style="text-align:center">${item.system.cost}</td>
-                    <td>${game.i18n.localize("DoD.supplyTypes." + item.system.supply)}</td>
-                    <td>${item.system.description}</td>
-                </tr>`;
-                break;
-
-            case "instrument":
-            case "trade":
-            case "knowledge":
-            case "light":
-            case "tool":
-            case "container":
-            case "medicine":
-            case "hunting":
-                html += `
-                <tr>
-                    <td style="text-align:left">@UUID[${uuid}]{${itemName}}</td>
-                    <td style="text-align:center">${item.system.cost}</td>
-                    <td>${game.i18n.localize("DoD.supplyTypes." + item.system.supply)}</td>
-                    <td style="text-align:center">${item.system.weight}</td>
-                    <td>${item.system.description}</td>
-                </tr>`;
-                break;
-
-
-            case "melee":
-            case "ranged":
-                {
-                    let range = item.system.range.toString() ?? "";
-                    range = range.replace("@str", game.i18n.localize("DoD.attributes.str"));
-    
+        if (item) {
+            switch (type) {
+                case "armor":
                     html += `
                     <tr>
                         <td style="text-align:left">@UUID[${uuid}]{${itemName}}</td>
-                        <td style="text-align:center">${game.i18n.localize(item.system.grip.label)}</td>
-                        <td style="text-align:center">${item.system.str > 0 ? item.system.str : "-"}</td>
-                        <td style="text-align:center">${range}</td>
-                        <td style="text-align:center">${item.system.damage}</td>
-                        <td style="text-align:center">${item.system.durability > 0 ? item.system.durability : "-"}</td>
-                        <td style="text-align:center">${item.system.cost !== "" ? item.system.cost : "-"}</td>
+                        <td style="text-align:center">${item.system.rating}</td>
+                        <td style="text-align:center">${item.system.cost}</td>
                         <td>${game.i18n.localize("DoD.supplyTypes." + item.system.supply)}</td>
-                        <td class="comma-list">`;
-    
-                    for (const feature of item.system.features) {
-                        html += `<span>${game.i18n.localize("DoD.weaponFeatureTypes." + feature)}</span>`;
-                    }
-    
-                    html += `
-                        </td>
+                        <td>${item.system.banes}</td>
                     </tr>`;
-                    break;    
-                }
+                    break;
+
+                case "clothes":
+                case "service":
+                case "travel":
+                case "animal":
+                    html += `
+                    <tr>
+                        <td style="text-align:left">@UUID[${uuid}]{${itemName}}</td>
+                        <td style="text-align:center">${item.system.cost}</td>
+                        <td>${game.i18n.localize("DoD.supplyTypes." + item.system.supply)}</td>
+                        <td>${item.system.description}</td>
+                    </tr>`;
+                    break;
+
+                case "instrument":
+                case "trade":
+                case "knowledge":
+                case "light":
+                case "tool":
+                case "container":
+                case "medicine":
+                case "hunting":
+                    html += `
+                    <tr>
+                        <td style="text-align:left">@UUID[${uuid}]{${itemName}}</td>
+                        <td style="text-align:center">${item.system.cost}</td>
+                        <td>${game.i18n.localize("DoD.supplyTypes." + item.system.supply)}</td>
+                        <td style="text-align:center">${item.system.weight}</td>
+                        <td>${item.system.description}</td>
+                    </tr>`;
+                    break;
+
+
+                case "melee":
+                case "ranged":
+                    {
+                        let range = item.system.range.toString() ?? "";
+                        range = range.replace("@str", game.i18n.localize("DoD.attributes.str"));
+        
+                        html += `
+                        <tr>
+                            <td style="text-align:left">@UUID[${uuid}]{${itemName}}</td>
+                            <td style="text-align:center">${game.i18n.localize(item.system.grip.label)}</td>
+                            <td style="text-align:center">${item.system.str > 0 ? item.system.str : "-"}</td>
+                            <td style="text-align:center">${range}</td>
+                            <td style="text-align:center">${item.system.damage}</td>
+                            <td style="text-align:center">${item.system.durability > 0 ? item.system.durability : "-"}</td>
+                            <td style="text-align:center">${item.system.cost !== "" ? item.system.cost : "-"}</td>
+                            <td>${game.i18n.localize("DoD.supplyTypes." + item.system.supply)}</td>
+                            <td class="comma-list">`;
+        
+                        for (const feature of item.system.features) {
+                            html += `<span>${game.i18n.localize("DoD.weaponFeatureTypes." + feature)}</span>`;
+                        }
+        
+                        html += `
+                            </td>
+                        </tr>`;
+                        break;    
+                    }
+            }
+        } else {
+            html += `
+            <tr>
+                <td style="text-align:left" colspan="100%">@UUID[${uuid}]{${itemName}}</td>
+            </tr>`;
         }
     }
 
