@@ -13,10 +13,15 @@ export default class DoDTest {
     @param {Integer} extraBanes : the number of additional banes to apply
     @param {Integer} extraBoons : the number of additional boons to apply
 */
-    constructor(actor, options = {}) {
+    constructor(actor, options = {}, dialogData) {
         this.actor = actor;
         this.options = options;
-        this.dialogData = {};
+        if(dialogData === undefined){
+            this.dialogData = {};
+        }
+        else{
+            this.dialogData = dialogData;
+        }       
         this.preRollData = {};
         this.postRollData = {};
         this.noBanesBoons = options?.noBanesBoons;
@@ -32,11 +37,22 @@ export default class DoDTest {
 
         this.updatePreRollData();
         const formula = this.options.formula ?? this.formatRollFormula(this.preRollData);
-        const rollOptions = {
-            boons: this.options.boons,
-            banes: this.options.banes,
-            extraBoons: this.options.extraBoons,
-            extraBanes: this.options.extraBanes
+        let rollOptions = {};
+        if(this.isReRoll === 0){
+            rollOptions = {
+                boons: this.options.boons,
+                banes: this.options.banes,
+                extraBoons: this.options.extraBoons,
+                extraBanes: this.options.extraBanes
+            }
+        }
+        else{
+            rollOptions = {
+                boons: this.dialogData.boons,
+                banes: this.dialogData.banes,
+                extraBoons: this.dialogData.extraBoons,
+                extraBanes: this.dialogData.extraBanes
+            }
         }
         this.roll = await new DoDRoll(formula, {}, rollOptions).roll(game.release.generation < 12 ? {async: true} : {});
 
@@ -102,7 +118,7 @@ export default class DoDTest {
     }
 
     updateDialogData() {
-
+        if(this.isReRoll === 0){
         if (this.noBanesBoons || this.autoSuccess) {
             return;
         }
@@ -140,6 +156,7 @@ export default class DoDTest {
         // Needed for dialog box layout
         this.dialogData.fillerBanes = Math.max(0, boons.length - banes.length);
         this.dialogData.fillerBoons = Math.max(0, banes.length - boons.length);
+        }
     }
 
 
@@ -147,8 +164,8 @@ export default class DoDTest {
 
         if (this.skipDialog) {
             return {
-                banes: this.options.noBanesBoons ? [] : this.dialogData.banes.map((e) => e.source),
-                boons: this.options.noBanesBoons ? [] : this.dialogData.boons.map((e) => e.source),
+                banes: this.options.noBanesBoons ? []: (this.dialogData?.banes?.map(e => e.source) ?? 0),              
+                boons: this.options.noBanesBoons ? []: (this.dialogData?.boons?.map(e => e.source) ?? 0),
                 extraBanes: 0,
                 extraBoons: 0
             }

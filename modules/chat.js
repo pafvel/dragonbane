@@ -501,7 +501,10 @@ function onPushRoll(event) {
         DoD_Utility.WARNING("DoD.WARNING.conditionAlreadyTaken");
         return;
     }
-
+    const mesageElementID = event.target.closest('[data-message-id]');
+    const messageID = mesageElementID?.getAttribute('data-message-id');
+    const message = game.messages.get(messageID)
+    const dialogData = message.rolls[0].options
     // Re-roll
     const options = {
         actorId: element.dataset.actorId,
@@ -514,23 +517,23 @@ function onPushRoll(event) {
     let test = null;
     switch (element.dataset.rollType) {
         case "DoDAttributeTest":
-            test = new DoDAttributeTest(actor, options.attribute, options);
+            test = new DoDAttributeTest(actor, options.attribute, options, dialogData);
             break;
         case "DoDSkillTest":
             options.skill = actor.findSkill(element.dataset.skillName)
-            test = new DoDSkillTest(actor, options.skill, options);
+            test = new DoDSkillTest(actor, options.skill, options, dialogData) ;
             break;
         case "DoDWeaponTest":
             options.action = element.dataset.action;
             options.extraDamage = element.dataset.extraDamage;
             options.weapon = fromUuidSync(element.dataset.weaponId);
-            test = new DoDWeaponTest(actor, options.weapon, options);
+            test = new DoDWeaponTest(actor, options.weapon, options, dialogData);
             break;
         case "DoDSpellTest":
             options.spell = actor.findSpell(element.dataset.spellName);
             options.powerLevel = Number(element.dataset.powerLevel);
             options.wpCost = Number(element.dataset.wpCost);
-            test = new DoDSpellTest(actor, options.spell, options);
+            test = new DoDSpellTest(actor, options.spell, options, dialogData);
             break;
         default:
             return;
