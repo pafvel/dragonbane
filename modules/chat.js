@@ -6,14 +6,14 @@ import DoDSpellTest from "./tests/spell-test.js";
 import { DoDActor } from "./actor.js";
 
 export function addChatListeners(_app, html, _data) {
-    html.on("click", ".inline-damage-roll", onInlineDamageRoll);
-    html.on("click", ".treasure-roll", onTreasureRoll);
-    html.on("click", "button.weapon-roll", onWeaponDamageRoll);
-    html.on("click", "button.magic-roll", onMagicDamageRoll);
-    html.on("click", "button.push-roll", onPushRoll);
-    html.on("click", ".damage-details", onExpandableClick);
 
-    html.on('click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
+    DoD_Utility.addHtmlEventListener(html, "click", ".inline-damage-roll", onInlineDamageRoll);   
+    DoD_Utility.addHtmlEventListener(html, "click", ".treasure-roll", onTreasureRoll);
+    DoD_Utility.addHtmlEventListener(html, "click", "button.weapon-roll", onWeaponDamageRoll);
+    DoD_Utility.addHtmlEventListener(html, "click", "button.magic-roll", onMagicDamageRoll);
+    DoD_Utility.addHtmlEventListener(html, "click", "button.push-roll", onPushRoll);
+    DoD_Utility.addHtmlEventListener(html, "click", ".damage-details", onExpandableClick);
+    DoD_Utility.addHtmlEventListener(html, 'click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
 }
 
 export function addChatMessageContextMenuOptions(_html, options) {
@@ -39,17 +39,20 @@ export function addChatMessageContextMenuOptions(_html, options) {
 
     const canDealTargetDamage = li =>
     {
-        if (li.find(".healing-roll").length > 0) {
+        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
+        if (li.querySelector(".healing-roll")) {
             return false;
         }
-        const element = li.find(".damage-roll")[0] || li.find(".dice-total")[0]
+        const element = li.querySelector(".damage-roll") || li.querySelector(".dice-total");
         const target = getTarget(element);
         return target ? target.isOwner : false;
     }
 
     const dealTargetDamage = function(li, multiplier = 1, ignoreArmor = false) {
+        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
+
         const damageData = {};
-        const element = li.find(".damage-roll")[0] || li.find(".dice-total")[0];
+        const element = li.querySelector(".damage-roll") || li.querySelector(".dice-total");
 
         damageData.damage = element.dataset.damage ?? Number(element.innerText);
         damageData.damageType = element.dataset.damageType?.substring(String("DoD.damageTypes.").length);
@@ -69,17 +72,21 @@ export function addChatMessageContextMenuOptions(_html, options) {
 
     const canHealTarget = li =>
     {
-        if (li.find(".damage-roll").length > 0) {
+        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
+
+        if (li.querySelector(".damage-roll")) {
             return false;
         }
-        const element = li.find(".healing-roll")[0] || li.find(".dice-total")[0]
+        const element = li.querySelector(".healing-roll") || li.querySelector(".dice-total")
         const target = getTarget(element);
         return target ? target.isOwner : false;
     }
 
     const healTarget = function(li, _multiplier = 1, _ignoreArmor = false) {
+        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
+
         const healingData = {};
-        const element = li.find(".healing-roll")[0] || li.find(".dice-total")[0];
+        const element = li.querySelector(".healing-roll") || li.querySelector(".dice-total");
 
         healingData.damage = element.dataset.healing ?? Number(element.innerText);
         healingData.actor = getTarget(element);
@@ -96,6 +103,8 @@ export function addChatMessageContextMenuOptions(_html, options) {
 
     const canDealSelectedDamage = li =>
     {
+        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
+
         if(!game.user.isGM || canDealTargetDamage(li)) {
             return false;
         }
@@ -104,11 +113,11 @@ export function addChatMessageContextMenuOptions(_html, options) {
             return false;
         }
 
-        if (canvas.tokens.controlled.length === 0 || li.find(".healing-roll").length > 0 || li.find(".skill-roll").length > 0) {
+        if (canvas.tokens.controlled.length === 0 || li.querySelector(".healing-roll") || li.querySelector(".skill-roll")) {
             return false;
         }
 
-        if ((li.find(".damage-roll").length > 0)) {
+        if ((li.querySelector(".damage-roll"))) {
             for (const token of canvas.tokens.controlled) {
                 if (!token.isOwner) {
                     return false;
@@ -120,8 +129,10 @@ export function addChatMessageContextMenuOptions(_html, options) {
     }
 
     const dealSelectedDamage = function(li, multiplier = 1, ignoreArmor = false) {
+        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
+
         const damageData = {};
-        const element = li.find(".damage-roll")[0];
+        const element = li.querySelector(".damage-roll");
 
         damageData.damage = element.dataset.damage;
         damageData.damageType = element.dataset.damageType?.substring(String("DoD.damageTypes.").length);
@@ -145,15 +156,17 @@ export function addChatMessageContextMenuOptions(_html, options) {
 
     const canHealSelectedDamage = li =>
     {
+        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
+
         if (!game.user.isGM || canHealTarget(li)) {
             return false;
         }
 
-        if (canvas.tokens.controlled.length === 0 || li.find(".damage-roll").length > 0 || li.find(".skill-roll").length > 0) {
+        if (canvas.tokens.controlled.length === 0 || li.querySelector(".damage-roll") || li.querySelector(".skill-roll")) {
             return false;
         }
 
-        if (li.find(".healing-roll").length > 0) {
+        if (li.querySelector(".healing-roll")) {
             for (const token of canvas.tokens.controlled) {
                 if (!token.isOwner) {
                     return false;
@@ -165,8 +178,10 @@ export function addChatMessageContextMenuOptions(_html, options) {
     }
 
     const healSelectedDamage = function(li) {
+        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
+
         const healingData = {};
-        const element = li.find(".dice-total")[0];
+        const element = li.querySelector(".dice-total");
 
         healingData.damage = Number(element.innerText);
 
@@ -185,7 +200,9 @@ export function addChatMessageContextMenuOptions(_html, options) {
 
     const canUndoDamage = li =>
     {
-        const element = li.find(".damage-message")[0];
+        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
+
+        const element = li.querySelector(".damage-message");
         if (element?.dataset.actorId) {
             const target = DoD_Utility.getActorFromUUID(element.dataset.actorId);
             return target?.isOwner && Number(element?.dataset.damage) !== 0;
@@ -194,7 +211,9 @@ export function addChatMessageContextMenuOptions(_html, options) {
     }
 
     const undoDamage = function(li) {
-        const element = li.find(".damage-message")[0];
+        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
+
+        const element = li.querySelector(".damage-message");
         const healingData = {
             actor: DoD_Utility.getActorFromUUID(element?.dataset.actorId),
             damage: Number(element?.dataset.damage)
@@ -280,7 +299,7 @@ export async function onInlineDamageRoll(event) {
     event.stopPropagation();
     event.preventDefault();
 
-    const element = event.currentTarget;
+    const element = event.target;
     const actorId = element.dataset.actorId;
     const actor = actorId ? DoD_Utility.getActorFromUUID(actorId) : null;
     const damageType = element.dataset.damageType;
@@ -310,7 +329,7 @@ export async function onTreasureRoll(event) {
     event.stopPropagation();
     event.preventDefault();
 
-    const element = event.currentTarget;
+    const element = event.target;
     const count = element.dataset.count;
 
     DoD_Utility.drawTreasureCards(count);
@@ -320,7 +339,7 @@ async function onWeaponDamageRoll(event) {
     if (event.detail === 2) { // double-click
         return;
     };
-    const element = event.currentTarget;
+    const element = event.target;
     const actorId = element.dataset.actorId;
     const actor = DoD_Utility.getActorFromUUID(actorId);
     if (!actor) return;
@@ -391,7 +410,7 @@ async function onMagicDamageRoll(event) {
         return;
     };
     const DoD = CONFIG.DoD;
-    const element = event.currentTarget;
+    const element = event.target;
     const actorId = element.dataset.actorId;
     const actor = DoD_Utility.getActorFromUUID(actorId);
     if (!actor) return;
@@ -476,7 +495,7 @@ function onPushRoll(event) {
     if (event.detail === 2) { // double-click
         return;
     };
-    const element = event.currentTarget;
+    const element = event.target;
     const actorId = element.dataset.actorId;
     const actor = DoD_Utility.getActorFromUUID(actorId);
     if (!actor) return;
@@ -596,7 +615,7 @@ export async function inflictDamageMessage(damageData) {
         target: damageData.target,
         isHealing: isHealing
     };
-    const renderedTemplate = await renderTemplate(template, templateContext);
+    const renderedTemplate = await DoD_Utility.renderTemplate(template, templateContext);
 
     const messageData = {
         user: game.user.id,
@@ -772,75 +791,76 @@ export async function applyHealingMessage(damageData) {
 }
 
 export function hideChatPermissions(_app, html, _data) {
+    const container = html.jquery ? html[0] : html; // jQuery in version <= 12, DOM in version >= 13
 
     if (!game.user.isGM) {
-        html.find(".permission-gm").remove();
+        for (const el of container.querySelectorAll(".permission-gm")) {
+            el.remove();
+        }        
     } else {
-        html.find(".permission-not-gm").remove();
+        for (const el of container.querySelectorAll(".permission-not-gm")) {
+            el.remove();
+        }        
     }
 
-    let elements = html.find(".permission-owner");
-    elements.each((_i, element) => {
-        const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId, {noWarnings: true});
+    for (const el of container.querySelectorAll(".permission-owner")) {
+        const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
         if (actor && !actor.isOwner) {
-            element.remove();
+            el.remove();
         }
-    });
+    }
 
-    elements = html.find(".permission-not-owner");
-    elements.each((_i, element) => {
-        const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId, {noWarnings: true});
+    for (const el of container.querySelectorAll(".permission-not-owner")) {
+        const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
         if (actor && actor.isOwner) {
-            element.remove();
+            el.remove();
         }
-    });
+    }
 
-    elements = html.find(".permission-observer");
-    elements.each((_i, element) => {
-        const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId, {noWarnings: true});
+    for (const el of container.querySelectorAll(".permission-observer")) {
+        const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
         if (actor && !actor.isObserver) {
-            element.remove();
+            el.remove();
         }
-    });
+    }
 
-    elements = html.find(".permission-not-observer");
-    elements.each((_i, element) => {
-        const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId, {noWarnings: true});
+    for (const el of container.querySelectorAll(".permission-not-observer")) {
+        const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
         if (actor && actor.isObserver) {
-            element.remove();
+            el.remove();
         }
-    });
+    }
 
-    elements = html.find(".permission-limited");
-    elements.each((_i, element) => {
-        const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId, {noWarnings: true});
+    for (const el of container.querySelectorAll(".permission-limited")) {
+        const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
         if (actor && !actor.isLimited) {
-            element.remove();
+            el.remove();
         }
-    });
+    }
 
-    elements = html.find(".permission-not-limited");
-    elements.each((_i, element) => {
-        const actor = DoD_Utility.getActorFromUUID(element.dataset.actorId, {noWarnings: true});
+    for (const el of container.querySelectorAll(".permission-not-limited")) {
+        const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
         if (actor && actor.isLimited) {
-            element.remove();
+            el.remove();
         }
-    });
+    }
 
-    elements = html.find(".permission-not-none");
-    elements.remove();
+    for (const el of container.querySelectorAll(".permission-not-none")) {
+        el.remove();
+    }        
 }
 
 export function onExpandableClick(event) {
     event.preventDefault();
 
     // Toggle the message flag
-    let roll = event.currentTarget;
-    const message = game.messages.get(roll.closest(".message").dataset.messageId);
+    let roll = event.target;
+    const msgElement = roll.closest(".message");
+    const message = game.messages.get(msgElement.dataset.messageId);
     message._expanded = !message._expanded;
 
     // Expand or collapse tooltips
-    const tooltips = roll.querySelectorAll(".expandable");
+    const tooltips = msgElement.querySelectorAll(".expandable");
     for ( let tip of tooltips ) {
       if ( message._expanded ) $(tip).slideDown(200);
       else $(tip).slideUp(200);

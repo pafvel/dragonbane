@@ -176,8 +176,8 @@ export default class DoD_Utility {
     }
 
     static async handleTableRoll(event) {
-        const tableId = event.currentTarget.dataset.tableId;
-        const tableName = event.currentTarget.dataset.tableName;
+        const tableId = event.target.dataset.tableId;
+        const tableName = event.target.dataset.tableName;
         const table = fromUuidSync(tableId) || this.findTable(tableName);
         if (table) {
             if (event.type === "click") { // left click
@@ -194,8 +194,9 @@ export default class DoD_Utility {
     {
         // Recursive roll if the result is a table
         if (tableResult && tableResult.type === CONST.TABLE_RESULT_TYPES.DOCUMENT) {
-            if ( tableResult.documentCollection === "RollTable" ) {
-                const innerTable = game.tables.get(tableResult.documentId);
+            if ( this.getTableResultType(tableResult) === "RollTable" ) {
+                const tableId = game.release.generation < 13 ? tableResult.documentId : foundry.utils.parseUuid(tableResult.documentUuid).id;
+                const innerTable = game.tables.get(tableId);
                 if (innerTable) {
                     const innerRoll = await innerTable.roll();
                     return innerRoll.results;
@@ -260,24 +261,33 @@ export default class DoD_Utility {
         };
 
         // Copy results to avoid modifying table
-        let messageResults = await results.map(result => {
+        let messageResults = [];
+        for (let result of results) {
             const r = result.toObject(false);
-            if (result.parent.id !== table.id) {
-                r.text = result.parent.description + "<p>" + result.getChatText() + "</p>";
+            const chatText = game.release.generation < 13 ? result.text : await result.description;
+            const resultText = result.parent.id !== table.id ? result.parent.description + "<p>" + chatText + "</p>" : chatText;
+
+            if (game.release.generation < 13) {
+                r.text = resultText;
             } else {
-                r.text = result.getChatText();
+                r.description = resultText;
             }
+
             r.icon = result.icon;
-            return r;
-        });
+            messageResults.push(r);
+        }
         // Enrich HTML with knowledge of actor
         for (let r of messageResults) {
-            r.text = await TextEditor.enrichHTML(r.text, {actor: actor, async: true});
+            if (game.release.generation < 13) {
+                r.text =  await CONFIG.DoD.TextEditor.enrichHTML(r.text, {actor: actor, async: true});
+            } else {
+                r.details = await CONFIG.DoD.TextEditor.enrichHTML(r.description, {actor: actor, async: true});
+            }
         }
 
         // Render the chat card which combines the dice roll with the drawn results
-        messageData.content = await renderTemplate(CONFIG.RollTable.resultTemplate, {
-            description: await TextEditor.enrichHTML(table.description, {documents: true, async: true}),
+        messageData.content = await DoD_Utility.renderTemplate(CONFIG.RollTable.resultTemplate, {
+            description: await CONFIG.DoD.TextEditor.enrichHTML(table.description, {documents: true, async: true}),
             results: messageResults,
             rollHTML: table.displayRoll && roll ? await roll.render() : null,
             table: table
@@ -372,4 +382,50 @@ export default class DoD_Utility {
             return ui.notifications.error(game.i18n.format(game.i18n.localize(msg), params));
         }
     }
+
+    static addHtmlEventListener(html, eventNames, selector, eventHandler) {
+        const container = html.jquery ? html[0] : html; // jQuery in version <= 12, DOM in version >= 13
+        for (const eventName of eventNames.split(" ")) {
+            const wrappedHandler = (e) => {
+                if (!e.target) return;
+                const target = e.target.closest(selector);
+                if (target) {
+                    eventHandler.call(target, e);
+                }
+            };
+            container.addEventListener(eventName, wrappedHandler);
+        }
+    }
+
+    static async renderTemplate(path, data) {
+        if (game.release.generation > 12) {
+            return foundry.applications.handlebars.renderTemplate(path, data);
+        } else {
+            return renderTemplate(path, data);
+        }
+    }
+
+    static getTableResultType(result) {
+        if (result?.type === "document") {
+            if (game.release.generation < 13) {
+                return result.documentCollection;
+            } else {
+                return foundry.utils.parseUuid(result.documentUuid).type;
+            }
+        } else {
+            return result?.type;
+        }
+    }
+
+    static getTableResultId(result) {
+        if (result?.type === "document") {
+            if (game.release.generation < 13) {
+                return result.documentId;
+            } else {
+                return foundry.utils.parseUuid(result.documentUuid).id;
+            }
+        } else {
+            return null;
+        }
+    }    
 }

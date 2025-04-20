@@ -13,21 +13,20 @@
     height: auto;
 }
 
-:root {
-  --color-shadow-primary: #007544;
-  --color-shadow-highlight: #3e7d63;
-  --color-border-highlight: #3e7d63;
-  --color-border-highlight-alt: #007544;
-  --color-underline-header: #237262;
-  --color-text-dark-header: #237262;
-}
-
 * {
-    scrollbar-width: thin;
-    scrollbar-color: var(--color-text-dark-header) #111;
+    --color-shadow-primary: #007544;
+    --color-shadow-highlight: #3e7d63;
+    --color-border-highlight: #3e7d63;
+    --color-border-highlight-alt: #007544;
+    --color-underline-header: #237262;
+    --color-text-dark-header: #2b8875;
+    --color-scrollbar-track: #111;
+    --color-scrollbar: #237262;
+    --checkbox-checked-color: #3e7d63;
+    --color-warm-1: var(--color-shadow-highlight);
+    --color-warm-2: var(--color-shadow-primary);
 }
 
-  
 @font-face {
     font-family: "Crimson Text";
     font-weight: normal;
@@ -95,9 +94,19 @@
     --dod-font-heading: "QTFrizQuad";
     --dod-font-handwriting: "Caveat";
 
+    --dod-dialog-background: url(art/ui/dialog-bg.webp) repeat;
+    --dod-color-text-primary: black;
+
+    &.theme-dark {
+        .application {
+            --dod-dialog-background: transparent;
+            --dod-color-text-primary: whitesmoke;
+        }
+    }
+
     font-family: var(--dod-font-primary);
 
-    h1, h2, h3, h4, h5, h6, th, blockquote, button:not(.header-control), caption, nav, .dice-roll, .header-button, .title, .heading, .page-title, .npc-title, .monster-title {
+    h1, h2, h3, h4, h5, h6, th, blockquote, button:not(.fas, .fa-solid, .header-control, .ui-control, .inline-control), caption, nav, .dice-roll, .header-button, .title, .heading, .page-title, .npc-title, .monster-title {
         font-family: var(--dod-font-heading);
     }
     b, strong, td, blockquote, .content-link, .inline-roll {
@@ -106,6 +115,8 @@
 
     .content-link, .inline-roll {
         font-style: normal;
+        flex-grow: 0;
+        display: inline;
     }
 
     background-image: url(art/ui/dragonbane.jpg);
@@ -119,44 +130,10 @@
         img {
             content:  url(art/icons/symbol-red.webp);
         }
+        figcaption {
+            color: whitesmoke;
+        }
     };
-
-    ul {
-        .description {
-            list-style-type: "✦ ";
-            font-weight: bold;
-            color: var(--color-text-dark-header);
-            p {
-                font-weight: normal;
-                color: black;            
-            }
-            ul, ol {
-                font-weight: normal;
-                color: black;            
-            }
-        }
-        .direction {
-            list-style-type: "✦ ";
-            font-weight: bold;
-            text-transform: uppercase;
-            color: var(--dod-color-direction);
-            p {
-                font-weight: normal;
-                text-transform: none;
-                color: black;
-            }
-        }
-        .secret {
-            list-style-type: "✦ ";
-            font-weight: bold;
-            color: var(--dod-color-secret);
-            p {
-                font-weight: normal;
-                font-style: italic;
-                color: black;
-            }
-        }
-    }
 
     .sheet.journal-entry {
         h1, h2, h3 {
@@ -165,9 +142,11 @@
         .scrollable {
             padding-right: 0;
         }
+       
         .journal-entry-content {
             background: url("art/ui/journal-page-bg.webp");
             background-size: 100% auto;
+            color: black;
 
             .journal-header {
                 background: url("art/ui/header-dragon.webp"), url("art/ui/arrow-wide-left.webp"), url("art/ui/arrow-wide-right.webp"), url("art/ui/border-horizontal.webp");
@@ -203,6 +182,9 @@
                 top: -24px;
                 margin: 0rem 0.5rem 0rem 0rem;
 
+                p:empty {
+                    min-height: 1rem;
+                }                
 
                 .journal-entry-page:first-child {
                     margin-top: 24px;
@@ -223,6 +205,43 @@
                         z-index: 2;
                         display: unset;
                     }
+
+                    ul {
+                        .description {
+                            list-style-type: "✦ ";
+                            font-weight: bold;
+                            color: var(--color-text-dark-header);
+                            p {
+                                font-weight: normal;
+                                color: black;            
+                            }
+                            ul, ol {
+                                font-weight: normal;
+                                color: black;            
+                            }
+                        }
+                        .direction {
+                            list-style-type: "✦ ";
+                            font-weight: bold;
+                            text-transform: uppercase;
+                            color: var(--dod-color-direction);
+                            p {
+                                font-weight: normal;
+                                text-transform: none;
+                                color: black;
+                            }
+                        }
+                        .secret {
+                            list-style-type: "✦ ";
+                            font-weight: bold;
+                            color: var(--dod-color-secret);
+                            p {
+                                font-weight: normal;
+                                font-style: italic;
+                                color: black;
+                            }
+                        }
+                    }                    
                 }
                 .journal-entry-page:not(.image):last-child {
                     background: url("art/ui/pagination-half-demon.webp");
@@ -247,6 +266,10 @@
                 pointer-events: none;
             }           
 
+            .content-link > i {
+                color: grey;
+            }
+
             .display-skill {
                 h4 {
                     font-size: large;
@@ -255,6 +278,7 @@
                     .content-link {
                         border: 0px solid transparent;
                         background-color: transparent;
+                        color: black;
                     }
                 }
             }
@@ -266,6 +290,7 @@
                     .content-link {
                         border: 0px solid transparent;
                         background-color: transparent;
+                        color: black;
                     }
                 }
                 li {
@@ -283,6 +308,7 @@
                     .content-link {
                         border: 0px solid transparent;
                         background-color: transparent;
+                        color: black;
                     }
                 }
                 h4 {
@@ -292,6 +318,7 @@
                     .content-link {
                         border: 0px solid transparent;
                         background-color: transparent;
+                        color: black;
                     }
                 }
                 li {
@@ -320,6 +347,7 @@
                     .content-link {
                         border: 0px solid transparent;
                         background-color: transparent;
+                        color: black;
                     }
                 }
                 .monster-title.named {
@@ -329,6 +357,7 @@
                         background-position: -1rem center, calc(100% + 1rem) center, center center;
                         background-repeat: no-repeat, no-repeat, no-repeat;
                         background-clip: border-box, border-box, padding-box;
+                        color: black;
                         padding-left: 1em;
                         padding-right: 1em;
                         font-size: 1em;
@@ -342,6 +371,7 @@
                 }
                 table {
                     border-color: rgb(63, 35, 6);
+                    background: transparent;
                 }
             }
 
@@ -364,6 +394,7 @@
                     .content-link {
                         border: 0px solid transparent;
                         background-color: transparent;
+                        color: black;
                     }
                 }
                 .npc-title.named {
@@ -373,6 +404,7 @@
                         background-position: -1rem center, calc(100% + 1rem) center, center center;
                         background-repeat: no-repeat, no-repeat, no-repeat;
                         background-clip: border-box, border-box, padding-box;
+                        color: black;
                         padding-left: 1em;
                         padding-right: 1em;
                         font-size: 1em;
@@ -386,6 +418,7 @@
                 }
                 table {
                     border-color: rgb(63, 35, 6);
+                    background: transparent;
                     .list-row {
                         div {
                             flex-shrink: 0;
@@ -439,6 +472,7 @@
                             text-align: center;
                             border-bottom: 0px solid transparent;
                             font-size: 16px;
+                            color: whitesmoke;
                         }
     
                     }
@@ -490,6 +524,7 @@
                             text-transform: none;
                             border-bottom: 0px solid transparent;
                             font-size: 16px;
+                            color: whitesmoke;
                         }
     
                     }
@@ -527,6 +562,9 @@
             }
 
             blockquote {
+                table {
+                    background: transparent;
+                }
                 &.info {
                     height: 100%;
                     width: 100%;
@@ -556,6 +594,9 @@
                         color:whitesmoke;
                         font-size: 16px;
                         font-style: normal;
+                        .content-link {
+                            color: rgb(222, 233, 230);
+                        }
 
                         border: 0px solid transparent;
                         padding: 6px 24px 12px 24px;
@@ -621,7 +662,12 @@
                         vertical-align: middle;
                         font-size: 16px;
                         font-style: normal;
+                        color: rgb(222, 233, 230);
 
+                        .content-link {
+                            color: rgb(222, 233, 230);
+                        }
+    
                         border: 0px solid transparent;
                         padding: 6px 24px 12px 24px;
                     }
@@ -656,7 +702,7 @@
         img {
             border: 0px solid transparent;
         }
-        h1 {
+        h1:not(.window-title) {
             font-size: 4em;
             font-weight: bolder;
             text-transform: uppercase;
@@ -669,7 +715,11 @@
             font-weight: normal;
             text-transform: uppercase;
             text-align: left;
+            color: black;
             border-bottom: 0px solid transparent;
+        }
+        h3, h4, h5, h6 {
+            color: black;
         }
     }
 
@@ -697,33 +747,54 @@
     .chat-button {
         background: url("art/ui/button-bg.webp");
         background-repeat: repeat-x;
-        background-size: contain;
+        background-size: cover;
         background-clip: border-box;
         color: whitesmoke;            
         font-family: var(--dod-font-heading);
         font-weight: normal;
+        width: 100%;
     }
     .chat-button:disabled {
         color: var(--color-text-dark-inactive);
         box-shadow: none;
     }
 
-    .window-content {
-        background: url(art/ui/dialog-bg.webp) repeat;
-        background-position-x: center;
-        color: black;
+    .dialog {
+        .window-content {
+            background: var(--dod-dialog-background);
+            background-position-x: center;
+            color: var(--dod-color-text-primary);
+        }
     }
 
-    .dialog .dialog-buttons .dialog-button, .dod-button, .standard-form .form-footer > button  {
-        background: url("art/ui/button-bg.webp");
-        background-repeat: repeat-x;
-        background-size: contain;
-        background-clip: border-box;
-        color: whitesmoke;
+    .standard-form {
+        background: var(--dod-dialog-background);
+        background-position-x: center;
+        color: var(--dod-color-text-primary);
+    }
+
+    .app.dialog .dialog-buttons .dialog-button, .dod-button > button  {
         font-family: var(--dod-font-heading);
         font-weight: normal;
         --button-focus-outline-color: var(--color-border-highlight);
-    }
+        color: whitesmoke;
+        background: url("art/ui/button-bg.webp");
+        background-repeat: repeat-x;
+        background-size: cover;
+        background-clip: border-box;
+    }    
+    .standard-form .form-footer > button  {
+        font-family: var(--dod-font-heading);
+        font-weight: normal;
+        --button-focus-outline-color: var(--color-border-highlight);
+        &:hover {
+            color: whitesmoke;
+            background: url("art/ui/button-bg.webp");
+            background-repeat: repeat-x;
+            background-size: cover;
+            background-clip: border-box;    
+        }
+    }    
 
     .mirror {
         -webkit-transform: scaleX(-1);
@@ -739,6 +810,8 @@
     background-position-x: center;
     background-position-y: 2em;
     border-top: transparent;
+    border-bottom: 1px solid var(--color-border-light-tertiary);                    
+    border-radius: 0px;
     color: black;
     background-color: transparent;
 
@@ -835,6 +908,7 @@
             background: transparent;
             width: 14px;
             height: 14px;
+            min-height: 14px;
             vertical-align: middle;
             i {
                 vertical-align: top;
@@ -947,11 +1021,17 @@
             text-align: center;
             padding-left: 12px;
             padding-right: 0px;
+            .application {
+                color: var(--dod-color-text-primary);
+            }
         }
         th:last-child {
             padding-right: 20px;
         }
 
+        tr {
+            background-color: transparent;
+        }
         tr:nth-child(1n+2) {
             background-image: url("art/ui/table-row-left.webp"), url("art/ui/table-row-right.webp"), url("art/ui/table-row-banner.webp");
             background-position: left center, right center, center center;
@@ -1130,12 +1210,12 @@
         }
     }
 
-    .result-text {
+    .result-text, ul.table-results {
         -webkit-user-select: text;
         -moz-user-select: text;
         -ms-user-select: text;
         user-select: text;
-        word-break: break-word;           
+        word-break: break-word;
     }
 
     .expandable {

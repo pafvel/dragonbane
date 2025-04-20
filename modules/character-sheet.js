@@ -153,7 +153,7 @@ export default class DoDCharacterSheet extends ActorSheet {
 
         async function enrich(html) {
             if (html) {
-                return await TextEditor.enrichHTML(html, {
+                return await CONFIG.DoD.TextEditor.enrichHTML(html, {
                     secrets: sheetData.actor.isOwner,
                     async: true
                 });
@@ -547,17 +547,20 @@ export default class DoDCharacterSheet extends ActorSheet {
             for (let result of table.results) {
                 // Find attack description
                 let attack = {name: "", description: "", index: result.range[0]};
-                if (result.documentCollection === "RollTable") {
-                    let subTable = DoD_Utility.findTable(result.text);
+                
+                let documentType = DoD_Utility.getTableResultType(result);
+
+                if (documentType === "RollTable") {
+                    let subTable = DoD_Utility.findTable(game.release.generation < 13 ? result.text : result.name);
                     if (subTable?.uuid !== table.uuid) {
                         attack.description = subTable?.description;
                     } else {
-                        attack.description = result.text;
+                        attack.description = game.release.generation < 13 ? result.text : result.description;
                     }
                 } else {
-                    attack.description = result.text;
+                    attack.description = game.release.generation < 13 ? result.text : result.description;
                 }
-                attack.description = await TextEditor.enrichHTML(attack.description, { async: true });
+                attack.description = await CONFIG.DoD.TextEditor.enrichHTML(attack.description, { async: true });
 
                 // Split attack name and description
                 const match = attack.description.match(/<b>(.*?)<\/b>(.*)/);
@@ -571,7 +574,7 @@ export default class DoDCharacterSheet extends ActorSheet {
             }
 
             const template = "systems/dragonbane/templates/partials/monster-attack-dialog.hbs";
-            const html = await renderTemplate(template, dialogData);
+            const html = await DoD_Utility.renderTemplate(template, dialogData);
             const labelOk = game.i18n.localize("DoD.ui.dialog.labelOk");
             const labelCancel = game.i18n.localize("DoD.ui.dialog.labelCancel");
 
@@ -1571,7 +1574,7 @@ export default class DoDCharacterSheet extends ActorSheet {
                 if (item.type === "item" && item.name === itemData.name) {
                     const itemTemplate = { ...itemData.system };
                     delete itemTemplate.quantity;
-                    return foundry.utils.objectsEqual(foundry.utils.filterObject(item.system, itemTemplate), itemTemplate);
+                    return foundry.utils.objectsEqual(foundry.utils.filterObject(item.system.toObject(), itemTemplate), itemTemplate);
                 }
                 return false;
             });
@@ -1614,6 +1617,7 @@ export default class DoDCharacterSheet extends ActorSheet {
         if (type === "effect") {
             return this.actor.createEmbeddedDocuments("ActiveEffect", [{
                 label: game.i18n.localize("DoD.effect.new"),
+                name: game.i18n.localize("DoD.effect.new"),
                 icon: "icons/svg/aura.svg",
                 origin: this.actor.uuid,
                 disabled: false

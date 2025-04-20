@@ -1,3 +1,5 @@
+import DoD_Utility from "./utility.js";
+
 export default class DoDRoll extends Roll {
 
 /**
@@ -19,7 +21,7 @@ static TOOLTIP_TEMPLATE = "systems/dragonbane/templates/partials/tooltip.hbs";
     if (this.options.extraBanes) {
         options.banes.push("+" + this.options.extraBanes);
     }
-    return renderTemplate(this.constructor.TOOLTIP_TEMPLATE, { parts, options });
+    return DoD_Utility.renderTemplate(this.constructor.TOOLTIP_TEMPLATE, { parts, options });
   }
 
 

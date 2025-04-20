@@ -77,28 +77,26 @@ export default class DoDTest {
     updatePushRollChoices() {
         const actor = this.postRollData.actor;
         this.postRollData.pushRollChoices = {};
-        this.postRollData.pushRollChoice = null;
+        this.postRollData.canPush = false;
+
         for (const attribute in actor.system.attributes) {
             const condition = actor.system.conditions[attribute];
             if (condition) {
                 if (!condition.value){
+                    const id = attribute;
+                    const label = game.i18n.localize("DoD.conditions." + attribute) + " (" +
+                        game.i18n.localize("DoD.attributes." + attribute) + ")";
 
-                    this.postRollData.pushRollChoices[attribute] =
-                        game.i18n.localize("DoD.conditions." + attribute) + " (" +
-                        game.i18n.localize("DoD.attributes." + attribute) + ")<br>";
-                    if (!this.postRollData.pushRollChoice) {
-                        this.postRollData.pushRollChoice = attribute;
+                    this.postRollData.pushRollChoices[attribute] = { id, label };
+                    if (!this.postRollData.canPush) {
+                        this.postRollData.canPush = true;
+                        this.postRollData.pushRollChoices[attribute].checked = true;
                     }
                 }
             } else {
                 DoD_Utility.ERROR("Missing condition for attribute " + attribute);
             }
         }
-        if (!this.postRollData.pushRollChoice) {
-            this.postRollData.canPush = false;
-            return;
-        }
-        this.postRollData.pushRollChoiceGroup = "pushRollChoice";
     }
 
     updateDialogData() {
@@ -155,7 +153,7 @@ export default class DoDTest {
         }
 
         const template = "systems/dragonbane/templates/partials/roll-dialog.hbs";
-        const html = await renderTemplate(template, this.dialogData);
+        const html = await DoD_Utility.renderTemplate(template, this.dialogData);
 
         return new Promise(
             resolve => {
@@ -275,7 +273,7 @@ export default class DoDTest {
             context.tooltip = context.formulaInfo + context.tooltip;
         }
 
-        return await renderTemplate(template, context);
+        return await DoD_Utility.renderTemplate(template, context);
     }
 
     getMessageTemplate() {

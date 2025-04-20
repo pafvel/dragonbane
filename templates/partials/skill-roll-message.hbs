@@ -1,4 +1,4 @@
-{{> "systems/dragonbane/templates/partials/roll.hbs"}}
+{{> "systems/dragonbane/templates/partials/roll-v12.html"}}
 
 <div class="skill-roll" data-actor-id="{{actor.uuid}}" data-skill-id="{{skill.id}}" data-target="{{target}}" data-result="{{result}}">
 <div class="permission-owner" data-actor-id="{{actor.uuid}}">
@@ -94,7 +94,16 @@
         <div class="form-group">
             <label>{{localize "DoD.roll.pushChoiceLabel"}}</label>
             <div class="form-fields">
-                {{radioBoxes pushRollChoiceGroup pushRollChoices checked=pushRollChoice localize=false}}
+                {{#each pushRollChoices as |choice|}}
+                <label class="checkbox">
+                    {{#if choice.checked}}
+                    <input type="radio" id="{{choice.id}}" name="pushRollChoice" value="{{choice.id}}" checked="true" style>
+                    {{else}}
+                    <input type="radio" id="{{choice.id}}" name="pushRollChoice" value="{{choice.id}}">
+                    {{/if}}
+                    {{choice.label}}<br>
+                </label>
+                {{/each}}
             </div>
         </div>
     </div>
