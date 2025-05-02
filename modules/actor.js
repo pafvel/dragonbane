@@ -989,11 +989,12 @@ export class DoDActor extends Actor {
 
         let formula = `
         <i class="fa-solid fa-circle-info"></i>
-        <div class="permission-observer dice-tooltip" data-actor-id="${this.uuid}" style="text-align: left; margin-left: 0.5em">`;
+        <div class="permission-observer dice-tooltip" data-actor-id="${this.uuid}" data-action="expandRoll" style="text-align: left; margin-left: 0.5em;">
+            <div class="wrapper">`;
         if (newWP !== currentWP) {
             formula += `<b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${currentWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>`;
         }
-        formula += "</div>";
+        formula += "</div></div>";
 
         // Render message
         const context =  {
@@ -1002,7 +1003,7 @@ export class DoDActor extends Actor {
             tooltip: await roll.getTooltip()
         };
         const template = "systems/dragonbane/templates/partials/roll-no-total.hbs";
-        const content = await renderTemplate(template, context);
+        const content = await DoD_Utility.renderTemplate(template, context);
         const msg = await roll.toMessage({
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this }),
@@ -1056,14 +1057,15 @@ export class DoDActor extends Actor {
 
         let formula = `
         <i class="fa-solid fa-circle-info"></i>
-        <div class="permission-observer dice-tooltip" data-actor-id="${this.uuid}" style="text-align: left; margin-left: 0.5em">`;
+        <div class="permission-observer dice-tooltip" data-actor-id="${this.uuid}" style="text-align: left; margin-left: 0.5em">
+            <div class="wrapper">`;
         if (newHP !== currentHP) {
             formula += `<b>${game.i18n.localize("DoD.ui.character-sheet.hp")}:</b> ${currentHP} <i class="fa-solid fa-arrow-right"></i> ${newHP}<br>`;
         }
         if (newWP !== currentWP) {
             formula += `<b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${currentWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>`;
         }
-        formula += "</div>";
+        formula += "</div></div>";
 
         // Render message
         const context =  {
@@ -1072,7 +1074,7 @@ export class DoDActor extends Actor {
             tooltip: await roll.getTooltip()
         };
         const template = "systems/dragonbane/templates/partials/roll-no-total.hbs";
-        const content = await renderTemplate(template, context);
+        const content = await DoD_Utility.renderTemplate(template, context);
         const msg = await roll.toMessage({
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this }),

@@ -436,6 +436,8 @@
   background-position-x: center;
   background-position-y: 2em;
   border-top: transparent;
+  border-bottom: 1px solid var(--color-border-light-tertiary);
+  border-radius: 0px;
   color: black;
   background-color: transparent;
 }
@@ -572,6 +574,7 @@
   width: 10px;
   height: 10px;
   border: 0 solid transparent;
+  display: inline;
 }
 .DoD.sheet.character .hit-points {
   background-image: url("art/ui/hp-panel.webp"), url("art/ui/death-rolls-bg.webp");
@@ -752,17 +755,18 @@
   width: 120px;
   height: auto;
 }
-:root {
+* {
   --color-shadow-primary: #007544;
   --color-shadow-highlight: #3e7d63;
   --color-border-highlight: #3e7d63;
   --color-border-highlight-alt: #007544;
   --color-underline-header: #237262;
-  --color-text-dark-header: #237262;
-}
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-text-dark-header) #111;
+  --color-text-dark-header: #2b8875;
+  --color-scrollbar-track: #111;
+  --color-scrollbar: #237262;
+  --checkbox-checked-color: #3e7d63;
+  --color-warm-1: var(--color-shadow-highlight);
+  --color-warm-2: var(--color-shadow-primary);
 }
 @font-face {
   font-family: "Crimson Text";
@@ -820,12 +824,18 @@
   --dod-font-secondary: "QTFrizQuad";
   --dod-font-heading: "QTFrizQuad";
   --dod-font-handwriting: "Caveat";
+  --dod-dialog-background: url(art/ui/dialog-bg.webp) repeat;
+  --dod-color-text-primary: black;
   font-family: var(--dod-font-primary);
   background-image: url(art/ui/dragonbane.jpg);
   background-repeat: no-repeat;
   background-position-x: center;
   background-size: auto 100vh;
   background-color: black;
+}
+.system-dragonbane.theme-dark .application {
+  --dod-dialog-background: transparent;
+  --dod-color-text-primary: whitesmoke;
 }
 .system-dragonbane h1,
 .system-dragonbane h2,
@@ -835,7 +845,7 @@
 .system-dragonbane h6,
 .system-dragonbane th,
 .system-dragonbane blockquote,
-.system-dragonbane button:not(.header-control),
+.system-dragonbane button:not(.fas, .fa-solid, .header-control, .ui-control, .inline-control),
 .system-dragonbane caption,
 .system-dragonbane nav,
 .system-dragonbane .dice-roll,
@@ -858,6 +868,8 @@
 .system-dragonbane .content-link,
 .system-dragonbane .inline-roll {
   font-style: normal;
+  flex-grow: 0;
+  display: inline;
 }
 .system-dragonbane #pause {
   background: url();
@@ -865,40 +877,8 @@
 .system-dragonbane #pause img {
   content: url(art/icons/symbol-red.webp);
 }
-.system-dragonbane ul .description {
-  list-style-type: "✦ ";
-  font-weight: bold;
-  color: var(--color-text-dark-header);
-}
-.system-dragonbane ul .description p {
-  font-weight: normal;
-  color: black;
-}
-.system-dragonbane ul .description ul,
-.system-dragonbane ul .description ol {
-  font-weight: normal;
-  color: black;
-}
-.system-dragonbane ul .direction {
-  list-style-type: "✦ ";
-  font-weight: bold;
-  text-transform: uppercase;
-  color: var(--dod-color-direction);
-}
-.system-dragonbane ul .direction p {
-  font-weight: normal;
-  text-transform: none;
-  color: black;
-}
-.system-dragonbane ul .secret {
-  list-style-type: "✦ ";
-  font-weight: bold;
-  color: var(--dod-color-secret);
-}
-.system-dragonbane ul .secret p {
-  font-weight: normal;
-  font-style: italic;
-  color: black;
+.system-dragonbane #pause figcaption {
+  color: whitesmoke;
 }
 .system-dragonbane .sheet.journal-entry h1,
 .system-dragonbane .sheet.journal-entry h2,
@@ -911,6 +891,7 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content {
   background: url("art/ui/journal-page-bg.webp");
   background-size: 100% auto;
+  color: black;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .journal-header {
   background: url("art/ui/header-dragon.webp"), url("art/ui/arrow-wide-left.webp"), url("art/ui/arrow-wide-right.webp"), url("art/ui/border-horizontal.webp");
@@ -943,6 +924,9 @@
   top: -24px;
   margin: 0rem 0.5rem 0rem 0rem;
 }
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages p:empty {
+  min-height: 1rem;
+}
 .system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page:first-child {
   margin-top: 24px;
 }
@@ -961,6 +945,45 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page .editor-edit {
   z-index: 2;
   display: unset;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page .edit-container button {
+  color: black;
+  border-color: black;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page ul .description {
+  list-style-type: "✦ ";
+  font-weight: bold;
+  color: var(--color-text-dark-header);
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page ul .description p {
+  font-weight: normal;
+  color: black;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page ul .description ul,
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page ul .description ol {
+  font-weight: normal;
+  color: black;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page ul .direction {
+  list-style-type: "✦ ";
+  font-weight: bold;
+  text-transform: uppercase;
+  color: var(--dod-color-direction);
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page ul .direction p {
+  font-weight: normal;
+  text-transform: none;
+  color: black;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page ul .secret {
+  list-style-type: "✦ ";
+  font-weight: bold;
+  color: var(--dod-color-secret);
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page ul .secret p {
+  font-weight: normal;
+  font-style: italic;
+  color: black;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page:not(.image):last-child {
   background: url("art/ui/pagination-half-demon.webp");
@@ -982,6 +1005,9 @@
   width: auto;
   pointer-events: none;
 }
+.system-dragonbane .sheet.journal-entry .journal-entry-content .content-link > i {
+  color: grey;
+}
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-skill h4 {
   font-size: large;
   font-weight: bold;
@@ -990,6 +1016,7 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-skill h4 .content-link {
   border: 0px solid transparent;
   background-color: transparent;
+  color: black;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-spell h4 {
   font-size: large;
@@ -999,6 +1026,7 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-spell h4 .content-link {
   border: 0px solid transparent;
   background-color: transparent;
+  color: black;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-spell li {
   color: var(--dod-color-text-dark-title);
@@ -1014,6 +1042,7 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-ability h3 .content-link {
   border: 0px solid transparent;
   background-color: transparent;
+  color: black;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-ability h4 {
   font-size: large;
@@ -1023,6 +1052,7 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-ability h4 .content-link {
   border: 0px solid transparent;
   background-color: transparent;
+  color: black;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-ability li {
   color: var(--dod-color-text-dark-title);
@@ -1050,6 +1080,7 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-monster .monster-title .content-link {
   border: 0px solid transparent;
   background-color: transparent;
+  color: black;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-monster .monster-title.named .content-link {
   background: url("art/ui/npc-banner-left.webp"), url("art/ui/npc-banner-right.webp"), url("art/ui/npc-banner.webp");
@@ -1057,6 +1088,7 @@
   background-position: -1rem center, calc(100% + 1rem) center, center center;
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-clip: border-box, border-box, padding-box;
+  color: black;
   padding-left: 1em;
   padding-right: 1em;
   font-size: 1em;
@@ -1069,6 +1101,7 @@
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-monster table {
   border-color: #3f2306;
+  background: transparent;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content div:has(> .npc-title.named) {
   border-top: 2.75em solid transparent;
@@ -1090,6 +1123,7 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-npc .npc-title .content-link {
   border: 0px solid transparent;
   background-color: transparent;
+  color: black;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-npc .npc-title.named .content-link {
   background: url("art/ui/npc-banner-left.webp"), url("art/ui/npc-banner-right.webp"), url("art/ui/npc-banner.webp");
@@ -1097,6 +1131,7 @@
   background-position: -1rem center, calc(100% + 1rem) center, center center;
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-clip: border-box, border-box, padding-box;
+  color: black;
   padding-left: 1em;
   padding-right: 1em;
   font-size: 1em;
@@ -1109,6 +1144,7 @@
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-npc table {
   border-color: #3f2306;
+  background: transparent;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-npc table .list-row div {
   flex-shrink: 0;
@@ -1124,6 +1160,7 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content .gear-table td .content-link {
   border: 0px solid transparent;
   background-color: transparent;
+  color: unset;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .gear-table td .content-link i {
   color: inherit;
@@ -1159,6 +1196,7 @@
   text-align: center;
   border-bottom: 0px solid transparent;
   font-size: 16px;
+  color: whitesmoke;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table tr {
   color: #4a2407;
@@ -1207,6 +1245,7 @@
   text-transform: none;
   border-bottom: 0px solid transparent;
   font-size: 16px;
+  color: whitesmoke;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-generic-table table tr {
   color: #4a2407;
@@ -1234,6 +1273,9 @@
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content table td {
   text-align: left;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote table {
+  background: transparent;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info {
   height: 100%;
@@ -1270,6 +1312,10 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h2 .content-link,
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h3 .content-link {
+  color: #dee9e6;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info p {
   padding: 4px 16px 0px 16px;
@@ -1325,8 +1371,12 @@
   vertical-align: middle;
   font-size: 16px;
   font-style: normal;
+  color: #dee9e6;
   border: 0px solid transparent;
   padding: 6px 24px 12px 24px;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional h3 .content-link {
+  color: #dee9e6;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional p {
   padding: 4px 16px 0px 16px;
@@ -1355,7 +1405,7 @@
 .system-dragonbane .sheet.journal-entry img {
   border: 0px solid transparent;
 }
-.system-dragonbane .sheet.journal-entry h1 {
+.system-dragonbane .sheet.journal-entry h1:not(.window-title) {
   font-size: 4em;
   font-weight: bolder;
   text-transform: uppercase;
@@ -1368,7 +1418,14 @@
   font-weight: normal;
   text-transform: uppercase;
   text-align: left;
+  color: black;
   border-bottom: 0px solid transparent;
+}
+.system-dragonbane .sheet.journal-entry h3,
+.system-dragonbane .sheet.journal-entry h4:not(.window-title),
+.system-dragonbane .sheet.journal-entry h5,
+.system-dragonbane .sheet.journal-entry h6 {
+  color: black;
 }
 .system-dragonbane .chat-message {
   background-image: url(art/ui/chat-card-bg.webp);
@@ -1393,32 +1450,49 @@
 .system-dragonbane .chat-button {
   background: url("art/ui/button-bg.webp");
   background-repeat: repeat-x;
-  background-size: contain;
+  background-size: cover;
   background-clip: border-box;
   color: whitesmoke;
   font-family: var(--dod-font-heading);
   font-weight: normal;
+  width: 100%;
 }
 .system-dragonbane .chat-button:disabled {
   color: var(--color-text-dark-inactive);
   box-shadow: none;
 }
-.system-dragonbane .window-content {
-  background: url(art/ui/dialog-bg.webp) repeat;
+.system-dragonbane .dialog .window-content {
+  background: var(--dod-dialog-background);
   background-position-x: center;
-  color: black;
+  color: var(--dod-color-text-primary);
 }
-.system-dragonbane .dialog .dialog-buttons .dialog-button,
-.system-dragonbane .dod-button,
-.system-dragonbane .standard-form .form-footer > button {
-  background: url("art/ui/button-bg.webp");
-  background-repeat: repeat-x;
-  background-size: contain;
-  background-clip: border-box;
-  color: whitesmoke;
+.system-dragonbane .standard-form {
+  background: var(--dod-dialog-background);
+  background-position-x: center;
+  color: var(--dod-color-text-primary);
+}
+.system-dragonbane .app.dialog .dialog-buttons .dialog-button,
+.system-dragonbane .dod-button.button {
   font-family: var(--dod-font-heading);
   font-weight: normal;
   --button-focus-outline-color: var(--color-border-highlight);
+  color: whitesmoke;
+  background: url("art/ui/button-bg.webp");
+  background-repeat: repeat-x;
+  background-size: cover;
+  background-clip: border-box;
+}
+.system-dragonbane .standard-form .form-footer > button {
+  font-family: var(--dod-font-heading);
+  font-weight: normal;
+  --button-focus-outline-color: var(--color-border-highlight);
+}
+.system-dragonbane .standard-form .form-footer > button:hover {
+  color: whitesmoke;
+  background: url("art/ui/button-bg.webp");
+  background-repeat: repeat-x;
+  background-size: cover;
+  background-clip: border-box;
 }
 .system-dragonbane .mirror {
   -webkit-transform: scaleX(-1);
@@ -1433,6 +1507,8 @@
   background-position-x: center;
   background-position-y: 2em;
   border-top: transparent;
+  border-bottom: 1px solid var(--color-border-light-tertiary);
+  border-radius: 0px;
   color: black;
   background-color: transparent;
 }
@@ -1521,6 +1597,7 @@
   background: transparent;
   width: 14px;
   height: 14px;
+  min-height: 14px;
   vertical-align: middle;
 }
 .system-dragonbane .sheet-table-data button i {
@@ -1622,8 +1699,14 @@
   padding-left: 12px;
   padding-right: 0px;
 }
+.system-dragonbane .simple-table th .application {
+  color: var(--dod-color-text-primary);
+}
 .system-dragonbane .simple-table th:last-child {
   padding-right: 20px;
+}
+.system-dragonbane .simple-table tr {
+  background-color: transparent;
 }
 .system-dragonbane .simple-table tr:nth-child(1n+2) {
   background-image: url("art/ui/table-row-left.webp"), url("art/ui/table-row-right.webp"), url("art/ui/table-row-banner.webp");
@@ -1783,7 +1866,8 @@
 .system-dragonbane .comma-list span:focus {
   outline: none;
 }
-.system-dragonbane .result-text {
+.system-dragonbane .result-text,
+.system-dragonbane ul.table-results {
   -webkit-user-select: text;
   -moz-user-select: text;
   -ms-user-select: text;

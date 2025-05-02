@@ -76,7 +76,9 @@ export default class DoDSpellTest extends DoDSkillTest  {
                 // Add info to chat card
                 this.postRollData.formulaInfo =
                 `<div class="permission-observer dice-tooltip" data-actor-id="${this.postRollData.actor.uuid}" style="text-align: left">
+                    <div class="wrapper">
                         <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${this.postRollData.wpOld} <i class="fa-solid fa-arrow-right"></i> ${this.postRollData.wpNew}<br>
+                    </div>
                 </div>`;
             }
         }

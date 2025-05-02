@@ -12,7 +12,7 @@
     <!-- Effect Configuration Tabs -->
         <nav class="sheet-tabs tabs" aria-role="{{localize 'SHEETS.FormNavLabel'}}">
             <a class="item" data-tab="description"><i class="fas fa-book"></i> {{localize "DoD.item-sheet.description"}}</a>
-            <a class="item" data-tab="effects"><i class="fas fa-cogs"></i> {{localize "EFFECT.TabEffects"}}</a>
+            <a class="item" data-tab="effects"><i class="fas fa-cogs"></i> {{localize "EFFECT.TABS.changes"}}</a>
         </nav>
 
         {{!-- Sheet Body --}}
@@ -28,7 +28,7 @@
                 <div class="derived-stat-box">
                     <table class="derived-stat">
                         <tr>
-                            <th>{{localize "EFFECT.Disabled"}}</th>
+                            <th>{{localize "EFFECT.FIELDS.disabled.label"}}</th>
                             <td><input type="checkbox" name="disabled" {{ checked data.disabled }} /></td>
                         </tr>
                         {{#if isItemEffect}}

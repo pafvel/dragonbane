@@ -79,13 +79,16 @@ async function preloadHandlebarsTemplates() {
         "systems/dragonbane/templates/partials/roll-dialog.hbs",
         "systems/dragonbane/templates/partials/roll-no-total.hbs",
         "systems/dragonbane/templates/partials/roll.hbs",
+        "systems/dragonbane/templates/partials/roll-v12.html",
         "systems/dragonbane/templates/partials/skill-roll-message.hbs",
         "systems/dragonbane/templates/partials/tooltip.hbs",
         "systems/dragonbane/templates/partials/wp-widget.hbs",
-        "templates/dice/roll.html",
     ];
 
-    return loadTemplates(templatePaths);
+    if (game.release.generation < 13) {
+        return loadTemplates(templatePaths);
+    }
+    return foundry.applications.handlebars.loadTemplates(templatePaths);
 }
 
 function registerSettings() {
@@ -269,12 +272,23 @@ Hooks.once("init", function () {
 
     CONFIG.DoD = DoD;
 
+    CONFIG.DoD.Actors       = game.release.generation < 13 ? Actors         : foundry.documents.collections.Actors;
+    CONFIG.DoD.ActorSheet   = game.release.generation < 13 ? ActorSheet     : foundry.appv1.sheets.ActorSheet;
+    CONFIG.DoD.Items        = game.release.generation < 13 ? Items          : foundry.documents.collections.Items;
+    CONFIG.DoD.ItemSheet    = game.release.generation < 13 ? ItemSheet      : foundry.appv1.sheets.ItemSheet;
+    CONFIG.DoD.FilePicker   = game.release.generation < 13 ? FilePicker     : foundry.applications.apps.FilePicker;
+    CONFIG.DoD.TextEditor   = game.release.generation < 13 ? TextEditor     : foundry.applications.ux.TextEditor;
+    
+    CONFIG.DoD.ActiveEffectConfig = game.release.generation < 13 ? ActiveEffectConfig : foundry.applications.sheets.ActiveEffectConfig;
+    CONFIG.DoD.DocumentSheetConfig = game.release.generation < 13 ? DocumentSheetConfig : foundry.applications.apps.DocumentSheetConfig;
+
     CONFIG.Actor.documentClass = DoDActor;
     CONFIG.Item.documentClass = DoDItem;
     CONFIG.ActiveEffect.documentClass = DoDActiveEffect;
     CONFIG.ActiveEffect.legacyTransferral = false;
 
     CONFIG.Dice.rolls.unshift(DoDRoll);
+
 
     foundry.utils.mergeObject(CONFIG.Actor.dataModels, {
         character: DoDCharacterData,
@@ -295,14 +309,14 @@ Hooks.once("init", function () {
         weapon: DoDWeaponData
     });
 
-    Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("DoD", DoDCharacterSheet, { makeDefault: true });
+    CONFIG.DoD.Actors.unregisterSheet("core", CONFIG.DoD.ActorSheet);
+    CONFIG.DoD.Actors.registerSheet("DoD", DoDCharacterSheet, { makeDefault: true });
 
-    Items.unregisterSheet("core", ItemSheet);
-    Items.registerSheet("DoD", DoDItemSheet, { makeDefault: true });
+    CONFIG.DoD.Items.unregisterSheet("core", CONFIG.DoD.ItemSheet);
+    CONFIG.DoD.Items.registerSheet("DoD", DoDItemSheet, { makeDefault: true });
 
-    DocumentSheetConfig.unregisterSheet(ActiveEffect, "core", ActiveEffectConfig);
-    DocumentSheetConfig.registerSheet(ActiveEffect, "DoD", DoDActiveEffectConfig, {makeDefault :true});
+    CONFIG.DoD.DocumentSheetConfig.unregisterSheet(ActiveEffect, "core", CONFIG.DoD.ActiveEffectConfig);
+    CONFIG.DoD.DocumentSheetConfig.registerSheet(ActiveEffect, "DoD", DoDActiveEffectConfig, {makeDefault :true});
 
     registerHandlebarsHelpers();
     preloadHandlebarsTemplates();
@@ -329,11 +343,26 @@ Hooks.once("init", function () {
     }
     // Don't show conditions on the TokenHUD
     Hooks.on('renderTokenHUD', (_app, html, _options) => {
+        const container = html.jquery ? html[0] : html; // jQuery in version <= 12, DOM in version >= 13
         for (const [_key, value] of Object.entries(DoD.conditionEffects)) {
-            const effects = html.find(`.effect-control[data-status-id="${value.id}"]`);
-            effects.remove();
+            for (const effect of container.querySelectorAll(`.effect-control[data-status-id="${value.id}"]`)) {
+                effect.remove();
+            }
         }
-    });    
+    });
+
+    Hooks.on("renderChatLog", DoDChat.addChatListeners);
+    if (game.release.generation < 13) {
+        Hooks.on("getChatLogEntryContext", DoDChat.addChatMessageContextMenuOptions);
+        Hooks.on("renderChatMessage", DoDChat.hideChatPermissions);
+    } else {
+        Hooks.on("getChatMessageContextOptions", DoDChat.addChatMessageContextMenuOptions);
+        Hooks.on("renderChatMessageHTML", DoDChat.hideChatPermissions);
+    }  
+
+    if (game.release.version < 14) {
+        CONFIG.compatibility.excludePatterns.push(new RegExp("The V1 Application framework is deprecated"));
+    }
 });
 
 Hooks.once("ready", async function () {
@@ -386,15 +415,13 @@ Hooks.once("ready", async function () {
     });
 });
 
-Hooks.on("renderChatLog", DoDChat.addChatListeners);
-Hooks.on("getChatLogEntryContext", DoDChat.addChatMessageContextMenuOptions);
-Hooks.on("renderChatMessage", DoDChat.hideChatPermissions);
 
-for (const sheet of ["ActorSheet", "ItemSheet", "JournalPageSheet"]) {
+
+for (const sheet of ["ActorSheet", "ItemSheet", "JournalPageSheet", "JournalEntryPageSheet"]) {
     Hooks.on(`render${sheet}`, (_app, html, _options) => {
-        html.on('click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
-        html.on("click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);
-        html.on("click", ".treasure-roll", DoDChat.onTreasureRoll);
+        DoD_Utility.addHtmlEventListener(html, 'click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
+        DoD_Utility.addHtmlEventListener(html, "click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);
+        DoD_Utility.addHtmlEventListener(html, "click", ".treasure-roll", DoDChat.onTreasureRoll);
     });
 }
 
@@ -431,7 +458,7 @@ Hooks.on('importAdventure', async (created, _updated) => {
             const scene = game.scenes.get(s.id);
             let exists = false;
             try {
-                const files = await FilePicker.browse("data", scene.thumb.substring(0, scene.thumb.lastIndexOf('/')));
+                const files = await CONFIG.DoD.FilePicker.browse("data", scene.thumb.substring(0, scene.thumb.lastIndexOf('/')));
                 if (files.files.includes(s.thumb)) {
                     exists = true;
                 }

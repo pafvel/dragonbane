@@ -50,7 +50,7 @@ export async function enrichDisplayAbility (match, options) {
         if (options.box) {
             html += `</blockquote>`;
         }
-        a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
+        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
     } else {
         a.dataset.abilityId = match[1];
         if (match[2]) a.dataset.abilityName = match[2];
@@ -108,7 +108,7 @@ export async function enrichDisplayMonster (match, options) {
                 ${monster.system.traits}
             </div>
         </div>`;
-        a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
+        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
     } else {
         a.dataset.monsterId = parsedMatch.uuid;
         if (match[2]) a.dataset.monsterName = match[2];
@@ -155,7 +155,7 @@ export async function enrichDisplayMonsterDescriptionCard (match, _options) {
                 ${displayTable(monster?.system.attackTable, table, game.i18n.localize("DoD.journal.monsterAttacks"))}
             </div>
         </div>`;
-        a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
+        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
     } else {
         a.dataset.monsterId = parsedMatch.uuid;
         if (match[2]) a.dataset.monsterName = match[2];
@@ -184,7 +184,7 @@ export async function enrichDisplayMonsterDescription (match, _options) {
                 ${monster.system.description}
             </div>
         </div>`;
-        a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
+        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
     } else {
         a.dataset.monsterId = parsedMatch.uuid;
         if (match[2]) a.dataset.monsterName = match[2];
@@ -383,7 +383,7 @@ export async function enrichDisplayNpcCard(match, options) {
                 ${npc.system.traits}
             </div>
         </div>`;
-        a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
+        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
     } else {
         a.dataset.npcId = parsedMatch.uuid;
         if (match[2]) a.dataset.npcName = match[2];
@@ -400,7 +400,7 @@ export async function enrichDisplayNpcDescription (match, _options) {
     const a = document.createElement("div");
     if (npc) {
         let html = `${npc.system.description}`;
-        a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
+        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
     } else {
         a.dataset.npcId = match[1];
         if (match[2]) a.dataset.npcName = match[2];
@@ -422,7 +422,7 @@ export async function enrichDisplaySkill (match, _options) {
             <h4>@UUID[${match[1]}]{${skillName}} <small>(${game.i18n.localize("DoD.attributes." + skill.system.attribute)})</small></h4>
             ${skill.system.description}
         </div>`;
-        a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
+        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
     } else {
         a.dataset.skillId = match[1];
         if (match[2]) a.dataset.skillName = match[2];
@@ -470,7 +470,7 @@ export async function enrichDisplaySpell (match, _options) {
             </ul>
             ${spell.system.description}
         </div>`;
-        a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
+        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
     } else {
         a.dataset.spellId = match[1];
         if (match[2]) a.dataset.spellName = match[2];
@@ -505,10 +505,11 @@ function displayTable(uuid, table, tableName, showDescription = false) {
         if (result.range[1] !== result.range[0]) {
             html += ` - ${result.range[1]}`;
         }
-        if (result.documentCollection === "RollTable") {
-            let subTable = DoD_Utility.findTable(result.text);
+        const resultType = DoD_Utility.getTableResultType(result);
+        if (resultType === "RollTable") {
+            let subTableName = game.release.generation < 13 ? result.text : result.name;
+            let subTable = DoD_Utility.findTable(subTableName);
             if (subTable?.uuid !== table.uuid) {
-                let subTableName = result.text;
                 if(subTableName.startsWith(table.name)) {
                     subTableName = subTableName.slice(table.name.length);
                     if (subTableName.startsWith(" - ")) {
@@ -516,20 +517,20 @@ function displayTable(uuid, table, tableName, showDescription = false) {
                     }
                 }
                 html += `</td>
-                    <td>${subTable?.description} @DisplayTable[RollTable.${result.documentId}]{${subTableName}}</td>
+                    <td>${subTable?.description} @DisplayTable[RollTable.${DoD_Utility.getTableResultId(result)}]{${subTableName}}</td>
                 </tr>`;
             } else {
                 html += `</td>
-                    <td>${result.text}</td>
+                    <td>${game.release.generation < 13 ? result.text : result.name}</td>
                 </tr>`;
             }
-        } else if (result.documentCollection === "Item") {
+        } else if (resultType === "Item") {
             html += `</td>
-                <td>@UUID[Item.${result.documentId}]{${result.text}}</td>
+                <td>@UUID[Item.${DoD_Utility.getTableResultId(result)}]{${game.release.generation < 13 ? result.text : result.name}}</td>
             </tr>`;
         } else {
             html += `</td>
-                <td>${result.text}</td>
+                <td>${game.release.generation < 13 ? result.text : result.description}</td>
             </tr>`;
         }
     }
@@ -547,7 +548,7 @@ export async function enrichDisplayTable (match, _options) {
     if (table) {
         a.classList.add("display-table");
         let html = displayTable(parsedMatch.uuid, table, tableName, parsedMatch.description === true);
-        a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
+        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
     } else {
         a.dataset.tableId = parsedMatch.uuid;
         if (match[2]) a.dataset.tableName = match[2];
@@ -568,7 +569,7 @@ export async function enrichDisplayTrick(match, _options) {
             <h4>@UUID[${match[1]}]{${spellName}}</h4>
             ${spell.system.description}
         </div>`;
-        a.innerHTML = await TextEditor.enrichHTML(html, {async: true});
+        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
     } else {
         a.dataset.spellId = match[1];
         if (match[2]) a.dataset.spellName = match[2];
@@ -749,6 +750,6 @@ export async function enrichGearTable(match, _options) {
 
     html += `</table>`
 
-    div.innerHTML = await TextEditor.enrichHTML(html, {async: true});
+    div.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
     return div;
 }

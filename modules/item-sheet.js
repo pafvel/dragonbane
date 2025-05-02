@@ -1,4 +1,9 @@
-export default class DoDItemSheet extends ItemSheet {
+import DoD_Utility from "./utility.js";
+
+// v12: ActorSheet --> v13: foundry.appv1.sheets.ActorSheet
+const BaseItemSheet = (typeof foundry?.appv1?.sheets?.ItemSheet !== "undefined") ? foundry.appv1.sheets.ItemSheet : ItemSheet;
+
+export default class DoDItemSheet extends BaseItemSheet {
 
     static get defaultOptions() {
         return foundry.utils.mergeObject(super.defaultOptions,  {
@@ -26,7 +31,7 @@ export default class DoDItemSheet extends ItemSheet {
             config: CONFIG.DoD
         };
 
-        sheetData.system.description = await TextEditor.enrichHTML(sheetData.system.description, { async: true, secrets: game.user.isGM });
+        sheetData.system.description = await CONFIG.DoD.TextEditor.enrichHTML(sheetData.system.description, { async: true, secrets: game.user.isGM });
 
         if (this.item.type === "weapon") {
             let weaponFeatures = [];
@@ -189,7 +194,7 @@ export default class DoDItemSheet extends ItemSheet {
         let dialogData = {features: featureData};
 
         const template = "systems/dragonbane/templates/partials/weapon-features-dialog.hbs";
-        const html = await renderTemplate(template, dialogData);
+        const html = await DoD_Utility.renderTemplate(template, dialogData);
         const labelOk = game.i18n.localize("DoD.ui.dialog.labelOk");
         //const labelCancel = game.i18n.localize("DoD.ui.dialog.labelCancel");
 
@@ -255,7 +260,7 @@ export default class DoDItemSheet extends ItemSheet {
         let dialogData = {bonuses: damageData};
 
         const template = "systems/dragonbane/templates/partials/armor-bonuses-dialog.hbs";
-        const html = await renderTemplate(template, dialogData);
+        const html = await DoD_Utility.renderTemplate(template, dialogData);
         const labelOk = game.i18n.localize("DoD.ui.dialog.labelOk");
         //const labelCancel = game.i18n.localize("DoD.ui.dialog.labelCancel");
 
@@ -304,7 +309,7 @@ export default class DoDItemSheet extends ItemSheet {
 
         if (this.item.type === "profession")
         {
-            const data = TextEditor.getDragEventData(event);
+            const data = CONFIG.DoD.TextEditor.getDragEventData(event);
             if (data.type === "Item") {
                 const item = await Item.implementation.fromDropData(data);
                 if (item.type === "ability") {
@@ -316,7 +321,7 @@ export default class DoDItemSheet extends ItemSheet {
 
         if (this.item.type === "kin")
         {
-            const data = TextEditor.getDragEventData(event);
+            const data = CONFIG.DoD.TextEditor.getDragEventData(event);
             if (data.type === "Item") {
                 const item = await Item.implementation.fromDropData(data);
                 if (item.type === "ability") {
