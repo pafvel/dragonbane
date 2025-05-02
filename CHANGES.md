@@ -1,5 +1,11 @@
 # Change Log
 
+## Version 2.0.0
+
+- Foundry VTT version 13 support
+  - Version 12 is still supported.
+  - Support for version 11 has been dropped.
+
 ## Version 1.9.5
 
 - Character Sheets
