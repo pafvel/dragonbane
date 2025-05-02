@@ -946,6 +946,10 @@
   z-index: 2;
   display: unset;
 }
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page .edit-container button {
+  color: black;
+  border-color: black;
+}
 .system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page ul .description {
   list-style-type: "✦ ";
   font-weight: bold;
@@ -1156,6 +1160,7 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content .gear-table td .content-link {
   border: 0px solid transparent;
   background-color: transparent;
+  color: unset;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .gear-table td .content-link i {
   color: inherit;
@@ -1417,7 +1422,7 @@
   border-bottom: 0px solid transparent;
 }
 .system-dragonbane .sheet.journal-entry h3,
-.system-dragonbane .sheet.journal-entry h4,
+.system-dragonbane .sheet.journal-entry h4:not(.window-title),
 .system-dragonbane .sheet.journal-entry h5,
 .system-dragonbane .sheet.journal-entry h6 {
   color: black;
@@ -1467,7 +1472,7 @@
   color: var(--dod-color-text-primary);
 }
 .system-dragonbane .app.dialog .dialog-buttons .dialog-button,
-.system-dragonbane .dod-button > button {
+.system-dragonbane .dod-button.button {
   font-family: var(--dod-font-heading);
   font-weight: normal;
   --button-focus-outline-color: var(--color-border-highlight);

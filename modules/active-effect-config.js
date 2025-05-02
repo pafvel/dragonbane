@@ -10,21 +10,11 @@ export default class DoDActiveEffectConfig extends DocumentSheet {
     }
 
     get template() {
-        if (game.release.generation < 12) {
-            return "systems/dragonbane/templates/active-effect-config-v11.html";    
+        if (game.release.generation < 13) {
+            return "systems/dragonbane/templates/active-effect-config-v12.html";    
         }
         return "systems/dragonbane/templates/active-effect-config.html";
     }
-
-    /*
-    async getData() {
-        const sheetData = await super.getData();
-
-        sheetData.config = CONFIG.DoD;
-
-        return sheetData;
-    }
-    */
 
     /** @override */
     async getData(options={}) {

@@ -206,6 +206,13 @@
                         display: unset;
                     }
 
+                    .edit-container {
+                        button {
+                            color: black;
+                            border-color: black;    
+                        }
+                    }
+
                     ul {
                         .description {
                             list-style-type: "✦ ";
@@ -438,6 +445,7 @@
                     .content-link {
                         border: 0px solid transparent;
                         background-color: transparent;
+                        color: unset;
                         i {
                             color: inherit;
                         }
@@ -718,7 +726,7 @@
             color: black;
             border-bottom: 0px solid transparent;
         }
-        h3, h4, h5, h6 {
+        h3, h4:not(.window-title), h5, h6 {
             color: black;
         }
     }
@@ -773,7 +781,7 @@
         color: var(--dod-color-text-primary);
     }
 
-    .app.dialog .dialog-buttons .dialog-button, .dod-button > button  {
+    .app.dialog .dialog-buttons .dialog-button, .dod-button.button  {
         font-family: var(--dod-font-heading);
         font-weight: normal;
         --button-focus-outline-color: var(--color-border-highlight);

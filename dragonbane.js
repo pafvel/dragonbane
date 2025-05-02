@@ -359,8 +359,10 @@ Hooks.once("init", function () {
         Hooks.on("getChatMessageContextOptions", DoDChat.addChatMessageContextMenuOptions);
         Hooks.on("renderChatMessageHTML", DoDChat.hideChatPermissions);
     }  
-    
-    CONFIG.compatibility.excludePatterns.push(new RegExp("The V1 Application framework is deprecated"));    
+
+    if (game.release.version < 14) {
+        CONFIG.compatibility.excludePatterns.push(new RegExp("The V1 Application framework is deprecated"));
+    }
 });
 
 Hooks.once("ready", async function () {

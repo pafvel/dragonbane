@@ -95,8 +95,6 @@
     "distance": 2,
     "units": "m"
   },
-  "gridDistance": 2,
-  "gridUnits": "m",
   "primaryTokenAttribute": "hitPoints",
   "secondaryTokenAttribute": "willPoints",
   "background": "systems/dragonbane/art/dragonbane-splash.webp",

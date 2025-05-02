@@ -1,6 +1,9 @@
 import DoD_Utility from "./utility.js";
 
-export default class DoDItemSheet extends ItemSheet {
+// v12: ActorSheet --> v13: foundry.appv1.sheets.ActorSheet
+const BaseItemSheet = (typeof foundry?.appv1?.sheets?.ItemSheet !== "undefined") ? foundry.appv1.sheets.ItemSheet : ItemSheet;
+
+export default class DoDItemSheet extends BaseItemSheet {
 
     static get defaultOptions() {
         return foundry.utils.mergeObject(super.defaultOptions,  {

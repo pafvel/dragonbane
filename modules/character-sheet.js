@@ -5,7 +5,11 @@ import DoDSpellTest from "./tests/spell-test.js";
 import DoDWeaponTest from "./tests/weapon-test.js";
 import DoD_Utility from "./utility.js";
 
-export default class DoDCharacterSheet extends ActorSheet {
+
+// v12: ActorSheet --> v13: foundry.appv1.sheets.ActorSheet
+const BaseActorSheet = (typeof foundry?.appv1?.sheets?.ActorSheet !== "undefined") ? foundry.appv1.sheets.ActorSheet : ActorSheet;
+
+export default class DoDCharacterSheet extends BaseActorSheet {
 
     static get defaultOptions() {
         return foundry.utils.mergeObject(super.defaultOptions,  {
