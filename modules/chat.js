@@ -339,6 +339,9 @@ async function onWeaponDamageRoll(event) {
     if (event.detail === 2) { // double-click
         return;
     };
+    event.stopPropagation();
+    event.preventDefault();
+
     const element = event.target;
     const actorId = element.dataset.actorId;
     const actor = DoD_Utility.getActorFromUUID(actorId);
@@ -409,6 +412,9 @@ async function onMagicDamageRoll(event) {
     if (event.detail === 2) { // double-click
         return;
     };
+    event.stopPropagation();
+    event.preventDefault();
+
     const DoD = CONFIG.DoD;
     const element = event.target;
     const actorId = element.dataset.actorId;
@@ -495,6 +501,9 @@ function onPushRoll(event) {
     if (event.detail === 2) { // double-click
         return;
     };
+    event.stopPropagation();
+    event.preventDefault();
+
     const element = event.target;
     const actorId = element.dataset.actorId;
     const actor = DoD_Utility.getActorFromUUID(actorId);
