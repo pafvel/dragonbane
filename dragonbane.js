@@ -351,11 +351,12 @@ Hooks.once("init", function () {
         }
     });
 
-    Hooks.on("renderChatLog", DoDChat.addChatListeners);
     if (game.release.generation < 13) {
+        Hooks.on("renderChatLog", DoDChat.addChatListeners);
         Hooks.on("getChatLogEntryContext", DoDChat.addChatMessageContextMenuOptions);
         Hooks.on("renderChatMessage", DoDChat.hideChatPermissions);
     } else {
+        Hooks.on("renderChatMessageHTML", DoDChat.addChatListeners);
         Hooks.on("getChatMessageContextOptions", DoDChat.addChatMessageContextMenuOptions);
         Hooks.on("renderChatMessageHTML", DoDChat.hideChatPermissions);
     }  
