@@ -1,3 +1,4 @@
+import { DoDItem } from "../item.js";
 import DoDTest from "./dod-test.js";
 
 
@@ -48,6 +49,7 @@ export default class DoDSkillTest extends DoDTest {
     }
 
     async setAdvancementMark() {
+        if (!(this.skill instanceof DoDItem)) return;
         if (this.skill.system.advance) return;
         await this.skill.update({ "system.advance": true })
     }
