@@ -112,6 +112,7 @@ export default class DoDItemSheet extends BaseItemSheet {
             case "create":
                 return owner.createEmbeddedDocuments("ActiveEffect", [{
                     label: game.i18n.localize("DoD.effect.new"),
+                    name: game.i18n.localize("DoD.effect.new"),
                     icon: "icons/svg/aura.svg",
                     origin: owner.uuid,
                     disabled: false
