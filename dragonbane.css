@@ -880,6 +880,14 @@
 .system-dragonbane #pause figcaption {
   color: whitesmoke;
 }
+.system-dragonbane .roll.die.d20.max {
+  color: #aa0200;
+  filter: sepia(0.5) hue-rotate(-60deg);
+}
+.system-dragonbane .roll.die.d20.min {
+  color: #18520b;
+  filter: sepia(0.5) hue-rotate(60deg);
+}
 .system-dragonbane .sheet.journal-entry h1,
 .system-dragonbane .sheet.journal-entry h2,
 .system-dragonbane .sheet.journal-entry h3 {
@@ -1267,6 +1275,11 @@
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .display-generic-table table td {
   padding-left: 1em;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content table {
+  background: transparent;
+  --table-row-color-odd: transparent;
+  --table-row-color-even: rgba(0, 0, 0, 0.1);
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content table th {
   text-align: left;
