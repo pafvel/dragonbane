@@ -2,11 +2,17 @@ import DoDTest from "./dod-test.js";
 
 export default class DoDAttributeTest extends DoDTest {
 
-    constructor(actor, attribute, options) {
-        super(actor, options);
+    constructor(actor, attribute, options, dialogData) {
+        super(actor, options, dialogData);
         this.attribute = attribute?.toLowerCase();
         if (this.options.canPush === undefined) {
             this.options.canPush = true;
+        }
+        if(dialogData === undefined){
+            this.dialogData = {};
+        }
+        else{
+            this.dialogData = dialogData;
         }
     }
 
