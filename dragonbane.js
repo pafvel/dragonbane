@@ -416,13 +416,17 @@ Hooks.once("ready", async function () {
     });
 });
 
-
-
 for (const sheet of ["ActorSheet", "ItemSheet", "JournalPageSheet", "JournalEntryPageSheet"]) {
     Hooks.on(`render${sheet}`, (_app, html, _options) => {
-        DoD_Utility.addHtmlEventListener(html, 'click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
-        DoD_Utility.addHtmlEventListener(html, "click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);
-        DoD_Utility.addHtmlEventListener(html, "click", ".treasure-roll", DoDChat.onTreasureRoll);
+        if (game.release.generation < 13) {
+            html.on('click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
+            html.on("click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);
+            html.on("click", ".treasure-roll", DoDChat.onTreasureRoll);
+        } else {
+            DoD_Utility.addHtmlEventListener(html, 'click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
+            DoD_Utility.addHtmlEventListener(html, "click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);
+            DoD_Utility.addHtmlEventListener(html, "click", ".treasure-roll", DoDChat.onTreasureRoll);
+        }
     });
 }
 
