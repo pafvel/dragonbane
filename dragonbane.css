@@ -897,6 +897,9 @@
 .system-dragonbane .sheet.journal-entry .scrollable {
   padding-right: 0;
 }
+.system-dragonbane .sheet.journal-entry .controls-dropdown {
+  z-index: 2;
+}
 .system-dragonbane .sheet.journal-entry .journal-entry-content {
   background: url("art/ui/journal-page-bg.webp");
   background-size: 100% auto;
