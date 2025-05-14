@@ -240,6 +240,7 @@
   margin: 0px;
   border: 0px solid transparent;
   object-fit: cover;
+  display: inline-block;
 }
 .DoD.sheet.character .sheet-header .image-container h1 {
   position: relative;
@@ -1591,6 +1592,7 @@
   min-width: 20px;
   min-height: 20px;
   border: 0px solid transparent;
+  display: inline-block;
   filter: invert(100%) sepia(1%) saturate(256%) hue-rotate(64deg) brightness(116%) contrast(92%);
 }
 .system-dragonbane .sheet-table-header .text-header {
