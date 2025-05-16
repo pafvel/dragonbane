@@ -10,7 +10,6 @@ export default class DoDSkillTest extends DoDTest {
         this.skill = skill;
         this.attribute = skill?.system.attribute;
         this.canPush = options ? options.canPush !== false : true;
-        this.isReRoll = options?.isReRoll | false;
     }
 
     async getRollOptions() {
