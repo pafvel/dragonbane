@@ -24,6 +24,7 @@ import DoDWeaponData from "./modules/data/items/weaponData.js";
 import DoDSpellData from "./modules/data/items/spellData.js";
 import DoDActiveEffect from "./modules/active-effect.js";
 import DoDActiveEffectConfig from "./modules/active-effect-config.js";
+import SocketHandler  from "./modules/socketHandler.mjs";
 
 function registerHandlebarsHelpers() {
 
@@ -322,6 +323,7 @@ Hooks.once("init", function () {
     preloadHandlebarsTemplates();
 
     registerSettings();
+ 
 
     game.dragonbane = {
         migrateWorld: DoDMigrate.migrateWorld,
@@ -334,7 +336,8 @@ Hooks.once("init", function () {
         useItem: DoDMacro.useItemMacro,
         monsterAttack: DoDMacro.monsterAttackMacro,
         monsterDefend: DoDMacro.monsterDefendMacro,
-        drawTreasureCards: DoD_Utility.drawTreasureCards
+        drawTreasureCards: DoD_Utility.drawTreasureCards,
+        socketHandler: new SocketHandler()
     };
 
     // Add status effects for conditions
@@ -586,6 +589,14 @@ Hooks.on("yzeCombatReady", () => {
         console.error("Dragonbane: Could not configure YZE Combat. Try refreshing the page");
     }
 })
+Hooks.on("dropCanvasData", async (canvas,data) => {
+
+    game.socket.emit("system.dragonbane", {
+                  type: "dropItemtoAnotherCharacter",
+                  data: data
+                });
+})
+
 
 CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     {
@@ -702,4 +713,3 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
         enricher: DoDJournal.enrichGearTable
     }
 ]);
-
