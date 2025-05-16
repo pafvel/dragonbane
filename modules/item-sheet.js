@@ -162,12 +162,18 @@ export default class DoDItemSheet extends BaseItemSheet {
         let field = element.dataset.field;
         let item = this.item;
 
-        // replace input with localized string if it matches general school name
-        let generalSchool = game.i18n.localize("DoD.spell.general");
-        if (generalSchool === element.value) {
+        // replace input with localized string if it matches registered general school name
+        const settingSchool = game.settings.get("dragonbane", "generalMagicSchoolName");
+        if ( settingSchool === element.value) {
             element.value = "DoD.spell.general";
+            return item.update({ [field]: settingSchool});
         }
-
+        // replace input with localized string if it matches localized general school name
+        const localizedSchool = game.i18n.localize("DoD.spell.general");
+        if (localizedSchool === element.value) {
+            element.value = "DoD.spell.general";
+            return item.update({ [field]: localizedSchool});
+        }
         return item.update({ [field]: element.value});
     }
 
