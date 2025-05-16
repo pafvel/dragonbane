@@ -185,16 +185,16 @@
       },
       "magicCritChoices": {
           "choiceLabel": "Effetto Critico",
-          "doubleDamage": "Doppio danno<br>",
-          "doubleRange": "Doppia gittata<br>",
-          "noCost": "L'incantesimo non costa alcun PV'<br>",
-          "extraSpell": "Puoi immediatamente lanciare un altro incantesimo, ma ottieni un Castigo sul tiro<br>"
+          "doubleDamage": "Doppio danno",
+          "doubleRange": "Doppia gittata",
+          "noCost": "L'incantesimo non costa alcun PV'",
+          "extraSpell": "Puoi immediatamente lanciare un altro incantesimo, ma ottieni un Castigo sul tiro"
       },
       "critChoices": {
           "choiceLabel": "Effatto Critico",
-          "doubleWeaponDamage": "Danno da Doppia Arma<br>",
-          "extraAttack": "Attacco gratuito contro un altro nemico<br>",
-          "ignoreArmor": "L'armatura non ha alcun effetto contro l'attacco<br>"
+          "doubleWeaponDamage": "Danno da Doppia Arma",
+          "extraAttack": "Attacco gratuito contro un altro nemico",
+          "ignoreArmor": "L'armatura non ha alcun effetto contro l'attacco"
       },
     "profession": {
       "key-attribute": "Attributo Chiave",

@@ -185,16 +185,16 @@
         },
         "magicCritChoices": {
             "choiceLabel": "Kritischer Effekt",
-            "doubleDamage": "Doppelter Schaden<br>",
-            "doubleRange": "Doppelte Reichweite<br>",
-            "noCost": "Der Zauber kostet keine WP<br>",
-            "extraSpell": "Du kannst sofort einen anderen Zauber wirken, bekommst aber einen Fluch auf den Wurf<br>"
+            "doubleDamage": "Doppelter Schaden",
+            "doubleRange": "Doppelte Reichweite",
+            "noCost": "Der Zauber kostet keine WP",
+            "extraSpell": "Du kannst sofort einen anderen Zauber wirken, bekommst aber einen Fluch auf den Wurf"
         },
         "critChoices": {
             "choiceLabel": "Kritischer Effekt",
-            "doubleWeaponDamage": "Doppelter Waffenschaden<br>",
-            "extraAttack": "Freier Angriff gegen einen anderen Gegner<br>",
-            "ignoreArmor": "Rüstung hat keinen Effekt gegen diesen Angriff<br>"
+            "doubleWeaponDamage": "Doppelter Waffenschaden",
+            "extraAttack": "Freier Angriff gegen einen anderen Gegner",
+            "ignoreArmor": "Rüstung hat keinen Effekt gegen diesen Angriff"
         },
         "profession": {
             "key-attribute": "Schlüsselattribut",

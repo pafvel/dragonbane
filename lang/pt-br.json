@@ -201,16 +201,16 @@
         },
         "magicCritChoices": {
             "choiceLabel": "Efeito Crítico",
-            "doubleDamage": "Dobro do dano<br>",
-            "doubleRange": "Dobro do alcance<br>",
-            "noCost": "A magia não custa nenhum FV<br>",
-            "extraSpell": "Você pode imediatamente lançar outra magia, mas obtém uma Desgraça no teste<br>"
+            "doubleDamage": "Dobro do dano",
+            "doubleRange": "Dobro do alcance",
+            "noCost": "A magia não custa nenhum FV",
+            "extraSpell": "Você pode imediatamente lançar outra magia, mas obtém uma Desgraça no teste"
         },
         "critChoices": {
             "choiceLabel": "Efeito Crítico",
-            "doubleWeaponDamage": "Dobro do dano da arma<br>",
-            "extraAttack": "Ataque livre contra outro inimigo<br>",
-            "ignoreArmor": "Armadura não tem efeito contra o ataque<br>"
+            "doubleWeaponDamage": "Dobro do dano da arma",
+            "extraAttack": "Ataque livre contra outro inimigo",
+            "ignoreArmor": "Armadura não tem efeito contra o ataque"
         },
         "profession": {
             "key-attribute": "Atributo Chave",

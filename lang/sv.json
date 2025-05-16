@@ -202,16 +202,16 @@
         },
         "magicCritChoices": {
             "choiceLabel": "Kritisk effekt",
-            "doubleDamage": "Skadan av besvärjelsen fördubblas<br>",
-            "doubleRange": "Räckvidden av besvärjelsen fördubblas<br>",
-            "noCost": "Besvärjelsen kostar dig inga VP<br>",
-            "extraSpell": "Du får omedelbart lägga en besvärjelse till, fast med nackdel på slaget.<br>"
+            "doubleDamage": "Skadan av besvärjelsen fördubblas",
+            "doubleRange": "Räckvidden av besvärjelsen fördubblas",
+            "noCost": "Besvärjelsen kostar dig inga VP",
+            "extraSpell": "Du får omedelbart lägga en besvärjelse till, fast med nackdel på slaget."
         },
         "critChoices": {
             "choiceLabel": "Kritisk effekt",
-            "doubleWeaponDamage": "Dubbel vapenskada<br>",
-            "extraAttack": "Extra attack mot annan fiende (fri handling)<br>",
-            "ignoreArmor": "Rustning och skydd har ingen effekt<br>"
+            "doubleWeaponDamage": "Dubbel vapenskada",
+            "extraAttack": "Extra attack mot annan fiende (fri handling)",
+            "ignoreArmor": "Rustning och skydd har ingen effekt"
         },
         "profession": {
             "key-attribute": "Viktigaste Grundegenskap",

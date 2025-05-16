@@ -201,16 +201,16 @@
         },
         "magicCritChoices": {
             "choiceLabel": "Effet critique",
-            "doubleDamage": "Double les dégâts<br>",
-            "doubleRange": "Double la distance<br>",
-            "noCost": "Le sort ne coûte pas de PV<br>",
-            "extraSpell": "Vous pouvez immédiatement lancer un autre sort, mais avec un Désavantage au jet<br>"
+            "doubleDamage": "Double les dégâts",
+            "doubleRange": "Double la distance",
+            "noCost": "Le sort ne coûte pas de PV",
+            "extraSpell": "Vous pouvez immédiatement lancer un autre sort, mais avec un Désavantage au jet"
         },
         "critChoices": {
             "choiceLabel": "Effet critique",
-            "doubleWeaponDamage": "Double les dégâts de l'arme<br>",
-            "extraAttack": "Attaque gratuite contre un autre ennemi<br>",
-            "ignoreArmor": "L'Armure n'a pas d'effet contre cette attaque<br>"
+            "doubleWeaponDamage": "Double les dégâts de l'arme",
+            "extraAttack": "Attaque gratuite contre un autre ennemi",
+            "ignoreArmor": "L'Armure n'a pas d'effet contre cette attaque"
         },
         "profession": {
             "key-attribute": "Caractéristique clé",

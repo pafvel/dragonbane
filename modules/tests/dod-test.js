@@ -77,26 +77,28 @@ export default class DoDTest {
     updatePushRollChoices() {
         const actor = this.postRollData.actor;
         this.postRollData.pushRollChoices = {};
-        this.postRollData.canPush = false;
+        this.postRollData.pushRollChoice = null;
 
         for (const attribute in actor.system.attributes) {
             const condition = actor.system.conditions[attribute];
             if (condition) {
-                if (!condition.value){
-                    const id = attribute;
-                    const label = game.i18n.localize("DoD.conditions." + attribute) + " (" +
+                if (!condition.value) {
+                    this.postRollData.pushRollChoices[attribute] =
+                        game.i18n.localize("DoD.conditions." + attribute) + " (" +
                         game.i18n.localize("DoD.attributes." + attribute) + ")";
-
-                    this.postRollData.pushRollChoices[attribute] = { id, label };
-                    if (!this.postRollData.canPush) {
-                        this.postRollData.canPush = true;
-                        this.postRollData.pushRollChoices[attribute].checked = true;
+                    if (!this.postRollData.pushRollChoice) {
+                        this.postRollData.pushRollChoice = attribute;
                     }
                 }
             } else {
                 DoD_Utility.ERROR("Missing condition for attribute " + attribute);
             }
         }
+        if (!this.postRollData.pushRollChoice) {
+            this.postRollData.canPush = false;
+            return;
+        }
+        this.postRollData.pushRollChoiceGroup = "pushRollChoice";        
     }
 
     updateDialogData() {

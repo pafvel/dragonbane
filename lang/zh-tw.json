@@ -201,16 +201,16 @@
         },
         "magicCritChoices": {
             "choiceLabel": "暴擊效果",
-            "doubleDamage": "雙倍傷害<br>",
-            "doubleRange": "雙倍射程<br>",
-            "noCost": "法術不消耗任何 WP<br>",
-            "extraSpell": "你可以馬上施放另一道法術，但施法檢定獲得一個劣勢<br>"
+            "doubleDamage": "雙倍傷害",
+            "doubleRange": "雙倍射程",
+            "noCost": "法術不消耗任何 WP",
+            "extraSpell": "你可以馬上施放另一道法術，但施法檢定獲得一個劣勢"
         },
         "critChoices": {
             "choiceLabel": "暴擊效果",
-            "doubleWeaponDamage": "雙倍武器傷害<br>",
-            "extraAttack": "額外攻擊另一個敵人<br>",
-            "ignoreArmor": "護甲無法抵抗此攻擊<br>"
+            "doubleWeaponDamage": "雙倍武器傷害",
+            "extraAttack": "額外攻擊另一個敵人",
+            "ignoreArmor": "護甲無法抵抗此攻擊"
         },
         "profession": {
             "key-attribute": "關鍵屬性",

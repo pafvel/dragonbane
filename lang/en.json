@@ -201,16 +201,16 @@
         },
         "magicCritChoices": {
             "choiceLabel": "Critical effect",
-            "doubleDamage": "Double damage<br>",
-            "doubleRange": "Double range<br>",
-            "noCost": "The spell does not cost any WP<br>",
-            "extraSpell": "You can immediately cast another spell, but get a bane on the roll<br>"
+            "doubleDamage": "Double damage",
+            "doubleRange": "Double range",
+            "noCost": "The spell does not cost any WP",
+            "extraSpell": "You can immediately cast another spell, but get a bane on the roll"
         },
         "critChoices": {
             "choiceLabel": "Critical effect",
-            "doubleWeaponDamage": "Double weapon damage<br>",
-            "extraAttack": "Free attack against another enemy<br>",
-            "ignoreArmor": "Armor has no effect against the attack<br>"
+            "doubleWeaponDamage": "Double weapon damage",
+            "extraAttack": "Free attack against another enemy",
+            "ignoreArmor": "Armor has no effect against the attack"
         },
         "profession": {
             "key-attribute": "Key Attribute",

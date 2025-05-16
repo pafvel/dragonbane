@@ -201,16 +201,16 @@
         },
         "magicCritChoices": {
             "choiceLabel": "Efekty krytyczne",
-            "doubleDamage": "Podwojenie obrażeń<br>",
-            "doubleRange": "Podwojenie zasięgu<br>",
-            "noCost": "Czar nie zurzywa żadnych punktów SW<br>",
-            "extraSpell": "Możesz natychmiast rzucić drugi czar, ale otrzymujesz Zgrzyt<br>"
+            "doubleDamage": "Podwojenie obrażeń",
+            "doubleRange": "Podwojenie zasięgu",
+            "noCost": "Czar nie zurzywa żadnych punktów SW",
+            "extraSpell": "Możesz natychmiast rzucić drugi czar, ale otrzymujesz Zgrzyt"
         },
         "critChoices": {
             "choiceLabel": "Efekty krytyczne",
-            "doubleWeaponDamage": "Podwujnie obrażenia bronii<br>",
-            "extraAttack": "Możesz natychmiast wykonać drugi atak przeciw innemu wrogowi. Jest on akcją darmową. <br>",
-            "ignoreArmor": "Zbroja nie chroni celu przed obrażeniami.<br>"
+            "doubleWeaponDamage": "Podwujnie obrażenia bronii",
+            "extraAttack": "Możesz natychmiast wykonać drugi atak przeciw innemu wrogowi. Jest on akcją darmową.",
+            "ignoreArmor": "Zbroja nie chroni celu przed obrażeniami."
         },
         "profession": {
             "key-attribute": "Kluczowa cecha",

@@ -750,9 +750,21 @@
         background-image: url(art/ui/chat-card-bg.webp);
         background-size: cover;
         background-position-x: center;
-            .result-image {
-                border: 0px transparent;
+        .result-image {
+            border: 0px transparent;
+        }
+        label.checkbox {
+            display: flex;
+            gap: 0.25rem;
+            margin: 0px;
+            height: unset;
+            line-height: unset;
+            min-height: 22px;
+            align-items: center;
+            input[type="radio"] {
+                top: 0px;
             }
+        }
         * {
             -webkit-user-select: text;
             -moz-user-select: text;

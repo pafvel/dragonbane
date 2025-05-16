@@ -201,16 +201,16 @@
         },
         "magicCritChoices": {
             "choiceLabel": "Efecto crítico",
-            "doubleDamage": "Daño doble<br>",
-            "doubleRange": "Alcance doble<br>",
-            "noCost": "El hechizo no cuesta ningún PV<br>",
-            "extraSpell": "Puedes lanzar automáticamente otro hechizo, pero con una Desventaja en la tirada<br>"
+            "doubleDamage": "Daño doble",
+            "doubleRange": "Alcance doble",
+            "noCost": "El hechizo no cuesta ningún PV",
+            "extraSpell": "Puedes lanzar automáticamente otro hechizo, pero con una Desventaja en la tirada"
         },
         "critChoices": {
             "choiceLabel": "Efecto crítico",
-            "doubleWeaponDamage": "Doble daño del arma<br>",
-            "extraAttack": "Un ataque gratuito contra otro enemigo<br>",
-            "ignoreArmor": "La armadura no protege contra el ataque<br>"
+            "doubleWeaponDamage": "Doble daño del arma",
+            "extraAttack": "Un ataque gratuito contra otro enemigo",
+            "ignoreArmor": "La armadura no protege contra el ataque"
         },
         "profession": {
             "key-attribute": "Atributo Clave",

@@ -1454,6 +1454,18 @@
 .system-dragonbane .chat-message .result-image {
   border: 0px transparent;
 }
+.system-dragonbane .chat-message label.checkbox {
+  display: flex;
+  gap: 0.25rem;
+  margin: 0px;
+  height: unset;
+  line-height: unset;
+  min-height: 22px;
+  align-items: center;
+}
+.system-dragonbane .chat-message label.checkbox input[type="radio"] {
+  top: 0px;
+}
 .system-dragonbane .chat-message * {
   -webkit-user-select: text;
   -moz-user-select: text;

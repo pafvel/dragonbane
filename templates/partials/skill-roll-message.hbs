@@ -94,16 +94,7 @@
         <div class="form-group">
             <label>{{localize "DoD.roll.pushChoiceLabel"}}</label>
             <div class="form-fields">
-                {{#each pushRollChoices as |choice|}}
-                <label class="checkbox">
-                    {{#if choice.checked}}
-                    <input type="radio" id="{{choice.id}}" name="pushRollChoice" value="{{choice.id}}" checked="true" style>
-                    {{else}}
-                    <input type="radio" id="{{choice.id}}" name="pushRollChoice" value="{{choice.id}}">
-                    {{/if}}
-                    {{choice.label}}<br>
-                </label>
-                {{/each}}
+               {{radioBoxes pushRollChoiceGroup pushRollChoices checked=pushRollChoice localize=false}}
             </div>
         </div>
     </div>
