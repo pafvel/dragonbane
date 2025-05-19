@@ -1,494 +1,493 @@
 {
-    "ACTOR": {
-        "TypeCharacter": "Spielercharakter",
-        "TypeNpc": "Nicht-Spieler-Charakter",
-        "TypeMonster": "Monster"
+  "ACTOR": {
+    "TypeCharacter": "Spielercharakter",
+    "TypeNpc": "Nicht-Spieler-Charakter",
+    "TypeMonster": "Monster"
+  },
+  "ITEM": {
+    "TypeAbility": "Talent",
+    "TypeArmor": "Rüstung",
+    "TypeHelmet": "Helm",
+    "TypeItem": "Gegenstand",
+    "TypeKin": "Volk",
+    "TypeProfession": "Beruf",
+    "TypeSkill": "Fertigkeit",
+    "TypeSpell": "Zauber",
+    "TypeWeapon": "Waffe"
+  },
+  "TYPES": {
+    "Actor": {
+      "character": "Spielercharacter",
+      "npc": "Nicht-Spieler-Character",
+      "monster": "Monster"
     },
-    "ITEM": {
-        "TypeAbility": "Talent",
-        "TypeArmor": "Rüstung",
-        "TypeHelmet": "Helm",
-        "TypeItem": "Gegenstand",
-        "TypeKin": "Volk",
-        "TypeProfession": "Beruf",
-        "TypeSkill": "Fertigkeit",
-        "TypeSpell": "Zauber",
-        "TypeWeapon": "Waffe"
-    },
-    "TYPES": {
-        "Actor": {
-            "character": "Spielercharacter",
-            "npc": "Nicht-Spieler-Character",
-            "monster": "Monster"
-        },
-        "Item": {
-            "ability": "Talent",
-            "armor": "Rüstung",
-            "helmet": "Helm",
-            "item": "Gegenstand",
-            "kin": "Volk",
-            "profession": "Beruf",
-            "skill": "Fertigkeit",
-            "spell": "Zauber",
-            "weapon": "Waffe"                
-        }
-    },
-    "DoD": {
-        "ability": {
-            "requirement": "Voraussetzung",
-            "type": "Art",
-            "wp": "Willenskraftpunkte",
-            "secondaryAttribute": "Attributsbonus",
-            "useWithWP": "<b>{actor}</b> gibt <b>{wp}</b> WP aus, um @UUID[{uuid}] zu aktivieren.",
-            "useWithoutWP": "<b>{actor}</b> aktiviert @UUID[{uuid}]. Siehe Fähigkeit für WP-Kosten."
-        },
-        "abilityTypes": {
-            "kin": "Volk",
-            "profession": "Beruf",
-            "heroic": "Heroisch"
-        },
-        "ageTypes": {
-            "young": "Jung",
-            "adult": "Erwachsen",
-            "old": "Alt"
-        },
-        "areaOfEffectTypes": {
-            "none": "-",
-            "cone": "Kegel",
-            "sphere": "Sphäre"
-        },
-        "armor": {
-            "banes": "Flüche",
-            "rating": "Rüstungswert",
-            "bonuses": "Rüstungsbonus"
-
-        },
-        "attackTypes": {
-            "ranged": "Fernkampfangriff",
-            "rangedTooltip": "Angriff mit Fernkampfwaffe",
-            "parry": "Parade",
-            "parryTooltip": "Eine Angriff parieren",
-            "normal": "Normal",
-            "normalTooltip": "Einen normalen Angriff durchführen",
-            "stab": "Stich",
-            "stabTooltip": "Einen Angriff durchführen, der Stichschaden verursacht",
-            "slash": "Hieb",
-            "slashTooltip": "Einen Angriff durchführen, der Hiebschaden verursacht",
-            "weakpoint": "Eine Schwachstelle finden",
-            "weakpointTooltip": "Stich zu und versuche, eine Lücke in der gegnerischen Rüstung zu finden. Dieser Angriff fügt dem Wurf einen Fluch hinzu",
-            "disarm": "Entwaffnen",
-            "disarmTooltip": "Entwaffne den Feind, anstatt ihm Schaden zuzufügen",
-            "topple": "Umwerfen",
-            "toppleTooltip": "Den Gegner zu Boden stürzen lassen, anstatt ihm Schaden zuzufügen",
-            "throw": "Werfen",
-            "throwTooltip": "Wurfangriff"
-        },
-        "attributes": {
-            "str": "STÄ",
-            "con": "KON",
-            "agl": "GEW",
-            "int": "INT",
-            "wil": "WIL",
-            "cha": "CHA"
-        },
-        "castingTimeTypes": {
-            "action": "Aktion",
-            "reaction": "Reaktion",
-            "stretch": "Viertel",
-            "shift": "Schicht"
-        },
-        "conditions": {
-            "str": "Erschöpft",
-            "con": "Kränkelnd",
-            "agl": "Benommen",
-            "int": "Wütend",
-            "wil": "Verängstigt",
-            "cha": "Verzagt"
-        },
-        "currency": {
-            "gold": "Gold",
-            "silver": "Silber",
-            "copper": "Kupfer"
-        },
-        "damageTypes": {
-            "none": "Schaden",
-            "bludgeoning": "Wuchtschaden",
-            "piercing": "Stichschaden",
-            "slashing": "Hiebschaden",
-	    "bludgeoningTooltip": "Wuchtschaden",
-            "piercingTooltip": "Stichschaden",
-            "slashingTooltip": "Hiebschaden"
-        },
-        "dice": {
-            "d": "d",
-            "d4": "d4",
-            "d6": "d6",
-            "d8": "d8",
-            "d10": "d10",
-            "d12": "d12",
-            "d20": "d20"
-        },
-	    "diceSoNice": {
-            "colorGreen": "Dragonbane Grün",
-            "colorGreenTransparent": "Dragonbane Grün (Transparent)",
-            "colorRed": "Dragonbane Rot",
-            "colorRedTransparent": "Dragonbane Rot (Transparent)",
-            "system": "Dragonbane",
-            "textureTransparent": "Dragonbane (Transparent)"
-        },
-        "item": {
-            "new": "Neues Item"
-        },
-        "gear": {
-            "weight": "Gewicht",
-            "quantity": "Anzahl",
-            "cost": "Kosten",
-            "supply": "Verf.",
-            "worn": "Getragen",
-            "memento": "Memento",
-            "type": "Kategorie",
-            "effect": "Effekt"
-        },
-        "gearTypeName": {
-            "animal": "Tier",
-            "armor": "Rüstung",
-            "clothes": "Kleidung",
-            "container": "Behälter",
-            "hunting": "Jagen",
-            "instrument": "Instrument",
-            "knowledge": "Wissen",
-            "light": "Lichtquelle",
-            "medicine": "Medizin",
-            "melee": "Nahkampfwaffe",
-            "ranged": "Fernkampfwaffe",
-            "service": "Dienstleistung",
-            "tool": "Werkzeug",
-            "trade": "Handelsgut",
-            "travel": "Fahrzeug"
-        },
-        "gripTypes": {
-            "none": "-",
-            "grip1h": "1h",
-            "grip2h": "2h"
-        },
-        "helmet": {
- 	    "new": "Neuer Helm",
-            "rating": "Rüstungsswert"
-        },
-        "itemTypes": {
-            "item": "Gegenstand",
-            "backpack": "Rucksack"
-        },
-        "journal": {
-            "tableResult": "Resultat",
-            "monsterAttacks": "Monsterangriffe"
-        },
-        "magicCritChoices": {
-            "choiceLabel": "Kritischer Effekt",
-            "doubleDamage": "Doppelter Schaden",
-            "doubleRange": "Doppelte Reichweite",
-            "noCost": "Der Zauber kostet keine WP",
-            "extraSpell": "Du kannst sofort einen anderen Zauber wirken, bekommst aber einen Fluch auf den Wurf"
-        },
-        "critChoices": {
-            "choiceLabel": "Kritischer Effekt",
-            "doubleWeaponDamage": "Doppelter Waffenschaden",
-            "extraAttack": "Freier Angriff gegen einen anderen Gegner",
-            "ignoreArmor": "Rüstung hat keinen Effekt gegen diesen Angriff"
-        },
-        "profession": {
-            "key-attribute": "Schlüsselattribut",
-            "skills": "Fertigkeiten"
-        },
-        "roll": {
-            "dragon": "erfolgreich mit einem Drachen!",
-            "demon": "mit einem Dämon gescheitert!",
-            "success": "erfolgreich.",
-            "failure": "gescheitert.",
-            "attributeRoll": "Attributswurf für <b>{attribute}</b> <b>{result}</b>",
-            "skillRoll": "Fertigkeitswurf für <b>{skill}</b> <b>{result}</b>",
-            "spellRoll": "Fertigkeitswurf für <b>{spell}</b> mit <b>Power Level {powerLevel}</b> <b>{result}</b>",
-            "spellRollTarget": "<b>{spell}</b> at Power Level <b>{powerLevel}</b> targeting <b>{target}</b> <b>{result}</b>",
-            "weaponRoll": "<b>{action}</b> mit <b>{skill}</b> <b>{result}</b>",
-            "weaponRollTarget": "<b>{action}</b> mit <b>{skill}</b> auf <b>{target}</b> <b>{result}</b>",
-            "damage": "<b>{actor}</b> verursacht <b>{damage}</b> Punkte <b>{damageType}</b>.",
-            "damageWeapon": "<b>{actor}</b> verursacht <b>{damage}</b> Punkte <b>{damageType}</b> mit <b>{weapon}</b>.",
-            "damageIgnoreArmor": "<b>{actor}</b> verursacht <b>{damage}</b> Punkte <b>{damageType} ignoriert Rüstung</b> mit <b>{weapon}</b>.",
-            "damageTarget": "<b>{actor}</b> verursacht <b>{damage}</b> Punkte <b>{damageType}</b> an {target}.",
-            "damageWeaponTarget": "<b>{actor}</b> verursacht <b>{damage}</b> Punkte <b>{damageType}</b> an {target} mit <b>{weapon}</b>.",
-            "damageIgnoreArmorTarget": "<b>{actor}</b> verursacht <b>{damage}</b> Punkte <b>{damageType} an {target} ignoriert Rüstung</b> mit <b>{weapon}</b>.",
-            "healing": "<b>{actor}</b> heals for <b>{damage}</b> HP.",
-            "healingTarget": "<b>{actor}</b> heals <b>{target}</b> for <b>{damage}</b> HP.",
-            "pushButtonLabel": "Wurf strapazieren",
-            "pushChoiceLabel": "Wähle einen Zustand:",
-            "parryWeapon": "<p>Wenn der parierte Schaden die Haltbarkeit deiner Waffe übersteigt (<b>{durability}</b>), ist die Waffe beschädigt. Stichschaden kann eine Waffe nicht beschädigen.</p>",
-            "parryShield": "<p>Wenn der parierte Schaden die Haltbarkeit deines Schildes übersteigt (<b>{durability}</b>), ist der Schild beschädigt. Stichschaden kann einen Schild nicht beschädigen.</p>",
- 	    "deathRoll": "Death Roll <b>{result}</b>"
-        },
-        "secondaryAttributeTypes": {
-            "none": "-",
-            "hitPoints": "Trefferpunkte",
-            "willPoints": "Willenskraftpunkte",
-            "movement": "Bewegung"
-        },
-        "sizeTypes": {
-            "small": "Klein",
-            "normal": "Normal",
-            "large": "Groß",
-            "huge": "Riesig",
-            "swarm": "Schwarm"
-        },
-        "skill": {
-            "advance": "Fortschritt",
-            "advanceTooltip": "Markiert, dass du einen Fortschrittswurf durchführen darfst",
-            "advancementFail": "Konnte <b>{skill}</b> nicht verbessern.",
-            "advancementSuccess": "<b>{skill}</b> increased from <b>{old}</b> to <b>{new}</b>.",
-            "attribute": "Attribut",
-            "attributeTooltip": "Das Attribut der Fertigkeit",
-            "hide": "Verstecken",
-            "hideTooltip": "Versteckt die Fertigkeit von der Liste der ausgebildeten Fertigkeiten",
-            "markAdvancement": "Markiere Fertigkeit für Fortschritt",
-            "rollAdvancement": "Würfle um die Fertigkeit am Ende der sitzung zu verbessern",
-            "type": "Typ",
-            "typeTooltip": "Der Fertigkeitentyp"
-        },
-        "skillTypes": {
-            "core": "Grundfertigkeit",
-            "weapon": "Waffenfertigkeit",
-            "secondary": "Sekundäre Fertigkeit",
-            "magic": "Magieschule"  
-        },
-        "spell": {
-            "areaOfEffect": "Bereich",
-            "castingTime": "Wirkdauer",
-            "damage": "Schaden",
-            "damagePerPowerlevel": "Schaden pro Machtstufe",
-            "duration": "Dauer",
-            "general": "Allgemein",
-            "memorized": "Vorbereitet",
-            "prerequisite": "Voraussetzung",
-            "range": "Entfernung",
-            "rangeType": "Reichweite",
-            "rank": "Rang",
-            "requirement": "Voraussetzung",
-            "school": "Magieschule"
-        },
-        "spellDurationTypes": {
-            "instant": "Sofort",
-            "round": "Runde",
-            "stretch": "Viertel",
-            "shift": "Schicht",
-            "concentration": "Konzentration",
-            "permanent": "Permanent"
-        },
-        "spellRangeTypes": {
-            "personal": "Selbst",
-            "touch": "Berühren",
-            "range": "Reichweite",
-            "cone": "Kegel",
-            "sphere": "Sphäre"
-        },        
-        "supplyTypes": {
-            "common": "Gewöhnlich",
-            "uncommon": "Ungewöhnlich",
-            "rare": "Selten",
-            "unique": "Einzigartig"
-        },
-        "tables": {
-            "mishapMagic": "Missgeschick - Magie",
-            "mishapMelee": "Missgeschick - Nahkampf",
-            "mishapRanged": "Missgeschick - Fernkampf"
-        },
-        "weapon": {
-	    "new": "Neue Waffe",
-            "grip": "Griff",
-            "gripTooltip": "Ob du eine oder zwei Hände brauchst, um die Waffe zu führen.",
-            "str": "STÄ",
-            "strTooltip": "Wie viel STÄ du brauchst, um die Waffe effektiv einzusetzen.",
-            "range": "Reichweite",
-            "rangeShort": "R",
-            "rangeTooltip": "Reichweite gibt die maximale Reichweite in Metern an, bei der die Waffe effektiv eingesetzt werden kann.",
-            "damage": "Schaden",
-            "damageShort": "Sch",
-            "damageTooltip": "Wie viel Schaden die Waffe bei einem Treffer zufügt.",
-            "durability": "Haltbarkeit",
-            "durabilityShort": "Hal.",
-            "durabilityTooltip": "Die Haltbarkeit bestimmt, wie viel Schaden man parieren kann, ohne die Waffe zu beschädigen.",
-            "features": "Eigenschaften",
-            "skill": "Fertigkeiten",
-            "skillValue": "Fertigkeit",
-            "skillValueTooltip": "Fertigkeitswert bei der Verwendung der Waffe.",
-	    "broken": "Beschädigt",
-            "brokenTooltip": "Zeigt an, ob die Waffe beschädigt ist",
-            "mainHandTooltip": "Die Waffe wird in der Haupthand geführt.",
-            "offHandTooltip": "Die Waffe wird in der Nebenhand geführt.",
-	    "belowRequiredStr": "Below STR"
-        },
-        "unit": {
-            "meterPlural": "Meter"
-        },
-        "weaponFeatureTypes": {
-            "bludgeoning": "Wucht",
-            "long": "Lang",
-            "mounted": "Beritten",
-            "noDamageBonus": "Kein Schadensbonus",
-            "noDamageBonusTooltip": "Kein Schadensbonus",
-            "noparry": "Keine Parade",
-            "piercing": "Stich",
-            "quiver": "Köcher",
-            "quiverTooltip": "Erfordert Köcher",
-            "slashing": "Hieb",
-            "subtle": "Raffiniert",
-            "thrown": "Geworfen",
-            "toppling": "Umwerfen",
-            "shield": "Schild",
-            "bludgeoningTooltip": "Wucht",
-            "longTooltip": "Lang",
-            "mountedTooltip": "Erfordert ein kampferprobtes Reittier",
-            "noparryTooltip": "Kann nicht zum Parieren verwendet werden",
-            "piercingTooltip": "Stich",
-            "slashingTooltip": "Hieb",
-            "subtleTooltip": "Raffiniert",
-            "thrownTooltip": "kann geworfen werden",
-            "topplingTooltip": "Umwerfen",
-            "shieldTooltip": "Schild"    
-        },    
-        "ui": {
-            "character-sheet": {
-                "abilities": "Talente",
-                "age": "Alter",
-                "appearance": "Aussehen",
-                "armor": "Rüstung",
-                "background": "Hintergrund",
-                "banes": "Fluch auf",
-                "combat": "Kampf",
-                "coreSkills": "Grundfertigkeiten",
-                "currency": "Münze",
-                "damageBonusAGL": "Schadenbonus GEW",
-                "damageBonusSTR": "Schadenbonus STÄ",
-                "deathRolls": "Todeswürfe",
-                "description": "Beschreibung",
-                "encumbrance": "Traglast",
-                "equipped-armor": "Getragene Rüstung",
-                "equipped-helmet": "Getragener Helm",
-                "equipped-weapon": "Ausgerüstete Waffen",
-                "failures": "Fehlschläge",
-                "ferocity": "Grimmigkeit",
-                "gear": "Ausrüstung",
-                "heroicAbilities": "Heroisches Talent",
-                "hitPoints": "Trefferpunkte",
-                "hp": "TP",
-                "inventory": "Inventar",
-                "kin": "Volk",
-                "kinAbilities": "Volkstalent",
-                "main": "Allgemein",
-                "max-encumbrance": "Max Traglast",
-                "memento": "Memento",
-                "memorized": "V",
-                "monsterAttackFlavor": "<b>{actor}</b> führt einen Monsterangriff von <b>{table} aus</b>.",
-                "monsterAttackTooltip": "Monsterangriff",
-                "monsterDefendSkillFlavor": "Ausweichen oder Parieren",
-                "monsterDefendTooltip": "Ausweichen oder Parieren",
-                "movement": "Bewegung",
-                "notes": "Notizen",
-                "profession": "Beruf",
-                "professionAbilities": "Berufstalente",
-                "restRound": "Schnelle Rast: <b>{actor}</b> rastet eine Runde und stellt <b>{wp}</b> WP her.",
-                "restRoundTooltip": "Schnelle Rast\rEine schnelle Rast, die nur eine Runde dauert.\rWährend einer Runde Rast erholst du W6 WP zurück.\rDu kannst nur einmal pro Schicht eine Runde Rast einlegen.",
-                "restStretch": "Kurze Rast: <b>{actor}</b> rastet ein Viertel und stellt <b>{hp}</b> TP, <b>{wp}</b> WP her und entfernt <b>einen Zustand nach Wahl</b>.<br>Du kannst dein Memento benutzen, um einen weiteren Zustand zu entfernen.",
-                "restStretchTooltip": "Kurze Rast\rRast für ein Viertel und heilt W6 TP, W6 WP und entfernt einen Zustand deiner Wahl.\rDu kannst dein Memento benutzen, um einen zusätzlichen Zustand zu entfernen.\rDu kannst nur einmal pro Schicht ein Viertel-Rast einlegen.",
-                "restShift": "Lange Rast: <b>{actor}</b> rastet für eine Schicht und heilt <b>{hp}</b> TP, <b>{wp}</b> WP and entfernt alle Zustände.",
-                "restShiftTooltip": "Lange Rast\rEine Schicht rasten und alle TP, WP zurückerhalten und alle Zustände entfernen",
-                "school": "Magieschule",
-                "secondarySkills": "Sekundäre Fertigkeiten",
-                "size": "Größe",
-                "skills": "Fertigkeiten",
-                "skillValue": "",
-                "spell": "Zauber",
-                "spells": "Zauber",
-                "successes": "Erfolge",
-                "tiny-items": "Winzige Gegenstände",
-                "traits": "Merkmale",
-                "trained-skills": "Ausgebildete Fertigkeiten",
-                "weakness": "Schwäche",
-                "weapons": "Waffen",
-                "weaponSkills": "Waffenfertigkeiten",
-                "willPoints": "Willenskraftpunkte",
-                "wp": "WP"
-            },
-            "chat":{
-                "damageApplied": "<b>{damage} Schaden</b> angewandt auf <b>{actor}</b>.",
-                "damageAppliedDetails": "{damage} Schaden vs {armor} Rüstungswert.",
-                "damageAppliedMultiplier": "x{multiplier} Multiplikator.",
-                "rollDamage": "Schaden würfeln",
-                "dealDamage": "Schaden anwenden",
-                "dealHalfDamage": "Halben Schaden anwenden",
-                "dealDoubleDamage": "Doppelten Schaden anwenden",
-                "dealSelectedDamage": "Schaden anwenden (ausgewähltes Token)",
-                "dealSelectedHalfDamage": "Halben Schaden anwenden (ausgewähltes Token)",
-                "dealSelectedDoubleDamage": "Doppelten Schaden anwenden (ausgewähltes Token)",
-                "choose": "Wähle",
-                "takeCondition": "{actor} erhält {condition}.",
-                "treasureCard": "1 Schatzkarte",
-                "treasureCards": "{count} Schatzkarten",
-                "failedDeathRoll": "{actor} misslingt ein Todeswurf, da er Schaden bekommen hat während er auf 0 TP steht.",
-                "characterDied": "{actor} stirbt.",
-                "characterProne": "{actor} erreichte 0 TP und ist Liegend."
-            },
-            "dialog": {
-                "banes": "Flüche",
-                "boons": "Segen",
-                "brokenWeaponTitle": "Beschdigte Waffe",
-                "brokenWeaponContent": "Die Waffe ist beschädigt. Bist du dir sicher, sie für eine Handlung einzusetzen?",
-                "performAction": "Handlung durchführen",
-                "cancelAction": "Handlung abbrechen",
-                "enchantedWeapon": "Verzauberte Waffe",
-                "extra": "Extra",
-                "extraDamage": "Zusätzlicher Schaden",
-                "skillRollTitle": "Fertigkeitswurf",
-                "skillRollLabel": "Wurf",
-                "attributeRollTitle": "Attributswurf",
-                "attributeRollLabel": "Wurf",
-                "powerLevel": "Machtstufe",
-                "labelCancel": "Abbrechen",
-                "labelOk": "Ok",
-                "chooseAction": "Wähle Handlung",
-                "useAbility": "Aktiviere Talent",
-                "useAbilityWithWP": "Bezahle <b>{wp}</b> WP um <b>{ability}</b> zu nutzen?",
-                "useAbilityWithoutWP": "Nutze <b>{ability}</b>?",
-                "weaponFeatures": "Waffeneigenschaften"
-            }
-
-        },
-        "INFO": {
-            "professionSkillAdded": "Hinzugefügtes Berufstalent: {skill}"
-        },
-        "SETTINGS": {
-            "keepOwnershipOnImport": "Besitzer bleiben beim Importieren von Abenteuern",
-            "keepOwnershipOnImportHint": "Eigentumsrechte dürfen beim Importieren von Inhalten, die bereits in der Welt existieren, nicht überschrieben werden."
-        },
-        "WARNING": {
-            "kinAbility": "Konnte angeborenes Talent nicht finden: {ability}",
-            "kin": "Konnte Volk nicht finden: {kin}",
-            "profession": "Konnte Beruf nicht finden: {profession}",
-            "professionAbility": "Konnte Berufstalent nicht finden: {ability}",
-            "professionSkill": "Konnte Berufsfertigkeit nicht finden: {skill}",
-            "notEnoughWPForSpell": "Nicht genug Willenskraftpunkt um den Zauber zu wirken",
-            "notEnoughWPForAbility": "Nicht genug Willenskraftpunkte um die Fähigkeit zu aktivieren",
-            "actorNotFound": "Kann Akteur mit ID nicht finden: {id}",
-            "tableNotFound": "Kann Tabelle nicht finden: {id}",
-            "conditionAlreadyTaken": "Der Zustand ist bereits ausgewählt",
-            "noPermissionToModifyActor": "Du hast nicht die nötigen Rechte, um den Akteur zu bearbeiten",
-            "cannotEvaluateFormula": "Formel kann nicht bewertet werden",
-            "missingMonsterAttackTable": "Fehlende Monsterangrifftabelle. Drag and drop eine Tabelle in den Charakterbogen.",
-            "attributeOutOfRange": "Ein Attribut kann nicht höher als 18 oder niedriger als 1 sein.",
-            "macroNoActor": "Fehlender Akteur für Makro.",
-            "macroNoItem": "Fehlender Gegenstand für Makro. Name: {item}. Typ: {type}.",
-            "macroMultipleItems": "Mehrere Gegenstände des gleichen Typs ({type}) und Namen ({item}). Der erste gefundene Gegenstand wird für das Makro genutzt.",
-            "noTreasureTable": "Fehlende Schatztabelle.",
-            "noMeleeMishapTable": "Fehlende Tabelle für Missgeschicke für Nahkampfwaffen.",
-            "noRangedMishapTable": "Fehlende Tabelle für Missgeschicke für Fernkampfwaffen.",
-            "noMagicMishapTable": "Fehlende Tabelle für Missgeschicke für Magie."
-      }
+    "Item": {
+      "ability": "Talent",
+      "armor": "Rüstung",
+      "helmet": "Helm",
+      "item": "Gegenstand",
+      "kin": "Volk",
+      "profession": "Beruf",
+      "skill": "Fertigkeit",
+      "spell": "Zauber",
+      "weapon": "Waffe"
     }
+  },
+  "DoD": {
+    "ability": {
+      "requirement": "Voraussetzung",
+      "type": "Art",
+      "wp": "Willenskraftpunkte",
+      "secondaryAttribute": "Attributsbonus",
+      "useWithWP": "<b>{actor}</b> gibt <b>{wp}</b> WP aus, um @UUID[{uuid}] zu aktivieren.",
+      "useWithoutWP": "<b>{actor}</b> aktiviert @UUID[{uuid}]. Siehe Fähigkeit für WP-Kosten."
+    },
+    "abilityTypes": {
+      "kin": "Volk",
+      "profession": "Beruf",
+      "heroic": "Heroisch"
+    },
+    "ageTypes": {
+      "young": "Jung",
+      "adult": "Erwachsen",
+      "old": "Alt"
+    },
+    "areaOfEffectTypes": {
+      "none": "-",
+      "cone": "Kegel",
+      "sphere": "Sphäre"
+    },
+    "armor": {
+      "banes": "Flüche",
+      "rating": "Rüstungswert",
+      "bonuses": "Rüstungsbonus"
+    },
+    "attackTypes": {
+      "ranged": "Fernkampfangriff",
+      "rangedTooltip": "Angriff mit Fernkampfwaffe",
+      "parry": "Parade",
+      "parryTooltip": "Eine Angriff parieren",
+      "normal": "Normal",
+      "normalTooltip": "Einen normalen Angriff durchführen",
+      "stab": "Stich",
+      "stabTooltip": "Einen Angriff durchführen, der Stichschaden verursacht",
+      "slash": "Hieb",
+      "slashTooltip": "Einen Angriff durchführen, der Hiebschaden verursacht",
+      "weakpoint": "Eine Schwachstelle finden",
+      "weakpointTooltip": "Stich zu und versuche, eine Lücke in der gegnerischen Rüstung zu finden. Dieser Angriff fügt dem Wurf einen Fluch hinzu",
+      "disarm": "Entwaffnen",
+      "disarmTooltip": "Entwaffne den Feind, anstatt ihm Schaden zuzufügen",
+      "topple": "Umwerfen",
+      "toppleTooltip": "Den Gegner zu Boden stürzen lassen, anstatt ihm Schaden zuzufügen",
+      "throw": "Werfen",
+      "throwTooltip": "Wurfangriff"
+    },
+    "attributes": {
+      "str": "STÄ",
+      "con": "KON",
+      "agl": "GEW",
+      "int": "INT",
+      "wil": "WIL",
+      "cha": "CHA"
+    },
+    "castingTimeTypes": {
+      "action": "Aktion",
+      "reaction": "Reaktion",
+      "stretch": "Viertel",
+      "shift": "Schicht"
+    },
+    "conditions": {
+      "str": "Erschöpft",
+      "con": "Kränkelnd",
+      "agl": "Benommen",
+      "int": "Wütend",
+      "wil": "Verängstigt",
+      "cha": "Verzagt"
+    },
+    "currency": {
+      "gold": "Gold",
+      "silver": "Silber",
+      "copper": "Kupfer"
+    },
+    "damageTypes": {
+      "none": "Schaden",
+      "bludgeoning": "Wuchtschaden",
+      "piercing": "Stichschaden",
+      "slashing": "Hiebschaden",
+      "bludgeoningTooltip": "Wuchtschaden",
+      "piercingTooltip": "Stichschaden",
+      "slashingTooltip": "Hiebschaden"
+    },
+    "dice": {
+      "d": "d",
+      "d4": "d4",
+      "d6": "d6",
+      "d8": "d8",
+      "d10": "d10",
+      "d12": "d12",
+      "d20": "d20"
+    },
+    "diceSoNice": {
+      "colorGreen": "Dragonbane Grün",
+      "colorGreenTransparent": "Dragonbane Grün (Transparent)",
+      "colorRed": "Dragonbane Rot",
+      "colorRedTransparent": "Dragonbane Rot (Transparent)",
+      "system": "Dragonbane",
+      "textureTransparent": "Dragonbane (Transparent)"
+    },
+    "item": {
+      "new": "Neues Item"
+    },
+    "gear": {
+      "weight": "Gewicht",
+      "quantity": "Anzahl",
+      "cost": "Kosten",
+      "supply": "Verf.",
+      "worn": "Getragen",
+      "memento": "Memento",
+      "type": "Kategorie",
+      "effect": "Effekt"
+    },
+    "gearTypeName": {
+      "animal": "Tier",
+      "armor": "Rüstung",
+      "clothes": "Kleidung",
+      "container": "Behälter",
+      "hunting": "Jagen",
+      "instrument": "Instrument",
+      "knowledge": "Wissen",
+      "light": "Lichtquelle",
+      "medicine": "Medizin",
+      "melee": "Nahkampfwaffe",
+      "ranged": "Fernkampfwaffe",
+      "service": "Dienstleistung",
+      "tool": "Werkzeug",
+      "trade": "Handelsgut",
+      "travel": "Fahrzeug"
+    },
+    "gripTypes": {
+      "none": "-",
+      "grip1h": "1h",
+      "grip2h": "2h"
+    },
+    "helmet": {
+      "new": "Neuer Helm",
+      "rating": "Rüstungsswert"
+    },
+    "itemTypes": {
+      "item": "Gegenstand",
+      "backpack": "Rucksack"
+    },
+    "journal": {
+      "tableResult": "Resultat",
+      "monsterAttacks": "Monsterangriffe"
+    },
+    "magicCritChoices": {
+      "choiceLabel": "Kritischer Effekt",
+      "doubleDamage": "Doppelter Schaden",
+      "doubleRange": "Doppelte Reichweite",
+      "noCost": "Der Zauber kostet keine WP",
+      "extraSpell": "Du kannst sofort einen anderen Zauber wirken, bekommst aber einen Fluch auf den Wurf"
+    },
+    "critChoices": {
+      "choiceLabel": "Kritischer Effekt",
+      "doubleWeaponDamage": "Doppelter Waffenschaden",
+      "extraAttack": "Freier Angriff gegen einen anderen Gegner",
+      "ignoreArmor": "Rüstung hat keinen Effekt gegen diesen Angriff"
+    },
+    "profession": {
+      "key-attribute": "Schlüsselattribut",
+      "skills": "Fertigkeiten"
+    },
+    "roll": {
+      "dragon": "erfolgreich mit einem Drachen!",
+      "demon": "mit einem Dämon gescheitert!",
+      "success": "erfolgreich.",
+      "failure": "gescheitert.",
+      "attributeRoll": "Attributswurf für <b>{attribute}</b> <b>{result}</b>",
+      "skillRoll": "Fertigkeitswurf für <b>{skill}</b> <b>{result}</b>",
+      "spellRoll": "Fertigkeitswurf für <b>{spell}</b> mit <b>Power Level {powerLevel}</b> <b>{result}</b>",
+      "spellRollTarget": "<b>{spell}</b> at Power Level <b>{powerLevel}</b> targeting <b>{target}</b> <b>{result}</b>",
+      "weaponRoll": "<b>{action}</b> mit <b>{skill}</b> <b>{result}</b>",
+      "weaponRollTarget": "<b>{action}</b> mit <b>{skill}</b> auf <b>{target}</b> <b>{result}</b>",
+      "damage": "<b>{actor}</b> verursacht <b>{damage}</b> Punkte <b>{damageType}</b>.",
+      "damageWeapon": "<b>{actor}</b> verursacht <b>{damage}</b> Punkte <b>{damageType}</b> mit <b>{weapon}</b>.",
+      "damageIgnoreArmor": "<b>{actor}</b> verursacht <b>{damage}</b> Punkte <b>{damageType} ignoriert Rüstung</b> mit <b>{weapon}</b>.",
+      "damageTarget": "<b>{actor}</b> verursacht <b>{damage}</b> Punkte <b>{damageType}</b> an {target}.",
+      "damageWeaponTarget": "<b>{actor}</b> verursacht <b>{damage}</b> Punkte <b>{damageType}</b> an {target} mit <b>{weapon}</b>.",
+      "damageIgnoreArmorTarget": "<b>{actor}</b> verursacht <b>{damage}</b> Punkte <b>{damageType} an {target} ignoriert Rüstung</b> mit <b>{weapon}</b>.",
+      "healing": "<b>{actor}</b> heals for <b>{damage}</b> HP.",
+      "healingTarget": "<b>{actor}</b> heals <b>{target}</b> for <b>{damage}</b> HP.",
+      "pushButtonLabel": "Wurf strapazieren",
+      "pushChoiceLabel": "Wähle einen Zustand:",
+      "parryWeapon": "<p>Wenn der parierte Schaden die Haltbarkeit deiner Waffe übersteigt (<b>{durability}</b>), ist die Waffe beschädigt. Stichschaden kann eine Waffe nicht beschädigen.</p>",
+      "parryShield": "<p>Wenn der parierte Schaden die Haltbarkeit deines Schildes übersteigt (<b>{durability}</b>), ist der Schild beschädigt. Stichschaden kann einen Schild nicht beschädigen.</p>",
+      "deathRoll": "Death Roll <b>{result}</b>"
+    },
+    "secondaryAttributeTypes": {
+      "none": "-",
+      "hitPoints": "Trefferpunkte",
+      "willPoints": "Willenskraftpunkte",
+      "movement": "Bewegung"
+    },
+    "sizeTypes": {
+      "small": "Klein",
+      "normal": "Normal",
+      "large": "Groß",
+      "huge": "Riesig",
+      "swarm": "Schwarm"
+    },
+    "skill": {
+      "advance": "Fortschritt",
+      "advanceTooltip": "Markiert, dass du einen Fortschrittswurf durchführen darfst",
+      "advancementFail": "Konnte <b>{skill}</b> nicht verbessern.",
+      "advancementSuccess": "<b>{skill}</b> increased from <b>{old}</b> to <b>{new}</b>.",
+      "attribute": "Attribut",
+      "attributeTooltip": "Das Attribut der Fertigkeit",
+      "hide": "Verstecken",
+      "hideTooltip": "Versteckt die Fertigkeit von der Liste der ausgebildeten Fertigkeiten",
+      "markAdvancement": "Markiere Fertigkeit für Fortschritt",
+      "rollAdvancement": "Würfle um die Fertigkeit am Ende der sitzung zu verbessern",
+      "type": "Typ",
+      "typeTooltip": "Der Fertigkeitentyp"
+    },
+    "skillTypes": {
+      "core": "Grundfertigkeit",
+      "weapon": "Waffenfertigkeit",
+      "secondary": "Sekundäre Fertigkeit",
+      "magic": "Magieschule"
+    },
+    "spell": {
+      "areaOfEffect": "Bereich",
+      "castingTime": "Wirkdauer",
+      "damage": "Schaden",
+      "damagePerPowerlevel": "Schaden pro Machtstufe",
+      "duration": "Dauer",
+      "general": "Allgemein",
+      "memorized": "Vorbereitet",
+      "prerequisite": "Voraussetzung",
+      "range": "Entfernung",
+      "rangeType": "Reichweite",
+      "rank": "Rang",
+      "requirement": "Voraussetzung",
+      "school": "Magieschule"
+    },
+    "spellDurationTypes": {
+      "instant": "Sofort",
+      "round": "Runde",
+      "stretch": "Viertel",
+      "shift": "Schicht",
+      "concentration": "Konzentration",
+      "permanent": "Permanent"
+    },
+    "spellRangeTypes": {
+      "personal": "Selbst",
+      "touch": "Berühren",
+      "range": "Reichweite",
+      "cone": "Kegel",
+      "sphere": "Sphäre"
+    },
+    "supplyTypes": {
+      "common": "Gewöhnlich",
+      "uncommon": "Ungewöhnlich",
+      "rare": "Selten",
+      "unique": "Einzigartig"
+    },
+    "tables": {
+      "mishapMagic": "Missgeschick - Magie",
+      "mishapMelee": "Missgeschick - Nahkampf",
+      "mishapRanged": "Missgeschick - Fernkampf"
+    },
+    "weapon": {
+      "new": "Neue Waffe",
+      "grip": "Griff",
+      "gripTooltip": "Ob du eine oder zwei Hände brauchst, um die Waffe zu führen.",
+      "str": "STÄ",
+      "strTooltip": "Wie viel STÄ du brauchst, um die Waffe effektiv einzusetzen.",
+      "range": "Reichweite",
+      "rangeShort": "R",
+      "rangeTooltip": "Reichweite gibt die maximale Reichweite in Metern an, bei der die Waffe effektiv eingesetzt werden kann.",
+      "damage": "Schaden",
+      "damageShort": "Sch",
+      "damageTooltip": "Wie viel Schaden die Waffe bei einem Treffer zufügt.",
+      "durability": "Haltbarkeit",
+      "durabilityShort": "Hal.",
+      "durabilityTooltip": "Die Haltbarkeit bestimmt, wie viel Schaden man parieren kann, ohne die Waffe zu beschädigen.",
+      "features": "Eigenschaften",
+      "skill": "Fertigkeiten",
+      "skillValue": "Fertigkeit",
+      "skillValueTooltip": "Fertigkeitswert bei der Verwendung der Waffe.",
+      "broken": "Beschädigt",
+      "brokenTooltip": "Zeigt an, ob die Waffe beschädigt ist",
+      "mainHandTooltip": "Die Waffe wird in der Haupthand geführt.",
+      "offHandTooltip": "Die Waffe wird in der Nebenhand geführt.",
+      "belowRequiredStr": "Below STR"
+    },
+    "unit": {
+      "meterPlural": "Meter"
+    },
+    "weaponFeatureTypes": {
+      "bludgeoning": "Wucht",
+      "long": "Lang",
+      "mounted": "Beritten",
+      "noDamageBonus": "Kein Schadensbonus",
+      "noDamageBonusTooltip": "Kein Schadensbonus",
+      "noparry": "Keine Parade",
+      "piercing": "Stich",
+      "quiver": "Köcher",
+      "quiverTooltip": "Erfordert Köcher",
+      "slashing": "Hieb",
+      "subtle": "Raffiniert",
+      "thrown": "Geworfen",
+      "toppling": "Umwerfen",
+      "shield": "Schild",
+      "bludgeoningTooltip": "Wucht",
+      "longTooltip": "Lang",
+      "mountedTooltip": "Erfordert ein kampferprobtes Reittier",
+      "noparryTooltip": "Kann nicht zum Parieren verwendet werden",
+      "piercingTooltip": "Stich",
+      "slashingTooltip": "Hieb",
+      "subtleTooltip": "Raffiniert",
+      "thrownTooltip": "kann geworfen werden",
+      "topplingTooltip": "Umwerfen",
+      "shieldTooltip": "Schild"
+    },
+    "ui": {
+      "character-sheet": {
+        "abilities": "Talente",
+        "age": "Alter",
+        "appearance": "Aussehen",
+        "armor": "Rüstung",
+        "background": "Hintergrund",
+        "banes": "Fluch auf",
+        "combat": "Kampf",
+        "coreSkills": "Grundfertigkeiten",
+        "currency": "Münze",
+        "damageBonusAGL": "Schadenbonus GEW",
+        "damageBonusSTR": "Schadenbonus STÄ",
+        "deathRolls": "Todeswürfe",
+        "description": "Beschreibung",
+        "encumbrance": "Traglast",
+        "equipped-armor": "Getragene Rüstung",
+        "equipped-helmet": "Getragener Helm",
+        "equipped-weapon": "Ausgerüstete Waffen",
+        "failures": "Fehlschläge",
+        "ferocity": "Grimmigkeit",
+        "gear": "Ausrüstung",
+        "heroicAbilities": "Heroisches Talent",
+        "hitPoints": "Trefferpunkte",
+        "hp": "TP",
+        "inventory": "Inventar",
+        "kin": "Volk",
+        "kinAbilities": "Volkstalent",
+        "main": "Allgemein",
+        "max-encumbrance": "Max Traglast",
+        "memento": "Memento",
+        "memorized": "V",
+        "monsterAttackFlavor": "<b>{actor}</b> führt einen Monsterangriff von <b>{table} aus</b>.",
+        "monsterAttackTooltip": "Monsterangriff",
+        "monsterDefendSkillFlavor": "Ausweichen oder Parieren",
+        "monsterDefendTooltip": "Ausweichen oder Parieren",
+        "movement": "Bewegung",
+        "notes": "Notizen",
+        "profession": "Beruf",
+        "professionAbilities": "Berufstalente",
+        "restRound": "Schnelle Rast: <b>{actor}</b> rastet eine Runde und stellt <b>{wp}</b> WP her.",
+        "restRoundTooltip": "Schnelle Rast\rEine schnelle Rast, die nur eine Runde dauert.\rWährend einer Runde Rast erholst du W6 WP zurück.\rDu kannst nur einmal pro Schicht eine Runde Rast einlegen.",
+        "restStretch": "Kurze Rast: <b>{actor}</b> rastet ein Viertel und stellt <b>{hp}</b> TP, <b>{wp}</b> WP her und entfernt <b>einen Zustand nach Wahl</b>.<br>Du kannst dein Memento benutzen, um einen weiteren Zustand zu entfernen.",
+        "restStretchTooltip": "Kurze Rast\rRast für ein Viertel und heilt W6 TP, W6 WP und entfernt einen Zustand deiner Wahl.\rDu kannst dein Memento benutzen, um einen zusätzlichen Zustand zu entfernen.\rDu kannst nur einmal pro Schicht ein Viertel-Rast einlegen.",
+        "restShift": "Lange Rast: <b>{actor}</b> rastet für eine Schicht und heilt <b>{hp}</b> TP, <b>{wp}</b> WP and entfernt alle Zustände.",
+        "restShiftTooltip": "Lange Rast\rEine Schicht rasten und alle TP, WP zurückerhalten und alle Zustände entfernen",
+        "school": "Magieschule",
+        "secondarySkills": "Sekundäre Fertigkeiten",
+        "size": "Größe",
+        "skills": "Fertigkeiten",
+        "skillValue": "",
+        "spell": "Zauber",
+        "spells": "Zauber",
+        "successes": "Erfolge",
+        "tiny-items": "Winzige Gegenstände",
+        "traits": "Merkmale",
+        "trained-skills": "Ausgebildete Fertigkeiten",
+        "weakness": "Schwäche",
+        "weapons": "Waffen",
+        "weaponSkills": "Waffenfertigkeiten",
+        "willPoints": "Willenskraftpunkte",
+        "wp": "WP"
+      },
+      "chat": {
+        "damageApplied": "<b>{damage} Schaden</b> angewandt auf <b>{actor}</b>.",
+        "damageAppliedDetails": "{damage} Schaden vs {armor} Rüstungswert.",
+        "damageAppliedMultiplier": "x{multiplier} Multiplikator.",
+        "rollDamage": "Schaden würfeln",
+        "dealDamage": "Schaden anwenden",
+        "dealHalfDamage": "Halben Schaden anwenden",
+        "dealDoubleDamage": "Doppelten Schaden anwenden",
+        "dealSelectedDamage": "Schaden anwenden (ausgewähltes Token)",
+        "dealSelectedHalfDamage": "Halben Schaden anwenden (ausgewähltes Token)",
+        "dealSelectedDoubleDamage": "Doppelten Schaden anwenden (ausgewähltes Token)",
+        "choose": "Wähle",
+        "takeCondition": "{actor} erhält {condition}.",
+        "treasureCard": "1 Schatzkarte",
+        "treasureCards": "{count} Schatzkarten",
+        "failedDeathRoll": "{actor} misslingt ein Todeswurf, da er Schaden bekommen hat während er auf 0 TP steht.",
+        "characterDied": "{actor} stirbt.",
+        "characterProne": "{actor} erreichte 0 TP und ist Liegend."
+      },
+      "dialog": {
+        "banes": "Flüche",
+        "boons": "Segen",
+        "brokenWeaponTitle": "Beschdigte Waffe",
+        "brokenWeaponContent": "Die Waffe ist beschädigt. Bist du dir sicher, sie für eine Handlung einzusetzen?",
+        "performAction": "Handlung durchführen",
+        "cancelAction": "Handlung abbrechen",
+        "enchantedWeapon": "Verzauberte Waffe",
+        "extra": "Extra",
+        "extraDamage": "Zusätzlicher Schaden",
+        "skillRollTitle": "Fertigkeitswurf",
+        "skillRollLabel": "Wurf",
+        "attributeRollTitle": "Attributswurf",
+        "attributeRollLabel": "Wurf",
+        "powerLevel": "Machtstufe",
+        "labelCancel": "Abbrechen",
+        "labelOk": "Ok",
+        "chooseAction": "Wähle Handlung",
+        "useAbility": "Aktiviere Talent",
+        "useAbilityWithWP": "Bezahle <b>{wp}</b> WP um <b>{ability}</b> zu nutzen?",
+        "useAbilityWithoutWP": "Nutze <b>{ability}</b>?",
+        "weaponFeatures": "Waffeneigenschaften",
+        "passItemToAnotherCharacter": "<p>Do you nat to pass <b>{item}</b> to <b>{character}</b>?</p>"
+      }
+    },
+    "INFO": {
+      "professionSkillAdded": "Hinzugefügtes Berufstalent: {skill}"
+    },
+    "SETTINGS": {
+      "keepOwnershipOnImport": "Besitzer bleiben beim Importieren von Abenteuern",
+      "keepOwnershipOnImportHint": "Eigentumsrechte dürfen beim Importieren von Inhalten, die bereits in der Welt existieren, nicht überschrieben werden."
+    },
+    "WARNING": {
+      "kinAbility": "Konnte angeborenes Talent nicht finden: {ability}",
+      "kin": "Konnte Volk nicht finden: {kin}",
+      "profession": "Konnte Beruf nicht finden: {profession}",
+      "professionAbility": "Konnte Berufstalent nicht finden: {ability}",
+      "professionSkill": "Konnte Berufsfertigkeit nicht finden: {skill}",
+      "notEnoughWPForSpell": "Nicht genug Willenskraftpunkt um den Zauber zu wirken",
+      "notEnoughWPForAbility": "Nicht genug Willenskraftpunkte um die Fähigkeit zu aktivieren",
+      "actorNotFound": "Kann Akteur mit ID nicht finden: {id}",
+      "tableNotFound": "Kann Tabelle nicht finden: {id}",
+      "conditionAlreadyTaken": "Der Zustand ist bereits ausgewählt",
+      "noPermissionToModifyActor": "Du hast nicht die nötigen Rechte, um den Akteur zu bearbeiten",
+      "cannotEvaluateFormula": "Formel kann nicht bewertet werden",
+      "missingMonsterAttackTable": "Fehlende Monsterangrifftabelle. Drag and drop eine Tabelle in den Charakterbogen.",
+      "attributeOutOfRange": "Ein Attribut kann nicht höher als 18 oder niedriger als 1 sein.",
+      "macroNoActor": "Fehlender Akteur für Makro.",
+      "macroNoItem": "Fehlender Gegenstand für Makro. Name: {item}. Typ: {type}.",
+      "macroMultipleItems": "Mehrere Gegenstände des gleichen Typs ({type}) und Namen ({item}). Der erste gefundene Gegenstand wird für das Makro genutzt.",
+      "noTreasureTable": "Fehlende Schatztabelle.",
+      "noMeleeMishapTable": "Fehlende Tabelle für Missgeschicke für Nahkampfwaffen.",
+      "noRangedMishapTable": "Fehlende Tabelle für Missgeschicke für Fernkampfwaffen.",
+      "noMagicMishapTable": "Fehlende Tabelle für Missgeschicke für Magie."
+    }
+  }
 }

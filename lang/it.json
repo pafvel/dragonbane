@@ -1,20 +1,20 @@
 {
   "ACTOR": {
-      "TypeCharacter": "Personaggio Giocante",
-      "TypeNpc": "Personaggio Non-Giocante",
-      "TypeMonster": "Monster"
+    "TypeCharacter": "Personaggio Giocante",
+    "TypeNpc": "Personaggio Non-Giocante",
+    "TypeMonster": "Monster"
   },
-"ITEM": {
-  "TypeAbility": "Capacità",
-  "TypeArmor": "Armatura",
-  "TypeHelmet": "Elmo",
-  "TypeItem": "Oggetto",
-  "TypeKin": "Stirpe",
-  "TypeProfession": "Professione",
-  "TypeSkill": "Abilità",
-  "TypeSpell": "Incantesimo",
-  "TypeWeapon": "Arma"
-},
+  "ITEM": {
+    "TypeAbility": "Capacità",
+    "TypeArmor": "Armatura",
+    "TypeHelmet": "Elmo",
+    "TypeItem": "Oggetto",
+    "TypeKin": "Stirpe",
+    "TypeProfession": "Professione",
+    "TypeSkill": "Abilità",
+    "TypeSpell": "Incantesimo",
+    "TypeWeapon": "Arma"
+  },
   "TYPES": {
     "Actor": {
       "character": "Personaggio Giocante",
@@ -42,27 +42,27 @@
       "useWithWP": "<b>{actor}</b> spende <b>{wp}</b> PV per attivare @UUID[{uuid}].",
       "useWithoutWP": "<b>{actor}</b> attiva @UUID[{uuid}]. Vedi la capacità per i PV."
     },
-      "abilityTypes": {
-          "kin": "Stirpe",
-          "profession": "Professione",
-          "heroic": "Eroico"
-      },
-      "ageTypes": {
-          "young": "Giovane",
-          "adult": "Adulto",
-          "old": "Vecchio"
-      },
-      "areaOfEffectTypes": {
-          "none": "-",
-          "cone": "Cono",
-          "sphere": "Sfera"
-      },
-      "armor": {
-          "new": "Nuova Armatura",
-          "banes": "Castighi",
-          "rating": "Valore Armatura",
-          "bonuses": "Bonus Armatura"
-      },
+    "abilityTypes": {
+      "kin": "Stirpe",
+      "profession": "Professione",
+      "heroic": "Eroico"
+    },
+    "ageTypes": {
+      "young": "Giovane",
+      "adult": "Adulto",
+      "old": "Vecchio"
+    },
+    "areaOfEffectTypes": {
+      "none": "-",
+      "cone": "Cono",
+      "sphere": "Sfera"
+    },
+    "armor": {
+      "new": "Nuova Armatura",
+      "banes": "Castighi",
+      "rating": "Valore Armatura",
+      "bonuses": "Bonus Armatura"
+    },
     "attackTypes": {
       "ranged": "Attacco a Distanza",
       "rangedTooltip": "Attacco con Arma a Gittata",
@@ -83,33 +83,33 @@
       "throw": "Lanciare",
       "throwTooltip": "Attacco di lancio"
     },
-      "attributes": {
-          "str": "FOR",
-          "con": "COS",
-          "agl": "AGI",
-          "int": "INT",
-          "wil": "VOL",
-          "cha": "CAR"
-      },
-      "castingTimeTypes": {
-          "action": "Azione",
-          "reaction": "Reazione",
-          "stretch": "Intervallo",
-          "shift": "Periodo"
-      },
-      "conditions": {
-          "str": "Esausto",
-          "con": "Malaticcio",
-          "agl": "Disorientato",
-          "int": "Arrabbiato",
-          "wil": "Spaventato",
-          "cha": "Scoraggiato"
-      },
-      "currency": {
-          "gold": "Oro",
-          "silver": "Argento",
-          "copper": "Rame"
-      },
+    "attributes": {
+      "str": "FOR",
+      "con": "COS",
+      "agl": "AGI",
+      "int": "INT",
+      "wil": "VOL",
+      "cha": "CAR"
+    },
+    "castingTimeTypes": {
+      "action": "Azione",
+      "reaction": "Reazione",
+      "stretch": "Intervallo",
+      "shift": "Periodo"
+    },
+    "conditions": {
+      "str": "Esausto",
+      "con": "Malaticcio",
+      "agl": "Disorientato",
+      "int": "Arrabbiato",
+      "wil": "Spaventato",
+      "cha": "Scoraggiato"
+    },
+    "currency": {
+      "gold": "Oro",
+      "silver": "Argento",
+      "copper": "Rame"
+    },
     "damageTypes": {
       "none": "Danno",
       "bludgeoning": "Danno Contundente",
@@ -119,26 +119,26 @@
       "piercingTooltip": "Danno Perforante",
       "slashingTooltip": "Danno Tagliente"
     },
-      "dice": {
-          "d": "D",
-          "d4": "D4",
-          "d6": "D6",
-          "d8": "D8",
-          "d10": "D10",
-          "d12": "D12",
-          "d20": "D20"
-      },
-      "diceSoNice": {
-          "colorGreen": "Dragonbane Green",
-          "colorGreenTransparent": "Dragonbane Green (Transparent)",
-          "colorRed": "Dragonbane Red",
-          "colorRedTransparent": "Dragonbane Red (Transparent)",
-          "system": "Dragonbane",
-          "textureTransparent": "Dragonbane (Transparent)"
-      },
-      "item": {
-          "new": "Nuovo Oggetto"
-      },
+    "dice": {
+      "d": "D",
+      "d4": "D4",
+      "d6": "D6",
+      "d8": "D8",
+      "d10": "D10",
+      "d12": "D12",
+      "d20": "D20"
+    },
+    "diceSoNice": {
+      "colorGreen": "Dragonbane Green",
+      "colorGreenTransparent": "Dragonbane Green (Transparent)",
+      "colorRed": "Dragonbane Red",
+      "colorRedTransparent": "Dragonbane Red (Transparent)",
+      "system": "Dragonbane",
+      "textureTransparent": "Dragonbane (Transparent)"
+    },
+    "item": {
+      "new": "Nuovo Oggetto"
+    },
     "gear": {
       "weight": "Peso",
       "quantity": "Quantità",
@@ -166,36 +166,36 @@
       "trade": "Oggetto",
       "travel": "Veicolo"
     },
-      "gripTypes": {
-          "none": "-",
-          "grip1h": "1m",
-          "grip2h": "2m"
-      },
-      "helmet": {
-          "new": "Nuovo Elmo",
-          "rating": "Valore Armatura"
-      },
-      "itemTypes": {
-          "item": "Oggetto",
-          "backpack": "Zaino"
-      },
-      "journal": {
-          "tableResult": "Risultato",
-          "monsterAttacks": "Attacchi Mostro"
-      },
-      "magicCritChoices": {
-          "choiceLabel": "Effetto Critico",
-          "doubleDamage": "Doppio danno",
-          "doubleRange": "Doppia gittata",
-          "noCost": "L'incantesimo non costa alcun PV'",
-          "extraSpell": "Puoi immediatamente lanciare un altro incantesimo, ma ottieni un Castigo sul tiro"
-      },
-      "critChoices": {
-          "choiceLabel": "Effatto Critico",
-          "doubleWeaponDamage": "Danno da Doppia Arma",
-          "extraAttack": "Attacco gratuito contro un altro nemico",
-          "ignoreArmor": "L'armatura non ha alcun effetto contro l'attacco"
-      },
+    "gripTypes": {
+      "none": "-",
+      "grip1h": "1m",
+      "grip2h": "2m"
+    },
+    "helmet": {
+      "new": "Nuovo Elmo",
+      "rating": "Valore Armatura"
+    },
+    "itemTypes": {
+      "item": "Oggetto",
+      "backpack": "Zaino"
+    },
+    "journal": {
+      "tableResult": "Risultato",
+      "monsterAttacks": "Attacchi Mostro"
+    },
+    "magicCritChoices": {
+      "choiceLabel": "Effetto Critico",
+      "doubleDamage": "Doppio danno",
+      "doubleRange": "Doppia gittata",
+      "noCost": "L'incantesimo non costa alcun PV'",
+      "extraSpell": "Puoi immediatamente lanciare un altro incantesimo, ma ottieni un Castigo sul tiro"
+    },
+    "critChoices": {
+      "choiceLabel": "Effatto Critico",
+      "doubleWeaponDamage": "Danno da Doppia Arma",
+      "extraAttack": "Attacco gratuito contro un altro nemico",
+      "ignoreArmor": "L'armatura non ha alcun effetto contro l'attacco"
+    },
     "profession": {
       "key-attribute": "Attributo Chiave",
       "skills": "Abilità"
@@ -227,13 +227,13 @@
       "hitPoints": "Punti Ferita",
       "willPoints": "Punti Volontà"
     },
-      "sizeTypes": {
-          "small": "Piccolo",
-          "normal": "Normale",
-          "large": "Grande",
-          "huge": "Enorme",
-          "swarm": "Sciame"
-      },
+    "sizeTypes": {
+      "small": "Piccolo",
+      "normal": "Normale",
+      "large": "Grande",
+      "huge": "Enorme",
+      "swarm": "Sciame"
+    },
     "skill": {
       "advance": "Avanza",
       "advanceTooltip": "Può fare un Tiro Avanzamento",
@@ -254,47 +254,47 @@
       "secondary": "Abilità Secondaria",
       "magic": "Scuola di magia"
     },
-      "spell": {
-          "areaOfEffect": "Area",
-          "castingTime": "Tempo di lancio",
-          "damage": "Danno",
-          "damagePerPowerlevel": "Danno per Livello Potere",
-          "duration": "Durata",
-          "general": "Generale",
-          "memorized": "Memorizzato",
-          "prerequisite": "Prerequisito",
-          "range": "Portata",
-          "rangeType": "Raggio",
-          "rank": "Grado",
-          "requirement": "Requisiti",
-          "school": "Scuola di Magia"
-      },
-      "spellDurationTypes": {
-          "instant": "Istantaneo",
-          "round": "Round",
-          "stretch": "Intervallo",
-          "shift": "Periodo",
-          "concentration": "Concentrazione",
-          "permanent": "Permanente"
-      },
-      "spellRangeTypes": {
-          "personal": "SeStesso",
-          "touch": "Tocco",
-          "range": "Portata",
-          "cone": "Cono",
-          "sphere": "Sfera"
-      },
-      "supplyTypes": {
-          "common": "Comune",
-          "uncommon": "Non Comune",
-          "rare": "Raro",
-          "unique": "Unico"
-      },
-      "tables": {
-          "mishapMagic": "Incidente - Magico",
-          "mishapMelee": "Incidente - Mischia",
-          "mishapRanged": "Incidente - Distanza"
-      },
+    "spell": {
+      "areaOfEffect": "Area",
+      "castingTime": "Tempo di lancio",
+      "damage": "Danno",
+      "damagePerPowerlevel": "Danno per Livello Potere",
+      "duration": "Durata",
+      "general": "Generale",
+      "memorized": "Memorizzato",
+      "prerequisite": "Prerequisito",
+      "range": "Portata",
+      "rangeType": "Raggio",
+      "rank": "Grado",
+      "requirement": "Requisiti",
+      "school": "Scuola di Magia"
+    },
+    "spellDurationTypes": {
+      "instant": "Istantaneo",
+      "round": "Round",
+      "stretch": "Intervallo",
+      "shift": "Periodo",
+      "concentration": "Concentrazione",
+      "permanent": "Permanente"
+    },
+    "spellRangeTypes": {
+      "personal": "SeStesso",
+      "touch": "Tocco",
+      "range": "Portata",
+      "cone": "Cono",
+      "sphere": "Sfera"
+    },
+    "supplyTypes": {
+      "common": "Comune",
+      "uncommon": "Non Comune",
+      "rare": "Raro",
+      "unique": "Unico"
+    },
+    "tables": {
+      "mishapMagic": "Incidente - Magico",
+      "mishapMelee": "Incidente - Mischia",
+      "mishapRanged": "Incidente - Distanza"
+    },
     "weapon": {
       "new": "Nuova Arma",
       "grip": "Presa",
@@ -320,9 +320,9 @@
       "offHandTooltip": "Stai impugnando l'arma con la tua mano destra.",
       "belowRequiredStr": "Sotto FOR"
     },
-      "unit": {
-          "meterPlural": "metri"
-      },
+    "unit": {
+      "meterPlural": "metri"
+    },
     "weaponFeatureTypes": {
       "bludgeoning": "Contundente",
       "bludgeoningTooltip": "Contundente",
@@ -351,128 +351,129 @@
       "unarmed": "Disarmato",
       "unarmedTooltip": "le armi disarmate non contano contro le armi impugnate"
     },
-      "ui": {
-        "character-sheet": {
-          "abilities": "Capacità",
-          "age": "Età",
-          "and": "&",
-          "appearance": "Aspetto",
-          "armor": "Armatura",
-          "background": "Background",
-          "banes": "Castigo su",
-          "combat": "Combattimento",
-          "coreSkills": "Abilità Generali",
-          "create-armor": "Cea Armatura",
-          "create-helmet": "Crea Elmo",
-          "create-item": "Crea Oggetto",
-          "create-weapon": "Crea Arma",
-          "currency": "Monete",
-          "damageBonusAGL": "Dnn Bonus AGI",
-          "damageBonusSTR": "Dnn Bonus FOR",
-          "deathRolls": "Tiri Morte",
-          "description": "Descrizione",
-          "encumbrance": "Ingombro",
-          "equipped-armor": "Armatura Equipaggiata",
-          "equipped-helmet": "Elmo Equipaggiato",
-          "equipped-weapon": "Armi Equipaggiate",
-          "failures": "Fallimenti",
-          "ferocity": "Ferocia",
-          "gear": "Attrezzatura",
-          "heroicAbilities": "Capacità Eroiche",
-          "hitPoints": "Punti Ferita",
-          "hp": "PF",
-          "inventory": "Inventario",
-          "kin": "Stirpe",
-          "kinAbilities": "Capacità di Stirpe",
-          "main": "Principale",
-          "max-encumbrance": "Max Ingombro",
-          "memento": "Cimelio",
-          "memorized": "M",
-          "monsterAttackFlavor": "<b>{actor}</b> effettua un Attacco Mostruoso da <b>{table}</b>.",
-          "monsterAttackTooltip": "Attacco Mostruoso",
-          "monsterDefendSkillFlavor": "Schiva o Para",
-          "monsterDefendTooltip": "Schiva o Para",
-          "movement": "Movimento",
-          "notes": "Note",
-          "profession": "Professione",
-          "professionAbilities": "Capacità di Professione",
-          "restRound": "Round di Riposo: <b>{actor}</b> riposa 1 round e recupera <b>{wp}</b> PV.",
-          "restRoundTooltip": "Round di Riposo\rA un riposo veloce che dura un singolo round.\rDurante un round di riposo recuperi D6 PV.\rPuoi avere un round di riposo una volta per Periodo.",
-          "restStretch": "Riposo Breve: <b>{actor}</b> riposa per un intervallo e recupera <b>{hp}</b> PF, <b>{wp}</b> PV e <b>da una condizione a tua scelta</b>.<br>Puoi usare il tuo cimelio per guarire da una altra condizione.",
-          "restStretchTooltip": "Riposo Breve\rRiposi per un intervallo e guarisci D6 PF, D6 PV e da una condizione a tua scelta.\rPuoi usare il tuo cimelio per guarire da una altra condizione.\rPuoi effettuare un solo riposo breve per Periodo.",
-          "restShift": "Riposo Lungo: <b>{actor}</b> riposa per un Periodo e guarisce <b>{hp}</b> PF, <b>{wp}</b> PV e tutte le condizioni.",
-          "restShiftTooltip": "Riposo Lungo\rRiposa per un periodo e guarisce tutti i PF, PV e condizioni",
-          "rollDeathRoll": "Tira un Tiro Morte",
-          "school": "Scuola di Magia",
-          "secondarySkills": "Abilità Secondarie",
-          "size": "Taglia",
-          "skills": "Abilità",
-          "skillValue": "",
-          "spell": "Incantesimo",
-          "spells": "Incantesimi",
-          "successes": "Successi",
-          "tiny-items": "Oggetti Minuscoli",
-          "traits": "Tratti",
-          "trained-skills": "Abilità Addestrate",
-          "weakness": "Debolezza",
-          "weapons": "Armi",
-          "weaponSkills": "Abilità Armi",
-          "willPoints": "Punti Volontà",
-          "wp": "PV"
-        },
-        "chat": {
-          "damageApplied": "<b>{damage} danno</b> applicato a <b>{actor}</b>.",
-          "damageAppliedDetails": "{damage} danno contro {armor} valore armatura.",
-          "damageAppliedMultiplier": "moltiplicatore x{multiplier}.",
-          "healingApplied": "<b>{actor}</b> guerisce <b>{damage}</b> PF.",
-          "rollDamage": "Tira danno",
-          "dealDamage": "Infliggi danno",
-          "dealHalfDamage": "Infliggi metà danno",
-          "dealDoubleDamage": "Infliggi doppio danno",
-          "dealDamageIgnoreArmor": "Infliggi danno, ignora armatura",
-          "dealSelectedDamage": "Infliggi danno (selezionato)",
-          "dealSelectedHalfDamage": "Infliggi metà danno (selezionato)",
-          "dealSelectedDoubleDamage": "Infliggi doppio danno (selezionato)",
-          "dealSelectedDamageIgnoreArmor": "Infliggi danno, ignora armatura (selezionato)",
-          "healSelectedDamage": "Guarisci danno (selezionato)",
-          "choose": "Scegli",
-          "takeCondition": "{actor} diventa {condition}.",
-          "treasureCard": "1 Carta Tesoro",
-          "treasureCards": "{count} Carte Tesoro",
-          "failedDeathRoll": "{actor} ha fallito un tiro morte dovuto al prendere danno a 0 PF.",
-          "characterDied": "{actor} è morto.",
-          "characterSurvived": "{actor} è sfuggito alla morte e recupera [[/roll D6]] PF.",
-          "characterProne": "{actor} ha raggiunto 0 PF ed è prono.",
-          "castMagicTrick": "<b>{actor}</b> lancia <b>{spell}</b>."
-        },
-        "dialog": {
-          "banes": "Castighi",
-          "boons": "Favori",
-          "brokenWeaponTitle": "Arma Rotta",
-          "brokenWeaponContent": "L'arma è rotta. Sei sicuro di volerla usare in un'azione?",
-          "performAction": "Esegui Azione",
-          "cancelAction": "Cancella Azione",
-          "enchantedWeapon": "Arma incantata",
-          "extra": "Extra",
-          "extraDamage": "Danno addizionale",
-          "skillRollTitle": "Tiro Abilità",
-          "skillRollLabel": "Tiro",
-          "attributeRollTitle": "Tiro Attributo",
-          "attributeRollLabel": "Tiro",
-          "powerLevel": "Livello Potere",
-          "labelCancel": "Cancella",
-          "labelOk": "Ok",
-          "chooseAction": "Scegli azione",
-          "useAbility": "Attiva Capacità",
-          "useAbilityWithWP": "Spendi <b>{wp}</b> PV per usare <b>{ability}</b>?",
-          "useAbilityWithoutWP": "Usare <b>{ability}</b>?",
-          "weaponFeatures": "Caratteristiche Arma",
-          "castMagicTrickTitle": "Lancia un Trucchetto Magico",
-          "castMagicTrickContent": "Spendi <b>1</b> PV per lanciare <b>{spell}</b>?",
-          "deleteItemTitle": "Cancella {item}",
-          "deleteItemContent": "Vuoi cancellare <b>{item}</b>?"
-        }
+    "ui": {
+      "character-sheet": {
+        "abilities": "Capacità",
+        "age": "Età",
+        "and": "&",
+        "appearance": "Aspetto",
+        "armor": "Armatura",
+        "background": "Background",
+        "banes": "Castigo su",
+        "combat": "Combattimento",
+        "coreSkills": "Abilità Generali",
+        "create-armor": "Cea Armatura",
+        "create-helmet": "Crea Elmo",
+        "create-item": "Crea Oggetto",
+        "create-weapon": "Crea Arma",
+        "currency": "Monete",
+        "damageBonusAGL": "Dnn Bonus AGI",
+        "damageBonusSTR": "Dnn Bonus FOR",
+        "deathRolls": "Tiri Morte",
+        "description": "Descrizione",
+        "encumbrance": "Ingombro",
+        "equipped-armor": "Armatura Equipaggiata",
+        "equipped-helmet": "Elmo Equipaggiato",
+        "equipped-weapon": "Armi Equipaggiate",
+        "failures": "Fallimenti",
+        "ferocity": "Ferocia",
+        "gear": "Attrezzatura",
+        "heroicAbilities": "Capacità Eroiche",
+        "hitPoints": "Punti Ferita",
+        "hp": "PF",
+        "inventory": "Inventario",
+        "kin": "Stirpe",
+        "kinAbilities": "Capacità di Stirpe",
+        "main": "Principale",
+        "max-encumbrance": "Max Ingombro",
+        "memento": "Cimelio",
+        "memorized": "M",
+        "monsterAttackFlavor": "<b>{actor}</b> effettua un Attacco Mostruoso da <b>{table}</b>.",
+        "monsterAttackTooltip": "Attacco Mostruoso",
+        "monsterDefendSkillFlavor": "Schiva o Para",
+        "monsterDefendTooltip": "Schiva o Para",
+        "movement": "Movimento",
+        "notes": "Note",
+        "profession": "Professione",
+        "professionAbilities": "Capacità di Professione",
+        "restRound": "Round di Riposo: <b>{actor}</b> riposa 1 round e recupera <b>{wp}</b> PV.",
+        "restRoundTooltip": "Round di Riposo\rA un riposo veloce che dura un singolo round.\rDurante un round di riposo recuperi D6 PV.\rPuoi avere un round di riposo una volta per Periodo.",
+        "restStretch": "Riposo Breve: <b>{actor}</b> riposa per un intervallo e recupera <b>{hp}</b> PF, <b>{wp}</b> PV e <b>da una condizione a tua scelta</b>.<br>Puoi usare il tuo cimelio per guarire da una altra condizione.",
+        "restStretchTooltip": "Riposo Breve\rRiposi per un intervallo e guarisci D6 PF, D6 PV e da una condizione a tua scelta.\rPuoi usare il tuo cimelio per guarire da una altra condizione.\rPuoi effettuare un solo riposo breve per Periodo.",
+        "restShift": "Riposo Lungo: <b>{actor}</b> riposa per un Periodo e guarisce <b>{hp}</b> PF, <b>{wp}</b> PV e tutte le condizioni.",
+        "restShiftTooltip": "Riposo Lungo\rRiposa per un periodo e guarisce tutti i PF, PV e condizioni",
+        "rollDeathRoll": "Tira un Tiro Morte",
+        "school": "Scuola di Magia",
+        "secondarySkills": "Abilità Secondarie",
+        "size": "Taglia",
+        "skills": "Abilità",
+        "skillValue": "",
+        "spell": "Incantesimo",
+        "spells": "Incantesimi",
+        "successes": "Successi",
+        "tiny-items": "Oggetti Minuscoli",
+        "traits": "Tratti",
+        "trained-skills": "Abilità Addestrate",
+        "weakness": "Debolezza",
+        "weapons": "Armi",
+        "weaponSkills": "Abilità Armi",
+        "willPoints": "Punti Volontà",
+        "wp": "PV"
       },
+      "chat": {
+        "damageApplied": "<b>{damage} danno</b> applicato a <b>{actor}</b>.",
+        "damageAppliedDetails": "{damage} danno contro {armor} valore armatura.",
+        "damageAppliedMultiplier": "moltiplicatore x{multiplier}.",
+        "healingApplied": "<b>{actor}</b> guerisce <b>{damage}</b> PF.",
+        "rollDamage": "Tira danno",
+        "dealDamage": "Infliggi danno",
+        "dealHalfDamage": "Infliggi metà danno",
+        "dealDoubleDamage": "Infliggi doppio danno",
+        "dealDamageIgnoreArmor": "Infliggi danno, ignora armatura",
+        "dealSelectedDamage": "Infliggi danno (selezionato)",
+        "dealSelectedHalfDamage": "Infliggi metà danno (selezionato)",
+        "dealSelectedDoubleDamage": "Infliggi doppio danno (selezionato)",
+        "dealSelectedDamageIgnoreArmor": "Infliggi danno, ignora armatura (selezionato)",
+        "healSelectedDamage": "Guarisci danno (selezionato)",
+        "choose": "Scegli",
+        "takeCondition": "{actor} diventa {condition}.",
+        "treasureCard": "1 Carta Tesoro",
+        "treasureCards": "{count} Carte Tesoro",
+        "failedDeathRoll": "{actor} ha fallito un tiro morte dovuto al prendere danno a 0 PF.",
+        "characterDied": "{actor} è morto.",
+        "characterSurvived": "{actor} è sfuggito alla morte e recupera [[/roll D6]] PF.",
+        "characterProne": "{actor} ha raggiunto 0 PF ed è prono.",
+        "castMagicTrick": "<b>{actor}</b> lancia <b>{spell}</b>."
+      },
+      "dialog": {
+        "banes": "Castighi",
+        "boons": "Favori",
+        "brokenWeaponTitle": "Arma Rotta",
+        "brokenWeaponContent": "L'arma è rotta. Sei sicuro di volerla usare in un'azione?",
+        "performAction": "Esegui Azione",
+        "cancelAction": "Cancella Azione",
+        "enchantedWeapon": "Arma incantata",
+        "extra": "Extra",
+        "extraDamage": "Danno addizionale",
+        "skillRollTitle": "Tiro Abilità",
+        "skillRollLabel": "Tiro",
+        "attributeRollTitle": "Tiro Attributo",
+        "attributeRollLabel": "Tiro",
+        "powerLevel": "Livello Potere",
+        "labelCancel": "Cancella",
+        "labelOk": "Ok",
+        "chooseAction": "Scegli azione",
+        "useAbility": "Attiva Capacità",
+        "useAbilityWithWP": "Spendi <b>{wp}</b> PV per usare <b>{ability}</b>?",
+        "useAbilityWithoutWP": "Usare <b>{ability}</b>?",
+        "weaponFeatures": "Caratteristiche Arma",
+        "castMagicTrickTitle": "Lancia un Trucchetto Magico",
+        "castMagicTrickContent": "Spendi <b>1</b> PV per lanciare <b>{spell}</b>?",
+        "deleteItemTitle": "Cancella {item}",
+        "deleteItemContent": "Vuoi cancellare <b>{item}</b>?",
+        "passItemToAnotherCharacter": "<p>Do you nat to pass <b>{item}</b> to <b>{character}</b>?</p>"
+      }
+    },
     "INFO": {
       "professionSkillAdded": "Abilità di Professione aggiunta: {skill}"
     },
