@@ -1,5 +1,3 @@
-2025/05/09-15:19:15.221 bc0 Recovering log #378
-2025/05/09-15:19:15.222 bc0 Level-0 table #380: started
-2025/05/09-15:19:15.224 bc0 Level-0 table #380: 47133 bytes OK
-2025/05/09-15:19:15.227 bc0 Delete type=0 #378
-2025/05/09-15:19:15.227 bc0 Delete type=3 #377
+2025/05/19-12:26:43.495 a4cc Recovering log #383
+2025/05/19-12:26:43.498 a4cc Delete type=0 #383
+2025/05/19-12:26:43.498 a4cc Delete type=3 #382
