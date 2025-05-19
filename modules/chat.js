@@ -531,14 +531,21 @@ function onPushRoll(event) {
     }
 
     // Re-roll
+    const messageElementID = event.target.closest('[data-message-id]');
+    const messageID = messageElementID?.getAttribute('data-message-id');
+    const message = messageID ? game.messages.get(messageID) : null;
+    const rerollOptions = message?.rolls[0].options;
+
     const options = {
         actorId: element.dataset.actorId,
         attribute: element.dataset.attribute,
         formula: element.dataset.formula,
         canPush: false,
         skipDialog: true,
-        isReRoll: true
-    }
+        isReroll: true,
+        rerollOptions,
+    };
+
     let test = null;
     switch (element.dataset.rollType) {
         case "DoDAttributeTest":

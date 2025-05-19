@@ -664,7 +664,9 @@ export class DoDActor extends Actor {
     }
 
     findMagicSkill(schoolName) {
-        if (schoolName === "DoD.spell.general") {
+        if (schoolName === "DoD.spell.general"
+            || schoolName === game.settings.get("dragonbane", "generalMagicSchoolName")
+            || schoolName === game.i18n.localize("DoD.spell.general")) {
             // find magic skill with highest skill value
             let bestSkill = null;
             for (let item of this.items.contents) {
@@ -945,14 +947,15 @@ export class DoDActor extends Actor {
         let generalSchool = "DoD.spell.general";
         magicSchools.set(generalSchool, maxValue);
 
-        let generalSchoolLocalized = game.i18n.localize(generalSchool);
-
+        const generalSchoolLocalized = game.i18n.localize(generalSchool);
+        const generalSchoolSettings = game.settings.get("dragonbane", "generalMagicSchoolName");
+        
         for (let item of this.items.contents) {
             if (item.type === "spell") {
                 let spell = item;
 
                 // replace general spells school name with localized string if it matches
-                if (spell.system.school === generalSchoolLocalized) {
+                if (spell.system.school === generalSchoolLocalized || spell.system.school === generalSchoolSettings) {
                     spell.system.school = generalSchool;
                     spell.update({ ["system.school"]: generalSchool});
                 }
