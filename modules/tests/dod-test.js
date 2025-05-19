@@ -23,6 +23,7 @@ export default class DoDTest {
         this.defaultBanesBoons = options?.defaultBanesBoons;
         this.skipDialog = options?.skipDialog || this.noBanesBoons || this.defaultBanesBoons;
         this.autoSuccess = options?.autoSuccess;
+        this.isReroll = options?.isReroll | false;
     }
 
     async roll() {
@@ -107,8 +108,8 @@ export default class DoDTest {
             return;
         }
 
-        let banes = this.options.banes ?? [];
-        let boons = this.options.boons ?? [];
+        const banes = this.options.banes ? this.options.banes.slice() : [];
+        const boons = this.options.boons ? this.options.boons.slice() : [];
 
         if (this.attribute && this.actor.hasCondition(this.attribute)) {
             banes.push( {source: game.i18n.localize("DoD.conditions." + this.attribute), value: true});
@@ -145,6 +146,9 @@ export default class DoDTest {
 
     async getRollOptionsFromDialog(title, label) {
 
+        if (this.isReroll) {
+            return this.options.rerollOptions;
+        }
         if (this.skipDialog) {
             return {
                 banes: this.options.noBanesBoons ? [] : this.dialogData.banes.map((e) => e.source),

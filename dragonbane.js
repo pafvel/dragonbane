@@ -175,6 +175,14 @@ function registerSettings() {
         default: false
     });
 
+    game.settings.register("dragonbane", "generalMagicSchoolName", {
+        config: false,
+        scope: "world",
+        type: String,
+        default: "General"
+    });
+
+
     // User permission levels
     const permissionLevels = {};
     permissionLevels[CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE] = "OWNERSHIP.NONE";
