@@ -540,7 +540,9 @@
         "healInjuriesMessage": "Réduire d'un jour le temps de guérison de toutes les blessures non guéries ?",
         "deleteKinAbility": "La suppression d'une capacité de Famille entraînera également la suppression de la capacité de Famille du personnage.",
         "deleteProfessionAbility": "La suppression d'une capacité de Profession entraînera également la suppression de la capacité de la Profession du personnage.",
-        "passItemToAnotherCharacter": "<p>Do you nat to pass <b>{item}</b> to <b>{character}</b>?</p>"
+        "passItemToAnotherCharacter": "<p>Do you nat to pass <b>{item}</b> to <b>{character}</b>?</p>",
+        "passItem": "Pass item",
+        "confirmPassItem": "Confirm pass item"
       }
     },
     "item-sheet": {
@@ -601,6 +603,5 @@
       "noMagicMishapTable": "Il manque la table aléatoire des échecs critiques magiques.",
       "maxWeaponsEquipped": "Vous ne pouvez équiper plus de 3 armes à la fois."
     }
-    
   }
 }

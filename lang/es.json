@@ -538,7 +538,9 @@
         "monsterAttackTitle": "Escoger el ataque del Monstruo",
         "healInjuriesTitle": "Tratar Heridas",
         "healInjuriesMessage": "¿Reducir en un día el tiempo necesario para la curación de todas las heridas todavía no sanadas?",
-        "passItemToAnotherCharacter": "<p>Do you nat to pass <b>{item}</b> to <b>{character}</b>?</p>"
+        "passItemToAnotherCharacter": "<p>Do you nat to pass <b>{item}</b> to <b>{character}</b>?</p>",
+        "passItem": "Pass item",
+        "confirmPassItem": "Confirm pass item"
       }
     },
     "item-sheet": {

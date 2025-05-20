@@ -538,7 +538,9 @@
         "monsterAttackTitle": "Wybierz atak potwora",
         "healInjuriesTitle": "Wylecz poważny uraz",
         "healInjuriesMessage": "Zredukować czas wyleczenia dla wszystkich nie wyleczonych urazów o jeden dzień?",
-        "passItemToAnotherCharacter": "<p>Czy chcesz przekazać <b>{item}</b> to <b>{character}</b>?</p>"
+        "passItemToAnotherCharacter": "<p>Czy chcesz przekazać <b>{item}</b> to <b>{character}</b>?</p>",
+        "passItem": "Przekarz przedmiot",
+        "confirmPassItem": "Potwierdź przekazanie przedmiotu"
       }
     },
     "item-sheet": {
@@ -599,6 +601,5 @@
       "noMagicMishapTable": "Brakuje tabeli magicznych tarapatów.",
       "maxWeaponsEquipped": "Maksymalnie 3 wyposażone bronie."
     }
-
   }
 }

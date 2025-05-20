@@ -542,7 +542,9 @@
         "healInjuriesMessage": "Minska läkningstiden för alla oläkta skador med en dag?",
         "deleteKinAbility": "Släktesförmågan kommer även att tas bort från karaktärens Släkte.",
         "deleteProfessionAbility": "Yrkesförmågan kommer även att tas bort från karaktärens Yrke.",
-        "passItemToAnotherCharacter": "<p>Do you nat to pass <b>{item}</b> to <b>{character}</b>?</p>"
+        "passItemToAnotherCharacter": "<p>Do you nat to pass <b>{item}</b> to <b>{character}</b>?</p>",
+        "passItem": "Pass item",
+        "confirmPassItem": "Confirm pass item"
       }
     },
     "item-sheet": {

@@ -456,7 +456,9 @@
         "useAbilityWithWP": "Bezahle <b>{wp}</b> WP um <b>{ability}</b> zu nutzen?",
         "useAbilityWithoutWP": "Nutze <b>{ability}</b>?",
         "weaponFeatures": "Waffeneigenschaften",
-        "passItemToAnotherCharacter": "<p>Do you nat to pass <b>{item}</b> to <b>{character}</b>?</p>"
+        "passItemToAnotherCharacter": "<p>Do you nat to pass <b>{item}</b> to <b>{character}</b>?</p>",
+        "passItem": "Pass item",
+        "confirmPassItem": "Confirm pass item"
       }
     },
     "INFO": {
