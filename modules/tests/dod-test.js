@@ -190,11 +190,9 @@ export default class DoDTest {
        
                     const form = htmlContent[0].querySelector("form");
                     const checkbox = form.querySelector("#throw");
-                    const tabel = form.querySelector(".sheet-table.banes")
-                    const rows = tabel?.querySelectorAll("tr.sheet-table-data");
-                    const lastRow = rows[rows.length - 1];
                     const radialInput = form.querySelectorAll('input[type=radio]');
-                    if (checkbox) {
+                    const targetToken = (this?.options?.targets?.length > 0) ? this.options.targets[0] : false;
+                    if (checkbox && targetToken ) {
                         radialInput.forEach(input =>{ input.addEventListener("change", async event => {
                             const form = htmlContent[0].querySelector("form");
                             const tabel = form.querySelector(".sheet-table.banes")
@@ -202,7 +200,7 @@ export default class DoDTest {
                             const lastRow = rows[rows.length - 1];
                            if(event.target.checked && event.target.id === "throw"){
                             const actorToken = game.canvas.tokens.placeables.filter(token => token.document.actorId === this.actor._id)[0]
-                            const targetToken = this?.options?.targets[0];
+                            
                             let itemRange = this.weapon.system.range;
                             if(itemRange === "@str"){
                                 itemRange = this.actor.system.attributes.str.value
@@ -255,19 +253,35 @@ export default class DoDTest {
                                         action.checked = false
                                     }
                                 })
-
+                                const isOnPath = await this.chekTokenOnPath(actorToken, targetToken)
+                                if(isOnPath){
+                                    newBane = {source: game.i18n.localize("DoD.effect.anotherTokenOnLineofShot"), value: true}
+                                    const newBaneHtml = `<tr class="sheet-table-data">
+                                                        <td><input type="checkbox" name="${newBane.source}" checked ${newBane.value}/></td>
+                                                        <td class="text-data">${newBane.source}</td>
+                                                    </tr>`
+                                    const tempWrapper = document.createElement("tbody");
+                                    tempWrapper.innerHTML = newBaneHtml;
+                                    const newRow = tempWrapper.firstElementChild;
+                                    lastRow.parentNode.insertBefore(newRow, lastRow);
+                                    
+                                    this.dialogData.banes.push(newBane);
+                                }
                
                             }
                            }
                             else{
                                 const pointBlankSource = game.i18n.localize("DoD.effect.pointBlank");
                                 const exceedRangeSource = game.i18n.localize("DoD.effect.exceedWeaponRange");
+                                const isOnPath = game.i18n.localize("DoD.effect.anotherTokenOnLineofShot")
                                 const hadPointBlank = this.dialogData.banes.some(bane => bane.source === pointBlankSource);
                                 const hadExeedRange = this.dialogData.banes.some(bane => bane.source === exeedRangeSource);
-                                if(hadExeedRange || hadPointBlank){
+                                const hadIsOnPath = this.dialogData.banes.some(bane => bane.source === isOnPath);
+                                if(hadExeedRange || hadPointBlank || hadIsOnPath ){
                                 this.dialogData.banes = this.dialogData.banes.filter(bane =>
                                     bane.source !== pointBlankSource &&
-                                    bane.source !== exeedRangeSource
+                                    bane.source !== exceedRangeSource &&
+                                    bane.source !== isOnPath
                                 );
                                 const chosenAction = this.dialogData.actions.filter(action => action.id === event.target.id)
                                 chosenAction.forEach(action =>{
@@ -288,6 +302,9 @@ export default class DoDTest {
                                     if (checkbox?.name === exceedRangeSource && labelCell?.textContent.trim() === exceedRangeSource){
                                         row.remove();        
                                     }
+                                    if (checkbox?.name === exceedRangeSource && labelCell?.textContent.trim() === isOnPath){
+                                        row.remove();        
+                                    }
                                 });
 
                             }
@@ -303,7 +320,42 @@ export default class DoDTest {
             }
         );
     }
+    async chekTokenOnPath(actorToken, targetToken){
+        const actorCoordinate = {x:actorToken.x, y:actorToken.y};
+        const targetCoordinate = {x:targetToken.x, y:targetToken.y};
+        const tokensOnCanva = game.canvas.tokens.objects.children.filter(token => token.id !== actorToken.id && token.id !== targetToken.id && token.document.hidden !== true);
+       
+        const isOnPath = tokensOnCanva.some(token => {
+            
+            const point1 = {x:token.hitArea.points[0], y:token.hitArea.points[1]}
+            const point2 = {x:token.hitArea.points[2], y:token.hitArea.points[3]}
+            const point3 = {x:token.hitArea.points[4], y:token.hitArea.points[5]}
+            const point4 = {x:token.hitArea.points[6], y:token.hitArea.points[7]}
+            function distance(p1, p2) {
+                const dx = p2.x - p1.x;
+                const dy = p2.y - p1.y;
+            return Math.sqrt(dx * dx + dy * dy);
+            }
 
+            const d1to2 = distance(point1, point2);
+            const d2to3 = distance(point2, point3);
+            const d3to4 = distance(point3, point4);
+            const d4to1 = distance(point4, point1);
+            const coordiante1 ={x:token.x-d1to2/2,y:token.y-d1to2/2}
+            const coordiante2 ={x:token.x+d2to3/2,y:token.y-d2to3/2}
+            const coordiante3 ={x:token.x-d3to4/2,y:token.y+d3to4/2}
+            const coordiante4 ={x:token.x+d4to1/2,y:token.y+d4to1/2}
+            const intersection1 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,coordiante1,coordiante2)
+            const intersection2 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,coordiante2,coordiante3)
+            const intersection3 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,coordiante3,coordiante4)
+            const intersection4 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,coordiante4,coordiante1)
+            const intersections = [intersection1, intersection2, intersection3, intersection4];
+            const isPassing = intersections.some(intersection => intersection !== null);
+            return isPassing;
+        
+        });
+        return isOnPath
+    }
     processDialogOptions(form) {
         let banes = [];
         let boons = [];
