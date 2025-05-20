@@ -96,6 +96,26 @@ export default class DoDWeaponTest extends DoDSkillTest  {
                 this.dialogData.extraDamage = "D6";
             }
         }
+        if(isRangedWeapon && targetToken && actorToken){
+
+            if(distance <= 2){
+                this.dialogData.banes.push({source: game.i18n.localize("DoD.effect.pointBlank"), value: true});
+               
+            }
+            const itemRange = Number(this.weapon.system.range )
+
+            if(itemRange < distance && distance  <= 2*itemRange ){
+                 this.dialogData.banes.push({source: game.i18n.localize("DoD.effect.exceedWeaponRange"), value: true});
+                
+            }
+              if(distance  > 2*itemRange ){
+                 DoD_Utility.WARNING("DoD.effect.exceedWeaponRange");
+                 this.dialogData.banes.push({source: game.i18n.localize("DoD.effect.exceedWeaponRange"), value: true});
+               
+            }
+           
+
+        }
         this.dialogData.actions = actions;
 
         this.dialogData.enchantedWeapon = 0;

@@ -157,7 +157,9 @@ export default class DoDTest {
                 extraBoons: 0
             }
         }
-
+         return await this.renderDialog(title, label);
+    }
+    async renderDialog(title, label){
         const template = "systems/dragonbane/templates/partials/roll-dialog.hbs";
         const html = await DoD_Utility.renderTemplate(template, this.dialogData);
 
@@ -183,7 +185,121 @@ export default class DoDTest {
                     default: "ok",
                     close: () => resolve({cancelled: true})
                 };
-                new Dialog(data, null).render(true);
+                const dialog = new Dialog(data, null);
+                Hooks.once("renderDialog", (app, htmlContent) => {
+       
+                    const form = htmlContent[0].querySelector("form");
+                    const checkbox = form.querySelector("#throw");
+                    const tabel = form.querySelector(".sheet-table.banes")
+                    const rows = tabel?.querySelectorAll("tr.sheet-table-data");
+                    const lastRow = rows[rows.length - 1];
+                    const radialInput = form.querySelectorAll('input[type=radio]');
+                    if (checkbox) {
+                        radialInput.forEach(input =>{ input.addEventListener("change", async event => {
+                            const form = htmlContent[0].querySelector("form");
+                            const tabel = form.querySelector(".sheet-table.banes")
+                            const rows = tabel?.querySelectorAll("tr.sheet-table-data");
+                            const lastRow = rows[rows.length - 1];
+                           if(event.target.checked && event.target.id === "throw"){
+                            const actorToken = game.canvas.tokens.placeables.filter(token => token.document.actorId === this.actor._id)[0]
+                            const targetToken = this?.options?.targets[0];
+                            let itemRange = this.weapon.system.range;
+                            if(itemRange === "@str"){
+                                itemRange = this.actor.system.attributes.str.value
+                            }
+                            else{
+                                itemRange = Number(itemRange);
+                            }
+                            if (actorToken && targetToken) {
+                                let distance = 0;
+                                let newBane = {};
+                                if (game.release.generation < 12) {
+                                    distance = canvas.grid.measureDistance(actorToken, targetToken, {gridSpaces: true});
+                                } 
+                                else {
+                                    distance = canvas.grid.measurePath([actorToken, targetToken]).distance;
+                                }
+                                if(distance <= 2){
+                                    newBane = {source: game.i18n.localize("DoD.effect.pointBlank"), value: true};
+                                    this.dialogData.banes.push(newBane);           
+                                }
+                               
+                                
+                                if(itemRange < distance && distance  <= 2*itemRange ){
+                                    newBane = {source: game.i18n.localize("DoD.effect.exceedWeaponRange"), value: true}
+                                    this.dialogData.banes.push(newBane);
+                                                
+                                }
+                                if(distance  > 2*itemRange ){
+                                    DoD_Utility.WARNING("DoD.WARNING.exedWeaponRange");
+                                    newBane = {source: game.i18n.localize("DoD.effect.exceedWeaponRange"), value: true}
+                                    this.dialogData.banes.push(newBane);
+                                               
+                                }
+                                if(Object.keys(newBane).length !== 0){
+                                const newBaneHtml = `<tr class="sheet-table-data">
+                                                        <td><input type="checkbox" name="${newBane.source}" checked ${newBane.value}/></td>
+                                                        <td class="text-data">${newBane.source}</td>
+                                                    </tr>`
+                                    const tempWrapper = document.createElement("tbody");
+                                    tempWrapper.innerHTML = newBaneHtml;
+                                    const newRow = tempWrapper.firstElementChild;
+                                    lastRow.parentNode.insertBefore(newRow, lastRow);
+                                }
+                                const chosenAction = this.dialogData.actions
+                                chosenAction.forEach(action =>{
+                                    if(action.id === event.target.id){
+                                        action.checked = true
+                                    }
+                                    else{
+                                        action.checked = false
+                                    }
+                                })
+
+               
+                            }
+                           }
+                            else{
+                                const pointBlankSource = game.i18n.localize("DoD.effect.pointBlank");
+                                const exceedRangeSource = game.i18n.localize("DoD.effect.exceedWeaponRange");
+                                const hadPointBlank = this.dialogData.banes.some(bane => bane.source === pointBlankSource);
+                                const hadExeedRange = this.dialogData.banes.some(bane => bane.source === exeedRangeSource);
+                                if(hadExeedRange || hadPointBlank){
+                                this.dialogData.banes = this.dialogData.banes.filter(bane =>
+                                    bane.source !== pointBlankSource &&
+                                    bane.source !== exeedRangeSource
+                                );
+                                const chosenAction = this.dialogData.actions.filter(action => action.id === event.target.id)
+                                chosenAction.forEach(action =>{
+                                    if(action.id === event.target.id){
+                                        action.checked = true
+                                    }
+                                    else{
+                                        action.checked = false
+                                    }
+                                })
+                                
+                                rows.forEach(row => {
+                                    const checkbox = row.querySelector('input[type="checkbox"]');
+                                    const labelCell = row.querySelector('td.text-data');
+                                    if (checkbox?.name === pointBlankSource && labelCell?.textContent.trim() === pointBlankSource){
+                                        row.remove();        
+                                    }
+                                    if (checkbox?.name === exceedRangeSource && labelCell?.textContent.trim() === exceedRangeSource){
+                                        row.remove();        
+                                    }
+                                });
+
+                            }
+
+                           }
+
+                        });
+                        })
+                    }
+                });
+            
+                dialog.render(true);
             }
         );
     }
