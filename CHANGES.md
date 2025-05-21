@@ -1,6 +1,11 @@
 # Change Log
 
-## Version 2.0.0
+## Version 2.1
+
+- Fix for playlists not visible (v13)
+- Fix for incorrect Monster Attack chat message formatting (v13)
+
+## Version 2.0.release
 
 - Foundry VTT version 13 support
 
