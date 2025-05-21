@@ -1906,8 +1906,9 @@
   user-select: text;
   word-break: break-word;
 }
-.system-dragonbane .expandable {
-  display: none;
+.system-dragonbane .result-text li,
+.system-dragonbane ul.table-results li {
+  display: list-item;
 }
 .system-dragonbane .damage-details {
   flex: 0 0 100%;
@@ -1919,4 +1920,7 @@
   border-radius: 3px;
   box-shadow: 0 0 2px #FFF inset;
   word-break: break-all;
+}
+.system-dragonbane .damage-details .expandable {
+  display: none;
 }

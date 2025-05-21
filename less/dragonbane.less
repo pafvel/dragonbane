@@ -1252,10 +1252,10 @@
         -ms-user-select: text;
         user-select: text;
         word-break: break-word;
-    }
 
-    .expandable {
-        display: none;
+        li {
+            display: list-item;
+        }
     }
 
     .damage-details {
@@ -1268,5 +1268,9 @@
         border-radius: 3px;
         box-shadow: 0 0 2px #FFF inset;
         word-break: break-all;
-      }    
+
+        .expandable {
+            display: none;
+        }
+    }
 }

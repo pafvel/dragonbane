@@ -4,7 +4,7 @@
 
 - Foundry VTT version 13 support
 
-  - Version 12 is still supported.
+  - Compatible with Foundry versions 12 and 13.
   - Support for version 11 has been dropped.
 
 - Miscellaneous
@@ -12,10 +12,6 @@
   - When expanding die rolls in chat, d20 results will be highlighted green for 1 and red for 20 instead of the other way around (contribution by @BartekB).
   - Fix for incorrect details when expanding roll results on pushed rolls in some situations (contribution by @BartekB).
   - Improved handling of the general magic school on spells when core module language is different from the language in settings. Requires 2.0 version of the core module to have effect.
-
-- For developers
-
-  - Sockets are enabled in the manifest
 
 ## Version 1.9.5
 
