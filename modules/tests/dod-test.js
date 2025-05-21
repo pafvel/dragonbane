@@ -211,7 +211,7 @@ export default class DoDTest {
                             if (actorToken && targetToken) {
                                 let distance = 0;
                                 let newBane = {};
-                                if (game.release.generation < 12) {
+                                if (game.release.generation < 13) {
                                     distance = canvas.grid.measureDistance(actorToken, targetToken, {gridSpaces: true});
                                 } 
                                 else {
@@ -253,19 +253,20 @@ export default class DoDTest {
                                         action.checked = false
                                     }
                                 })
-                                const isOnPath = await this.chekTokenOnPath(actorToken, targetToken)
+                                const isOnPath = this.chekTokenOnPath(actorToken, targetToken)
                                 if(isOnPath){
-                                    newBane = {source: game.i18n.localize("DoD.effect.anotherTokenOnLineofShot"), value: true}
+                                    const isOnPathBane = {source: game.i18n.localize("DoD.effect.anotherTokenOnLineofShot"), value: true}
+                                    this.dialogData.banes.push(isOnPathBane);
                                     const newBaneHtml = `<tr class="sheet-table-data">
-                                                        <td><input type="checkbox" name="${newBane.source}" checked ${newBane.value}/></td>
-                                                        <td class="text-data">${newBane.source}</td>
+                                                        <td><input type="checkbox" name="${isOnPathBane.source}" checked ${isOnPathBane.value}/></td>
+                                                        <td class="text-data">${isOnPathBane.source}</td>
                                                     </tr>`
                                     const tempWrapper = document.createElement("tbody");
                                     tempWrapper.innerHTML = newBaneHtml;
                                     const newRow = tempWrapper.firstElementChild;
                                     lastRow.parentNode.insertBefore(newRow, lastRow);
                                     
-                                    this.dialogData.banes.push(newBane);
+                                    
                                 }
                
                             }
@@ -275,7 +276,7 @@ export default class DoDTest {
                                 const exceedRangeSource = game.i18n.localize("DoD.effect.exceedWeaponRange");
                                 const isOnPath = game.i18n.localize("DoD.effect.anotherTokenOnLineofShot")
                                 const hadPointBlank = this.dialogData.banes.some(bane => bane.source === pointBlankSource);
-                                const hadExeedRange = this.dialogData.banes.some(bane => bane.source === exeedRangeSource);
+                                const hadExeedRange = this.dialogData.banes.some(bane => bane.source === exceedRangeSource);
                                 const hadIsOnPath = this.dialogData.banes.some(bane => bane.source === isOnPath);
                                 if(hadExeedRange || hadPointBlank || hadIsOnPath ){
                                 this.dialogData.banes = this.dialogData.banes.filter(bane =>
@@ -302,7 +303,7 @@ export default class DoDTest {
                                     if (checkbox?.name === exceedRangeSource && labelCell?.textContent.trim() === exceedRangeSource){
                                         row.remove();        
                                     }
-                                    if (checkbox?.name === exceedRangeSource && labelCell?.textContent.trim() === isOnPath){
+                                    if (checkbox?.name === isOnPath && labelCell?.textContent.trim() === isOnPath){
                                         row.remove();        
                                     }
                                 });
@@ -321,38 +322,52 @@ export default class DoDTest {
         );
     }
     async chekTokenOnPath(actorToken, targetToken){
-        const actorCoordinate = {x:actorToken.x, y:actorToken.y};
-        const targetCoordinate = {x:targetToken.x, y:targetToken.y};
+        let actorCoordinate = {}, targetCoordinate = {};
+         if(game.release.generation < 13){
+            actorCoordinate = {x:actorToken.x+actorToken._object.hitArea.center.x, y:actorToken.y+actorToken._object.hitArea.center.y};
+            targetCoordinate = {x:targetToken.x+targetToken._object.hitArea.center.x, y:targetToken.y+targetToken._object.hitArea.center.y};
+         }
+         else{
+            actorCoordinate = actorToken._object.center;
+            targetCoordinate = targetToken._object.center;
+         }
         const tokensOnCanva = game.canvas.tokens.objects.children.filter(token => token.id !== actorToken.id && token.id !== targetToken.id && token.document.hidden !== true);
        
         const isOnPath = tokensOnCanva.some(token => {
-            
-            const point1 = {x:token.hitArea.points[0], y:token.hitArea.points[1]}
-            const point2 = {x:token.hitArea.points[2], y:token.hitArea.points[3]}
-            const point3 = {x:token.hitArea.points[4], y:token.hitArea.points[5]}
-            const point4 = {x:token.hitArea.points[6], y:token.hitArea.points[7]}
-            function distance(p1, p2) {
-                const dx = p2.x - p1.x;
-                const dy = p2.y - p1.y;
-            return Math.sqrt(dx * dx + dy * dy);
+            if(game.release.generation < 13){
+                point1 = {x:token.x, y:token.y};
+                point2 = {x:token.x + token.hitArea.rightEdge.A.x, y: token.y};
+                point3 = {x:token.x + token.hitArea.rightEdge.B.x, y: token.y+token.hitArea.rightEdge.B.y};
+                point4 = {x:token.x, y:token.y + token.hitArea.leftEdge.A.y};
             }
+            else{
+                point1 = {x:token.x + token.hitArea.points[0], y:token.y + token.hitArea.points[1]}
+                point2 = {x:token.x + token.hitArea.points[2], y:token.y + token.hitArea.points[3]}
+                point3 = {x:token.x + token.hitArea.points[4], y:token.y + token.hitArea.points[5]}
+                point4 = {x:token.x + token.hitArea.points[6], y:token.y + token.hitArea.points[7]}
+            }
+            const intersection1 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,point1,point2)
+            const intersection2 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,point2,point3)
+            const intersection3 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,point3,point4)
+            const intersection4 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,point4,point1)
+            const intersections = [intersection1, intersection2, intersection3, intersection4];          
+            const hitPoints = [point1, point2, point3,point4]
+            const nonNullIntersections = intersections.filter(i => i !== null);
+            const cornerMatches = nonNullIntersections.filter(intersection =>
+                hitPoints.some(pt => pt.x === intersection.x && pt.y === intersection.y)
+            );
 
-            const d1to2 = distance(point1, point2);
-            const d2to3 = distance(point2, point3);
-            const d3to4 = distance(point3, point4);
-            const d4to1 = distance(point4, point1);
-            const coordiante1 ={x:token.x-d1to2/2,y:token.y-d1to2/2}
-            const coordiante2 ={x:token.x+d2to3/2,y:token.y-d2to3/2}
-            const coordiante3 ={x:token.x-d3to4/2,y:token.y+d3to4/2}
-            const coordiante4 ={x:token.x+d4to1/2,y:token.y+d4to1/2}
-            const intersection1 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,coordiante1,coordiante2)
-            const intersection2 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,coordiante2,coordiante3)
-            const intersection3 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,coordiante3,coordiante4)
-            const intersection4 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,coordiante4,coordiante1)
-            const intersections = [intersection1, intersection2, intersection3, intersection4];
-            const isPassing = intersections.some(intersection => intersection !== null);
-            return isPassing;
-        
+            let validIntersections = false;
+
+            if (nonNullIntersections.length >= 2) {
+                const cornerCount = cornerMatches.length;
+
+                if (cornerCount === 0 || cornerCount > 2) {
+
+                    validIntersections = true;
+                }
+            }
+            return validIntersections
         });
         return isOnPath
     }

@@ -143,7 +143,8 @@
       "applyWhenEquippedTooltip": "If checked, this effect will only be enabled if the item is equipped",
       "new": "New Effect",
       "pointBlank": "You shoot in point blank",
-      "exceedWeaponRange": "You shoot from a distance exceeding the weapon's range."
+      "exceedWeaponRange": "You shoot from a distance exceeding the weapon's range.",
+      "anotherTokenOnLineofShot": "On line of shot is another Token"
     },
     "item": {
       "new": "New Item"
