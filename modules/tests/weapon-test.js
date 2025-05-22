@@ -8,7 +8,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         this.weapon = weapon;
     }
 
-    updateDialogData() {
+    async updateDialogData() {
         super.updateDialogData();
 
         const isThrownWeapon = this.weapon.hasWeaponFeature("thrown");
@@ -96,6 +96,29 @@ export default class DoDWeaponTest extends DoDSkillTest  {
                 this.dialogData.extraDamage = "D6";
             }
         }
+        if(isRangedWeapon && targetToken && actorToken){
+
+            if(distance <= 2){
+                this.dialogData.banes.push({source: game.i18n.localize("DoD.effect.pointBlank"), value: true});
+               
+            }
+            const itemRange = Number(this.weapon.system.range )
+
+            if(itemRange < distance && distance  <= 2*itemRange ){
+                 this.dialogData.banes.push({source: game.i18n.localize("DoD.effect.exceedWeaponRange"), value: true});
+                
+            }
+              if(distance  > 2*itemRange ){
+                 DoD_Utility.WARNING("DoD.effect.exceedWeaponRange");
+                 this.dialogData.banes.push({source: game.i18n.localize("DoD.effect.exceedWeaponRange"), value: true});
+               
+            }
+           const isTokenOnWhey =await this.chekTokenOnPath(actorToken, targetToken);
+           if(isTokenOnWhey){
+            this.dialogData.banes.push({source: game.i18n.localize("DoD.effect.anotherTokenOnLineofShot"), value: true});
+           }
+
+        }
         this.dialogData.actions = actions;
 
         this.dialogData.enchantedWeapon = 0;
@@ -111,6 +134,56 @@ export default class DoDWeaponTest extends DoDSkillTest  {
       
         this.dialogData.enchantedWeaponLevels = {"0": "-", "1": 1, "2": 2, "3": 3};
     }   
+    async chekTokenOnPath(actorToken, targetToken){
+        let actorCoordinate = {}, targetCoordinate = {};
+         if(game.release.generation < 13){
+            actorCoordinate = {x:actorToken.x+actorToken._object.hitArea.center.x, y:actorToken.y+actorToken._object.hitArea.center.y};
+            targetCoordinate = {x:targetToken.x+targetToken._object.hitArea.center.x, y:targetToken.y+targetToken._object.hitArea.center.y};
+         }
+         else{
+            actorCoordinate = actorToken._object.center;
+            targetCoordinate = targetToken._object.center;
+         }
+        const tokensOnCanva = game.canvas.tokens.objects.children.filter(token => token.id !== actorToken.id && token.id !== targetToken.id && token.document.hidden !== true);
+        let point1 ={}, point2 ={}, point3={}, point4 ={}
+        const isOnPath = tokensOnCanva.some(token => {
+            if(game.release.generation < 13){
+                point1 = {x:token.x, y:token.y};
+                point2 = {x:token.x + token.hitArea.rightEdge.A.x, y: token.y};
+                point3 = {x:token.x + token.hitArea.rightEdge.B.x, y: token.y+token.hitArea.rightEdge.B.y};
+                point4 = {x:token.x, y:token.y + token.hitArea.leftEdge.A.y};
+            }
+            else{
+                point1 = {x:token.x + token.hitArea.points[0], y:token.y + token.hitArea.points[1]}
+                point2 = {x:token.x + token.hitArea.points[2], y:token.y + token.hitArea.points[3]}
+                point3 = {x:token.x + token.hitArea.points[4], y:token.y + token.hitArea.points[5]}
+                point4 = {x:token.x + token.hitArea.points[6], y:token.y +token.hitArea.points[7]}
+            }
+            const intersection1 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,point1,point2)
+            const intersection2 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,point2,point3)
+            const intersection3 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,point3,point4)
+            const intersection4 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,point4,point1)
+            const intersections = [intersection1, intersection2, intersection3, intersection4];          
+            const hitPoints = [point1, point2, point3,point4]
+            const nonNullIntersections = intersections.filter(i => i !== null);
+            const cornerMatches = nonNullIntersections.filter(intersection =>
+                hitPoints.some(pt => pt.x === intersection.x && pt.y === intersection.y)
+            );
+
+            let validIntersections = false;
+
+            if (nonNullIntersections.length >= 2) {
+                const cornerCount = cornerMatches.length;
+
+                if (cornerCount === 0 || cornerCount > 2) {
+
+                    validIntersections = true;
+                }
+            }
+            return validIntersections
+        });
+        return isOnPath
+    }
 
     async getRollOptionsFromDialog(title, label) {
         if (this.skipDialog) {
@@ -345,3 +418,5 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         }
     }
 }
+
+

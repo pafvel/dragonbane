@@ -157,7 +157,9 @@ export default class DoDTest {
                 extraBoons: 0
             }
         }
-
+         return await this.renderDialog(title, label);
+    }
+    async renderDialog(title, label){
         const template = "systems/dragonbane/templates/partials/roll-dialog.hbs";
         const html = await DoD_Utility.renderTemplate(template, this.dialogData);
 
@@ -183,11 +185,192 @@ export default class DoDTest {
                     default: "ok",
                     close: () => resolve({cancelled: true})
                 };
-                new Dialog(data, null).render(true);
+                const dialog = new Dialog(data, null);
+                Hooks.once("renderDialog", (app, htmlContent) => {
+       
+                    const form = htmlContent[0].querySelector("form");
+                    const checkbox = form.querySelector("#throw");
+                    const radialInput = form.querySelectorAll('input[type=radio]');
+                    const targetToken = (this?.options?.targets?.length > 0) ? this.options.targets[0] : false;
+                    if (checkbox && targetToken ) {
+                        radialInput.forEach(input =>{ input.addEventListener("change", async event => {
+                            const form = htmlContent[0].querySelector("form");
+                            const tabel = form.querySelector(".sheet-table.banes")
+                            const rows = tabel?.querySelectorAll("tr.sheet-table-data");
+                            const lastRow = rows[rows.length - 1];
+                           if(event.target.checked && event.target.id === "throw"){
+                            const actorToken = game.canvas.tokens.placeables.filter(token => token.document.actorId === this.actor._id)[0]
+                            
+                            let itemRange = this.weapon.system.range;
+                            if(itemRange === "@str"){
+                                itemRange = this.actor.system.attributes.str.value
+                            }
+                            else{
+                                itemRange = Number(itemRange);
+                            }
+                            if (actorToken && targetToken) {
+                                let distance = 0;
+                                let newBane = {};
+                                if (game.release.generation < 13) {
+                                    distance = canvas.grid.measureDistance(actorToken, targetToken, {gridSpaces: true});
+                                } 
+                                else {
+                                    distance = canvas.grid.measurePath([actorToken, targetToken]).distance;
+                                }
+                                if(distance <= 2){
+                                    newBane = {source: game.i18n.localize("DoD.effect.pointBlank"), value: true};
+                                    this.dialogData.banes.push(newBane);           
+                                }
+                               
+                                
+                                if(itemRange < distance && distance  <= 2*itemRange ){
+                                    newBane = {source: game.i18n.localize("DoD.effect.exceedWeaponRange"), value: true}
+                                    this.dialogData.banes.push(newBane);
+                                                
+                                }
+                                if(distance  > 2*itemRange ){
+                                    DoD_Utility.WARNING("DoD.WARNING.exedWeaponRange");
+                                    newBane = {source: game.i18n.localize("DoD.effect.exceedWeaponRange"), value: true}
+                                    this.dialogData.banes.push(newBane);
+                                               
+                                }
+                                if(Object.keys(newBane).length !== 0){
+                                const newBaneHtml = `<tr class="sheet-table-data">
+                                                        <td><input type="checkbox" name="${newBane.source}" checked ${newBane.value}/></td>
+                                                        <td class="text-data">${newBane.source}</td>
+                                                    </tr>`
+                                    const tempWrapper = document.createElement("tbody");
+                                    tempWrapper.innerHTML = newBaneHtml;
+                                    const newRow = tempWrapper.firstElementChild;
+                                    lastRow.parentNode.insertBefore(newRow, lastRow);
+                                }
+                                const chosenAction = this.dialogData.actions
+                                chosenAction.forEach(action =>{
+                                    if(action.id === event.target.id){
+                                        action.checked = true
+                                    }
+                                    else{
+                                        action.checked = false
+                                    }
+                                })
+                                const isOnPath = this.chekTokenOnPath(actorToken, targetToken)
+                                if(isOnPath){
+                                    const isOnPathBane = {source: game.i18n.localize("DoD.effect.anotherTokenOnLineofShot"), value: true}
+                                    this.dialogData.banes.push(isOnPathBane);
+                                    const newBaneHtml = `<tr class="sheet-table-data">
+                                                        <td><input type="checkbox" name="${isOnPathBane.source}" checked ${isOnPathBane.value}/></td>
+                                                        <td class="text-data">${isOnPathBane.source}</td>
+                                                    </tr>`
+                                    const tempWrapper = document.createElement("tbody");
+                                    tempWrapper.innerHTML = newBaneHtml;
+                                    const newRow = tempWrapper.firstElementChild;
+                                    lastRow.parentNode.insertBefore(newRow, lastRow);
+                                    
+                                    
+                                }
+               
+                            }
+                           }
+                            else{
+                                const pointBlankSource = game.i18n.localize("DoD.effect.pointBlank");
+                                const exceedRangeSource = game.i18n.localize("DoD.effect.exceedWeaponRange");
+                                const isOnPath = game.i18n.localize("DoD.effect.anotherTokenOnLineofShot")
+                                const hadPointBlank = this.dialogData.banes.some(bane => bane.source === pointBlankSource);
+                                const hadExeedRange = this.dialogData.banes.some(bane => bane.source === exceedRangeSource);
+                                const hadIsOnPath = this.dialogData.banes.some(bane => bane.source === isOnPath);
+                                if(hadExeedRange || hadPointBlank || hadIsOnPath ){
+                                this.dialogData.banes = this.dialogData.banes.filter(bane =>
+                                    bane.source !== pointBlankSource &&
+                                    bane.source !== exceedRangeSource &&
+                                    bane.source !== isOnPath
+                                );
+                                const chosenAction = this.dialogData.actions.filter(action => action.id === event.target.id)
+                                chosenAction.forEach(action =>{
+                                    if(action.id === event.target.id){
+                                        action.checked = true
+                                    }
+                                    else{
+                                        action.checked = false
+                                    }
+                                })
+                                
+                                rows.forEach(row => {
+                                    const checkbox = row.querySelector('input[type="checkbox"]');
+                                    const labelCell = row.querySelector('td.text-data');
+                                    if (checkbox?.name === pointBlankSource && labelCell?.textContent.trim() === pointBlankSource){
+                                        row.remove();        
+                                    }
+                                    if (checkbox?.name === exceedRangeSource && labelCell?.textContent.trim() === exceedRangeSource){
+                                        row.remove();        
+                                    }
+                                    if (checkbox?.name === isOnPath && labelCell?.textContent.trim() === isOnPath){
+                                        row.remove();        
+                                    }
+                                });
+
+                            }
+
+                           }
+
+                        });
+                        })
+                    }
+                });
+            
+                dialog.render(true);
             }
         );
     }
+    async chekTokenOnPath(actorToken, targetToken){
+        let actorCoordinate = {}, targetCoordinate = {};
+         if(game.release.generation < 13){
+            actorCoordinate = {x:actorToken.x+actorToken._object.hitArea.center.x, y:actorToken.y+actorToken._object.hitArea.center.y};
+            targetCoordinate = {x:targetToken.x+targetToken._object.hitArea.center.x, y:targetToken.y+targetToken._object.hitArea.center.y};
+         }
+         else{
+            actorCoordinate = actorToken._object.center;
+            targetCoordinate = targetToken._object.center;
+         }
+        const tokensOnCanva = game.canvas.tokens.objects.children.filter(token => token.id !== actorToken.id && token.id !== targetToken.id && token.document.hidden !== true);
+       
+        const isOnPath = tokensOnCanva.some(token => {
+            if(game.release.generation < 13){
+                point1 = {x:token.x, y:token.y};
+                point2 = {x:token.x + token.hitArea.rightEdge.A.x, y: token.y};
+                point3 = {x:token.x + token.hitArea.rightEdge.B.x, y: token.y+token.hitArea.rightEdge.B.y};
+                point4 = {x:token.x, y:token.y + token.hitArea.leftEdge.A.y};
+            }
+            else{
+                point1 = {x:token.x + token.hitArea.points[0], y:token.y + token.hitArea.points[1]}
+                point2 = {x:token.x + token.hitArea.points[2], y:token.y + token.hitArea.points[3]}
+                point3 = {x:token.x + token.hitArea.points[4], y:token.y + token.hitArea.points[5]}
+                point4 = {x:token.x + token.hitArea.points[6], y:token.y + token.hitArea.points[7]}
+            }
+            const intersection1 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,point1,point2)
+            const intersection2 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,point2,point3)
+            const intersection3 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,point3,point4)
+            const intersection4 = foundry.utils.lineSegmentIntersection(actorCoordinate,targetCoordinate,point4,point1)
+            const intersections = [intersection1, intersection2, intersection3, intersection4];          
+            const hitPoints = [point1, point2, point3,point4]
+            const nonNullIntersections = intersections.filter(i => i !== null);
+            const cornerMatches = nonNullIntersections.filter(intersection =>
+                hitPoints.some(pt => pt.x === intersection.x && pt.y === intersection.y)
+            );
 
+            let validIntersections = false;
+
+            if (nonNullIntersections.length >= 2) {
+                const cornerCount = cornerMatches.length;
+
+                if (cornerCount === 0 || cornerCount > 2) {
+
+                    validIntersections = true;
+                }
+            }
+            return validIntersections
+        });
+        return isOnPath
+    }
     processDialogOptions(form) {
         let banes = [];
         let boons = [];
