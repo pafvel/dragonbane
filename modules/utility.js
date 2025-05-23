@@ -292,8 +292,23 @@ export default class DoD_Utility {
             rollHTML: table.displayRoll && roll ? await roll.render() : null,
             table: table
         });
-  
-        // Create the chat message
+        const targetsTokens = Array.from(game.user.targets);
+        const isProne = targetsTokens.some(token => 
+            token.document.hasStatusEffect("prone")
+        );
+        let targetIDs =[];
+        targetIDs = targetsTokens.map(token => {
+            if (token.document.actor.type === "character" &&  token.document.hasStatusEffect("prone")) {
+                return token.document.actor.id;
+            } else {
+                if( token.document.hasStatusEffect("prone")){
+                    return token.document.uuid; 
+                }
+            }       
+        }).filter(id => id !== undefined);
+        if(isProne === true){
+            messageData.content += `<button class="chat-button monster-extra-dmg" data-target-id=${targetIDs} data-extra-damage="D6" data-monster=${actor.id}>${game.i18n.localize("DoD.ui.dialog.extraDamage")}</button>`
+                }        // Create the chat message
         ChatMessage.applyRollMode(messageData, game.settings.get("core", "rollMode"));
         return ChatMessage.create(messageData);
     }
