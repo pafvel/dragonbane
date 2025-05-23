@@ -14,7 +14,8 @@ export function addChatListeners(_app, html, _data) {
     DoD_Utility.addHtmlEventListener(html, "click", "button.push-roll", onPushRoll);
     DoD_Utility.addHtmlEventListener(html, "click", ".damage-details", onExpandableClick);
     DoD_Utility.addHtmlEventListener(html, 'click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
-}
+    DoD_Utility.addHtmlEventListener(html, "click", "button.monster-extra-dmg", onMonsterExtraDamageRoll);  
+} 
 
 export function addChatMessageContextMenuOptions(_html, options) {
 
@@ -883,3 +884,30 @@ export function onExpandableClick(event) {
       tip.classList.toggle("expanded", message._expanded);
     }
   }
+    
+async function onMonsterExtraDamageRoll(event){
+    event.stopPropagation();
+    event.preventDefault();
+    const element = event.target;
+    const extraDamage = element.dataset.extraDamage;
+    const targets = element.dataset.targetId.split(",");;
+    const monster = await game.actors.get(element.dataset.monster);
+    targets.forEach(async target => {
+        let targetActor
+        if(target.includes("Token")){
+            targetActor = await fromUuid(target)
+        }
+        else{
+            targetActor = await game.actors.get(target)
+        }
+        const damageData = {
+            actor: monster,
+            damage: extraDamage,
+            target: targetActor,
+            damageType: game.i18n.localize("DoD.damageTypes.none")
+        };
+
+        inflictDamageMessage(damageData)
+    })
+
+}
