@@ -298,12 +298,14 @@ export default class DoD_Utility {
         );
         let targetIDs =[];
         targetIDs = targetsTokens.map(token => {
-            if (token.document.actor.type === "character") {
+            if (token.document.actor.type === "character" &&  token.document.hasStatusEffect("prone")) {
                 return token.document.actor.id;
             } else {
-                return token.document.uuid; // or undefined or some placeholder
+                if( token.document.hasStatusEffect("prone")){
+                    return token.document.uuid; 
+                }
             }       
-        });
+        }).filter(id => id !== undefined);
         if(isProne === true){
             messageData.content += `<button class="chat-button monster-extra-dmg" data-target-id=${targetIDs} data-extra-damage="D6" data-monster=${actor.id}>${game.i18n.localize("DoD.ui.dialog.extraDamage")}</button>`
                 }        // Create the chat message
