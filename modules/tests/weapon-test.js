@@ -93,15 +93,6 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             }
         }
 
-        // Bane on ranged attacks at point blank
-        if (targetToken && isRangedWeapon && distance <= 2) {
-                this.dialogData.banes.push({source: game.i18n.localize("Point Blank"), value: true});
-        }
-        // Bane on ranged attacks at more than max range
-        if (targetToken && (isRangedWeapon || isThrownWeapon) && distance > this.weapon.system.calculatedRange) {
-                this.dialogData.banes.push({source: game.i18n.localize("Long Range"), value: true});
-        }
-
         this.dialogData.actions = actions;
 
         this.dialogData.enchantedWeapon = 0;
