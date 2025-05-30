@@ -39,7 +39,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         let distance = 0;
         let isInMeleeRange = true;
         let isMeleeAttack = isMeleeWeapon || isThrownWeapon;
-        let isRangedAttack = isRangedWeapon;
+        let isRangedAttack = isRangedWeapon || isThrownWeapon;
         if (actorToken && targetToken) {
             distance = canvas.grid.measurePath([actorToken, targetToken]).distance;
             isInMeleeRange = distance <= (isMeleeWeapon ? this.weapon.system.calculatedRange : (isLongWeapon ? 4 : 2));
@@ -104,7 +104,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.longRange"), value: true});
         }
         // Bane if walls or tokens obstruct line of sight
-        if (targetToken && actorToken) {
+        if (targetToken && actorToken && isRangedAttack) {
 
             const origin = actorToken.object.bounds.center;
             const destination = targetToken.object.bounds.center;
