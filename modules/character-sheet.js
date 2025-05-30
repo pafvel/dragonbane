@@ -724,14 +724,7 @@ export default class DoDCharacterSheet extends BaseActorSheet {
             }
             if (actor.system.deathRolls.failures === 3 && game.settings.get("dragonbane", "automateCharacterDeath")) {
                 const status = CONFIG.statusEffects.find(a => a.id === 'dead');
-                if (game.release.generation < 12) {
-                    const token = canvas.scene.tokens.find(t => t.actor.uuid === actor.uuid);
-                    if (token) {
-                        token.toggleActiveEffect(status, {active: true, overlay: true})    
-                    }
-                } else {
-                    actor.toggleStatusEffect(status.id, {active: true,  overlay: true});
-                }
+                actor.toggleStatusEffect(status.id, {active: true,  overlay: true});
 
                 const actorName = actor.isToken ? actor.token.name : actor.name;
                 const msg = "<p>" + game.i18n.format("DoD.ui.chat.characterDied", {actor: actorName}) + "</p>";
@@ -1335,7 +1328,7 @@ export default class DoDCharacterSheet extends BaseActorSheet {
             if (isNaN(healingTime)) {
                 // Roll healing time
                 try {
-                    const roll = await new Roll(healingTime).roll(game.release.generation < 12 ? {async: true} : {});
+                    const roll = await new Roll(healingTime).roll({});
                     const flavor = game.i18n.format("DoD.injury.healingTimeRollFlavor", {injury: injury.name, days: roll.total});
                     await roll.toMessage({
                         user: game.user.id,
@@ -1442,7 +1435,7 @@ export default class DoDCharacterSheet extends BaseActorSheet {
         if (event.type === "click") {
 
             // Make roll
-            const roll = await new Roll("D20").roll(game.release.generation < 12 ? {async: true} : {});
+            const roll = await new Roll("D20").roll({});
             const advance = Math.min(DoD.skillMaximum , roll.result) > skillItem.system.value;
             const flavorText = advance ?
                 game.i18n.format("DoD.skill.advancementSuccess", {skill: skillItem.name, old: skillItem.system.value, new: skillItem.system.value + 1}) :

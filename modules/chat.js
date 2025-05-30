@@ -592,13 +592,12 @@ export async function inflictDamageMessage(damageData) {
 
     if (damageData.doubleWeaponDamage && roll.terms.length > 0) {
         let term = roll.terms[0];
-        const isDie = game.release.generation < 12 && term instanceof Die || term instanceof foundry.dice.terms.Die;
-        if (isDie) {
+        if (term instanceof foundry.dice.terms.Die) {
             term.number *= 2;
         }
     }
 
-    await roll.roll(game.release.generation < 12 ? {async: true} : {});
+    await roll.roll({});
 
     const weaponName = damageData.weapon?.name ?? damageData.action;
     let msg = isHealing ?
@@ -673,12 +672,7 @@ export async function applyDamageMessage(damageData) {
         if (oldHP > 0 && damageToApply >= oldHP) {
             if (token && !token.hasStatusEffect("prone")) {
                 const status = CONFIG.statusEffects.find(a => a.id === 'prone');
-                if (game.release.generation < 12) {
-                    token.toggleActiveEffect(status, {active: true});
-                } else {
-                    token.actor.toggleStatusEffect(status.id, {active: true});
-                }
-
+                token.actor.toggleStatusEffect(status.id, {active: true});
                 message += "<p>" + game.i18n.format("DoD.ui.chat.characterProne", {actor: actorName}) + "</p>";
             }
         }
@@ -719,12 +713,7 @@ export async function applyDamageMessage(damageData) {
         {
             const status = CONFIG.statusEffects.find(a => a.id === 'dead');
             if (token && !token.hasStatusEffect("dead")) {
-                if (game.release.generation < 12) {
-                    token.toggleActiveEffect(status, {active: true, overlay: true});
-                } else {
-                    token.actor.toggleStatusEffect(status.id, {active: true, overlay: true});
-                }
-
+                token.actor.toggleStatusEffect(status.id, {active: true, overlay: true});
             }
             if (instantDeath) {
                 message += "<p>" + game.i18n.format("DoD.ui.chat.characterDiedInstantly", {actor: actorName}) + "</p>";
@@ -791,12 +780,7 @@ export async function applyHealingMessage(damageData) {
         const token = canvas.scene.tokens.find(t => t.actor.uuid === actor.uuid);
         if (token && token.hasStatusEffect("dead")) {
             const status = CONFIG.statusEffects.find(a => a.id === 'dead');
-            if (game.release.generation < 12) {
-                token.toggleActiveEffect(status);
-            } else {
-                token.actor.toggleStatusEffect(status.id);
-            }
-
+            token.actor.toggleStatusEffect(status.id);
         }
     }
 

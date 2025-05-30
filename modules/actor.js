@@ -183,11 +183,7 @@ export class DoDActor extends Actor {
                         const tokens = this.getActiveTokens();                    
                         if (tokens.length > 0) {
                             const value = foundry.utils.getProperty(data, condition);
-                            if (game.release.generation < 12) {
-                                tokens[0].document.toggleActiveEffect(status, {active: value});
-                            } else {
-                                this.toggleStatusEffect(status.id, {active: value});
-                            }
+                            this.toggleStatusEffect(status.id, {active: value});
                         }    
                     }
                 }
@@ -856,9 +852,9 @@ export class DoDActor extends Actor {
             roll = DoDRoll.create(t.formula);
 
             // Check range
-            const minOption = game.release.generation < 12 ? {minimize: true, async: true} : {minimize: true};
+            const minOption = {minimize: true};
             const minRoll = (await roll.reroll(minOption)).total;
-            const maxOption = game.release.generation < 12 ? {maximize: true, async: true} : {maximize: true};
+            const maxOption = {maximize: true};
             const maxRoll = (await roll.reroll(maxOption)).total;
             if ( (tableResult.range[0] > maxRoll) || (tableResult.range[1] < minRoll) ) {
                 // Create a roll that guarantees the result
@@ -867,7 +863,7 @@ export class DoDActor extends Actor {
 
             // Continue rolling until the desired result is rolled
             // This is preferred if the roll is shown
-            roll = await roll.reroll(game.release.generation < 12 ? {async: true} : {});
+            roll = await roll.reroll({});
             let iter = 0;
             while ( !(tableResult.range[0] <= roll.total && roll.total <= tableResult.range[1]) ) {
                 if ( iter >= 100 ) {
@@ -875,7 +871,7 @@ export class DoDActor extends Actor {
                     roll = DoDRoll.create(tableResult.range[0].toString());
                     break;
                 }
-                roll = await roll.reroll(game.release.generation < 12 ? {async: true} : {});
+                roll = await roll.reroll({});
                 iter++;
             }
 
@@ -974,7 +970,7 @@ export class DoDActor extends Actor {
 
         await this.update({["system.canRestRound"]: false});
 
-        const roll = await new Roll("D6").roll(game.release.generation < 12 ? {async: true} : {});
+        const roll = await new Roll("D6").roll({});
 
         if (game.dice3d) {
             // Green for WP
@@ -1029,7 +1025,7 @@ export class DoDActor extends Actor {
         await this.update({["system.canRestStretch"]: false});
 
         // Make roll
-        const roll = await new Roll(`D6[${game.i18n.localize("DoD.secondaryAttributeTypes.hitPoints")}] + D6[${game.i18n.localize("DoD.secondaryAttributeTypes.willPoints")}]`).roll(game.release.generation < 12 ? {async: true} : {});
+        const roll = await new Roll(`D6[${game.i18n.localize("DoD.secondaryAttributeTypes.hitPoints")}] + D6[${game.i18n.localize("DoD.secondaryAttributeTypes.willPoints")}]`).roll({});
 
         if (game.dice3d) {
             // Red for HP

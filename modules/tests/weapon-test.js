@@ -38,11 +38,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         const targetToken = this.options.targets?.length > 0 ? this.options.targets[0].document : null;
         let distance = 0;
         if (actorToken && targetToken) {
-            if (game.release.generation < 12) {
-                distance = canvas.grid.measureDistance(actorToken, targetToken, {gridSpaces: true});
-            } else {
-                distance = canvas.grid.measurePath([actorToken, targetToken]).distance;
-            }
+            distance = canvas.grid.measurePath([actorToken, targetToken]).distance;
         }
         //const isInRange = distance <= this.weapon.system.calculatedRange;
         const isInMeleeRange = distance <= (isMeleeWeapon ? this.weapon.system.calculatedRange : (isLongWeapon ? 4 : 2));
@@ -96,6 +92,16 @@ export default class DoDWeaponTest extends DoDSkillTest  {
                 this.dialogData.extraDamage = "D6";
             }
         }
+
+        // Bane on ranged attacks at point blank
+        if (targetToken && isRangedWeapon && distance <= 2) {
+                this.dialogData.banes.push({source: game.i18n.localize("Point Blank"), value: true});
+        }
+        // Bane on ranged attacks at more than max range
+        if (targetToken && (isRangedWeapon || isThrownWeapon) && distance > this.weapon.system.calculatedRange) {
+                this.dialogData.banes.push({source: game.i18n.localize("Long Range"), value: true});
+        }
+
         this.dialogData.actions = actions;
 
         this.dialogData.enchantedWeapon = 0;
