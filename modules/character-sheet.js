@@ -513,6 +513,7 @@ export default class DoDCharacterSheet extends BaseActorSheet {
     _processSelectMonsterAttack(form, table) {
         let elements = form.getElementsByClassName("selectMonsterAttack");
         let element = elements.length > 0 ? elements[0] : null;
+        
         if (element) {
             const value = parseInt(element.value);
             if (value > 0) {
