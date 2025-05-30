@@ -338,7 +338,11 @@
             "brokenTooltip": "Indicates if the weapon is broken",
             "mainHandTooltip": "Holding the weapon in the left hand.",
             "offHandTooltip": "Holding the weapon in the right hand.",
-            "belowRequiredStr": "Below STR"
+            "belowRequiredStr": "Below STR",
+            "pointBlank": "Point Blank",
+            "longRange": "Long Range",
+            "lineOfSightToken": "Obscured by token",
+            "lineOfSightWall": "Obscured by wall"
         },
         "unit": {
             "meterPlural": "meters"
@@ -507,6 +511,8 @@
                 "boons": "Boons",
                 "brokenWeaponTitle": "Broken Weapon",
                 "brokenWeaponContent": "The weapon is broken. Are you sure you want to use it to perform an action?",
+                "longRangeTitle": "Long Range",
+                "longRangeContent": "The target is further away than twice the weapon range. Are you sure you want to perform an action?",
                 "performAction": "Perform Action",
                 "cancelAction": "Cancel Action",
                 "enchantedWeapon": "Enchanted weapon",

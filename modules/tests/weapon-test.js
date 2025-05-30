@@ -12,7 +12,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         super.updateDialogData();
 
         const isThrownWeapon = this.weapon.hasWeaponFeature("thrown");
-        const isRangedWeapon = !isThrownWeapon && this.weapon.system.calculatedRange >= 10;
+        const isRangedWeapon = !isThrownWeapon && this.weapon.isRangedWeapon;
         const isMeleeWeapon = !isThrownWeapon && !isRangedWeapon;
         const isLongWeapon = this.weapon.hasWeaponFeature("long");
         const hasSlashAttack = this.weapon.hasWeaponFeature("slashing");
@@ -37,37 +37,41 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         const actorToken = canvas.scene?.tokens?.find(t => t.actor?.uuid === this.actor.uuid);
         const targetToken = this.options.targets?.length > 0 ? this.options.targets[0].document : null;
         let distance = 0;
+        let isInMeleeRange = true;
+        let isMeleeAttack = isMeleeWeapon || isThrownWeapon;
+        let isRangedAttack = isRangedWeapon;
         if (actorToken && targetToken) {
             distance = canvas.grid.measurePath([actorToken, targetToken]).distance;
+            isInMeleeRange = distance <= (isMeleeWeapon ? this.weapon.system.calculatedRange : (isLongWeapon ? 4 : 2));
+            isMeleeAttack = isMeleeWeapon || isThrownWeapon && isInMeleeRange;
+            isRangedAttack = !isMeleeAttack;
         }
-        //const isInRange = distance <= this.weapon.system.calculatedRange;
-        const isInMeleeRange = distance <= (isMeleeWeapon ? this.weapon.system.calculatedRange : (isLongWeapon ? 4 : 2));
 
         if(isRangedWeapon) {
             pushAction("ranged");
         }
-        if(hasNormalAttack && !isRangedWeapon) {
+        if(isMeleeAttack && hasNormalAttack) {
             pushAction("normal");
         }
-        if(hasSlashAttack && !isRangedWeapon) {
+        if(isMeleeAttack && hasSlashAttack) {
             pushAction("slash");
         }
-        if(hasStabAttack && !isRangedWeapon) {
+        if(isMeleeAttack && hasStabAttack) {
             pushAction("stab");
         }
-        if(hasWeakpointAttack && !isRangedWeapon) {
+        if(isMeleeAttack && hasWeakpointAttack) {
             pushAction("weakpoint");
         }
-        if(hasToppleAttack && !isRangedWeapon) {
+        if(isMeleeAttack && hasToppleAttack) {
             pushAction("topple");
         }
-        if(hasDisarmAttack && !isRangedWeapon) {
+        if(isMeleeAttack && hasDisarmAttack) {
             pushAction("disarm");
         }
-        if(isThrownWeapon && !isRangedWeapon) {
+        if(isThrownWeapon && isRangedAttack) {
             pushAction("throw");
         }
-        if(hasParry && !isRangedWeapon) {
+        if(isMeleeAttack && hasParry) {
             pushAction("parry");
         }
 
@@ -85,11 +89,49 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         }
 
         // Boon and extra damage on melee attack on prone target
-        const isMeleeAttack = isMeleeWeapon || isThrownWeapon && isInMeleeRange;
         if (isMeleeAttack && targetToken && actorToken) {
             if (targetToken.hasStatusEffect("prone") && !actorToken.hasStatusEffect("prone")) {
                 this.dialogData.boons.push({source: game.i18n.localize("EFFECT.StatusProne"), value: true});
                 this.dialogData.extraDamage = "D6";
+            }
+        }
+        // Bane on ranged attacks at point blank
+        if (targetToken && isRangedWeapon && distance <= 2) {
+            this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.pointBlank"), value: true});
+        }
+        // Bane on ranged attacks at more than max range
+        if (targetToken && (isRangedWeapon || isThrownWeapon) && distance > this.weapon.system.calculatedRange) {
+            this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.longRange"), value: true});
+        }
+        // Bane if walls or tokens obstruct line of sight
+        if (targetToken && actorToken) {
+
+            const origin = actorToken.object.bounds.center;
+            const destination = targetToken.object.bounds.center;
+
+            // Check walls
+            const sightBackend = CONFIG.Canvas.polygonBackends["sight"];
+            const blockedByWall = sightBackend.testCollision(origin, destination, { mode: "any", type: "sight" });
+            if (blockedByWall) {
+                this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.lineOfSightWall"), value: true});
+            }
+
+            // Check tokens
+            const ray = game.release.generation < 13 ? new Ray (origin, destination) : new foundry.canvas.geometry.Ray(origin, destination);
+            const blockers = canvas.tokens.placeables.filter(t => t.id !== targetToken.id && t.id !== actorToken.id);
+            for (const blocker of blockers) {
+                const { x, y, width, height } = blocker.bounds;
+                const sides = [
+                    [ x,            y,          x + width, y            ], // top
+                    [ x + width,    y,          x + width, y + height   ], // right
+                    [ x + width,    y + height, x,         y + height   ], // bottom
+                    [ x,            y + height, x,         y            ]  // left
+                ];
+                const blockedByToken = sides.some(coords => !!ray.intersectSegment(coords));                
+                if (blockedByToken) {
+                    this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.lineOfSightToken"), value: true});
+                    break;
+                }
             }
         }
 
@@ -124,38 +166,67 @@ export default class DoDWeaponTest extends DoDSkillTest  {
 
         let label = game.i18n.localize("DoD.ui.dialog.skillRollLabel");
         let title = game.i18n.localize("DoD.ui.dialog.skillRollTitle") + ": " + this.weapon.name;
-        let options = {cancelled: true};
 
+        // User may cancel if the weapon is broken
         if (this.weapon.system.broken) {
-            options = await new Promise(
-                resolve => {
-                    const data = {
-                        title: game.i18n.localize("DoD.ui.dialog.brokenWeaponTitle"),
-                        content: game.i18n.localize("DoD.ui.dialog.brokenWeaponContent"),
-                        buttons: {
-                            ok: {
-                                icon: '<i class="fas fa-check"></i>',
-                                label: game.i18n.localize("DoD.ui.dialog.performAction"),
-                                callback: () => {
-                                    resolve(this.getRollOptionsFromDialog(title, label));
-                                }
-                            }                            ,
-                            cancel: {
-                                icon: '<i class="fas fa-times"></i>',
-                                label: game.i18n.localize("DoD.ui.dialog.cancelAction"),
-                                callback: _html => resolve({cancelled: true})
-                            }
-                        },
-                        default: "cancel",
-                        close: () => resolve({cancelled: true})
-                    };
-                    new Dialog(data, null).render(true);
+            const brokenOpts = await new Promise(resolve => {
+            new Dialog({
+                title: game.i18n.localize("DoD.ui.dialog.brokenWeaponTitle"),
+                content: game.i18n.localize("DoD.ui.dialog.brokenWeaponContent"),
+                buttons: {
+                ok: {
+                    icon: '<i class="fas fa-check"></i>',
+                    label: game.i18n.localize("DoD.ui.dialog.performAction"),
+                    callback: () => resolve({ cancelled: false })
+                },
+                cancel: {
+                    icon: '<i class="fas fa-times"></i>',
+                    label: game.i18n.localize("DoD.ui.dialog.cancelAction"),
+                    callback: () => resolve({ cancelled: true })
                 }
-            );
-        } else {
-            options = await this.getRollOptionsFromDialog(title, label);
+                },
+                default: "cancel",
+                close: () => resolve({ cancelled: true })
+            }).render(true);
+            });
+            if (brokenOpts.cancelled) return { cancelled: true };
         }
-        return options;
+        // User may cancel if the distance to target is greater than 2x max range
+        if (this.weapon.isRangedWeapon || this.weapon.hasWeaponFeature("thrown"))
+        {
+            const actorToken = canvas.scene?.tokens?.find(t => t.actor?.uuid === this.actor.uuid);
+            const targetToken = this.options.targets?.length > 0 ? this.options.targets[0].document : null;
+            let distance = 0;
+            if (actorToken && targetToken) {
+                distance = canvas.grid.measurePath([actorToken, targetToken]).distance;
+            }
+
+            if (distance > 2 * this.weapon.system.calculatedRange) {
+                const rangedOpts = await new Promise(resolve => {
+                new Dialog({
+                    title: game.i18n.localize("DoD.ui.dialog.longRangeTitle"),
+                    content: game.i18n.localize("DoD.ui.dialog.longRangeContent"),
+                    buttons: {
+                    ok: {
+                        icon: '<i class="fas fa-check"></i>',
+                        label: game.i18n.localize("DoD.ui.dialog.performAction"),
+                        callback: () => resolve({ cancelled: false })
+                    },
+                    cancel: {
+                        icon: '<i class="fas fa-times"></i>',
+                        label: game.i18n.localize("DoD.ui.dialog.cancelAction"),
+                        callback: () => resolve({ cancelled: true })
+                    }
+                    },
+                    default: "cancel",
+                    close: () => resolve({ cancelled: true })
+                }).render(true);
+                });
+                if (rangedOpts.cancelled) return { cancelled: true };
+            }
+        }
+        // Finally, ask for the actual roll options
+        return this.getRollOptionsFromDialog(title, label);       
     }
 
     formatRollMessage(postRollData) {

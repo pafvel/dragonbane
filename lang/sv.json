@@ -343,7 +343,11 @@
             "brokenTooltip": "Anger om vapnet är trasigt",
             "mainHandTooltip": "Håller vapnet i vänstra handen",
             "offHandTooltip": "Håller vapnet i högra handen",
-            "belowRequiredStr": "STY-krav"
+            "belowRequiredStr": "STY-krav",
+            "pointBlank": "Nära håll",
+            "longRange": "Långt avstånd",
+            "lineOfSightToken": "Skymd av markör",
+            "lineOfSightWall": "Skymd av vägg"
         },
         "weaponFeatureTypes": {
             "bludgeoning": "Krossande",
@@ -511,6 +515,8 @@
                 "boons": "Fördelar",
                 "brokenWeaponTitle": "Trasigt vapen",
                 "brokenWeaponContent": "Vapnet är trasigt. Är du säker på att du vill utföra en handling med vapnet?",
+                "longRangeTitle": "Långt avstånd",
+                "longRangeContent": "Avståndet till målet är mer än dubbla vapnets räckvid. Är du säker på att du vill utföra en handling med vapnet?",
                 "performAction": "Utför handling",
                 "cancelAction": "Avbryt handling",
                 "enchantedWeapon": "Förtrolla vapen",

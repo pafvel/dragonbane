@@ -206,4 +206,8 @@ export class DoDItem extends Item {
             await this.update({"system.abilities": newAbilities});
         }
     }
+
+    get isRangedWeapon() {
+        return this.type === "weapon" && this.system.calculatedRange >= 10;
+    }
 }
