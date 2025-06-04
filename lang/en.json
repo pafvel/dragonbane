@@ -545,7 +545,9 @@
                 "healInjuriesTitle": "Heal Injuries",
                 "healInjuriesMessage": "Reduce the healing time for all un-healed injuries by one day?",
                 "deleteKinAbility": "Deleting a Kin Ability will also remove the ability from the character's Kin.",
-                "deleteProfessionAbility": "Deleting a Profession Ability will also remove the ability from the character's Profession."
+                "deleteProfessionAbility": "Deleting a Profession Ability will also remove the ability from the character's Profession.",
+                "addMeleeDamageVsProneMessage": "Melee attacks against prone targets inflict an extra D6 damage.<p>Do you wish to add D6 damage to the monster attack against <b>{target}</b>?",
+                "addMeleeDamageVsProneTitle": "Add Damage"
             }
         },
         "item-sheet": {
