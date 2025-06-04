@@ -226,7 +226,7 @@
             "spellRoll": "<b>{spell}</b> at Power Level <b>{powerLevel}</b> <b>{result}</b>",
             "spellRollTarget": "<b>{spell}</b> at Power Level <b>{powerLevel}</b> targeting <b>{target}</b> <b>{result}</b>",
             "weaponRoll": "<b>{action}</b> with <b>@UUID[{skill}]</b> <b>{result}</b>",
-            "weaponRollTarget": "<b>{action}</b> with <b>@UUID[{skill}]}</b> targeting <b>{target}</b> <b>{result}</b>",
+            "weaponRollTarget": "<b>{action}</b> with <b>@UUID[{skill}]</b> targeting <b>{target}</b> <b>{result}</b>",
             "damage": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType}</b>.",
             "damageWeapon": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType}</b> using <b>{weapon}</b>.",
             "damageIgnoreArmor": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType} ignoring armor</b> using <b>{weapon}</b>.",
