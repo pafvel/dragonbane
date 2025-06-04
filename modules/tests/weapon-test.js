@@ -239,20 +239,22 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             const durability = this.postRollData.weapon.system.durability ?? 0;
             weapon += `<span class="permission-observer" data-actor-id="${this.postRollData.actor.uuid}" style="font-weight:normal;"> (${game.i18n.localize("DoD.weapon.durability")} ${durability})</span>`;
         }
-
+      
         let label = game.i18n.format(game.i18n.localize(locString),
             {
                 action: game.i18n.localize("DoD.attackTypes." + postRollData.action),
-                skill: weapon,
+                skill: postRollData.weapon.uuid,
                 result: result,
                 target: this.postRollData.targetActor?.isToken ? this.postRollData.targetActor.token.name : this.postRollData.targetActor?.name
             }
         );
+      
 
         return {
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: postRollData.actor }),
-            flavor: label
+            content: label,
+           
         };
     }
 

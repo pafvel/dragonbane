@@ -119,7 +119,7 @@ export default class DoDSpellTest extends DoDSkillTest  {
         const target = postRollData.targetActor;
         const result = this.formatRollResult(postRollData);
         const locString = postRollData.powerLevel > 0 ? (target ? "DoD.roll.spellRollTarget" : "DoD.roll.spellRoll") : "DoD.roll.skillRoll";
-        const label = game.i18n.format(
+        let label = game.i18n.format(
             game.i18n.localize(locString),
             {
                 skill: postRollData.spell.name,
@@ -129,11 +129,14 @@ export default class DoDSpellTest extends DoDSkillTest  {
                 result: result
             }
         );
-
+      
+        const spellUuid = `@UUID[${postRollData.spell.uuid}]{${postRollData.spell.name}}`
+        
         return {
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: postRollData.actor }),
-            flavor: label
+            flavor: label,
+            content: spellUuid
         };
     }
 }
