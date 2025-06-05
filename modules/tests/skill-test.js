@@ -55,7 +55,7 @@ export default class DoDSkillTest extends DoDTest {
 
     formatRollMessage(postRollData) {
         const resultMsg = this.formatRollResult(postRollData);
-        const label = game.i18n.format(game.i18n.localize("DoD.roll.skillRoll"), { skill: postRollData.skill.uuid, result: resultMsg });
+        const label = game.i18n.format("DoD.roll.skillRoll", { skill: postRollData.skill.uuid, result: resultMsg });
      
         return {
             user: game.user.id,

@@ -496,7 +496,7 @@
         "characterDiedInstantly": "<b>{actor}</b> ha muerto al instante.",
         "characterSurvived": "{actor} ha escapado de la muerte y recupera [[/roll D6]] PG.",
         "characterProne": "{actor} ha llegado a 0 PG y está derribado.",
-        "castMagicTrick": "<b>{actor}</b> lanza <b>@UUID[{uuid}]<</b>.",
+        "castMagicTrick": "<b>{actor}</b> lanza <b>@UUID[{uuid}]</b>.",
         "damageDetailDamage": "Daño",
         "damageDetailArmor": "Armadura",
         "damageDetailMultiplier": "Multiplicador",

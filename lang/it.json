@@ -443,7 +443,7 @@
         "characterDied": "{actor} è morto.",
         "characterSurvived": "{actor} è sfuggito alla morte e recupera [[/roll D6]] PF.",
         "characterProne": "{actor} ha raggiunto 0 PF ed è prono.",
-        "castMagicTrick": "<b>{actor}</b> lancia <b>@UUID[{uuid}]<</b>."
+        "castMagicTrick": "<b>{actor}</b> lancia <b>@UUID[{uuid}]</b>."
       },
       "dialog": {
         "banes": "Castighi",

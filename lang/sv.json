@@ -502,7 +502,7 @@
         "characterDiedInstantly": "<b>{actor}</b> dog omedelbart.",
         "characterSurvived": "<b>{actor}</b> undvek döden och återfår [[/roll D6]] KP.",
         "characterProne": "<b>{actor}</b> nådde 0 KP och blev liggande.",
-        "castMagicTrick": "<b>{actor}</b> utför trolleritricket <b>@UUID[{uuid}]<</b>.",
+        "castMagicTrick": "<b>{actor}</b> utför trolleritricket <b>@UUID[{uuid}]</b>.\"",
         "damageDetailDamage": "Skada",
         "damageDetailArmor": "Skydd",
         "damageDetailMultiplier": "Modifikation",

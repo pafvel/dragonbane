@@ -496,7 +496,7 @@
         "characterDiedInstantly": "<b>{actor}</b> umiera natychmiast.",
         "characterSurvived": "<b>{actor}</b> unika śmierci i odzyskuje [[/roll D6]] WT.",
         "characterProne": "<b>{actor}</b> posiada 0 WT i upada.",
-        "castMagicTrick": "<b>{actor}</b> rzucza czar <b>@UUID[{uuid}]<</b>.",
+        "castMagicTrick": "<b>{actor}</b> rzucza czar <b>@UUID[{uuid}]</b>.",
         "damageDetailDamage": "Obrażenia",
         "damageDetailArmor": "Zbroja",
         "damageDetailMultiplier": "Mnożnik",
