@@ -1220,9 +1220,10 @@ export default class DoDCharacterSheet extends BaseActorSheet {
                             DoD_Utility.WARNING("DoD.WARNING.notEnoughWPForSpell");
                             return;
                         } else {
+                            const trickUuid = `@UUID[${item.uuid}]`
                             let content = "<p>" + game.i18n.format("DoD.ui.chat.castMagicTrick", {
                                 actor: this.actor.name,
-                                spell: item.name,
+                                spell: trickUuid,
                                 uuid: item.uuid
                             }) + "</p>";
                             if (this.actor.type !== "monster") {

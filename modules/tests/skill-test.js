@@ -55,11 +55,12 @@ export default class DoDSkillTest extends DoDTest {
 
     formatRollMessage(postRollData) {
         const resultMsg = this.formatRollResult(postRollData);
-        const label = game.i18n.format(game.i18n.localize("DoD.roll.skillRoll"), { skill: postRollData.skill.name, result: resultMsg });
+        const skillUuid = `@UUID[${postRollData.skill.uuid}]`
+        const label = game.i18n.format(game.i18n.localize("DoD.roll.skillRoll"), { skill:skillUuid , result: resultMsg });
         return {
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: postRollData.actor }),
-            flavor: label
+            content: label
         };
     }
 
