@@ -122,8 +122,8 @@ export default class DoDSpellTest extends DoDSkillTest  {
         const label = game.i18n.format(
             game.i18n.localize(locString),
             {
-                skill: postRollData.spell.name,
-                spell: postRollData.spell.name,
+                skill: postRollData.spell.uuid,
+                spell: postRollData.spell.uuid,
                 powerLevel: postRollData.powerLevel,
                 target: postRollData.targetActor?.isToken ? postRollData.targetActor.token.name : postRollData.targetActor?.name,
                 result: result
