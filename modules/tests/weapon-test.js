@@ -248,6 +248,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
                 target: this.postRollData.targetActor?.isToken ? this.postRollData.targetActor.token.name : this.postRollData.targetActor?.name
             }
         );
+      
 
         return {
             user: game.user.id,

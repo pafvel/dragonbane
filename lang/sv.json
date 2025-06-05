@@ -1,40 +1,53 @@
 {
-    "ACTOR": {
-        "TypeCharacter": "Rollperson",
-        "TypeNpc": "Spelledarperson",
-        "TypeMonster": "Monster"
+  "ACTOR": {
+    "TypeCharacter": "Rollperson",
+    "TypeNpc": "Spelledarperson",
+    "TypeMonster": "Monster"
+  },
+  "ITEM": {
+    "TypeAbility": "Förmåga",
+    "TypeArmor": "Rustning",
+    "TypeHelmet": "Hjälm",
+    "TypeInjury": "Skada",
+    "TypeItem": "Föremål",
+    "TypeKin": "Släkte",
+    "TypeProfession": "Yrke",
+    "TypeSkill": "Färdighet",
+    "TypeSpell": "Besvärjelse",
+    "TypeWeapon": "Vapen"
+  },
+  "TYPES": {
+    "Actor": {
+      "character": "Rollperson",
+      "npc": "Spelledarperson",
+      "monster": "Monster"
     },
-
-    "ITEM": {
-        "TypeAbility": "Förmåga",
-        "TypeArmor": "Rustning",
-        "TypeHelmet": "Hjälm",
-        "TypeInjury": "Skada",
-        "TypeItem": "Föremål",
-        "TypeKin": "Släkte",
-        "TypeProfession": "Yrke",
-        "TypeSkill": "Färdighet",
-        "TypeSpell": "Besvärjelse",
-        "TypeWeapon": "Vapen"
+    "Item": {
+      "ability": "Förmåga",
+      "armor": "Rustning",
+      "helmet": "Hjälm",
+      "injury": "Skada",
+      "item": "Föremål",
+      "kin": "Släkte",
+      "profession": "Yrke",
+      "skill": "Färdighet",
+      "spell": "Besvärjelse",
+      "weapon": "Vapen"
+    }
+  },
+  "DoD": {
+    "ability": {
+      "requirement": "Krav",
+      "type": "Typ",
+      "wp": "Viljepoäng",
+      "secondaryAttribute": "Egenskapsbonus",
+      "useWithWP": "<b>{actor}</b> spenderar <b>{wp}</b> Viljepoäng och aktiverar @UUID[{uuid}].",
+      "useWithoutWP": "<b>{actor}</b> aktiverar @UUID[{uuid}]. Se förmågan för kostnad i Viljepoäng."
     },
-    "TYPES": {
-        "Actor": {
-            "character": "Rollperson",
-            "npc": "Spelledarperson",
-            "monster": "Monster"
-        },
-        "Item": {
-            "ability": "Förmåga",
-            "armor": "Rustning",
-            "helmet": "Hjälm",
-            "injury": "Skada",
-            "item": "Föremål",
-            "kin": "Släkte",
-            "profession": "Yrke",
-            "skill": "Färdighet",
-            "spell": "Besvärjelse",
-            "weapon": "Vapen"
-        }
+    "abilityTypes": {
+      "kin": "Släktesförmåga",
+      "profession": "Yrkesförmåga",
+      "heroic": "Hjälteförmåga"
     },
     "DoD": {
         "ability": {
@@ -614,4 +627,5 @@
             "noSkillsInCompendium": "Den registrerade grundmodulen innehåller inga färdigheter. Modulen kan vara skadad och bör ominstalleras. Försöker att hitta färdigheter i världen istället."
         }
     }
+  }
 }

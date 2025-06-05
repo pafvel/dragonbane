@@ -1226,6 +1226,7 @@ export default class DoDCharacterSheet extends BaseActorSheet {
                                 spell: trickUuid,
                                 uuid: item.uuid
                             }) + "</p>";
+                           
                             if (this.actor.type !== "monster") {
                                 const oldWP = this.actor.system.willPoints.value;
                                 const newWP = oldWP - 1;

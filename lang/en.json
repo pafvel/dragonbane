@@ -1,39 +1,53 @@
 {
-    "ACTOR": {
-        "TypeCharacter": "Player Character",
-        "TypeNpc": "Non-Player Character",
-        "TypeMonster": "Monster"
+  "ACTOR": {
+    "TypeCharacter": "Player Character",
+    "TypeNpc": "Non-Player Character",
+    "TypeMonster": "Monster"
+  },
+  "ITEM": {
+    "TypeAbility": "Ability",
+    "TypeArmor": "Armor",
+    "TypeHelmet": "Helmet",
+    "TypeInjury": "Injury",
+    "TypeItem": "Item",
+    "TypeKin": "Kin",
+    "TypeProfession": "Profession",
+    "TypeSkill": "Skill",
+    "TypeSpell": "Spell",
+    "TypeWeapon": "Weapon"
+  },
+  "TYPES": {
+    "Actor": {
+      "character": "Player Character",
+      "npc": "Non-Player Character",
+      "monster": "Monster"
     },
-    "ITEM": {
-        "TypeAbility": "Ability",
-        "TypeArmor": "Armor",
-        "TypeHelmet": "Helmet",
-        "TypeInjury": "Injury",
-        "TypeItem": "Item",
-        "TypeKin": "Kin",
-        "TypeProfession": "Profession",
-        "TypeSkill": "Skill",
-        "TypeSpell": "Spell",
-        "TypeWeapon": "Weapon"
+    "Item": {
+      "ability": "Ability",
+      "armor": "Armor",
+      "helmet": "Helmet",
+      "injury": "Injury",
+      "item": "Item",
+      "kin": "Kin",
+      "profession": "Profession",
+      "skill": "Skill",
+      "spell": "Spell",
+      "weapon": "Weapon"
+    }
+  },
+  "DoD": {
+    "ability": {
+      "requirement": "Requirement",
+      "type": "Type",
+      "wp": "Willpower Points",
+      "secondaryAttribute": "Attribute bonus",
+      "useWithWP": "<b>{actor}</b> spends <b>{wp}</b> WP to activate @UUID[{uuid}].",
+      "useWithoutWP": "<b>{actor}</b> activates @UUID[{uuid}]. See ability for WP cost."
     },
-    "TYPES": {
-        "Actor": {
-            "character": "Player Character",
-            "npc": "Non-Player Character",
-            "monster": "Monster"
-        },
-        "Item": {
-            "ability": "Ability",
-            "armor": "Armor",
-            "helmet": "Helmet",
-            "injury": "Injury",
-            "item": "Item",
-            "kin": "Kin",
-            "profession": "Profession",
-            "skill": "Skill",
-            "spell": "Spell",
-            "weapon": "Weapon"
-        }
+    "abilityTypes": {
+      "kin": "Kin",
+      "profession": "Profession",
+      "heroic": "Heroic"
     },
     "DoD": {
         "ability": {
@@ -610,4 +624,5 @@
             "noSkillsInCompendium": "The registered core module did not contain any base skills. The core module may be damaged and should be re-installed. Trying to find skills in the world instead."
         }
     }
+  }
 }
