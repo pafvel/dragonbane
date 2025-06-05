@@ -821,6 +821,8 @@
   --dod-color-secret: #E83031;
   --dod-color-positive-effect: #00604D;
   --dod-color-negative-effect: #E83031;
+  --dod-color-dash-range: yellow;
+  --dod-color-out-of-range: #E83031;
   --dod-font-primary: "QTFrizQuad";
   --dod-font-secondary: "QTFrizQuad";
   --dod-font-heading: "QTFrizQuad";
@@ -1923,4 +1925,13 @@
 }
 .system-dragonbane .damage-details .expandable {
   display: none;
+}
+.system-dragonbane .waypoint-label .move-range {
+  color: inherit;
+}
+.system-dragonbane .waypoint-label .dash-range {
+  color: var(--dod-color-dash-range);
+}
+.system-dragonbane .waypoint-label .out-of-range {
+  color: var(--dod-color-out-of-range);
 }

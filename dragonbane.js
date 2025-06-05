@@ -24,6 +24,7 @@ import DoDWeaponData from "./modules/data/items/weaponData.js";
 import DoDSpellData from "./modules/data/items/spellData.js";
 import DoDActiveEffect from "./modules/active-effect.js";
 import DoDActiveEffectConfig from "./modules/active-effect-config.js";
+import DoDTokenRuler from "./modules/token-ruler.js";
 
 function registerHandlebarsHelpers() {
 
@@ -83,6 +84,7 @@ async function preloadHandlebarsTemplates() {
         "systems/dragonbane/templates/partials/skill-roll-message.hbs",
         "systems/dragonbane/templates/partials/tooltip.hbs",
         "systems/dragonbane/templates/partials/wp-widget.hbs",
+        "systems/dragonbane/templates/partials/waypoint-label.hbs",
     ];
 
     if (game.release.generation < 13) {
@@ -297,6 +299,7 @@ Hooks.once("init", function () {
 
     CONFIG.Dice.rolls.unshift(DoDRoll);
 
+    CONFIG.Token.rulerClass = DoDTokenRuler;
 
     foundry.utils.mergeObject(CONFIG.Actor.dataModels, {
         character: DoDCharacterData,
