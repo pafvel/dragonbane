@@ -567,10 +567,10 @@ export default class DoDCharacterSheet extends BaseActorSheet {
                 attack.description = await CONFIG.DoD.TextEditor.enrichHTML(attack.description, { async: true });
 
                 // Split attack name and description
-                const match = attack.description.match(/<b>(.*?)<\/b>(.*)/);
+                const match = attack.description.match(/<(b|strong)>(.*?)<\/\1>(.*)/);
                 if (match) {
-                    attack.name = match[1];
-                    attack.description = match[2]
+                    attack.name = match[2];
+                    attack.description = match[3]
                 } else {
                     attack.name = String(attack.index);
                 }
