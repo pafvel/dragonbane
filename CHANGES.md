@@ -1,5 +1,24 @@
 # Change Log
 
+## Version 2.2
+
+- Token Drag Measurement
+
+  - The Foundry v13 Token Drag Measurement tool will display the total distance in yellow if the distance exceeds the characters movement attribute, or red if the distance exceeds twice the movement attribute.
+
+- Ranged Combat
+
+  - Ranged attacks receive a bane at point blank range or if the distance to target is above max range. If the distance is more than twice the max range the player will be shown a dialog asking for confirmation. (partially contributed by @BartekB)
+  - Ranged attacks will receive a bane if the line of sight between the attacker and the target intersects other tokens or walls. (partially contributed by @BartekB)
+
+- Monster Attacks
+
+  - When rolling for damage from a monster attack on a prone target, there will be a dialog asking if D6 damage should be added.
+  - Fix for monster attack names not being shown in the monster attack dialog if they were edited in the Foundry v13 table editor.
+
+- Miscellaneuos
+  - Links to skills, spells and weapons will be shown in chat when they are used (similar to heroic abilities).
+
 ## Version 2.1
 
 - Fix for playlists not visible (v13)
