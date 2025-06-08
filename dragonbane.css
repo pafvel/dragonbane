@@ -1456,6 +1456,9 @@
 .system-dragonbane .chat-message .result-image {
   border: 0px transparent;
 }
+.system-dragonbane .chat-message .message-content {
+  padding-top: 1px;
+}
 .system-dragonbane .chat-message label.checkbox {
   display: flex;
   gap: 0.25rem;
