@@ -427,5 +427,20 @@ export default class DoD_Utility {
         } else {
             return null;
         }
-    }    
+    }
+
+    static getAttributeFromDamageBonus(damageBonus) {
+        switch (damageBonus) {
+            case "d4":
+                return 14;
+            case "d6":
+            case "d8":
+            case "d10":
+            case "d12":
+            case "d20":
+                return 17;
+            default:
+                return 10;
+        }
+    }
 }

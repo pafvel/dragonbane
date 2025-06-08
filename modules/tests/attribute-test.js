@@ -1,3 +1,4 @@
+import DoD_Utility from "../utility.js";
 import DoDTest from "./dod-test.js";
 
 export default class DoDAttributeTest extends DoDTest {
@@ -30,35 +31,9 @@ export default class DoDAttributeTest extends DoDTest {
             } else if (this.attribute === "wil") {
                 this.preRollData.target = this.actor.system.willPoints.max - 2 * this.actor.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "willPoints").length;
             } else if (this.attribute === "str") {
-                switch (this.actor.system.damageBonus.str.value) {
-                    case "d4":
-                        this.preRollData.target = 14;
-                        break;
-                    case "d6":
-                    case "d8":
-                    case "d10":
-                    case "d12":
-                    case "d20":
-                        this.preRollData.target = 17;
-                        break;
-                    default:
-                        this.preRollData.target = 10;
-                }
+                this.preRollData.target = DoD_Utility.getAttributeFromDamageBonus(this.actor.system.damageBonus.str.value);
             } else if (this.attribute === "agl") {
-                switch (this.actor.system.damageBonus.agl.value) {
-                    case "d4":
-                        this.preRollData.target = 14;
-                        break;
-                    case "d6":
-                    case "d8":
-                    case "d10":
-                    case "d12":
-                    case "d20":
-                        this.preRollData.target = 17;
-                        break;
-                    default:
-                        this.preRollData.target = 10;
-                }
+                this.preRollData.target = DoD_Utility.getAttributeFromDamageBonus(this.actor.system.damageBonus.agl.value);
             } else {
                 // INT and CHA
                 this.preRollData.target = 10;

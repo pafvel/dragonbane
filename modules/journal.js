@@ -713,8 +713,7 @@ export async function enrichGearTable(match, _options) {
                 case "melee":
                 case "ranged":
                     {
-                        let range = item.system.range.toString() ?? "";
-                        range = range.replace("@str", game.i18n.localize("DoD.attributes.str"));
+                        const range = item.system.calculatedRange;
         
                         html += `
                         <tr>

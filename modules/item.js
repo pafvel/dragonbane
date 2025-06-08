@@ -57,7 +57,11 @@ export class DoDItem extends Item {
 
         // Range
         if (this.actor && this.system.range !== "") {
-            let r = new Roll(String(this.system.range), {str: this.actor.system.attributes?.str.value});
+            const str = this.actor.system.attributes?.str.value ??
+                DoD_Utility.getAttributeFromDamageBonus(this.actor.system.damageBonus.str.value);
+            const agl = this.actor.system.attributes?.agl.value ??
+                DoD_Utility.getAttributeFromDamageBonus(this.actor.system.damageBonus.agl.value);
+            let r = new Roll(String(this.system.range), {str, agl});
             try {
                 await r.evaluate({});
                 this.system.calculatedRange = r.total;
@@ -67,7 +71,10 @@ export class DoDItem extends Item {
                 this.system.calculatedRange = "";
             }
         } else {
-            let r = new Roll(String(this.system.range), {str: game.i18n.localize("DoD.attributes.str")});
+            let r = new Roll(String(this.system.range), {
+                agl: game.i18n.localize("DoD.attributes.agl"),
+                str: game.i18n.localize("DoD.attributes.str")
+            });
             this.system.calculatedRange = r.formula;
         }
     }
