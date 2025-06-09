@@ -1,5 +1,14 @@
 # Change Log
 
+## Version 2.3
+
+- Monster Attacks
+
+  - Fix for broken skill link when doing a monster defend action.
+
+- Localization
+  - Updated ES translation (by Tarot).
+
 ## Version 2.2
 
 - Token Drag Measurement
