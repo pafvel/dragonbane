@@ -339,7 +339,11 @@
             "brokenTooltip": "Indica si el arma se ha roto.",
             "mainHandTooltip": "Sujetando el arma con la mano principal.",
             "offHandTooltip": "Sujetando el arma con la mano mala.",
-            "belowRequiredStr": "FUE insuficiente"
+            "belowRequiredStr": "FUE insuficiente",
+            "pointBlank": "A bocajarro",
+            "longRange": "Alcance Largo",
+            "lineOfSightToken": "Tapado por token",
+            "lineOfSightWall": "Tapado por pared"
         },
         "unit": {
             "meterPlural": "metros"
@@ -508,6 +512,8 @@
                 "boons": "Ventajas",
                 "brokenWeaponTitle": "Arma Rota",
                 "brokenWeaponContent": "El arma está rota. ¿Estás seguro/a de querer usarla para realizar una acción?",
+                "longRangeTitle": "Largo Alcance",
+                "longRangeContent": "El objetivo está mas allá de dos veces el alcance del arma (está fuera de alcance).<p>¿Estás seguro de que quieres usar una acción?",
                 "performAction": "Realizar Acción",
                 "cancelAction": "Cancelar Acción",
                 "enchantedWeapon": "Arma hechizada",
@@ -538,7 +544,11 @@
                 "monsterAttackRandom": "Aleatorio",
                 "monsterAttackTitle": "Escoger el ataque del Monstruo",
                 "healInjuriesTitle": "Tratar Heridas",
-                "healInjuriesMessage": "¿Reducir en un día el tiempo necesario para la curación de todas las heridas todavía no sanadas?"
+                "healInjuriesMessage": "¿Reducir en un día el tiempo necesario para la curación de todas las heridas todavía no sanadas?",
+		"deleteKinAbility": "Eliminar una Capacidad de Raza también eliminará la capacidad de la raza del personaje.",
+                "deleteProfessionAbility": "Eliminar una Habilidad Profesional también eliminará la habilidad de la Profesión del personaje.",
+                "addMeleeDamageVsProneMessage": "Los ataques Cuepro a Cuerpo contra un objetivo derribado causan 1d6 puntos de daño adicionales.<p>¿Quieres causar 1d6 de daño adicional en el ataque de monstruo contra <b>{target}</b>?",
+                "addMeleeDamageVsProneTitle": "Añadir Daño"
             }
         },
         "item-sheet": {
@@ -597,7 +607,8 @@
             "noMeleeMishapTable": "Falta la tabla de pifias para armas cuerpo a cuerpo.",
             "noRangedMishapTable": "Falta la tabla de pifias para proyectiles.",
             "noMagicMishapTable": "Falta la tabla de pifias para magia.",
-            "maxWeaponsEquipped": "Máximo de 3 armas a mano (incluyendo escudos)."
+            "maxWeaponsEquipped": "Máximo de 3 armas a mano (incluyendo escudos).",
+            "noSkillsInCompendium": "El módulo base registrado no contiene ninguna habilidad básica. El módulo base puede estar rañado y requerir una reinstalación. Intentando encontrar habilidades en el mundo en su lugar."
         }
     }
 }
