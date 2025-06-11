@@ -1,4 +1,3 @@
-import DoD_Utility from "../utility.js";
 import DoDTest from "./dod-test.js";
 
 export default class DoDAttributeTest extends DoDTest {
@@ -22,28 +21,9 @@ export default class DoDAttributeTest extends DoDTest {
         super.updatePreRollData();
         this.preRollData.actor = this.actor;
         this.preRollData.attribute = this.attribute;
-        if (this.actor.type === "character") {
-            this.preRollData.target = this.actor.system.attributes[this.attribute].value;
-            this.preRollData.canPush = this.options.canPush;
-        } else if (this.actor.type === "npc") {
-            if (this.attribute === "con") {
-                this.preRollData.target = this.actor.system.hitPoints.max - 2 * this.actor.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "hitPoints").length;
-            } else if (this.attribute === "wil") {
-                this.preRollData.target = this.actor.system.willPoints.max - 2 * this.actor.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "willPoints").length;
-            } else if (this.attribute === "str") {
-                this.preRollData.target = DoD_Utility.getAttributeFromDamageBonus(this.actor.system.damageBonus.str.value);
-            } else if (this.attribute === "agl") {
-                this.preRollData.target = DoD_Utility.getAttributeFromDamageBonus(this.actor.system.damageBonus.agl.value);
-            } else {
-                // INT and CHA
-                this.preRollData.target = 10;
-            }
-            this.preRollData.canPush = false;
-        } else {
-            // monster
-            this.preRollData.target = 15;
-            this.preRollData.canPush = false;
-        }
+        this.preRollData.target = this.actor.getAttribute(this.attribute);
+        this.preRollData.canPush = this.actor.type === "character" ? this.options.canPush : false;
+        console.log(this.preRollData.attribute, this.preRollData.target);
     }
 
     updatePostRollData() {

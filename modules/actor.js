@@ -1228,4 +1228,26 @@ export class DoDActor extends Actor {
             await this.deleteEmbeddedDocuments("Item", [item.id])
         }
     }
+
+    getAttribute(attribute) {
+        if (this.type === "character") {
+            return this.system.attributes[attribute].value;
+        } else if (this.type === "npc") {
+            if (attribute === "con") {
+                return this.system.hitPoints.max - 2 * this.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "hitPoints").length;
+            } else if (attribute === "wil") {
+                return this.system.willPoints.max - 2 * this.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "willPoints").length;
+            } else if (attribute === "str") {
+                return DoD_Utility.getAttributeFromDamageBonus(this.system.damageBonus.str.value);
+            } else if (attribute === "agl") {
+                return DoD_Utility.getAttributeFromDamageBonus(this.system.damageBonus.agl.value);
+            } else {
+                // INT and CHA
+                return 10;
+            }
+        } else {
+            // monster
+            return 15;
+        }        
+    }
 }

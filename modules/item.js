@@ -57,10 +57,8 @@ export class DoDItem extends Item {
 
         // Range
         if (this.actor && this.system.range !== "") {
-            const str = this.actor.system.attributes?.str.value ??
-                DoD_Utility.getAttributeFromDamageBonus(this.actor.system.damageBonus.str.value);
-            const agl = this.actor.system.attributes?.agl.value ??
-                DoD_Utility.getAttributeFromDamageBonus(this.actor.system.damageBonus.agl.value);
+            const str = this.actor.getAttribute("str");
+            const agl = this.actor.getAttribute("agl");
             let r = new Roll(String(this.system.range), {str, agl});
             try {
                 await r.evaluate({});
