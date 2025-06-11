@@ -1,5 +1,11 @@
 # Change Log
 
+## Version 2.4
+
+- Bug fix
+
+  - Fix for error message when monsters have weapon items
+
 ## Version 2.3
 
 - Monster Attacks
