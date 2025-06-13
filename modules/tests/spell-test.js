@@ -132,7 +132,7 @@ export default class DoDSpellTest extends DoDSkillTest  {
         return {
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: postRollData.actor }),
-            content: content
+            content: "<p>" + content + "</p>"
         };
     }
 }

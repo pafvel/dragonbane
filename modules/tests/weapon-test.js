@@ -253,7 +253,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         return {
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: postRollData.actor }),
-            content: content
+            content: "<p>" + content + "</p>"
         };
     }
 
