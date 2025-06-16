@@ -183,6 +183,15 @@ function registerSettings() {
     });
 
 
+    // Setting to ensure that turn marker is registered only once
+    game.settings.register("dragonbane", "registeredTurnMarker", {
+        config: false,
+        scope: "world",
+        type: Boolean,
+        default: false
+    });
+
+
     // User permission levels
     const permissionLevels = {};
     permissionLevels[CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE] = "OWNERSHIP.NONE";
@@ -425,6 +434,14 @@ Hooks.once("ready", async function () {
         }
         console.log("Dragonbane: Imported " + created.name);
     });
+
+    // Register token turn marker once
+    if (game.settings.get("dragonbane", "registeredTurnMarker") === false) {
+        const combatTrackerConfig = game.settings.get("core", "combatTrackerConfig");
+        combatTrackerConfig.turnMarker.src = "systems/dragonbane/art/tokens/token-frame.webp";
+        game.settings.set("core", "combatTrackerConfig", combatTrackerConfig);
+        game.settings.set("dragonbane", "registeredTurnMarker", true);
+    }
 });
 
 for (const sheet of ["ActorSheet", "ItemSheet", "JournalPageSheet", "JournalEntryPageSheet"]) {
