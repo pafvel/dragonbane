@@ -436,7 +436,7 @@ Hooks.once("ready", async function () {
     });
 
     // Register token turn marker once
-    if (game.settings.get("dragonbane", "registeredTurnMarker") === false) {
+    if ( game.release.generation >= 13 && game.settings.get("dragonbane", "registeredTurnMarker") === false) {
         const combatTrackerConfig = game.settings.get("core", "combatTrackerConfig");
         combatTrackerConfig.turnMarker.src = "systems/dragonbane/art/tokens/token-frame.webp";
         game.settings.set("core", "combatTrackerConfig", combatTrackerConfig);
