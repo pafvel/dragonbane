@@ -1,5 +1,16 @@
 # Change Log
 
+## Version 2.5
+
+- Token Marker
+
+  - Added dragonbane token frame as the default token marker.
+
+- Miscellaneous
+
+  - Improved roll message formatting, making it easier for modules to parse.
+    - Automated Animations should now work with Dragonbane again.
+
 ## Version 2.4
 
 - Bug fix
@@ -13,6 +24,7 @@
   - Fix for broken skill link when doing a monster defend action.
 
 - Localization
+
   - Updated ES translation (by Tarot).
 
 ## Version 2.2
