@@ -217,7 +217,7 @@
             "skills": "Skills"
         },
         "roll": {
-            "dragon": "succeded with a Dragon!",
+            "dragon": "succedeed with a Dragon!",
             "demon": "failed with a Demon!",
             "success": "succeeded.",
             "failure": "failed.",
