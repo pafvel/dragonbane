@@ -118,20 +118,20 @@ export default class DoDWeaponTest extends DoDSkillTest  {
 
             // Check tokens
             const ray = game.release.generation < 13 ? new Ray (origin, destination) : new foundry.canvas.geometry.Ray(origin, destination);
-            const blockers = canvas.tokens.placeables.filter(t => t.id !== targetToken.id && t.id !== actorToken.id);
-            for (const blocker of blockers) {
-                const { x, y, width, height } = blocker.bounds;
+            const potentialBlockers = canvas.tokens.placeables.filter(t => t.id !== targetToken.id && t.id !== actorToken.id && !t.document.hidden);
+            const blockers = potentialBlockers.filter(t => {
+                const { x, y, width, height } = t.bounds;
                 const sides = [
                     [ x,            y,          x + width, y            ], // top
                     [ x + width,    y,          x + width, y + height   ], // right
                     [ x + width,    y + height, x,         y + height   ], // bottom
                     [ x,            y + height, x,         y            ]  // left
                 ];
-                const blockedByToken = sides.some(coords => !!ray.intersectSegment(coords));                
-                if (blockedByToken) {
-                    this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.lineOfSightToken"), value: true});
-                    break;
-                }
+                return sides.some(coords => !!ray.intersectSegment(coords));
+            });
+            if (blockers.length > 0) {
+                const notProne = blockers.some( blocker => !blocker.document.hasStatusEffect("prone") );
+                this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.lineOfSightToken"), value: notProne});
             }
         }
 
