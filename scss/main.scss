@@ -1,12 +1,15 @@
+// abstracts
 @use "abstracts/fonts";
 @use "abstracts/functions";
 @use "abstracts/mixins";
 @use "abstracts/placeholders";
 @use "abstracts/variables";
 
+// base
 @use "base/root";
 @use "base/typography";
 
+// components
 @use "components/comma-list";
 @use "components/derived-stat";
 @use "components/dialog";
@@ -24,12 +27,15 @@
 @use "components/token-ruler";
 @use "components/utilities";
 
+// layout
 @use "layout/background";
 @use "layout/chat-message";
 
+// themes
 @use "themes/dark";
 @use "themes/light";
 
+// sheets
 @use "sheets/character-sheet";
 @use "sheets/item-sheet";
 @use "sheets/journal-entry";

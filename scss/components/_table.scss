@@ -10,14 +10,14 @@
         background-position-y: 2em;
         border-top: transparent;
         border-bottom: 1px solid var(--color-border-light-tertiary);                    
-        border-radius: 0px;
+        border-radius: 0;
         color: black;
         background-color: transparent;
 
         i {
             margin-left: auto;
             float:right;
-            color: rgb(80, 80, 80);
+            color: rgb(80 80 80);
         };                 
     };                
 
@@ -29,18 +29,21 @@
         background-clip: content-box;
         background-position: center center;
         height: 36px;
+
         th {
             white-space: nowrap;
+
             button {
-                padding: 0px;
-                margin: 0px;
+                padding: 0;
+                margin: 0;
                 text-align: center;
-                border: 0px transparent;
+                border: 0 transparent;
                 background: transparent;
                 color:whitesmoke;
                 max-width: 24px;
             }
         };
+
         th:first-child {
             background-image: url("art/ui/arrow-left.webp");
             background-position-x: left;
@@ -48,18 +51,19 @@
             background-repeat: no-repeat;
             background-clip: border-box;
             padding-left: 2em;
-            padding-right: 0em;
+            padding-right: 0;
             width: 3em;
             min-width: 3em;
             min-height: 2em;
         };
+
         th:last-child {
             background-image: url("art/ui/arrow-right.webp");
             background-position-x: right;
             background-size: contain;
             background-repeat: no-repeat;
             background-clip: border-box;
-            padding-left: 0em;
+            padding-left: 0;
             padding-right: 2em;
             width: 3em;
             min-width: 3em;
@@ -67,7 +71,7 @@
         };
         
         .thumbnail-header {
-            padding: 0px;            
+            padding: 0;            
             width: 36px;
             height: 36px;
             min-width: 36px;
@@ -78,9 +82,8 @@
                 height: 20px;
                 min-width: 20px;
                 min-height: 20px;
-                border: 0px solid transparent;
+                border: 0 solid transparent;
                 display:inline-block;
-                // whitesmoke color
                 filter: invert(100%) sepia(1%) saturate(256%) hue-rotate(64deg) brightness(116%) contrast(92%);
             };
         }
@@ -99,61 +102,76 @@
         background-color: transparent;
 
         button {
-            padding: 0px;
-            margin: 0px -1px 0px 0px;
-            border: 0px solid transparent;
+            padding: 0;
+            margin: 0 -1px 0 0;
+            border: 0 solid transparent;
             background: transparent;
             width: 14px;
             height: 14px;
             min-height: 14px;
             vertical-align: middle;
+
             i {
                 vertical-align: top;
                 float: none;
             }
         }
+
         button:hover {
             text-shadow: 0 0 8px var(--color-shadow-primary);
             box-shadow: none;
         }
+
         td {
             padding-left: 1em;
             padding-right: 1em;
         };
+
         td:first-child {
             padding-left: 2em;
-            padding-right: 0em;
+            padding-right: 0;
             text-align: right;
         };
+
         td:last-child {
             padding-right: 2em;
         };
 
         select {
-            border: 0px;
+            border: 0;
         };
 
         .thumbnail-data {
-            padding: 0px;            
+            padding: 0;            
             width: 36px;
             height: 36px;
             min-width: 36px;
             min-height: 36px;
+
             img {
                 vertical-align: middle;
-                border: 0px solid transparent;         
+                border: 0 solid transparent;         
             }
         }
 
         .checkbox-data {
-            padding: 0px;            
+            margin: 0;
+            padding: 0;            
             width: 24px;
             height: 24px;
             min-width: 24px;
             min-height: 24px;
+            text-align: center;
+
             img {
                 vertical-align: middle;
-                border: 0px solid transparent;         
+                border: 0 solid transparent;         
+            }
+
+            input {
+                width: 12px;
+                margin: 0;
+                vertical-align: middle;
             }
         }
 
@@ -165,37 +183,27 @@
             text-align: center;
             padding-left: 0.5em;
             padding-right: 0.5em;
+
             input {
-                border: 0px;
+                border: 0;
                 height: 100%;
                 width: 2em;
-                padding: 0px 0px;
+                padding: 0;
                 text-align: center;
                 vertical-align: middle;
             };
         }            
 
-        .checkbox-data {
-            margin: 0px;
-            padding: 0px;
-            text-align: center;
-            input {
-                width: 12px;
-                margin: 0px;
-                vertical-align: middle;
-            }
-        }
-
         .icon-data {
             width: 4em;
             min-width: 4em;
-            padding-left: 0px;
+            padding-left: 0;
         }
 
         .narrow {
-            padding-left: 0px;
-            padding-right: 0px;
-            text-indent: 0px;
+            padding-left: 0;
+            padding-right: 0;
+            text-indent: 0;
         }
 
         .wide {
@@ -204,12 +212,13 @@
     };
     
     .simple-table {
-        border: 0px;
+        border: 0;
         background: none;
 
         input:invalid {
             color: red;
         }    
+
         input:valid {
             color: black;
         }    
@@ -217,11 +226,13 @@
         th {
             text-align: center;
             padding-left: 12px;
-            padding-right: 0px;
+            padding-right: 0;
+
             .application {
                 color: var(--dod-color-text-primary);
             }
         }
+
         th:last-child {
             padding-right: 20px;
         }
@@ -229,6 +240,7 @@
         tr {
             background-color: transparent;
         }
+
         tr:nth-child(1n+2) {
             background-image: url("art/ui/table-row-left.webp"), url("art/ui/table-row-right.webp"), url("art/ui/table-row-banner.webp");
             background-position: left center, right center, center center;
@@ -240,25 +252,29 @@
 
             td {
                 text-align: center;
+
                     input {
-                    border: 0px;
+                    border: 0;
                     background: transparent;
                 }
+
                 padding-left: 16px;
-                padding-right: 0px;
+                padding-right: 0;
             }
+
             td:nth-child(1n+2) {
                 background-image: url("art/ui/table-row-separator.webp");
                 background-position: left center;
                 background-repeat: no-repeat;
                 background-size: contain;
             }
+
             td:last-child {
                 padding-right: 20px;
             }
 
             select {
-                border: 0px;
+                border: 0;
             }
 
         }

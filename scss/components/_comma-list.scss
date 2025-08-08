@@ -1,20 +1,27 @@
 .system-dragonbane {
+
     .comma-list {
+
         a::after {
             content: ", ";
         }
+
         a:last-child::after {
             content: "";
         }
+
         a:focus {
             outline: none;  
         }
+
         span::after {
             content: ", ";
         }
+
         span:last-child::after {
             content: "";
         }
+
         span:focus {
             outline: none;  
         }

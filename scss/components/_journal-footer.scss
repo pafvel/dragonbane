@@ -1,5 +1,7 @@
 .system-dragonbane {
+
     .journal-entry-content {
+
         .journal-entry-page:not(.image):last-child {
             background: url("art/ui/pagination-half-demon.webp");
             background-position: center bottom;
@@ -7,7 +9,7 @@
             background-size: auto 60px;
             background-clip: padding-box;
             padding-bottom: 60px;
-            margin-bottom: 0px;
+            margin-bottom: 0;
             min-height: calc(100% - 36px);
         }
     }

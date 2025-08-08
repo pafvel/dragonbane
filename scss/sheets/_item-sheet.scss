@@ -1,16 +1,19 @@
 @use "../abstracts/placeholders";
 
 .DoD.sheet.item, .DoD.sheet.active-effect-sheet {
+
     form {
         display: flex;
         flex-direction: column;
         font-family: var(--dod-font-primary);
     }
+
     .window-content {
-        background:url(art/ui/item-sheet-bg.webp) repeat;
+        background:url("art/ui/item-sheet-bg.webp") repeat;
         background-position: top center;
-        padding: 0px;
+        padding: 0;
     }
+
     .sheet-header {
         padding: 8px;
 
@@ -23,24 +26,26 @@
             padding-left: 48px;
             padding-right: 48px;
         }
+
         input {
             color: whitesmoke;
             text-align: center;
-            border: 0px;
+            border: 0;
         }
+
         img {
             border-color: transparent;
         }
     }
+
     .sheet-content {
         height: 100%;
         display: flex;    
         flex-direction: column;
-
         background-position: center top, center bottom;
         background-repeat: repeat-x, repeat-x;
         background-size: auto 12px, auto 12px;
-        padding-bottom: 0px;
+        padding-bottom: 0;
     
         .sheet-tabs {
             width: 100%;
@@ -52,25 +57,27 @@
         }
 
         .sheet-body {
-            padding: 0px 8px 0px 8px;
+            padding: 0 8px;
         }
 
         input:invalid {
             color: red;
         }    
+
         input:valid {
             color: black;
         }    
 
         .item-table {
-            border: 0px;
+            border: 0;
             background: none;
 
             th {
                 text-align: center;
                 padding-left: 12px;
-                padding-right: 0px;
+                padding-right: 0;
             }
+
             th:last-child {
                 padding-right: 20px;
             }
@@ -86,25 +93,29 @@
 
                 td {
                     text-align: center;
+
                         input {
-                        border: 0px;
+                        border: 0;
                         background: transparent;
                     }
+
                     padding-left: 16px;
-                    padding-right: 0px;
+                    padding-right: 0;
                 }
+
                 td:nth-child(1n+2) {
                     background-image: url("art/ui/table-row-separator.webp");
                     background-position: left center;
                     background-repeat: no-repeat;
                     background-size: contain;
                 }
+
                 td:last-child {
                     padding-right: 20px;
                 }
 
                 select {
-                    border: 0px;
+                    border: 0;
                 }
 
             }
@@ -112,6 +123,7 @@
 
         .editor {
             @extend %parchment-frame;
+
             min-height: 160px;
             align-self: center;
         }
@@ -122,10 +134,12 @@
             border-style: solid;
             border-color: transparent;
         }
+
         .editor-edit {
             top: 21px;
             right: 12px;
         }
+
         .tox.tox-tinymce {
             padding-left: 12px;
             padding-right: 12px;

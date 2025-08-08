@@ -11,44 +11,49 @@
         padding: 5% 5% 12px 5%;
         border-bottom: 8px solid transparent;
         color: var(--dod-color-parchment-text);
+
         .#{$actor}-title {
             text-align: center;    
             font-size: x-large;
+
             .content-link {
-                border: 0px solid transparent;
+                border: 0;
                 background-color: transparent;
                 color: var(--dod-color-parchment-text);
+
                 i {
                     color: var(--color-dark-6);
                 }
             }
         }
         .#{$actor}-title.named {
+
             .content-link {
                 background: url("art/ui/npc-banner-left.webp"), url("art/ui/npc-banner-right.webp"), url("art/ui/npc-banner.webp");
                 background-size: auto 100%, auto 100%, auto 100%;
                 background-position: -1rem center, calc(100% + 1rem) center, center center;
                 background-repeat: no-repeat, no-repeat, no-repeat;
                 background-clip: border-box, border-box, padding-box;
-                padding-left: 1em;
-                padding-right: 1em;
-                font-size: 1em;
-                padding-top: 1.75em;
-                padding-bottom: 1em;
+                padding: 1.75em 1em 1em 1em;
                 border-left: 1em solid transparent;
                 border-right: 1em solid transparent;
                 position: relative;
                 top: -1em;  
+                font-size: 1em;
             }
         }
+
         table {
             border-color: var(--dod-color-parchment-text);
             background: transparent;
+
             .list-row {
+
                 div {
                     flex-shrink: 0;
                     flex-grow: 1;
                 }
+
                 div:first-child {
                     flex-shrink: 1;
                     flex-grow: 0;

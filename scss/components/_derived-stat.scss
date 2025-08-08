@@ -2,21 +2,25 @@
 
     .derived-stat-box {
         width: 100%;
+
         table {
-            margin: 0px;
+            margin: 0;
         }
+
         table:first-child {
             margin-top: 7px;
         }
+
         table:last-child {
             margin-bottom: 7px;
         }
     }
 
     .derived-stat {
-        border-bottom: 0px;
-        border-top: 0px;
+        border-bottom: 0;
+        border-top: 0;
         background-color: transparent;
+
         th {
             text-align: center;
             color: whitesmoke;            
@@ -29,6 +33,7 @@
             padding-left: 30px;
             min-width: 160px;
         }
+
         td {
             text-align: center;
             color: black;
@@ -41,19 +46,24 @@
             padding-right: 30px;
             min-width: 6em;
         }
+
         .warning {
             color:red;
         }
+
         input {
             border-color: transparent;
         }
+
         select {
             border-color: transparent;
         }
+
         option {
             text-align:center;
             text-align-last: center; 
         }
+
         input[type="checkbox"] {
             margin: 4px 5px;
         }  

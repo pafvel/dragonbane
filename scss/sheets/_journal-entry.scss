@@ -1,41 +1,51 @@
 @use "../abstracts/placeholders";
 
 .system-dragonbane {
+
     .sheet.journal-entry {
+
         h1, h2, h3 {
             scroll-margin-top: 20px;
         }
+
         h1:not(.window-title) {
             font-size: 4em;
             font-weight: bolder;
             text-transform: uppercase;
             text-align: center;
             color: var(--color-text-dark-header);
-            border-bottom: 0px solid transparent;
+            border-bottom: 0 solid transparent;
         }
+
         h2 {
             font-size: 1.5em;
             font-weight: normal;
             text-transform: uppercase;
             text-align: left;
             color: black;
-            border-bottom: 0px solid transparent;
+            border-bottom: 0 solid transparent;
         }
+
         h3 {
             border-bottom: 1px solid var(--color-underline-header);
         }
+
         h3, h4:not(.window-title), h5, h6 {
             color: black;
         }
+
         .scrollable {
             padding-right: 0;
         }
+
         .controls-dropdown {
             z-index: 2;
         }
+
         img {
-            border: 0px solid transparent;
+            border: 0 solid transparent;
         }
+
         .journal-entry-content {
             background: var(--dod-journal-background);
             background-size: 100% auto;
@@ -44,7 +54,8 @@
             .journal-entry-pages {
                 position: relative;
                 top: -24px;
-                margin: 0rem 0.5rem 0rem 0rem;
+                margin: 0 0.5rem 0 0;
+
                 p:empty {
                     min-height: 1rem;
                 }                
@@ -52,12 +63,15 @@
                 .journal-entry-page:first-child {
                     margin-top: 24px;
                 }
+
                 .journal-entry-page.image {
                     margin-top: 0;
+
                     figure {
                         margin-top: 0;
                     }                    
                 }
+
                 .journal-entry-page {
                     padding-left: 12px;
                     padding-right: 12px;
@@ -70,6 +84,7 @@
                     }
 
                     .edit-container {
+
                         button {
                             color: black;
                             border-color: black;
@@ -84,6 +99,7 @@
                 display: block;
                 margin: auto;
             }
+
             img.dropcap {
                 float: left;
                 height: 3.5em;
@@ -93,17 +109,21 @@
 
             table {
                 background: transparent;
+
                 --table-row-color-odd: transparent;
-                --table-row-color-even: rgba(0,0,0,0.1);
+                --table-row-color-even: rgb(0 0 0 / 10%);
+
                 td, th {
                     text-align: left;
                 }
             }
 
             blockquote {
+
                 table {
                     background: transparent;
                 }
+
                 &.info {
                     @extend %base-box;
 
@@ -117,35 +137,43 @@
                         top: -4px;
                         text-transform: none;
                         color:whitesmoke;
-
                         background-image: url("art/ui/info-box-title-bg.webp");
                         background-size: contain;
                         background-repeat: no-repeat;
                         background-position: center center;
 
                     }
+
                     p {
                         color: var(--dod-color-journal-info-text);
                     }
+
                     p:first-of-type {
                         padding-top: 16px;
                     }
+
                     p:last-of-type {
                         margin-bottom: 16px;
                     }
+
                     table {
                         color: var(--dod-color-journal-info-text);
+
                         td, th {
                             padding: 0.25em 0;
                         }
+
                         margin-left: 1em;
                     }
+
                     ol, ul {
+
                         li {
                             color: var(--dod-color-journal-info-text);;
                         }
                     }
                 }
+
                 &.optional {
                     @extend %base-box;
 
@@ -154,16 +182,17 @@
                     background-clip: border-box, border-box, padding-box, border-box, border-box, padding-box, content-box;
                     background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y;
                     background-size: auto 32px, auto 32px, auto 32px, auto 32px, auto 32px, auto 32px, 100% auto;
-                    
                     color: var(--dod-color-journal-optional-text);
 
                     h2, h3 {
                         top: -1px;
                         color: var(--dod-color-journal-optional-text);
                     }
+
                     p:first-of-type {
                         padding-top: 20px;
                     }
+
                     p:last-of-type {
                         padding-bottom: 16px;
                     }
@@ -171,6 +200,7 @@
                     .content-link {
                         background: #dddddd80;
                     }
+
                     .inline-roll {
                         background: #dddddd80;
                     }

@@ -28,20 +28,20 @@
   src: url("fonts/CrimsonText/CrimsonText-BoldItalic.ttf");
 }
 @font-face {
-  font-family: "QTFrizQuad";
+  font-family: QTFrizQuad;
   src: url("fonts/QTFrizQuad/QTFrizQuad.otf");
 }
 @font-face {
-  font-family: "QTFrizQuad";
+  font-family: QTFrizQuad;
   src: url("fonts/QTFrizQuad/QTFrizQuad-Bold.otf");
   font-weight: bold;
 }
 @font-face {
-  font-family: "Caveat";
+  font-family: Caveat;
   src: url("fonts/Caveat/static/Caveat-Regular.ttf");
 }
 @font-face {
-  font-family: "Caveat";
+  font-family: Caveat;
   src: url("fonts/Caveat/static/Caveat-Bold.ttf");
   font-weight: bold;
 }
@@ -65,7 +65,7 @@
   text-transform: uppercase;
 }
 .system-dragonbane .journal-entry-content .display-skill h3 .content-link, .system-dragonbane .journal-entry-content .display-spell h3 .content-link, .system-dragonbane .journal-entry-content .display-ability h3 .content-link {
-  border: 0px solid transparent;
+  border: 0 solid transparent;
   background-color: transparent;
   color: var(--dod-color-journal-text);
 }
@@ -75,7 +75,7 @@
   text-transform: uppercase;
 }
 .system-dragonbane .journal-entry-content .display-skill h4 .content-link, .system-dragonbane .journal-entry-content .display-spell h4 .content-link, .system-dragonbane .journal-entry-content .display-ability h4 .content-link {
-  border: 0px solid transparent;
+  border: 0 solid transparent;
   background-color: transparent;
   color: var(--dod-color-journal-text);
 }
@@ -94,7 +94,7 @@
   width: 100%;
   height: 32px;
   left: calc(50% - 170px);
-  padding: 6px 24px 12px 24px;
+  padding: 6px 24px 12px;
   background-image: url("art/ui/text-box-title-wide-bg.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp");
   background-size: contain, auto 24px, auto 24px, calc(100% - 24px) 16px;
   background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
@@ -158,9 +158,9 @@
   height: 100%;
   width: 100%;
   min-width: 300px;
-  padding: 6px 0px 12px 0px;
-  margin: 4px 0px 4px 0px;
-  border-width: 0px 26px 0px 26px;
+  padding: 6px 0 12px;
+  margin: 4px 0;
+  border-width: 0 26px;
   border-style: solid;
   border-color: transparent;
   position: relative;
@@ -174,14 +174,14 @@
   vertical-align: middle;
   font-size: 16px;
   font-style: normal;
-  border: 0px solid transparent;
-  padding: 8px 24px 12px 24px;
+  border: 0 solid transparent;
+  padding: 8px 24px 12px;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h2 .content-link, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional h2 .content-link, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h3 .content-link, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional h3 .content-link {
   color: rgb(222, 233, 230);
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info p, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional p {
-  padding: 4px 16px 0px 16px;
+  padding: 4px 16px 0;
   font-style: normal;
   font-size: 13px;
 }
@@ -207,7 +207,7 @@
   --dod-color-text-dark-title: #00604D;
   --dod-color-journal-text: black;
   --dod-color-journal-table-text: #3F2306;
-  --dod-color-journal-table-tint: rgba(74, 36, 7, 0.2);
+  --dod-color-journal-table-tint: rgb(74 36 7 / 20%);
   --dod-color-journal-table-title: whitesmoke;
   --dod-color-journal-info-text: #3F2306;
   --dod-color-journal-optional-text: #DEE9E6;
@@ -267,7 +267,7 @@
   width: 100%;
 }
 .system-dragonbane .derived-stat-box table {
-  margin: 0px;
+  margin: 0;
 }
 .system-dragonbane .derived-stat-box table:first-child {
   margin-top: 7px;
@@ -276,8 +276,8 @@
   margin-bottom: 7px;
 }
 .system-dragonbane .derived-stat {
-  border-bottom: 0px;
-  border-top: 0px;
+  border-bottom: 0;
+  border-top: 0;
   background-color: transparent;
 }
 .system-dragonbane .derived-stat th {
@@ -346,7 +346,7 @@
   font-size: x-large;
 }
 .system-dragonbane .journal-entry-content .display-monster .monster-title .content-link {
-  border: 0px solid transparent;
+  border: 0;
   background-color: transparent;
   color: var(--dod-color-parchment-text);
 }
@@ -359,15 +359,12 @@
   background-position: -1rem center, calc(100% + 1rem) center, center center;
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-clip: border-box, border-box, padding-box;
-  padding-left: 1em;
-  padding-right: 1em;
-  font-size: 1em;
-  padding-top: 1.75em;
-  padding-bottom: 1em;
+  padding: 1.75em 1em 1em 1em;
   border-left: 1em solid transparent;
   border-right: 1em solid transparent;
   position: relative;
   top: -1em;
+  font-size: 1em;
 }
 .system-dragonbane .journal-entry-content .display-monster table {
   border-color: var(--dod-color-parchment-text);
@@ -399,7 +396,7 @@
   font-size: x-large;
 }
 .system-dragonbane .journal-entry-content .display-npc .npc-title .content-link {
-  border: 0px solid transparent;
+  border: 0;
   background-color: transparent;
   color: var(--dod-color-parchment-text);
 }
@@ -412,15 +409,12 @@
   background-position: -1rem center, calc(100% + 1rem) center, center center;
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-clip: border-box, border-box, padding-box;
-  padding-left: 1em;
-  padding-right: 1em;
-  font-size: 1em;
-  padding-top: 1.75em;
-  padding-bottom: 1em;
+  padding: 1.75em 1em 1em 1em;
   border-left: 1em solid transparent;
   border-right: 1em solid transparent;
   position: relative;
   top: -1em;
+  font-size: 1em;
 }
 .system-dragonbane .journal-entry-content .display-npc table {
   border-color: var(--dod-color-parchment-text);
@@ -435,12 +429,12 @@
   flex-grow: 0;
 }
 
+.system-dragonbane .journal-entry-content .display-generic-table table td, .system-dragonbane .journal-entry-content .display-generic-table table th {
+  padding-left: 1em;
+}
 .system-dragonbane .journal-entry-content .display-generic-table table td:first-child, .system-dragonbane .journal-entry-content .display-generic-table table th:first-child {
   text-align: left;
   width: auto;
-}
-.system-dragonbane .journal-entry-content .display-generic-table table td, .system-dragonbane .journal-entry-content .display-generic-table table th {
-  padding-left: 1em;
 }
 
 .system-dragonbane .journal-entry-content .display-table table td:first-child, .system-dragonbane .journal-entry-content .display-table table th:first-child {
@@ -463,7 +457,7 @@
   background-size: auto 60px;
   background-clip: padding-box;
   padding-bottom: 60px;
-  margin-bottom: 0px;
+  margin-bottom: 0;
   min-height: calc(100% - 36px);
 }
 
@@ -479,8 +473,8 @@
   padding-left: 12px;
   padding-right: 12px;
   padding-bottom: 36px;
-  margin-bottom: 0px;
-  margin-left: 0px;
+  margin-bottom: 0;
+  margin-left: 0;
   z-index: 1;
 }
 .system-dragonbane .journal-entry-content .journal-header .title {
@@ -531,10 +525,10 @@
 }
 
 .system-dragonbane #pause {
-  background: url();
+  background: url("");
 }
 .system-dragonbane #pause img {
-  content: url(art/icons/symbol-red.webp);
+  content: url("art/icons/symbol-red.webp");
 }
 .system-dragonbane #pause figcaption {
   color: whitesmoke;
@@ -550,7 +544,7 @@
   background-position-y: 2em;
   border-top: transparent;
   border-bottom: 1px solid var(--color-border-light-tertiary);
-  border-radius: 0px;
+  border-radius: 0;
   color: black;
   background-color: transparent;
 }
@@ -572,10 +566,10 @@
   white-space: nowrap;
 }
 .system-dragonbane .sheet-table-header th button {
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
   text-align: center;
-  border: 0px transparent;
+  border: 0 transparent;
   background: transparent;
   color: whitesmoke;
   max-width: 24px;
@@ -587,7 +581,7 @@
   background-repeat: no-repeat;
   background-clip: border-box;
   padding-left: 2em;
-  padding-right: 0em;
+  padding-right: 0;
   width: 3em;
   min-width: 3em;
   min-height: 2em;
@@ -598,14 +592,14 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-clip: border-box;
-  padding-left: 0em;
+  padding-left: 0;
   padding-right: 2em;
   width: 3em;
   min-width: 3em;
   min-height: 2em;
 }
 .system-dragonbane .sheet-table-header .thumbnail-header {
-  padding: 0px;
+  padding: 0;
   width: 36px;
   height: 36px;
   min-width: 36px;
@@ -616,7 +610,7 @@
   height: 20px;
   min-width: 20px;
   min-height: 20px;
-  border: 0px solid transparent;
+  border: 0 solid transparent;
   display: inline-block;
   filter: invert(100%) sepia(1%) saturate(256%) hue-rotate(64deg) brightness(116%) contrast(92%);
 }
@@ -631,9 +625,9 @@
   background-color: transparent;
 }
 .system-dragonbane .sheet-table-data button {
-  padding: 0px;
-  margin: 0px -1px 0px 0px;
-  border: 0px solid transparent;
+  padding: 0;
+  margin: 0 -1px 0 0;
+  border: 0 solid transparent;
   background: transparent;
   width: 14px;
   height: 14px;
@@ -654,17 +648,17 @@
 }
 .system-dragonbane .sheet-table-data td:first-child {
   padding-left: 2em;
-  padding-right: 0em;
+  padding-right: 0;
   text-align: right;
 }
 .system-dragonbane .sheet-table-data td:last-child {
   padding-right: 2em;
 }
 .system-dragonbane .sheet-table-data select {
-  border: 0px;
+  border: 0;
 }
 .system-dragonbane .sheet-table-data .thumbnail-data {
-  padding: 0px;
+  padding: 0;
   width: 36px;
   height: 36px;
   min-width: 36px;
@@ -672,18 +666,25 @@
 }
 .system-dragonbane .sheet-table-data .thumbnail-data img {
   vertical-align: middle;
-  border: 0px solid transparent;
+  border: 0 solid transparent;
 }
 .system-dragonbane .sheet-table-data .checkbox-data {
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   width: 24px;
   height: 24px;
   min-width: 24px;
   min-height: 24px;
+  text-align: center;
 }
 .system-dragonbane .sheet-table-data .checkbox-data img {
   vertical-align: middle;
-  border: 0px solid transparent;
+  border: 0 solid transparent;
+}
+.system-dragonbane .sheet-table-data .checkbox-data input {
+  width: 12px;
+  margin: 0;
+  vertical-align: middle;
 }
 .system-dragonbane .sheet-table-data .text-data {
   text-align: left;
@@ -694,38 +695,28 @@
   padding-right: 0.5em;
 }
 .system-dragonbane .sheet-table-data .number-data input {
-  border: 0px;
+  border: 0;
   height: 100%;
   width: 2em;
-  padding: 0px 0px;
+  padding: 0;
   text-align: center;
-  vertical-align: middle;
-}
-.system-dragonbane .sheet-table-data .checkbox-data {
-  margin: 0px;
-  padding: 0px;
-  text-align: center;
-}
-.system-dragonbane .sheet-table-data .checkbox-data input {
-  width: 12px;
-  margin: 0px;
   vertical-align: middle;
 }
 .system-dragonbane .sheet-table-data .icon-data {
   width: 4em;
   min-width: 4em;
-  padding-left: 0px;
+  padding-left: 0;
 }
 .system-dragonbane .sheet-table-data .narrow {
-  padding-left: 0px;
-  padding-right: 0px;
-  text-indent: 0px;
+  padding-left: 0;
+  padding-right: 0;
+  text-indent: 0;
 }
 .system-dragonbane .sheet-table-data .wide {
   width: 100%;
 }
 .system-dragonbane .simple-table {
-  border: 0px;
+  border: 0;
   background: none;
 }
 .system-dragonbane .simple-table input:invalid {
@@ -737,7 +728,7 @@
 .system-dragonbane .simple-table th {
   text-align: center;
   padding-left: 12px;
-  padding-right: 0px;
+  padding-right: 0;
 }
 .system-dragonbane .simple-table th .application {
   color: var(--dod-color-text-primary);
@@ -760,10 +751,10 @@
 .system-dragonbane .simple-table tr:nth-child(1n+2) td {
   text-align: center;
   padding-left: 16px;
-  padding-right: 0px;
+  padding-right: 0;
 }
 .system-dragonbane .simple-table tr:nth-child(1n+2) td input {
-  border: 0px;
+  border: 0;
   background: transparent;
 }
 .system-dragonbane .simple-table tr:nth-child(1n+2) td:nth-child(1n+2) {
@@ -776,13 +767,13 @@
   padding-right: 20px;
 }
 .system-dragonbane .simple-table tr:nth-child(1n+2) select {
-  border: 0px;
+  border: 0;
 }
 
 .system-dragonbane .text-box {
   position: relative;
   align-self: center;
-  border-width: 0px 16px 0px 16px;
+  border-width: 0 16px;
 }
 .system-dragonbane .text-box .text-box-title {
   text-align: center;
@@ -790,7 +781,7 @@
   padding-bottom: 2px;
 }
 .system-dragonbane .text-box input[type=radio] {
-  top: 0px;
+  top: 0;
   vertical-align: middle;
 }
 .system-dragonbane .text-box label {
@@ -799,7 +790,7 @@
   padding-right: 0.5em;
 }
 .system-dragonbane .text-box div {
-  padding: 6px 2px 6px 2px;
+  padding: 6px 2px;
 }
 .system-dragonbane .text-box table {
   border-color: transparent;
@@ -833,12 +824,11 @@
   justify-content: center;
 }
 .system-dragonbane .mirror {
-  -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
 }
 
 .system-dragonbane {
-  background-image: url(art/ui/dragonbane.jpg);
+  background-image: url("art/ui/dragonbane.jpg");
   background-repeat: no-repeat;
   background-position-x: center;
   background-size: auto 100vh;
@@ -846,16 +836,13 @@
 }
 
 .system-dragonbane .chat-message {
-  -webkit-user-select: text;
-  -moz-user-select: text;
-  -ms-user-select: text;
   user-select: text;
-  background-image: url(art/ui/chat-card-bg.webp);
+  background-image: url("art/ui/chat-card-bg.webp");
   background-size: cover;
   background-position-x: center;
 }
 .system-dragonbane .chat-message.whisper {
-  background-image: url(art/ui/whisper-chat-card-bg.webp);
+  background-image: url("art/ui/whisper-chat-card-bg.webp");
   background-size: cover;
   background-position-x: center;
   border: 2px solid var(--color-shadow-primary);
@@ -864,7 +851,7 @@
   padding-top: 2px;
 }
 .system-dragonbane .chat-message .message-content .table-results {
-  word-break: break-word;
+  overflow-wrap: break-word;
 }
 .system-dragonbane .chat-message .message-content .table-results li {
   display: list-item;
@@ -908,14 +895,14 @@
 .system-dragonbane .chat-message .message-content label.checkbox {
   display: flex;
   gap: 0.25rem;
-  margin: 0px;
+  margin: 0;
   height: unset;
   line-height: unset;
   min-height: 22px;
   align-items: center;
 }
 .system-dragonbane .chat-message .message-content label.checkbox input[type=radio] {
-  top: 0px;
+  top: 0;
 }
 
 .theme-dark {
@@ -925,7 +912,7 @@
 
 .theme-light {
   --dod-color-text-primary: black;
-  --dod-dialog-background: url(art/ui/dialog-bg.webp) repeat;
+  --dod-dialog-background: url("art/ui/dialog-bg.webp") repeat;
 }
 
 .DoD.sheet.character form {
@@ -934,9 +921,9 @@
   font-family: var(--dod-font-primary);
 }
 .DoD.sheet.character .window-content {
-  background: url(art/ui/item-sheet-bg.webp) repeat;
+  background: url("art/ui/item-sheet-bg.webp") repeat;
   background-position: top center;
-  padding: 0px;
+  padding: 0;
 }
 .DoD.sheet.character .npc-header {
   min-width: 450px;
@@ -956,18 +943,18 @@
   display: flex;
   width: 75px;
   height: 75px;
-  margin: 0px 4px;
-  border: 0px;
+  margin: 0 4px;
+  border: 0;
   align-items: center;
   justify-content: center;
   flex-grow: 0;
-  background-image: url(art/ui/monster-action-bg.webp);
+  background-image: url("art/ui/monster-action-bg.webp");
   background-size: contain;
   background-repeat: no-repeat;
   background-color: transparent;
 }
 .DoD.sheet.character .monster-actions button img {
-  border: 0px;
+  border: 0;
   width: 80%;
   height: auto;
 }
@@ -981,17 +968,17 @@
   width: 40px;
   height: 40px;
   margin: 2px 8px;
-  border: 0px;
+  border: 0;
   align-items: center;
   justify-content: center;
   flex-grow: 0;
-  background-image: url(art/ui/monster-action-bg.webp);
+  background-image: url("art/ui/monster-action-bg.webp");
   background-size: contain;
   background-repeat: no-repeat;
   background-color: transparent;
 }
 .DoD.sheet.character .rest-actions button img {
-  border: 0px;
+  border: 0;
   width: 100%;
   height: auto;
 }
@@ -1001,7 +988,7 @@
 }
 .DoD.sheet.character .sheet-header {
   top: 4px;
-  padding: 8px 8px 0px 8px;
+  padding: 8px 8px 0;
   flex-direction: row;
 }
 .DoD.sheet.character .sheet-header .image-container {
@@ -1015,8 +1002,8 @@
   height: 128px;
   min-height: 128px;
   width: auto;
-  margin: 0px;
-  border: 0px solid transparent;
+  margin: 0;
+  border: 0 solid transparent;
   object-fit: cover;
   display: inline-block;
 }
@@ -1038,11 +1025,11 @@
   color: black;
   text-align: center;
   font-weight: bold;
-  border: 0px;
+  border: 0;
   background: transparent;
-  padding: 10px 5px 0px 5px;
-  margin-top: 0px;
-  margin-bottom: 0px;
+  padding: 10px 5px 0;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 .DoD.sheet.character .attributes-container {
   display: flex;
@@ -1062,7 +1049,7 @@
 }
 .DoD.sheet.character .attributes-container .attributes .attribute-panel {
   position: absolute;
-  top: 0px;
+  top: 0;
   width: 48px;
   height: 100%;
 }
@@ -1113,11 +1100,9 @@
   height: 8px;
   transform: rotate(45deg);
   appearance: none;
-  -webkit-appearance: none;
 }
 .DoD.sheet.character .attributes-container .attributes .conditions input[type=checkbox]:checked {
   background-color: red;
-  -webkit-filter: none;
   filter: none;
 }
 .DoD.sheet.character .attributes-container .attributes .conditions .condition-panel {
@@ -1174,7 +1159,7 @@
 .DoD.sheet.character .sheet-content {
   min-width: 440px;
   padding: 8px;
-  padding-top: 0px;
+  padding-top: 0;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -1182,7 +1167,7 @@
   background-position: center top;
   background-repeat: repeat-x;
   background-size: auto 12px;
-  padding-bottom: 0px;
+  padding-bottom: 0;
 }
 .DoD.sheet.character .sheet-content .sheet-tabs {
   width: 100%;
@@ -1216,7 +1201,7 @@
   background-position-y: 2em;
   border-top: transparent;
   border-bottom: 1px solid var(--color-border-light-tertiary);
-  border-radius: 0px;
+  border-radius: 0;
   color: black;
   background-color: transparent;
 }
@@ -1259,8 +1244,7 @@
 }
 .DoD.sheet.character .resource-points .resource-points-box {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-flow: row wrap;
   position: absolute;
   top: 24px;
   left: 66px;
@@ -1272,7 +1256,7 @@
   width: 10px;
   height: 10px;
   border: 0 solid transparent;
-  margin: 0px;
+  margin: 0;
   flex: none;
 }
 .DoD.sheet.character .resource-points .resource-points-box .resource-point:nth-child(10n+6) {
@@ -1308,7 +1292,7 @@
   font-size: 12px;
 }
 .DoD.sheet.character .resource-points .death-rolls-box table {
-  border: 0px solid transparent;
+  border: 0 solid transparent;
   background-color: transparent;
 }
 .DoD.sheet.character .resource-points .death-rolls-box tr {
@@ -1318,24 +1302,21 @@
   padding-left: 4px;
   padding-right: 8px;
   font-weight: bold;
-  padding-bottom: 0px;
-  border: 0px solid transparent;
+  padding-bottom: 0;
+  border: 0 solid transparent;
 }
 .DoD.sheet.character .resource-points .death-rolls-box td {
-  padding-left: 4px;
-  padding-right: 8px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  border: 0px solid transparent;
+  padding: 0 8px 0 4px;
+  border: 0 solid transparent;
   text-align: center;
 }
 .DoD.sheet.character .resource-points .death-rolls-box button {
   font-family: var(--dod-font-heading);
   font-size: 12px;
   font-weight: bold;
-  padding: 0px;
-  margin: 0px;
-  border: 0px solid transparent;
+  padding: 0;
+  margin: 0;
+  border: 0 solid transparent;
   background: transparent;
   vertical-align: middle;
   text-align: center;
@@ -1408,11 +1389,11 @@
   background-repeat: no-repeat;
   background-position: 42px center;
   min-width: 266px;
-  border: 0px solid transparent;
+  border: 0 solid transparent;
   background-color: transparent;
 }
 .DoD.sheet.character .armor td {
-  border: 0px solid transparent;
+  border: 0 solid transparent;
 }
 .DoD.sheet.character .armor tr {
   height: 40px;
@@ -1461,7 +1442,7 @@
   align-self: start;
   margin-top: 4px;
   border-width: 16px;
-  border-top: 0px;
+  border-top: 0;
 }
 .DoD.sheet.character .dod-text-container .dod-text-container-label {
   position: relative;
@@ -1474,7 +1455,7 @@
   position: absolute;
   top: -16px;
   left: calc(50% - 137px);
-  padding: 6px 24px 12px 24px;
+  padding: 6px 24px 12px;
   background-image: url("art/ui/text-box-title-bg.webp");
   background-size: contain;
   background-repeat: no-repeat;
@@ -1489,10 +1470,10 @@
   padding-top: 21px;
 }
 .DoD.sheet.character .dod-text-container .editor-container {
-  margin: 0px;
+  margin: 0;
 }
 .DoD.sheet.character .dod-text-container .editor-content {
-  padding: 0px;
+  padding: 0;
   border-left: 12px;
   border-right: 12px;
   border-top: 16px;
@@ -1520,9 +1501,9 @@
   font-family: var(--dod-font-primary);
 }
 .DoD.sheet.item .window-content, .DoD.sheet.active-effect-sheet .window-content {
-  background: url(art/ui/item-sheet-bg.webp) repeat;
+  background: url("art/ui/item-sheet-bg.webp") repeat;
   background-position: top center;
-  padding: 0px;
+  padding: 0;
 }
 .DoD.sheet.item .sheet-header, .DoD.sheet.active-effect-sheet .sheet-header {
   padding: 8px;
@@ -1539,7 +1520,7 @@
 .DoD.sheet.item .sheet-header input, .DoD.sheet.active-effect-sheet .sheet-header input {
   color: whitesmoke;
   text-align: center;
-  border: 0px;
+  border: 0;
 }
 .DoD.sheet.item .sheet-header img, .DoD.sheet.active-effect-sheet .sheet-header img {
   border-color: transparent;
@@ -1551,7 +1532,7 @@
   background-position: center top, center bottom;
   background-repeat: repeat-x, repeat-x;
   background-size: auto 12px, auto 12px;
-  padding-bottom: 0px;
+  padding-bottom: 0;
 }
 .DoD.sheet.item .sheet-content .sheet-tabs, .DoD.sheet.active-effect-sheet .sheet-content .sheet-tabs {
   width: 100%;
@@ -1562,7 +1543,7 @@
   border-color: transparent;
 }
 .DoD.sheet.item .sheet-content .sheet-body, .DoD.sheet.active-effect-sheet .sheet-content .sheet-body {
-  padding: 0px 8px 0px 8px;
+  padding: 0 8px;
 }
 .DoD.sheet.item .sheet-content input:invalid, .DoD.sheet.active-effect-sheet .sheet-content input:invalid {
   color: red;
@@ -1571,13 +1552,13 @@
   color: black;
 }
 .DoD.sheet.item .sheet-content .item-table, .DoD.sheet.active-effect-sheet .sheet-content .item-table {
-  border: 0px;
+  border: 0;
   background: none;
 }
 .DoD.sheet.item .sheet-content .item-table th, .DoD.sheet.active-effect-sheet .sheet-content .item-table th {
   text-align: center;
   padding-left: 12px;
-  padding-right: 0px;
+  padding-right: 0;
 }
 .DoD.sheet.item .sheet-content .item-table th:last-child, .DoD.sheet.active-effect-sheet .sheet-content .item-table th:last-child {
   padding-right: 20px;
@@ -1594,10 +1575,10 @@
 .DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) td, .DoD.sheet.active-effect-sheet .sheet-content .item-table tr:nth-child(1n+2) td {
   text-align: center;
   padding-left: 16px;
-  padding-right: 0px;
+  padding-right: 0;
 }
 .DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) td input, .DoD.sheet.active-effect-sheet .sheet-content .item-table tr:nth-child(1n+2) td input {
-  border: 0px;
+  border: 0;
   background: transparent;
 }
 .DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) td:nth-child(1n+2), .DoD.sheet.active-effect-sheet .sheet-content .item-table tr:nth-child(1n+2) td:nth-child(1n+2) {
@@ -1610,7 +1591,7 @@
   padding-right: 20px;
 }
 .DoD.sheet.item .sheet-content .item-table tr:nth-child(1n+2) select, .DoD.sheet.active-effect-sheet .sheet-content .item-table tr:nth-child(1n+2) select {
-  border: 0px;
+  border: 0;
 }
 .DoD.sheet.item .sheet-content .editor, .DoD.sheet.active-effect-sheet .sheet-content .editor {
   min-height: 160px;
@@ -1640,7 +1621,7 @@
   text-transform: uppercase;
   text-align: center;
   color: var(--color-text-dark-header);
-  border-bottom: 0px solid transparent;
+  border-bottom: 0 solid transparent;
 }
 .system-dragonbane .sheet.journal-entry h2 {
   font-size: 1.5em;
@@ -1648,7 +1629,7 @@
   text-transform: uppercase;
   text-align: left;
   color: black;
-  border-bottom: 0px solid transparent;
+  border-bottom: 0 solid transparent;
 }
 .system-dragonbane .sheet.journal-entry h3 {
   border-bottom: 1px solid var(--color-underline-header);
@@ -1663,7 +1644,7 @@
   z-index: 2;
 }
 .system-dragonbane .sheet.journal-entry img {
-  border: 0px solid transparent;
+  border: 0 solid transparent;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content {
   background: var(--dod-journal-background);
@@ -1673,7 +1654,7 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages {
   position: relative;
   top: -24px;
-  margin: 0rem 0.5rem 0rem 0rem;
+  margin: 0 0.5rem 0 0;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages p:empty {
   min-height: 1rem;
@@ -1715,7 +1696,7 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content table {
   background: transparent;
   --table-row-color-odd: transparent;
-  --table-row-color-even: rgba(0,0,0,0.1);
+  --table-row-color-even: rgb(0 0 0 / 10%);
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content table td, .system-dragonbane .sheet.journal-entry .journal-entry-content table th {
   text-align: left;

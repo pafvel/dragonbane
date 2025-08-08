@@ -13,29 +13,35 @@
 }
 
 %display-item {
+
     h3 {
         font-size: large;
         font-weight: normal;
         text-transform: uppercase;
+
         .content-link {
-            border: 0px solid transparent;
+            border: 0 solid transparent;
             background-color: transparent;
             color: var(--dod-color-journal-text);
         }
     }
+
     h4 {
         font-size: large;
         font-weight: bold;
         text-transform: uppercase;
+
         .content-link {
-            border: 0px solid transparent;
+            border: 0 solid transparent;
             background-color: transparent;
             color: var(--dod-color-journal-text);
         }
     }
+
     li {
         color: var(--dod-color-text-dark-title);
     }
+
     span {
         color: var(--dod-color-journal-text);
     }
@@ -49,7 +55,7 @@
         width: 100%;
         height: 32px;
         left: calc(50% - 170px);
-        padding: 6px 24px 12px 24px;
+        padding: 6px 24px 12px;
         background-image: url("art/ui/text-box-title-wide-bg.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp");
         background-size: contain, auto 24px, auto 24px, calc(100% - 24px) 16px;
         background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
@@ -64,28 +70,35 @@
             font-size: 16px;
             color: var(--dod-color-journal-table-title);
         }
+
         .content-link, .table-roll {
             border: 0;
             background-color: transparent;
+
             i {
                 color: inherit;
             }
         }
     }
+
     tr {
         color: var(--dod-color-journal-table-text);
         border-bottom: 1px solid var(--dod-color-journal-table-text);
         background: transparent;
     }
+
     tr:first-child {
         border-bottom: 2px solid var(--dod-color-journal-table-text);
     }
+
     tr:last-child {
         border-bottom: 0;
     }
+
     tr:nth-child(2n) {
         background-color: var(--dod-color-journal-table-tint);
     }
+
     td, th {
         padding: 2px;
     }  
@@ -115,9 +128,9 @@
     height: 100%;
     width: 100%;
     min-width: 300px;
-    padding: 6px 0px 12px 0px;
-    margin: 4px 0px 4px 0px;
-    border-width: 0px 26px 0px 26px;
+    padding: 6px 0 12px;
+    margin: 4px 0;
+    border-width: 0 26px;
     border-style: solid;
     border-color: transparent;
     position: relative;
@@ -127,25 +140,26 @@
         width: 280px;
         height: 32px;
         left: calc(50% - 140px);
-        
         text-align: center;
         vertical-align: middle;
         font-size: 16px;
         font-style: normal;
 
         .content-link {
-            color: rgb(222, 233, 230);
+            color: rgb(222 233 230);
         }
 
-        border: 0px solid transparent;
-        padding: 8px 24px 12px 24px;
+        border: 0 solid transparent;
+        padding: 8px 24px 12px;
 
     }
+
     p {
-        padding: 4px 16px 0px 16px;
+        padding: 4px 16px 0;
         font-style: normal;
         font-size: 13px;
     }
+
     ol, ul {
         margin-left: 1em;
     }

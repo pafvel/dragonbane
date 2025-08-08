@@ -1,7 +1,9 @@
 @use "../abstracts/placeholders";
 
 .system-dragonbane {
+
     .dialog {
+
         .window-content {
             @extend %dialog-background;
         }
@@ -9,6 +11,7 @@
 
     .app.dialog .dialog-buttons .dialog-button, .sheet-footer button  {
         --button-focus-outline-color: var(--color-border-highlight);
+
         @extend %button-font;
         @extend %button-theme;
     }    

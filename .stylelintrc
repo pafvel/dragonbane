@@ -1,5 +1,15 @@
 {
   "extends": "stylelint-config-standard-scss",
   "rules": {
-  }
+    "font-family-name-quotes": "always-where-recommended",
+    "rule-empty-line-before": "always-multi-line",
+    "no-empty-source": null,
+    "shorthand-property-no-redundant-values": null,
+    "selector-class-pattern": [
+      "^(DoD|[a-z][a-z0-9-]*)$",
+      {
+        "message": "Expected class selector to be kebab-case or 'DoD'"
+      }
+    ]
+ }
 }

@@ -1,73 +1,86 @@
 @use "../abstracts/placeholders";
 
 .DoD.sheet.character {
+
     form {
         display: flex;
         flex-direction: column;
         font-family: var(--dod-font-primary);
     }
+
     .window-content {
-        background:url(art/ui/item-sheet-bg.webp) repeat;
+        background:url("art/ui/item-sheet-bg.webp") repeat;
         background-position: top center;
-        padding: 0px;
+        padding: 0;
     }
+
     .npc-header {
         min-width: 450px;
     }
+
     .npc-content {
         min-width: 450px;
     }
+
     .character-header {
         width: 700px;
     }
+
     .monster-actions {
         display: flex;
         align-items: center;
         justify-content: center;
+
         button {
             display: flex;
             width: 75px;
             height: 75px;
-            margin: 0px 4px;
-            border: 0px;
+            margin: 0 4px;
+            border: 0;
             align-items: center;
             justify-content: center;
             flex-grow: 0;
-            background-image: url(art/ui/monster-action-bg.webp);
+            background-image: url("art/ui/monster-action-bg.webp");
             background-size: contain;
             background-repeat: no-repeat;
             background-color: transparent;
+
             img {
-                border: 0px;
+                border: 0;
                 width: 80%;
                 height: auto;
             }
         }
     }
+
     .rest-actions {
         display: flex;
         align-items: center;
         justify-content: center;
+
         button {
             display: flex;
             width: 40px;
             height: 40px;
             margin: 2px 8px;
-            border: 0px;
+            border: 0;
             align-items: center;
             justify-content: center;
             flex-grow: 0;
-            background-image: url(art/ui/monster-action-bg.webp);
+            background-image: url("art/ui/monster-action-bg.webp");
             background-size: contain;
             background-repeat: no-repeat;
             background-color: transparent;
+
             img {
-                border: 0px;
+                border: 0;
                 width: 100%;
                 height: auto;
             }
         }
+
         button:disabled {
+
             img {
               opacity: 0.25;
               width: 90%;
@@ -77,23 +90,26 @@
 
     .sheet-header {
         top: 4px;
-        padding: 8px 8px 0px 8px;
+        padding: 8px 8px 0;
         flex-direction: row;
+
         .image-container {
             height: 140px;
             width: 154px;
             min-height: 128px;
             flex-grow: 0;
             text-align: center;
+
             img {
                 height: 128px;
                 min-height: 128px;
                 width: auto;
-                margin: 0px;
-                border: 0px solid transparent;
+                margin: 0;
+                border: 0 solid transparent;
                 object-fit: cover;
                 display: inline-block;
             }
+
             h1 {
                 position: relative;
                 width:154px;
@@ -107,24 +123,25 @@
                 font-size: 16px;
                 font-family: var(--dod-font-handwriting);
                 font-weight: bold;
+
                 input {
                     color: black;
                     text-align: center;
                     font-weight: bold;
-                    border: 0px;
+                    border: 0;
                     background: transparent;
-                    padding: 10px 5px 0px 5px;
-                    margin-top: 0px;
-                    margin-bottom: 0px;
+                    padding: 10px 5px 0;
+                    margin-top: 0;
+                    margin-bottom: 0;
                 }
             }
         }
     }
+
     .attributes-container {
         display: flex;    
         flex-direction: column;
         align-items: center;
-
         width: 100%;
         left: center;
 
@@ -132,14 +149,14 @@
             position: relative;
             width: 530px;
             height: 128px;
-            background-image:  url("art/ui/attributes-panel.webp"); // 1060x256
-            background-position: center top;    
+            background-image:  url("art/ui/attributes-panel.webp");
+            background-position: center top;
             background-size: contain;
             background-repeat: no-repeat;      
             
             .attribute-panel {
                 position: absolute;
-                top: 0px;
+                top: 0;
                 width: 48px;
                 height: 100%;
                 
@@ -151,10 +168,11 @@
                     font-size: 12px;
                     font-weight: bold;
                     text-align: center;
-                    background-color: rgb(219, 208, 191);
+                    background-color: rgb(219 208 191);
                     border-radius: 5px;
                     border: solid 1px black;
                 }
+
                 .attribute-input {
                     position: absolute;
                     top: 38%;
@@ -168,38 +186,45 @@
                     background-color: transparent;
                 }
             }
+
             .attribute1 {
                 left: 18%;
             }
+
             .attribute2 {
                 left: 29.5%;
             }
+
             .attribute3 {
                 left: 41%;
             }
+
             .attribute4 {
                 left: 52.5%;
             }
+
             .attribute5 {
                 left: 63.75%;
             }
+
             .attribute6 {
                 left: 75.25%;
             }
 
             .conditions {
+
                 input[type="checkbox"] {
                     width: 8px;
                     height: 8px;
                     transform: rotate(45deg);
                     appearance: none;
-                    -webkit-appearance: none;
                 }  
+
                 input[type="checkbox"]:checked {
                     background-color: red;
-                    -webkit-filter: none;
                     filter: none;
                 }                                    
+
                 .condition-panel {
                     position: absolute;
                     top: 65%;
@@ -210,6 +235,7 @@
                     background-repeat: no-repeat;
                     background-size: cover;
                     background-clip: border-box;
+
                     .condition-input {
                         position: absolute;
                         top: 5px;
@@ -217,6 +243,7 @@
                         size: 12px;
                     }
                 }
+
                 .condition-label {
                     position: absolute;
                     top: 14px;
@@ -226,49 +253,55 @@
                     font-size: 10px;
                     text-align: center;
                     pointer-events: none;
-
                     overflow: hidden;
                     white-space: nowrap;
                     text-overflow: ellipsis;
 
                 }
+
                 .condition1 {
                     left: 17%;
                 }
+
                 .condition2 {
                     left: 28.5%;
                 }
+
                 .condition3 {
                     left: 40%;
                 }
+
                 .condition4 {
                     left: 51.5%;
                 }
+
                 .condition5 {
                     left: 62.75%;
                 }
+
                 .condition6 {
                     left: 74.25%;
                 }        
             }
         }
     }
+
     .main-tab {
         display: flex;
     }
+
     .sheet-content {
         min-width: 440px;
         padding: 8px;
-        padding-top: 0px;
+        padding-top: 0;
         height: 100%;
         display: flex;    
         flex-direction: column;
         align-items: center;
-
         background-position: center top;
         background-repeat: repeat-x;
         background-size: auto 12px;
-        padding-bottom: 0px;
+        padding-bottom: 0;
     
         .sheet-tabs {
             width: 100%;
@@ -278,6 +311,7 @@
             background-size: auto 100%;
             border-color: transparent;
         }
+
         .sheet-body {
             width: 100%;
 
@@ -285,9 +319,11 @@
                 display: flex;
                 flex-direction: row;
             }
+
             .abilities-tab {
                 display: flex;
             }
+
             .background-tab {
                 display: flex;
                 flex-direction: column;
@@ -305,14 +341,14 @@
         background-position-y: 2em;
         border-top: transparent;
         border-bottom: 1px solid var(--color-border-light-tertiary);                    
-        border-radius: 0px;
+        border-radius: 0;
         color: black;
         background-color: transparent;
     
         i {
             margin-left: auto;
             float:right;
-            color: rgb(80, 80, 80);
+            color: rgb(80 80 80);
           };                 
     };
 
@@ -320,6 +356,7 @@
         position: relative;
         width: 200px;
         height: 75px;
+
         .resource-points-text-label {
             position: absolute;
             top: 14px;
@@ -330,6 +367,7 @@
             color: white;
             text-transform: uppercase;
         }
+
         .resource-points-max-box {
             position: absolute;
             top: 33px;
@@ -337,6 +375,7 @@
             width: 34px;
             height: 23px;
             background-color: transparent;
+
             .resource-points-max-label {
                 display: inline-block;
                 text-align: center;
@@ -347,30 +386,34 @@
                 border-color: transparent;
             }
         }        
+
         .resource-points-box {
             display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
+            flex-flow: row wrap;
             position: absolute;
             top: 24px;
             left: 66px;
             width: 115px;
             height: 40px;
             align-items: center;
+
             .resource-point {
                 width: 10px;
                 height: 10px;    
                 border: 0 solid transparent;
-                margin: 0px;
+                margin: 0;
                 flex: none;
             }
+
             .resource-point:nth-child(10n+6) {
                 margin-left: 10px;
             }
+
             .invisible {
                 visibility: hidden;
             }
         }
+
         .resource-points-current-box {
             position: absolute;
             top: 33px;
@@ -378,6 +421,7 @@
             width: 50px;
             height: 23px;
             background-color: transparent;
+
             .resource-points-current-label {
                 display: inline-block;
                 text-align: center;
@@ -389,6 +433,7 @@
                 border-color: transparent;
             }
         }
+
         .death-rolls-box {
             position: absolute;
             top: 60px;
@@ -396,48 +441,53 @@
             width: 180px;
             height: 60px;
             font-size: 12px;
+
             table {
-                border: 0px solid transparent;
+                border: 0 solid transparent;
                 background-color: transparent;
             }
+
             tr {
                 background-color: transparent;
             }
+
             th {
                 padding-left: 4px;   
                 padding-right: 8px;   
                 font-weight: bold; 
-                padding-bottom: 0px;   
-                border: 0px solid transparent;
+                padding-bottom: 0;   
+                border: 0 solid transparent;
             }
+
             td {
-                padding-left: 4px;   
-                padding-right: 8px;   
-                padding-top: 0px;   
-                padding-bottom: 0px;   
-                border: 0px solid transparent;
+                padding: 0 8px 0 4px;   
+                border: 0 solid transparent;
                 text-align: center;
             }
+
             button {
                 font-family: var(--dod-font-heading);
                 font-size: 12px;
                 font-weight: bold;
-                padding: 0px;
-                margin: 0px;
-                border: 0px solid transparent;
+                padding: 0;
+                margin: 0;
+                border: 0 solid transparent;
                 background: transparent;
                 vertical-align: middle;
                 text-align: center;
                 line-height: normal;
+
                 i {
                     vertical-align: top;
                     float: none;
                 }
             }
+
             button:hover {
                 text-shadow: 0 0 8px var(--color-shadow-primary);
                 box-shadow: none;
             }
+
             .hit-point {
                 width: 10px;
                 height: 10px;    
@@ -446,6 +496,7 @@
             }
         }
     }
+
     .hit-points {
         background-image: url("art/ui/hp-panel.webp"), url("art/ui/death-rolls-bg.webp");
         background-size: contain, 200px auto;
@@ -453,42 +504,50 @@
         background-position: left top, center bottom;
         height: 110px;
     }
+
     .hit-points-large {
         background-image: url("art/ui/hp-panel-large.webp"), url("art/ui/death-rolls-bg.webp");
         background-size: contain, 200px auto;
         background-repeat: no-repeat, no-repeat;
         background-position: left top, center bottom;
         height: 110px;
+
         .resource-points-max-box {
             width: 50px;
         }
     }
+
     .hit-points-npc {
         background-image: url("art/ui/hp-panel.webp");
         background-size: contain;
         background-repeat: no-repeat;
         background-position: left top;
     }
+
     .hit-points-npc-large {
         background-image: url("art/ui/hp-panel-large.webp");
         background-size: contain;
         background-repeat: no-repeat;
         background-position: left top;
+
         .resource-points-max-box {
             width: 50px;
         }
     }
+
     .will-points {
         background-image: url("art/ui/wp-panel.webp");
         background-size: contain;
         background-repeat: no-repeat;
         background-position: left top;
     }
+
     .will-points-large {
         background-image: url("art/ui/wp-panel-large.webp");
         background-size: contain;
         background-repeat: no-repeat;
         background-position: left top;
+
         .resource-points-max-box {
             width: 50px;
         }
@@ -500,14 +559,17 @@
         background-repeat: no-repeat;
         background-position: 42px center;
         min-width: 266px;
-        border: 0px solid transparent;
+        border: 0 solid transparent;
         background-color: transparent;
+
         td {
-            border: 0px solid transparent;
+            border: 0 solid transparent;
         }
+
         tr {
             height: 40px;
         }
+
         .armor-value {
             background-image: url("art/ui/armor.webp");
             background-size: contain;
@@ -521,6 +583,7 @@
             font-weight: bold;
             font-size: 18px;
         }
+
         .helmet-value {
             background-image: url("art/ui/helmet-small.webp");
             background-size: contain;
@@ -534,15 +597,18 @@
             font-weight: bold;
             font-size: 18px;
         }
+
         .armor-label {
             text-transform: uppercase;
             font-size: smaller;
             font-weight: bold;
             vertical-align: bottom;
         }
+
         .armor-name {
             font-weight: normal;
         }
+
         .armor-banes {
             font-size: small;
             vertical-align: top;
@@ -552,22 +618,24 @@
 
     .dod-text-container {
         @extend %parchment-frame;
+
         align-self: start;
         margin-top: 4px;
         border-width: 16px;
-        border-top: 0px;
+        border-top: 0;
 
         .dod-text-container-label {
             position: relative;
             font-family: var(--dod-font-heading);
             text-align: center;
+
             label {
                 width: 274px;
                 height: 32px;
                 position: absolute;
                 top: -16px;
                 left: calc(50% - 137px);
-                padding: 6px 24px 12px 24px;
+                padding: 6px 24px 12px;
                 background-image: url("art/ui/text-box-title-bg.webp");
                 background-size: contain;
                 background-repeat: no-repeat;
@@ -580,14 +648,17 @@
         .editor-edit {
             right: 12px;
         }
+
         .editor-menu {
             padding-top: 21px;
         }
+
         .editor-container {
-            margin: 0px;
+            margin: 0;
         }
+
         .editor-content {
-            padding: 0px;
+            padding: 0;
             border-left: 12px;
             border-right: 12px;
             border-top: 16px;
@@ -601,12 +672,15 @@
     input:focus {
         color: black;
     }
+
     select:focus {
         color: black;
     }
+
     .value-increased {
         color: var(--dod-color-positive-effect);
     }
+
     .value-decreased {
         color: var(--dod-color-negative-effect);
     }
