@@ -22,7 +22,7 @@
     };                
 
     .sheet-table-header {
-        color: whitesmoke;            
+        color: var(--dod-color-journal-table-header);
         background-image: url("art/ui/title-bar.webp");
         background-size: calc(100% - 4em) 32px;
         background-repeat: no-repeat;
@@ -39,7 +39,7 @@
                 text-align: center;
                 border: 0 transparent;
                 background: transparent;
-                color:whitesmoke;
+                color: var(--dod-color-journal-table-header);
                 max-width: 24px;
             }
         };
@@ -216,11 +216,11 @@
         background: none;
 
         input:invalid {
-            color: red;
+            color: var(--dod-color-negative-effect);
         }    
 
         input:valid {
-            color: black;
+            color: var(--dod-color-journal-text);
         }    
             
         th {
@@ -279,6 +279,4 @@
 
         }
     }
-
-
 }

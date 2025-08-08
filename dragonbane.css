@@ -107,7 +107,7 @@
   text-transform: none;
   border-bottom: 0;
   font-size: 16px;
-  color: var(--dod-color-journal-table-title);
+  color: var(--dod-color-journal-table-header);
 }
 .system-dragonbane .journal-entry-content .display-table table caption .content-link, .system-dragonbane .journal-entry-content .display-generic-table table caption .content-link, .system-dragonbane .journal-entry-content .display-table table caption .table-roll, .system-dragonbane .journal-entry-content .display-generic-table table caption .table-roll {
   border: 0;
@@ -209,6 +209,7 @@
   --dod-color-journal-table-text: #3F2306;
   --dod-color-journal-table-tint: rgb(74 36 7 / 20%);
   --dod-color-journal-table-title: whitesmoke;
+  --dod-color-journal-table-header: whitesmoke;
   --dod-color-journal-info-text: #3F2306;
   --dod-color-journal-optional-text: #DEE9E6;
   --dod-color-parchment-text: #3F2306;
@@ -554,7 +555,7 @@
   color: rgb(80, 80, 80);
 }
 .system-dragonbane .sheet-table-header {
-  color: whitesmoke;
+  color: var(--dod-color-journal-table-header);
   background-image: url("art/ui/title-bar.webp");
   background-size: calc(100% - 4em) 32px;
   background-repeat: no-repeat;
@@ -571,7 +572,7 @@
   text-align: center;
   border: 0 transparent;
   background: transparent;
-  color: whitesmoke;
+  color: var(--dod-color-journal-table-header);
   max-width: 24px;
 }
 .system-dragonbane .sheet-table-header th:first-child {
@@ -720,10 +721,10 @@
   background: none;
 }
 .system-dragonbane .simple-table input:invalid {
-  color: red;
+  color: var(--dod-color-negative-effect);
 }
 .system-dragonbane .simple-table input:valid {
-  color: black;
+  color: var(--dod-color-journal-text);
 }
 .system-dragonbane .simple-table th {
   text-align: center;
@@ -1518,7 +1519,7 @@
   padding-right: 48px;
 }
 .system-dragonbane .sheet.item .sheet-header input, .system-dragonbane .sheet.active-effect-sheet .sheet-header input {
-  color: whitesmoke;
+  color: var(--dod-color-journal-table-header);
   text-align: center;
   border: 0;
 }
