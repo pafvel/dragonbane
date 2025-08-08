@@ -6,14 +6,14 @@
     {
       "label": "Build Sass",
       "type": "shell",
-      "command": "npx sass scss/main.scss dragonbane.scss.css --style=compressed",
+      "command": "npx sass scss/main.scss dragonbane.css --style=compressed",
       "group": "build",
       "problemMatcher": []
     },
     {
       "label": "Watch Sass",
       "type": "shell",
-      "command": "npx sass --watch scss/main.scss:dragonbane.scss.css --no-source-map",
+      "command": "npx sass --watch scss/main.scss:dragonbane.css --no-source-map",
       "isBackground": true,
       "group": "build",
       "problemMatcher": []

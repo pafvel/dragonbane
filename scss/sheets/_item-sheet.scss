@@ -1,148 +1,151 @@
 @use "../abstracts/placeholders";
 
-.DoD.sheet.item, .DoD.sheet.active-effect-sheet {
+.system-dragonbane {
 
-    form {
-        display: flex;
-        flex-direction: column;
-        font-family: var(--dod-font-primary);
-    }
+    .sheet.item, .sheet.active-effect-sheet {
 
-    .window-content {
-        background:url("art/ui/item-sheet-bg.webp") repeat;
-        background-position: top center;
-        padding: 0;
-    }
-
-    .sheet-header {
-        padding: 8px;
-
-        h1 {
-            background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/title-bar.webp");
-            background-position: left center, right center, center center;
-            background-repeat: no-repeat, no-repeat, repeat-x;
-            background-size: contain, contain, contain;
-            background-clip: border-box, border-box, content-box;
-            padding-left: 48px;
-            padding-right: 48px;
+        form {
+            display: flex;
+            flex-direction: column;
+            font-family: var(--dod-font-primary);
         }
 
-        input {
-            color: whitesmoke;
-            text-align: center;
-            border: 0;
+        .window-content {
+            background:url("art/ui/item-sheet-bg.webp") repeat;
+            background-position: top center;
+            padding: 0;
         }
 
-        img {
-            border-color: transparent;
-        }
-    }
+        .sheet-header {
+            padding: 8px;
 
-    .sheet-content {
-        height: 100%;
-        display: flex;    
-        flex-direction: column;
-        background-position: center top, center bottom;
-        background-repeat: repeat-x, repeat-x;
-        background-size: auto 12px, auto 12px;
-        padding-bottom: 0;
-    
-        .sheet-tabs {
-            width: 100%;
-            background-image: url("art/ui/table-row-banner.webp");
-            background-repeat:  repeat-x;
-            background-clip: border-box;
-            background-size: auto 100%;
-            border-color: transparent;
-        }
-
-        .sheet-body {
-            padding: 0 8px;
-        }
-
-        input:invalid {
-            color: red;
-        }    
-
-        input:valid {
-            color: black;
-        }    
-
-        .item-table {
-            border: 0;
-            background: none;
-
-            th {
-                text-align: center;
-                padding-left: 12px;
-                padding-right: 0;
-            }
-
-            th:last-child {
-                padding-right: 20px;
-            }
-
-            tr:nth-child(1n+2) {
-                background-image: url("art/ui/table-row-left.webp"), url("art/ui/table-row-right.webp"), url("art/ui/table-row-banner.webp");
+            h1 {
+                background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/title-bar.webp");
                 background-position: left center, right center, center center;
                 background-repeat: no-repeat, no-repeat, repeat-x;
                 background-size: contain, contain, contain;
-                background-clip: border-box, border-box, padding-box;
-                border-left: 8px transparent;
-                border-right: 8px transparent;
+                background-clip: border-box, border-box, content-box;
+                padding-left: 48px;
+                padding-right: 48px;
+            }
 
-                td {
-                    text-align: center;
+            input {
+                color: whitesmoke;
+                text-align: center;
+                border: 0;
+            }
 
-                        input {
-                        border: 0;
-                        background: transparent;
-                    }
-
-                    padding-left: 16px;
-                    padding-right: 0;
-                }
-
-                td:nth-child(1n+2) {
-                    background-image: url("art/ui/table-row-separator.webp");
-                    background-position: left center;
-                    background-repeat: no-repeat;
-                    background-size: contain;
-                }
-
-                td:last-child {
-                    padding-right: 20px;
-                }
-
-                select {
-                    border: 0;
-                }
-
+            img {
+                border-color: transparent;
             }
         }
 
-        .editor {
-            @extend %parchment-frame;
+        .sheet-content {
+            height: 100%;
+            display: flex;    
+            flex-direction: column;
+            background-position: center top, center bottom;
+            background-repeat: repeat-x, repeat-x;
+            background-size: auto 12px, auto 12px;
+            padding-bottom: 0;
+        
+            .sheet-tabs {
+                width: 100%;
+                background-image: url("art/ui/table-row-banner.webp");
+                background-repeat:  repeat-x;
+                background-clip: border-box;
+                background-size: auto 100%;
+                border-color: transparent;
+            }
 
-            min-height: 160px;
-            align-self: center;
-        }
+            .sheet-body {
+                padding: 0 8px;
+            }
 
-        .editor-content {
-            border-left: 12px;
-            border-right: 12px;
-            border-style: solid;
-            border-color: transparent;
-        }
+            input:invalid {
+                color: red;
+            }    
 
-        .editor-edit {
-            top: 21px;
-            right: 12px;
-        }
+            input:valid {
+                color: black;
+            }    
 
-        .tox.tox-tinymce {
-            padding-left: 12px;
-            padding-right: 12px;
+            .item-table {
+                border: 0;
+                background: none;
+
+                th {
+                    text-align: center;
+                    padding-left: 12px;
+                    padding-right: 0;
+                }
+
+                th:last-child {
+                    padding-right: 20px;
+                }
+
+                tr:nth-child(1n+2) {
+                    background-image: url("art/ui/table-row-left.webp"), url("art/ui/table-row-right.webp"), url("art/ui/table-row-banner.webp");
+                    background-position: left center, right center, center center;
+                    background-repeat: no-repeat, no-repeat, repeat-x;
+                    background-size: contain, contain, contain;
+                    background-clip: border-box, border-box, padding-box;
+                    border-left: 8px transparent;
+                    border-right: 8px transparent;
+
+                    td {
+                        text-align: center;
+
+                            input {
+                            border: 0;
+                            background: transparent;
+                        }
+
+                        padding-left: 16px;
+                        padding-right: 0;
+                    }
+
+                    td:nth-child(1n+2) {
+                        background-image: url("art/ui/table-row-separator.webp");
+                        background-position: left center;
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                    }
+
+                    td:last-child {
+                        padding-right: 20px;
+                    }
+
+                    select {
+                        border: 0;
+                    }
+
+                }
+            }
+
+            .editor {
+                @extend %parchment-frame;
+
+                min-height: 160px;
+                align-self: center;
+            }
+
+            .editor-content {
+                border-left: 12px;
+                border-right: 12px;
+                border-style: solid;
+                border-color: transparent;
+            }
+
+            .editor-edit {
+                top: 21px;
+                right: 12px;
+            }
+
+            .tox.tox-tinymce {
+                padding-left: 12px;
+                padding-right: 12px;
+            }
         }
     }
 }

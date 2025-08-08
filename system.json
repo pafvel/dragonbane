@@ -19,8 +19,7 @@
     "dragonbane.js"
   ],
   "styles": [
-    "dragonbane.css",
-    "dragonbane.scss.css"
+    "dragonbane.css"
   ],
   "languages": [
     {
