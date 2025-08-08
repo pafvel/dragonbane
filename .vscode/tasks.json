@@ -1,13 +1,22 @@
 {
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
-
   "version": "2.0.0",
-  "command": "gulp",
-  "type": "shell",
-  "problemMatchers": [],
-  "group": {
-    "kind": "build",
-    "isDefault": true
-  }
-} 
+  "tasks": [
+    {
+      "label": "Build Sass",
+      "type": "shell",
+      "command": "npx sass scss/main.scss dragonbane.scss.css --style=compressed",
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Watch Sass",
+      "type": "shell",
+      "command": "npx sass --watch scss/main.scss:dragonbane.scss.css --no-source-map",
+      "isBackground": true,
+      "group": "build",
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+@use "sass:map";
+
+// Colors map
+$colors: (
+    green-warm-1:   #3e7d63,
+    green-warm-2:   #007544,
+    green-cold-1:   #237262,
+    green-cold-2:   #2b8875,
+    green-cold-3:   #00604D,
+    black-1:        #111,
+    brown-1:        #4a2407,
+    brown-2:        #3F2306,
+    red-1:          #E83031,
+    mint-cream-1:   #DEE9E6
+);
+
+// Accessor function
+@function color($key) {
+  @return map.get($colors, $key);
+}
+
+// Foundry overrides
+* {
+    --color-shadow-primary:         #{color(green-warm-2)};
+    --color-shadow-highlight:       #{color(green-warm-1)};
+    --color-border-highlight:       #{color(green-warm-1)};
+    --color-border-highlight-alt:   #{color(green-warm-2)};
+    --color-underline-header:       #{color(green-cold-1)};
+    --color-text-dark-header:       #{color(green-cold-2)};
+    --color-scrollbar-track:        #{color(black-1)};
+    --color-scrollbar:              #{color(green-cold-1)};
+    --checkbox-checked-color:       #{color(green-warm-1)};
+    --color-warm-1:                 #{color(green-warm-1)};
+    --color-warm-2:                 #{color(green-warm-2)};
+}
+
+// System variables
+.system-dragonbane {
+    --dod-color-text-dark-title:        #{color(green-cold-3)};
+    --dod-color-journal-text:           black;
+    --dod-color-journal-table-text:     #{color(brown-2)};
+    --dod-color-journal-table-tint:     rgba(74, 36, 7, 0.2);
+    --dod-color-journal-table-title:    whitesmoke;
+    --dod-color-journal-info-text:      #{color(brown-2)};
+    --dod-color-journal-optional-text:  #{color(mint-cream-1)};
+    --dod-color-parchment-text:         #{color(brown-2)};
+    --dod-color-direction:              #{color(brown-1)};
+    --dod-color-secret:                 #{color(red-1)};
+    --dod-color-positive-effect:        #{color(green-cold-3)};
+    --dod-color-negative-effect:        #{color(red-1)};
+    --dod-color-dash-range:             yellow;
+    --dod-color-out-of-range:           #{color(red-1)};
+    --dod-journal-background:           url("art/ui/journal-page-bg.webp");
+
+    --dod-font-primary:     "QTFrizQuad";
+    --dod-font-secondary:   "QTFrizQuad";
+    --dod-font-heading:     "QTFrizQuad";
+    --dod-font-button:      "QTFrizQuad";
+    --dod-font-handwriting: "Caveat";
+}

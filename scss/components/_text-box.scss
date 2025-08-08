@@ -1,0 +1,44 @@
+@use "../abstracts/placeholders";
+
+.system-dragonbane {
+    .text-box {
+        @extend %parchment-frame;
+        position: relative;
+        align-self: center;
+        border-width: 0px 16px 0px 16px;
+
+        .text-box-title {
+            text-align: center;
+            font-weight: bold;
+            padding-bottom: 2px;
+        }
+
+        input[type="radio"] {
+            top: 0px;
+            vertical-align: middle;
+        }
+
+        label {
+            white-space: nowrap;
+            text-indent: 0.5em;
+            padding-right: 0.5em;
+        }
+
+        div {
+            padding: 6px 2px 6px 2px;
+        }
+
+        table {
+            border-color: transparent;
+        }
+        th {
+            padding-left: 1em;
+            text-align: left;
+        }
+        td {
+            padding-left: 1em;
+            text-align: left;
+            padding-right: 1em;
+        }
+    }
+}

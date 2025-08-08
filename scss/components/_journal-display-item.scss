@@ -1,0 +1,15 @@
+@use "../abstracts/placeholders";
+
+.system-dragonbane {
+    .journal-entry-content {
+        .display-skill {
+            @extend %display-item;
+       }
+        .display-spell {
+            @extend %display-item;
+        }
+        .display-ability {
+            @extend %display-item;
+        }
+    }
+}

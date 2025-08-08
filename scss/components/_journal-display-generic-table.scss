@@ -1,0 +1,18 @@
+@use "../abstracts/placeholders";
+
+.system-dragonbane {
+    .journal-entry-content {
+        .display-generic-table {
+            table {
+                @extend %base-table;
+                td:first-child, th:first-child {
+                    text-align: left;
+                    width: auto;
+                }
+                td, th {
+                    padding-left: 1em;
+                }
+            }
+        }
+    }
+}

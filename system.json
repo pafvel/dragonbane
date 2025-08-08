@@ -19,7 +19,8 @@
     "dragonbane.js"
   ],
   "styles": [
-    "dragonbane.css"
+    "dragonbane.css",
+    "dragonbane.scss.css"
   ],
   "languages": [
     {
@@ -92,10 +93,6 @@
   "manifest": "https://github.com/pafvel/dragonbane/releases/latest/download/system.json",
   "download": "https://github.com/pafvel/dragonbane/releases/download/v2.5/dragonbane.zip",
   "flags": {
-    "hotReload": {
-      "extensions": ["css", "html", "hbs", "json"],
-      "paths": ["dragonbane.css", "templates", "lang"]
-    }
   },
   "relationships": {
     "recommends": [

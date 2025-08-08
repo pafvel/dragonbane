@@ -1,0 +1,8 @@
+@use "../abstracts/mixins";
+
+.system-dragonbane {
+    .journal-entry-content {
+        @include mixins.display-actor(monster);
+        @include mixins.display-actor(npc);
+   }
+}

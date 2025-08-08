@@ -1,0 +1,40 @@
+.system-dragonbane {
+    .journal-entry-content {
+        ul {
+            .description {
+                list-style-type: "✦ ";
+                font-weight: bold;
+                color: var(--color-text-dark-header);
+                p {
+                    font-weight: normal;
+                    color: var(--dod-color-journal-text);
+                }
+                ul, ol {
+                    font-weight: normal;
+                    color: var(--dod-color-journal-text);
+                }
+            }
+            .direction {
+                list-style-type: "✦ ";
+                font-weight: bold;
+                text-transform: uppercase;
+                color: var(--dod-color-direction);
+                p {
+                    font-weight: normal;
+                    text-transform: none;
+                    color: var(--dod-color-journal-text);
+                }
+            }
+            .secret {
+                list-style-type: "✦ ";
+                font-weight: bold;
+                color: var(--dod-color-secret);
+                p {
+                    font-weight: normal;
+                    font-style: italic;
+                    color: var(--dod-color-journal-text);
+                }
+            }
+        }
+    }
+}

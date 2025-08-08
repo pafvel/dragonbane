@@ -1,0 +1,20 @@
+.system-dragonbane {
+
+    // Don't wrap children
+    .flex-nowrap {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+    // Center children along the main axis
+    .flex-justify-center {
+        display: flex;
+        justify-content: center;
+    }
+
+    // Mirror element horizontally
+    .mirror {
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+    };
+}
