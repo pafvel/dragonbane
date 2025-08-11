@@ -135,13 +135,17 @@
 
                     h2, h3 {
                         top: -4px;
+                        max-width: 90%;
+                        min-width: 280px;
                         text-transform: none;
                         color:whitesmoke;
-                        background-image: url("art/ui/info-box-title-bg.webp");
-                        background-size: contain;
-                        background-repeat: no-repeat;
-                        background-position: center center;
-
+                        background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/text-box-title-bg-center.webp");
+                        background-position: left -32px bottom, right -32px bottom, center center;
+                        background-size: auto 32px, auto 32px, auto 32px;
+                        background-clip: border-box, border-box, padding-box;
+                        background-repeat: no-repeat, no-repeat, repeat-x;
+                        border-left: 40px solid transparent;
+                        border-right: 40px solid transparent;
                     }
 
                     p {

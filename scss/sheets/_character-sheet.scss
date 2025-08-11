@@ -360,14 +360,17 @@
             height: 75px;
 
             .resource-points-text-label {
-                position: absolute;
-                top: 14px;
-                left: 24px;
-                text-align: center;
-                font-size: 12px;
-                font-family: var(--dod-font-heading);
-                color: white;
-                text-transform: uppercase;
+                
+                label {
+                    position: absolute;
+                    top: 14px;
+                    left: 24px;
+                    text-align: center;
+                    font-size: 12px;
+                    font-family: var(--dod-font-heading);
+                    color: white;
+                    text-transform: uppercase;
+                }
             }
 
             .resource-points-max-box {
@@ -445,6 +448,8 @@
                 font-size: 12px;
 
                 table {
+                    width: 100%;
+                    table-layout: fixed;
                     border: 0 solid transparent;
                     background-color: transparent;
                 }
@@ -454,15 +459,15 @@
                 }
 
                 th {
-                    padding-left: 4px;   
-                    padding-right: 8px;   
+                    padding: 0;
+                    padding-top: 3px;
                     font-weight: bold; 
-                    padding-bottom: 0;   
                     border: 0 solid transparent;
+                    text-align: center;
                 }
 
                 td {
-                    padding: 0 8px 0 4px;   
+                    padding: 0;
                     border: 0 solid transparent;
                     text-align: center;
                 }
@@ -478,6 +483,8 @@
                     vertical-align: middle;
                     text-align: center;
                     line-height: normal;
+                    max-width: 50px;
+                    max-height: 36px;
 
                     i {
                         vertical-align: top;
@@ -488,6 +495,18 @@
                 button:hover {
                     text-shadow: 0 0 8px var(--color-shadow-primary);
                     box-shadow: none;
+                }
+                
+                .death-rolls-success-label, .death-rolls-failure-label {
+                    display: block;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    max-height: 16px;
+                    max-width: 65px;
+                }
+                
+                .death-rolls-success, .death-rolls-failure {
+                    font-size: 0;
                 }
 
                 .hit-point {

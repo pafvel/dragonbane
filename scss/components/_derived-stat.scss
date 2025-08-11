@@ -23,7 +23,7 @@
 
         th {
             text-align: center;
-            color: whitesmoke;            
+            color: var(--dod-color-journal-table-header);
             background-image: url("art/ui/table-row-right.webp"), url("art/ui/arrow-left.webp"), url("art/ui/title-bar.webp");
             background-size: contain, contain, contain;
             background-clip: border-box, border-box, content-box;
@@ -32,6 +32,8 @@
             height: 2.5em;
             padding-left: 30px;
             min-width: 160px;
+            white-space: nowrap;
+            overflow: hidden;
         }
 
         td {
