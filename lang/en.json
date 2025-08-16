@@ -83,7 +83,7 @@
             "topple": "Topple",
             "toppleTooltip": "Topple the enemy to the ground instead of inflicting damage\nToppling weapons get a Boon to the roll",
             "throw": "Throw",
-            "throwTooltip": "Trow weapon at enemy"
+            "throwTooltip": "Throw weapon at enemy"
         },
         "attributes": {
             "str": "STR",
