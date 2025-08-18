@@ -719,7 +719,7 @@ export async function enrichGearTable(match, _options) {
                 case "melee":
                 case "ranged":
                     {
-                        const range = item.system.calculatedRange;
+                        const range = item.calculatedRange;
         
                         html += `
                         <tr>

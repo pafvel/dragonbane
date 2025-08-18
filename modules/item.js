@@ -53,28 +53,31 @@ export class DoDItem extends Item {
                 }
             }
         }
+    }
 
-
-        // Range
+    calculateRange() {
         if (this.actor && this.system.range !== "") {
             const str = this.actor.getAttribute("str");
             const agl = this.actor.getAttribute("agl");
             let r = new Roll(String(this.system.range), {str, agl});
             try {
-                await r.evaluate({});
-                this.system.calculatedRange = r.total;
+                r.evaluateSync({});
+                return r.total;
             } catch {
                 DoD_Utility.WARNING("DoD.WARNING.cannotEvaluateFormula");
-                this.system.range = "";
-                this.system.calculatedRange = "";
+                return undefined;
             }
         } else {
             let r = new Roll(String(this.system.range), {
                 agl: game.i18n.localize("DoD.attributes.agl"),
                 str: game.i18n.localize("DoD.attributes.str")
             });
-            this.system.calculatedRange = r.formula;
+            return r.formula;
         }
+    }
+
+    get calculatedRange() {
+        return this.calculateRange();
     }
 
     get displayName() {
@@ -213,6 +216,6 @@ export class DoDItem extends Item {
     }
 
     get isRangedWeapon() {
-        return this.type === "weapon" && this.system.calculatedRange >= 10;
+        return this.type === "weapon" && this.calculatedRange >= 10;
     }
 }
