@@ -64,7 +64,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             distance = Math.round(canvas.grid.measurePath([actorCenter, targetCenter]).distance);
 
             // Determine available attack types based on range and weapon
-            isInMeleeRange = distance <= (isMeleeWeapon ? this.weapon.system.calculatedRange : (isLongWeapon ? 4 : 2));
+            isInMeleeRange = distance <= (isMeleeWeapon ? this.weapon.calculateRange() : (isLongWeapon ? 4 : 2));
             isMeleeAttack = isMeleeWeapon || isThrownWeapon && isInMeleeRange;
             isRangedAttack = !isMeleeAttack;
         }
@@ -122,7 +122,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.pointBlank"), value: true});
         }
         // Bane on ranged attacks at more than max range
-        if (targetToken && (isRangedWeapon || isThrownWeapon) && distance > this.weapon.system.calculatedRange) {
+        if (targetToken && (isRangedWeapon || isThrownWeapon) && distance > this.weapon.calculateRange()) {
             this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.longRange"), value: true});
         }
         // Bane if walls or tokens obstruct line of sight
@@ -223,7 +223,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
                 distance = canvas.grid.measurePath([actorToken, targetToken]).distance;
             }
 
-            if (distance > 2 * this.weapon.system.calculatedRange) {
+            if (distance > 2 * this.weapon.calculateRange()) {
                 const rangedOpts = await new Promise(resolve => {
                 new Dialog({
                     title: game.i18n.localize("DoD.ui.dialog.longRangeTitle"),
