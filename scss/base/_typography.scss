@@ -2,28 +2,28 @@
     font-family: var(--dod-font-primary);
 
     // Heading font
-
     h1, h2, h3, h4, h5, h6, th, blockquote, caption, nav, .dice-roll, .header-button, .title, .heading, .page-title, .npc-title, .monster-title {
         font-family: var(--dod-font-heading);
     }
 
     // Button font, except Foundry icon/control ones
-
     button:not(.fas, .fa-solid, .header-control, .ui-control, .inline-control) {
         font-family: var(--dod-font-button);
     }
 
     // Secondary font
-
     b, strong, td, blockquote, .content-link, .inline-roll {
         font-family: var(--dod-font-secondary);
     }
-
+    
     // Inline tweaks
-
     .content-link, .inline-roll {
         font-style: normal;
         flex-grow: 0;
         display: inline;
     }
+
+    img[data-action="editImage"] {
+        cursor: var(--cursor-pointer);
+    }  
 }

@@ -20,7 +20,6 @@ $colors: (
 }
 
 // Foundry overrides
-
 * {
     --color-shadow-primary:         #{color(green-warm-2)};
     --color-shadow-highlight:       #{color(green-warm-1)};
@@ -36,12 +35,11 @@ $colors: (
 }
 
 // System variables
-
 .system-dragonbane {
     --dod-color-text-dark-title:        #{color(green-cold-3)};
     --dod-color-journal-text:           black;
     --dod-color-journal-table-text:     #{color(brown-2)};
-    --dod-color-journal-table-tint:     rgb(74 36 7 / 20%);
+    --dod-color-journal-table-tint:     rgba(74, 36, 7, 0.2);
     --dod-color-journal-table-title:    whitesmoke;
     --dod-color-journal-table-header:   whitesmoke;
     --dod-color-journal-info-text:      #{color(brown-2)};

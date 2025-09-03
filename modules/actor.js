@@ -543,6 +543,10 @@ export class DoDActor extends Actor {
         return this.items.filter(i => i.type === "weapon" && i.system.worn === true);
     }
 
+    canEquipWeapon() {
+        return this.getEquippedWeapons().filter(w => !w.hasWeaponFeature("unarmed")).length < 3;
+    }
+
     getArmorValue(damageType) {
         let armorValue = 0;
         if (this.system.equippedArmor) {

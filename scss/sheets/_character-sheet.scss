@@ -3,17 +3,45 @@
 .system-dragonbane {
 
     .sheet.character {
+        display: flex;
+        flex-direction: column;
+        font-family: var(--dod-font-primary);
 
-        form {
-            display: flex;
-            flex-direction: column;
-            font-family: var(--dod-font-primary);
+        input {
+            color: black;
         }
 
+        input[type="text"], select {
+            outline: 0;
+
+            &:focus {
+                box-shadow: 0 0 5px var(--color-shadow-primary);
+                transition: none;
+            }
+        }
+
+        input[type="number"] {
+            background-color: transparent;
+
+            &:focus {
+                box-shadow: 0 0 5px var(--color-shadow-primary);
+                transition: none;
+            }
+        }
+        
+        .flexrow {
+            align-items: start;
+        }
+        
         .window-content {
             background:url("art/ui/item-sheet-bg.webp") repeat;
             background-position: top center;
             padding: 0;
+        }
+
+        .tab {
+            overflow: hidden auto; // Enable scrollbar
+            padding: 0 8px;
         }
 
         .npc-header {
@@ -25,7 +53,10 @@
         }
 
         .character-header {
+            display: flex;
             width: 700px;
+            height: 140px;
+            color: black;                    
         }
 
         .monster-actions {
@@ -114,8 +145,9 @@
 
                 h1 {
                     position: relative;
+                    margin: 0;
                     width:154px;
-                    top: -40px;
+                    top: -35px;
                     left: calc(0.5 * ( 100% - 154px ) );
                     background-image: url("art/ui/banner-name-straight-compact.webp");
                     background-position: center center;
@@ -127,7 +159,7 @@
                     font-weight: bold;
 
                     input {
-                        color: black;
+                        color: var(--dod-color-parchment-text);
                         text-align: center;
                         font-weight: bold;
                         border: 0;
@@ -170,7 +202,7 @@
                         font-size: 12px;
                         font-weight: bold;
                         text-align: center;
-                        background-color: rgb(219 208 191);
+                        background-color: rgb(219, 208, 191);
                         border-radius: 5px;
                         border: solid 1px black;
                     }
@@ -225,7 +257,15 @@
                     input[type="checkbox"]:checked {
                         background-color: red;
                         filter: none;
-                    }                                    
+                    }
+                    
+                    // Hide the default checkbox appearance
+                    input[type="checkbox"]::before,
+                    input[type="checkbox"]::after,
+                    input[type="checkbox"]:checked::before,
+                    input[type="checkbox"]:checked::after {
+                        content: none;
+                    }
 
                     .condition-panel {
                         position: absolute;
@@ -241,7 +281,7 @@
                         .condition-input {
                             position: absolute;
                             top: 5px;
-                            left: 19px;
+                            left: 20px;
                             size: 12px;
                         }
                     }
@@ -288,6 +328,19 @@
             }
         }
 
+        .sheet-tabs {
+            width: 100%;
+            background-image: url("art/ui/table-row-banner.webp");
+            background-repeat:  repeat-x;
+            background-clip: border-box;
+            background-size: auto 100%;
+            border-color: transparent;
+
+            label {
+                color: var(--dod-color-parchment-text);
+            }
+        }
+
         .main-tab {
             display: flex;
         }
@@ -305,14 +358,7 @@
             background-size: auto 12px;
             padding-bottom: 0;
         
-            .sheet-tabs {
-                width: 100%;
-                background-image: url("art/ui/table-row-banner.webp");
-                background-repeat:  repeat-x;
-                background-clip: border-box;
-                background-size: auto 100%;
-                border-color: transparent;
-            }
+
 
             .sheet-body {
                 width: 100%;
@@ -342,22 +388,23 @@
             background-position-x: center;
             background-position-y: 2em;
             border-top: transparent;
-            border-bottom: 1px solid var(--color-border-light-tertiary);                    
+            border-bottom: 1px solid var(--dod-color-parchment-text);                    
             border-radius: 0;
-            color: black;
+            color: var(--dod-color-parchment-text);
             background-color: transparent;
         
             i {
                 margin-left: auto;
                 float:right;
-                color: rgb(80 80 80);
-            };                 
+                color: rgb(80, 80, 80);
+            };
         };
 
         .resource-points {
             position: relative;
             width: 200px;
             height: 75px;
+            color: black;
 
             .resource-points-text-label {
                 
@@ -389,6 +436,7 @@
                     font-size: 18px;
                     font-weight: bold;
                     border-color: transparent;
+                    padding: 0;
                 }
             }        
 
@@ -446,11 +494,13 @@
                 width: 180px;
                 height: 60px;
                 font-size: 12px;
+                color: var(--dod-color-parchment-text);
 
                 table {
                     width: 100%;
                     table-layout: fixed;
                     border: 0 solid transparent;
+                    margin: 0.5rem 0;
                     background-color: transparent;
                 }
 
@@ -485,6 +535,7 @@
                     line-height: normal;
                     max-width: 50px;
                     max-height: 36px;
+                    color: var(--dod-color-parchment-text);
 
                     i {
                         vertical-align: top;
@@ -506,7 +557,7 @@
                 }
                 
                 .death-rolls-success, .death-rolls-failure {
-                    font-size: 0;
+                    font-size: 12px;
                 }
 
                 .hit-point {
@@ -581,6 +632,7 @@
             background-position: 42px center;
             min-width: 266px;
             border: 0 solid transparent;
+            margin: 0;
             background-color: transparent;
 
             td {
@@ -603,6 +655,7 @@
                 text-align: center;
                 font-weight: bold;
                 font-size: 18px;
+                color: black;
             }
 
             .helmet-value {
@@ -617,6 +670,7 @@
                 text-align: center;
                 font-weight: bold;
                 font-size: 18px;
+                color: black;
             }
 
             .armor-label {
@@ -628,66 +682,17 @@
 
             .armor-name {
                 font-weight: normal;
+                color: var(--dod-color-parchment-text);
+                padding-left: 0;
             }
 
             .armor-banes {
                 font-size: small;
                 vertical-align: top;
                 font-weight: normal;
+                color: black;
+                padding: 2px;
             }
-        }
-
-        .dod-text-container {
-            @extend %parchment-frame;
-
-            align-self: start;
-            margin-top: 4px;
-            border-width: 16px;
-            border-top: 0;
-
-            .dod-text-container-label {
-                position: relative;
-                font-family: var(--dod-font-heading);
-                text-align: center;
-
-                label {
-                    width: 274px;
-                    height: 32px;
-                    position: absolute;
-                    top: -16px;
-                    left: calc(50% - 137px);
-                    padding: 6px 24px 12px;
-                    background-image: url("art/ui/text-box-title-bg.webp");
-                    background-size: contain;
-                    background-repeat: no-repeat;
-                    background-position: center center;
-                    color: whitesmoke;
-                    font-weight: bold;
-                }
-            }
-
-            .editor-edit {
-                right: 12px;
-            }
-
-            .editor-menu {
-                padding-top: 21px;
-            }
-
-            .editor-container {
-                margin: 0;
-            }
-
-            .editor-content {
-                padding: 0;
-                border-left: 12px;
-                border-right: 12px;
-                border-top: 16px;
-                border-style: solid;
-                border-color: transparent;
-                min-height: 80px;
-                position: static;
-            }     
         }
 
         input:focus {

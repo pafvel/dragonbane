@@ -1,0 +1,63 @@
+<div class="sheet-header character-header">
+    <div class="image-container">
+        <img class="profile-img" data-action="editImage" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+        <h1>
+            <input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
+        </h1>
+    </div>
+    <div class="attributes-container">
+        <div class="attributes">
+            <div class="attribute-panel attribute1">
+                <label class="heading attribute-label rollable-attribute" data-attribute="str"><a>{{localize "DoD.attributes.str"}}</a></label>
+                <input class="attribute-input active-effect-property" data-property="system.attributes.str" name="system.attributes.str.value" type="text" value="{{system.attributes.str.value}}" data-dtype="Number" />
+            </div>
+            <div class="attribute-panel attribute2">
+                <label class="heading attribute-label rollable-attribute" data-attribute="con"><a>{{localize "DoD.attributes.con"}}</a></label>
+                <input class="attribute-input active-effect-property" data-property="system.attributes.con" name="system.attributes.con.value" type="text" value="{{system.attributes.con.value}}" data-dtype="Number" />
+            </div>
+            <div class="attribute-panel attribute3">
+                <label class="heading attribute-label rollable-attribute" data-attribute="agl"><a>{{localize "DoD.attributes.agl"}}</a></label>
+                <input class="attribute-input active-effect-property" data-property="system.attributes.agl" name="system.attributes.agl.value" type="text" value="{{system.attributes.agl.value}}" data-dtype="Number" />
+            </div>
+            <div class="attribute-panel attribute4">
+                <label class="heading attribute-label rollable-attribute" data-attribute="int"><a>{{localize "DoD.attributes.int"}}</a></label>
+                <input class="attribute-input active-effect-property" data-property="system.attributes.int" name="system.attributes.int.value" type="text" value="{{system.attributes.int.value}}" data-dtype="Number" />
+            </div>
+            <div class="attribute-panel attribute5">
+                <label class="heading attribute-label rollable-attribute" data-attribute="wil"><a>{{localize "DoD.attributes.wil"}}</a></label>
+                <input class="attribute-input active-effect-property" data-property="system.attributes.wil" name="system.attributes.wil.value" type="text" value="{{system.attributes.wil.value}}" data-dtype="Number" />
+            </div>
+            <div class="attribute-panel attribute6">
+                <label class="heading attribute-label rollable-attribute" data-attribute="cha"><a>{{localize "DoD.attributes.cha"}}</a></label>
+                <input class="attribute-input active-effect-property" data-property="system.attributes.cha" name="system.attributes.cha.value" type="text" value="{{system.attributes.cha.value}}" data-dtype="Number" />
+            </div>
+
+            <div class="conditions">
+                <div class="condition-panel condition1" title="{{localize "DoD.conditions.str"}}">
+                    <input class="condition-input" name="system.conditions.str.value" type="checkbox" {{checked system.conditions.str.value}} />
+                    <label class="condition-label">{{localize "DoD.conditions.str"}}</label>
+                </div>
+                <div class="condition-panel condition2" title="{{localize "DoD.conditions.con"}}">
+                    <input class="condition-input" name="system.conditions.con.value" type="checkbox" {{checked system.conditions.con.value}} />
+                    <label class="condition-label">{{localize "DoD.conditions.con"}}</label>
+                </div>
+                <div class="condition-panel condition3" title="{{localize "DoD.conditions.agl"}}">
+                    <input class="condition-input" name="system.conditions.agl.value" type="checkbox" {{checked system.conditions.agl.value}} />
+                    <label class="condition-label">{{localize "DoD.conditions.agl"}}</label>
+                </div>
+                <div class="condition-panel condition4" title="{{localize "DoD.conditions.int"}}">
+                    <input class="condition-input" name="system.conditions.int.value" type="checkbox" {{checked system.conditions.int.value}} />
+                    <label class="condition-label">{{localize "DoD.conditions.int"}}</label>
+                </div>
+                <div class="condition-panel condition5" title="{{localize "DoD.conditions.wil"}}">
+                    <input class="condition-input" name="system.conditions.wil.value" type="checkbox" {{checked system.conditions.wil.value}} />
+                    <label class="condition-label">{{localize "DoD.conditions.wil"}}</label>
+                </div>
+                <div class="condition-panel condition6" title="{{localize "DoD.conditions.cha"}}">
+                    <input class="condition-input" name="system.conditions.cha.value" type="checkbox" {{checked system.conditions.cha.value}} />
+                    <label class="condition-label">{{localize "DoD.conditions.cha"}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

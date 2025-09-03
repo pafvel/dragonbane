@@ -19,6 +19,7 @@
     .derived-stat {
         border-bottom: 0;
         border-top: 0;
+        margin: 0.5rem 0;
         background-color: transparent;
 
         th {
@@ -30,7 +31,7 @@
             background-repeat: no-repeat, no-repeat, repeat-x;
             background-position: right -8px center, left (+4px) center, center center;
             height: 2.5em;
-            padding-left: 30px;
+            padding: 0 0 0 30px;
             min-width: 160px;
             white-space: nowrap;
             overflow: hidden;
@@ -38,14 +39,14 @@
 
         td {
             text-align: center;
-            color: black;
+            color: var(--dod-color-parchment-text);
             background-image: url("art/ui/table-row-right.webp"), url("art/ui/arrow-right.webp"), url("art/ui/table-row-banner2.webp");
             background-size: contain, contain, contain;
             background-clip: border-box, border-box, content-box;
             background-repeat: no-repeat, no-repeat, repeat-x;
             background-position: left -8px center, right center, center center;
             height: 2.5em;
-            padding-right: 30px;
+            padding: 0 30px 0 0;
             min-width: 6em;
         }
 
@@ -55,10 +56,15 @@
 
         input {
             border-color: transparent;
+            background: transparent;
+            text-align: center;
         }
 
         select {
             border-color: transparent;
+            background: transparent;
+            color: black;
+            width: auto
         }
 
         option {

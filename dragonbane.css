@@ -45,7 +45,7 @@
   src: url("fonts/Caveat/static/Caveat-Bold.ttf");
   font-weight: bold;
 }
-.system-dragonbane .sheet.item .sheet-content .editor, .system-dragonbane .sheet.active-effect-sheet .sheet-content .editor, .system-dragonbane .sheet.character .dod-text-container, .system-dragonbane .text-box {
+.system-dragonbane .sheet.item .sheet-content .editor, .system-dragonbane .sheet.active-effect-sheet .sheet-content .editor, .system-dragonbane .text-box, .system-dragonbane .text-box-editor {
   height: 100%;
   width: 100%;
   background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/parchment-vertical.webp");
@@ -57,6 +57,7 @@
   padding-bottom: 12px;
   border-style: solid;
   border-color: transparent;
+  color: var(--dod-color-parchment-text);
 }
 
 .system-dragonbane .journal-entry-content .display-skill h3, .system-dragonbane .journal-entry-content .display-spell h3, .system-dragonbane .journal-entry-content .display-ability h3 {
@@ -234,7 +235,7 @@
   --dod-color-text-dark-title: #00604D;
   --dod-color-journal-text: black;
   --dod-color-journal-table-text: #3F2306;
-  --dod-color-journal-table-tint: rgb(74 36 7 / 20%);
+  --dod-color-journal-table-tint: rgba(74, 36, 7, 0.2);
   --dod-color-journal-table-title: whitesmoke;
   --dod-color-journal-table-header: whitesmoke;
   --dod-color-journal-info-text: #3F2306;
@@ -271,6 +272,9 @@
   flex-grow: 0;
   display: inline;
 }
+.system-dragonbane img[data-action=editImage] {
+  cursor: var(--cursor-pointer);
+}
 
 .system-dragonbane .comma-list a::after {
   content: ", ";
@@ -306,6 +310,7 @@
 .system-dragonbane .derived-stat {
   border-bottom: 0;
   border-top: 0;
+  margin: 0.5rem 0;
   background-color: transparent;
 }
 .system-dragonbane .derived-stat th {
@@ -317,21 +322,21 @@
   background-repeat: no-repeat, no-repeat, repeat-x;
   background-position: right -8px center, left 4px center, center center;
   height: 2.5em;
-  padding-left: 30px;
+  padding: 0 0 0 30px;
   min-width: 160px;
   white-space: nowrap;
   overflow: hidden;
 }
 .system-dragonbane .derived-stat td {
   text-align: center;
-  color: black;
+  color: var(--dod-color-parchment-text);
   background-image: url("art/ui/table-row-right.webp"), url("art/ui/arrow-right.webp"), url("art/ui/table-row-banner2.webp");
   background-size: contain, contain, contain;
   background-clip: border-box, border-box, content-box;
   background-repeat: no-repeat, no-repeat, repeat-x;
   background-position: left -8px center, right center, center center;
   height: 2.5em;
-  padding-right: 30px;
+  padding: 0 30px 0 0;
   min-width: 6em;
 }
 .system-dragonbane .derived-stat .warning {
@@ -339,9 +344,14 @@
 }
 .system-dragonbane .derived-stat input {
   border-color: transparent;
+  background: transparent;
+  text-align: center;
 }
 .system-dragonbane .derived-stat select {
   border-color: transparent;
+  background: transparent;
+  color: black;
+  width: auto;
 }
 .system-dragonbane .derived-stat option {
   text-align: center;
@@ -573,15 +583,26 @@
   background-position-x: center;
   background-position-y: 2em;
   border-top: transparent;
-  border-bottom: 1px solid var(--color-border-light-tertiary);
+  border-bottom: 1px solid var(--dod-color-parchment-text);
   border-radius: 0;
-  color: black;
+  color: var(--dod-color-parchment-text);
   background-color: transparent;
+  margin: 0.5rem 0;
+}
+.system-dragonbane .sheet-table button {
+  display: inline-block;
 }
 .system-dragonbane .sheet-table i {
   margin-left: auto;
   float: right;
   color: rgb(80, 80, 80);
+}
+.system-dragonbane .sheet-table input[type=text] {
+  background: rgba(0, 0, 0, 0.1);
+}
+.system-dragonbane .sheet-table input[type=checkbox]::before, .system-dragonbane .sheet-table input[type=checkbox]::after {
+  font-size: 1rem;
+  line-height: 1rem;
 }
 .system-dragonbane .sheet-table-header {
   color: var(--dod-color-journal-table-header);
@@ -594,6 +615,7 @@
 }
 .system-dragonbane .sheet-table-header th {
   white-space: nowrap;
+  padding: 0.5rem 0;
 }
 .system-dragonbane .sheet-table-header th button {
   padding: 0;
@@ -611,7 +633,6 @@
   background-repeat: no-repeat;
   background-clip: border-box;
   padding-left: 2em;
-  padding-right: 0;
   width: 3em;
   min-width: 3em;
   min-height: 2em;
@@ -622,7 +643,6 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-clip: border-box;
-  padding-left: 0;
   padding-right: 2em;
   width: 3em;
   min-width: 3em;
@@ -645,8 +665,8 @@
   filter: invert(100%) sepia(1%) saturate(256%) hue-rotate(64deg) brightness(116%) contrast(92%);
 }
 .system-dragonbane .sheet-table-header .text-header {
-  text-indent: 1em;
   text-align: left;
+  padding-left: 1rem;
 }
 .system-dragonbane .sheet-table-header .number-header {
   text-align: center;
@@ -673,13 +693,11 @@
   box-shadow: none;
 }
 .system-dragonbane .sheet-table-data td {
-  padding-left: 1em;
-  padding-right: 1em;
+  padding: 0.2rem 1rem;
 }
 .system-dragonbane .sheet-table-data td:first-child {
   padding-left: 2em;
   padding-right: 0;
-  text-align: right;
 }
 .system-dragonbane .sheet-table-data td:last-child {
   padding-right: 2em;
@@ -712,9 +730,11 @@
   border: 0 solid transparent;
 }
 .system-dragonbane .sheet-table-data .checkbox-data input {
-  width: 12px;
   margin: 0;
-  vertical-align: middle;
+  vertical-align: sub;
+}
+.system-dragonbane .sheet-table-data .checkbox-data input[type=checkbox]::before {
+  color: white;
 }
 .system-dragonbane .sheet-table-data .text-data {
   text-align: left;
@@ -824,15 +844,83 @@
 }
 .system-dragonbane .text-box table {
   border-color: transparent;
+  background-color: transparent;
+  margin: 0;
 }
-.system-dragonbane .text-box th {
+.system-dragonbane .text-box table tr:nth-child(even) {
+  background-color: transparent;
+}
+.system-dragonbane .text-box table tr:nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.system-dragonbane .text-box table th {
   padding-left: 1em;
   text-align: left;
 }
-.system-dragonbane .text-box td {
+.system-dragonbane .text-box table td {
   padding-left: 1em;
   text-align: left;
   padding-right: 1em;
+}
+.system-dragonbane .text-box-editor {
+  align-self: start;
+  margin-top: 4px;
+  border-width: 16px;
+  border-top: 0;
+}
+.system-dragonbane .text-box-editor prose-mirror, .system-dragonbane .text-box-editor .prose-mirror {
+  min-height: 80px;
+}
+.system-dragonbane .text-box-editor .label-container {
+  position: relative;
+  font-family: var(--dod-font-heading);
+  text-align: center;
+}
+.system-dragonbane .text-box-editor .label-container label {
+  width: 274px;
+  height: 32px;
+  position: absolute;
+  top: -16px;
+  left: calc(50% - 137px);
+  padding: 6px 24px 12px;
+  background-image: url("art/ui/text-box-title-bg.webp");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  color: whitesmoke;
+  font-weight: bold;
+}
+.system-dragonbane .text-box-editor .editor-menu {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  margin-top: 16px;
+}
+.system-dragonbane .text-box-editor .editor-container {
+  margin: 0;
+}
+.system-dragonbane .text-box-editor .editor-content {
+  padding: 0;
+  border-left: 12px;
+  border-right: 12px;
+  border-top: 16px;
+  border-style: solid;
+  border-color: transparent;
+  min-height: 80px;
+  position: static;
+}
+.system-dragonbane .text-box-editor .editor-container > .editor-content {
+  border-top: 0;
+}
+.system-dragonbane .text-box-editor button.toggle {
+  background: transparent;
+  border: 0 solid transparent;
+  color: black;
+  top: 0;
+  right: 6px;
+}
+.system-dragonbane .text-box-editor button.toggle:hover {
+  text-shadow: 0 0 8px var(--color-shadow-primary);
+  box-shadow: none;
 }
 
 .system-dragonbane .waypoint-label .move-range {
@@ -945,15 +1033,39 @@
   --dod-dialog-background: url("art/ui/dialog-bg.webp") repeat;
 }
 
-.system-dragonbane .sheet.character form {
+.system-dragonbane .sheet.character {
   display: flex;
   flex-direction: column;
   font-family: var(--dod-font-primary);
+}
+.system-dragonbane .sheet.character input {
+  color: black;
+}
+.system-dragonbane .sheet.character input[type=text], .system-dragonbane .sheet.character select {
+  outline: 0;
+}
+.system-dragonbane .sheet.character input[type=text]:focus, .system-dragonbane .sheet.character select:focus {
+  box-shadow: 0 0 5px var(--color-shadow-primary);
+  transition: none;
+}
+.system-dragonbane .sheet.character input[type=number] {
+  background-color: transparent;
+}
+.system-dragonbane .sheet.character input[type=number]:focus {
+  box-shadow: 0 0 5px var(--color-shadow-primary);
+  transition: none;
+}
+.system-dragonbane .sheet.character .flexrow {
+  align-items: start;
 }
 .system-dragonbane .sheet.character .window-content {
   background: url("art/ui/item-sheet-bg.webp") repeat;
   background-position: top center;
   padding: 0;
+}
+.system-dragonbane .sheet.character .tab {
+  overflow: hidden auto;
+  padding: 0 8px;
 }
 .system-dragonbane .sheet.character .npc-header {
   min-width: 450px;
@@ -962,7 +1074,10 @@
   min-width: 450px;
 }
 .system-dragonbane .sheet.character .character-header {
+  display: flex;
   width: 700px;
+  height: 140px;
+  color: black;
 }
 .system-dragonbane .sheet.character .monster-actions {
   display: flex;
@@ -1039,8 +1154,9 @@
 }
 .system-dragonbane .sheet.character .sheet-header .image-container h1 {
   position: relative;
+  margin: 0;
   width: 154px;
-  top: -40px;
+  top: -35px;
   left: calc(0.5 * (100% - 154px));
   background-image: url("art/ui/banner-name-straight-compact.webp");
   background-position: center center;
@@ -1052,7 +1168,7 @@
   font-weight: bold;
 }
 .system-dragonbane .sheet.character .sheet-header .image-container h1 input {
-  color: black;
+  color: var(--dod-color-parchment-text);
   text-align: center;
   font-weight: bold;
   border: 0;
@@ -1135,6 +1251,12 @@
   background-color: red;
   filter: none;
 }
+.system-dragonbane .sheet.character .attributes-container .attributes .conditions input[type=checkbox]::before,
+.system-dragonbane .sheet.character .attributes-container .attributes .conditions input[type=checkbox]::after,
+.system-dragonbane .sheet.character .attributes-container .attributes .conditions input[type=checkbox]:checked::before,
+.system-dragonbane .sheet.character .attributes-container .attributes .conditions input[type=checkbox]:checked::after {
+  content: none;
+}
 .system-dragonbane .sheet.character .attributes-container .attributes .conditions .condition-panel {
   position: absolute;
   top: 65%;
@@ -1149,7 +1271,7 @@
 .system-dragonbane .sheet.character .attributes-container .attributes .conditions .condition-panel .condition-input {
   position: absolute;
   top: 5px;
-  left: 19px;
+  left: 20px;
   size: 12px;
 }
 .system-dragonbane .sheet.character .attributes-container .attributes .conditions .condition-label {
@@ -1183,6 +1305,17 @@
 .system-dragonbane .sheet.character .attributes-container .attributes .conditions .condition6 {
   left: 74.25%;
 }
+.system-dragonbane .sheet.character .sheet-tabs {
+  width: 100%;
+  background-image: url("art/ui/table-row-banner.webp");
+  background-repeat: repeat-x;
+  background-clip: border-box;
+  background-size: auto 100%;
+  border-color: transparent;
+}
+.system-dragonbane .sheet.character .sheet-tabs label {
+  color: var(--dod-color-parchment-text);
+}
 .system-dragonbane .sheet.character .main-tab {
   display: flex;
 }
@@ -1198,14 +1331,6 @@
   background-repeat: repeat-x;
   background-size: auto 12px;
   padding-bottom: 0;
-}
-.system-dragonbane .sheet.character .sheet-content .sheet-tabs {
-  width: 100%;
-  background-image: url("art/ui/table-row-banner.webp");
-  background-repeat: repeat-x;
-  background-clip: border-box;
-  background-size: auto 100%;
-  border-color: transparent;
 }
 .system-dragonbane .sheet.character .sheet-content .sheet-body {
   width: 100%;
@@ -1230,9 +1355,9 @@
   background-position-x: center;
   background-position-y: 2em;
   border-top: transparent;
-  border-bottom: 1px solid var(--color-border-light-tertiary);
+  border-bottom: 1px solid var(--dod-color-parchment-text);
   border-radius: 0;
-  color: black;
+  color: var(--dod-color-parchment-text);
   background-color: transparent;
 }
 .system-dragonbane .sheet.character .weapon-table i {
@@ -1244,6 +1369,7 @@
   position: relative;
   width: 200px;
   height: 75px;
+  color: black;
 }
 .system-dragonbane .sheet.character .resource-points .resource-points-text-label label {
   position: absolute;
@@ -1271,6 +1397,7 @@
   font-size: 18px;
   font-weight: bold;
   border-color: transparent;
+  padding: 0;
 }
 .system-dragonbane .sheet.character .resource-points .resource-points-box {
   display: flex;
@@ -1320,11 +1447,13 @@
   width: 180px;
   height: 60px;
   font-size: 12px;
+  color: var(--dod-color-parchment-text);
 }
 .system-dragonbane .sheet.character .resource-points .death-rolls-box table {
   width: 100%;
   table-layout: fixed;
   border: 0 solid transparent;
+  margin: 0.5rem 0;
   background-color: transparent;
 }
 .system-dragonbane .sheet.character .resource-points .death-rolls-box tr {
@@ -1355,6 +1484,7 @@
   line-height: normal;
   max-width: 50px;
   max-height: 36px;
+  color: var(--dod-color-parchment-text);
 }
 .system-dragonbane .sheet.character .resource-points .death-rolls-box button i {
   vertical-align: top;
@@ -1372,7 +1502,7 @@
   max-width: 65px;
 }
 .system-dragonbane .sheet.character .resource-points .death-rolls-box .death-rolls-success, .system-dragonbane .sheet.character .resource-points .death-rolls-box .death-rolls-failure {
-  font-size: 0;
+  font-size: 12px;
 }
 .system-dragonbane .sheet.character .resource-points .death-rolls-box .hit-point {
   width: 10px;
@@ -1434,6 +1564,7 @@
   background-position: 42px center;
   min-width: 266px;
   border: 0 solid transparent;
+  margin: 0;
   background-color: transparent;
 }
 .system-dragonbane .sheet.character .armor td {
@@ -1454,6 +1585,7 @@
   text-align: center;
   font-weight: bold;
   font-size: 18px;
+  color: black;
 }
 .system-dragonbane .sheet.character .armor .helmet-value {
   background-image: url("art/ui/helmet-small.webp");
@@ -1467,6 +1599,7 @@
   text-align: center;
   font-weight: bold;
   font-size: 18px;
+  color: black;
 }
 .system-dragonbane .sheet.character .armor .armor-label {
   text-transform: uppercase;
@@ -1476,55 +1609,15 @@
 }
 .system-dragonbane .sheet.character .armor .armor-name {
   font-weight: normal;
+  color: var(--dod-color-parchment-text);
+  padding-left: 0;
 }
 .system-dragonbane .sheet.character .armor .armor-banes {
   font-size: small;
   vertical-align: top;
   font-weight: normal;
-}
-.system-dragonbane .sheet.character .dod-text-container {
-  align-self: start;
-  margin-top: 4px;
-  border-width: 16px;
-  border-top: 0;
-}
-.system-dragonbane .sheet.character .dod-text-container .dod-text-container-label {
-  position: relative;
-  font-family: var(--dod-font-heading);
-  text-align: center;
-}
-.system-dragonbane .sheet.character .dod-text-container .dod-text-container-label label {
-  width: 274px;
-  height: 32px;
-  position: absolute;
-  top: -16px;
-  left: calc(50% - 137px);
-  padding: 6px 24px 12px;
-  background-image: url("art/ui/text-box-title-bg.webp");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center center;
-  color: whitesmoke;
-  font-weight: bold;
-}
-.system-dragonbane .sheet.character .dod-text-container .editor-edit {
-  right: 12px;
-}
-.system-dragonbane .sheet.character .dod-text-container .editor-menu {
-  padding-top: 21px;
-}
-.system-dragonbane .sheet.character .dod-text-container .editor-container {
-  margin: 0;
-}
-.system-dragonbane .sheet.character .dod-text-container .editor-content {
-  padding: 0;
-  border-left: 12px;
-  border-right: 12px;
-  border-top: 16px;
-  border-style: solid;
-  border-color: transparent;
-  min-height: 80px;
-  position: static;
+  color: black;
+  padding: 2px;
 }
 .system-dragonbane .sheet.character input:focus {
   color: black;

@@ -32,17 +32,100 @@
 
         table {
             border-color: transparent;
-        }
+            background-color: transparent;
+            margin: 0;
 
-        th {
-            padding-left: 1em;
-            text-align: left;
-        }
+            tr:nth-child(even) {
+                background-color: transparent;
+            }
+                
+            tr:nth-child(odd) {
+                background-color: rgb(0, 0, 0, 0.05);
+            }
 
-        td {
-            padding-left: 1em;
-            text-align: left;
-            padding-right: 1em;
+            th {
+                padding-left: 1em;
+                text-align: left;
+            }
+
+            td {
+                padding-left: 1em;
+                text-align: left;
+                padding-right: 1em;
+            }
         }
     }
+
+    .text-box-editor {
+        @extend %parchment-frame;
+
+        align-self: start;
+        margin-top: 4px;
+        border-width: 16px;
+        border-top: 0;
+
+        prose-mirror, .prose-mirror {
+            min-height: 80px;
+        }
+
+        .label-container {
+            position: relative;
+            font-family: var(--dod-font-heading);
+            text-align: center;
+
+            label {
+                width: 274px;
+                height: 32px;
+                position: absolute;
+                top: -16px;
+                left: calc(50% - 137px);
+                padding: 6px 24px 12px;
+                background-image: url("art/ui/text-box-title-bg.webp");
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center center;
+                color: whitesmoke;
+                font-weight: bold;
+            }
+        }
+
+        .editor-menu {
+            padding-top: 4px;
+            padding-bottom: 4px;
+            margin-top: 16px
+        }
+
+        .editor-container {
+            margin: 0;
+        }
+
+        .editor-content {
+            padding: 0;
+            border-left: 12px;
+            border-right: 12px;
+            border-top: 16px;
+            border-style: solid;
+            border-color: transparent;
+            min-height: 80px;
+            position: static;
+        }
+
+        .editor-container > .editor-content {
+            border-top: 0;
+        }
+
+        button.toggle {
+            background: transparent;
+            border: 0 solid transparent;
+            color: black;
+            top: 0;
+            right: 6px;
+
+            &:hover {
+                text-shadow: 0 0 8px var(--color-shadow-primary);
+                box-shadow: none;
+            }
+        }
+    }
+
 }

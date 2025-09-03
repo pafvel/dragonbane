@@ -1,5 +1,7 @@
 import { DoDActor } from "./modules/actor.js";
-import DoDCharacterSheet from "./modules/character-sheet.js";
+import DoDCharacterSheet from "./modules/sheets/character-sheet.js";
+import DoDNpcSheet from "./modules/sheets/npc-sheet.js";
+import DoDMonsterSheet from "./modules/sheets/monster-sheet.js";
 import * as DoDChat from "./modules/chat.js";
 import { DoD } from "./modules/config.js";
 import DoDItemSheet from "./modules/item-sheet.js";
@@ -64,19 +66,9 @@ function registerHandlebarsHelpers() {
 
 async function preloadHandlebarsTemplates() {
     const templatePaths = [
-        "systems/dragonbane/templates/partials/character-sheet-abilities.hbs",
-        "systems/dragonbane/templates/partials/character-sheet-background.hbs",
-        "systems/dragonbane/templates/partials/character-sheet-effects.hbs",
-        "systems/dragonbane/templates/partials/character-sheet-inventory.hbs",
-        "systems/dragonbane/templates/partials/character-sheet-main.hbs",
-        "systems/dragonbane/templates/partials/character-sheet-skills.hbs",
         "systems/dragonbane/templates/partials/damage-roll-message.hbs",
         "systems/dragonbane/templates/partials/hp-widget.hbs",
         "systems/dragonbane/templates/partials/item-sheet-effects.hbs",
-        "systems/dragonbane/templates/partials/monster-sheet-main.hbs",
-        "systems/dragonbane/templates/partials/npc-sheet-inventory.hbs",
-        "systems/dragonbane/templates/partials/npc-sheet-main.hbs",
-        "systems/dragonbane/templates/partials/npc-sheet-skills.hbs",
         "systems/dragonbane/templates/partials/roll-dialog.hbs",
         "systems/dragonbane/templates/partials/roll-no-total.hbs",
         "systems/dragonbane/templates/partials/roll.hbs",
@@ -292,7 +284,6 @@ Hooks.once("init", function () {
     CONFIG.DoD = DoD;
 
     CONFIG.DoD.Actors       = game.release.generation < 13 ? Actors         : foundry.documents.collections.Actors;
-    CONFIG.DoD.ActorSheet   = game.release.generation < 13 ? ActorSheet     : foundry.appv1.sheets.ActorSheet;
     CONFIG.DoD.Items        = game.release.generation < 13 ? Items          : foundry.documents.collections.Items;
     CONFIG.DoD.ItemSheet    = game.release.generation < 13 ? ItemSheet      : foundry.appv1.sheets.ItemSheet;
     CONFIG.DoD.FilePicker   = game.release.generation < 13 ? FilePicker     : foundry.applications.apps.FilePicker;
@@ -329,9 +320,11 @@ Hooks.once("init", function () {
         weapon: DoDWeaponData
     });
 
-    CONFIG.DoD.Actors.unregisterSheet("core", CONFIG.DoD.ActorSheet);
-    CONFIG.DoD.Actors.registerSheet("DoD", DoDCharacterSheet, { makeDefault: true });
-
+    CONFIG.DoD.Actors.unregisterSheet("core", foundry.appv1.sheets.ActorSheet);
+    CONFIG.DoD.Actors.registerSheet("DoD", DoDCharacterSheet, { types: ["character"], makeDefault: true });
+    CONFIG.DoD.Actors.registerSheet("DoD", DoDNpcSheet, { types: ["npc"], makeDefault: true });
+    CONFIG.DoD.Actors.registerSheet("DoD", DoDMonsterSheet, { types: ["monster"], makeDefault: true });
+    
     CONFIG.DoD.Items.unregisterSheet("core", CONFIG.DoD.ItemSheet);
     CONFIG.DoD.Items.registerSheet("DoD", DoDItemSheet, { makeDefault: true });
 

@@ -6,7 +6,7 @@
     {
       "label": "Build Sass",
       "type": "shell",
-      "command": "npx sass scss/main.scss dragonbane.css --style=compressed",
+      "command": "npx sass scss/main.scss dragonbane.css --no-source-map",
       "group": "build",
       "problemMatcher": []
     },

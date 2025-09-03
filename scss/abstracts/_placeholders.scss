@@ -9,7 +9,8 @@
     padding-top: 12px;
     padding-bottom: 12px;
     border-style: solid;
-    border-color: transparent;    
+    border-color: transparent;
+    color: var(--dod-color-parchment-text);
 }
 
 %display-item {
@@ -64,7 +65,6 @@ caption {
     color: var(--dod-color-journal-table-title);
 
     // Background for <caption>title</caption>
-    
     &:not(:has(> :is(h2, h3, span))) {
         padding: 6px 24px 12px;
         background-image: url("art/ui/text-box-title-wide-bg.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp");
@@ -75,7 +75,6 @@ caption {
     }
 
     // Caption has child element h2, h3 or span. Just do separator here, child elements will handle the rest.
-
     &:has(> :is(h2, h3, span)) {
         padding: 2px 24px;
         background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp");
@@ -183,7 +182,7 @@ caption {
         font-style: normal;
 
         .content-link {
-            color: rgb(222 233 230);
+            color: rgb(222, 233, 230);
         }
 
         border: 0 solid transparent;

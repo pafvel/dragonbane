@@ -9,16 +9,30 @@
         background-position-x: center;
         background-position-y: 2em;
         border-top: transparent;
-        border-bottom: 1px solid var(--color-border-light-tertiary);                    
+        border-bottom: 1px solid var(--dod-color-parchment-text);
         border-radius: 0;
-        color: black;
+        color: var(--dod-color-parchment-text);
         background-color: transparent;
+        margin: 0.5rem 0;
+
+        button {
+            display: inline-block;
+        }
 
         i {
             margin-left: auto;
             float:right;
-            color: rgb(80 80 80);
-        };                 
+            color: rgb(80, 80, 80);
+        };
+
+        input[type="text"] {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="checkbox"]::before, input[type="checkbox"]::after {
+            font-size: 1rem;
+            line-height: 1rem;
+        }
     };                
 
     .sheet-table-header {
@@ -32,6 +46,7 @@
 
         th {
             white-space: nowrap;
+            padding: 0.5rem 0;
 
             button {
                 padding: 0;
@@ -51,7 +66,6 @@
             background-repeat: no-repeat;
             background-clip: border-box;
             padding-left: 2em;
-            padding-right: 0;
             width: 3em;
             min-width: 3em;
             min-height: 2em;
@@ -63,7 +77,6 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-clip: border-box;
-            padding-left: 0;
             padding-right: 2em;
             width: 3em;
             min-width: 3em;
@@ -89,8 +102,8 @@
         }
 
         .text-header {
-            text-indent: 1em;
             text-align: left;
+            padding-left: 1rem;
         }
 
         .number-header {
@@ -123,14 +136,12 @@
         }
 
         td {
-            padding-left: 1em;
-            padding-right: 1em;
+            padding: 0.2rem 1rem;
         };
 
         td:first-child {
             padding-left: 2em;
             padding-right: 0;
-            text-align: right;
         };
 
         td:last-child {
@@ -169,10 +180,13 @@
             }
 
             input {
-                width: 12px;
                 margin: 0;
-                vertical-align: middle;
+                vertical-align: sub;
             }
+
+            input[type="checkbox"]::before {
+                color: white;
+            }            
         }
 
         .text-data {
