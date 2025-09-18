@@ -41,7 +41,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         let isMeleeAttack = isMeleeWeapon || isThrownWeapon;
         let isRangedAttack = isRangedWeapon || isThrownWeapon;
         if (actorToken && targetToken) {
-            distance = canvas.grid.measurePath([actorToken, targetToken]).distance;
+            distance = computeTokenDistance(actorToken, targetToken);
             isInMeleeRange = distance <= (isMeleeWeapon ? this.weapon.system.calculatedRange : (isLongWeapon ? 4 : 2));
             isMeleeAttack = isMeleeWeapon || isThrownWeapon && isInMeleeRange;
             isRangedAttack = !isMeleeAttack;
@@ -198,7 +198,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             const targetToken = this.options.targets?.length > 0 ? this.options.targets[0].document : null;
             let distance = 0;
             if (actorToken && targetToken) {
-                distance = canvas.grid.measurePath([actorToken, targetToken]).distance;
+                distance = computeTokenDistance(actorToken, targetToken);
             }
 
             if (distance > 2 * this.weapon.system.calculatedRange) {
@@ -413,4 +413,34 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             }
         }
     }
+}
+
+/**
+ * Computes the shortest distance in grid units required for one token to enter the bounding box of another, taking token size into consideration.
+ * Returns zero if tokens already overlap partially or completely.
+ * In game terms this can represent attack distance, where attack is a "step" into the nearest grid cell of the target token.
+ * Works only for square grids.
+ *
+ * @param {foundry.documents.TokenDocument} token1 - First token {x, y, width, height}
+ * @param {foundry.documents.TokenDocument} token2 - Second token {x, y, width, height}
+ * @returns {number} Distance in grid units
+ */
+function computeTokenDistance(token1, token2) {
+  const r1 = { left: token1.x, right: token1.x + token1.width * canvas.grid.size, top: token1.y, bottom: token1.y + token1.height * canvas.grid.size };
+  const r2 = { left: token2.x, right: token2.x + token2.width * canvas.grid.size, top: token2.y, bottom: token2.y + token2.height * canvas.grid.size };
+
+  // Return zero distance for full or partial overlap
+  const horizontalOverlap = Math.min(r1.right, r2.right) - Math.max(r1.left, r2.left);
+  const verticalOverlap   = Math.min(r1.bottom, r2.bottom) - Math.max(r1.top, r2.top);
+  if (horizontalOverlap > 0 && verticalOverlap > 0) {
+    return 0;
+  }
+
+  // Calculate horizontal and vertical distance
+  const dx = r1.right < r2.left ? r2.left - r1.right : r1.left - r2.right;
+  const dy = r1.bottom < r2.top ? r2.top - r1.bottom : r1.top - r2.bottom;
+
+  // Chebyshev (chess board) distance plus one.
+  // Plus one represents the extra step to enter the token space.
+  return (Math.max(dx, dy) / canvas.grid.size + 1) * canvas.grid.distance;
 }
