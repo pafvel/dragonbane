@@ -217,7 +217,7 @@
             "skills": "Skills"
         },
         "roll": {
-            "dragon": "succedeed with a Dragon!",
+            "dragon": "succeeded with a Dragon!",
             "demon": "failed with a Demon!",
             "success": "succeeded.",
             "failure": "failed.",
@@ -604,9 +604,9 @@
             "macroMultipleItems": "Multiple items of the same type ({type}) and name ({item}). The first found item will be used by the macro.",
             "missingMagicSchool": "Missing magic school for {spell}.",
             "noTreasureTable": "Missing treasure table.",
-            "noMeleeMishapTable": "Missing the misphap table for melee weapons.",
-            "noRangedMishapTable": "Missing the misphap table for ranged weapons.",
-            "noMagicMishapTable": "Missing the magic misphap table.",
+            "noMeleeMishapTable": "Missing the mishap table for melee weapons.",
+            "noRangedMishapTable": "Missing the mishap table for ranged weapons.",
+            "noMagicMishapTable": "Missing the magic mishap table.",
             "maxWeaponsEquipped": "Maximum 3 equipped weapons.",
             "noSkillsInCompendium": "The registered core module did not contain any base skills. The core module may be damaged and should be re-installed. Trying to find skills in the world instead."
         }
