@@ -65,8 +65,8 @@ export default class DoDWeaponTest extends DoDSkillTest  {
 
             // Determine available attack types based on range and weapon
             isInMeleeRange = distance <= (isMeleeWeapon ? this.weapon.calculateRange() : (isLongWeapon ? 4 : 2));
-            isMeleeAttack = isMeleeWeapon || isThrownWeapon && isInMeleeRange;
-            isRangedAttack = !isMeleeAttack;
+            isMeleeAttack = isMeleeWeapon || isThrownWeapon;
+            isRangedAttack = isRangedWeapon || isThrownWeapon;
         }
 
         if(isRangedWeapon) {
@@ -90,7 +90,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         if(isMeleeAttack && hasDisarmAttack) {
             pushAction("disarm");
         }
-        if(isThrownWeapon && isRangedAttack) {
+        if(isThrownWeapon) {
             pushAction("throw");
         }
         if(isMeleeAttack && hasParry) {
@@ -98,12 +98,16 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         }
 
         if (actions.length > 0) {
+            let defaultIndex = 0;
             if (isShield) {
                 // Default action for shields is parry
-                actions[actions.length - 1].checked = true;    
-            } else {
-                actions[0].checked = true;
+                defaultIndex = actions.findIndex(a => a.id === "parry");
+            } else if (isThrownWeapon && !isInMeleeRange) {
+                // Default action for thrown weapons at range is throw
+                defaultIndex = actions.findIndex(a => a.id === "throw");
             }
+            if (defaultIndex < 0) defaultIndex = 0;
+            actions[defaultIndex].checked = true;
         }
 
         if (this.actor.type === "character" && this.weapon.requiredStr > this.actor.system.attributes.str.value) {
