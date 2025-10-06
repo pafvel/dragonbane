@@ -416,41 +416,18 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
 
         if (advancedSkillsCount < maxTrainedSkills && (skillValue === baseChance || skillValue === 0)) {
 
-            // result: 0 -> Cancel
-            // result: 1 -> Mark
-            // result: 2 -> Train
-            const result = await new Promise(
-                resolve => {
-                    const data = {
-                        title: game.i18n.localize("DoD.ui.dialog.trainSkillTitle"),
-                        content: game.i18n.format("DoD.ui.dialog.trainSkillContent", {skill: skillItem.name}),
-                        buttons: {
-                            train: {
-                                icon: '<i class="fas fa-check"></i>',
-                                label: game.i18n.localize("DoD.ui.dialog.trainLabel"),
-                                callback: () => resolve(2)
-                            },
-                            mark: {
-                                icon: '<i class="fas fa-times"></i>',
-                                label: game.i18n.localize("DoD.ui.dialog.markLabel"),
-                                callback: _html => resolve(1)
-                            }
-                        },
-                        default: "train",
-                        close: () => resolve(0)
-                    };
-                    new Dialog(data, null).render(true);
-                }
-            );
-            switch (result) {
-                case 0: // Cancel
-                    return;
-                case 1: // Mark
-                    await skillItem.update({ "system.advance": true });
-                    return;
-                case 2: // Train
-                    await skillItem.update({ "system.value": baseChance * 2 });
-                    return;
+            const result = await foundry.applications.api.DialogV2.confirm({
+                window: { title: game.i18n.localize("DoD.ui.dialog.trainSkillTitle") },
+                content: game.i18n.format("DoD.ui.dialog.trainSkillContent", {skill: skillItem.name}),
+                yes: { label: game.i18n.localize("DoD.ui.dialog.trainLabel") },
+                no:  { label: game.i18n.localize("DoD.ui.dialog.markLabel") },
+            });
+
+            if (result === true) { // Train
+                await skillItem.update({ "system.value": baseChance * 2 });
+            } else if (result === false) { // Mark
+                await skillItem.update({ "system.advance": true });
+            } else { // Cancelled
             }
         } else {
             await skillItem.update({ "system.advance": true });

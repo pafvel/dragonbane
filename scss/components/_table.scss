@@ -150,8 +150,20 @@
 
         select {
             border: 0;
-        };
+            border-color: transparent;
+            background-color: rgba(0, 0, 0, 0.05);
+            color: black;
+            line-height: unset;
+            outline: 0;
+            height: auto;
+            width: auto;                
 
+            &:focus {
+                box-shadow: 0 0 5px var(--color-shadow-primary);
+                transition: none;
+            }
+        }
+        
         .thumbnail-data {
             padding: 0;            
             width: 36px;
@@ -231,12 +243,28 @@
 
         input:invalid {
             color: var(--dod-color-negative-effect);
-        }    
+        }
 
         input:valid {
             color: var(--dod-color-journal-text);
-        }    
-            
+        }
+
+        select {
+            border: 0;
+            border-color: transparent;
+            background-color: rgba(0, 0, 0, 0.05);
+            color: black;
+            line-height: unset;
+            outline: 0;
+            height: auto;
+            width: auto;                
+
+            &:focus {
+                box-shadow: 0 0 5px var(--color-shadow-primary);
+                transition: none;
+            }
+        }
+
         th {
             text-align: center;
             padding-left: 12px;
@@ -286,11 +314,6 @@
             td:last-child {
                 padding-right: 20px;
             }
-
-            select {
-                border: 0;
-            }
-
         }
     }
 }

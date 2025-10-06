@@ -159,76 +159,41 @@ export default class DoDTest {
         }
 
         const template = "systems/dragonbane/templates/partials/roll-dialog.hbs";
-        const html = await DoD_Utility.renderTemplate(template, this.dialogData);
+        const content = await DoD_Utility.renderTemplate(template, this.dialogData);
 
-        return new Promise(
-            resolve => {
-                const data = {
-                    actor: this.actor,
-                    title: title,
-                    content: html,
-                    buttons: {
-                        ok: {
-                            label: label,
-                            callback: html => resolve(this.processDialogOptions(html[0].querySelector("form")))
-                        }
-                        /*
-                        ,
-                        cancel: {
-                            label: "Cancel",
-                            callback: html => resolve({cancelled: true})
-                        }
-                        */
-                    },
-                    default: "ok",
-                    close: () => resolve({cancelled: true})
-                };
-                new Dialog(data, null).render(true);
-            }
-        );
+        const values = await foundry.applications.api.DialogV2.input({
+            window: { title },
+            content: content,
+            ok: { label }
+        });
+
+        if (values === null) return { cancelled: true };  // user closed the dialog
+
+        const expanded = foundry.utils.expandObject(values);
+        return this.processDialogOptions(expanded);
     }
 
-    processDialogOptions(form) {
-        let banes = [];
-        let boons = [];
-        let extraBanes = 0;
-        let extraBoons = 0;
-
-        // Process banes
-        let elements = form.getElementsByClassName("banes");
-        let element = elements ? elements[0] : null;
-        let inputs = element?.getElementsByTagName("input");
-        for (let input of inputs) {
-            if (input.type === "checkbox" && input.checked) {
-                banes.push(input.name);
-            }
-        }
-        // Process extra banes
-        elements = form.getElementsByClassName("extraBanes");
-        element = elements ? elements[0] : null;
-        extraBanes = element ? Number(element.value) : 0;
-        extraBanes = isNaN(extraBanes) ? 0 : extraBanes;
+    processDialogOptions(input) {
 
         // Process boons
-        elements = form.getElementsByClassName("boons");
-        element = elements ? elements[0] : null;
-        inputs = element?.getElementsByTagName("input");
-        for (let input of inputs) {
-            if (input.type === "checkbox" && input.checked) {
-                boons.push(input.name);
-            }
-        }
+        const boons = Object.entries(input.boons ?? {})
+            .filter(([_, value]) => value) // keep only checked
+            .map(([key, _]) => key); // get the names
         // Process extra boons
-        elements = form.getElementsByClassName("extraBoons");
-        element = elements ? elements[0] : null;
-        extraBoons = element ? Number(element.value) : 0;
-        extraBoons = isNaN(extraBoons) ? 0 : extraBoons;
+        const extraBoons = Number(input.extraBoons);
+
+        // Process banes
+        const banes = Object.entries(input.banes ?? {})
+            .filter(([_, value]) => value) // keep only checked
+            .map(([key, _]) => key); // get the names
+        // Process extra banes
+        const extraBanes = Number(input.extraBanes);
 
         return {
-            banes: banes,
-            boons: boons,
-            extraBanes: extraBanes,
-            extraBoons: extraBoons
+            banes,
+            boons,
+            extraBanes,
+            extraBoons
         }
     }
 

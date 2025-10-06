@@ -56,24 +56,6 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
         }
     }
 
-    #processSelectMonsterAttack(form, table) {
-        let elements = form.getElementsByClassName("selectMonsterAttack");
-        let element = elements.length > 0 ? elements[0] : null;
-        if (element) {
-            const value = parseInt(element.value);
-            if (value > 0) {
-                for (let tableResult of table.results) {
-                    if (value === tableResult.range[0]) {
-                        DoD_Utility.monsterAttack(this.actor, table, tableResult);
-                        return;
-                    }
-                }
-            } else {
-                DoD_Utility.monsterAttack(this.actor, table);
-            }
-        }
-    }
-
     async _onMonsterAttack(event) {
         event.preventDefault();
         event.currentTarget?.blur();
@@ -90,8 +72,11 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
                 skipDialog = !skipDialog;
             }
             if (skipDialog) {
+                // Random attack
                 return DoD_Utility.monsterAttack(this.actor, table);
             }
+
+            // Prepare dialog data
             let dialogData = { };
             dialogData.attacks = [];
             for (let result of table.results) {
@@ -123,35 +108,29 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
                 dialogData.attacks.push(attack);
             }
 
+            // Render the monster attack dialog
             const template = "systems/dragonbane/templates/partials/monster-attack-dialog.hbs";
-            const html = await DoD_Utility.renderTemplate(template, dialogData);
-            const labelOk = game.i18n.localize("DoD.ui.dialog.labelOk");
-            const labelCancel = game.i18n.localize("DoD.ui.dialog.labelCancel");
-
-            return await new Promise(
-                resolve => {
-                    const data = {
-                        item: this.item,
-                        title: game.i18n.localize("DoD.ui.dialog.monsterAttackTitle"),
-                        content: html,
-                        buttons: {
-                            ok: {
-                                label: labelOk,
-                                callback: html => resolve(this.#processSelectMonsterAttack(html[0].querySelector("form"), table))
-                                //callback: html => resolve({cancelled: false})
-                            },
-                            cancel: {
-                                label: labelCancel,
-                                callback: _html => resolve({cancelled: true})
-                            }
-                        },
-                        default: "ok",
-                        close: () => resolve({cancelled: true})
-                    };
-                    new Dialog(data, null).render(true);
+            const content = await DoD_Utility.renderTemplate(template, dialogData);
+            const input = await foundry.applications.api.DialogV2.input({
+                window: { title: game.i18n.localize("DoD.ui.dialog.monsterAttackTitle") },
+                content: content
+            });
+            if (input === null) return; // dialog was closed
+            
+            // Process selection
+            const selected = Number(input.selectMonsterAttack);
+            if (selected > 0) {
+                for (let tableResult of table.results) {
+                    if (selected === tableResult.range[0]) {
+                        // Specified attack
+                        return DoD_Utility.monsterAttack(this.actor, table, tableResult);
+                    }
                 }
-            );
-        } else { // right click
+            } else {
+                // Random attack
+                return DoD_Utility.monsterAttack(this.actor, table);
+            }
+        } else { // right click -> edit table
             return DoD_Utility.monsterAttackTable(this.actor, table);
         }
     }

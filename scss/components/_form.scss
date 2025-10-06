@@ -3,7 +3,6 @@
 .system-dragonbane {
 
     .standard-form {
-        @extend %dialog-background;
 
         .form-footer button  {
             --button-focus-outline-color: var(--color-border-highlight);

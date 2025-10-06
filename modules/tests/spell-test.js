@@ -44,16 +44,10 @@ export default class DoDSpellTest extends DoDSkillTest  {
         return options;
     }
 
-    processDialogOptions(form) {
-        let options = super.processDialogOptions(form);
-
-        // Process power level
-        const elements = form.getElementsByClassName("power-level");
-        const element = elements ? elements[0] : null;
-        if (element) {
-            options.powerLevel = Number(element.value);
-        }
-        return options;
+    processDialogOptions(input) {
+        const options = super.processDialogOptions(input);
+        const powerLevel = Number(input.powerLevel);
+        return { ...options, powerLevel };
     }
 
     updatePreRollData() {

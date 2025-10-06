@@ -175,7 +175,7 @@
   background-clip: border-box;
 }
 
-.system-dragonbane .standard-form, .system-dragonbane .dialog .window-content {
+.system-dragonbane .dialog .window-content {
   background: var(--dod-dialog-background);
   background-size: cover;
   background-position: center;
@@ -275,6 +275,9 @@
 .system-dragonbane img[data-action=editImage] {
   cursor: var(--cursor-pointer);
 }
+.system-dragonbane select {
+  width: auto;
+}
 
 .system-dragonbane .comma-list a::after {
   content: ", ";
@@ -361,6 +364,9 @@
   margin: 4px 5px;
 }
 
+.system-dragonbane .dialog .dialog-content {
+  display: block;
+}
 .system-dragonbane .app.dialog .dialog-buttons .dialog-button, .system-dragonbane .sheet-footer button {
   --button-focus-outline-color: var(--color-border-highlight);
 }
@@ -704,6 +710,17 @@
 }
 .system-dragonbane .sheet-table-data select {
   border: 0;
+  border-color: transparent;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: black;
+  line-height: unset;
+  outline: 0;
+  height: auto;
+  width: auto;
+}
+.system-dragonbane .sheet-table-data select:focus {
+  box-shadow: 0 0 5px var(--color-shadow-primary);
+  transition: none;
 }
 .system-dragonbane .sheet-table-data .thumbnail-data {
   padding: 0;
@@ -775,6 +792,20 @@
 .system-dragonbane .simple-table input:valid {
   color: var(--dod-color-journal-text);
 }
+.system-dragonbane .simple-table select {
+  border: 0;
+  border-color: transparent;
+  background-color: rgba(0, 0, 0, 0.05);
+  color: black;
+  line-height: unset;
+  outline: 0;
+  height: auto;
+  width: auto;
+}
+.system-dragonbane .simple-table select:focus {
+  box-shadow: 0 0 5px var(--color-shadow-primary);
+  transition: none;
+}
 .system-dragonbane .simple-table th {
   text-align: center;
   padding-left: 12px;
@@ -815,9 +846,6 @@
 }
 .system-dragonbane .simple-table tr:nth-child(1n+2) td:last-child {
   padding-right: 20px;
-}
-.system-dragonbane .simple-table tr:nth-child(1n+2) select {
-  border: 0;
 }
 
 .system-dragonbane .text-box {

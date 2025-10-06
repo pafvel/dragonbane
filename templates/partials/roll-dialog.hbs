@@ -9,7 +9,7 @@
             </tr>
             {{#each boons as |boon|}}
             <tr class="sheet-table-data">
-                <td><input type="checkbox" name="{{boon.source}}" {{checked boon.value}}/></td>
+                <td><input type="checkbox" name="boons.{{boon.source}}" {{checked boon.value}}/></td>
                 <td class="text-data">{{boon.source}}</td>
             </tr>
             {{/each}}
@@ -40,14 +40,14 @@
         </table>
 
         {{!-- Banes --}}
-        <table class="sheet-table banes">
+        <table class="sheet-table banes" name="banes">
             <tr class="sheet-table-header">
                 <th></th>
                 <th class="text-header">{{localize "DoD.ui.dialog.banes"}}</th>
             </tr>
             {{#each banes as |bane|}}
             <tr class="sheet-table-data">
-                <td><input type="checkbox" name="{{bane.source}}" {{checked bane.value}}/></td>
+                <td><input type="checkbox" name="banes.{{bane.source}}" {{checked bane.value}}/></td>
                 <td class="text-data">{{bane.source}}</td>
             </tr>
             {{/each}}
@@ -106,7 +106,7 @@
         <div class="weapon-action">
             <div class="flexrow">
                 {{#each actions as |action|}}
-                <div class="flex-nowrap">
+                <div class="flex-nowrap" style="align-items: center; padding-top: 0">
                     {{#if action.checked}}
                     <input type="radio" id="{{action.id}}" name="action" value="{{action.id}}" checked>
                     {{else}}
