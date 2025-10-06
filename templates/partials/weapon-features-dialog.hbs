@@ -8,8 +8,13 @@
             </tr>
             {{#each features as |feature|}}
             <tr class="sheet-table-data">
-                <td class="checkbox-data"><input type="checkbox" id="{{feature.id}}" name="{{feature.name}}" {{checked feature.value}}/></td>
-                <td class="text-data" title="{{localize feature.tooltip}}">{{localize feature.name}}</td>
+                <td></td>
+                <td>
+                    <label title="{{localize feature.tooltip}}">
+                        <input type="checkbox"  id="{{feature.id}}" name="{{feature.name}}" {{checked feature.value}}>
+                        {{localize feature.name}}
+                    </label>
+                </td>
             </tr>
             {{/each}}
         </table>

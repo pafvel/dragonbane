@@ -201,49 +201,19 @@ export default class DoDItemSheet extends BaseItemSheet {
         let dialogData = {features: featureData};
 
         const template = "systems/dragonbane/templates/partials/weapon-features-dialog.hbs";
-        const html = await DoD_Utility.renderTemplate(template, dialogData);
-        const labelOk = game.i18n.localize("DoD.ui.dialog.labelOk");
-        //const labelCancel = game.i18n.localize("DoD.ui.dialog.labelCancel");
+        const content = await DoD_Utility.renderTemplate(template, dialogData);
 
+        const inputs = await foundry.applications.api.DialogV2.input({
+            window: { title: game.i18n.localize("DoD.ui.dialog.weaponFeatures") },
+            content: content,
+        });
+        if (!inputs) return; // closed
 
-        return new Promise(
-            resolve => {
-                const data = {
-                    item: this.item,
-                    title: game.i18n.localize("DoD.ui.dialog.weaponFeatures"),
-                    content: html,
-                    buttons: {
-                        ok: {
-                            label: labelOk,
-                            callback: html => resolve(this._processWeaponFeatures(html[0].querySelector("form")))
-                        },
-                        /*
-                        cancel: {
-                            label: labelCancel,
-                            callback: html => resolve({cancelled: true})
-                        }
-                        */
-                    },
-                    default: "ok",
-                    close: () => resolve({cancelled: true})
-                };
-                new Dialog(data, null).render(true);
-            }
-        );
-    }
-
-    _processWeaponFeatures(form) {
-        let elements = form.getElementsByClassName("weapon-features");
-        let element = elements ? elements[0] : null;
-        let inputs = element?.getElementsByTagName("input");
-        let features = [];
-
-        for (let input of inputs) {
-            if (input.type === "checkbox" && input.checked) {
-                features.push(input.id);
-            }
-        }
-        this.item.update({ ["system.features"]: features});
+        // Selected feature ids -> input keys with value=true
+        const selected = Object.entries(inputs)
+            .filter(([, v]) => !!v) // keep only checked features
+            .map(([id]) => id); // extract the ids
+        await this.item.update({ "system.features": selected });        
     }
 
     async _onEditArmorBonuses(event) {
@@ -267,49 +237,19 @@ export default class DoDItemSheet extends BaseItemSheet {
         let dialogData = {bonuses: damageData};
 
         const template = "systems/dragonbane/templates/partials/armor-bonuses-dialog.hbs";
-        const html = await DoD_Utility.renderTemplate(template, dialogData);
-        const labelOk = game.i18n.localize("DoD.ui.dialog.labelOk");
-        //const labelCancel = game.i18n.localize("DoD.ui.dialog.labelCancel");
+        const content = await DoD_Utility.renderTemplate(template, dialogData);
 
+        const inputs = await foundry.applications.api.DialogV2.input({
+            window: { title: game.i18n.localize("DoD.armor.bonuses") },
+            content: content,
+        });
+        if (!inputs) return; // closed
 
-        return new Promise(
-            resolve => {
-                const data = {
-                    item: this.item,
-                    title: game.i18n.localize("DoD.armor.bonuses"),
-                    content: html,
-                    buttons: {
-                        ok: {
-                            label: labelOk,
-                            callback: html => resolve(this._processDamageBonuses(html[0].querySelector("form")))
-                        },
-                        /*
-                        cancel: {
-                            label: labelCancel,
-                            callback: html => resolve({cancelled: true})
-                        }
-                        */
-                    },
-                    default: "ok",
-                    close: () => resolve({cancelled: true})
-                };
-                new Dialog(data, null).render(true);
-            }
-        );
-    }
-
-    _processDamageBonuses(form) {
-        let elements = form.getElementsByClassName("armor-bonuses");
-        let element = elements ? elements[0] : null;
-        let inputs = element?.getElementsByTagName("input");
-        let bonuses = [];
-
-        for (let input of inputs) {
-            if (input.type === "checkbox" && input.checked) {
-                bonuses.push(input.id);
-            }
-        }
-        this.item.update({ ["system.bonuses"]: bonuses});
+        // Selected bonus ids -> input keys with value=true
+        const selected = Object.entries(inputs)
+            .filter(([, v]) => !!v) // keep only checked bonuses
+            .map(([id]) => id); // extract the ids
+        await this.item.update({ "system.bonuses": selected });        
     }
 
     async _onDrop(event) {

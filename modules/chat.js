@@ -593,29 +593,12 @@ export async function inflictDamageMessage(damageData) {
         const actorToken = canvas.scene.tokens.find(t => t.actor.uuid === damageData.actor.uuid);
         const targetToken = canvas.scene.tokens.find(t => t.actor.uuid === damageData.target.uuid);
         if (actorToken && !actorToken.hasStatusEffect("prone") && targetToken && targetToken.hasStatusEffect("prone")) {
-            const addDamage = await new Promise(
-                resolve => {
-                    const data = {
-                        title: game.i18n.localize("DoD.ui.dialog.addMeleeDamageVsProneTitle"),
-                        content: game.i18n.format("DoD.ui.dialog.addMeleeDamageVsProneMessage", {target: targetToken.name}),
-                        buttons: {
-                            ok: {
-                                icon: '<i class="fas fa-check"></i>',
-                                label: game.i18n.localize("Yes"),
-                                callback: () => resolve(true)
-                            },
-                            cancel: {
-                                icon: '<i class="fas fa-times"></i>',
-                                label: game.i18n.localize("No"),
-                                callback: _html => resolve(false)
-                            }
-                        },
-                        default: "cancel",
-                        close: () => resolve(false)
-                    };
-                    new Dialog(data, null).render(true);
-                }
-            );
+
+            const addDamage = await foundry.applications.api.DialogV2.confirm({
+                window: { title: game.i18n.localize("DoD.ui.dialog.addMeleeDamageVsProneTitle") },
+                content: game.i18n.format("DoD.ui.dialog.addMeleeDamageVsProneMessage", {target: targetToken.name}),
+            });
+
             if (addDamage) {
                 formula += "+1D6";
             }

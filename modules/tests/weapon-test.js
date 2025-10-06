@@ -178,27 +178,13 @@ export default class DoDWeaponTest extends DoDSkillTest  {
 
         // User may cancel if the weapon is broken
         if (this.weapon.system.broken) {
-            const brokenOpts = await new Promise(resolve => {
-            new Dialog({
-                title: game.i18n.localize("DoD.ui.dialog.brokenWeaponTitle"),
+            const confirmAction = await foundry.applications.api.DialogV2.confirm({
+                window:  { title: game.i18n.localize("DoD.ui.dialog.brokenWeaponTitle") },
                 content: game.i18n.localize("DoD.ui.dialog.brokenWeaponContent"),
-                buttons: {
-                ok: {
-                    icon: '<i class="fas fa-check"></i>',
-                    label: game.i18n.localize("DoD.ui.dialog.performAction"),
-                    callback: () => resolve({ cancelled: false })
-                },
-                cancel: {
-                    icon: '<i class="fas fa-times"></i>',
-                    label: game.i18n.localize("DoD.ui.dialog.cancelAction"),
-                    callback: () => resolve({ cancelled: true })
-                }
-                },
-                default: "cancel",
-                close: () => resolve({ cancelled: true })
-            }).render(true);
-            });
-            if (brokenOpts.cancelled) return { cancelled: true };
+                yes: { label: game.i18n.localize("DoD.ui.dialog.performAction") },
+                no:  { label: game.i18n.localize("DoD.ui.dialog.cancelAction") }
+            });            
+            if (!confirmAction) return { cancelled: true };
         }
         // User may cancel if the distance to target is greater than 2x max range
         if (this.weapon.isRangedWeapon || this.weapon.hasWeaponFeature("thrown"))
@@ -211,27 +197,13 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             }
 
             if (distance > 2 * this.weapon.calculateRange()) {
-                const rangedOpts = await new Promise(resolve => {
-                new Dialog({
-                    title: game.i18n.localize("DoD.ui.dialog.longRangeTitle"),
+                const confirmRangedAction = await foundry.applications.api.DialogV2.confirm({
+                    window:  { title: game.i18n.localize("DoD.ui.dialog.longRangeTitle") },
                     content: game.i18n.localize("DoD.ui.dialog.longRangeContent"),
-                    buttons: {
-                    ok: {
-                        icon: '<i class="fas fa-check"></i>',
-                        label: game.i18n.localize("DoD.ui.dialog.performAction"),
-                        callback: () => resolve({ cancelled: false })
-                    },
-                    cancel: {
-                        icon: '<i class="fas fa-times"></i>',
-                        label: game.i18n.localize("DoD.ui.dialog.cancelAction"),
-                        callback: () => resolve({ cancelled: true })
-                    }
-                    },
-                    default: "cancel",
-                    close: () => resolve({ cancelled: true })
-                }).render(true);
-                });
-                if (rangedOpts.cancelled) return { cancelled: true };
+                    yes: { label: game.i18n.localize("DoD.ui.dialog.performAction") },
+                    no:  { label: game.i18n.localize("DoD.ui.dialog.cancelAction") }
+                });            
+                if (!confirmRangedAction) return { cancelled: true };
             }
         }
         // Finally, ask for the actual roll options
@@ -267,53 +239,25 @@ export default class DoDWeaponTest extends DoDSkillTest  {
     }
 
 
-    processDialogOptions(form) {
-        let options = super.processDialogOptions(form);
+    processDialogOptions(input) {
+        const options = super.processDialogOptions(input);
 
-        // Process input action
-        let elements = form.getElementsByClassName("weapon-action");
-        let element = elements ? elements[0] : null;
-        if (element) {
-            let inputs = element.getElementsByTagName("input");
-            for (let input of inputs) {
-                if (input.checked) {
-                    options.action = input.id;
-                    break;
-                }
-            }
-        }
-        if (options.action === "weakpoint") {
+        // Process inputs
+        const action = String(input.action);
+        const extraDamage = String(input.extraDamage).trim();
+        const enchantedWeapon = Number(input.enchantedWeapon);
+
+        // Add automatic banes and boons
+        if (action === "weakpoint") {
             options.banes.push(game.i18n.localize("DoD.attackTypes.weakpoint"));
         }
-
-        if (options.action === "topple" && this.weapon.hasWeaponFeature("toppling")) {
+        if (action === "topple" && this.weapon.hasWeaponFeature("toppling")) {
             options.boons.push(game.i18n.localize("DoD.attackTypes.topple"));
         }
-        ;
 
-        // Process extra damage
-        elements = form.getElementsByClassName("extra-damage");
-        element = elements ? elements[0] : null;
-        if (element && element.value.length > 0) {
-            if (element.validity.valid) {
-                options.extraDamage = element.value;
-            } else {
-                DoD_Utility.WARNING("DoD.WARNING.cannotEvaluateFormula");
-            }
-        }
-
-        // Process enchanted weapon
-        elements = form.getElementsByClassName("enchanted-weapon");
-        element = elements ? elements[0] : null;
-        if (element) {
-            const value = Number(element.value);
-            if (value > 0) {
-                options.enchantedWeapon = value;
-            }
-        }
-
-
-        return options;
+        // TODO: Validate extra damage formula
+    
+        return { ...options, action, extraDamage, enchantedWeapon };
     }
 
     updatePreRollData() {

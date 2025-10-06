@@ -7,6 +7,10 @@
         .window-content {
             @extend %dialog-background;
         }
+        
+        .dialog-content {
+            display: block
+        }
     }
 
     .app.dialog .dialog-buttons .dialog-button, .sheet-footer button  {

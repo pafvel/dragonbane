@@ -73,35 +73,14 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
     }
 
     async _itemDeleteDialog(item, flavor = "") {
-        let content = flavor ? "<p>" + flavor + "</p>" : "";
-        content += game.i18n.format("DoD.ui.dialog.deleteItemContent", {item: item.name});
-
+        const content = (flavor ? "<p>" + flavor + "</p>" : "") + game.i18n.format("DoD.ui.dialog.deleteItemContent", {item: item.name});
         const itemType = item.documentName === "ActiveEffect" ? game.i18n.localize("DoD.ui.character-sheet.effect") : game.i18n.localize("TYPES.Item." + item.type);
+        const title = game.i18n.format("DoD.ui.dialog.deleteItemTitle", {item: itemType});
 
-        return await new Promise(
-            resolve => {
-                const data = {
-                    title: game.i18n.format("DoD.ui.dialog.deleteItemTitle",
-                        {item: itemType}),
-                    content: content,
-                    buttons: {
-                        ok: {
-                            icon: '<i class="fas fa-check"></i>',
-                            label: game.i18n.localize("Yes"),
-                            callback: () => resolve(true)
-                        },
-                        cancel: {
-                            icon: '<i class="fas fa-times"></i>',
-                            label: game.i18n.localize("No"),
-                            callback: _html => resolve(false)
-                        }
-                    },
-                    default: "cancel",
-                    close: () => resolve(false)
-                };
-                new Dialog(data, null).render(true);
-            }
-        );
+        return await foundry.applications.api.DialogV2.confirm({
+            window: { title: title },
+            content: content,
+        });
     }
 
     _formatActiveEffectProperties() {
@@ -742,29 +721,12 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                     }
                     test = new DoDSpellTest(this.actor, item, options);
                 } else {
-                    const use = await new Promise(
-                        resolve => {
-                            const data = {
-                                title: game.i18n.localize("DoD.ui.dialog.castMagicTrickTitle"),
-                                content: game.i18n.format("DoD.ui.dialog.castMagicTrickContent", {spell: item.name}),
-                                buttons: {
-                                    ok: {
-                                        icon: '<i class="fas fa-check"></i>',
-                                        label: game.i18n.localize("Yes"),
-                                        callback: () => resolve(true)
-                                    },
-                                    cancel: {
-                                        icon: '<i class="fas fa-times"></i>',
-                                        label: game.i18n.localize("No"),
-                                        callback: _html => resolve(false)
-                                    }
-                                },
-                                default: "cancel",
-                                close: () => resolve(false)
-                            };
-                            new Dialog(data, null).render(true);
-                        }
-                    );
+
+                    const use = await foundry.applications.api.DialogV2.confirm({
+                        window: { title: game.i18n.localize("DoD.ui.dialog.castMagicTrickTitle") },
+                        content: game.i18n.format("DoD.ui.dialog.castMagicTrickContent", {spell: item.name}),
+                    });
+
                     if (use) {
                         if (this.actor.type !== "monster" && this.actor.system.willPoints.value < 1) {
                             DoD_Utility.WARNING("DoD.WARNING.notEnoughWPForSpell");
