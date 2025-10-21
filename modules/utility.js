@@ -310,38 +310,46 @@ export default class DoD_Utility {
         await test.roll();
     }
 
-    static async drawTreasureCards(number) {
+     static async drawTreasureCards(number) {
 
         const tableId = game.settings.get("dragonbane", "treasureTable");
         const table = DoD_Utility.findTable("RollTable." + tableId);
+        const count = table ? DoD_Utility.clamp(number, 1, table.results.size) : 0;
 
-        if (!table) {
+        if (!table || count === 0) {
             DoD_Utility.WARNING(game.i18n.localize("DoD.WARNING.noTreasureTable"));
             return;
         }
 
-        const count = DoD_Utility.clamp(number, 1, table.results.size);
+        const results = [];
+        const rolls = [];
 
-        // RollTable.drawMany doesn't work with nested tables, using this as workaround
-        async function drawMany(t, cnt) {
-            const results = [];
-            const rolls = [];
+        // Force replacement to avoid modifying the table
+        const replacement = table.replacement
+        table.replacement = true;
 
-            // Draw one at a time
-            for (let i = 0; i < cnt; ++i) {
-                const draw = await t.draw({displayChat: false});
+        // Draw one at a time
+        let reRolls = 100; // re-roll duplicates up to this many times
+        while (results.length < count) {
+            const draw = await table.draw({displayChat: false});
+            // add results if they are unique or we have run out of re-rolls
+            if (results.findIndex(r => r.id === draw.results[0].id) === -1 || reRolls === 0) {
                 rolls.push(draw.roll);
                 results.push(draw.results[0]);
+            } else {
+                --reRolls;
             }
-            // Construct a Roll object using the constructed pool
-            const pool = foundry.dice.terms.PoolTerm.fromRolls(rolls);
-            const roll = Roll.defaultImplementation.fromTerms([pool]);
+        }
 
-            // Display results and reset table
-            await t.toMessage(results, {roll: roll});
-            await t.resetResults();
-        };
-        drawMany(table, count);
+        // Restore replacement
+        table.replacement = replacement;
+
+        // Construct a Roll object using the constructed pool
+        const pool = foundry.dice.terms.PoolTerm.fromRolls(rolls);
+        const roll = Roll.defaultImplementation.fromTerms([pool]);
+
+        // Display results
+        await table.toMessage(results, {roll: roll});
     }
 
     static getViewDamagePermission() {
