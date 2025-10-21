@@ -40,28 +40,11 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         let isInMeleeRange = true;
         let isMeleeAttack = isMeleeWeapon || isThrownWeapon;
         let isRangedAttack = isRangedWeapon || isThrownWeapon;
+       
         if (actorToken && targetToken) {
+
             // Calculate separation between actor and target tokens
-            // by displacing center points to account for token size
-            let actorCenter = actorToken.getCenterPoint();
-            const actorDisplacement = (actorToken.width * 0.5 - 0.5) * canvas.scene.dimensions.size;
-            let targetCenter = targetToken.getCenterPoint();
-            const targetDisplacement = (targetToken.width * 0.5 - 0.5) * canvas.scene.dimensions.size;
-            if (actorCenter.x < targetCenter.x) {
-                actorCenter.x += actorDisplacement;
-                targetCenter.x -= targetDisplacement;
-            } else if (actorCenter.x > targetCenter.x) {
-                actorCenter.x -= actorDisplacement;
-                targetCenter.x += targetDisplacement;
-            }
-            if (actorCenter.y < targetCenter.y) {
-                actorCenter.y += actorDisplacement;
-                targetCenter.y -= targetDisplacement;
-            } else if (actorCenter.y > targetCenter.y) {
-                actorCenter.y -= actorDisplacement;
-                targetCenter.y += targetDisplacement;
-            }
-            distance = Math.round(canvas.grid.measurePath([actorCenter, targetCenter]).distance);
+            distance = DoD_Utility.calculateDistanceBetweenTokens(actorToken, targetToken);
 
             // Determine available attack types based on range and weapon
             isInMeleeRange = distance <= (isMeleeWeapon ? this.weapon.calculateRange() : (isLongWeapon ? 4 : 2));

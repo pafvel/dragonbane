@@ -451,4 +451,65 @@ export default class DoD_Utility {
                 return 10;
         }
     }
+
+    // Calculate separation between tokens by displacing center points to account for token size
+    static calculateDistanceBetweenTokens(tokenA, tokenB) {
+
+        // helper function to calculate token center in canvas space
+        function tokenCenter(token) {
+            if (game.release.generation >= 13) {
+                return token.getCenterPoint();
+            } else {
+                const width = token.width * token.parent.grid.size;
+                const height = token.height * token.parent.grid.size;
+                return {
+                    x: token.x + (width / 2), 
+                    y: token.y + (height / 2), 
+                    elevation: token.elevation
+                };
+            }
+        }
+
+        // helper function to calculate distance from the token center point 
+        // to the center of the grid cell just inside edge of the token
+        function tokenDisplacement(token) {
+            return {
+                x: (token.width - 1) * 0.5 * token.parent.grid.size,
+                y: (token.height - 1) * 0.5 * token.parent.grid.size
+            }
+        }
+
+        // Find center points and displacements
+        let centerA = tokenCenter(tokenA);
+        let centerB = tokenCenter(tokenB);
+        const displacementA = tokenDisplacement(tokenA);
+        const displacementB = tokenDisplacement(tokenB);
+
+        // Displace target center point towards actor center point
+        if (centerA.x < centerB.x) {
+            centerB.x -= Math.min(displacementB.x, centerB.x - centerA.x);
+        } else if (centerA.x > centerB.x) {
+            centerB.x += Math.min(displacementB.x, centerA.x - centerB.x);
+        }
+        if (centerA.y < centerB.y) {
+            centerB.y -= Math.min(displacementB.y, centerB.y - centerA.y);
+        } else if (centerA.y > centerB.y) {
+            centerB.y += Math.min(displacementB.y, centerA.y - centerB.y);
+        }
+
+        // Displace actor center point towards new target center point
+        if (centerA.x < centerB.x) {
+            centerA.x += Math.min(displacementA.x, centerB.x - centerA.x);
+        } else if (centerA.x > centerB.x) {
+            centerA.x -= Math.min(displacementA.x, centerA.x - centerB.x);
+        }
+        if (centerA.y < centerB.y) {
+            centerA.y += Math.min(displacementA.y, centerB.y - centerA.y);
+        } else if (centerA.y > centerB.y) {
+            centerA.y -= Math.min(displacementA.y, centerA.y - centerB.y);
+        }
+
+        // Measure distance between adjusted center points
+        return  Math.round(canvas.grid.measurePath([centerA, centerB]).distance);
+    }        
 }
