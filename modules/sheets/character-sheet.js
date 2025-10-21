@@ -41,17 +41,6 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         effects: { scrollable: [''], template: 'systems/dragonbane/templates/parts/character-sheet-effects.hbs' },
     }
 
-
-    constructor(options={}, ...args) {
-        super(options, ...args);
-        const t = this.document?.type;
-        if (t === "monster") {
-            this.options.position = { ...this.options.position, width: 580, height: 670 };
-        } else if (t === "npc") {
-            this.options.position = { ...this.options.position, width: 580, height: 640 };
-        }
-    }
-
     async _onRender(context, options) {
         await super._onRender(context, options);
 
