@@ -1,5 +1,20 @@
 # Change Log
 
+## Version 2.6
+
+- Combat
+
+  - Improved range calculation when tokens are large.
+  - Melee actions are no longer hidden when attacking from a distance.
+  - Ranged attack is the pre-selected action when attacking from a distance.
+  - Prone tokens will default the "Obscured by token" bane to unchecked.
+  - Hidden tokens no longer obscure ranged attacks.
+  - Active effects now correctly affect range calculations based on character attributes.
+
+- Miscellaneous
+  - The drawTreasureCards() function no longer modifies the treasure table, allowing the /treasure command to be run on Foundry v13 without needing ownership permission to the treasure RollTable.
+  - Fixed a few mispelled words.
+
 ## Version 2.5
 
 - Token Marker
