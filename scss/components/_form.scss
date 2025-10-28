@@ -2,9 +2,20 @@
 
 .system-dragonbane {
 
-    .standard-form {
-        @extend %dialog-background;
+    form {
 
+        .window-content {
+            @extend %dialog-background;
+        }
+    }
+
+    .standard-form {
+        gap: 0;
+
+        .flexrow {
+            align-items: normal;
+        }
+        
         .form-footer button  {
             --button-focus-outline-color: var(--color-border-highlight);
 

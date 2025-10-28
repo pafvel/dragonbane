@@ -1,0 +1,16 @@
+<div class="tab sheet-tab {{tabs.description.cssClass}}" data-group="primary" data-tab="{{tabs.description.id}}">
+    <div class="text-box-editor">
+        {{#if editable}}
+        <prose-mirror
+            name="system.description"
+            value="{{system.description}}"
+            button="true"
+            editable="{{editable}}"
+            toggled="false">
+            {{{descriptionHTML}}}
+        </prose-mirror>
+        {{else}}
+        {{{descriptionHTML}}}
+        {{/if}}
+    </div>
+</div>

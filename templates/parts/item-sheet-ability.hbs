@@ -1,0 +1,37 @@
+<div class="tab sheet-tab {{tabs.details.cssClass}}" data-group="primary" data-tab="{{tabs.details.id}}">
+    <div class="ability-tab">
+
+        <table class="item-table">
+            <tr>
+                <th>{{localize "DoD.ability.requirement"}}</th>
+                <th>{{localize "DoD.ability.wp"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <input name="system.requirement" type="text" value="{{system.requirement}}" />
+                </td>
+                <td>
+                    <input name="system.wp" type="text" value="{{system.wp}}" data-dtype="Number" />
+                </td>
+            </tr>
+        </table>
+
+        <table class="item-table">
+            <tr>
+                <th>{{localize "DoD.ui.dialog.boons"}}</th>
+                <th>{{localize "DoD.ability.secondaryAttribute"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <input name="system.boons" type="text" value="{{system.boons}}" />
+                </td>
+                <td>
+                    <select name="system.secondaryAttribute">
+                        {{selectOptions config.secondaryAttributeTypes selected=system.secondaryAttribute localize=true}}
+                    </select>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>

@@ -158,34 +158,21 @@ export default class DoDTest {
             }
         }
 
+        // render dialog html
         const template = "systems/dragonbane/templates/partials/roll-dialog.hbs";
         const html = await DoD_Utility.renderTemplate(template, this.dialogData);
 
-        return new Promise(
-            resolve => {
-                const data = {
-                    actor: this.actor,
-                    title: title,
-                    content: html,
-                    buttons: {
-                        ok: {
-                            label: label,
-                            callback: html => resolve(this.processDialogOptions(html[0].querySelector("form")))
-                        }
-                        /*
-                        ,
-                        cancel: {
-                            label: "Cancel",
-                            callback: html => resolve({cancelled: true})
-                        }
-                        */
-                    },
-                    default: "ok",
-                    close: () => resolve({cancelled: true})
-                };
-                new Dialog(data, null).render(true);
-            }
-        );
+        // show dialog
+        return foundry.applications.api.DialogV2.prompt({
+            window: { title: title },
+            content: html,
+            ok: {
+                label: label,
+                callback: (_event, _button, dialog) => {
+                    return this.processDialogOptions(dialog.element.querySelector("form"));
+                }
+            }           
+        });        
     }
 
     processDialogOptions(form) {

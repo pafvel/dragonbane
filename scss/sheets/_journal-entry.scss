@@ -111,7 +111,7 @@
                 background: transparent;
 
                 --table-row-color-odd: transparent;
-                --table-row-color-even: rgb(0 0 0 / 10%);
+                --table-row-color-even: rgba(0, 0, 0, 0.1);
 
                 td, th {
                     text-align: left;

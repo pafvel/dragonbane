@@ -17,6 +17,7 @@
         }
 
         .sheet-header {
+            display: flex;
             padding: 8px;
 
             h1 {
@@ -27,12 +28,25 @@
                 background-clip: border-box, border-box, content-box;
                 padding-left: 48px;
                 padding-right: 48px;
+                margin: 0;
+                font-size: 28px;
+                font-weight: 400;
+                width: 100%
             }
 
             input {
                 color: var(--dod-color-journal-table-header);
+                background: transparent;
                 text-align: center;
+                height: 48px;
                 border: 0;
+                margin: 8px;
+                outline: 0;
+
+                &:focus {
+                    box-shadow: 0 0 5px var(--color-shadow-primary);
+                    transition: none;
+                }
             }
 
             img {
@@ -40,16 +54,9 @@
             }
         }
 
-        .sheet-content {
-            height: 100%;
-            display: flex;    
-            flex-direction: column;
-            background-position: center top, center bottom;
-            background-repeat: repeat-x, repeat-x;
-            background-size: auto 12px, auto 12px;
-            padding-bottom: 0;
-        
-            .sheet-tabs {
+        nav.tabs {
+
+            &.sheet-tabs {
                 width: 100%;
                 background-image: url("art/ui/table-row-banner.webp");
                 background-repeat:  repeat-x;
@@ -57,27 +64,67 @@
                 background-size: auto 100%;
                 border-color: transparent;
             }
+        }
 
-            .sheet-body {
-                padding: 0 8px;
+        nav.tabs [data-tab] {
+            color: var(--dod-color-parchment-text);
+        }
+            
+            
+
+        .sheet-tab {
+            height: 100%;
+            padding: 0 8px;
+            color: var(--dod-color-journal-text);
+
+            input {
+                background: transparent;
+                text-align: center;
+                outline: 0;
+                color: var(--dod-color-journal-text);
+
+                &:invalid {
+                    color: var(--dod-color-invalid-input);
+                }    
+
+                &:valid {
+                    color: var(--dod-color-journal-text);
+                }    
+
             }
 
-            input:invalid {
-                color: red;
-            }    
+            select:focus, input:focus {
+                box-shadow: 0 0 5px var(--color-shadow-primary);
+                transition: none;
+            }
 
-            input:valid {
-                color: black;
-            }    
+            select, input[type="text"] {
+                height: 2em;
+                line-height: normal;
+                padding: 1px 0.25em;
+            }
+
+            select {
+                border-color: transparent;
+                background: rgba(0, 0, 0, 0.05);
+                color: var(--dod-color-journal-text);
+                width: auto;
+                outline: 0;
+            }
 
             .item-table {
                 border: 0;
                 background: none;
+                margin: 0.5em 0;
+
+                tr {
+                    background-color: transparent;
+                }
 
                 th {
                     text-align: center;
-                    padding-left: 12px;
-                    padding-right: 0;
+                    padding: 0.25em 0 0.25em 1em;
+                    color: var(--dod-color-journal-text);
                 }
 
                 th:last-child {
@@ -95,14 +142,15 @@
 
                     td {
                         text-align: center;
+                        padding: 0.25em 0.25em 0.25em 1.25em;
+                        max-width:200px;
+                        
+                        @extend %no-wrap-ellipsis;
 
-                            input {
+                        input {
                             border: 0;
                             background: transparent;
                         }
-
-                        padding-left: 16px;
-                        padding-right: 0;
                     }
 
                     td:nth-child(1n+2) {
@@ -113,7 +161,7 @@
                     }
 
                     td:last-child {
-                        padding-right: 20px;
+                        padding-right: 1.25em;
                     }
 
                     select {
@@ -123,28 +171,8 @@
                 }
             }
 
-            .editor {
-                @extend %parchment-frame;
-
-                min-height: 160px;
-                align-self: center;
-            }
-
-            .editor-content {
-                border-left: 12px;
-                border-right: 12px;
-                border-style: solid;
-                border-color: transparent;
-            }
-
-            .editor-edit {
-                top: 21px;
-                right: 12px;
-            }
-
-            .tox.tox-tinymce {
-                padding-left: 12px;
-                padding-right: 12px;
+            .text-box-editor {
+                height: 100%;
             }
         }
     }

@@ -45,7 +45,7 @@
   src: url("fonts/Caveat/static/Caveat-Bold.ttf");
   font-weight: bold;
 }
-.system-dragonbane .sheet.item .sheet-content .editor, .system-dragonbane .sheet.active-effect-sheet .sheet-content .editor, .system-dragonbane .text-box, .system-dragonbane .text-box-editor {
+.system-dragonbane .text-box, .system-dragonbane .text-box-editor {
   height: 100%;
   width: 100%;
   background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/parchment-vertical.webp");
@@ -87,7 +87,7 @@
   color: var(--dod-color-journal-text);
 }
 
-.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h2, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional h2, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h3, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional h3, .system-dragonbane .journal-entry-content .display-table table caption h2, .system-dragonbane .journal-entry-content .display-generic-table table caption h2, .system-dragonbane .journal-entry-content .display-table table caption h3, .system-dragonbane .journal-entry-content .display-generic-table table caption h3, .system-dragonbane .journal-entry-content .display-table table caption span, .system-dragonbane .journal-entry-content .display-generic-table table caption span {
+.system-dragonbane .sheet.item .sheet-tab .item-table tr:nth-child(1n+2) td, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table tr:nth-child(1n+2) td, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h2, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional h2, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h3, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional h3, .system-dragonbane .journal-entry-content .display-table table caption h2, .system-dragonbane .journal-entry-content .display-generic-table table caption h2, .system-dragonbane .journal-entry-content .display-table table caption h3, .system-dragonbane .journal-entry-content .display-generic-table table caption h3, .system-dragonbane .journal-entry-content .display-table table caption span, .system-dragonbane .journal-entry-content .display-generic-table table caption span {
   white-space: nowrap; /* Prevent text from wrapping */
   overflow: hidden; /* Hide the overflowed text */
   text-overflow: ellipsis; /* Add ellipsis when the text overflows */
@@ -175,7 +175,7 @@
   background-clip: border-box;
 }
 
-.system-dragonbane .standard-form, .system-dragonbane .dialog .window-content {
+.theme-light .image-popout, .system-dragonbane form .window-content, .system-dragonbane .dialog .window-content {
   background: var(--dod-dialog-background);
   background-size: cover;
   background-position: center;
@@ -229,6 +229,7 @@
   --checkbox-checked-color: #3e7d63;
   --color-warm-1: #3e7d63;
   --color-warm-2: #007544;
+  --input-border-color: #00604D;
 }
 
 .system-dragonbane {
@@ -245,8 +246,10 @@
   --dod-color-secret: #E83031;
   --dod-color-positive-effect: #00604D;
   --dod-color-negative-effect: #E83031;
+  --dod-color-invalid-input: #E83031;
   --dod-color-dash-range: yellow;
   --dod-color-out-of-range: #E83031;
+  --dod-color-border-bottom: #00604D;
   --dod-journal-background: url("art/ui/journal-page-bg.webp");
   --dod-font-primary: "QTFrizQuad";
   --dod-font-secondary: "QTFrizQuad";
@@ -365,6 +368,12 @@
   --button-focus-outline-color: var(--color-border-highlight);
 }
 
+.system-dragonbane .standard-form {
+  gap: 0;
+}
+.system-dragonbane .standard-form .flexrow {
+  align-items: normal;
+}
 .system-dragonbane .standard-form .form-footer button {
   --button-focus-outline-color: var(--color-border-highlight);
 }
@@ -583,7 +592,7 @@
   background-position-x: center;
   background-position-y: 2em;
   border-top: transparent;
-  border-bottom: 1px solid var(--dod-color-parchment-text);
+  border-bottom: 1px solid var(--dod-color-border-bottom);
   border-radius: 0;
   color: var(--dod-color-parchment-text);
   background-color: transparent;
@@ -600,7 +609,7 @@
 .system-dragonbane .sheet-table input[type=text] {
   background: rgba(0, 0, 0, 0.1);
 }
-.system-dragonbane .sheet-table input[type=checkbox]::before, .system-dragonbane .sheet-table input[type=checkbox]::after {
+.system-dragonbane .sheet-table input[type=checkbox].mark-advancement::before, .system-dragonbane .sheet-table input[type=checkbox].mark-advancement::after {
   font-size: 1rem;
   line-height: 1rem;
 }
@@ -704,6 +713,11 @@
 }
 .system-dragonbane .sheet-table-data select {
   border: 0;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--dod-color-journal-text);
+  width: auto;
+  outline: 0;
+  padding: 0;
 }
 .system-dragonbane .sheet-table-data .thumbnail-data {
   padding: 0;
@@ -724,6 +738,11 @@
   min-width: 24px;
   min-height: 24px;
   text-align: center;
+  /*
+  input[type="checkbox"]::before {
+      color: white;
+  }
+  */
 }
 .system-dragonbane .sheet-table-data .checkbox-data img {
   vertical-align: middle;
@@ -732,9 +751,6 @@
 .system-dragonbane .sheet-table-data .checkbox-data input {
   margin: 0;
   vertical-align: sub;
-}
-.system-dragonbane .sheet-table-data .checkbox-data input[type=checkbox]::before {
-  color: white;
 }
 .system-dragonbane .sheet-table-data .text-data {
   text-align: left;
@@ -768,19 +784,39 @@
 .system-dragonbane .simple-table {
   border: 0;
   background: none;
+  margin: 0.5em 0;
+}
+.system-dragonbane .simple-table input {
+  background: transparent;
+  text-align: center;
+  outline: 0;
+  color: var(--dod-color-journal-text);
 }
 .system-dragonbane .simple-table input:invalid {
-  color: var(--dod-color-negative-effect);
+  color: var(--dod-color-invalid-input);
 }
 .system-dragonbane .simple-table input:valid {
   color: var(--dod-color-journal-text);
 }
+.system-dragonbane .simple-table select:focus, .system-dragonbane .simple-table input:focus {
+  box-shadow: 0 0 5px var(--color-shadow-primary);
+  transition: none;
+}
+.system-dragonbane .simple-table select, .system-dragonbane .simple-table input[type=text] {
+  height: 2em;
+  line-height: normal;
+  padding: 1px 0.25em;
+}
+.system-dragonbane .simple-table select {
+  border-color: transparent;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--dod-color-journal-text);
+  width: auto;
+  outline: 0;
+}
 .system-dragonbane .simple-table th {
   text-align: center;
-  padding-left: 12px;
-  padding-right: 0;
-}
-.system-dragonbane .simple-table th .application {
+  padding: 0.25em 0 0.25em 1em;
   color: var(--dod-color-text-primary);
 }
 .system-dragonbane .simple-table th:last-child {
@@ -800,8 +836,8 @@
 }
 .system-dragonbane .simple-table tr:nth-child(1n+2) td {
   text-align: center;
-  padding-left: 16px;
-  padding-right: 0;
+  padding: 0.25em 0.25em 0.25em 1.25em;
+  max-width: 200px;
 }
 .system-dragonbane .simple-table tr:nth-child(1n+2) td input {
   border: 0;
@@ -814,7 +850,7 @@
   background-size: contain;
 }
 .system-dragonbane .simple-table tr:nth-child(1n+2) td:last-child {
-  padding-right: 20px;
+  padding-right: 1.25em;
 }
 .system-dragonbane .simple-table tr:nth-child(1n+2) select {
   border: 0;
@@ -1032,11 +1068,13 @@
   --dod-color-text-primary: black;
   --dod-dialog-background: url("art/ui/dialog-bg.webp") repeat;
 }
-
 .system-dragonbane .sheet.character {
   display: flex;
   flex-direction: column;
   font-family: var(--dod-font-primary);
+}
+.system-dragonbane .sheet.character table {
+  --table-row-color-even: transparent;
 }
 .system-dragonbane .sheet.character input {
   color: black;
@@ -1355,7 +1393,7 @@
   background-position-x: center;
   background-position-y: 2em;
   border-top: transparent;
-  border-bottom: 1px solid var(--dod-color-parchment-text);
+  border-bottom: 1px solid var(--dod-color-border-bottom);
   border-radius: 0;
   color: var(--dod-color-parchment-text);
   background-color: transparent;
@@ -1643,6 +1681,7 @@
   padding: 0;
 }
 .system-dragonbane .sheet.item .sheet-header, .system-dragonbane .sheet.active-effect-sheet .sheet-header {
+  display: flex;
   padding: 8px;
 }
 .system-dragonbane .sheet.item .sheet-header h1, .system-dragonbane .sheet.active-effect-sheet .sheet-header h1 {
@@ -1653,25 +1692,28 @@
   background-clip: border-box, border-box, content-box;
   padding-left: 48px;
   padding-right: 48px;
+  margin: 0;
+  font-size: 28px;
+  font-weight: 400;
+  width: 100%;
 }
 .system-dragonbane .sheet.item .sheet-header input, .system-dragonbane .sheet.active-effect-sheet .sheet-header input {
   color: var(--dod-color-journal-table-header);
+  background: transparent;
   text-align: center;
+  height: 48px;
   border: 0;
+  margin: 8px;
+  outline: 0;
+}
+.system-dragonbane .sheet.item .sheet-header input:focus, .system-dragonbane .sheet.active-effect-sheet .sheet-header input:focus {
+  box-shadow: 0 0 5px var(--color-shadow-primary);
+  transition: none;
 }
 .system-dragonbane .sheet.item .sheet-header img, .system-dragonbane .sheet.active-effect-sheet .sheet-header img {
   border-color: transparent;
 }
-.system-dragonbane .sheet.item .sheet-content, .system-dragonbane .sheet.active-effect-sheet .sheet-content {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  background-position: center top, center bottom;
-  background-repeat: repeat-x, repeat-x;
-  background-size: auto 12px, auto 12px;
-  padding-bottom: 0;
-}
-.system-dragonbane .sheet.item .sheet-content .sheet-tabs, .system-dragonbane .sheet.active-effect-sheet .sheet-content .sheet-tabs {
+.system-dragonbane .sheet.item nav.tabs.sheet-tabs, .system-dragonbane .sheet.active-effect-sheet nav.tabs.sheet-tabs {
   width: 100%;
   background-image: url("art/ui/table-row-banner.webp");
   background-repeat: repeat-x;
@@ -1679,28 +1721,59 @@
   background-size: auto 100%;
   border-color: transparent;
 }
-.system-dragonbane .sheet.item .sheet-content .sheet-body, .system-dragonbane .sheet.active-effect-sheet .sheet-content .sheet-body {
+.system-dragonbane .sheet.item nav.tabs [data-tab], .system-dragonbane .sheet.active-effect-sheet nav.tabs [data-tab] {
+  color: var(--dod-color-parchment-text);
+}
+.system-dragonbane .sheet.item .sheet-tab, .system-dragonbane .sheet.active-effect-sheet .sheet-tab {
+  height: 100%;
   padding: 0 8px;
+  color: var(--dod-color-journal-text);
 }
-.system-dragonbane .sheet.item .sheet-content input:invalid, .system-dragonbane .sheet.active-effect-sheet .sheet-content input:invalid {
-  color: red;
+.system-dragonbane .sheet.item .sheet-tab input, .system-dragonbane .sheet.active-effect-sheet .sheet-tab input {
+  background: transparent;
+  text-align: center;
+  outline: 0;
+  color: var(--dod-color-journal-text);
 }
-.system-dragonbane .sheet.item .sheet-content input:valid, .system-dragonbane .sheet.active-effect-sheet .sheet-content input:valid {
-  color: black;
+.system-dragonbane .sheet.item .sheet-tab input:invalid, .system-dragonbane .sheet.active-effect-sheet .sheet-tab input:invalid {
+  color: var(--dod-color-invalid-input);
 }
-.system-dragonbane .sheet.item .sheet-content .item-table, .system-dragonbane .sheet.active-effect-sheet .sheet-content .item-table {
+.system-dragonbane .sheet.item .sheet-tab input:valid, .system-dragonbane .sheet.active-effect-sheet .sheet-tab input:valid {
+  color: var(--dod-color-journal-text);
+}
+.system-dragonbane .sheet.item .sheet-tab select:focus, .system-dragonbane .sheet.item .sheet-tab input:focus, .system-dragonbane .sheet.active-effect-sheet .sheet-tab select:focus, .system-dragonbane .sheet.active-effect-sheet .sheet-tab input:focus {
+  box-shadow: 0 0 5px var(--color-shadow-primary);
+  transition: none;
+}
+.system-dragonbane .sheet.item .sheet-tab select, .system-dragonbane .sheet.item .sheet-tab input[type=text], .system-dragonbane .sheet.active-effect-sheet .sheet-tab select, .system-dragonbane .sheet.active-effect-sheet .sheet-tab input[type=text] {
+  height: 2em;
+  line-height: normal;
+  padding: 1px 0.25em;
+}
+.system-dragonbane .sheet.item .sheet-tab select, .system-dragonbane .sheet.active-effect-sheet .sheet-tab select {
+  border-color: transparent;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--dod-color-journal-text);
+  width: auto;
+  outline: 0;
+}
+.system-dragonbane .sheet.item .sheet-tab .item-table, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table {
   border: 0;
   background: none;
+  margin: 0.5em 0;
 }
-.system-dragonbane .sheet.item .sheet-content .item-table th, .system-dragonbane .sheet.active-effect-sheet .sheet-content .item-table th {
+.system-dragonbane .sheet.item .sheet-tab .item-table tr, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table tr {
+  background-color: transparent;
+}
+.system-dragonbane .sheet.item .sheet-tab .item-table th, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table th {
   text-align: center;
-  padding-left: 12px;
-  padding-right: 0;
+  padding: 0.25em 0 0.25em 1em;
+  color: var(--dod-color-journal-text);
 }
-.system-dragonbane .sheet.item .sheet-content .item-table th:last-child, .system-dragonbane .sheet.active-effect-sheet .sheet-content .item-table th:last-child {
+.system-dragonbane .sheet.item .sheet-tab .item-table th:last-child, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table th:last-child {
   padding-right: 20px;
 }
-.system-dragonbane .sheet.item .sheet-content .item-table tr:nth-child(1n+2), .system-dragonbane .sheet.active-effect-sheet .sheet-content .item-table tr:nth-child(1n+2) {
+.system-dragonbane .sheet.item .sheet-tab .item-table tr:nth-child(1n+2), .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table tr:nth-child(1n+2) {
   background-image: url("art/ui/table-row-left.webp"), url("art/ui/table-row-right.webp"), url("art/ui/table-row-banner.webp");
   background-position: left center, right center, center center;
   background-repeat: no-repeat, no-repeat, repeat-x;
@@ -1709,44 +1782,29 @@
   border-left: 8px transparent;
   border-right: 8px transparent;
 }
-.system-dragonbane .sheet.item .sheet-content .item-table tr:nth-child(1n+2) td, .system-dragonbane .sheet.active-effect-sheet .sheet-content .item-table tr:nth-child(1n+2) td {
+.system-dragonbane .sheet.item .sheet-tab .item-table tr:nth-child(1n+2) td, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table tr:nth-child(1n+2) td {
   text-align: center;
-  padding-left: 16px;
-  padding-right: 0;
+  padding: 0.25em 0.25em 0.25em 1.25em;
+  max-width: 200px;
 }
-.system-dragonbane .sheet.item .sheet-content .item-table tr:nth-child(1n+2) td input, .system-dragonbane .sheet.active-effect-sheet .sheet-content .item-table tr:nth-child(1n+2) td input {
+.system-dragonbane .sheet.item .sheet-tab .item-table tr:nth-child(1n+2) td input, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table tr:nth-child(1n+2) td input {
   border: 0;
   background: transparent;
 }
-.system-dragonbane .sheet.item .sheet-content .item-table tr:nth-child(1n+2) td:nth-child(1n+2), .system-dragonbane .sheet.active-effect-sheet .sheet-content .item-table tr:nth-child(1n+2) td:nth-child(1n+2) {
+.system-dragonbane .sheet.item .sheet-tab .item-table tr:nth-child(1n+2) td:nth-child(1n+2), .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table tr:nth-child(1n+2) td:nth-child(1n+2) {
   background-image: url("art/ui/table-row-separator.webp");
   background-position: left center;
   background-repeat: no-repeat;
   background-size: contain;
 }
-.system-dragonbane .sheet.item .sheet-content .item-table tr:nth-child(1n+2) td:last-child, .system-dragonbane .sheet.active-effect-sheet .sheet-content .item-table tr:nth-child(1n+2) td:last-child {
-  padding-right: 20px;
+.system-dragonbane .sheet.item .sheet-tab .item-table tr:nth-child(1n+2) td:last-child, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table tr:nth-child(1n+2) td:last-child {
+  padding-right: 1.25em;
 }
-.system-dragonbane .sheet.item .sheet-content .item-table tr:nth-child(1n+2) select, .system-dragonbane .sheet.active-effect-sheet .sheet-content .item-table tr:nth-child(1n+2) select {
+.system-dragonbane .sheet.item .sheet-tab .item-table tr:nth-child(1n+2) select, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table tr:nth-child(1n+2) select {
   border: 0;
 }
-.system-dragonbane .sheet.item .sheet-content .editor, .system-dragonbane .sheet.active-effect-sheet .sheet-content .editor {
-  min-height: 160px;
-  align-self: center;
-}
-.system-dragonbane .sheet.item .sheet-content .editor-content, .system-dragonbane .sheet.active-effect-sheet .sheet-content .editor-content {
-  border-left: 12px;
-  border-right: 12px;
-  border-style: solid;
-  border-color: transparent;
-}
-.system-dragonbane .sheet.item .sheet-content .editor-edit, .system-dragonbane .sheet.active-effect-sheet .sheet-content .editor-edit {
-  top: 21px;
-  right: 12px;
-}
-.system-dragonbane .sheet.item .sheet-content .tox.tox-tinymce, .system-dragonbane .sheet.active-effect-sheet .sheet-content .tox.tox-tinymce {
-  padding-left: 12px;
-  padding-right: 12px;
+.system-dragonbane .sheet.item .sheet-tab .text-box-editor, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .text-box-editor {
+  height: 100%;
 }
 
 .system-dragonbane .sheet.journal-entry h1, .system-dragonbane .sheet.journal-entry h2, .system-dragonbane .sheet.journal-entry h3 {
@@ -1833,7 +1891,7 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content table {
   background: transparent;
   --table-row-color-odd: transparent;
-  --table-row-color-even: rgb(0 0 0 / 10%);
+  --table-row-color-even: rgba(0, 0, 0, 0.1);
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content table td, .system-dragonbane .sheet.journal-entry .journal-entry-content table th {
   text-align: left;

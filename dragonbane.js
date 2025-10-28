@@ -1,16 +1,30 @@
-import { DoDActor } from "./modules/actor.js";
-import DoDCharacterSheet from "./modules/sheets/character-sheet.js";
-import DoDNpcSheet from "./modules/sheets/npc-sheet.js";
-import DoDMonsterSheet from "./modules/sheets/monster-sheet.js";
-import * as DoDChat from "./modules/chat.js";
 import { DoD } from "./modules/config.js";
-import DoDItemSheet from "./modules/item-sheet.js";
+
+import { DoDActor } from "./modules/actor.js";
 import { DoDItem } from "./modules/item.js";
+
+import DoD_Utility from "./modules/utility.js";
+import DoDRoll from "./modules/roll.js";
+
+import * as DoDChat from "./modules/chat.js";
 import * as DoDJournal from "./modules/journal.js";
 import * as DoDMacro from "./modules/macro.js";
 import * as DoDMigrate from "./modules/migrate.js";
-import DoD_Utility from "./modules/utility.js";
-import DoDRoll from "./modules/roll.js";
+
+import DoDCharacterSheet from "./modules/sheets/character-sheet.js";
+import DoDNpcSheet from "./modules/sheets/npc-sheet.js";
+import DoDMonsterSheet from "./modules/sheets/monster-sheet.js";
+import DoDAbilitySheet from "./modules/sheets/item/ability-sheet.js";
+import DoDArmorSheet from "./modules/sheets/item/armor-sheet.js";
+import DoDHelmetSheet from "./modules/sheets/item/helmet-sheet.js";
+import DoDInjurySheet from "./modules/sheets/item/injury-sheet.js";
+import DoDItemSheet from "./modules/sheets/item/item-sheet.js";
+import DoDKinSheet from "./modules/sheets/item/kin-sheet.js";
+import DoDProfessionSheet from "./modules/sheets/item/profession-sheet.js";
+import DoDSkillSheet from "./modules/sheets/item/skill-sheet.js";
+import DoDSpellSheet from "./modules/sheets/item/spell-sheet.js";
+import DoDWeaponSheet from "./modules/sheets/item/weapon-sheet.js";
+
 import DoDCharacterData from "./modules/data/actors/characterData.js";
 import DoDNPCData from "./modules/data/actors/NPCData.js";
 import DoDMonsterData from "./modules/data/actors/monsterData.js";
@@ -24,6 +38,7 @@ import DoDProfessionData from "./modules/data/items/professionData.js";
 import DoDSkillData from "./modules/data/items/skillData.js";
 import DoDWeaponData from "./modules/data/items/weaponData.js";
 import DoDSpellData from "./modules/data/items/spellData.js";
+
 import DoDActiveEffect from "./modules/active-effect.js";
 import DoDActiveEffectConfig from "./modules/active-effect-config.js";
 import DoDTokenRuler from "./modules/token-ruler.js";
@@ -325,9 +340,18 @@ Hooks.once("init", function () {
     CONFIG.DoD.Actors.registerSheet("DoD", DoDNpcSheet, { types: ["npc"], makeDefault: true });
     CONFIG.DoD.Actors.registerSheet("DoD", DoDMonsterSheet, { types: ["monster"], makeDefault: true });
     
-    CONFIG.DoD.Items.unregisterSheet("core", CONFIG.DoD.ItemSheet);
-    CONFIG.DoD.Items.registerSheet("DoD", DoDItemSheet, { makeDefault: true });
-
+    CONFIG.DoD.Items.unregisterSheet("core", foundry.appv1.sheets.ItemSheet);
+    CONFIG.DoD.Items.registerSheet("DoD", DoDAbilitySheet, { types: ["ability"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDArmorSheet, { types: ["armor"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDHelmetSheet, { types: ["helmet"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDInjurySheet, { types: ["injury"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDItemSheet, { types: ["item"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDKinSheet, { types: ["kin"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDProfessionSheet, { types: ["profession"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDSkillSheet, { types: ["skill"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDSpellSheet, { types: ["spell"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDWeaponSheet, { types: ["weapon"], makeDefault: true });
+    
     CONFIG.DoD.DocumentSheetConfig.unregisterSheet(ActiveEffect, "core", CONFIG.DoD.ActiveEffectConfig);
     CONFIG.DoD.DocumentSheetConfig.registerSheet(ActiveEffect, "DoD", DoDActiveEffectConfig, {makeDefault :true});
 

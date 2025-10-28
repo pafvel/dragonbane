@@ -7,6 +7,10 @@
         flex-direction: column;
         font-family: var(--dod-font-primary);
 
+        table {
+            --table-row-color-even: transparent;
+        }
+
         input {
             color: black;
         }
@@ -388,7 +392,7 @@
             background-position-x: center;
             background-position-y: 2em;
             border-top: transparent;
-            border-bottom: 1px solid var(--dod-color-parchment-text);                    
+            border-bottom: 1px solid var(--dod-color-border-bottom);                    
             border-radius: 0;
             color: var(--dod-color-parchment-text);
             background-color: transparent;

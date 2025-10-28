@@ -9,7 +9,7 @@
         background-position-x: center;
         background-position-y: 2em;
         border-top: transparent;
-        border-bottom: 1px solid var(--dod-color-parchment-text);
+        border-bottom: 1px solid var(--dod-color-border-bottom);
         border-radius: 0;
         color: var(--dod-color-parchment-text);
         background-color: transparent;
@@ -29,9 +29,12 @@
             background: rgba(0, 0, 0, 0.1);
         }
 
-        input[type="checkbox"]::before, input[type="checkbox"]::after {
-            font-size: 1rem;
-            line-height: 1rem;
+        input[type="checkbox"].mark-advancement {
+            
+            &::before, &::after {
+                font-size: 1rem;
+                line-height: 1rem;
+            }
         }
     };                
 
@@ -150,7 +153,12 @@
 
         select {
             border: 0;
-        };
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--dod-color-journal-text);
+            width: auto;
+            outline: 0;
+            padding: 0;
+        }
 
         .thumbnail-data {
             padding: 0;            
@@ -184,9 +192,11 @@
                 vertical-align: sub;
             }
 
+            /*
             input[type="checkbox"]::before {
                 color: white;
-            }            
+            }
+            */           
         }
 
         .text-data {
@@ -228,23 +238,47 @@
     .simple-table {
         border: 0;
         background: none;
+        margin: 0.5em 0;
 
-        input:invalid {
-            color: var(--dod-color-negative-effect);
-        }    
-
-        input:valid {
+        input {
+            background: transparent;
+            text-align: center;
+            outline: 0;
             color: var(--dod-color-journal-text);
-        }    
-            
+
+            &:invalid {
+                color: var(--dod-color-invalid-input);
+            }    
+
+            &:valid {
+                color: var(--dod-color-journal-text);
+            }    
+
+        }
+
+        select:focus, input:focus {
+            box-shadow: 0 0 5px var(--color-shadow-primary);
+            transition: none;
+        }
+
+        select, input[type="text"] {
+            height: 2em;
+            line-height: normal;
+            padding: 1px 0.25em;
+        }
+
+        select {
+            border-color: transparent;
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--dod-color-journal-text);
+            width: auto;
+            outline: 0;
+        }
+
         th {
             text-align: center;
-            padding-left: 12px;
-            padding-right: 0;
-
-            .application {
-                color: var(--dod-color-text-primary);
-            }
+            padding: 0.25em 0 0.25em 1em;
+            color: var(--dod-color-text-primary);
         }
 
         th:last-child {
@@ -266,14 +300,14 @@
 
             td {
                 text-align: center;
-
-                    input {
+                padding: 0.25em 0.25em 0.25em 1.25em;
+                max-width:200px;
+                
+                // @extend %no-wrap-ellipsis;
+                input {
                     border: 0;
                     background: transparent;
                 }
-
-                padding-left: 16px;
-                padding-right: 0;
             }
 
             td:nth-child(1n+2) {
@@ -284,7 +318,7 @@
             }
 
             td:last-child {
-                padding-right: 20px;
+                padding-right: 1.25em;
             }
 
             select {

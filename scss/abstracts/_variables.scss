@@ -11,7 +11,8 @@ $colors: (
     brown-1:        #4a2407,
     brown-2:        #3F2306,
     red-1:          #E83031,
-    mint-cream-1:   #DEE9E6
+    mint-cream-1:   #DEE9E6,
+    gray-1:         #777
 );
 
 // Accessor function
@@ -32,6 +33,7 @@ $colors: (
     --checkbox-checked-color:       #{color(green-warm-1)};
     --color-warm-1:                 #{color(green-warm-1)};
     --color-warm-2:                 #{color(green-warm-2)};
+    --input-border-color:           #{color(green-cold-3)};
 }
 
 // System variables
@@ -49,8 +51,10 @@ $colors: (
     --dod-color-secret:                 #{color(red-1)};
     --dod-color-positive-effect:        #{color(green-cold-3)};
     --dod-color-negative-effect:        #{color(red-1)};
+    --dod-color-invalid-input:          #{color(red-1)};
     --dod-color-dash-range:             yellow;
     --dod-color-out-of-range:           #{color(red-1)};
+    --dod-color-border-bottom:          #{color(green-cold-3)};
     --dod-journal-background:           url("art/ui/journal-page-bg.webp");
     --dod-font-primary:     "QTFrizQuad";
     --dod-font-secondary:   "QTFrizQuad";
