@@ -87,7 +87,7 @@
   color: var(--dod-color-journal-text);
 }
 
-.system-dragonbane .sheet.item .sheet-tab .item-table tr:nth-child(1n+2) td, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table tr:nth-child(1n+2) td, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h2, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional h2, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h3, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional h3, .system-dragonbane .journal-entry-content .display-table table caption h2, .system-dragonbane .journal-entry-content .display-generic-table table caption h2, .system-dragonbane .journal-entry-content .display-table table caption h3, .system-dragonbane .journal-entry-content .display-generic-table table caption h3, .system-dragonbane .journal-entry-content .display-table table caption span, .system-dragonbane .journal-entry-content .display-generic-table table caption span {
+.system-dragonbane .simple-table tr:nth-child(1n+2) td, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h2, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional h2, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h3, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional h3, .system-dragonbane .journal-entry-content .display-table table caption h2, .system-dragonbane .journal-entry-content .display-generic-table table caption h2, .system-dragonbane .journal-entry-content .display-table table caption h3, .system-dragonbane .journal-entry-content .display-generic-table table caption h3, .system-dragonbane .journal-entry-content .display-table table caption span, .system-dragonbane .journal-entry-content .display-generic-table table caption span {
   white-space: nowrap; /* Prevent text from wrapping */
   overflow: hidden; /* Hide the overflowed text */
   text-overflow: ellipsis; /* Add ellipsis when the text overflows */
@@ -298,6 +298,46 @@
   outline: none;
 }
 
+.system-dragonbane .dod-controls input {
+  border: 0;
+  margin: 0;
+  outline: 0;
+  background: transparent;
+  text-align: center;
+  color: var(--dod-color-journal-text);
+}
+.system-dragonbane .dod-controls input:invalid {
+  color: var(--dod-color-invalid-input);
+}
+.system-dragonbane .dod-controls input:focus {
+  box-shadow: 0 0 5px var(--color-shadow-primary);
+  transition: none;
+}
+.system-dragonbane .dod-controls input[type=text] {
+  height: 2em;
+  line-height: normal;
+  padding: 1px 0.25em;
+  background: transparent;
+}
+.system-dragonbane .dod-controls input[type=radio] {
+  top: 0;
+  vertical-align: middle;
+}
+.system-dragonbane .dod-controls select {
+  border: 0;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--dod-color-journal-text);
+  height: 2em;
+  line-height: normal;
+  width: auto;
+  outline: 0;
+  padding: 1px 0.25em;
+}
+.system-dragonbane .dod-controls select:focus {
+  box-shadow: 0 0 5px var(--color-shadow-primary);
+  transition: none;
+}
+
 .system-dragonbane .derived-stat-box {
   width: 100%;
 }
@@ -345,23 +385,9 @@
 .system-dragonbane .derived-stat .warning {
   color: red;
 }
-.system-dragonbane .derived-stat input {
-  border-color: transparent;
-  background: transparent;
-  text-align: center;
-}
-.system-dragonbane .derived-stat select {
-  border-color: transparent;
-  background: transparent;
-  color: black;
-  width: auto;
-}
 .system-dragonbane .derived-stat option {
   text-align: center;
   text-align-last: center;
-}
-.system-dragonbane .derived-stat input[type=checkbox] {
-  margin: 4px 5px;
 }
 
 .system-dragonbane .app.dialog .dialog-buttons .dialog-button, .system-dragonbane .sheet-footer button {
@@ -606,12 +632,8 @@
   float: right;
   color: rgb(80, 80, 80);
 }
-.system-dragonbane .sheet-table input[type=text] {
+.system-dragonbane .sheet-table input[type=text], .system-dragonbane .sheet-table input[type=number] {
   background: rgba(0, 0, 0, 0.1);
-}
-.system-dragonbane .sheet-table input[type=checkbox].mark-advancement::before, .system-dragonbane .sheet-table input[type=checkbox].mark-advancement::after {
-  font-size: 1rem;
-  line-height: 1rem;
 }
 .system-dragonbane .sheet-table-header {
   color: var(--dod-color-journal-table-header);
@@ -711,14 +733,6 @@
 .system-dragonbane .sheet-table-data td:last-child {
   padding-right: 2em;
 }
-.system-dragonbane .sheet-table-data select {
-  border: 0;
-  background: rgba(0, 0, 0, 0.05);
-  color: var(--dod-color-journal-text);
-  width: auto;
-  outline: 0;
-  padding: 0;
-}
 .system-dragonbane .sheet-table-data .thumbnail-data {
   padding: 0;
   width: 36px;
@@ -738,19 +752,13 @@
   min-width: 24px;
   min-height: 24px;
   text-align: center;
-  /*
-  input[type="checkbox"]::before {
-      color: white;
-  }
-  */
 }
 .system-dragonbane .sheet-table-data .checkbox-data img {
   vertical-align: middle;
   border: 0 solid transparent;
 }
 .system-dragonbane .sheet-table-data .checkbox-data input {
-  margin: 0;
-  vertical-align: sub;
+  vertical-align: -webkit-baseline-middle;
 }
 .system-dragonbane .sheet-table-data .text-data {
   text-align: left;
@@ -761,12 +769,13 @@
   padding-right: 0.5em;
 }
 .system-dragonbane .sheet-table-data .number-data input {
-  border: 0;
   height: 100%;
+}
+.system-dragonbane .sheet-table-data .number-data input[type=text] {
   width: 2em;
-  padding: 0;
-  text-align: center;
-  vertical-align: middle;
+}
+.system-dragonbane .sheet-table-data .number-data input[type=number] {
+  width: 3em;
 }
 .system-dragonbane .sheet-table-data .icon-data {
   width: 4em;
@@ -786,44 +795,16 @@
   background: none;
   margin: 0.5em 0;
 }
-.system-dragonbane .simple-table input {
-  background: transparent;
-  text-align: center;
-  outline: 0;
-  color: var(--dod-color-journal-text);
-}
-.system-dragonbane .simple-table input:invalid {
-  color: var(--dod-color-invalid-input);
-}
-.system-dragonbane .simple-table input:valid {
-  color: var(--dod-color-journal-text);
-}
-.system-dragonbane .simple-table select:focus, .system-dragonbane .simple-table input:focus {
-  box-shadow: 0 0 5px var(--color-shadow-primary);
-  transition: none;
-}
-.system-dragonbane .simple-table select, .system-dragonbane .simple-table input[type=text] {
-  height: 2em;
-  line-height: normal;
-  padding: 1px 0.25em;
-}
-.system-dragonbane .simple-table select {
-  border-color: transparent;
-  background: rgba(0, 0, 0, 0.05);
-  color: var(--dod-color-journal-text);
-  width: auto;
-  outline: 0;
+.system-dragonbane .simple-table tr {
+  background-color: transparent;
 }
 .system-dragonbane .simple-table th {
   text-align: center;
   padding: 0.25em 0 0.25em 1em;
-  color: var(--dod-color-text-primary);
+  color: var(--dod-color-journal-text);
 }
 .system-dragonbane .simple-table th:last-child {
   padding-right: 20px;
-}
-.system-dragonbane .simple-table tr {
-  background-color: transparent;
 }
 .system-dragonbane .simple-table tr:nth-child(1n+2) {
   background-image: url("art/ui/table-row-left.webp"), url("art/ui/table-row-right.webp"), url("art/ui/table-row-banner.webp");
@@ -852,9 +833,6 @@
 .system-dragonbane .simple-table tr:nth-child(1n+2) td:last-child {
   padding-right: 1.25em;
 }
-.system-dragonbane .simple-table tr:nth-child(1n+2) select {
-  border: 0;
-}
 
 .system-dragonbane .text-box {
   position: relative;
@@ -865,10 +843,6 @@
   text-align: center;
   font-weight: bold;
   padding-bottom: 2px;
-}
-.system-dragonbane .text-box input[type=radio] {
-  top: 0;
-  vertical-align: middle;
 }
 .system-dragonbane .text-box label {
   white-space: nowrap;
@@ -1076,22 +1050,9 @@
 .system-dragonbane .sheet.character table {
   --table-row-color-even: transparent;
 }
-.system-dragonbane .sheet.character input {
-  color: black;
-}
-.system-dragonbane .sheet.character input[type=text], .system-dragonbane .sheet.character select {
-  outline: 0;
-}
-.system-dragonbane .sheet.character input[type=text]:focus, .system-dragonbane .sheet.character select:focus {
-  box-shadow: 0 0 5px var(--color-shadow-primary);
-  transition: none;
-}
-.system-dragonbane .sheet.character input[type=number] {
-  background-color: transparent;
-}
-.system-dragonbane .sheet.character input[type=number]:focus {
-  box-shadow: 0 0 5px var(--color-shadow-primary);
-  transition: none;
+.system-dragonbane .sheet.character input[type=checkbox].mark-advancement::before, .system-dragonbane .sheet.character input[type=checkbox].mark-advancement::after {
+  font-size: 1rem;
+  line-height: 1rem;
 }
 .system-dragonbane .sheet.character .flexrow {
   align-items: start;
@@ -1254,12 +1215,20 @@
   top: 38%;
   left: -6px;
   width: 100%;
+  height: 26px;
+  padding: 1px 3px;
   font-family: var(--dod-font-handwriting);
   font-size: 2em;
   font-weight: bold;
   text-align: center;
   border: none;
   background-color: transparent;
+  color: black;
+}
+.system-dragonbane .sheet.character .attributes-container .attributes .attribute-panel input[type=text]:focus {
+  box-shadow: 0 0 5px var(--color-shadow-primary);
+  transition: none;
+  outline: 0;
 }
 .system-dragonbane .sheet.character .attributes-container .attributes .attribute1 {
   left: 18%;
@@ -1728,80 +1697,6 @@
   height: 100%;
   padding: 0 8px;
   color: var(--dod-color-journal-text);
-}
-.system-dragonbane .sheet.item .sheet-tab input, .system-dragonbane .sheet.active-effect-sheet .sheet-tab input {
-  background: transparent;
-  text-align: center;
-  outline: 0;
-  color: var(--dod-color-journal-text);
-}
-.system-dragonbane .sheet.item .sheet-tab input:invalid, .system-dragonbane .sheet.active-effect-sheet .sheet-tab input:invalid {
-  color: var(--dod-color-invalid-input);
-}
-.system-dragonbane .sheet.item .sheet-tab input:valid, .system-dragonbane .sheet.active-effect-sheet .sheet-tab input:valid {
-  color: var(--dod-color-journal-text);
-}
-.system-dragonbane .sheet.item .sheet-tab select:focus, .system-dragonbane .sheet.item .sheet-tab input:focus, .system-dragonbane .sheet.active-effect-sheet .sheet-tab select:focus, .system-dragonbane .sheet.active-effect-sheet .sheet-tab input:focus {
-  box-shadow: 0 0 5px var(--color-shadow-primary);
-  transition: none;
-}
-.system-dragonbane .sheet.item .sheet-tab select, .system-dragonbane .sheet.item .sheet-tab input[type=text], .system-dragonbane .sheet.active-effect-sheet .sheet-tab select, .system-dragonbane .sheet.active-effect-sheet .sheet-tab input[type=text] {
-  height: 2em;
-  line-height: normal;
-  padding: 1px 0.25em;
-}
-.system-dragonbane .sheet.item .sheet-tab select, .system-dragonbane .sheet.active-effect-sheet .sheet-tab select {
-  border-color: transparent;
-  background: rgba(0, 0, 0, 0.05);
-  color: var(--dod-color-journal-text);
-  width: auto;
-  outline: 0;
-}
-.system-dragonbane .sheet.item .sheet-tab .item-table, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table {
-  border: 0;
-  background: none;
-  margin: 0.5em 0;
-}
-.system-dragonbane .sheet.item .sheet-tab .item-table tr, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table tr {
-  background-color: transparent;
-}
-.system-dragonbane .sheet.item .sheet-tab .item-table th, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table th {
-  text-align: center;
-  padding: 0.25em 0 0.25em 1em;
-  color: var(--dod-color-journal-text);
-}
-.system-dragonbane .sheet.item .sheet-tab .item-table th:last-child, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table th:last-child {
-  padding-right: 20px;
-}
-.system-dragonbane .sheet.item .sheet-tab .item-table tr:nth-child(1n+2), .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table tr:nth-child(1n+2) {
-  background-image: url("art/ui/table-row-left.webp"), url("art/ui/table-row-right.webp"), url("art/ui/table-row-banner.webp");
-  background-position: left center, right center, center center;
-  background-repeat: no-repeat, no-repeat, repeat-x;
-  background-size: contain, contain, contain;
-  background-clip: border-box, border-box, padding-box;
-  border-left: 8px transparent;
-  border-right: 8px transparent;
-}
-.system-dragonbane .sheet.item .sheet-tab .item-table tr:nth-child(1n+2) td, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table tr:nth-child(1n+2) td {
-  text-align: center;
-  padding: 0.25em 0.25em 0.25em 1.25em;
-  max-width: 200px;
-}
-.system-dragonbane .sheet.item .sheet-tab .item-table tr:nth-child(1n+2) td input, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table tr:nth-child(1n+2) td input {
-  border: 0;
-  background: transparent;
-}
-.system-dragonbane .sheet.item .sheet-tab .item-table tr:nth-child(1n+2) td:nth-child(1n+2), .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table tr:nth-child(1n+2) td:nth-child(1n+2) {
-  background-image: url("art/ui/table-row-separator.webp");
-  background-position: left center;
-  background-repeat: no-repeat;
-  background-size: contain;
-}
-.system-dragonbane .sheet.item .sheet-tab .item-table tr:nth-child(1n+2) td:last-child, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table tr:nth-child(1n+2) td:last-child {
-  padding-right: 1.25em;
-}
-.system-dragonbane .sheet.item .sheet-tab .item-table tr:nth-child(1n+2) select, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .item-table tr:nth-child(1n+2) select {
-  border: 0;
 }
 .system-dragonbane .sheet.item .sheet-tab .text-box-editor, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .text-box-editor {
   height: 100%;

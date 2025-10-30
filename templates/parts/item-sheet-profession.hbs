@@ -1,25 +1,27 @@
 <div class="tab sheet-tab {{tabs.details.cssClass}}" data-group="primary" data-tab="{{tabs.details.id}}">
-    <table class="item-table">
-        <tr>
-            <th>{{localize "DoD.profession.key-attribute"}}</th>
-            <th>{{localize "DoD.ui.character-sheet.professionAbilities"}}</th>
-        </tr>
-        <tr>
-            <td>
-                <select name="system.attribute">
-                    {{selectOptions config.attributes selected=system.attribute localize=true}}
-                </select>
-            </td>
-                <td><input class="edit-profession-abilities" name="system.abilities" type="text" value="{{system.abilities}}" /></td>
-        </tr>
-    </table>
+    <div class="profession-tab dod-controls">
+        <table class="simple-table">
+            <tr>
+                <th>{{localize "DoD.profession.key-attribute"}}</th>
+                <th>{{localize "DoD.ui.character-sheet.professionAbilities"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <select name="system.attribute">
+                        {{selectOptions config.attributes selected=system.attribute localize=true}}
+                    </select>
+                </td>
+                    <td><input class="edit-profession-abilities" name="system.abilities" type="text" value="{{system.abilities}}" /></td>
+            </tr>
+        </table>
 
-    <table class="item-table">
-        <tr>
-            <th>{{localize "DoD.profession.skills"}}</th>
-        </tr>
-        <tr data-item-id="{{ability.id}}">
-            <td><input name="system.skills" type="text" value="{{system.skills}}" /></td>
-        </tr>
-    </table>
+        <table class="simple-table">
+            <tr>
+                <th>{{localize "DoD.profession.skills"}}</th>
+            </tr>
+            <tr data-item-id="{{ability.id}}">
+                <td><input name="system.skills" type="text" value="{{system.skills}}" /></td>
+            </tr>
+        </table>
+    </div>
 </div>

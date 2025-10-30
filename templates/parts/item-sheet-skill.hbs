@@ -1,36 +1,38 @@
 <div class="tab sheet-tab {{tabs.details.cssClass}}" data-group="primary" data-tab="{{tabs.details.id}}">
-    <table class="item-table">
-        <tr>
-            <th>
-                <label title="{{localize "DoD.skill.typeTooltip"}}">
-                {{localize "DoD.skill.type"}}
-                </label>
-            </th>
-            <th>
-                <label title="{{localize "DoD.skill.attributeTooltip"}}">
-                {{localize "DoD.skill.attribute"}}
-                </label>
-            </th>
-            <th>
-                <label title="{{localize "DoD.skill.hideTooltip"}}">
-                {{localize "DoD.skill.hide"}}
-                </label>
-            </th>
-        </tr>
-        <tr>
-            <td>
-                <select name="system.skillType">
-                    {{selectOptions config.skillTypes selected=system.skillType localize=true}}
-                </select>
-            </td>
-            <td>
-                <select name="system.attribute">
-                    {{selectOptions config.attributes selected=system.attribute localize=true}}
-                </select>
-            </td>
-            <td>
-                <input class="inline-edit" name="system.hideTrained" data-field="system.hideTrained" type="checkbox" {{checked system.hideTrained}} />
-            </td>
-        </tr>
-    </table>
+    <div class="skill-tab dod-controls">
+        <table class="simple-table">
+            <tr>
+                <th>
+                    <label title="{{localize "DoD.skill.typeTooltip"}}">
+                    {{localize "DoD.skill.type"}}
+                    </label>
+                </th>
+                <th>
+                    <label title="{{localize "DoD.skill.attributeTooltip"}}">
+                    {{localize "DoD.skill.attribute"}}
+                    </label>
+                </th>
+                <th>
+                    <label title="{{localize "DoD.skill.hideTooltip"}}">
+                    {{localize "DoD.skill.hide"}}
+                    </label>
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <select name="system.skillType">
+                        {{selectOptions config.skillTypes selected=system.skillType localize=true}}
+                    </select>
+                </td>
+                <td>
+                    <select name="system.attribute">
+                        {{selectOptions config.attributes selected=system.attribute localize=true}}
+                    </select>
+                </td>
+                <td>
+                    <input class="inline-edit" name="system.hideTrained" data-field="system.hideTrained" type="checkbox" {{checked system.hideTrained}} />
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>

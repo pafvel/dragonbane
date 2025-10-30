@@ -1,4 +1,5 @@
-<form class = "DoD.dialog">
+<form>
+    <div  class="dod-controls">
     <div class="flexrow">
 
         {{!-- Boons --}}
@@ -107,12 +108,10 @@
             <div class="flexrow">
                 {{#each actions as |action|}}
                 <div class="flex-nowrap">
-                    {{#if action.checked}}
-                    <input type="radio" id="{{action.id}}" name="action" value="{{action.id}}" checked>
-                    {{else}}
-                    <input type="radio" id="{{action.id}}" name="action" value="{{action.id}}">
-                    {{/if}}
-                    <label for="{{action.id}}" title="{{action.tooltip}}">{{action.label}}</label>
+                    <label for="{{action.id}}" title="{{action.tooltip}}">
+                        <input type="radio" id="{{action.id}}" name="action" value="{{action.id}}" {{#if action.checked}}checked{{/if}}>
+                        {{action.label}}
+                    </label>
                 </div>
                 {{/each}}
             </div>
@@ -138,4 +137,5 @@
     </div>
     <br>
     {{/if}}
+    </div>
 </form>

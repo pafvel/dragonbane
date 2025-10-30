@@ -1,5 +1,5 @@
 <div class="tab {{tabs.skills.cssClass}}" data-group="primary" data-tab="{{tabs.skills.id}}">
-    <div class="flexrow">
+    <div class="flexrow dod-controls">
         {{!-- Core Skills --}}
         <div>
             <table class="sheet-table core-skills item-list">
@@ -30,7 +30,7 @@
                         {{/if}}
                     </td>
                     <td class="number-data narrow">
-                        <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
+                        <input class="inline-edit" data-field="system.value" type="number" value="{{skill.system.value}}" data-dtype="Number"/>
                     </td>
                     <td class="skill-name text-data">
                         {{#if skill.system.isProfessionSkill}}

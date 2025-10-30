@@ -11,25 +11,11 @@
             --table-row-color-even: transparent;
         }
 
-        input {
-            color: black;
-        }
-
-        input[type="text"], select {
-            outline: 0;
-
-            &:focus {
-                box-shadow: 0 0 5px var(--color-shadow-primary);
-                transition: none;
-            }
-        }
-
-        input[type="number"] {
-            background-color: transparent;
-
-            &:focus {
-                box-shadow: 0 0 5px var(--color-shadow-primary);
-                transition: none;
+        input[type="checkbox"].mark-advancement {
+            
+            &::before, &::after {
+                font-size: 1rem;
+                line-height: 1rem;
             }
         }
         
@@ -216,12 +202,21 @@
                         top: 38%;
                         left: -6px;
                         width: 100%;
+                        height: 26px;
+                        padding: 1px 3px;
                         font-family: var(--dod-font-handwriting);
                         font-size: 2em;
                         font-weight: bold;
                         text-align: center;
                         border: none;
                         background-color: transparent;
+                        color: black;
+                    }
+
+                    input[type="text"]:focus {
+                        box-shadow: 0 0 5px var(--color-shadow-primary);
+                        transition: none;
+                        outline: 0;
                     }
                 }
 

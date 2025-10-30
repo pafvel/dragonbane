@@ -1,6 +1,6 @@
-<form class = "DoD.dialog">
-    <div class="flexcol">
-        {{!-- Weapon Features --}}
+<form>
+    <div class="flexcol dod-controls">
+        {{!-- Armor bonuses --}}
         <table class="sheet-table armor-bonuses">
             <tr class="sheet-table-header">
                 <th></th>
@@ -8,7 +8,7 @@
             </tr>
             {{#each bonuses as |bonus|}}
             <tr class="sheet-table-data">
-                <td><input type="checkbox" id="{{bonus.id}}" name="{{bonus.name}}" {{checked bonus.value}}/></td>
+                <td class="checkbox-data"><input type="checkbox" id="{{bonus.id}}" name="{{bonus.name}}" {{checked bonus.value}}/></td>
                 <td class="text-data" title="{{localize bonus.tooltip}}" style="text-transform:capitalize;">{{localize bonus.name}}</td>
             </tr>
             {{/each}}

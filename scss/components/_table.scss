@@ -1,3 +1,5 @@
+@use "../abstracts/placeholders";
+
 .system-dragonbane {
 
     .sheet-table {
@@ -25,16 +27,8 @@
             color: rgb(80, 80, 80);
         };
 
-        input[type="text"] {
+        input[type="text"], input[type="number"] {
             background: rgba(0, 0, 0, 0.1);
-        }
-
-        input[type="checkbox"].mark-advancement {
-            
-            &::before, &::after {
-                font-size: 1rem;
-                line-height: 1rem;
-            }
         }
     };                
 
@@ -151,15 +145,6 @@
             padding-right: 2em;
         };
 
-        select {
-            border: 0;
-            background: rgba(0, 0, 0, 0.05);
-            color: var(--dod-color-journal-text);
-            width: auto;
-            outline: 0;
-            padding: 0;
-        }
-
         .thumbnail-data {
             padding: 0;            
             width: 36px;
@@ -188,15 +173,8 @@
             }
 
             input {
-                margin: 0;
-                vertical-align: sub;
+                vertical-align: -webkit-baseline-middle;
             }
-
-            /*
-            input[type="checkbox"]::before {
-                color: white;
-            }
-            */           
         }
 
         .text-data {
@@ -209,12 +187,15 @@
             padding-right: 0.5em;
 
             input {
-                border: 0;
                 height: 100%;
+            }
+
+            input[type="text"] {
                 width: 2em;
-                padding: 0;
-                text-align: center;
-                vertical-align: middle;
+            };
+
+            input[type="number"] {
+                width: 3em;
             };
         }            
 
@@ -240,53 +221,18 @@
         background: none;
         margin: 0.5em 0;
 
-        input {
-            background: transparent;
-            text-align: center;
-            outline: 0;
-            color: var(--dod-color-journal-text);
-
-            &:invalid {
-                color: var(--dod-color-invalid-input);
-            }    
-
-            &:valid {
-                color: var(--dod-color-journal-text);
-            }    
-
-        }
-
-        select:focus, input:focus {
-            box-shadow: 0 0 5px var(--color-shadow-primary);
-            transition: none;
-        }
-
-        select, input[type="text"] {
-            height: 2em;
-            line-height: normal;
-            padding: 1px 0.25em;
-        }
-
-        select {
-            border-color: transparent;
-            background: rgba(0, 0, 0, 0.05);
-            color: var(--dod-color-journal-text);
-            width: auto;
-            outline: 0;
+        tr {
+            background-color: transparent;
         }
 
         th {
             text-align: center;
             padding: 0.25em 0 0.25em 1em;
-            color: var(--dod-color-text-primary);
+            color: var(--dod-color-journal-text);
         }
 
         th:last-child {
             padding-right: 20px;
-        }
-
-        tr {
-            background-color: transparent;
         }
 
         tr:nth-child(1n+2) {
@@ -303,7 +249,8 @@
                 padding: 0.25em 0.25em 0.25em 1.25em;
                 max-width:200px;
                 
-                // @extend %no-wrap-ellipsis;
+                @extend %no-wrap-ellipsis;
+
                 input {
                     border: 0;
                     background: transparent;
@@ -320,11 +267,6 @@
             td:last-child {
                 padding-right: 1.25em;
             }
-
-            select {
-                border: 0;
-            }
-
         }
     }
 }

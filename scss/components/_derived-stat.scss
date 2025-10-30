@@ -54,26 +54,9 @@
             color:red;
         }
 
-        input {
-            border-color: transparent;
-            background: transparent;
-            text-align: center;
-        }
-
-        select {
-            border-color: transparent;
-            background: transparent;
-            color: black;
-            width: auto
-        }
-
         option {
             text-align:center;
             text-align-last: center; 
         }
-
-        input[type="checkbox"] {
-            margin: 4px 5px;
-        }  
     };
 }
