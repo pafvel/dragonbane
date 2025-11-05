@@ -187,6 +187,7 @@ export default class DoDCharacterSheet extends BaseActorSheet {
         const tricks = [];
         const schools = {};
         const inventory = [];
+        const storage = [];
         const equippedWeapons = [];
         const injuries = [];
 
@@ -196,6 +197,11 @@ export default class DoDCharacterSheet extends BaseActorSheet {
         let smallItems = [];
 
         for (let item of sheetData.actor.items.contents) {
+            // Show storage items in storage section only (accept boolean true or string 'true')
+            if (item.system && (item.system.storage === true || item.system.storage === "true")) {
+                storage.push(item);
+                continue;
+            }
 
             // any item can be a memento
             if (item.system.memento && this.actor.type === "character") {
@@ -352,6 +358,7 @@ export default class DoDCharacterSheet extends BaseActorSheet {
         sheetData.hasArmor = equippedArmor || equippedHelmet;
         sheetData.smallItems = smallItems?.sort(DoD_Utility.itemSorter);
         sheetData.memento = memento;
+        sheetData.storage = storage?.sort(DoD_Utility.itemSorter);
         sheetData.canEquipItems = game.settings.get("dragonbane", "canEquipItems2");
         sheetData.effects = Array.from(this.actor.allApplicableEffects());
 
@@ -1504,12 +1511,14 @@ export default class DoDCharacterSheet extends BaseActorSheet {
                             // split item
                             itemData.system.quantity = 1;
                             itemData.system.worn = true;
+                            itemData.system.storage = false;
                             await item.update({["system.quantity"]: item.system.quantity - 1 });
                             return await this._onDropItemCreate(itemData);
                         } else {
                             await item.update({
                                 ["system.worn"]: worn,
-                                ["system.memento"]: false
+                                ["system.memento"]: false,
+                                ["system.storage"]: false
                             });
                             return this._onSortItem(event, itemData);
                         }
@@ -1519,27 +1528,35 @@ export default class DoDCharacterSheet extends BaseActorSheet {
                     await actorData.equippedArmor?.update({ ["system.worn"]: false});
                     await item.update({
                         ["system.worn"]: true,
-                        ["system.memento"]: false
+                        ["system.memento"]: false,
+                        ["system.storage"]: false
                     });
                 }
                 else if (dropTarget === "helmet" && itemData.type === "helmet") {
                     await actorData.equippedHelmet?.update({ ["system.worn"]: false});
                     await item.update({
                         ["system.worn"]: true,
-                        ["system.memento"]: false
+                        ["system.memento"]: false,
+                        ["system.storage"]: false
                     });
                 }
                 else if (dropTarget === "memento") {
                     await actorData.memento?.update({ ["system.memento"]: false });
-                    await item.update({ ["system.memento"]: true});
+                    await item.update({ ["system.memento"]: true, ["system.storage"]: false});
                 }
                 else if (dropTarget === "inventory" || dropTarget === "tiny") {
                     await item.update({
                         ["system.worn"]: false,
-                        ["system.memento"]: false
+                        ["system.memento"]: false,
+                        ["system.storage"]: false
+                    });
+                } else if (dropTarget === "storage") {
+                    await item.update({
+                        ["system.worn"]: false,
+                        ["system.memento"]: false,
+                        ["system.storage"]: true
                     });
                 }
-              
             }
 
             return this._onSortItem(event, itemData);
@@ -1563,8 +1580,26 @@ export default class DoDCharacterSheet extends BaseActorSheet {
                 || item.type === "helmet" && !actorData.equippedHelmet;
         }
 
-        // Increase quantity when dropped item already exists in inventory 
-        if(item.type === "item" && itemData.system?.quantity !== undefined ) {
+        // If the item is dropped from outside this actor, detect the drop target
+        // and set the storage flag accordingly.
+        try {
+            const list = event.target.closest(".item-list");
+            const dropTarget = list ? list.dataset.droptarget : null;
+            if (dropTarget === "storage") {
+                itemData.system = itemData.system || {};
+                itemData.system.storage = true;
+                if (itemData.system.worn !== undefined) itemData.system.worn = false;
+                if (itemData.system.memento !== undefined) itemData.system.memento = false;
+            } else if (dropTarget === "inventory" || dropTarget === "tiny") {
+                itemData.system = itemData.system || {};
+                itemData.system.storage = false;
+            }
+        } catch (err) {
+            // ignore DOM lookup failures
+        }
+
+        // Increase quantity when dropped item already exists in inventory
+        if (item.type === "item" && itemData.system?.quantity !== undefined) {
             const existingItem = actorData.actor.items.filter(item => {
                 // Item exists if it is the same type, has the same name
                 // and has the same system data properties (except quantity)
@@ -1635,6 +1670,14 @@ export default class DoDCharacterSheet extends BaseActorSheet {
                 itemData.type === "weapon" && actorData.canEquipWeapon
                 || itemData.type === "armor" && !actorData.equippedArmor
                 || itemData.type === "helmet" && !actorData.equippedHelmet;
+        }
+
+        // If the create button is in the storage section, mark the item as stored
+        if (element.classList && element.classList.contains("storage")) {
+            itemData.system = itemData.system || {};
+            itemData.system.storage = true;
+            if (itemData.system.worn !== undefined) itemData.system.worn = false;
+            if (itemData.system.memento !== undefined) itemData.system.memento = false;
         }
 
         return this.actor.createEmbeddedDocuments("Item", [itemData]);

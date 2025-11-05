@@ -12,6 +12,7 @@ export class DoDGearBaseData extends DoDItemBaseData {
             memento: new fields.BooleanField({ required: true, initial: false }),
             boons: new fields.StringField({ required: true, blank: true, initial: "" }),
             banes: new fields.StringField({ required: true, blank: true, initial: "" }),
+            storage: new fields.BooleanField({ required: false, initial: false }),
         });
     };
 
