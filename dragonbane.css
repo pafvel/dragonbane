@@ -319,7 +319,7 @@
   padding: 1px 0.25em;
   background: transparent;
 }
-.system-dragonbane .dod-controls input[type=radio] {
+.system-dragonbane .dod-controls input[type=checkbox], .system-dragonbane .dod-controls input[type=radio] {
   top: 0;
   vertical-align: middle;
 }
@@ -390,13 +390,13 @@
   text-align-last: center;
 }
 
+.system-dragonbane .dialog .dialog-content {
+  display: block;
+}
 .system-dragonbane .app.dialog .dialog-buttons .dialog-button, .system-dragonbane .sheet-footer button {
   --button-focus-outline-color: var(--color-border-highlight);
 }
 
-.system-dragonbane .standard-form {
-  gap: 0;
-}
 .system-dragonbane .standard-form .flexrow {
   align-items: normal;
 }
@@ -801,7 +801,6 @@
 .system-dragonbane .simple-table th {
   text-align: center;
   padding: 0.25em 0 0.25em 1em;
-  color: var(--dod-color-journal-text);
 }
 .system-dragonbane .simple-table th:last-child {
   padding-right: 20px;
