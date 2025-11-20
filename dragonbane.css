@@ -313,7 +313,7 @@
   box-shadow: 0 0 5px var(--color-shadow-primary);
   transition: none;
 }
-.system-dragonbane .dod-controls input[type=text] {
+.system-dragonbane .dod-controls input[type=number], .system-dragonbane .dod-controls input[type=text] {
   height: 2em;
   line-height: normal;
   padding: 1px 0.25em;
@@ -771,11 +771,8 @@
 .system-dragonbane .sheet-table-data .number-data input {
   height: 100%;
 }
-.system-dragonbane .sheet-table-data .number-data input[type=text] {
+.system-dragonbane .sheet-table-data .number-data input[type=number], .system-dragonbane .sheet-table-data .number-data input[type=text] {
   width: 2em;
-}
-.system-dragonbane .sheet-table-data .number-data input[type=number] {
-  width: 3em;
 }
 .system-dragonbane .sheet-table-data .icon-data {
   width: 4em;

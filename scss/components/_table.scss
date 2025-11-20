@@ -190,12 +190,8 @@
                 height: 100%;
             }
 
-            input[type="text"] {
+            input[type="number"], input[type="text"] {
                 width: 2em;
-            };
-
-            input[type="number"] {
-                width: 3em;
             };
         }            
 
