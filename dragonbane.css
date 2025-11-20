@@ -1221,6 +1221,12 @@
   background-color: transparent;
   color: black;
 }
+.system-dragonbane .sheet.character .attributes-container .attributes .attribute-panel .attribute-input.value-increased {
+  color: var(--dod-color-positive-effect);
+}
+.system-dragonbane .sheet.character .attributes-container .attributes .attribute-panel .attribute-input.value-decreased {
+  color: var(--dod-color-negative-effect);
+}
 .system-dragonbane .sheet.character .attributes-container .attributes .attribute-panel input[type=text]:focus {
   box-shadow: 0 0 5px var(--color-shadow-primary);
   transition: none;

@@ -211,6 +211,15 @@
                         border: none;
                         background-color: transparent;
                         color: black;
+
+                        &.value-increased {
+                            color: var(--dod-color-positive-effect);            
+                        }
+                        
+                        &.value-decreased {
+                            color: var(--dod-color-negative-effect);
+                        }
+
                     }
 
                     input[type="text"]:focus {
@@ -703,9 +712,9 @@
         }
 
         .value-increased {
-            color: var(--dod-color-positive-effect);
+            color: var(--dod-color-positive-effect);            
         }
-
+        
         .value-decreased {
             color: var(--dod-color-negative-effect);
         }
