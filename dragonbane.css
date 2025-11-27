@@ -1231,6 +1231,7 @@
   box-shadow: 0 0 5px var(--color-shadow-primary);
   transition: none;
   outline: 0;
+  color: black;
 }
 .system-dragonbane .sheet.character .attributes-container .attributes .attribute1 {
   left: 18%;
