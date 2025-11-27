@@ -1,11 +1,30 @@
 .system-dragonbane {
 
-    .sheet.item, .sheet.active-effect-sheet {
+    .sheet.item, .sheet.active-effect-config {
 
         form {
             display: flex;
             flex-direction: column;
             font-family: var(--dod-font-primary);
+        }
+
+        .standard-form {
+            gap: 0;
+
+            .form-footer {
+                
+                button {
+                    background: url("art/ui/button-bg.webp");
+                    background-repeat: repeat-x;
+                    background-size: cover;
+                    background-clip: border-box;
+                    color: whitesmoke;            
+                    font-family: var(--dod-font-heading);
+                    font-weight: normal;
+                    width: 100%;
+                }
+            }
+
         }
 
         .window-content {

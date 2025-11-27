@@ -29,6 +29,7 @@ import DoDCharacterData from "./modules/data/actors/characterData.js";
 import DoDNPCData from "./modules/data/actors/NPCData.js";
 import DoDMonsterData from "./modules/data/actors/monsterData.js";
 import DoDAbilityData from "./modules/data/items/abilityData.js";
+import DoDActiveEffectData from "./modules/data/items/activeEffectData.js";
 import DoDArmorData from "./modules/data/items/armorData.js";
 import DoDHelmetData from "./modules/data/items/helmetData.js";
 import DoDInjuryData from "./modules/data/items/injuryData.js";
@@ -335,6 +336,8 @@ Hooks.once("init", function () {
         weapon: DoDWeaponData
     });
 
+    CONFIG.ActiveEffect.dataModels["base"] = DoDActiveEffectData;
+
     CONFIG.DoD.Actors.unregisterSheet("core", foundry.appv1.sheets.ActorSheet);
     CONFIG.DoD.Actors.registerSheet("DoD", DoDCharacterSheet, { types: ["character"], makeDefault: true });
     CONFIG.DoD.Actors.registerSheet("DoD", DoDNpcSheet, { types: ["npc"], makeDefault: true });
@@ -396,10 +399,6 @@ Hooks.once("init", function () {
         Hooks.on("renderChatMessageHTML", DoDChat.addChatListeners);
         Hooks.on("getChatMessageContextOptions", DoDChat.addChatMessageContextMenuOptions);
         Hooks.on("renderChatMessageHTML", DoDChat.hideChatPermissions);
-    }  
-
-    if (game.release.version < 14) {
-        CONFIG.compatibility.excludePatterns.push(new RegExp("The V1 Application framework is deprecated"));
     }
 });
 

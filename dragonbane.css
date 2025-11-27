@@ -1641,21 +1641,34 @@
   color: var(--dod-color-negative-effect);
 }
 
-.system-dragonbane .sheet.item form, .system-dragonbane .sheet.active-effect-sheet form {
+.system-dragonbane .sheet.item form, .system-dragonbane .sheet.active-effect-config form {
   display: flex;
   flex-direction: column;
   font-family: var(--dod-font-primary);
 }
-.system-dragonbane .sheet.item .window-content, .system-dragonbane .sheet.active-effect-sheet .window-content {
+.system-dragonbane .sheet.item .standard-form, .system-dragonbane .sheet.active-effect-config .standard-form {
+  gap: 0;
+}
+.system-dragonbane .sheet.item .standard-form .form-footer button, .system-dragonbane .sheet.active-effect-config .standard-form .form-footer button {
+  background: url("art/ui/button-bg.webp");
+  background-repeat: repeat-x;
+  background-size: cover;
+  background-clip: border-box;
+  color: whitesmoke;
+  font-family: var(--dod-font-heading);
+  font-weight: normal;
+  width: 100%;
+}
+.system-dragonbane .sheet.item .window-content, .system-dragonbane .sheet.active-effect-config .window-content {
   background: url("art/ui/item-sheet-bg.webp") repeat;
   background-position: top center;
   padding: 0;
 }
-.system-dragonbane .sheet.item .sheet-header, .system-dragonbane .sheet.active-effect-sheet .sheet-header {
+.system-dragonbane .sheet.item .sheet-header, .system-dragonbane .sheet.active-effect-config .sheet-header {
   display: flex;
   padding: 8px;
 }
-.system-dragonbane .sheet.item .sheet-header h1, .system-dragonbane .sheet.active-effect-sheet .sheet-header h1 {
+.system-dragonbane .sheet.item .sheet-header h1, .system-dragonbane .sheet.active-effect-config .sheet-header h1 {
   background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/title-bar.webp");
   background-position: left center, right center, center center;
   background-repeat: no-repeat, no-repeat, repeat-x;
@@ -1668,7 +1681,7 @@
   font-weight: 400;
   width: 100%;
 }
-.system-dragonbane .sheet.item .sheet-header input, .system-dragonbane .sheet.active-effect-sheet .sheet-header input {
+.system-dragonbane .sheet.item .sheet-header input, .system-dragonbane .sheet.active-effect-config .sheet-header input {
   color: var(--dod-color-journal-table-header);
   background: transparent;
   text-align: center;
@@ -1677,14 +1690,14 @@
   margin: 8px;
   outline: 0;
 }
-.system-dragonbane .sheet.item .sheet-header input:focus, .system-dragonbane .sheet.active-effect-sheet .sheet-header input:focus {
+.system-dragonbane .sheet.item .sheet-header input:focus, .system-dragonbane .sheet.active-effect-config .sheet-header input:focus {
   box-shadow: 0 0 5px var(--color-shadow-primary);
   transition: none;
 }
-.system-dragonbane .sheet.item .sheet-header img, .system-dragonbane .sheet.active-effect-sheet .sheet-header img {
+.system-dragonbane .sheet.item .sheet-header img, .system-dragonbane .sheet.active-effect-config .sheet-header img {
   border-color: transparent;
 }
-.system-dragonbane .sheet.item nav.tabs.sheet-tabs, .system-dragonbane .sheet.active-effect-sheet nav.tabs.sheet-tabs {
+.system-dragonbane .sheet.item nav.tabs.sheet-tabs, .system-dragonbane .sheet.active-effect-config nav.tabs.sheet-tabs {
   width: 100%;
   background-image: url("art/ui/table-row-banner.webp");
   background-repeat: repeat-x;
@@ -1692,15 +1705,15 @@
   background-size: auto 100%;
   border-color: transparent;
 }
-.system-dragonbane .sheet.item nav.tabs [data-tab], .system-dragonbane .sheet.active-effect-sheet nav.tabs [data-tab] {
+.system-dragonbane .sheet.item nav.tabs [data-tab], .system-dragonbane .sheet.active-effect-config nav.tabs [data-tab] {
   color: var(--dod-color-parchment-text);
 }
-.system-dragonbane .sheet.item .sheet-tab, .system-dragonbane .sheet.active-effect-sheet .sheet-tab {
+.system-dragonbane .sheet.item .sheet-tab, .system-dragonbane .sheet.active-effect-config .sheet-tab {
   height: 100%;
   padding: 0 8px;
   color: var(--dod-color-journal-text);
 }
-.system-dragonbane .sheet.item .sheet-tab .text-box-editor, .system-dragonbane .sheet.active-effect-sheet .sheet-tab .text-box-editor {
+.system-dragonbane .sheet.item .sheet-tab .text-box-editor, .system-dragonbane .sheet.active-effect-config .sheet-tab .text-box-editor {
   height: 100%;
 }
 

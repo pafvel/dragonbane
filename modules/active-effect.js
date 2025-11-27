@@ -3,35 +3,32 @@ import DoD_Utility from "./utility.js";
 
 export default class DoDActiveEffect extends ActiveEffect {
 
+    static migrateData(source) {
+        
+        // Migrate old flag to system field
+        const flags = source.flags?.[game.system.id];
+        if (flags?.applyOnlyWhenEquipped !== undefined) {
+            // Move to system field
+            const oldValue = flags.applyOnlyWhenEquipped;
+            foundry.utils.setProperty(source, "system.applyOnlyWhenEquipped", oldValue);
+
+            // Remove old flag
+            delete flags.applyOnlyWhenEquipped;
+            if (!Object.keys(flags).length) {
+                delete source.flags[game.system.id];
+            }
+        }
+        return super.migrateData(source);
+    }
+
     get canDeleteFromCharacterSheet() {
         return this.isOwner && this.parent instanceof DoDActor;
     }
 
-    get applyOnlyWhenEquipped() {
-        const flag = this.getFlag(game.system.id, "applyOnlyWhenEquipped");
-        return !!flag;
-    }
-    set applyOnlyWhenEquipped(value) {
-        this.setFlag(game.system.id, "applyOnlyWhenEquipped", value);
-    }
-
-    toObject(source=true) {
-        const data = super.toObject(source);
-        data.applyOnlyWhenEquipped = this.applyOnlyWhenEquipped;
-        return data;
-    }
-  
-    async update(data={}, context={}) {
-        if ("applyOnlyWhenEquipped" in data) {
-            await this.setFlag(game.system.id, "applyOnlyWhenEquipped", data.applyOnlyWhenEquipped);
-        }
-        return super.update(data, context);
-    }
-  
     get isSuppressed() {
         // If applyOnlyWhenEquipped is true, check if the item is equipped
         // NPCs and Monsters don't have equip checkboxes - assume that items are always equipped. Disable on effects tab instead.
-        if (this.parent instanceof Item && !this.parent.system.worn && this.applyOnlyWhenEquipped && this.target?.type === "character") {
+        if (this.parent instanceof Item && !this.parent.system.worn && this.system.applyOnlyWhenEquipped && this.target?.type === "character") {
             return true;
         }
         return false;
