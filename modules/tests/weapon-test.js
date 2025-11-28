@@ -113,7 +113,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.longRange"), value: true});
         }
         // Bane if walls or tokens obstruct line of sight
-        if (targetToken && actorToken && isRangedAttack) {
+        if (targetToken && actorToken && (isRangedWeapon || isThrownWeapon && !isInMeleeRange)) {
 
             const origin = actorToken.object.bounds.center;
             const destination = targetToken.object.bounds.center;
