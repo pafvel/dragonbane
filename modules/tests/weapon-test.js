@@ -14,6 +14,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         const isThrownWeapon = this.weapon.hasWeaponFeature("thrown");
         const isRangedWeapon = !isThrownWeapon && this.weapon.isRangedWeapon;
         const isMeleeWeapon = !isThrownWeapon && !isRangedWeapon;
+        const hasMeleeAttack = isMeleeWeapon || isThrownWeapon;
         const isLongWeapon = this.weapon.hasWeaponFeature("long");
         const hasSlashAttack = this.weapon.hasWeaponFeature("slashing");
         const hasStabAttack = this.weapon.hasWeaponFeature("piercing");
@@ -23,7 +24,27 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         const hasDisarmAttack = true;
         const hasParry = !this.weapon.hasWeaponFeature("noparry");
         const isShield = this.weapon.hasWeaponFeature("shield");
+        const actorToken = canvas.scene?.tokens?.find(t => t.actor?.uuid === this.actor.uuid);
+        const targetToken = this.options.targets?.length > 0 ? this.options.targets[0].document : null;
 
+        //
+        // Calculate ranges
+        //
+        let distance = 0;
+        let isInMeleeRange = true;
+
+        if (actorToken && targetToken) {
+
+            // Calculate separation between actor and target tokens
+            distance = DoD_Utility.calculateDistanceBetweenTokens(actorToken, targetToken);
+
+            // Determine available attack types based on range and weapon
+            isInMeleeRange = distance <= (isMeleeWeapon ? this.weapon.calculateRange() : (isLongWeapon ? 4 : 2));
+        }
+
+        //
+        // Determine available actions
+        //
         let actions = [];
 
         function pushAction(action) {
@@ -34,52 +55,37 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             });
         }
 
-        const actorToken = canvas.scene?.tokens?.find(t => t.actor?.uuid === this.actor.uuid);
-        const targetToken = this.options.targets?.length > 0 ? this.options.targets[0].document : null;
-        let distance = 0;
-        let isInMeleeRange = true;
-        let isMeleeAttack = isMeleeWeapon || isThrownWeapon;
-        let isRangedAttack = isRangedWeapon || isThrownWeapon;
-       
-        if (actorToken && targetToken) {
-
-            // Calculate separation between actor and target tokens
-            distance = DoD_Utility.calculateDistanceBetweenTokens(actorToken, targetToken);
-
-            // Determine available attack types based on range and weapon
-            isInMeleeRange = distance <= (isMeleeWeapon ? this.weapon.calculateRange() : (isLongWeapon ? 4 : 2));
-            isMeleeAttack = isMeleeWeapon || isThrownWeapon;
-            isRangedAttack = isRangedWeapon || isThrownWeapon;
-        }
-
         if(isRangedWeapon) {
             pushAction("ranged");
         }
-        if(isMeleeAttack && hasNormalAttack) {
+        if(hasMeleeAttack && hasNormalAttack) {
             pushAction("normal");
         }
-        if(isMeleeAttack && hasSlashAttack) {
+        if(hasMeleeAttack && hasSlashAttack) {
             pushAction("slash");
         }
-        if(isMeleeAttack && hasStabAttack) {
+        if(hasMeleeAttack && hasStabAttack) {
             pushAction("stab");
         }
-        if(isMeleeAttack && hasWeakpointAttack) {
+        if(hasMeleeAttack && hasWeakpointAttack) {
             pushAction("weakpoint");
         }
-        if(isMeleeAttack && hasToppleAttack) {
+        if(hasMeleeAttack && hasToppleAttack) {
             pushAction("topple");
         }
-        if(isMeleeAttack && hasDisarmAttack) {
+        if(hasMeleeAttack && hasDisarmAttack) {
             pushAction("disarm");
         }
         if(isThrownWeapon) {
             pushAction("throw");
         }
-        if(isMeleeAttack && hasParry) {
+        if(hasMeleeAttack && hasParry) {
             pushAction("parry");
         }
 
+        //
+        // Set default action
+        //
         if (actions.length > 0) {
             let defaultIndex = 0;
             if (isShield) {
@@ -93,59 +99,70 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             actions[defaultIndex].checked = true;
         }
 
+        this.dialogData.actions = actions;
+
+        //
+        // Automatic banes and boons
+        //
+
+        // Bane for strength below weapon requirement
         if (this.actor.type === "character" && this.weapon.requiredStr > this.actor.system.attributes.str.value) {
             this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.belowRequiredStr"), value: true});
         }
 
-        // Boon and extra damage on melee attack on prone target
-        if (isMeleeAttack && targetToken && actorToken) {
-            if (targetToken.hasStatusEffect("prone") && !actorToken.hasStatusEffect("prone")) {
-                this.dialogData.boons.push({source: game.i18n.localize("EFFECT.StatusProne"), value: true});
-                this.dialogData.extraDamage = "D6";
+        if (actorToken && targetToken) {
+
+            // Boon and extra damage on melee attack on prone target
+            if (hasMeleeAttack && isInMeleeRange) {
+                if (targetToken.hasStatusEffect("prone") && !actorToken.hasStatusEffect("prone")) {
+                    this.dialogData.boons.push({source: game.i18n.localize("EFFECT.StatusProne"), value: true});
+                    this.dialogData.extraDamage = "D6";
+                }
+            }
+            // Bane on ranged attacks at point blank
+            if (isRangedWeapon && distance <= 2) {
+                this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.pointBlank"), value: true});
+            }
+            // Bane on ranged attacks at more than max range
+            if ((isRangedWeapon || isThrownWeapon) && distance > this.weapon.calculateRange()) {
+                this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.longRange"), value: true});
+            }
+            // Bane if walls or tokens obstruct line of sight
+            if ((isRangedWeapon || isThrownWeapon && !isInMeleeRange)) {
+
+                const origin = actorToken.object.bounds.center;
+                const destination = targetToken.object.bounds.center;
+
+                // Check walls
+                const sightBackend = CONFIG.Canvas.polygonBackends["sight"];
+                const blockedByWall = sightBackend.testCollision(origin, destination, { mode: "any", type: "sight" });
+                if (blockedByWall) {
+                    this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.lineOfSightWall"), value: true});
+                }
+
+                // Check tokens
+                const ray = game.release.generation < 13 ? new Ray (origin, destination) : new foundry.canvas.geometry.Ray(origin, destination);
+                const potentialBlockers = canvas.tokens.placeables.filter(t => t.id !== targetToken.id && t.id !== actorToken.id && !t.document.hidden);
+                const blockers = potentialBlockers.filter(t => {
+                    const { x, y, width, height } = t.bounds;
+                    const sides = [
+                        [ x,            y,          x + width, y            ], // top
+                        [ x + width,    y,          x + width, y + height   ], // right
+                        [ x + width,    y + height, x,         y + height   ], // bottom
+                        [ x,            y + height, x,         y            ]  // left
+                    ];
+                    return sides.some(coords => !!ray.intersectSegment(coords));
+                });
+                if (blockers.length > 0) {
+                    const notProne = blockers.some( blocker => !blocker.document.hasStatusEffect("prone") );
+                    this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.lineOfSightToken"), value: notProne});
+                }
             }
         }
-        // Bane on ranged attacks at point blank
-        if (targetToken && isRangedWeapon && distance <= 2) {
-            this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.pointBlank"), value: true});
-        }
-        // Bane on ranged attacks at more than max range
-        if (targetToken && (isRangedWeapon || isThrownWeapon) && distance > this.weapon.calculateRange()) {
-            this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.longRange"), value: true});
-        }
-        // Bane if walls or tokens obstruct line of sight
-        if (targetToken && actorToken && (isRangedWeapon || isThrownWeapon && !isInMeleeRange)) {
 
-            const origin = actorToken.object.bounds.center;
-            const destination = targetToken.object.bounds.center;
-
-            // Check walls
-            const sightBackend = CONFIG.Canvas.polygonBackends["sight"];
-            const blockedByWall = sightBackend.testCollision(origin, destination, { mode: "any", type: "sight" });
-            if (blockedByWall) {
-                this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.lineOfSightWall"), value: true});
-            }
-
-            // Check tokens
-            const ray = game.release.generation < 13 ? new Ray (origin, destination) : new foundry.canvas.geometry.Ray(origin, destination);
-            const potentialBlockers = canvas.tokens.placeables.filter(t => t.id !== targetToken.id && t.id !== actorToken.id && !t.document.hidden);
-            const blockers = potentialBlockers.filter(t => {
-                const { x, y, width, height } = t.bounds;
-                const sides = [
-                    [ x,            y,          x + width, y            ], // top
-                    [ x + width,    y,          x + width, y + height   ], // right
-                    [ x + width,    y + height, x,         y + height   ], // bottom
-                    [ x,            y + height, x,         y            ]  // left
-                ];
-                return sides.some(coords => !!ray.intersectSegment(coords));
-            });
-            if (blockers.length > 0) {
-                const notProne = blockers.some( blocker => !blocker.document.hasStatusEffect("prone") );
-                this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.lineOfSightToken"), value: notProne});
-            }
-        }
-
-        this.dialogData.actions = actions;
-
+        //
+        // Enchanted weapons
+        //
         this.dialogData.enchantedWeapon = 0;
         if (this.weapon.hasWeaponFeature("enchanted1")) {
             this.dialogData.enchantedWeapon = 1;
