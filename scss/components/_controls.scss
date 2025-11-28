@@ -7,7 +7,6 @@
             margin: 0;
             outline: 0;
             background: transparent;
-            text-align: center;
             color: var(--dod-color-journal-text);
 
             &:invalid {
@@ -25,6 +24,7 @@
             line-height: normal;
             padding: 1px 0.25em;
             background: transparent;
+            text-align: center;
         }
 
         input[type="checkbox"], input[type="radio"] {

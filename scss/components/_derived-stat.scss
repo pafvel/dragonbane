@@ -48,6 +48,10 @@
             height: 2.5em;
             padding: 0 30px 0 0;
             min-width: 6em;
+
+            input[type="checkbox"] {
+                vertical-align: -webkit-baseline-middle;
+            }
         }
 
         .warning {

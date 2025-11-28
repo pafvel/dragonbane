@@ -17,6 +17,10 @@
         background-color: transparent;
         margin: 0.5rem 0;
 
+        tr {
+            background-color: transparent;
+        }
+        
         button {
             display: inline-block;
         }
@@ -249,6 +253,10 @@
                 input {
                     border: 0;
                     background: transparent;
+                }
+
+                input[type="checkbox"] {
+                    vertical-align: -webkit-baseline-middle;
                 }
             }
 
