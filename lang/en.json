@@ -594,7 +594,9 @@
             "optionalRuleSettings": "Optional Rules",
             "optionalRuleSettingsHint": "Configure which optional rules to use.",
             "damageTypes": "Damage Types",
-            "damageTypesHint": "Enable damage types (Bludgeoning, Piercing, Slashing), armor rating modifiers and weapon actions related to damage types."
+            "damageTypesHint": "Enable damage types (Bludgeoning, Piercing, Slashing), armor rating modifiers and weapon actions related to damage types.",
+            "coinEncumbrance": "Coin Encumbrance",
+            "coinEncumbranceHint": "Include coins in encumbrance calculations."
         },
         "WARNING": {
             "kinAbility": "Could not find Kin Ability: {ability}",

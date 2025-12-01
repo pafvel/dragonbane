@@ -1,3 +1,4 @@
+import DoDActorSettings from "./apps/actor-settings.js";
 import DoDSkillTest from "./tests/skill-test.js";
 
 export default class DoD_Utility {
@@ -59,7 +60,7 @@ export default class DoD_Utility {
     }
 
     static async getBaseSkills() {
-        if (!game.settings.get("dragonbane", "useWorldSkillsOnCreateActor")) {
+        if (!DoDActorSettings.useWorldSkills) {
             // Get skills from core module compendium
             const compendiumName = game.settings.get("dragonbane", "coreModuleCompendium");
             const pack = game.packs.get(compendiumName + "." + compendiumName);

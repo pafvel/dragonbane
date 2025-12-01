@@ -598,7 +598,9 @@
             "optionalRuleSettings": "Frivilliga regler",
             "optionalRuleSettingsHint": "Slå av/på frivilliga regler.",
             "damageTypes": "Skadetyper",
-            "damageTypesHint": "Använd skadetyper (krosskada, stickskada, huggskada), modifiering av rustningars skyddsvärde och relaterade vapenhandlingar."
+            "damageTypesHint": "Använd skadetyper (krosskada, stickskada, huggskada), modifiering av rustningars skyddsvärde och relaterade vapenhandlingar.",
+            "coinEncumbrance": "Vikt av mynt",
+            "coinEncumbranceHint": "Inkludera vikten av mynt i beräkningen av belastning."
         },
         "WARNING": {
             "kinAbility": "Kan ej hitta Släktesförmåga: {ability}",

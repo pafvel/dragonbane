@@ -24,7 +24,7 @@ export default class DoDActorSettings extends HandlebarsApplicationMixin(Applica
     /** @override */
     static PARTS = {
         body: {
-            template: "systems/dragonbane/templates/apps/actor-settings.hbs",
+            template: "systems/dragonbane/templates/apps/generic-settings.hbs",
             scrollable: [""],
             root: true
         },
@@ -34,14 +34,25 @@ export default class DoDActorSettings extends HandlebarsApplicationMixin(Applica
     };
 
     static #schema = new foundry.data.fields.SchemaField({
-        useWorldSkills: new foundry.data.fields.BooleanField({label : "DoD.SETTINGS.useWorldSkillsOnCreateActor", hint : "DoD.SETTINGS.useWorldSkillsOnCreateActorHint"}),
-        canEquipItems: new foundry.data.fields.BooleanField({label : "DoD.SETTINGS.canEquipItems", hint : "DoD.SETTINGS.canEquipItemsHint"}),
-        hideNpcWpWidget: new foundry.data.fields.BooleanField({label : "DoD.SETTINGS.hideNpcWpWidget", hint : "DoD.SETTINGS.hideNpcWpWidgetHint"}),
+        canEquipItems: new foundry.data.fields.BooleanField({ initial: true, label : "DoD.SETTINGS.canEquipItems", hint : "DoD.SETTINGS.canEquipItemsHint"}),
+        coinEncumbrance: new foundry.data.fields.BooleanField({ initial: true, label : "DoD.SETTINGS.coinEncumbrance", hint : "DoD.SETTINGS.coinEncumbranceHint"}),
+        hideNpcWpWidget: new foundry.data.fields.BooleanField({ initial: true, label : "DoD.SETTINGS.hideNpcWpWidget", hint : "DoD.SETTINGS.hideNpcWpWidgetHint"}),
+        useWorldSkills: new foundry.data.fields.BooleanField({ initial: false, label : "DoD.SETTINGS.useWorldSkillsOnCreateActor", hint : "DoD.SETTINGS.useWorldSkillsOnCreateActorHint"}),
     });
 
     static get schema()
     {
         return this.#schema
+    }
+
+    // Define getters for each schema field
+    static {
+        for (const key of Object.keys(this.#schema.fields)) {
+            Object.defineProperty(this, key, {
+                get() { return game.settings.get("dragonbane", "actorSettings")[key]; },
+                enumerable: true,
+            });
+        }
     }
 
     static registerSettings() {
@@ -55,57 +66,37 @@ export default class DoDActorSettings extends HandlebarsApplicationMixin(Applica
             restricted: true
         });
 
-        // If true, looks for skills in the world instead of the module when creating a new Actor.
-        game.settings.register("dragonbane", "useWorldSkillsOnCreateActor", {
-            name: "DoD.SETTINGS.useWorldSkillsOnCreateActor",
-            hint: "DoD.SETTINGS.useWorldSkillsOnCreateActorHint",
+        game.settings.register("dragonbane", "actorSettings", {
+            name: "DoD.SETTINGS.actorSettings",
+            hint: "DoD.SETTINGS.actorSettingsHint",
             scope: "world",
             config: false,
-            default: false,
-            type: Boolean
-        });
-
-        // canEquipItems2 replaces canEquipItems to ensure the new default value
-        game.settings.register("dragonbane", "canEquipItems2", {
-            name: "DoD.SETTINGS.canEquipItems",
-            hint: "DoD.SETTINGS.canEquipItemsHint",
-            scope: "world",
-            config: false,
-            default: true,
-            type: Boolean
-        });
-
-        // If true, hides WP gadget if NPC has 0 WP and no spells or abilities
-        game.settings.register("dragonbane", "hideNpcWpWidget", {
-            name: "DoD.SETTINGS.hideNpcWpWidget",
-            hint: "DoD.SETTINGS.hideNpcWpWidgetHint",
-            scope: "world",
-            config: false,
-            default: true,
-            type: Boolean
+            type: DoDActorSettings.schema
         });
     }
 
     async _prepareContext(options) {
         let context = await super._prepareContext(options);
-        
         context.schema = this.constructor.schema;
-        
-        context.source = {};
-        context.source.useWorldSkills = game.settings.get("dragonbane", "useWorldSkillsOnCreateActor");
-        context.source.canEquipItems = game.settings.get("dragonbane", "canEquipItems2");
-        context.source.hideNpcWpWidget = game.settings.get("dragonbane", "hideNpcWpWidget");
-
+        context.source = game.settings.get("dragonbane", "actorSettings");
         context.buttons = [{ type: "submit", icon: "fa-solid fa-floppy-disk", label: "SETTINGS.Save" }];
-
         return context;
     }
 
-
     static async _onSubmit(event, form, formData) 
     {
-        game.settings.set("dragonbane", "useWorldSkillsOnCreateActor", formData.object.useWorldSkills);
-        game.settings.set("dragonbane", "canEquipItems2", formData.object.canEquipItems);
-        game.settings.set("dragonbane", "hideNpcWpWidget", formData.object.hideNpcWpWidget);
+        // Check if reload is needed
+        let reload = false;
+        if (game.settings.get("dragonbane", "actorSettings").coinEncumbrance != formData.object.coinEncumbrance) {
+            reload = true;
+        }
+
+        // Save settings
+        game.settings.set("dragonbane", "actorSettings", formData.object);
+       
+        // Reload
+        if (reload) {
+            foundry.applications.settings.SettingsConfig.reloadConfirm({ world: true });
+        }
     }
 }

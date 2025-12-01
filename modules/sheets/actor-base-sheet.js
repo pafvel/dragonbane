@@ -4,6 +4,7 @@ import DoDSkillTest from "../tests/skill-test.js";
 import DoDSpellTest from "../tests/spell-test.js";
 import DoDWeaponTest from "../tests/weapon-test.js";
 import DoDOptionalRuleSettings from "../apps/optional-rule-settings.js";
+import DoDActorSettings from "../apps/actor-settings.js";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
@@ -231,7 +232,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
 
         // WP widget data
         if (this.actor.system.willPoints !== undefined) {
-            context.hasWillpower = this.actor.system.willPoints.max > 0 || context.abilities?.length > 0 || context.spells?.length > 0 || !game.settings.get("dragonbane", "hideNpcWpWidget");
+            context.hasWillpower = this.actor.system.willPoints.max > 0 || context.abilities?.length > 0 || context.spells?.length > 0 || !DoDActorSettings.hideNpcWpWidget;
             if (context.hasWillpower) {
                 context.maxWP = this.actor.system.willPoints.max;
                 context.currentWP = this.actor.system.willPoints.value;
@@ -1058,7 +1059,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         context.injuries = context.injuries?.sort(DoD_Utility.itemSorter);
 
         // Flags
-        context.canEquipItems = game.settings.get("dragonbane", "canEquipItems2");
+        context.canEquipItems = DoDActorSettings.canEquipItems;
     }
 
     _prepareEncumbrance(context) {

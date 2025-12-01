@@ -3,6 +3,7 @@ import DoDSkillTest from "./tests/skill-test.js";
 import DoDRoll from "./roll.js";
 import DoDActiveEffect from "./active-effect.js";
 import { DoD } from "./config.js";
+import DoDActorSettings from "./apps/actor-settings.js";
 
 export class DoDActor extends Actor {
 
@@ -532,7 +533,7 @@ export class DoDActor extends Actor {
         for (const item of this.items.contents) {
             encumbrance += item.totalWeight;
         }
-        if (this.system.currency) {
+        if (this.system.currency && DoDActorSettings.coinEncumbrance) {
             let coins = this.system.currency.gc + this.system.currency.sc + this.system.currency.cc;
             encumbrance += Math.floor(coins/100);
         }
