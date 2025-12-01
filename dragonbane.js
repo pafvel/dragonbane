@@ -44,6 +44,10 @@ import DoDActiveEffect from "./modules/active-effect.js";
 import DoDActiveEffectConfig from "./modules/active-effect-config.js";
 import DoDTokenRuler from "./modules/token-ruler.js";
 
+import DoDActorSettings from "./modules/apps/actor-settings.js";
+import DoDAutomationSettings from "./modules/apps/automation-settings.js";
+import DoDCombatSettings from "./modules/apps/combat-settings.js";
+
 function registerHandlebarsHelpers() {
 
     /*
@@ -104,6 +108,10 @@ async function preloadHandlebarsTemplates() {
 function registerSettings() {
     console.log("Dragonbane: Registering settings");
 
+    DoDActorSettings.registerSettings();
+    DoDAutomationSettings.registerSettings();
+    DoDCombatSettings.registerSettings();
+
     // If true, keeps permission on assets when re-importing them
     game.settings.register("dragonbane", "keepOwnershipOnImport", {
         name: "DoD.SETTINGS.keepOwnershipOnImport",
@@ -111,16 +119,6 @@ function registerSettings() {
         scope: "world",
         config: true,
         default: true,
-        type: Boolean
-    });
-
-    // If true, looks for skills in the world instead of the module when creating a new Actor.
-    game.settings.register("dragonbane", "useWorldSkillsOnCreateActor", {
-        name: "DoD.SETTINGS.useWorldSkillsOnCreateActor",
-        hint: "DoD.SETTINGS.useWorldSkillsOnCreateActorHint",
-        scope: "world",
-        config: true,
-        default: false,
         type: Boolean
     });
 
@@ -198,100 +196,7 @@ function registerSettings() {
         type: Boolean,
         default: false
     });
-
-
-    // User permission levels
-    const permissionLevels = {};
-    permissionLevels[CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE] = "OWNERSHIP.NONE";
-    permissionLevels[CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED] = "OWNERSHIP.LIMITED";
-    permissionLevels[CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER] = "OWNERSHIP.OBSERVER";
-    permissionLevels[CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER] = "OWNERSHIP.OWNER";
-
-    // Minimum level to view damage applied in messages
-    game.settings.register("dragonbane", "viewDamagePermission", {
-        name: "DoD.SETTINGS.viewDamagePermission",
-        hint: "DoD.SETTINGS.viewDamagePermissionHint",
-        scope: "world",
-        config: true,
-        default: CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
-        type: Number,
-        choices: permissionLevels
-    });
-
-    // If true, showing the "Select Monster Attack" dialog is default when making a monster attack.
-    game.settings.register("dragonbane", "monsterAttackDialogIsDefault", {
-        name: "DoD.SETTINGS.monsterAttackDialogIsDefault",
-        hint: "DoD.SETTINGS.monsterAttackDialogIsDefaultHint",
-        scope: "world",
-        config: true,
-        default: true,
-        type: Boolean
-    });
-
-    // If true, autmatically marks Characters as dead when they fail 3 death rolls or get instantly killed
-    game.settings.register("dragonbane", "automateCharacterDeath", {
-        name: "DoD.SETTINGS.automateCharacterDeath",
-        hint: "DoD.SETTINGS.automateCharacterDeathHint",
-        scope: "world",
-        config: true,
-        default: true,
-        type: Boolean
-    });
-    // If true, autmatically marks NPCs as dead when the reach 0 HP
-    game.settings.register("dragonbane", "automateNpcDeath", {
-        name: "DoD.SETTINGS.automateNpcDeath",
-        hint: "DoD.SETTINGS.automateNpcDeathHint",
-        scope: "world",
-        config: true,
-        default: true,
-        type: Boolean
-    });
-    // If true, autmatically marks Monsters as dead when the reach 0 HP
-    game.settings.register("dragonbane", "automateMonsterDeath", {
-        name: "DoD.SETTINGS.automateMonsterDeath",
-        hint: "DoD.SETTINGS.automateMonsterDeathHint",
-        scope: "world",
-        config: true,
-        default: true,
-        type: Boolean
-    });
-    // If true, autmatically marks Monsters as dead when the reach 0 HP
-    // canEquipItems2 replaces canEquipItems to ensure the new default value
-    game.settings.register("dragonbane", "canEquipItems2", {
-        name: "DoD.SETTINGS.canEquipItems",
-        hint: "DoD.SETTINGS.canEquipItemsHint",
-        scope: "world",
-        config: true,
-        default: true,
-        type: Boolean
-    });
-    // If true, hides WP gadget if NPC has 0 WP and no spells or abilities
-    game.settings.register("dragonbane", "hideNpcWpWidget", {
-        name: "DoD.SETTINGS.hideNpcWpWidget",
-        hint: "DoD.SETTINGS.hideNpcWpWidgetHint",
-        scope: "world",
-        config: true,
-        default: true,
-        type: Boolean
-    });
-    // If true, allows dealing damage using the selection method
-    game.settings.register("dragonbane", "allowDealDamageOnSelected", {
-        name: "DoD.SETTINGS.allowDealDamageOnSelected",
-        hint: "DoD.SETTINGS.allowDealDamageOnSelectedHint",
-        scope: "world",
-        config: true,
-        default: false,
-        type: Boolean
-    });
-    // If true, automatically set skill advancement mark on a Dragon or Demon roll
-    game.settings.register("dragonbane", "automaticSkillAdvancementMark", {
-        name: "DoD.SETTINGS.automaticSkillAdvancementMark",
-        hint: "DoD.SETTINGS.automaticSkillAdvancementMarkHint",
-        scope: "world",
-        config: true,
-        default: true,
-        type: Boolean
-    });
+    
 }
 
 Hooks.once("init", function () {
