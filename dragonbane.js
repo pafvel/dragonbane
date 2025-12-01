@@ -47,6 +47,7 @@ import DoDTokenRuler from "./modules/token-ruler.js";
 import DoDActorSettings from "./modules/apps/actor-settings.js";
 import DoDAutomationSettings from "./modules/apps/automation-settings.js";
 import DoDCombatSettings from "./modules/apps/combat-settings.js";
+import DoDOptionalRuleSettings from "./modules/apps/optional-rule-settings.js";
 
 function registerHandlebarsHelpers() {
 
@@ -111,6 +112,7 @@ function registerSettings() {
     DoDActorSettings.registerSettings();
     DoDAutomationSettings.registerSettings();
     DoDCombatSettings.registerSettings();
+    DoDOptionalRuleSettings.registerSettings();
 
     // If true, keeps permission on assets when re-importing them
     game.settings.register("dragonbane", "keepOwnershipOnImport", {
@@ -546,7 +548,7 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
             a.classList.add("inline-roll");
             a.classList.add("inline-damage-roll");
             a.dataset.damage = match[1];
-            a.dataset.damageType = "DoD.damageTypes." + (match[2] ?? "none");
+            a.dataset.damageType = DoDOptionalRuleSettings.damageTypes ? "DoD.damageTypes." + (match[2] ?? "none") : "DoD.damageTypes.none";
             if (options.actor) a.dataset.actorId = options.actor.uuid;
             if (match[3]) a.dataset.action = match[3];
 

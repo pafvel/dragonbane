@@ -1,5 +1,6 @@
 import DoDSkillTest from "./skill-test.js";
 import DoD_Utility from "../utility.js";
+import DoDOptionalRuleSettings from "../apps/optional-rule-settings.js";
 
 export default class DoDWeaponTest extends DoDSkillTest  {
 
@@ -11,16 +12,17 @@ export default class DoDWeaponTest extends DoDSkillTest  {
     updateDialogData() {
         super.updateDialogData();
 
+        const useDamageTypes = DoDOptionalRuleSettings.damageTypes;
         const isThrownWeapon = this.weapon.hasWeaponFeature("thrown");
         const isRangedWeapon = !isThrownWeapon && this.weapon.isRangedWeapon;
         const isMeleeWeapon = !isThrownWeapon && !isRangedWeapon;
         const hasMeleeAttack = isMeleeWeapon || isThrownWeapon;
         const isLongWeapon = this.weapon.hasWeaponFeature("long");
-        const hasSlashAttack = this.weapon.hasWeaponFeature("slashing");
-        const hasStabAttack = this.weapon.hasWeaponFeature("piercing");
+        const hasSlashAttack = this.weapon.hasWeaponFeature("slashing") && useDamageTypes;
+        const hasStabAttack = this.weapon.hasWeaponFeature("piercing")  && useDamageTypes;
         const hasWeakpointAttack = hasStabAttack;
         const hasNormalAttack = this.weapon.hasWeaponFeature("bludgeoning") || !(hasStabAttack || hasSlashAttack);
-        const hasToppleAttack = true; //this.weapon.hasWeaponFeature("toppling");
+        const hasToppleAttack = true;
         const hasDisarmAttack = true;
         const hasParry = !this.weapon.hasWeaponFeature("noparry");
         const isShield = this.weapon.hasWeaponFeature("shield");
@@ -337,6 +339,10 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             default:
                 this.postRollData.damageType = DoD.damageTypes.none;
                 this.postRollData.isDamaging = true;
+        }
+
+        if (DoDOptionalRuleSettings.damageTypes === false) {
+            this.postRollData.damageType = DoD.damageTypes.none;
         }
 
         if (this.postRollData.isDemon) {

@@ -594,7 +594,11 @@
             "allowDealDamageOnSelected": "Skada på vald spelfigur",
             "allowDealDamageOnSelectedHint": "Spelledaren (GM) kan tillfoga skada (och hela skada) på vald spelfigur om ingen spelfigur satts som mål.",
             "automaticSkillAdvancementMark": "Automatiskt förbättringskryss",
-            "automaticSkillAdvancementMarkHint": "Sätt automatiskt förbättringskryss vid Drakslag eller Demonslag."
+            "automaticSkillAdvancementMarkHint": "Sätt automatiskt förbättringskryss vid Drakslag eller Demonslag.",
+            "optionalRuleSettings": "Frivilliga regler",
+            "optionalRuleSettingsHint": "Slå av/på frivilliga regler.",
+            "damageTypes": "Skadetyper",
+            "damageTypesHint": "Använd skadetyper (krosskada, stickskada, huggskada), modifiering av rustningars skyddsvärde och relaterade vapenhandlingar."
         },
         "WARNING": {
             "kinAbility": "Kan ej hitta Släktesförmåga: {ability}",

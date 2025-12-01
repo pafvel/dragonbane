@@ -3,6 +3,7 @@ import * as DoDChat from "../chat.js";
 import DoDSkillTest from "../tests/skill-test.js";
 import DoDSpellTest from "../tests/spell-test.js";
 import DoDWeaponTest from "../tests/weapon-test.js";
+import DoDOptionalRuleSettings from "../apps/optional-rule-settings.js";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
@@ -800,14 +801,16 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
             const damage = damageBonus ? weaponDamage + "+" + damageBonus : weaponDamage;
             let damageType = DoD.damageTypes.none;
 
-            if (weapon.hasWeaponFeature("bludgeoning")) {
-                damageType = DoD.damageTypes.bludgeoning;
-            } else if (weapon.hasWeaponFeature("slashing")) {
-                damageType = DoD.damageTypes.slashing;
-            } else if (weapon.hasWeaponFeature("piercing")) {
-                damageType = DoD.damageTypes.piercing;
+            if (DoDOptionalRuleSettings.damageTypes) {
+                if (weapon.hasWeaponFeature("bludgeoning")) {
+                    damageType = DoD.damageTypes.bludgeoning;
+                } else if (weapon.hasWeaponFeature("slashing")) {
+                    damageType = DoD.damageTypes.slashing;
+                } else if (weapon.hasWeaponFeature("piercing")) {
+                    damageType = DoD.damageTypes.piercing;
+                }
             }
-
+            
             const damageData = {
                 actor: this.actor,
                 weapon: weapon,
