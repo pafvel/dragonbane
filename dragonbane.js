@@ -48,6 +48,7 @@ import DoDActorSettings from "./modules/apps/actor-settings.js";
 import DoDAutomationSettings from "./modules/apps/automation-settings.js";
 import DoDCombatSettings from "./modules/apps/combat-settings.js";
 import DoDOptionalRuleSettings from "./modules/apps/optional-rule-settings.js";
+import DoDCoreSettings from "./modules/apps/core-settings.js";
 
 function registerHandlebarsHelpers() {
 
@@ -112,6 +113,7 @@ function registerSettings() {
     DoDActorSettings.registerSettings();
     DoDAutomationSettings.registerSettings();
     DoDCombatSettings.registerSettings();
+    DoDCoreSettings.registerSettings();
     DoDOptionalRuleSettings.registerSettings();
 
     // If true, keeps permission on assets when re-importing them
@@ -140,56 +142,12 @@ function registerSettings() {
         default: ""
     });
 
-    // The core module registers itself here, could be different language versions.
-    game.settings.register("dragonbane", "coreModuleCompendium", {
-        config: false,
-        scope: "world",
-        type: String,
-        default: ""
-    });
-
-    game.settings.register("dragonbane", "magicMishapTable", {
-        config: false,
-        scope: "world",
-        type: String,
-        default: ""
-    });
-
-    game.settings.register("dragonbane", "meleeMishapTable", {
-        config: false,
-        scope: "world",
-        type: String,
-        default: ""
-    });
-
-    game.settings.register("dragonbane", "rangedMishapTable", {
-        config: false,
-        scope: "world",
-        type: String,
-        default: ""
-    });
-
-    game.settings.register("dragonbane", "treasureTable", {
-        config: false,
-        scope: "world",
-        type: String,
-        default: ""
-    });
-
     game.settings.register("dragonbane", "configuredYzeCombat", {
         config: false,
         scope: "world",
         type: Boolean,
         default: false
     });
-
-    game.settings.register("dragonbane", "generalMagicSchoolName", {
-        config: false,
-        scope: "world",
-        type: String,
-        default: "General"
-    });
-
 
     // Setting to ensure that turn marker is registered only once
     game.settings.register("dragonbane", "registeredTurnMarker", {

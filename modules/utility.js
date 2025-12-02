@@ -1,4 +1,5 @@
 import DoDActorSettings from "./apps/actor-settings.js";
+import DoDCoreSettings from "./apps/core-settings.js";
 import DoDSkillTest from "./tests/skill-test.js";
 
 export default class DoD_Utility {
@@ -133,10 +134,12 @@ export default class DoD_Utility {
     }
 
     static findSystemTable(settingName, tableName) {
-        const tableId = game.settings.get("dragonbane", settingName);
-        let tableUuid = "RollTable." + tableId;
-        let table = DoD_Utility.findTable(tableUuid, {noWarnings: true});
+        const tableId = DoDCoreSettings[settingName];
+        let table = DoD_Utility.findTable(tableId, {noWarnings: true});
         if (!table) {
+            table = DoD_Utility.findTable("RollTable." + tableId, {noWarnings: true});
+        }
+        if (!table && tableName) {
             table = DoD_Utility.findTable(tableName, {noWarnings: true});
         }
         return table;
@@ -312,9 +315,7 @@ export default class DoD_Utility {
     }
 
      static async drawTreasureCards(number) {
-
-        const tableId = game.settings.get("dragonbane", "treasureTable");
-        const table = DoD_Utility.findTable("RollTable." + tableId);
+        const table = DoD_Utility.findSystemTable("treasureTable");
         const count = table ? DoD_Utility.clamp(number, 1, table.results.size) : 0;
 
         if (!table || count === 0) {

@@ -596,7 +596,18 @@
             "damageTypes": "Damage Types",
             "damageTypesHint": "Enable damage types (Bludgeoning, Piercing, Slashing), armor rating modifiers and weapon actions related to damage types.",
             "coinEncumbrance": "Coin Encumbrance",
-            "coinEncumbranceHint": "Include coins in encumbrance calculations."
+            "coinEncumbranceHint": "Include coins in encumbrance calculations.",
+            "coreSettingOverrides": "Core Module Overrides",
+            "coreSettingOverridesHint": "Override core module settings for this world.",
+            "magicMishapTable": "Magic Mishap Table",
+            "magicMishapTableHint": "Override the table to use for magic mishaps.",
+            "meleeMishapTable": "Melee Mishap Table",
+            "meleeMishapTableHint": "Override the table to use for melee mishaps.",
+            "rangedMishapTable": "Ranged Mishap Table",
+            "rangedMishapTableHint": "Override the table to use for ranged mishaps.",
+            "treasureTable": "Treasure Table",
+            "treasureTableHint": "Override the table to use for treasures."
+
         },
         "WARNING": {
             "kinAbility": "Could not find Kin Ability: {ability}",
