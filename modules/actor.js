@@ -548,6 +548,19 @@ export class DoDActor extends Actor {
         return this.getEquippedWeapons().filter(w => !w.hasWeaponFeature("unarmed")).length < 3;
     }
 
+    canEquip(item) {
+        if (item.type === "weapon") {
+            return this.canEquipWeapon();
+        } else if (item.type === "armor") {
+            return this.system.equippedArmor == null;
+        } else if (item.type === "helmet") {
+            return this.system.equippedHelmet == null;
+        } else if (item.type === "item") {
+            return true;
+        }
+        return false;
+    }
+
     getArmorValue(damageType) {
         let armorValue = 0;
         if (this.system.equippedArmor) {

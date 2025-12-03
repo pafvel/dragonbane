@@ -1,3 +1,23 @@
+{{#*inline "abilityRow"}}
+    <tr class="sheet-table-data item" data-item-id="{{ability.id}}">
+        <td></td>
+        <td class="text-data">
+            {{#if owner}}
+            <a class="use-ability">{{ability.name}}</a>
+            {{else}}
+            <a class="item-edit">{{ability.name}}</a>
+            {{/if}}
+        </td>
+        <td>
+            {{#if editable}}
+            <button type="button" class="icon" data-action="itemControls" data-item-id="{{ability.id}}">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
+            {{/if}}
+        </td>
+    </tr>
+{{/inline}}
+
 <div class="tab {{tabs.abilities.cssClass}}" data-group="primary" data-tab="{{tabs.abilities.id}}">
     <div class="abilities-tab flexcol dod-controls">
         <div class="flexrow">
@@ -21,17 +41,7 @@
                         </th>
                     </tr>
                     {{#each kinAbilities as |ability abilityId|}}
-                    <tr class="sheet-table-data item" data-item-id="{{ability.id}}">
-                        <td></td>
-                        <td class="text-data">
-                            <a class="item-edit">{{ability.name}}</a>
-                        </td>
-                        <td class="icon-data">
-                            <a class="item-delete" data-type="ability">
-                                <i class="fas fa-trash"></i>
-                            </a>   
-                        </td>
-                    </tr>
+                        {{> abilityRow ability=ability editable=../editable owner=../owner}}
                     {{/each}}
                 </table>
                 {{!-- Profession Abilities --}}
@@ -48,17 +58,7 @@
                         </th>
                     </tr>
                     {{#each professionAbilities as |ability abilityId|}}
-                    <tr class="sheet-table-data item" data-item-id="{{ability.id}}">
-                        <td></td>
-                        <td class="text-data">
-                            <a class="item-edit">{{ability.name}}</a>
-                        </td>
-                        <td class="icon-data">
-                            <a class="item-delete" data-type="ability">
-                                <i class="fas fa-trash"></i>
-                            </a>   
-                        </td>
-                    </tr>
+                        {{> abilityRow ability=ability editable=../editable owner=../owner}}
                     {{/each}}
                 </table>
                 {{/if}}
@@ -75,17 +75,7 @@
                         </th>
                     </tr>
                     {{#each heroicAbilities as |ability abilityId|}}
-                    <tr class="sheet-table-data item" data-item-id="{{ability.id}}">
-                        <td></td>
-                        <td class="text-data">
-                            <a class="item-edit">{{ability.name}}</a>
-                        </td>
-                        <td class="icon-data">
-                            <a class="item-delete" data-type="ability">
-                                <i class="fas fa-trash"></i>
-                            </a>   
-                        </td>
-                    </tr>
+                        {{> abilityRow ability=ability editable=../editable owner=../owner}}
                     {{/each}}
                 </table>
             </div>
@@ -109,15 +99,18 @@
                 <tr class="sheet-table-data item" data-item-id="{{spell.id}}">
                     <td></td>
                     <td class="text-data">
+                        {{#if ../owner}}
                         <a class="rollable-skill">{{spell.name}}</a>
+                        {{else}}
+                        <a class="item-edit">{{spell.name}}</a>
+                        {{/if}}
                     </td>
-                    <td class="icon-data">
-                        <a class="item-delete" data-type="spell">
-                            <i class="fas fa-trash"></i>
-                        </a>    
-                        <a class="item-edit" data-type="spell">
-                            <i class="fas fa-edit"></i>
-                        </a>            
+                    <td>
+                        {{#if ../editable}}
+                        <button type="button" class="icon" data-action="itemControls" data-item-id="{{spell.id}}">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        {{/if}}
                     </td>
                     {{#unless ../hasSpells}}
                     <td></td>
@@ -166,7 +159,11 @@
                         {{/if}}
                     </td>
                     <td class="text-data">
+                        {{#if ../owner}}
                         <a class="rollable-skill">{{spell.name}}</a>
+                        {{else}}
+                        <a class="item-edit">{{spell.name}}</a>
+                        {{/if}}
                     </td>
                     <td class="number-data">
                         {{spell.system.rank}}
@@ -177,13 +174,12 @@
                     <td class="text-data">
                         {{localize spell.system.school}}
                     </td>
-                    <td class="icon-data">
-                        <a class="item-delete" data-type="spell">
-                            <i class="fas fa-trash"></i>
-                        </a>    
-                        <a class="item-edit" data-type="spell">
-                            <i class="fas fa-edit"></i>
-                        </a>            
+                    <td>
+                        {{#if ../editable}}
+                        <button type="button" class="icon" data-action="itemControls" data-item-id="{{spell.id}}">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        {{/if}}
                     </td>
                     {{#unless ../hasTricks}}
                     <td></td>

@@ -1,3 +1,27 @@
+{{#*inline "skillRow"}}
+    <tr class="sheet-table-data item" data-item-id="{{skill.id}}">
+        <td></td>
+        <td class="number-data narrow">
+            <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
+        </td>
+        <td class="skill-name text-data">
+            {{#if skill.system.isProfessionSkill}}
+            <a class="rollable-skill"><b>{{skill.name}}</b> ({{localize skill.system.attributeShort}})</a>
+            {{else}}
+            <a class="rollable-skill">{{skill.name}} ({{localize skill.system.attributeShort}})</a>
+            {{/if}}
+        </td>
+        <td>
+            {{#if editable}}
+            <button type="button" class="icon" data-action="itemControls" data-item-id="{{skill.id}}">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
+            {{/if}}
+        </td>
+    </tr>
+{{/inline}}
+
+
 <div class="tab {{tabs.skills.cssClass}} dod-controls" data-group="primary" data-tab="{{tabs.skills.id}}">
     <div class="flexrow">
         {{!-- Core Skills --}}
@@ -17,27 +41,7 @@
                     </th>
                 </tr>
                 {{#each coreSkills as |skill skillId|}}
-                <tr class="sheet-table-data item" data-item-id="{{skill.id}}">
-                    <td></td>
-                    <td class="number-data narrow">
-                        <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
-                    </td>
-                    <td class="skill-name text-data">
-                        {{#if skill.system.isProfessionSkill}}
-                        <a class="rollable-skill"><b>{{skill.name}}</b> ({{localize skill.system.attributeShort}})</a>
-                        {{else}}
-                        <a class="rollable-skill">{{skill.name}} ({{localize skill.system.attributeShort}})</a>
-                        {{/if}}
-                    </td>
-                    <td class="icon-data">
-                        <a class="item-delete" data-type="skill">
-                            <i class="fas fa-trash"></i>
-                        </a>    
-                        <a class="item-edit" data-type="skill">
-                            <i class="fas fa-edit"></i>
-                        </a>                                                
-                    </td>
-                </tr>
+                    {{> skillRow skill=skill editable=../editable}}
                 {{/each}}
             </table>
         </div>
@@ -59,27 +63,7 @@
                     </th>
                 </tr>
                 {{#each weaponSkills as |skill skillId|}}
-                <tr class="sheet-table-data item" data-item-id="{{skill.id}}">
-                    <td></td>
-                    <td class="number-data narrow">
-                        <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
-                    </td>
-                    <td class="skill-name text-data">
-                        {{#if skill.system.isProfessionSkill}}
-                        <a class="rollable-skill"><b>{{skill.name}}</b> ({{localize skill.system.attributeShort}})</a>
-                        {{else}}
-                        <a class="rollable-skill">{{skill.name}} ({{localize skill.system.attributeShort}})</a>
-                        {{/if}}
-                    </td>
-                    <td class="icon-data">
-                        <a class="item-delete" data-type="skill">
-                            <i class="fas fa-trash"></i>
-                        </a>    
-                        <a class="item-edit" data-type="skill">
-                            <i class="fas fa-edit"></i>
-                        </a>            
-                    </td>
-                </tr>
+                    {{> skillRow skill=skill editable=../editable}}
                 {{/each}}
             </table>
             {{!-- Secondary Skills --}}
@@ -98,27 +82,7 @@
                     </th>
                 </tr>
                 {{#each secondarySkills as |skill skillId|}}
-                <tr class="sheet-table-data item" data-item-id="{{skill.id}}">
-                    <td></td>
-                    <td class="number-data narrow">
-                        <input class="inline-edit" data-field="system.value" type="text" value="{{skill.system.value}}" data-dtype="Number"/>
-                    </td>
-                    <td class="skill-name text-data">
-                        {{#if skill.system.isProfessionSkill}}
-                        <a class="rollable-skill"><b>{{skill.name}}</b> ({{localize skill.system.attributeShort}})</a>
-                        {{else}}
-                        <a class="rollable-skill">{{skill.name}} ({{localize skill.system.attributeShort}})</a>
-                        {{/if}}
-                    </td>
-                    <td class="icon-data">
-                        <a class="item-delete" data-type="skill">
-                            <i class="fas fa-trash"></i>
-                        </a>    
-                        <a class="item-edit" data-type="skill">
-                            <i class="fas fa-edit"></i>
-                        </a>            
-                    </td>
-                </tr>
+                    {{> skillRow skill=skill editable=../editable}}
                 {{/each}}
             </table>
             {{/if}}

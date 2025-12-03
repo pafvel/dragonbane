@@ -20,7 +20,7 @@
         tr {
             background-color: transparent;
         }
-        
+
         button {
             display: inline-block;
         }
@@ -124,6 +124,7 @@
             height: 14px;
             min-height: 14px;
             vertical-align: middle;
+            color: var(--dod-color-parchment-text);
 
             i {
                 vertical-align: top;

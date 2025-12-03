@@ -1,3 +1,36 @@
+{{#*inline "itemRow"}}
+    <tr class="sheet-table-data item draggable" data-item-id="{{item.id}}">
+        <td></td>
+        <td class="thumbnail-data">
+            <img src="{{item.img}}" title="{{item.name}}"/>
+        </td>
+        <td class="text-data">
+            {{#if rollable}}
+            <a class="rollable-skill">{{item.displayName}}</a>
+            {{else}}
+            <a class="item-edit">{{item.displayName}}</a>
+            {{/if}}
+        </td>
+        {{#if canEquipItems}}
+        <td class="checkbox-data">
+            <input class="inline-edit" data-field="system.worn" type="checkbox" {{checked item.system.worn}} />
+        </td>
+        {{/if}}
+        {{#if hasWeight}}
+        <td class="number-data">
+            {{item.displayWeight}}
+        </td>
+        {{/if}}
+        <td>
+            {{#if editable}}
+            <button type="button" class="icon" data-action="itemControls" data-item-id="{{item.id}}">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
+            {{/if}}
+        </td>
+    </tr>
+{{/inline}}
+
 <div class="tab {{tabs.inventory.cssClass}}" data-group="primary" data-tab="{{tabs.inventory.id}}">
     <div class="flexrow dod-controls">
         <div>
@@ -22,33 +55,10 @@
                 </tr>
                 {{#if equippedWeapons}}
                 {{#each equippedWeapons as |weapon weaponId|}}
-                <tr class="sheet-table-data item draggable" data-item-id="{{weapon.id}}">
-                    <td></td>
-                    <td class="thumbnail-data">
-                        <img src="{{weapon.img}}" title="{{weapon.name}}"/>
-                    </td>
-                    <td class="text-data">
-                        <a class="item-edit">{{weapon.displayName}}</a>
-                    </td>
-                    {{#if ../canEquipItems}}
-                    <td class="checkbox-data">
-                        <input class="inline-edit" data-field="system.worn"  type="checkbox" {{checked weapon.system.worn}} />
-                    </td>
-                    {{/if}}
-                    <td class="icon-data">
-                        <a class="item-delete" data-type="weapon">
-                            <i class="fas fa-trash"></i>
-                        </a>    
-                    </td>
-                </tr>
+                    {{> itemRow item=weapon canEquipItems=../canEquipItems editable=../editable rollable=../owner}}
                 {{/each}}
                 {{else}}
-                <tr class="sheet-table-data">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                    <tr class="sheet-table-data"/>
                 {{/if}}                  
             </table>
 
@@ -74,32 +84,9 @@
                     <th></th>
                 </tr>
                 {{#if equippedArmor}}
-                <tr class="sheet-table-data item draggable" data-item-id="{{equippedArmor.id}}">
-                    <td></td>
-                    <td class="thumbnail-data">
-                        <img src="{{equippedArmor.img}}" title="{{equippedArmor.name}}"/>
-                    </td>
-                    <td class="text-data">
-                        <a class="item-edit">{{equippedArmor.displayName}}</a>
-                    </td>
-                    {{#if canEquipItems}}
-                    <td class="checkbox-data">
-                        <input class="inline-edit" data-field="system.worn"  type="checkbox" {{checked equippedArmor.system.worn}} />
-                    </td>
-                    {{/if}}
-                    <td class="icon-data">
-                        <a class="item-delete" data-type="armor">
-                            <i class="fas fa-trash"></i>
-                        </a>    
-                    </td>
-                </tr>
+                    {{> itemRow item=equippedArmor canEquipItems=canEquipItems editable=editable}}
                 {{else}}
-                <tr class="sheet-table-data">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                    <tr class="sheet-table-data"/>
                 {{/if}}
             </table>
 
@@ -125,32 +112,9 @@
                     <th></th>
                 </tr>
                 {{#if equippedHelmet}}
-                <tr class="sheet-table-data item draggable" data-item-id="{{equippedHelmet.id}}">
-                    <td></td>
-                    <td class="thumbnail-data">
-                        <img src="{{equippedHelmet.img}}" title="{{equippedHelmet.name}}"/>
-                    </td>
-                    <td class="text-data">
-                        <a class="item-edit">{{equippedHelmet.displayName}}</a>
-                    </td>
-                    {{#if canEquipItems}}
-                    <td class="checkbox-data">
-                        <input class="inline-edit" data-field="system.worn"  type="checkbox" {{checked equippedHelmet.system.worn}} />
-                    </td>
-                    {{/if}}
-                    <td class="icon-data">
-                        <a class="item-delete" data-type="helmet">
-                            <i class="fas fa-trash"></i>
-                        </a>    
-                    </td>
-                </tr>
+                    {{> itemRow item=equippedHelmet canEquipItems=canEquipItems editable=editable}}
                 {{else}}
-                <tr class="sheet-table-data">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                    <tr class="sheet-table-data"/>
                 {{/if}}
             </table>
 
@@ -219,36 +183,10 @@
                 </tr>
                 {{#if inventory}}
                 {{#each inventory as |item itemId|}}
-                <tr class="sheet-table-data item draggable" data-item-id="{{item.id}}">
-                    <td></td>
-                    <td class="thumbnail-data">
-                        <img src="{{item.img}}" title="{{item.name}}"/>
-                    </td>
-                    <td class="text-data">
-                        <a class="item-edit">{{item.displayName}}</a>
-                    </td>
-                    {{#if ../canEquipItems}}
-                    <td class="checkbox-data">
-                        <input class="inline-edit" data-field="system.worn"  type="checkbox" {{checked item.system.worn}} />
-                    </td>
-                    {{/if}}
-                    <td class="number-data">
-                        <a>{{item.displayWeight}}</a>
-                    </td>
-                    <td class="icon-data">
-                        <a class="item-delete" data-type="spell">
-                            <i class="fas fa-trash"></i>
-                        </a>    
-                    </td>
-                </tr>
+                    {{> itemRow item=item canEquipItems=../canEquipItems editable=../editable hasWeight=true}}
                 {{/each}}
                 {{else}}
-                <tr class="sheet-table-data">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                    <tr class="sheet-table-data"/>
                 {{/if}}
 
             </table>
@@ -274,35 +212,9 @@
                     <th></th>
                 </tr>
                 {{#if memento}}
-                <tr class="sheet-table-data item draggable" data-item-id="{{memento.id}}">
-                    <td></td>
-                    <td class="thumbnail-data">
-                        <img src="{{memento.img}}" title="{{memento.name}}"/>
-                    </td>
-                    <td class="text-data">
-                        <a class="item-edit">{{memento.displayName}}</a>
-                    </td>
-                    {{#if canEquipItems}}
-                    <td class="checkbox-data">
-                        <input class="inline-edit" data-field="system.worn"  type="checkbox" {{checked memento.system.worn}} />
-                    </td>
-                    {{/if}}
-                    <td class="number-data">
-                        <a>{{memento.displayWeight}}</a>
-                    </td>
-                    <td class="icon-data">
-                        <a class="item-delete" data-type="helmet">
-                            <i class="fas fa-trash"></i>
-                        </a>    
-                    </td>
-                </tr>
+                    {{> itemRow item=memento canEquipItems=canEquipItems editable=editable hasWeight=true}}
                 {{else}}
-                <tr class="sheet-table-data">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                    <tr class="sheet-table-data"/>
                 {{/if}}
 
             </table>
@@ -326,32 +238,10 @@
                 </tr>
                 {{#if smallItems}}
                 {{#each smallItems as |item itemId|}}
-                <tr class="sheet-table-data item draggable" data-item-id="{{item.id}}">
-                    <td></td>
-                    <td class="thumbnail-data">
-                        <img src="{{item.img}}" title="{{item.name}}"/>
-                    </td>
-                    <td class="text-data">
-                        <a class="item-edit">{{item.displayName}}</a>
-                    </td>
-                    {{#if ../canEquipItems}}
-                    <td class="checkbox-data">
-                        <input class="inline-edit" data-field="system.worn"  type="checkbox" {{checked item.system.worn}} />
-                    </td>
-                    {{/if}}
-                    <td class="icon-data">
-                        <a class="item-delete" data-type="spell">
-                            <i class="fas fa-trash"></i>
-                        </a>            
-                    </td>
-                </tr>
+                    {{> itemRow item=item canEquipItems=../canEquipItems editable=../editable}}
                 {{/each}}
                 {{else}}
-                <tr class="sheet-table-data">
-                    <td></td>
-                    <td><a>&nbsp</a></td>
-                    <td></td>
-                </tr>
+                    <tr class="sheet-table-data"/>
                 {{/if}}
 
             </table>

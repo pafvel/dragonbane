@@ -720,6 +720,7 @@
   height: 14px;
   min-height: 14px;
   vertical-align: middle;
+  color: var(--dod-color-parchment-text);
 }
 .system-dragonbane .sheet-table-data button i {
   vertical-align: top;

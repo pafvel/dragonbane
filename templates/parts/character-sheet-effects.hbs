@@ -13,7 +13,6 @@
                         {{localize "DoD.injury.healingTime"}}
                     </th>
                     <th>{{!-- column for icons --}}&nbsp</th>
-                    <th></th>
                 </tr>
                 {{#each injuries as |injury injuryId|}}
                 <tr class="sheet-table-data item" data-item-id="{{injury.id}}">
@@ -28,11 +27,12 @@
                         <a class="rollable-healingTime" title="{{injury.system.healingTimeTooltip}}">{{injury.system.healingTime}}</a>
                     </td>
                     <td class="icon-data">
-                        <a class="item-delete" data-type="injury">
-                            <i class="fas fa-trash"></i>
-                        </a>    
+                        {{#if ../editable}}
+                        <button type="button" class="icon" data-action="itemControls" data-item-id="{{injury.id}}">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        {{/if}}
                     </td>
-                    <td></td>
                 </tr>
                 {{/each}}
             </table>
@@ -51,7 +51,6 @@
                     <th class="text-header">{{localize "DoD.ui.character-sheet.source"}}</th>
                     <th>{{localize "DoD.ui.character-sheet.disabled"}}</th>
                     <th></th>
-                    <th></th>
                 </tr>
                 {{#each effects as |effect|}}
                 <tr class="sheet-table-data effect" data-effect-uuid="{{effect.uuid}}" data-item-id="{{effect.parent.id}}">
@@ -69,13 +68,12 @@
                         <input class="inline-edit" data-field="effect.disabled"  type="checkbox" {{checked effect.disabled}} />
                     </td>
                     <td class="icon-data">
-                        {{#if effect.canDeleteFromCharacterSheet}}
-                        <a class="effect-delete" data-type="effect">
-                            <i class="fas fa-trash"></i>
-                        </a>
+                        {{#if ../editable}}
+                        <button type="button" class="icon" data-action="itemControls" data-effect-uuid="{{effect.uuid}}" data-parent-id="{{effect.parent.id}}">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
                         {{/if}}
-                    </td>
-                    <td></td>
+                    </td>                  
                 </tr>
                 {{/each}}
             </table>

@@ -23,6 +23,82 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         await super._onFirstRender(context, options);
         this.#keydownListener = this.#onKeydown.bind(this);
         document.addEventListener("keydown", this.#keydownListener);
+
+        this._createContextMenu(this._getItemContextOptions, "[data-action='itemControls']", {
+            eventName: "click",
+            fixed: true,
+            hookName: "getItemContextOptions",
+            parentClassHooks: false
+        });        
+    }
+
+    _getItemContextOptions() {
+        return [
+            {
+                name: "CONTROLS.CommonOpenSheet",
+                icon: '<i class="fa-solid fa-suitcase"></i>',
+                condition: li => {
+                    return li.dataset.itemId || li.dataset.effectUuid;
+                },
+                callback: li => {
+                    const itemId = li.dataset.itemId;
+                    if (itemId !== undefined) {
+                        const item = this.actor.items.get(itemId);
+                        return item.sheet.render(true);
+                    } else {
+                        const effectUuid = li.dataset.effectUuid;
+                        const effect = Array.from(this.actor.allApplicableEffects()).find(e => e.uuid === effectUuid);                        
+                        return effect?.sheet.render(true);
+                    }
+                }
+            },
+            {
+                name: "CONTROLS.CommonDelete",
+                icon: '<i class="fa-solid fa-trash"></i>',
+                condition: li => {
+                    if (li.dataset.itemId) {
+                        return this.actor.isOwner;
+                    }
+                    if (li.dataset.effectUuid && li.dataset.parentId) {
+                        return li.dataset.parentId === this.actor.id && this.actor.isOwner;
+                    }
+                    
+                },
+                callback: async (li) => {
+                    const itemId = li.dataset.itemId;
+                    if (itemId !== undefined) {
+                        const item = this.actor.items.get(itemId);
+                        return this._onDeleteItem(item, itemId);
+                    } else {
+                        const effectUuid = li.dataset.effectUuid;
+                        const effect = fromUuidSync(effectUuid);
+                        if (await this._itemDeleteDialog(effect)) {
+                            return effect.delete();
+                        }
+                    }
+                }
+            },
+            {
+                name: "SIDEBAR.Duplicate",
+                icon: '<i class="fa-regular fa-copy"></i>',
+                condition: li => {
+                    if (li.dataset.itemId && this.actor.isOwner) {
+                        const item = this.actor.items.get(li.dataset.itemId);
+                        return (["item", "weapon", "armor", "helmet"].includes(item.type));
+                    }
+                    return false;
+                },
+                callback: li => {
+                    const original = this.actor.items.get(li.dataset.itemId);
+                    return original.clone({
+                            name: game.i18n.format("DOCUMENT.CopyOf", {name: original.name}),
+                            "system.worn": original.system.worn && this.actor.canEquip(original),
+                            "system.memento": false,
+                        },
+                        {save: true, addSource: true});
+                }
+            },
+        ];
     }
 
     async _preClose(options) {
