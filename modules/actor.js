@@ -181,11 +181,11 @@ export class DoDActor extends Actor {
                 if (foundry.utils.hasProperty(data, condition)) {
                     const status = CONFIG.statusEffects.find(a => a.id === DoD.conditionEffects[condition].id);
                     if (status) {
-                        const tokens = this.getActiveTokens();                    
+                        const tokens = this.getActiveTokens();
                         if (tokens.length > 0) {
                             const value = foundry.utils.getProperty(data, condition);
                             this.toggleStatusEffect(status.id, {active: value});
-                        }    
+                        }
                     }
                 }
             }
@@ -458,7 +458,7 @@ export class DoDActor extends Actor {
             case "character":
                 {
                     const value = this._getAttributeValueFromName(skill.system.attribute);
-                    return DoD_Utility.calculateBaseChance(value);    
+                    return DoD_Utility.calculateBaseChance(value);
                 }
             case "npc":
                 return 5;
@@ -531,6 +531,8 @@ export class DoDActor extends Actor {
         let encumbrance = 0;
 
         for (const item of this.items.contents) {
+            // Exclude items placed in Storage from the encumbrance calculation.
+            if (item.system && item.system.storage) continue;
             encumbrance += item.totalWeight;
         }
         if (this.system.currency && DoDActorSettings.coinEncumbrance) {
@@ -946,7 +948,7 @@ export class DoDActor extends Actor {
 
         const generalSchoolLocalized = game.i18n.localize(generalSchool);
         const generalSchoolSettings = game.settings.get("dragonbane", "generalMagicSchoolName");
-        
+
         for (let item of this.items.contents) {
             if (item.type === "spell") {
                 let spell = item;
@@ -1175,8 +1177,8 @@ export class DoDActor extends Actor {
                 for (let injury of healingInjuries) {
                     injury.reduceHealingTime();
                 }
-            }    
-        }        
+            }
+        }
     }
 
     async deleteItemDialog(item, flavor = "") {
@@ -1212,6 +1214,6 @@ export class DoDActor extends Actor {
         } else {
             // monster
             return 15;
-        }        
+        }
     }
 }
