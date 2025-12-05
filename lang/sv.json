@@ -558,6 +558,7 @@
         "item-sheet": {
             "details": "Detaljer",
             "description": "Beskrivning",
+            "gmDescription": "SL-anteckningar",
             "effects": "Effekter"
         },
         "INFO": {

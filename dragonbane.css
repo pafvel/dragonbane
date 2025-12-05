@@ -1725,7 +1725,7 @@
   color: var(--dod-color-journal-text);
 }
 .system-dragonbane .sheet.item .sheet-tab .text-box-editor, .system-dragonbane .sheet.active-effect-config .sheet-tab .text-box-editor {
-  height: 100%;
+  height: auto;
 }
 
 .system-dragonbane .sheet.journal-entry h1, .system-dragonbane .sheet.journal-entry h2, .system-dragonbane .sheet.journal-entry h3 {

@@ -554,6 +554,7 @@
         "item-sheet": {
             "details": "Details",
             "description": "Description",
+            "gmDescription": "GM Notes",
             "effects": "Effects"
         },
         "INFO": {

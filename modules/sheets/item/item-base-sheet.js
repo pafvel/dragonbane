@@ -61,7 +61,10 @@ export default class DoDItemBaseSheet extends HandlebarsApplicationMixin(ItemShe
             effects: this.item.effects.contents,
             config: CONFIG.DoD
         };
-        sheetData.descriptionHTML = await CONFIG.DoD.TextEditor.enrichHTML(sheetData.system.description, { async: true, secrets: game.user.isGM });
+        sheetData.itemDescriptionHTML = await CONFIG.DoD.TextEditor.enrichHTML(sheetData.system.itemDescription, { async: true, secrets: this.item.isOwner });
+        if (context.user.isGM) {
+            sheetData.gmDescriptionHTML = await CONFIG.DoD.TextEditor.enrichHTML(sheetData.system.gmDescription, { async: true, secrets: true });
+        }
         return {...context, ...sheetData};        
     }
 

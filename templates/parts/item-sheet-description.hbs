@@ -2,15 +2,32 @@
     <div class="text-box-editor">
         {{#if editable}}
         <prose-mirror
-            name="system.description"
-            value="{{system.description}}"
+            name="system.itemDescription"
+            value="{{system.itemDescription}}"
             button="true"
             editable="{{editable}}"
             toggled="false">
-            {{{descriptionHTML}}}
+            {{{itemDescriptionHTML}}}
         </prose-mirror>
         {{else}}
-        {{{descriptionHTML}}}
+        {{{itemDescriptionHTML}}}
         {{/if}}
     </div>
+    {{#if user.isGM}}
+    <div class="text-box-editor">
+        <div class="label-container">
+            <label>
+                {{localize "DoD.item-sheet.gmDescription"}}
+            </label>
+        </div>
+        <prose-mirror
+            name="system.gmDescription"
+            value="{{system.gmDescription}}"
+            button="true"
+            editable="true"
+            toggled="false">
+            {{{gmDescriptionHTML}}}
+        </prose-mirror>
+    </div>
+    {{/if}}
 </div>
