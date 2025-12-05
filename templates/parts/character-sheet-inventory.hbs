@@ -183,30 +183,7 @@
                 </tr>
                 {{#if inventory}}
                 {{#each inventory as |item itemId|}}
-                    {{#unless item.system.storage}}
-                <tr class="sheet-table-data item draggable-item" data-item-id="{{item.id}}">
-                    <td></td>
-                    <td class="thumbnail-data">
-                        <img src="{{item.img}}" title="{{item.name}}"/>
-                    </td>
-                    <td class="text-data">
-                        <a class="item-edit">{{item.displayName}}</a>
-                    </td>
-                    {{#if ../canEquipItems}}
-                    <td class="checkbox-data">
-                        <input class="inline-edit" data-field="system.worn"  type="checkbox" {{checked item.system.worn}} />
-                    </td>
-                    {{/if}}
-                    <td class="number-data">
-                        <a>{{item.displayWeight}}</a>
-                    </td>
-                    <td class="icon-data">
-                        <a class="item-delete" data-type="spell">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </td>
-                </tr>
-                    {{/unless}}
+                    {{> itemRow item=item canEquipItems=../canEquipItems editable=../editable hasWeight=true}}
                 {{/each}}
                 {{else}}
                 <tr class="sheet-table-data">
@@ -215,102 +192,6 @@
                     <td></td>
                     <td></td>
                 </tr>
-                {{/if}}
-
-            </table>
-
-            {{!-- Storage --}}
-            <table class="sheet-table item-list" data-droptarget="storage">
-                <tr class="sheet-table-header">
-                    <th>
-                    </th>
-                    <th class="thumbnail-header">
-                        <button type="button" class="item-create storage" data-type="item" title="{{localize "DoD.ui.character-sheet.create-item"}}">
-                            <a  class="fas fa-plus"></a>
-                        </button>
-                    </th>
-                    <th class="text-header">
-                        {{localize "DoD.ui.character-sheet.storage"}}
-                    </th>
-                    <th class="number-header">
-                        {{localize "DoD.gear.weight"}}
-                    </th>
-                    <th>
-                    </th>
-                </tr>
-                {{#if storage}}
-                    {{#each storage as |item itemId|}}
-                <tr class="sheet-table-data item draggable-item" data-item-id="{{item.id}}">
-                    <td></td>
-                    <td class="thumbnail-data">
-                        <img src="{{item.img}}" title="{{item.name}}"/>
-                    </td>
-                    <td class="text-data">
-                        <a class="item-edit">{{item.displayName}}</a>
-                    </td>
-                    <td class="number-data">
-                        <a>{{item.displayWeight}}</a>
-                    </td>
-                    <td class="icon-data">
-                        <a class="item-delete" data-type="spell">
-                            <i class="fas fa-trash"></i>
-                        </a>    
-                    </td>
-                </tr>
-                {{/each}}
-                {{else}}
-                <tr class="sheet-table-data">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                {{/if}}
-
-            </table>
-
-            {{!-- Storage --}}
-            <table class="sheet-table item-list" data-droptarget="storage">
-                <tr class="sheet-table-header">
-                    <th>
-                    </th>
-                    <th class="thumbnail-header">
-                        <button type="button" class="item-create storage" data-type="item" title="{{localize "DoD.ui.character-sheet.create-item"}}">
-                            <a  class="fas fa-plus"></a>
-                        </button>
-                    </th>
-                    <th class="text-header">
-                        {{localize "DoD.ui.character-sheet.storage"}}
-                    </th>
-                    <th class="number-header">
-                        {{localize "DoD.gear.weight"}}
-                    </th>
-                    <th>
-                    </th>
-                </tr>
-                {{#if storage}}
-                    {{#each storage as |item itemId|}}
-                <tr class="sheet-table-data item draggable-item" data-item-id="{{item.id}}">
-                    <td></td>
-                    <td class="thumbnail-data">
-                        <img src="{{item.img}}" title="{{item.name}}"/>
-                    </td>
-                    <td class="text-data">
-                        <a class="item-edit">{{item.displayName}}</a>
-                    </td>
-                    <td class="number-data">
-                        <a>{{item.displayWeight}}</a>
-                    </td>
-                    <td class="icon-data">
-                        <a class="item-delete" data-type="spell">
-                            <i class="fas fa-trash"></i>
-                        </a>    
-                    </td>
-                </tr>
->>>>>>> pr/139:templates/partials/character-sheet-inventory.hbs
-                {{/each}}
-                {{else}}
-                    <tr class="sheet-table-data"/>
                 {{/if}}
 
             </table>
@@ -367,7 +248,35 @@
                 {{else}}
                     <tr class="sheet-table-data"/>
                 {{/if}}
-
+            </table>
+            <hr>
+            {{!-- Storage --}}
+            <table class="sheet-table item-list" data-droptarget="storage">
+                <tr class="sheet-table-header">
+                    <th>
+                    </th>
+                    <th class="thumbnail-header">
+                        <button type="button" class="item-create storage" data-type="item" title="{{localize "DoD.ui.character-sheet.create-item"}}">
+                            <a  class="fas fa-plus"></a>
+                        </button>
+                    </th>
+                    <th class="text-header">
+                        {{localize "DoD.ui.character-sheet.storage"}}
+                    </th>
+                    <th class="number-header">
+                        {{localize "DoD.gear.weight"}}
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                {{#if storage}}
+                {{#each storage as |item itemId|}}
+                    {{> itemRow item=item canEquipItems=false editable=../editable hasWeight=true}}
+                {{/each}}
+                {{else}}
+                <tr class="sheet-table-data">
+                </tr>
+                {{/if}}
             </table>
         </div>
     </div>

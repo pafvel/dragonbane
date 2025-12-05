@@ -110,8 +110,14 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         // Separate small items (weight = 0) from normal inventory items (weight > 0)
         context.smallItems = context.inventory.filter(i => i.system.weight === 0 && i.system.type !== "backpack");
         context.inventory = context.inventory.filter(i => i.system.weight > 0 || i.system.type === "backpack");
+    }
 
-
+    _prepareItem(item, context) {
+        if (item.system.storage) {
+            context.storage.push(item);
+        } else {
+            super._prepareItem(item, context);
+        }
     }
 
     async _prepareContext(options) {

@@ -348,40 +348,46 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         return stack;
     };
 
-    #dragSource = null;
-    async _onDragStart(event) {
-        super._onDragStart(event);
-        this.#dragSource = event.currentTarget;
+    isInventoryItem(item) {
+        return item?.system?.quantity !== undefined;
     }
 
     async _onDropItem(event, item)
     {
         if ( !this.actor.isOwner ) return false;
 
-        // Handle item sorting within the same Actor
-        if ( this.actor.uuid === item.parent?.uuid ) {
-            let dropTarget = event.target.closest(".item-list")?.dataset.droptarget;
-            let dragSource = this.#dragSource.closest(".item-list")?.dataset.droptarget;
-
+        const dropTarget = event.target.closest(".item-list")?.dataset.droptarget;        
+        
+        // Handle inventory sorting within the same Actor
+        if ( this.actor.uuid === item.parent?.uuid && this.isInventoryItem(item)) {
             if (dropTarget) {
-                if (dropTarget === "weapon" && item.type === "weapon")
-                {
+
+                // Check weapon equip limits
+                if (dropTarget === "weapon" && item.type === "weapon") {
                     const worn = item.system.worn || this.actor.canEquipWeapon() || item.hasWeaponFeature("unarmed");
                     if(!worn) {
                         DoD_Utility.WARNING("DoD.WARNING.maxWeaponsEquipped");
                         return;
                     }
                 }
+
+                // Handle equipping items (weapons, armor, helmet)
                 if (dropTarget === "weapon" && item.type === "weapon"
                     || dropTarget === "armor" && item.type === "armor"
                     || dropTarget === "helmet" && item.type === "helmet" )
                 {
                     // Un-requip previous armor/helmet in the same slot
                     if (dropTarget === "armor") {
-                        await this.actor.system.equippedArmor?.update({ ["system.worn"]: false});
+                        await this.actor.system.equippedArmor?.update({ 
+                            ["system.worn"]: false,
+                            ["system.storage"]: false,
+                        });
                     }
                     else if (dropTarget === "helmet") {
-                        await this.actor.system.equippedHelmet?.update({ ["system.worn"]: false});
+                        await this.actor.system.equippedHelmet?.update({
+                            ["system.worn"]: false,
+                            ["system.storage"]: false,
+                        });
                     }
 
                     if (item.system.quantity > 1) {
@@ -389,29 +395,34 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                         const itemData = item.toObject();
                         itemData.system.quantity = 1;
                         itemData.system.worn = true;
+                        itemData.system.storage = false;
                         await this.actor.createEmbeddedDocuments("Item", [itemData]);
                         return await item.update({["system.quantity"]: item.system.quantity - 1 });
                     } else {
                         await item.update({
                             ["system.worn"]: true,
+                            ["system.storage"]: false,
                         });
                     }
                 }
+                // Handle memento
                 else if (dropTarget === "memento") {
                     const memento = this.actor.items.contents.find(i => i.system.memento);
                     await memento?.update({ ["system.memento"]: false });
-                    await item.update({ ["system.memento"]: true});
+                    await item.update({
+                        ["system.memento"]: true,
+                        ["system.storage"]: false,
+                    });
                 }
-                else if (dropTarget === "inventory" || dropTarget === "tiny") {
+                // Handle moving things to inventory and storage (tiny items are also inventory)
+                else if (dropTarget === "inventory" || dropTarget === "tiny" || dropTarget === "storage") {
                     // Update item first so that stack can be found
-                    if (dragSource === "memento") {
-                        // Drag from memento -> Clear memento flag
-                        await item.update({
-                            ["system.worn"]: false,
-                            ["system.memento"]: false});
-                    } else {
-                        await item.update({["system.worn"]: false});
-                    }
+                    await item.update({
+                        ["system.worn"]: false,
+                        ["system.memento"]: false,
+                        ["system.storage"]: dropTarget === "storage",
+                    });
+                    // Stack items if possible
                     const stack = this._findItemStack(item);
                     if (stack) {
                         // Item already exists in inventory, increase quantity and delete the original item
@@ -443,6 +454,22 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
 
         // Create the owned item
         const createdItem = await super._onDropItem(event, item);
+
+        if (this.isInventoryItem(item)) {
+            if (dropTarget === "storage") {
+                await createdItem.update({
+                    ["system.storage"]: true,
+                    ["system.worn"]: false,
+                    ["system.memento"]: false,
+                });
+            } else {
+                await createdItem.update({
+                    ["system.storage"]: false,
+                    ["system.worn"]: false,
+                    ["system.memento"]: false,
+                });
+            }
+        }
 
         // If there are available slots, equip weapons, armor and helmet
         if (createdItem.system.quantity === 1 && ["weapon", "armor", "helmet"].includes(createdItem.type)) {
@@ -513,6 +540,14 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                 itemData.type === "weapon" && this.actor.canEquipWeapon()
                 || itemData.type === "armor" && !this.actor.system.equippedArmor
                 || itemData.type === "helmet" && !this.actor.system.equippedHelmet;
+        }
+
+        // If the create button is in the storage section, mark the item as stored
+        if (element.classList && element.classList.contains("storage")) {
+            itemData.system = itemData.system || {};
+            itemData.system.storage = true;
+            if (itemData.system.worn !== undefined) itemData.system.worn = false;
+            if (itemData.system.memento !== undefined) itemData.system.memento = false;
         }
 
         return this.actor.createEmbeddedDocuments("Item", [itemData]);
@@ -992,22 +1027,23 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         if (weapon.system.worn) {
             context.equippedWeapons.push(weapon);
         } else {
-            context.inventory.push(weapon);
+            this._prepareItem(weapon, context);
         }
     }
 
     _prepareArmor(armor, context) {
         if (!armor.system.worn) {
-            context.inventory.push(armor);
+           this._prepareItem(armor, context);
         }
     }
 
     _prepareHelmet(helmet, context) {
         if (!helmet.system.worn) {
-            context.inventory.push(helmet);
+            this._prepareItem(helmet, context);
         }
     }
 
+    // overridden by DoDCharacterSheet to populate storage
     _prepareItem(item, context) {
         context.inventory.push(item);
     }
@@ -1064,6 +1100,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         context.tricks = [];
         context.schools = {};
         context.inventory = [];
+        context.storage = [];
         context.equippedWeapons = [];
         context.injuries = [];
 
@@ -1125,6 +1162,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
 
         // Inventory
         context.inventory = context.inventory?.sort(DoD_Utility.itemSorter);
+        context.storage = context.storage?.sort(DoD_Utility.itemSorter);
 
         // Weapons and Armor
         context.equippedWeapons = context.equippedWeapons?.sort(DoD_Utility.itemSorter);
