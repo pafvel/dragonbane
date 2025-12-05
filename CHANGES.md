@@ -1,5 +1,10 @@
 # Change Log
 
+## Version 2.6.1
+
+- Combat
+  - Fixed an issue where thrown weapons used in melee recieved banes for the target being obscured.
+
 ## Version 2.6
 
 - Combat
