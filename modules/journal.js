@@ -512,7 +512,7 @@ function displayTable(uuid, table, tableName, showDescription = false) {
         }
         const resultType = DoD_Utility.getTableResultType(result);
         if (resultType === "RollTable") {
-            let subTableName = game.release.generation < 13 ? result.text : result.name;
+            let subTableName = result.name;
             let subTable = DoD_Utility.findTable(subTableName);
             if (subTable?.uuid !== table.uuid) {
                 if(subTableName.startsWith(table.name)) {
@@ -526,16 +526,16 @@ function displayTable(uuid, table, tableName, showDescription = false) {
                 </tr>`;
             } else {
                 html += `</td>
-                    <td>${game.release.generation < 13 ? result.text : result.name}</td>
+                    <td>${result.name}</td>
                 </tr>`;
             }
         } else if (resultType === "Item") {
             html += `</td>
-                <td>@UUID[Item.${DoD_Utility.getTableResultId(result)}]{${game.release.generation < 13 ? result.text : result.name}}</td>
+                <td>@UUID[Item.${DoD_Utility.getTableResultId(result)}]{${result.name}}</td>
             </tr>`;
         } else {
             html += `</td>
-                <td>${game.release.generation < 13 ? result.text : result.description}</td>
+                <td>${result.description}</td>
             </tr>`;
         }
     }

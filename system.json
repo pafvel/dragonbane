@@ -2,9 +2,9 @@
   "id": "dragonbane",
   "title": "Dragonbane / Drakar och Demoner",
   "description": "System for playing Dragonbane / Drakar och Demoner",
-  "version": "2.5",
+  "version": "2.6.99-rc.1",
   "compatibility": {
-    "minimum": "12",
+    "minimum": "13",
     "verified": "13",
     "maximum": "13"
   },

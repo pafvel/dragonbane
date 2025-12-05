@@ -199,7 +199,7 @@ export default class DoD_Utility {
         // Recursive roll if the result is a table
         if (tableResult && tableResult.type === CONST.TABLE_RESULT_TYPES.DOCUMENT) {
             if ( this.getTableResultType(tableResult) === "RollTable" ) {
-                const tableId = game.release.generation < 13 ? tableResult.documentId : foundry.utils.parseUuid(tableResult.documentUuid).id;
+                const tableId = foundry.utils.parseUuid(tableResult.documentUuid).id;
                 const innerTable = game.tables.get(tableId);
                 if (innerTable) {
                     const innerRoll = await innerTable.roll();
@@ -268,25 +268,15 @@ export default class DoD_Utility {
         let messageResults = [];
         for (let result of results) {
             const r = result.toObject(false);
-            const chatText = game.release.generation < 13 ? result.text : await result.description;
-            const resultText = result.parent.id !== table.id ? result.parent.description + "<p>" + chatText + "</p>" : chatText;
+            const chatText = await result.description;
 
-            if (game.release.generation < 13) {
-                r.text = resultText;
-            } else {
-                r.description = resultText;
-            }
-
+            r.description = result.parent.id !== table.id ? result.parent.description + "<p>" + chatText + "</p>" : chatText;;
             r.icon = result.icon;
             messageResults.push(r);
         }
         // Enrich HTML with knowledge of actor
         for (let r of messageResults) {
-            if (game.release.generation < 13) {
-                r.text =  await CONFIG.DoD.TextEditor.enrichHTML(r.text, {actor: actor, async: true});
-            } else {
-                r.details = await CONFIG.DoD.TextEditor.enrichHTML(r.description, {actor: actor, async: true});
-            }
+            r.details = await CONFIG.DoD.TextEditor.enrichHTML(r.description, {actor: actor, async: true});
         }
 
         // Render the chat card which combines the dice roll with the drawn results
@@ -394,7 +384,6 @@ export default class DoD_Utility {
     }
 
     static addHtmlEventListener(html, eventNames, selector, eventHandler) {
-        const container = html.jquery ? html[0] : html; // jQuery in version <= 12, DOM in version >= 13
         for (const eventName of eventNames.split(" ")) {
             const wrappedHandler = (e) => {
                 if (!e.target) return;
@@ -403,25 +392,17 @@ export default class DoD_Utility {
                     eventHandler.call(target, e);
                 }
             };
-            container.addEventListener(eventName, wrappedHandler);
+            html.addEventListener(eventName, wrappedHandler);
         }
     }
 
     static async renderTemplate(path, data) {
-        if (game.release.generation > 12) {
-            return foundry.applications.handlebars.renderTemplate(path, data);
-        } else {
-            return renderTemplate(path, data);
-        }
+        return foundry.applications.handlebars.renderTemplate(path, data);
     }
 
     static getTableResultType(result) {
         if (result?.type === "document") {
-            if (game.release.generation < 13) {
-                return result.documentCollection;
-            } else {
-                return foundry.utils.parseUuid(result.documentUuid).type;
-            }
+            return foundry.utils.parseUuid(result.documentUuid).type;
         } else {
             return result?.type;
         }
@@ -429,11 +410,7 @@ export default class DoD_Utility {
 
     static getTableResultId(result) {
         if (result?.type === "document") {
-            if (game.release.generation < 13) {
-                return result.documentId;
-            } else {
-                return foundry.utils.parseUuid(result.documentUuid).id;
-            }
+            return foundry.utils.parseUuid(result.documentUuid).id;
         } else {
             return null;
         }
@@ -457,21 +434,6 @@ export default class DoD_Utility {
     // Calculate separation between tokens by displacing center points to account for token size
     static calculateDistanceBetweenTokens(tokenA, tokenB) {
 
-        // helper function to calculate token center in canvas space
-        function tokenCenter(token) {
-            if (game.release.generation >= 13) {
-                return token.getCenterPoint();
-            } else {
-                const width = token.width * token.parent.grid.size;
-                const height = token.height * token.parent.grid.size;
-                return {
-                    x: token.x + (width / 2), 
-                    y: token.y + (height / 2), 
-                    elevation: token.elevation
-                };
-            }
-        }
-
         // helper function to calculate distance from the token center point 
         // to the center of the grid cell just inside edge of the token
         function tokenDisplacement(token) {
@@ -482,8 +444,8 @@ export default class DoD_Utility {
         }
 
         // Find center points and displacements
-        let centerA = tokenCenter(tokenA);
-        let centerB = tokenCenter(tokenB);
+        let centerA = tokenA.getCenterPoint();
+        let centerB = tokenB.getCenterPoint();
         const displacementA = tokenDisplacement(tokenA);
         const displacementB = tokenDisplacement(tokenB);
 

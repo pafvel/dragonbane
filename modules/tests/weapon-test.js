@@ -143,7 +143,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
                 }
 
                 // Check tokens
-                const ray = game.release.generation < 13 ? new Ray (origin, destination) : new foundry.canvas.geometry.Ray(origin, destination);
+                const ray = new foundry.canvas.geometry.Ray(origin, destination);
                 const potentialBlockers = canvas.tokens.placeables.filter(t => t.id !== targetToken.id && t.id !== actorToken.id && !t.document.hidden);
                 const blockers = potentialBlockers.filter(t => {
                     const { x, y, width, height } = t.bounds;

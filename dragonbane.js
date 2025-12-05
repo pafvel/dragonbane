@@ -94,16 +94,12 @@ async function preloadHandlebarsTemplates() {
         "systems/dragonbane/templates/partials/roll-dialog.hbs",
         "systems/dragonbane/templates/partials/roll-no-total.hbs",
         "systems/dragonbane/templates/partials/roll.hbs",
-        "systems/dragonbane/templates/partials/roll-v12.html",
         "systems/dragonbane/templates/partials/skill-roll-message.hbs",
         "systems/dragonbane/templates/partials/tooltip.hbs",
         "systems/dragonbane/templates/partials/wp-widget.hbs",
         "systems/dragonbane/templates/partials/waypoint-label.hbs",
     ];
 
-    if (game.release.generation < 13) {
-        return loadTemplates(templatePaths);
-    }
     return foundry.applications.handlebars.loadTemplates(templatePaths);
 }
 
@@ -164,14 +160,14 @@ Hooks.once("init", function () {
 
     CONFIG.DoD = DoD;
 
-    CONFIG.DoD.Actors       = game.release.generation < 13 ? Actors         : foundry.documents.collections.Actors;
-    CONFIG.DoD.Items        = game.release.generation < 13 ? Items          : foundry.documents.collections.Items;
-    CONFIG.DoD.ItemSheet    = game.release.generation < 13 ? ItemSheet      : foundry.appv1.sheets.ItemSheet;
-    CONFIG.DoD.FilePicker   = game.release.generation < 13 ? FilePicker     : foundry.applications.apps.FilePicker;
-    CONFIG.DoD.TextEditor   = game.release.generation < 13 ? TextEditor     : foundry.applications.ux.TextEditor;
+    CONFIG.DoD.Actors       = foundry.documents.collections.Actors;
+    CONFIG.DoD.Items        = foundry.documents.collections.Items;
+    CONFIG.DoD.ItemSheet    = foundry.appv1.sheets.ItemSheet;
+    CONFIG.DoD.FilePicker   = foundry.applications.apps.FilePicker;
+    CONFIG.DoD.TextEditor   = foundry.applications.ux.TextEditor;
     
-    CONFIG.DoD.ActiveEffectConfig = game.release.generation < 13 ? ActiveEffectConfig : foundry.applications.sheets.ActiveEffectConfig;
-    CONFIG.DoD.DocumentSheetConfig = game.release.generation < 13 ? DocumentSheetConfig : foundry.applications.apps.DocumentSheetConfig;
+    CONFIG.DoD.ActiveEffectConfig = foundry.applications.sheets.ActiveEffectConfig;
+    CONFIG.DoD.DocumentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
 
     CONFIG.Actor.documentClass = DoDActor;
     CONFIG.Item.documentClass = DoDItem;
@@ -248,23 +244,16 @@ Hooks.once("init", function () {
     }
     // Don't show conditions on the TokenHUD
     Hooks.on('renderTokenHUD', (_app, html, _options) => {
-        const container = html.jquery ? html[0] : html; // jQuery in version <= 12, DOM in version >= 13
         for (const [_key, value] of Object.entries(DoD.conditionEffects)) {
-            for (const effect of container.querySelectorAll(`.effect-control[data-status-id="${value.id}"]`)) {
+            for (const effect of html.querySelectorAll(`.effect-control[data-status-id="${value.id}"]`)) {
                 effect.remove();
             }
         }
     });
 
-    if (game.release.generation < 13) {
-        Hooks.on("renderChatLog", DoDChat.addChatListeners);
-        Hooks.on("getChatLogEntryContext", DoDChat.addChatMessageContextMenuOptions);
-        Hooks.on("renderChatMessage", DoDChat.hideChatPermissions);
-    } else {
-        Hooks.on("renderChatMessageHTML", DoDChat.addChatListeners);
-        Hooks.on("getChatMessageContextOptions", DoDChat.addChatMessageContextMenuOptions);
-        Hooks.on("renderChatMessageHTML", DoDChat.hideChatPermissions);
-    }
+    Hooks.on("renderChatMessageHTML", DoDChat.addChatListeners);
+    Hooks.on("getChatMessageContextOptions", DoDChat.addChatMessageContextMenuOptions);
+    Hooks.on("renderChatMessageHTML", DoDChat.hideChatPermissions);
 });
 
 Hooks.once("ready", async function () {
@@ -317,7 +306,7 @@ Hooks.once("ready", async function () {
     });
 
     // Register token turn marker once
-    if ( game.release.generation >= 13 && game.settings.get("dragonbane", "registeredTurnMarker") === false) {
+    if ( game.settings.get("dragonbane", "registeredTurnMarker") === false) {
         const combatTrackerConfig = game.settings.get("core", "combatTrackerConfig");
         combatTrackerConfig.turnMarker.src = "systems/dragonbane/art/tokens/token-frame.webp";
         game.settings.set("core", "combatTrackerConfig", combatTrackerConfig);
@@ -327,15 +316,9 @@ Hooks.once("ready", async function () {
 
 for (const sheet of ["ActorSheet", "ItemSheet", "JournalPageSheet", "JournalEntryPageSheet"]) {
     Hooks.on(`render${sheet}`, (_app, html, _options) => {
-        if (game.release.generation < 13) {
-            html.on('click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
-            html.on("click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);
-            html.on("click", ".treasure-roll", DoDChat.onTreasureRoll);
-        } else {
-            DoD_Utility.addHtmlEventListener(html, 'click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
-            DoD_Utility.addHtmlEventListener(html, "click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);
-            DoD_Utility.addHtmlEventListener(html, "click", ".treasure-roll", DoDChat.onTreasureRoll);
-        }
+        DoD_Utility.addHtmlEventListener(html, 'click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
+        DoD_Utility.addHtmlEventListener(html, "click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);
+        DoD_Utility.addHtmlEventListener(html, "click", ".treasure-roll", DoDChat.onTreasureRoll);
     });
 }
 

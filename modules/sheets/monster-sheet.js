@@ -86,14 +86,14 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
                 let documentType = DoD_Utility.getTableResultType(result);
 
                 if (documentType === "RollTable") {
-                    let subTable = DoD_Utility.findTable(game.release.generation < 13 ? result.text : result.name);
+                    let subTable = DoD_Utility.findTable(result.name);
                     if (subTable?.uuid !== table.uuid) {
                         attack.description = subTable?.description;
                     } else {
-                        attack.description = game.release.generation < 13 ? result.text : result.description;
+                        attack.description = result.description;
                     }
                 } else {
-                    attack.description = game.release.generation < 13 ? result.text : result.description;
+                    attack.description = result.description;
                 }
                 attack.description = await CONFIG.DoD.TextEditor.enrichHTML(attack.description, { async: true });
 
