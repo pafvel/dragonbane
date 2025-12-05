@@ -1013,7 +1013,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
     }
 
     _prepareInjury(injury, context) {
-        let tooltip = DoD_Utility.removeEnrichment(injury.system.description);
+        let tooltip = DoD_Utility.removeEnrichment(injury.system.itemDescription);
         injury.system.tooltip = DoD_Utility.removeHtml(tooltip);
         if (isNaN(injury.system.healingTime)) {
             injury.system.healingTimeTooltip = game.i18n.localize("DoD.injury.rollHealingTime");

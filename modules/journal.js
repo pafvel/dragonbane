@@ -45,7 +45,7 @@ export async function enrichDisplayAbility (match, options) {
         html += `
                     <li><b>${game.i18n.localize("DoD.ability.wp")}: </b><span>${wp}</span>
                 </ul>
-                ${ability.system.description}
+                ${ability.system.itemDescription}
             </div>`;
         if (options.box) {
             html += `</blockquote>`;
@@ -420,7 +420,7 @@ export async function enrichDisplaySkill (match, _options) {
         let html = `
         <div class="display-skill">
             <h4>@UUID[${match[1]}]{${skillName}} <small>(${game.i18n.localize("DoD.attributes." + skill.system.attribute)})</small></h4>
-            ${skill.system.description}
+            ${skill.system.itemDescription}
         </div>`;
         a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
     } else {
@@ -468,7 +468,7 @@ export async function enrichDisplaySpell (match, _options) {
             <li><b class="heading">${game.i18n.localize("DoD.spell.rangeType")}: </b><span>${range}</span>
             <li><b class="heading">${game.i18n.localize("DoD.spell.duration")}: </b><span>${game.i18n.localize("DoD.spellDurationTypes." + spell.system.duration)}</span>
             </ul>
-            ${spell.system.description}
+            ${spell.system.itemDescription}
         </div>`;
         a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
     } else {
@@ -572,7 +572,7 @@ export async function enrichDisplayTrick(match, _options) {
         let html = `
         <div class="display-spell">
             <h4>@UUID[${match[1]}]{${spellName}}</h4>
-            ${spell.system.description}
+            ${spell.system.itemDescription}
         </div>`;
         a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
     } else {
@@ -693,7 +693,7 @@ export async function enrichGearTable(match, _options) {
                         <td style="text-align:left">@UUID[${uuid}]{${itemName}}</td>
                         <td style="text-align:center">${item.system.cost}</td>
                         <td>${game.i18n.localize("DoD.supplyTypes." + item.system.supply)}</td>
-                        <td>${item.system.description}</td>
+                        <td>${item.system.itemDescription}</td>
                     </tr>`;
                     break;
 
@@ -711,7 +711,7 @@ export async function enrichGearTable(match, _options) {
                         <td style="text-align:center">${item.system.cost}</td>
                         <td>${game.i18n.localize("DoD.supplyTypes." + item.system.supply)}</td>
                         <td style="text-align:center">${item.system.weight}</td>
-                        <td>${item.system.description}</td>
+                        <td>${item.system.itemDescription}</td>
                     </tr>`;
                     break;
 
