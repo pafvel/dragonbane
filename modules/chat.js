@@ -39,7 +39,6 @@ export function addChatMessageContextMenuOptions(_html, options) {
 
     const canDealTargetDamage = li =>
     {
-        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
         if (li.querySelector(".healing-roll")) {
             return false;
         }
@@ -49,8 +48,6 @@ export function addChatMessageContextMenuOptions(_html, options) {
     }
 
     const dealTargetDamage = function(li, multiplier = 1, ignoreArmor = false) {
-        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
-
         const damageData = {};
         const element = li.querySelector(".damage-roll") || li.querySelector(".dice-total");
 
@@ -72,8 +69,6 @@ export function addChatMessageContextMenuOptions(_html, options) {
 
     const canHealTarget = li =>
     {
-        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
-
         if (li.querySelector(".damage-roll")) {
             return false;
         }
@@ -83,8 +78,6 @@ export function addChatMessageContextMenuOptions(_html, options) {
     }
 
     const healTarget = function(li, _multiplier = 1, _ignoreArmor = false) {
-        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
-
         const healingData = {};
         const element = li.querySelector(".healing-roll") || li.querySelector(".dice-total");
 
@@ -103,8 +96,6 @@ export function addChatMessageContextMenuOptions(_html, options) {
 
     const canDealSelectedDamage = li =>
     {
-        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
-
         if(!game.user.isGM || canDealTargetDamage(li)) {
             return false;
         }
@@ -129,8 +120,6 @@ export function addChatMessageContextMenuOptions(_html, options) {
     }
 
     const dealSelectedDamage = function(li, multiplier = 1, ignoreArmor = false) {
-        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
-
         const damageData = {};
         const element = li.querySelector(".damage-roll");
 
@@ -156,8 +145,6 @@ export function addChatMessageContextMenuOptions(_html, options) {
 
     const canHealSelectedDamage = li =>
     {
-        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
-
         if (!game.user.isGM || canHealTarget(li)) {
             return false;
         }
@@ -178,8 +165,6 @@ export function addChatMessageContextMenuOptions(_html, options) {
     }
 
     const healSelectedDamage = function(li) {
-        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
-
         const healingData = {};
         const element = li.querySelector(".dice-total");
 
@@ -200,8 +185,6 @@ export function addChatMessageContextMenuOptions(_html, options) {
 
     const canUndoDamage = li =>
     {
-        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
-
         const element = li.querySelector(".damage-message");
         if (element?.dataset.actorId) {
             const target = DoD_Utility.getActorFromUUID(element.dataset.actorId);
@@ -211,8 +194,6 @@ export function addChatMessageContextMenuOptions(_html, options) {
     }
 
     const undoDamage = function(li) {
-        li = li.jquery ? li[0] : li; // jQuery in version <= 12, DOM in version >= 13
-
         const element = li.querySelector(".damage-message");
         const healingData = {
             actor: DoD_Utility.getActorFromUUID(element?.dataset.actorId),
@@ -593,29 +574,12 @@ export async function inflictDamageMessage(damageData) {
         const actorToken = canvas.scene.tokens.find(t => t.actor.uuid === damageData.actor.uuid);
         const targetToken = canvas.scene.tokens.find(t => t.actor.uuid === damageData.target.uuid);
         if (actorToken && !actorToken.hasStatusEffect("prone") && targetToken && targetToken.hasStatusEffect("prone")) {
-            const addDamage = await new Promise(
-                resolve => {
-                    const data = {
-                        title: game.i18n.localize("DoD.ui.dialog.addMeleeDamageVsProneTitle"),
-                        content: game.i18n.format("DoD.ui.dialog.addMeleeDamageVsProneMessage", {target: targetToken.name}),
-                        buttons: {
-                            ok: {
-                                icon: '<i class="fas fa-check"></i>',
-                                label: game.i18n.localize("Yes"),
-                                callback: () => resolve(true)
-                            },
-                            cancel: {
-                                icon: '<i class="fas fa-times"></i>',
-                                label: game.i18n.localize("No"),
-                                callback: _html => resolve(false)
-                            }
-                        },
-                        default: "cancel",
-                        close: () => resolve(false)
-                    };
-                    new Dialog(data, null).render(true);
-                }
-            );
+
+            const addDamage = await foundry.applications.api.DialogV2.confirm({
+                window: { title: game.i18n.localize("DoD.ui.dialog.addMeleeDamageVsProneTitle") },
+                content: game.i18n.format("DoD.ui.dialog.addMeleeDamageVsProneMessage", {target: targetToken.name}),
+            });
+
             if (addDamage) {
                 formula += "+1D6";
             }
@@ -825,61 +789,59 @@ export async function applyHealingMessage(damageData) {
 }
 
 export function hideChatPermissions(_app, html, _data) {
-    const container = html.jquery ? html[0] : html; // jQuery in version <= 12, DOM in version >= 13
-
     if (!game.user.isGM) {
-        for (const el of container.querySelectorAll(".permission-gm")) {
+        for (const el of html.querySelectorAll(".permission-gm")) {
             el.remove();
         }        
     } else {
-        for (const el of container.querySelectorAll(".permission-not-gm")) {
+        for (const el of html.querySelectorAll(".permission-not-gm")) {
             el.remove();
         }        
     }
 
-    for (const el of container.querySelectorAll(".permission-owner")) {
+    for (const el of html.querySelectorAll(".permission-owner")) {
         const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
         if (actor && !actor.isOwner) {
             el.remove();
         }
     }
 
-    for (const el of container.querySelectorAll(".permission-not-owner")) {
+    for (const el of html.querySelectorAll(".permission-not-owner")) {
         const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
         if (actor && actor.isOwner) {
             el.remove();
         }
     }
 
-    for (const el of container.querySelectorAll(".permission-observer")) {
+    for (const el of html.querySelectorAll(".permission-observer")) {
         const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
         if (actor && !actor.isObserver) {
             el.remove();
         }
     }
 
-    for (const el of container.querySelectorAll(".permission-not-observer")) {
+    for (const el of html.querySelectorAll(".permission-not-observer")) {
         const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
         if (actor && actor.isObserver) {
             el.remove();
         }
     }
 
-    for (const el of container.querySelectorAll(".permission-limited")) {
+    for (const el of html.querySelectorAll(".permission-limited")) {
         const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
         if (actor && !actor.isLimited) {
             el.remove();
         }
     }
 
-    for (const el of container.querySelectorAll(".permission-not-limited")) {
+    for (const el of html.querySelectorAll(".permission-not-limited")) {
         const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
         if (actor && actor.isLimited) {
             el.remove();
         }
     }
 
-    for (const el of container.querySelectorAll(".permission-not-none")) {
+    for (const el of html.querySelectorAll(".permission-not-none")) {
         el.remove();
     }        
 }

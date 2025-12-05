@@ -1,0 +1,8 @@
+<nav class="sheet-tabs tabs" data-group="primary">
+    <a class="{{tabs.main.cssClass}}" data-action="tab" data-group="{{tabs.main.group}}" data-tab="main"><label>{{localize "DoD.ui.character-sheet.main"}}</label></a>
+    {{#if observer}}
+    <a class="{{tabs.skills.cssClass}}" data-action="tab" data-group="{{tabs.skills.group}}" data-tab="skills"><label>{{localize "DoD.ui.character-sheet.skills"}}</label></a>
+    <a class="{{tabs.inventory.cssClass}}" data-action="tab" data-group="{{tabs.inventory.group}}" data-tab="inventory"><label>{{localize "DoD.ui.character-sheet.inventory"}}</label></a>
+    <a class="{{tabs.effects.cssClass}}" data-action="tab" data-group="{{tabs.effects.group}}" data-tab="effects"><label>{{localize "DoD.ui.character-sheet.effects"}}</label></a>
+    {{/if}}
+</nav>

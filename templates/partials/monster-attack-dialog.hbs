@@ -1,12 +1,11 @@
 <form class = "DoD.dialog">
-    <div class="display-table">
+    <div class="display-table dod-controls">
         <table class="derived-stat">
             <tr>
                 <th>{{localize "DoD.ui.dialog.monsterAttack"}}</th>
                 <td>
                     <select name="selectMonsterAttack" class="selectMonsterAttack">
                         <option value="0" selected>&lt {{localize "DoD.ui.dialog.monsterAttackRandom"}} &gt</option>
-                        <!-- nameAttr is deprecated since version 12, replaced with valueAttr -->
                         {{selectOptions attacks localize=true valueAttr="index" nameAttr="index" labelAttr="name"}}
                     </select>
                 </td>

@@ -1,0 +1,13 @@
+{
+  "extends": "stylelint-config-standard-scss",
+  "rules": {
+    "font-family-name-quotes": "always-where-recommended",
+    "no-empty-source": null,
+    "shorthand-property-no-redundant-values": null,
+    "no-descending-specificity": null,
+    "rule-empty-line-before": ["always", { "except": ["after-single-line-comment"] }],
+    "color-function-notation": "legacy",
+    "color-function-alias-notation": null,
+    "alpha-value-notation": "number"
+ }
+}

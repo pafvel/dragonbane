@@ -2,9 +2,9 @@
   "id": "dragonbane",
   "title": "Dragonbane / Drakar och Demoner",
   "description": "System for playing Dragonbane / Drakar och Demoner",
-  "version": "2.6.1",
+  "version": "2.6.99-rc.1",
   "compatibility": {
-    "minimum": "12",
+    "minimum": "13",
     "verified": "13",
     "maximum": "13"
   },
@@ -78,18 +78,7 @@
       "private": false,
       "system": "dragonbane",
       "banner": "./systems/dragonbane/art/dragonbane-banner.webp"
-    },
-    {
-    "name": "official-soundtrack-by-andreas-lundstrom",
-      "label": "Official Soundtrack by Andreas Lundström",
-      "path": "packs/official-soundtrack-by-andreas-lundstrom",
-      "type": "Playlist",
-      "module": "Dragonbane",
-      "private": false,
-      "system": "dragonbane",
-      "banner": "./systems/dragonbane/art/audio/ost/ost-banner.webp"
     }
-
   ],
   "initiative": "1d20",
   "grid": {
@@ -101,17 +90,18 @@
   "background": "systems/dragonbane/art/dragonbane-splash.webp",
   "url": "https://github.com/pafvel/dragonbane",
   "manifest": "https://github.com/pafvel/dragonbane/releases/latest/download/system.json",
-  "download": "https://github.com/pafvel/dragonbane/releases/download/v2.6.1/dragonbane.zip",
+  "download": "https://github.com/pafvel/dragonbane/releases/download/v2.5/dragonbane.zip",
   "flags": {
-    "hotReload": {
-      "extensions": ["css", "html", "hbs", "json"],
-      "paths": ["dragonbane.css", "templates", "lang"]
-    }
   },
   "relationships": {
     "recommends": [
       {
         "id": "yze-combat",
+        "type": "module",
+        "compatibility": {}
+      },
+      {
+        "id": "dragonbane-official-soundtrack",
         "type": "module",
         "compatibility": {}
       }

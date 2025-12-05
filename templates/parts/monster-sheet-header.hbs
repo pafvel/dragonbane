@@ -1,0 +1,49 @@
+<div class="sheet-header monster-header dod-controls">
+    <div class="flexcol">
+        <div class="flexrow">
+            <div class="image-container">
+                <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+                <h1>
+                    <input name="name" type="text" value="{{actor.name}}" placeholder="Name"/>
+                </h1>
+            </div>
+            {{#if observer}}
+            <div>
+                <table class="derived-stat">
+                    <tr>                            
+                        <th>{{localize "DoD.ui.character-sheet.ferocity"}}</th>
+                        <td><input class="attribute-input active-effect-property" data-property="system.ferocity" name="system.ferocity.value" type="text" value="{{system.ferocity.value}}" data-dtype="Number" /></td>
+                    </tr>
+                    <tr>
+                        <th>{{localize "DoD.ui.character-sheet.size"}}</th>
+                        <td>
+                            <select name="system.size">
+                                {{selectOptions config.sizeTypes selected=system.size localize=true}}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{localize "DoD.ui.character-sheet.movement"}}</th>
+                        <td><input class="attribute-input active-effect-property" data-property="system.movement" name="system.movement.value" type="text" value="{{system.movement.value}}" data-dtype="Number" /></td>
+                    </tr>
+                    <tr>
+                        <th>{{localize "DoD.ui.character-sheet.armor"}}</th>
+                        <td><input name="system.armor" type="text" value="{{system.armor}}" data-dtype="Number" /></td>
+                    </tr>
+                </table>
+            </div>
+            {{/if}}
+        </div>
+        {{#unless observer}}
+        {{!-- Notes --}}
+        <div class="dod-text-container">
+            <div class="dod-text-container-label">
+                <label>
+                    {{localize "DoD.ui.character-sheet.description"}}
+                </label>
+            </div>
+            {{editor system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
+        </div>        
+        {{/unless}}
+    </div>
+</header>

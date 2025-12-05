@@ -1,15 +1,20 @@
-<form class = "DoD.dialog">
+<form>
     <div class="flexcol">
         {{!-- Weapon Features --}}
-        <table class="sheet-table weapon-features">
+        <table class="sheet-table dod-controls">
             <tr class="sheet-table-header">
                 <th></th>
                 <th class="text-header">{{localize "DoD.ui.dialog.weaponFeatures"}}</th>
             </tr>
             {{#each features as |feature|}}
             <tr class="sheet-table-data">
-                <td><input type="checkbox" id="{{feature.id}}" name="{{feature.name}}" {{checked feature.value}}/></td>
-                <td class="text-data" title="{{localize feature.tooltip}}">{{localize feature.name}}</td>
+                <td></td>
+                <td>
+                    <label title="{{localize feature.tooltip}}">
+                        <input type="checkbox"  id="{{feature.id}}" name="{{feature.name}}" {{checked feature.value}}>
+                        {{localize feature.name}}
+                    </label>
+                </td>
             </tr>
             {{/each}}
         </table>

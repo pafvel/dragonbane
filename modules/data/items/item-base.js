@@ -4,11 +4,39 @@ export class DoDItemBaseData extends DragonbaneDataModel {
     static defineSchema() {
         const { fields } = foundry.data;
         return this.mergeSchema(super.defineSchema(), {
-            description: new fields.StringField({ required: true, initial: "" }),
+            // Remove old description field and replace with itemDescription + gmDescription
+            // description: new fields.StringField({ required: true, initial: "" }),
+            itemDescription: new fields.StringField({ required: true, initial: "" }),
+            gmDescription: new fields.StringField({ required: true, initial: "" }),
         });
     };
 
     static migrateData(source) {
+        if (source.description !== undefined) {
+            // Put unrevealed secrets in gmDescription and the rest in itemDescription
+            source.gmDescription = "";
+            const html = document.createElement("div");
+            html.innerHTML = String(source.description || "");
+            const secrets = html.querySelectorAll("section.secret:not(.revealed)");
+            if (secrets.length > 0) {
+                for (const secret of secrets) {
+                    // Remove warning text from content being moved
+                    const enString = "section will be visible to players if they edit the item description";
+                    const seString = "text är synlig för spelare om de redigerar föremålets beskrivning";
+                    for (const section of secret.children) {
+                        if (!(section.outerHTML.includes(enString) || section.outerHTML.includes(seString))) {
+                            source.gmDescription += section.outerHTML;
+                        }
+                    }
+                    secret.remove();
+                }
+                source.itemDescription = html.innerHTML;
+            } else {
+                source.itemDescription = source.description;
+                source.gmDescription = "";
+            }
+            delete source.description;
+        }
         return super.migrateData(source);
     }
 }

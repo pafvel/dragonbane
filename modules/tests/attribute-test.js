@@ -23,7 +23,6 @@ export default class DoDAttributeTest extends DoDTest {
         this.preRollData.attribute = this.attribute;
         this.preRollData.target = this.actor.getAttribute(this.attribute);
         this.preRollData.canPush = this.actor.type === "character" ? this.options.canPush : false;
-        console.log(this.preRollData.attribute, this.preRollData.target);
     }
 
     updatePostRollData() {

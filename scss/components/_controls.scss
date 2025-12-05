@@ -1,0 +1,53 @@
+.system-dragonbane {
+    // Opt-in for Dragonbane styled controls
+    .dod-controls {
+
+        input {
+            border: 0;
+            margin: 0;
+            outline: 0;
+            background: transparent;
+            color: var(--dod-color-journal-text);
+
+            &:invalid {
+                color: var(--dod-color-invalid-input);
+            }
+
+            &:focus {
+                box-shadow: 0 0 5px var(--color-shadow-primary);
+                transition: none;
+            }
+        }
+
+        input[type="number"], input[type="text"] {
+            height: 2em;
+            line-height: normal;
+            padding: 1px 0.25em;
+            background: transparent;
+            text-align: center;
+        }
+
+        input[type="checkbox"], input[type="radio"] {
+            top: 0;
+            vertical-align: middle;
+        }
+
+        select {
+            border: 0;
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--dod-color-journal-text);
+            height: 2em;
+            line-height: normal;
+            width: auto;
+            outline: 0;
+            padding: 1px 0.25em;
+
+            &:focus {
+                box-shadow: 0 0 5px var(--color-shadow-primary);
+                transition: none;
+            }
+
+        }
+
+    }
+}

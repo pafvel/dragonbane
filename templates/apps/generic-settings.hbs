@@ -1,0 +1,5 @@
+<div>
+    {{#each schema.fields as |field key|}}
+    {{formGroup field name=key value=(lookup ../source key) localize=true}}
+    {{/each}}    
+</div>

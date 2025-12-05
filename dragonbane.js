@@ -1,18 +1,35 @@
-import { DoDActor } from "./modules/actor.js";
-import DoDCharacterSheet from "./modules/character-sheet.js";
-import * as DoDChat from "./modules/chat.js";
 import { DoD } from "./modules/config.js";
-import DoDItemSheet from "./modules/item-sheet.js";
+
+import { DoDActor } from "./modules/actor.js";
 import { DoDItem } from "./modules/item.js";
+
+import DoD_Utility from "./modules/utility.js";
+import DoDRoll from "./modules/roll.js";
+
+import * as DoDChat from "./modules/chat.js";
 import * as DoDJournal from "./modules/journal.js";
 import * as DoDMacro from "./modules/macro.js";
 import * as DoDMigrate from "./modules/migrate.js";
-import DoD_Utility from "./modules/utility.js";
-import DoDRoll from "./modules/roll.js";
+
+import DoDCharacterSheet from "./modules/sheets/character-sheet.js";
+import DoDNpcSheet from "./modules/sheets/npc-sheet.js";
+import DoDMonsterSheet from "./modules/sheets/monster-sheet.js";
+import DoDAbilitySheet from "./modules/sheets/item/ability-sheet.js";
+import DoDArmorSheet from "./modules/sheets/item/armor-sheet.js";
+import DoDHelmetSheet from "./modules/sheets/item/helmet-sheet.js";
+import DoDInjurySheet from "./modules/sheets/item/injury-sheet.js";
+import DoDItemSheet from "./modules/sheets/item/item-sheet.js";
+import DoDKinSheet from "./modules/sheets/item/kin-sheet.js";
+import DoDProfessionSheet from "./modules/sheets/item/profession-sheet.js";
+import DoDSkillSheet from "./modules/sheets/item/skill-sheet.js";
+import DoDSpellSheet from "./modules/sheets/item/spell-sheet.js";
+import DoDWeaponSheet from "./modules/sheets/item/weapon-sheet.js";
+
 import DoDCharacterData from "./modules/data/actors/characterData.js";
 import DoDNPCData from "./modules/data/actors/NPCData.js";
 import DoDMonsterData from "./modules/data/actors/monsterData.js";
 import DoDAbilityData from "./modules/data/items/abilityData.js";
+import DoDActiveEffectData from "./modules/data/items/activeEffectData.js";
 import DoDArmorData from "./modules/data/items/armorData.js";
 import DoDHelmetData from "./modules/data/items/helmetData.js";
 import DoDInjuryData from "./modules/data/items/injuryData.js";
@@ -22,9 +39,16 @@ import DoDProfessionData from "./modules/data/items/professionData.js";
 import DoDSkillData from "./modules/data/items/skillData.js";
 import DoDWeaponData from "./modules/data/items/weaponData.js";
 import DoDSpellData from "./modules/data/items/spellData.js";
+
 import DoDActiveEffect from "./modules/active-effect.js";
 import DoDActiveEffectConfig from "./modules/active-effect-config.js";
 import DoDTokenRuler from "./modules/token-ruler.js";
+
+import DoDActorSettings from "./modules/apps/actor-settings.js";
+import DoDAutomationSettings from "./modules/apps/automation-settings.js";
+import DoDCombatSettings from "./modules/apps/combat-settings.js";
+import DoDOptionalRuleSettings from "./modules/apps/optional-rule-settings.js";
+import DoDCoreSettings from "./modules/apps/core-settings.js";
 
 function registerHandlebarsHelpers() {
 
@@ -64,37 +88,29 @@ function registerHandlebarsHelpers() {
 
 async function preloadHandlebarsTemplates() {
     const templatePaths = [
-        "systems/dragonbane/templates/partials/character-sheet-abilities.hbs",
-        "systems/dragonbane/templates/partials/character-sheet-background.hbs",
-        "systems/dragonbane/templates/partials/character-sheet-effects.hbs",
-        "systems/dragonbane/templates/partials/character-sheet-inventory.hbs",
-        "systems/dragonbane/templates/partials/character-sheet-main.hbs",
-        "systems/dragonbane/templates/partials/character-sheet-skills.hbs",
         "systems/dragonbane/templates/partials/damage-roll-message.hbs",
         "systems/dragonbane/templates/partials/hp-widget.hbs",
         "systems/dragonbane/templates/partials/item-sheet-effects.hbs",
-        "systems/dragonbane/templates/partials/monster-sheet-main.hbs",
-        "systems/dragonbane/templates/partials/npc-sheet-inventory.hbs",
-        "systems/dragonbane/templates/partials/npc-sheet-main.hbs",
-        "systems/dragonbane/templates/partials/npc-sheet-skills.hbs",
         "systems/dragonbane/templates/partials/roll-dialog.hbs",
         "systems/dragonbane/templates/partials/roll-no-total.hbs",
         "systems/dragonbane/templates/partials/roll.hbs",
-        "systems/dragonbane/templates/partials/roll-v12.html",
         "systems/dragonbane/templates/partials/skill-roll-message.hbs",
         "systems/dragonbane/templates/partials/tooltip.hbs",
         "systems/dragonbane/templates/partials/wp-widget.hbs",
         "systems/dragonbane/templates/partials/waypoint-label.hbs",
     ];
 
-    if (game.release.generation < 13) {
-        return loadTemplates(templatePaths);
-    }
     return foundry.applications.handlebars.loadTemplates(templatePaths);
 }
 
 function registerSettings() {
     console.log("Dragonbane: Registering settings");
+
+    DoDActorSettings.registerSettings();
+    DoDAutomationSettings.registerSettings();
+    DoDCombatSettings.registerSettings();
+    DoDCoreSettings.registerSettings();
+    DoDOptionalRuleSettings.registerSettings();
 
     // If true, keeps permission on assets when re-importing them
     game.settings.register("dragonbane", "keepOwnershipOnImport", {
@@ -103,16 +119,6 @@ function registerSettings() {
         scope: "world",
         config: true,
         default: true,
-        type: Boolean
-    });
-
-    // If true, looks for skills in the world instead of the module when creating a new Actor.
-    game.settings.register("dragonbane", "useWorldSkillsOnCreateActor", {
-        name: "DoD.SETTINGS.useWorldSkillsOnCreateActor",
-        hint: "DoD.SETTINGS.useWorldSkillsOnCreateActorHint",
-        scope: "world",
-        config: true,
-        default: false,
         type: Boolean
     });
 
@@ -132,56 +138,12 @@ function registerSettings() {
         default: ""
     });
 
-    // The core module registers itself here, could be different language versions.
-    game.settings.register("dragonbane", "coreModuleCompendium", {
-        config: false,
-        scope: "world",
-        type: String,
-        default: ""
-    });
-
-    game.settings.register("dragonbane", "magicMishapTable", {
-        config: false,
-        scope: "world",
-        type: String,
-        default: ""
-    });
-
-    game.settings.register("dragonbane", "meleeMishapTable", {
-        config: false,
-        scope: "world",
-        type: String,
-        default: ""
-    });
-
-    game.settings.register("dragonbane", "rangedMishapTable", {
-        config: false,
-        scope: "world",
-        type: String,
-        default: ""
-    });
-
-    game.settings.register("dragonbane", "treasureTable", {
-        config: false,
-        scope: "world",
-        type: String,
-        default: ""
-    });
-
     game.settings.register("dragonbane", "configuredYzeCombat", {
         config: false,
         scope: "world",
         type: Boolean,
         default: false
     });
-
-    game.settings.register("dragonbane", "generalMagicSchoolName", {
-        config: false,
-        scope: "world",
-        type: String,
-        default: "General"
-    });
-
 
     // Setting to ensure that turn marker is registered only once
     game.settings.register("dragonbane", "registeredTurnMarker", {
@@ -190,100 +152,7 @@ function registerSettings() {
         type: Boolean,
         default: false
     });
-
-
-    // User permission levels
-    const permissionLevels = {};
-    permissionLevels[CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE] = "OWNERSHIP.NONE";
-    permissionLevels[CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED] = "OWNERSHIP.LIMITED";
-    permissionLevels[CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER] = "OWNERSHIP.OBSERVER";
-    permissionLevels[CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER] = "OWNERSHIP.OWNER";
-
-    // Minimum level to view damage applied in messages
-    game.settings.register("dragonbane", "viewDamagePermission", {
-        name: "DoD.SETTINGS.viewDamagePermission",
-        hint: "DoD.SETTINGS.viewDamagePermissionHint",
-        scope: "world",
-        config: true,
-        default: CONST.DOCUMENT_OWNERSHIP_LEVELS.OBSERVER,
-        type: Number,
-        choices: permissionLevels
-    });
-
-    // If true, showing the "Select Monster Attack" dialog is default when making a monster attack.
-    game.settings.register("dragonbane", "monsterAttackDialogIsDefault", {
-        name: "DoD.SETTINGS.monsterAttackDialogIsDefault",
-        hint: "DoD.SETTINGS.monsterAttackDialogIsDefaultHint",
-        scope: "world",
-        config: true,
-        default: true,
-        type: Boolean
-    });
-
-    // If true, autmatically marks Characters as dead when they fail 3 death rolls or get instantly killed
-    game.settings.register("dragonbane", "automateCharacterDeath", {
-        name: "DoD.SETTINGS.automateCharacterDeath",
-        hint: "DoD.SETTINGS.automateCharacterDeathHint",
-        scope: "world",
-        config: true,
-        default: true,
-        type: Boolean
-    });
-    // If true, autmatically marks NPCs as dead when the reach 0 HP
-    game.settings.register("dragonbane", "automateNpcDeath", {
-        name: "DoD.SETTINGS.automateNpcDeath",
-        hint: "DoD.SETTINGS.automateNpcDeathHint",
-        scope: "world",
-        config: true,
-        default: true,
-        type: Boolean
-    });
-    // If true, autmatically marks Monsters as dead when the reach 0 HP
-    game.settings.register("dragonbane", "automateMonsterDeath", {
-        name: "DoD.SETTINGS.automateMonsterDeath",
-        hint: "DoD.SETTINGS.automateMonsterDeathHint",
-        scope: "world",
-        config: true,
-        default: true,
-        type: Boolean
-    });
-    // If true, autmatically marks Monsters as dead when the reach 0 HP
-    // canEquipItems2 replaces canEquipItems to ensure the new default value
-    game.settings.register("dragonbane", "canEquipItems2", {
-        name: "DoD.SETTINGS.canEquipItems",
-        hint: "DoD.SETTINGS.canEquipItemsHint",
-        scope: "world",
-        config: true,
-        default: true,
-        type: Boolean
-    });
-    // If true, hides WP gadget if NPC has 0 WP and no spells or abilities
-    game.settings.register("dragonbane", "hideNpcWpWidget", {
-        name: "DoD.SETTINGS.hideNpcWpWidget",
-        hint: "DoD.SETTINGS.hideNpcWpWidgetHint",
-        scope: "world",
-        config: true,
-        default: true,
-        type: Boolean
-    });
-    // If true, allows dealing damage using the selection method
-    game.settings.register("dragonbane", "allowDealDamageOnSelected", {
-        name: "DoD.SETTINGS.allowDealDamageOnSelected",
-        hint: "DoD.SETTINGS.allowDealDamageOnSelectedHint",
-        scope: "world",
-        config: true,
-        default: false,
-        type: Boolean
-    });
-    // If true, automatically set skill advancement mark on a Dragon or Demon roll
-    game.settings.register("dragonbane", "automaticSkillAdvancementMark", {
-        name: "DoD.SETTINGS.automaticSkillAdvancementMark",
-        hint: "DoD.SETTINGS.automaticSkillAdvancementMarkHint",
-        scope: "world",
-        config: true,
-        default: true,
-        type: Boolean
-    });
+    
 }
 
 Hooks.once("init", function () {
@@ -291,15 +160,14 @@ Hooks.once("init", function () {
 
     CONFIG.DoD = DoD;
 
-    CONFIG.DoD.Actors       = game.release.generation < 13 ? Actors         : foundry.documents.collections.Actors;
-    CONFIG.DoD.ActorSheet   = game.release.generation < 13 ? ActorSheet     : foundry.appv1.sheets.ActorSheet;
-    CONFIG.DoD.Items        = game.release.generation < 13 ? Items          : foundry.documents.collections.Items;
-    CONFIG.DoD.ItemSheet    = game.release.generation < 13 ? ItemSheet      : foundry.appv1.sheets.ItemSheet;
-    CONFIG.DoD.FilePicker   = game.release.generation < 13 ? FilePicker     : foundry.applications.apps.FilePicker;
-    CONFIG.DoD.TextEditor   = game.release.generation < 13 ? TextEditor     : foundry.applications.ux.TextEditor;
+    CONFIG.DoD.Actors       = foundry.documents.collections.Actors;
+    CONFIG.DoD.Items        = foundry.documents.collections.Items;
+    CONFIG.DoD.ItemSheet    = foundry.appv1.sheets.ItemSheet;
+    CONFIG.DoD.FilePicker   = foundry.applications.apps.FilePicker;
+    CONFIG.DoD.TextEditor   = foundry.applications.ux.TextEditor;
     
-    CONFIG.DoD.ActiveEffectConfig = game.release.generation < 13 ? ActiveEffectConfig : foundry.applications.sheets.ActiveEffectConfig;
-    CONFIG.DoD.DocumentSheetConfig = game.release.generation < 13 ? DocumentSheetConfig : foundry.applications.apps.DocumentSheetConfig;
+    CONFIG.DoD.ActiveEffectConfig = foundry.applications.sheets.ActiveEffectConfig;
+    CONFIG.DoD.DocumentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
 
     CONFIG.Actor.documentClass = DoDActor;
     CONFIG.Item.documentClass = DoDItem;
@@ -329,12 +197,25 @@ Hooks.once("init", function () {
         weapon: DoDWeaponData
     });
 
-    CONFIG.DoD.Actors.unregisterSheet("core", CONFIG.DoD.ActorSheet);
-    CONFIG.DoD.Actors.registerSheet("DoD", DoDCharacterSheet, { makeDefault: true });
+    CONFIG.ActiveEffect.dataModels["base"] = DoDActiveEffectData;
 
-    CONFIG.DoD.Items.unregisterSheet("core", CONFIG.DoD.ItemSheet);
-    CONFIG.DoD.Items.registerSheet("DoD", DoDItemSheet, { makeDefault: true });
-
+    CONFIG.DoD.Actors.unregisterSheet("core", foundry.appv1.sheets.ActorSheet);
+    CONFIG.DoD.Actors.registerSheet("DoD", DoDCharacterSheet, { types: ["character"], makeDefault: true });
+    CONFIG.DoD.Actors.registerSheet("DoD", DoDNpcSheet, { types: ["npc"], makeDefault: true });
+    CONFIG.DoD.Actors.registerSheet("DoD", DoDMonsterSheet, { types: ["monster"], makeDefault: true });
+    
+    CONFIG.DoD.Items.unregisterSheet("core", foundry.appv1.sheets.ItemSheet);
+    CONFIG.DoD.Items.registerSheet("DoD", DoDAbilitySheet, { types: ["ability"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDArmorSheet, { types: ["armor"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDHelmetSheet, { types: ["helmet"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDInjurySheet, { types: ["injury"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDItemSheet, { types: ["item"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDKinSheet, { types: ["kin"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDProfessionSheet, { types: ["profession"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDSkillSheet, { types: ["skill"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDSpellSheet, { types: ["spell"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDWeaponSheet, { types: ["weapon"], makeDefault: true });
+    
     CONFIG.DoD.DocumentSheetConfig.unregisterSheet(ActiveEffect, "core", CONFIG.DoD.ActiveEffectConfig);
     CONFIG.DoD.DocumentSheetConfig.registerSheet(ActiveEffect, "DoD", DoDActiveEffectConfig, {makeDefault :true});
 
@@ -363,27 +244,16 @@ Hooks.once("init", function () {
     }
     // Don't show conditions on the TokenHUD
     Hooks.on('renderTokenHUD', (_app, html, _options) => {
-        const container = html.jquery ? html[0] : html; // jQuery in version <= 12, DOM in version >= 13
         for (const [_key, value] of Object.entries(DoD.conditionEffects)) {
-            for (const effect of container.querySelectorAll(`.effect-control[data-status-id="${value.id}"]`)) {
+            for (const effect of html.querySelectorAll(`.effect-control[data-status-id="${value.id}"]`)) {
                 effect.remove();
             }
         }
     });
 
-    if (game.release.generation < 13) {
-        Hooks.on("renderChatLog", DoDChat.addChatListeners);
-        Hooks.on("getChatLogEntryContext", DoDChat.addChatMessageContextMenuOptions);
-        Hooks.on("renderChatMessage", DoDChat.hideChatPermissions);
-    } else {
-        Hooks.on("renderChatMessageHTML", DoDChat.addChatListeners);
-        Hooks.on("getChatMessageContextOptions", DoDChat.addChatMessageContextMenuOptions);
-        Hooks.on("renderChatMessageHTML", DoDChat.hideChatPermissions);
-    }  
-
-    if (game.release.version < 14) {
-        CONFIG.compatibility.excludePatterns.push(new RegExp("The V1 Application framework is deprecated"));
-    }
+    Hooks.on("renderChatMessageHTML", DoDChat.addChatListeners);
+    Hooks.on("getChatMessageContextOptions", DoDChat.addChatMessageContextMenuOptions);
+    Hooks.on("renderChatMessageHTML", DoDChat.hideChatPermissions);
 });
 
 Hooks.once("ready", async function () {
@@ -436,7 +306,7 @@ Hooks.once("ready", async function () {
     });
 
     // Register token turn marker once
-    if ( game.release.generation >= 13 && game.settings.get("dragonbane", "registeredTurnMarker") === false) {
+    if ( game.settings.get("dragonbane", "registeredTurnMarker") === false) {
         const combatTrackerConfig = game.settings.get("core", "combatTrackerConfig");
         combatTrackerConfig.turnMarker.src = "systems/dragonbane/art/tokens/token-frame.webp";
         game.settings.set("core", "combatTrackerConfig", combatTrackerConfig);
@@ -446,15 +316,9 @@ Hooks.once("ready", async function () {
 
 for (const sheet of ["ActorSheet", "ItemSheet", "JournalPageSheet", "JournalEntryPageSheet"]) {
     Hooks.on(`render${sheet}`, (_app, html, _options) => {
-        if (game.release.generation < 13) {
-            html.on('click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
-            html.on("click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);
-            html.on("click", ".treasure-roll", DoDChat.onTreasureRoll);
-        } else {
-            DoD_Utility.addHtmlEventListener(html, 'click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
-            DoD_Utility.addHtmlEventListener(html, "click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);
-            DoD_Utility.addHtmlEventListener(html, "click", ".treasure-roll", DoDChat.onTreasureRoll);
-        }
+        DoD_Utility.addHtmlEventListener(html, 'click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
+        DoD_Utility.addHtmlEventListener(html, "click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);
+        DoD_Utility.addHtmlEventListener(html, "click", ".treasure-roll", DoDChat.onTreasureRoll);
     });
 }
 
@@ -625,7 +489,7 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
             a.classList.add("inline-roll");
             a.classList.add("inline-damage-roll");
             a.dataset.damage = match[1];
-            a.dataset.damageType = "DoD.damageTypes." + (match[2] ?? "none");
+            a.dataset.damageType = DoDOptionalRuleSettings.damageTypes ? "DoD.damageTypes." + (match[2] ?? "none") : "DoD.damageTypes.none";
             if (options.actor) a.dataset.actorId = options.actor.uuid;
             if (match[3]) a.dataset.action = match[3];
 

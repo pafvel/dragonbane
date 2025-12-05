@@ -1,0 +1,40 @@
+<div class="tab sheet-tab {{tabs.changes.cssClass}}" data-group="primary" data-tab="{{tabs.changes.id}}">
+    <div class="changes-tab dod-controls">
+        <table class="sheet-table changes-list">
+            <tr class="sheet-table-header">
+                <th></th>
+                <th class="text-header">{{ localize "EFFECT.ChangeKey" }}</th>
+                <th class="text-header">{{ localize "EFFECT.ChangeMode" }}</th>
+                <th class="text-header">{{ localize "EFFECT.ChangeValue" }}</th>
+                <th>
+                    <button type="button" class="effect-control" data-action="addChange">
+                        <a  class="fas fa-plus"></a>
+                    </button>                        
+                </th>
+                <th></th>
+            </tr>
+            {{#each source.changes as |change i|}}
+            <tr class="effect-change" data-index="{{i}}">
+                <td></td>
+                <td class="key">
+                    <select name="changes.{{i}}.key">
+                        {{selectOptions ../config.activeEffectChanges selected=change.key localize=true}}
+                    </select>
+                </td>
+                <td class="mode">
+                    <select name="changes.{{i}}.mode" data-dtype="Number">
+                        {{selectOptions ../modes selected=change.mode}}
+                    </select>
+                </td>
+                <td class="value">
+                    <input type="text" name="changes.{{i}}.value" value="{{change.value}}"/>
+                </td>
+                <td class="effect-controls">
+                    <a class="effect-control" data-action="deleteChange"><i class="fas fa-trash"></i></a>
+                </td>
+                <td></td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+</div>

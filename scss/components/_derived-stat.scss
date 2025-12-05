@@ -1,0 +1,66 @@
+.system-dragonbane {
+
+    .derived-stat-box {
+        width: 100%;
+
+        table {
+            margin: 0;
+        }
+
+        table:first-child {
+            margin-top: 7px;
+        }
+
+        table:last-child {
+            margin-bottom: 7px;
+        }
+    }
+
+    .derived-stat {
+        border-bottom: 0;
+        border-top: 0;
+        margin: 0.5rem 0;
+        background-color: transparent;
+
+        th {
+            text-align: center;
+            color: var(--dod-color-journal-table-header);
+            background-image: url("art/ui/table-row-right.webp"), url("art/ui/arrow-left.webp"), url("art/ui/title-bar.webp");
+            background-size: contain, contain, contain;
+            background-clip: border-box, border-box, content-box;
+            background-repeat: no-repeat, no-repeat, repeat-x;
+            background-position: right -8px center, left (+4px) center, center center;
+            height: 2.5em;
+            padding: 0 0 0 30px;
+            min-width: 160px;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        td {
+            text-align: center;
+            color: var(--dod-color-parchment-text);
+            background-image: url("art/ui/table-row-right.webp"), url("art/ui/arrow-right.webp"), url("art/ui/table-row-banner2.webp");
+            background-size: contain, contain, contain;
+            background-clip: border-box, border-box, content-box;
+            background-repeat: no-repeat, no-repeat, repeat-x;
+            background-position: left -8px center, right center, center center;
+            height: 2.5em;
+            padding: 0 30px 0 0;
+            min-width: 6em;
+
+            input[type="checkbox"] {
+                vertical-align: -webkit-baseline-middle;
+            }
+        }
+
+        .warning {
+            color:red;
+        }
+
+        option {
+            text-align:center;
+            text-align-last: center; 
+        }
+    };
+}

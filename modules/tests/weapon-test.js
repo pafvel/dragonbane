@@ -1,5 +1,6 @@
 import DoDSkillTest from "./skill-test.js";
 import DoD_Utility from "../utility.js";
+import DoDOptionalRuleSettings from "../apps/optional-rule-settings.js";
 
 export default class DoDWeaponTest extends DoDSkillTest  {
 
@@ -11,19 +12,41 @@ export default class DoDWeaponTest extends DoDSkillTest  {
     updateDialogData() {
         super.updateDialogData();
 
+        const useDamageTypes = DoDOptionalRuleSettings.damageTypes;
         const isThrownWeapon = this.weapon.hasWeaponFeature("thrown");
         const isRangedWeapon = !isThrownWeapon && this.weapon.isRangedWeapon;
         const isMeleeWeapon = !isThrownWeapon && !isRangedWeapon;
+        const hasMeleeAttack = isMeleeWeapon || isThrownWeapon;
         const isLongWeapon = this.weapon.hasWeaponFeature("long");
-        const hasSlashAttack = this.weapon.hasWeaponFeature("slashing");
-        const hasStabAttack = this.weapon.hasWeaponFeature("piercing");
+        const hasSlashAttack = this.weapon.hasWeaponFeature("slashing") && useDamageTypes;
+        const hasStabAttack = this.weapon.hasWeaponFeature("piercing")  && useDamageTypes;
         const hasWeakpointAttack = hasStabAttack;
         const hasNormalAttack = this.weapon.hasWeaponFeature("bludgeoning") || !(hasStabAttack || hasSlashAttack);
-        const hasToppleAttack = true; //this.weapon.hasWeaponFeature("toppling");
+        const hasToppleAttack = true;
         const hasDisarmAttack = true;
         const hasParry = !this.weapon.hasWeaponFeature("noparry");
         const isShield = this.weapon.hasWeaponFeature("shield");
+        const actorToken = canvas.scene?.tokens?.find(t => t.actor?.uuid === this.actor.uuid);
+        const targetToken = this.options.targets?.length > 0 ? this.options.targets[0].document : null;
 
+        //
+        // Calculate ranges
+        //
+        let distance = 0;
+        let isInMeleeRange = true;
+
+        if (actorToken && targetToken) {
+
+            // Calculate separation between actor and target tokens
+            distance = DoD_Utility.calculateDistanceBetweenTokens(actorToken, targetToken);
+
+            // Determine available attack types based on range and weapon
+            isInMeleeRange = distance <= (isMeleeWeapon ? this.weapon.calculateRange() : (isLongWeapon ? 4 : 2));
+        }
+
+        //
+        // Determine available actions
+        //
         let actions = [];
 
         function pushAction(action) {
@@ -34,52 +57,37 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             });
         }
 
-        const actorToken = canvas.scene?.tokens?.find(t => t.actor?.uuid === this.actor.uuid);
-        const targetToken = this.options.targets?.length > 0 ? this.options.targets[0].document : null;
-        let distance = 0;
-        let isInMeleeRange = true;
-        let isMeleeAttack = isMeleeWeapon || isThrownWeapon;
-        let isRangedAttack = isRangedWeapon || isThrownWeapon;
-       
-        if (actorToken && targetToken) {
-
-            // Calculate separation between actor and target tokens
-            distance = DoD_Utility.calculateDistanceBetweenTokens(actorToken, targetToken);
-
-            // Determine available attack types based on range and weapon
-            isInMeleeRange = distance <= (isMeleeWeapon ? this.weapon.calculateRange() : (isLongWeapon ? 4 : 2));
-            isMeleeAttack = isMeleeWeapon || isThrownWeapon;
-            isRangedAttack = isRangedWeapon || isThrownWeapon;
-        }
-
         if(isRangedWeapon) {
             pushAction("ranged");
         }
-        if(isMeleeAttack && hasNormalAttack) {
+        if(hasMeleeAttack && hasNormalAttack) {
             pushAction("normal");
         }
-        if(isMeleeAttack && hasSlashAttack) {
+        if(hasMeleeAttack && hasSlashAttack) {
             pushAction("slash");
         }
-        if(isMeleeAttack && hasStabAttack) {
+        if(hasMeleeAttack && hasStabAttack) {
             pushAction("stab");
         }
-        if(isMeleeAttack && hasWeakpointAttack) {
+        if(hasMeleeAttack && hasWeakpointAttack) {
             pushAction("weakpoint");
         }
-        if(isMeleeAttack && hasToppleAttack) {
+        if(hasMeleeAttack && hasToppleAttack) {
             pushAction("topple");
         }
-        if(isMeleeAttack && hasDisarmAttack) {
+        if(hasMeleeAttack && hasDisarmAttack) {
             pushAction("disarm");
         }
         if(isThrownWeapon) {
             pushAction("throw");
         }
-        if(isMeleeAttack && hasParry) {
+        if(hasMeleeAttack && hasParry) {
             pushAction("parry");
         }
 
+        //
+        // Set default action
+        //
         if (actions.length > 0) {
             let defaultIndex = 0;
             if (isShield) {
@@ -93,59 +101,70 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             actions[defaultIndex].checked = true;
         }
 
+        this.dialogData.actions = actions;
+
+        //
+        // Automatic banes and boons
+        //
+
+        // Bane for strength below weapon requirement
         if (this.actor.type === "character" && this.weapon.requiredStr > this.actor.system.attributes.str.value) {
             this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.belowRequiredStr"), value: true});
         }
 
-        // Boon and extra damage on melee attack on prone target
-        if (isMeleeAttack && targetToken && actorToken) {
-            if (targetToken.hasStatusEffect("prone") && !actorToken.hasStatusEffect("prone")) {
-                this.dialogData.boons.push({source: game.i18n.localize("EFFECT.StatusProne"), value: true});
-                this.dialogData.extraDamage = "D6";
+        if (actorToken && targetToken) {
+
+            // Boon and extra damage on melee attack on prone target
+            if (hasMeleeAttack && isInMeleeRange) {
+                if (targetToken.hasStatusEffect("prone") && !actorToken.hasStatusEffect("prone")) {
+                    this.dialogData.boons.push({source: game.i18n.localize("EFFECT.StatusProne"), value: true});
+                    this.dialogData.extraDamage = "D6";
+                }
+            }
+            // Bane on ranged attacks at point blank
+            if (isRangedWeapon && distance <= 2) {
+                this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.pointBlank"), value: true});
+            }
+            // Bane on ranged attacks at more than max range
+            if ((isRangedWeapon || isThrownWeapon) && distance > this.weapon.calculateRange()) {
+                this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.longRange"), value: true});
+            }
+            // Bane if walls or tokens obstruct line of sight
+            if ((isRangedWeapon || isThrownWeapon && !isInMeleeRange)) {
+
+                const origin = actorToken.object.bounds.center;
+                const destination = targetToken.object.bounds.center;
+
+                // Check walls
+                const sightBackend = CONFIG.Canvas.polygonBackends["sight"];
+                const blockedByWall = sightBackend.testCollision(origin, destination, { mode: "any", type: "sight" });
+                if (blockedByWall) {
+                    this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.lineOfSightWall"), value: true});
+                }
+
+                // Check tokens
+                const ray = new foundry.canvas.geometry.Ray(origin, destination);
+                const potentialBlockers = canvas.tokens.placeables.filter(t => t.id !== targetToken.id && t.id !== actorToken.id && !t.document.hidden);
+                const blockers = potentialBlockers.filter(t => {
+                    const { x, y, width, height } = t.bounds;
+                    const sides = [
+                        [ x,            y,          x + width, y            ], // top
+                        [ x + width,    y,          x + width, y + height   ], // right
+                        [ x + width,    y + height, x,         y + height   ], // bottom
+                        [ x,            y + height, x,         y            ]  // left
+                    ];
+                    return sides.some(coords => !!ray.intersectSegment(coords));
+                });
+                if (blockers.length > 0) {
+                    const notProne = blockers.some( blocker => !blocker.document.hasStatusEffect("prone") );
+                    this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.lineOfSightToken"), value: notProne});
+                }
             }
         }
-        // Bane on ranged attacks at point blank
-        if (targetToken && isRangedWeapon && distance <= 2) {
-            this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.pointBlank"), value: true});
-        }
-        // Bane on ranged attacks at more than max range
-        if (targetToken && (isRangedWeapon || isThrownWeapon) && distance > this.weapon.calculateRange()) {
-            this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.longRange"), value: true});
-        }
-        // Bane if walls or tokens obstruct line of sight
-        if (targetToken && actorToken && (isRangedWeapon || isThrownWeapon && !isInMeleeRange)) {
 
-            const origin = actorToken.object.bounds.center;
-            const destination = targetToken.object.bounds.center;
-
-            // Check walls
-            const sightBackend = CONFIG.Canvas.polygonBackends["sight"];
-            const blockedByWall = sightBackend.testCollision(origin, destination, { mode: "any", type: "sight" });
-            if (blockedByWall) {
-                this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.lineOfSightWall"), value: true});
-            }
-
-            // Check tokens
-            const ray = game.release.generation < 13 ? new Ray (origin, destination) : new foundry.canvas.geometry.Ray(origin, destination);
-            const potentialBlockers = canvas.tokens.placeables.filter(t => t.id !== targetToken.id && t.id !== actorToken.id && !t.document.hidden);
-            const blockers = potentialBlockers.filter(t => {
-                const { x, y, width, height } = t.bounds;
-                const sides = [
-                    [ x,            y,          x + width, y            ], // top
-                    [ x + width,    y,          x + width, y + height   ], // right
-                    [ x + width,    y + height, x,         y + height   ], // bottom
-                    [ x,            y + height, x,         y            ]  // left
-                ];
-                return sides.some(coords => !!ray.intersectSegment(coords));
-            });
-            if (blockers.length > 0) {
-                const notProne = blockers.some( blocker => !blocker.document.hasStatusEffect("prone") );
-                this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.lineOfSightToken"), value: notProne});
-            }
-        }
-
-        this.dialogData.actions = actions;
-
+        //
+        // Enchanted weapons
+        //
         this.dialogData.enchantedWeapon = 0;
         if (this.weapon.hasWeaponFeature("enchanted1")) {
             this.dialogData.enchantedWeapon = 1;
@@ -178,27 +197,13 @@ export default class DoDWeaponTest extends DoDSkillTest  {
 
         // User may cancel if the weapon is broken
         if (this.weapon.system.broken) {
-            const brokenOpts = await new Promise(resolve => {
-            new Dialog({
-                title: game.i18n.localize("DoD.ui.dialog.brokenWeaponTitle"),
+            const confirmAction = await foundry.applications.api.DialogV2.confirm({
+                window:  { title: game.i18n.localize("DoD.ui.dialog.brokenWeaponTitle") },
                 content: game.i18n.localize("DoD.ui.dialog.brokenWeaponContent"),
-                buttons: {
-                ok: {
-                    icon: '<i class="fas fa-check"></i>',
-                    label: game.i18n.localize("DoD.ui.dialog.performAction"),
-                    callback: () => resolve({ cancelled: false })
-                },
-                cancel: {
-                    icon: '<i class="fas fa-times"></i>',
-                    label: game.i18n.localize("DoD.ui.dialog.cancelAction"),
-                    callback: () => resolve({ cancelled: true })
-                }
-                },
-                default: "cancel",
-                close: () => resolve({ cancelled: true })
-            }).render(true);
-            });
-            if (brokenOpts.cancelled) return { cancelled: true };
+                yes: { label: game.i18n.localize("DoD.ui.dialog.performAction") },
+                no:  { label: game.i18n.localize("DoD.ui.dialog.cancelAction") }
+            });            
+            if (!confirmAction) return { cancelled: true };
         }
         // User may cancel if the distance to target is greater than 2x max range
         if (this.weapon.isRangedWeapon || this.weapon.hasWeaponFeature("thrown"))
@@ -211,27 +216,13 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             }
 
             if (distance > 2 * this.weapon.calculateRange()) {
-                const rangedOpts = await new Promise(resolve => {
-                new Dialog({
-                    title: game.i18n.localize("DoD.ui.dialog.longRangeTitle"),
+                const confirmRangedAction = await foundry.applications.api.DialogV2.confirm({
+                    window:  { title: game.i18n.localize("DoD.ui.dialog.longRangeTitle") },
                     content: game.i18n.localize("DoD.ui.dialog.longRangeContent"),
-                    buttons: {
-                    ok: {
-                        icon: '<i class="fas fa-check"></i>',
-                        label: game.i18n.localize("DoD.ui.dialog.performAction"),
-                        callback: () => resolve({ cancelled: false })
-                    },
-                    cancel: {
-                        icon: '<i class="fas fa-times"></i>',
-                        label: game.i18n.localize("DoD.ui.dialog.cancelAction"),
-                        callback: () => resolve({ cancelled: true })
-                    }
-                    },
-                    default: "cancel",
-                    close: () => resolve({ cancelled: true })
-                }).render(true);
-                });
-                if (rangedOpts.cancelled) return { cancelled: true };
+                    yes: { label: game.i18n.localize("DoD.ui.dialog.performAction") },
+                    no:  { label: game.i18n.localize("DoD.ui.dialog.cancelAction") }
+                });            
+                if (!confirmRangedAction) return { cancelled: true };
             }
         }
         // Finally, ask for the actual roll options
@@ -267,53 +258,25 @@ export default class DoDWeaponTest extends DoDSkillTest  {
     }
 
 
-    processDialogOptions(form) {
-        let options = super.processDialogOptions(form);
+    processDialogOptions(input) {
+        const options = super.processDialogOptions(input);
 
-        // Process input action
-        let elements = form.getElementsByClassName("weapon-action");
-        let element = elements ? elements[0] : null;
-        if (element) {
-            let inputs = element.getElementsByTagName("input");
-            for (let input of inputs) {
-                if (input.checked) {
-                    options.action = input.id;
-                    break;
-                }
-            }
-        }
-        if (options.action === "weakpoint") {
+        // Process inputs
+        const action = String(input.action);
+        const extraDamage = String(input.extraDamage).trim();
+        const enchantedWeapon = Number(input.enchantedWeapon);
+
+        // Add automatic banes and boons
+        if (action === "weakpoint") {
             options.banes.push(game.i18n.localize("DoD.attackTypes.weakpoint"));
         }
-
-        if (options.action === "topple" && this.weapon.hasWeaponFeature("toppling")) {
+        if (action === "topple" && this.weapon.hasWeaponFeature("toppling")) {
             options.boons.push(game.i18n.localize("DoD.attackTypes.topple"));
         }
-        ;
 
-        // Process extra damage
-        elements = form.getElementsByClassName("extra-damage");
-        element = elements ? elements[0] : null;
-        if (element && element.value.length > 0) {
-            if (element.validity.valid) {
-                options.extraDamage = element.value;
-            } else {
-                DoD_Utility.WARNING("DoD.WARNING.cannotEvaluateFormula");
-            }
-        }
-
-        // Process enchanted weapon
-        elements = form.getElementsByClassName("enchanted-weapon");
-        element = elements ? elements[0] : null;
-        if (element) {
-            const value = Number(element.value);
-            if (value > 0) {
-                options.enchantedWeapon = value;
-            }
-        }
-
-
-        return options;
+        // TODO: Validate extra damage formula
+    
+        return { ...options, action, extraDamage, enchantedWeapon };
     }
 
     updatePreRollData() {
@@ -376,6 +339,10 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             default:
                 this.postRollData.damageType = DoD.damageTypes.none;
                 this.postRollData.isDamaging = true;
+        }
+
+        if (DoDOptionalRuleSettings.damageTypes === false) {
+            this.postRollData.damageType = DoD.damageTypes.none;
         }
 
         if (this.postRollData.isDemon) {

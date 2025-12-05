@@ -1,0 +1,75 @@
+<div class="tab sheet-tab {{tabs.details.cssClass}}" data-group="primary" data-tab="{{tabs.details.id}}">
+    <div class="spell-tab dod-controls">
+        <table class="simple-table">
+            <tr>
+                <th>{{localize "DoD.spell.school"}}</th>
+                <th>{{localize "DoD.spell.rank"}}</th>
+                <th>{{localize "DoD.spell.prerequisite"}}</th>
+                <th>{{localize "DoD.spell.requirement"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <input class="edit-school" data-field="system.school" name="system.school" type="text" value="{{localize system.school}}" />
+                </td>
+                <td>
+                    <input name="system.rank" type="text" value="{{system.rank}}" data-dtype="Number" />
+                </td>
+                <td>
+                    <input name="system.prerequisite" type="text" value="{{system.prerequisite}}" />
+                </td>
+                <td>
+                    <input name="system.requirement" type="text" value="{{system.requirement}}" />
+                </td>
+            </tr>
+        </table>
+
+        <table class="simple-table">
+            <tr>
+                <th>{{localize "DoD.spell.castingTime"}}</th>
+                <th>{{localize "DoD.spell.rangeType"}}</th>
+                <th>{{localize "DoD.spell.range"}}</th>
+                <th>{{localize "DoD.spell.duration"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <select name="system.castingTime">
+                        {{selectOptions config.castingTimeTypes selected=system.castingTime localize=true}}
+                    </select>
+                </td>
+                <td>
+                    <select name="system.rangeType">
+                        {{selectOptions config.spellRangeTypes selected=system.rangeType localize=true}}
+                    </select>
+                </td>
+                <td>
+                    {{#if enableRange}}
+                    <input name="system.range" type="text" value="{{system.range}}" data-dtype="Number" />
+                    {{else}}
+                    <input name="system.range" type="text" value="-" data-dtype="Number" disabled/>
+                    {{/if}}
+                </td>
+                <td>
+                    <select name="system.duration">
+                        {{selectOptions config.spellDurationTypes selected=system.duration localize=true}}
+                    </select>
+                </td>
+            </tr>
+        </table>
+
+        <table class="simple-table">
+            <tr>
+                <th>{{localize "DoD.spell.damage"}}</th>
+                <th>{{localize "DoD.spell.damagePerPowerlevel"}}</th>
+            </tr>
+            
+            <tr>
+                <td>
+                    <input name="system.damage" type="text" value="{{system.damage}}" pattern="([\+\-])?(\d+)?[dD](\d+)([\+\-]\d+)?|(([\+\-])?\d+)?"/>
+                </td>    
+                <td>
+                    <input name="system.damagePerPowerlevel" type="text" value="{{system.damagePerPowerlevel}}" pattern="(\d+)?[dD](\d+)([\+\-]\d+)?|(([\+\-])?\d+)?"/>
+                </td>    
+            </tr>
+        </table>
+    </div>
+</div>

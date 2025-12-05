@@ -1,0 +1,194 @@
+{{#*inline "abilityRow"}}
+    <tr class="sheet-table-data item" data-item-id="{{ability.id}}">
+        <td></td>
+        <td class="text-data">
+            {{#if owner}}
+            <a class="use-ability">{{ability.name}}</a>
+            {{else}}
+            <a class="item-edit">{{ability.name}}</a>
+            {{/if}}
+        </td>
+        <td>
+            {{#if editable}}
+            <button type="button" class="icon" data-action="itemControls" data-item-id="{{ability.id}}">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
+            {{/if}}
+        </td>
+    </tr>
+{{/inline}}
+
+<div class="tab {{tabs.abilities.cssClass}}" data-group="primary" data-tab="{{tabs.abilities.id}}">
+    <div class="abilities-tab flexcol dod-controls">
+        <div class="flexrow">
+            {{!-- Will Power --}}
+            <div>
+                {{> "systems/dragonbane/templates/partials/wp-widget.hbs" }}
+            </div>
+
+            {{!-- Abilities --}}
+            <div>
+                {{!-- Kin Abilities --}}
+                <table class="sheet-table kin-abilities item-list">
+                    <tr class="sheet-table-header">
+                        <th></th>
+                        <th class="text-header" title="{{localize "DoD.ui.character-sheet.kinAbilitiesTooltip"}}">
+                            {{localize "DoD.ui.character-sheet.kinAbilities"}}
+                        </th>
+                        <th>
+                            {{!-- column for icons --}}
+                            &nbsp
+                        </th>
+                    </tr>
+                    {{#each kinAbilities as |ability abilityId|}}
+                        {{> abilityRow ability=ability editable=../editable owner=../owner}}
+                    {{/each}}
+                </table>
+                {{!-- Profession Abilities --}}
+                {{#if professionAbilities }}
+                <table class="sheet-table profession-abilities item-list">
+                    <tr class="sheet-table-header">
+                        <th></th>
+                        <th class="text-header" title="{{localize "DoD.ui.character-sheet.professionAbilitiesTooltip"}}">
+                            {{localize "DoD.ui.character-sheet.professionAbilities"}}
+                        </th>
+                        <th>
+                            {{!-- column for icons --}}
+                            &nbsp
+                        </th>
+                    </tr>
+                    {{#each professionAbilities as |ability abilityId|}}
+                        {{> abilityRow ability=ability editable=../editable owner=../owner}}
+                    {{/each}}
+                </table>
+                {{/if}}
+                {{!-- Heroic Abilities --}}
+                <table class="sheet-table heroic-abilities item-list">
+                    <tr class="sheet-table-header">
+                        <th></th>
+                        <th class="text-header" title="{{localize "DoD.ui.character-sheet.heroicAbilitiesTooltip"}}">
+                            {{localize "DoD.ui.character-sheet.heroicAbilities"}}
+                        </th>
+                        <th>
+                            {{!-- column for icons --}}
+                            &nbsp
+                        </th>
+                    </tr>
+                    {{#each heroicAbilities as |ability abilityId|}}
+                        {{> abilityRow ability=ability editable=../editable owner=../owner}}
+                    {{/each}}
+                </table>
+            </div>
+        </div>
+        <div class="flexrow">
+        {{#if hasTricks }}
+        <div>
+            {{!-- Tricks --}}
+            <table class="sheet-table item-list spells">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th class="text-header">
+                        {{localize "DoD.ui.character-sheet.trick"}}
+                    </th>
+                    <th></th>
+                    {{#unless hasSpells}}
+                    <th></th>
+                    {{/unless}}
+                </tr>
+                {{#each tricks as |spell spellId|}}
+                <tr class="sheet-table-data item" data-item-id="{{spell.id}}">
+                    <td></td>
+                    <td class="text-data">
+                        {{#if ../owner}}
+                        <a class="rollable-skill">{{spell.name}}</a>
+                        {{else}}
+                        <a class="item-edit">{{spell.name}}</a>
+                        {{/if}}
+                    </td>
+                    <td>
+                        {{#if ../editable}}
+                        <button type="button" class="icon" data-action="itemControls" data-item-id="{{spell.id}}">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        {{/if}}
+                    </td>
+                    {{#unless ../hasSpells}}
+                    <td></td>
+                    {{/unless}}
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+        {{/if}}
+        {{#if hasSpells }}
+        <div>
+            {{!-- Spells --}}
+            <table class="sheet-table item-list spells">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th class="number-header">
+                        {{localize "DoD.ui.character-sheet.skillValue"}}
+                    </th>
+                    <th class="text-header">
+                        {{localize "DoD.ui.character-sheet.spell"}}&nbsp
+                    </th>
+                    <th class="number-header">
+                        {{localize "DoD.spell.rank"}}
+                    </th>        
+                    <th class="checkbox-header">
+                        <label title="{{localize "DoD.spell.memorized"}}">
+                            {{localize "DoD.ui.character-sheet.memorized"}}
+                        </label>
+                    </th>
+                    <th class="text-header">
+                        {{localize "DoD.ui.character-sheet.school"}}
+                    </th>
+                    <th></th>
+                    {{#unless hasTricks}}
+                    <th></th>
+                    {{/unless}}
+                </tr>
+                {{#each spells as |spell spellId|}}
+                <tr class="sheet-table-data item" data-item-id="{{spell.id}}">
+                    <td></td>
+                    <td class="number-data">
+                        {{#if spell.system.rank}}
+                        {{spell.system.skillValue}}
+                        {{else}}
+                        -
+                        {{/if}}
+                    </td>
+                    <td class="text-data">
+                        {{#if ../owner}}
+                        <a class="rollable-skill">{{spell.name}}</a>
+                        {{else}}
+                        <a class="item-edit">{{spell.name}}</a>
+                        {{/if}}
+                    </td>
+                    <td class="number-data">
+                        {{spell.system.rank}}
+                    </td>
+                    <td class="checkbox-data">
+                        <input class="inline-edit" data-field="system.memorized"  type="checkbox" {{checked spell.system.memorized}} />
+                    </td>
+                    <td class="text-data">
+                        {{localize spell.system.school}}
+                    </td>
+                    <td>
+                        {{#if ../editable}}
+                        <button type="button" class="icon" data-action="itemControls" data-item-id="{{spell.id}}">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        {{/if}}
+                    </td>
+                    {{#unless ../hasTricks}}
+                    <td></td>
+                    {{/unless}}
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+        {{/if}}
+        </div>
+    </div>
+</div>

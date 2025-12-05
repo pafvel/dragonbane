@@ -1,0 +1,37 @@
+<div class="tab sheet-tab {{tabs.details.cssClass}}" data-group="primary" data-tab="{{tabs.details.id}}">
+    <div class="details-tab dod-controls">
+
+        <div class="form-group stacked" style="height: 100%">
+            <div class="text-box-editor">
+                {{#if editable}}
+                <prose-mirror
+                    name="description"
+                    value="{{description}}"
+                    button="true"
+                    editable="{{editable}}"
+                    toggled="false">
+                    {{{descriptionHTML}}}
+                </prose-mirror>
+                {{else}}
+                {{{descriptionHTML}}}
+                {{/if}}
+            </div>
+        </div>
+
+        <div class="derived-stat-box">
+            <table class="derived-stat">
+                <tr>
+                    <th>{{localize "EFFECT.FIELDS.disabled.label"}}</th>
+                    <td><input type="checkbox" name="disabled" {{ checked source.disabled }} /></td>
+                </tr>
+                {{#if isItemEffect}}
+                <tr>
+                    <th title="{{localize "DoD.effect.applyWhenEquippedTooltip"}}">{{localize "DoD.effect.applyWhenEquipped"}}</th>
+                    <td><input type="checkbox" name="system.applyOnlyWhenEquipped" {{checked source.system.applyOnlyWhenEquipped}}/></td>
+                </tr>
+                {{/if}}
+            </table>    
+        </div>
+
+    </div>
+</div>

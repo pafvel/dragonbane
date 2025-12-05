@@ -22,7 +22,7 @@ jobs:
       - name: Build
         run: npm run build
       - name: Create Zipped Artifact
-        run: zip -r dragonbane.zip ./ -x ".git/*" ".gitignore" ".vscode/*" "gulpfile.js" "less/*" "node_modules/*" "package.json" "package-lock.json"
+        run: zip -r dragonbane.zip ./ -x ".git/*" ".gitignore" ".vscode/*" "gulpfile.js" "less/*" "scss/*" "node_modules/*" "package.json" "package-lock.json"
       - name: Create Release
         uses: ncipollo/release-action@v1.12.0
         with:

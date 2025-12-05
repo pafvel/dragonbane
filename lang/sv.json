@@ -558,6 +558,7 @@
         "item-sheet": {
             "details": "Detaljer",
             "description": "Beskrivning",
+            "gmDescription": "SL-anteckningar",
             "effects": "Effekter"
         },
         "INFO": {
@@ -565,14 +566,22 @@
             "professionSkillAdded": "Lade till Yrkesfärdighet: {skill}"
         },
         "SETTINGS": {
+            "actorSettings": "Karaktärer",
+            "actorSettingsHint": "Konfigurera karaktärsrelaterade inställningar.",
             "automateNpcDeath": "Markera döda SLP",
             "automateNpcDeathHint": "Markera spelledarpersoner som döda när de når 0 KP.",
             "automateMonsterDeath": "Markera döda monster",
             "automateMonsterDeathHint": "Markera monster som döda när de når 0 KP.",
             "automateCharacterDeath": "Markera döda rollpersoner",
             "automateCharacterDeathHint": "Markera rollpersoner som döda när de misslyckas med 3 dödsslag eller om de dör omedelbart på grund av hög skada.",
+            "automationSettings": "Automatisering",
+            "automationSettingsHint": "Konfigurera automatisering av spelmekaniker.",
+            "automationSettingsTokens": "Spelfigurer",
+            "automationSettingsSkills": "Färdigheter",
             "canEquipItems": "Utrustning till hands",
             "canEquipItemsHint": "Alla sorters utrustning kan vara till hands eller bäras (som t.ex. kläder). Utrustning som är till hands räknas inte som belastning.",
+            "combatSettings": "Strider",
+            "combatSettingsHint": "Konfigurera inställingar för strider.",
             "hideNpcWpWidget": "Dölj viljepoäng från SLP-arket",
             "hideNpcWpWidgetHint": "Dölj viljepoäng från SLP-arket om SLPn har noll viljepoäng och varken har besvärjelser eller förmågor.",
             "keepOwnershipOnImport": "Behåll ägande vid import",
@@ -586,7 +595,23 @@
             "allowDealDamageOnSelected": "Skada på vald spelfigur",
             "allowDealDamageOnSelectedHint": "Spelledaren (GM) kan tillfoga skada (och hela skada) på vald spelfigur om ingen spelfigur satts som mål.",
             "automaticSkillAdvancementMark": "Automatiskt förbättringskryss",
-            "automaticSkillAdvancementMarkHint": "Sätt automatiskt förbättringskryss vid Drakslag eller Demonslag."
+            "automaticSkillAdvancementMarkHint": "Sätt automatiskt förbättringskryss vid Drakslag eller Demonslag.",
+            "optionalRuleSettings": "Frivilliga regler",
+            "optionalRuleSettingsHint": "Slå av/på frivilliga regler.",
+            "damageTypes": "Skadetyper",
+            "damageTypesHint": "Använd skadetyper (krosskada, stickskada, huggskada), modifiering av rustningars skyddsvärde och relaterade vapenhandlingar.",
+            "coinEncumbrance": "Vikt av mynt",
+            "coinEncumbranceHint": "Inkludera vikten av mynt i beräkningen av belastning.",
+            "coreSettingOverrides": "Inställningar för grundmodul",
+            "coreSettingOverridesHint": "Konfigurera inställningar för grundmodulen.",
+            "magicMishapTable": "Magiska missöden",
+            "magicMishapTableHint": "Använd denna tabell för magiska missöden istället för tabellen i grundmodulen.",
+            "meleeMishapTable": "Missöden i närstrid",
+            "meleeMishapTableHint": "Använd denna tabell för missöden i närstrid istället för tabellen i grundmodulen.",
+            "rangedMishapTable": "Missöden med avståndsvapen",
+            "rangedMishapTableHint": "Använd denna tabell för missöden med avståndsvapen istället för tabellen i grundmodulen.",
+            "treasureTable": "Skattetabell",
+            "treasureTableHint": "Använd denna tabell för skatter istället för tabellen i grundmodulen."
         },
         "WARNING": {
             "kinAbility": "Kan ej hitta Släktesförmåga: {ability}",

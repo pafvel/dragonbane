@@ -1,0 +1,100 @@
+{{#*inline "skillRow"}}
+    <tr class="sheet-table-data item" data-item-id="{{skill.id}}">
+        <td class="checkbox-data icon-data">
+            {{#if skill.canImproveSkill}}
+                {{#if skill.system.advance}}
+                <button type="button" class="roll-advancement" data-action="roll-advancement"  title="{{localize "DoD.skill.rollAdvancement"}}">
+                    <i class="fas fa-circle-arrow-up"></i>
+                </button>
+                {{else}}
+                    <input  title="{{localize "DoD.skill.markAdvancement"}}" class="mark-advancement" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
+                {{/if}}
+            {{/if}}
+        </td>
+        <td class="number-data narrow">
+            <input class="inline-edit" data-field="system.value" type="number" value="{{skill.system.value}}" data-dtype="Number"/>
+        </td>
+        <td class="skill-name text-data">
+            {{#if skill.system.isProfessionSkill}}
+            <a class="rollable-skill"><b>{{skill.name}}</b> ({{localize skill.system.attributeShort}})</a>
+            {{else}}
+            <a class="rollable-skill">{{skill.name}} ({{localize skill.system.attributeShort}})</a>
+            {{/if}}
+        </td>
+        <td>
+            {{#if editable}}
+            <button type="button" class="icon" data-action="itemControls" data-item-id="{{skill.id}}">
+                <i class="fas fa-ellipsis-v"></i>
+            </button>
+            {{/if}}
+        </td>
+    </tr>
+{{/inline}}
+
+<div class="tab {{tabs.skills.cssClass}}" data-group="primary" data-tab="{{tabs.skills.id}}">
+    <div class="flexrow dod-controls">
+        {{!-- Core Skills --}}
+        <div>
+            <table class="sheet-table core-skills item-list">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th class="number-header">
+                        {{localize "DoD.ui.character-sheet.skillValue"}}
+                    </th>
+                    <th class="text-header">
+                        {{localize "DoD.ui.character-sheet.coreSkills"}}
+                    </th>
+                    <th>
+                        {{!-- column for icons --}}
+                        &nbsp
+                    </th>
+                </tr>
+                {{#each coreSkills as |skill skillId|}}
+                    {{> skillRow skill=skill editable=../editable}}
+                {{/each}}
+            </table>
+        </div>
+
+        <div>
+            {{!-- Weapon Skills --}}
+            <table class="sheet-table weapon-skills item-list">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th class="number-header">
+                        {{localize "DoD.ui.character-sheet.skillValue"}}
+                    </th>
+                    <th class="text-header">
+                        {{localize "DoD.ui.character-sheet.weaponSkills"}}
+                    </th>
+                    <th>
+                        {{!-- column for icons --}}
+                        &nbsp
+                    </th>
+                </tr>
+                {{#each weaponSkills as |skill skillId|}}
+                    {{> skillRow skill=skill editable=../editable}}
+                {{/each}}
+            </table>
+            {{!-- Secondary Skills --}}
+            {{#if secondarySkills }}
+            <table class="sheet-table secondary-skills item-list">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th class="number-header">
+                        {{localize "DoD.ui.character-sheet.skillValue"}}
+                    </th>
+                    <th class="text-header">
+                        {{localize "DoD.ui.character-sheet.secondarySkills"}}
+                    </th>
+                    <th>
+                        {{!-- column for icons --}}
+                    </th>
+                </tr>
+                {{#each secondarySkills as |skill skillId|}}
+                    {{> skillRow skill=skill editable=../editable}}
+                {{/each}}
+            </table>
+            {{/if}}
+        </div>
+    </div>
+</div>

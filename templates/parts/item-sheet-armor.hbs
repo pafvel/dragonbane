@@ -1,0 +1,51 @@
+<div class="tab sheet-tab {{tabs.details.cssClass}}" data-group="primary" data-tab="{{tabs.details.id}}">
+    <div class="armor-tab dod-controls">
+        <table class="simple-table">
+            <tr>
+                <th>{{localize "DoD.armor.rating"}}</th>
+                <th>{{localize "DoD.armor.bonuses"}}</th>
+                <th>{{localize "DoD.armor.banes"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <input name="system.rating" type="text" value="{{system.rating}}" data-dtype="Number" />
+                </td>
+                <td class="comma-list" data-action="editBonusArmor">
+                    <a title = "{{#each armorBonuses as |bonus|}}{{localize bonus.name}}&#013{{/each}}">
+                        {{#each armorBonuses as |bonus|}}
+                        <span style="text-transform:capitalize;">{{localize bonus.name}}</span>
+                        {{/each}}
+                    </a>
+                </td>
+
+                <td>
+                    <input name="system.banes" type="text" value="{{system.banes}}" />
+                </td>
+            </tr>
+        </table>
+        <table class="simple-table">
+            <tr>
+                <th>{{localize "DoD.gear.weight"}}</th>
+                <th>{{localize "DoD.gear.quantity"}}</th>
+                <th>{{localize "DoD.gear.cost"}}</th>
+                <th>{{localize "DoD.gear.supply"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <input name="system.weight" type="text" value="{{system.weight}}" data-dtype="Number" />
+                </td>
+                <td>
+                    <input name="system.quantity" type="text" value="{{system.quantity}}" data-dtype="Number" />
+                </td>
+                <td>
+                    <input name="system.cost" type="text" value="{{system.cost}}" />
+                </td>
+                <td>
+                    <select name="system.supply">
+                        {{selectOptions config.supplyTypes selected=system.supply localize=true}}
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

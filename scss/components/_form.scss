@@ -1,0 +1,28 @@
+@use "../abstracts/placeholders";
+
+.system-dragonbane {
+
+    form {
+
+        .window-content {
+            @extend %dialog-background;
+        }
+    }
+
+    .standard-form {
+
+        .flexrow {
+            align-items: normal;
+        }
+        
+        .form-footer button  {
+            --button-focus-outline-color: var(--color-border-highlight);
+
+            @extend %button-font;
+
+            &:hover {
+                @extend %button-theme;
+            }
+        }    
+    }
+}

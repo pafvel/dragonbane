@@ -3,6 +3,7 @@ import DoDSkillTest from "./tests/skill-test.js";
 import DoDRoll from "./roll.js";
 import DoDActiveEffect from "./active-effect.js";
 import { DoD } from "./config.js";
+import DoDActorSettings from "./apps/actor-settings.js";
 
 export class DoDActor extends Actor {
 
@@ -532,7 +533,7 @@ export class DoDActor extends Actor {
         for (const item of this.items.contents) {
             encumbrance += item.totalWeight;
         }
-        if (this.system.currency) {
+        if (this.system.currency && DoDActorSettings.coinEncumbrance) {
             let coins = this.system.currency.gc + this.system.currency.sc + this.system.currency.cc;
             encumbrance += Math.floor(coins/100);
         }
@@ -541,6 +542,23 @@ export class DoDActor extends Actor {
 
     getEquippedWeapons() {
         return this.items.filter(i => i.type === "weapon" && i.system.worn === true);
+    }
+
+    canEquipWeapon() {
+        return this.getEquippedWeapons().filter(w => !w.hasWeaponFeature("unarmed")).length < 3;
+    }
+
+    canEquip(item) {
+        if (item.type === "weapon") {
+            return this.canEquipWeapon();
+        } else if (item.type === "armor") {
+            return this.system.equippedArmor == null;
+        } else if (item.type === "helmet") {
+            return this.system.equippedHelmet == null;
+        } else if (item.type === "item") {
+            return true;
+        }
+        return false;
     }
 
     getArmorValue(damageType) {
@@ -586,29 +604,12 @@ export class DoDActor extends Actor {
         let wp = Number(ability.system.wp);
         wp = isNaN(wp) ? 0 : wp;
 
-        const use = await new Promise(
-            resolve => {
-                const data = {
-                    title: game.i18n.localize("DoD.ui.dialog.useAbility"),
-                    content: wp > 0 ? game.i18n.format("DoD.ui.dialog.useAbilityWithWP", {wp: wp, ability: ability.name}) : game.i18n.format("DoD.ui.dialog.useAbilityWithoutWP", {ability: ability.name}),
-                    buttons: {
-                        ok: {
-                            icon: '<i class="fas fa-check"></i>',
-                            label: game.i18n.localize("Yes"),
-                            callback: () => resolve(true)
-                        },
-                        cancel: {
-                            icon: '<i class="fas fa-times"></i>',
-                            label: game.i18n.localize("No"),
-                            callback: _html => resolve(false)
-                        }
-                    },
-                    default: "cancel",
-                    close: () => resolve(false)
-                };
-                new Dialog(data, null).render(true);
-            }
-        );
+        const use = await foundry.applications.api.DialogV2.confirm({
+            window: { title: game.i18n.localize("DoD.ui.dialog.useAbility") },
+            content: wp > 0 ? game.i18n.format("DoD.ui.dialog.useAbilityWithWP", {wp: wp, ability: ability.name})
+                : game.i18n.format("DoD.ui.dialog.useAbilityWithoutWP", {ability: ability.name})
+        });
+
         if (use) {
             let content;
             if (wp > 0) {
@@ -1165,29 +1166,11 @@ export class DoDActor extends Actor {
     async healInjuriesDialog() {
         const healingInjuries = this.items.filter(i => i.type === "injury" && i.system.healingTime != "" && !isNaN(i.system.healingTime));
         if (healingInjuries.length > 0) {
-            const heal = await new Promise(
-                resolve => {
-                    const data = {
-                        title: game.i18n.localize("DoD.ui.dialog.healInjuriesTitle"),
-                        content: game.i18n.format("DoD.ui.dialog.healInjuriesMessage"),
-                        buttons: {
-                            ok: {
-                                icon: '<i class="fas fa-check"></i>',
-                                label: game.i18n.localize("Yes"),
-                                callback: () => resolve(true)
-                            },
-                            cancel: {
-                                icon: '<i class="fas fa-times"></i>',
-                                label: game.i18n.localize("No"),
-                                callback: _html => resolve(false)
-                            }
-                        },
-                        default: "cancel",
-                        close: () => resolve(false)
-                    };
-                    new Dialog(data, null).render(true);
-                }
-            );
+            const heal = await foundry.applications.api.DialogV2.confirm({
+                window: { title: game.i18n.localize("DoD.ui.dialog.healInjuriesTitle") },
+                content: game.i18n.format("DoD.ui.dialog.healInjuriesMessage"),
+            });
+
             if (heal) {
                 for (let injury of healingInjuries) {
                     injury.reduceHealingTime();
@@ -1197,33 +1180,14 @@ export class DoDActor extends Actor {
     }
 
     async deleteItemDialog(item, flavor = "") {
-        let content = flavor ? "<p>" + flavor + "</p>" : "";
-        content += game.i18n.format("DoD.ui.dialog.deleteItemContent", {item: item.name});
+        const content = (flavor ? "<p>" + flavor + "</p>" : "") + game.i18n.format("DoD.ui.dialog.deleteItemContent", {item: item.name});
+        const title = game.i18n.format("DoD.ui.dialog.deleteItemTitle", {item: game.i18n.localize("TYPES.Item." + item.type)});
 
-        const ok = await new Promise(
-            resolve => {
-                const data = {
-                    title: game.i18n.format("DoD.ui.dialog.deleteItemTitle",
-                        {item: game.i18n.localize("TYPES.Item." + item.type)}),
-                    content: content,
-                    buttons: {
-                        ok: {
-                            icon: '<i class="fas fa-check"></i>',
-                            label: game.i18n.localize("Yes"),
-                            callback: () => resolve(true)
-                        },
-                        cancel: {
-                            icon: '<i class="fas fa-times"></i>',
-                            label: game.i18n.localize("No"),
-                            callback: _html => resolve(false)
-                        }
-                    },
-                    default: "cancel",
-                    close: () => resolve(false)
-                };
-                new Dialog(data, null).render(true);
-            }
-        );
+        const ok = await foundry.applications.api.DialogV2.confirm({
+            window: { title: title },
+            content: content,
+        });
+
         if (ok) {
             await this.deleteEmbeddedDocuments("Item", [item.id])
         }

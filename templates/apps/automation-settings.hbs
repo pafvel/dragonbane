@@ -1,0 +1,12 @@
+<div>
+    <fieldset>
+        <legend>{{localize "DoD.SETTINGS.automationSettingsTokens"}}</legend>
+        {{formGroup schema.fields.characterDeath value=source.characterDeath name="characterDeath" localize=true}}
+        {{formGroup schema.fields.npcDeath value=source.npcDeath name="npcDeath" localize=true}}
+        {{formGroup schema.fields.monsterDeath value=source.monsterDeath name="monsterDeath" localize=true}}
+    </fieldset>
+    <fieldset>
+        <legend>{{localize "DoD.SETTINGS.automationSettingsSkills"}}</legend>
+        {{formGroup schema.fields.skillAdvancementMark value=source.skillAdvancementMark name="skillAdvancementMark" localize=true}}
+    </fieldset>
+</div>

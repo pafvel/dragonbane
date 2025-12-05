@@ -1,0 +1,87 @@
+.system-dragonbane {
+
+    .chat-message {
+        user-select: text;
+        background-image: url("art/ui/chat-card-bg.webp");
+        background-size: cover;
+        background-position-x: center;
+
+        &.whisper {
+            background-image: url("art/ui/whisper-chat-card-bg.webp");
+            background-size: cover;
+            background-position-x: center;
+            border: 2px solid var(--color-shadow-primary);
+        }
+
+        .message-content {
+            padding-top: 2px;
+
+            .table-results {
+                overflow-wrap: break-word;
+
+                li {
+                    display: list-item;
+                }
+            }
+
+            .dice-rolls {
+
+                .roll.die.d20.max {
+                    color: #aa0200;
+                    filter: sepia(0.5) hue-rotate(-60deg);
+                }
+
+                .roll.die.d20.min {
+                    color: #18520b;
+                    filter: sepia(0.5) hue-rotate(60deg);
+                }
+            }
+
+            .damage-details {
+                flex: 0 0 100%;
+                position: relative;
+                margin: 0;
+                text-align: center;
+                background: rgba(0, 0, 0, 0.1);
+                border: 1px solid var(--color-border-light-2);
+                border-radius: 3px;
+                box-shadow: 0 0 2px #FFF inset;
+                word-break: break-all;
+
+                .expandable {
+                    display: none;
+                }
+            }
+
+            .chat-button {
+                background: url("art/ui/button-bg.webp");
+                background-repeat: repeat-x;
+                background-size: cover;
+                background-clip: border-box;
+                color: whitesmoke;            
+                font-family: var(--dod-font-heading);
+                font-weight: normal;
+                width: 100%;
+            }
+            
+            .chat-button:disabled {
+                color: var(--color-text-dark-inactive);
+                box-shadow: none;
+            }
+
+            label.checkbox {
+                display: flex;
+                gap: 0.25rem;
+                margin: 0;
+                height: unset;
+                line-height: unset;
+                min-height: 22px;
+                align-items: center;
+
+                input[type="radio"] {
+                    top: 0;
+                }
+            }
+        }
+    }
+}

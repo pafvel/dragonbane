@@ -1,0 +1,10 @@
+@use "../abstracts/placeholders";
+
+.theme-light {
+    --dod-color-text-primary:   black;
+    --dod-dialog-background:    url("art/ui/dialog-bg.webp") repeat;
+
+    .image-popout {
+        @extend %dialog-background;
+    }
+}

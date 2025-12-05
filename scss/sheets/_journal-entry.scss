@@ -1,0 +1,215 @@
+@use "../abstracts/placeholders";
+
+.system-dragonbane {
+
+    .sheet.journal-entry {
+
+        h1, h2, h3 {
+            scroll-margin-top: 20px;
+        }
+
+        h1:not(.window-title) {
+            font-size: 4em;
+            font-weight: bolder;
+            text-transform: uppercase;
+            text-align: center;
+            color: var(--color-text-dark-header);
+            border-bottom: 0 solid transparent;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            font-weight: normal;
+            text-transform: uppercase;
+            text-align: left;
+            color: black;
+            border-bottom: 0 solid transparent;
+        }
+
+        h3 {
+            border-bottom: 1px solid var(--color-underline-header);
+        }
+
+        h3, h4:not(.window-title), h5, h6 {
+            color: black;
+        }
+
+        .scrollable {
+            padding-right: 0;
+        }
+
+        .controls-dropdown {
+            z-index: 2;
+        }
+
+        img {
+            border: 0 solid transparent;
+        }
+
+        .journal-entry-content {
+            background: var(--dod-journal-background);
+            background-size: 100% auto;
+            color: var(--dod-color-journal-text);
+
+            .journal-entry-pages {
+                position: relative;
+                top: -24px;
+                margin: 0 0.5rem 0 0;
+
+                p:empty {
+                    min-height: 1rem;
+                }                
+
+                .journal-entry-page:first-child {
+                    margin-top: 24px;
+                }
+
+                .journal-entry-page.image {
+                    margin-top: 0;
+
+                    figure {
+                        margin-top: 0;
+                    }                    
+                }
+
+                .journal-entry-page {
+                    padding-left: 12px;
+                    padding-right: 12px;
+                    border-left: 12px solid transparent;
+                    border-right: 12px solid transparent;
+
+                    .editor-edit {
+                        z-index: 2;
+                        display: unset;
+                    }
+
+                    .edit-container {
+
+                        button {
+                            color: black;
+                            border-color: black;
+                            top: 28px
+                        }
+                    }
+
+                }
+            }
+
+            img {
+                display: block;
+                margin: auto;
+            }
+
+            img.dropcap {
+                float: left;
+                height: 3.5em;
+                width: auto;
+                pointer-events: none;
+            }           
+
+            table {
+                background: transparent;
+
+                --table-row-color-odd: transparent;
+                --table-row-color-even: rgba(0, 0, 0, 0.1);
+
+                td, th {
+                    text-align: left;
+                }
+            }
+
+            blockquote {
+
+                table {
+                    background: transparent;
+                }
+
+                &.info {
+                    @extend %base-box;
+
+                    background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp"), url("art/ui/parchment-vertical.webp");
+                    background-position: left -16px bottom, right -16px bottom, center bottom 4px, left -16px top, right -16px top, center top 4px, center center;
+                    background-clip: border-box, border-box, padding-box, border-box, border-box, padding-box, content-box;
+                    background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y;
+                    background-size: auto 24px, auto 24px, auto 16px, auto 24px, auto 24px, auto 16px, 100% auto;
+
+                    h2, h3 {
+                        top: -4px;
+                        max-width: 90%;
+                        min-width: 280px;
+                        text-transform: none;
+                        color:whitesmoke;
+                        background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/text-box-title-bg-center.webp");
+                        background-position: left -32px bottom, right -32px bottom, center center;
+                        background-size: auto 32px, auto 32px, auto 32px;
+                        background-clip: border-box, border-box, padding-box;
+                        background-repeat: no-repeat, no-repeat, repeat-x;
+                        border-left: 40px solid transparent;
+                        border-right: 40px solid transparent;
+                    }
+
+                    p {
+                        color: var(--dod-color-journal-info-text);
+                    }
+
+                    p:first-of-type {
+                        padding-top: 16px;
+                    }
+
+                    p:last-of-type {
+                        margin-bottom: 16px;
+                    }
+
+                    table {
+                        color: var(--dod-color-journal-info-text);
+
+                        td, th {
+                            padding: 0.25em 0;
+                        }
+
+                        margin-left: 1em;
+                    }
+
+                    ol, ul {
+
+                        li {
+                            color: var(--dod-color-journal-info-text);;
+                        }
+                    }
+                }
+
+                &.optional {
+                    @extend %base-box;
+
+                    background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/title-bar.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/title-bar.webp"), url("art/ui/stone-vertical.webp");
+                    background-position: left -16px bottom, right -16px bottom, center bottom, left -16px top, right -16px top, center top, center center;
+                    background-clip: border-box, border-box, padding-box, border-box, border-box, padding-box, content-box;
+                    background-repeat: no-repeat, no-repeat, repeat-x, no-repeat, no-repeat, repeat-x, repeat-y;
+                    background-size: auto 32px, auto 32px, auto 32px, auto 32px, auto 32px, auto 32px, 100% auto;
+                    color: var(--dod-color-journal-optional-text);
+
+                    h2, h3 {
+                        top: -1px;
+                        color: var(--dod-color-journal-optional-text);
+                    }
+
+                    p:first-of-type {
+                        padding-top: 20px;
+                    }
+
+                    p:last-of-type {
+                        padding-bottom: 16px;
+                    }
+
+                    .content-link {
+                        background: #dddddd80;
+                    }
+
+                    .inline-roll {
+                        background: #dddddd80;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,102 @@
+.system-dragonbane {
+
+    .sheet.item, .sheet.active-effect-config {
+
+        form {
+            display: flex;
+            flex-direction: column;
+            font-family: var(--dod-font-primary);
+        }
+
+        .standard-form {
+            gap: 0;
+
+            .form-footer {
+                
+                button {
+                    background: url("art/ui/button-bg.webp");
+                    background-repeat: repeat-x;
+                    background-size: cover;
+                    background-clip: border-box;
+                    color: whitesmoke;            
+                    font-family: var(--dod-font-heading);
+                    font-weight: normal;
+                    width: 100%;
+                }
+            }
+
+        }
+
+        .window-content {
+            background:url("art/ui/item-sheet-bg.webp") repeat;
+            background-position: top center;
+            padding: 0;
+        }
+
+        .sheet-header {
+            display: flex;
+            padding: 8px;
+
+            h1 {
+                background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/title-bar.webp");
+                background-position: left center, right center, center center;
+                background-repeat: no-repeat, no-repeat, repeat-x;
+                background-size: contain, contain, contain;
+                background-clip: border-box, border-box, content-box;
+                padding-left: 48px;
+                padding-right: 48px;
+                margin: 0;
+                font-size: 28px;
+                font-weight: 400;
+                width: 100%
+            }
+
+            input {
+                color: var(--dod-color-journal-table-header);
+                background: transparent;
+                text-align: center;
+                height: 48px;
+                border: 0;
+                margin: 8px;
+                outline: 0;
+
+                &:focus {
+                    box-shadow: 0 0 5px var(--color-shadow-primary);
+                    transition: none;
+                }
+            }
+
+            img {
+                border-color: transparent;
+            }
+        }
+
+        nav.tabs {
+
+            &.sheet-tabs {
+                width: 100%;
+                background-image: url("art/ui/table-row-banner.webp");
+                background-repeat:  repeat-x;
+                background-clip: border-box;
+                background-size: auto 100%;
+                border-color: transparent;
+            }
+        }
+
+        nav.tabs [data-tab] {
+            color: var(--dod-color-parchment-text);
+        }
+            
+            
+
+        .sheet-tab {
+            height: 100%;
+            padding: 0 8px;
+            color: var(--dod-color-journal-text);
+
+            .text-box-editor {
+                height: auto;
+            }
+        }
+    }
+}
