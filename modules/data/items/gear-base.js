@@ -7,7 +7,7 @@ export class DoDGearBaseData extends DoDItemBaseData {
             weight: new fields.NumberField({ required: true, nullable: true, initial: 1 }),
             quantity: new fields.NumberField({ required: true, nullable: true, initial: 1 }),
             cost: new fields.StringField({ required: true, blank: true, initial: "" }),
-            supply: new fields.StringField({ required: true, blank: true, initial: "" }),
+            supply: new fields.StringField({ required: true, blank: true, initial: "common" }),
             worn: new fields.BooleanField({ required: true, initial: false }),
             memento: new fields.BooleanField({ required: true, initial: false }),
             boons: new fields.StringField({ required: true, blank: true, initial: "" }),

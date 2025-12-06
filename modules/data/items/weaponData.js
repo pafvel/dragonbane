@@ -5,7 +5,7 @@ export default class DoDWeaponData extends DoDGearBaseData {
         const { fields } = foundry.data;
         return this.mergeSchema(super.defineSchema(), {
             grip: new fields.SchemaField({
-                value: new fields.StringField({ required: true, initial: "" }),
+                value: new fields.StringField({ required: true, initial: "none" }),
             }),
             str: new fields.NumberField({ required: true, initial: 0 }),
             range: new fields.StringField({ required: true, initial: "" }),
