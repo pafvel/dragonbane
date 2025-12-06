@@ -25,12 +25,14 @@ export class DoDActor extends Actor {
         }
 
         const type = game.i18n.localize(this.constructor.metadata.label);
-        return Dialog.confirm({
+        const ok = await foundry.applications.api.DialogV2.confirm({
           title: `${game.i18n.format("DOCUMENT.Delete", {type})}: ${this.name}`,
           content: `<h4>${game.i18n.localize("AreYouSure")}</h4><p>${game.i18n.format("SIDEBAR.DeleteWarning", {type})}</p>${tokenMessage}`,
-          yes: this.delete.bind(this),
           options: options
         });
+        if (ok) {
+            this.delete();
+        }
     }
 
     /** @override */
