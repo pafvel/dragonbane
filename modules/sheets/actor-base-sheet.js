@@ -326,160 +326,173 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
     }
 
     // Increase quantity when dropped item already exists in inventory
-    _findItemStack(item) {
-        const hasQuantity = item?.system?.quantity !== undefined;
+    #_findItemStack(item, itemData) {
+        const systemObject = itemData ? foundry.utils.mergeObject(item.system.toObject(), itemData.system) : item.system.toObject();
+        const hasQuantity = systemObject?.quantity !== undefined;
         const isItem = item?.type === "item";
         const isEquippable = ["weapon", "armor", "helmet"].includes(item?.type);
-        const isWorn = !!item?.system?.worn;
+        const isWorn = !!systemObject?.worn;
         let stack = null;
         if (hasQuantity && (isItem || (isEquippable && !isWorn))) {
             stack = this.actor.items.find(i => {
                 // Stack exists if it is the same type, has the same name
                 // and has the same system data properties (except quantity)
-                if (i.type === item.type && i.name === item.name && i.id != item.id) {
-                    let itemTemplate = item.system.toObject();
+                if (i.type === item.type && i.name === item.name && i.uuid != item.uuid) {
+                    let itemTemplate = systemObject;
                     item.system.constructor.cleanData(itemTemplate);
                     delete itemTemplate.quantity;
                     return foundry.utils.objectsEqual(foundry.utils.filterObject(i.system.toObject(), itemTemplate), itemTemplate);
                 }
-                return false;
+                return null;
             });
         }
         return stack;
     };
 
-    isInventoryItem(item) {
+    // simple check, could check types instead
+    #isInventoryItem(item) {
         return item?.system?.quantity !== undefined;
     }
 
-    async _onDropItem(event, item)
+    // Re-implements super._onDropItem and adds update data to prevent multiple data changes
+    async _onDropItemUpdate(event, item, update) {
+        if ( !this.actor.isOwner ) return null;
+        if ( this.actor.uuid === item.parent?.uuid ) {
+            const result = await this._onSortItem(event, item);
+            return result?.length ? item : null;
+        }
+        const keepId = !this.actor.items.has(item.id);
+        const itemData = foundry.utils.mergeObject(item.toObject(), update);
+        const result = await Item.implementation.create(itemData, {parent: this.actor, keepId});
+        return result ?? null;
+    }
+    
+    
+    async _onDropInventoryItem(event, item)
     {
-        if ( !this.actor.isOwner ) return false;
+        if ( !this.actor.isOwner ) return null;
+        if (!this.#isInventoryItem(item)) return null;
 
-        const dropTarget = event.target.closest(".item-list")?.dataset.droptarget;        
-        
+        const dropTarget = event.target.closest(".item-list")?.dataset.droptarget;
+        let itemData = item.toObject();
+
+        // Default to inventory
+        itemData.system.memento = false;
+        itemData.system.storage = false;
+        itemData.system.worn = false;
+
         // Handle inventory sorting within the same Actor
-        if ( this.actor.uuid === item.parent?.uuid && this.isInventoryItem(item)) {
-            if (dropTarget) {
-
-                // Check weapon equip limits
-                if (dropTarget === "weapon" && item.type === "weapon") {
-                    const worn = item.system.worn || this.actor.canEquipWeapon() || item.hasWeaponFeature("unarmed");
-                    if(!worn) {
-                        DoD_Utility.WARNING("DoD.WARNING.maxWeaponsEquipped");
-                        return;
-                    }
-                }
-
-                // Handle equipping items (weapons, armor, helmet)
-                if (dropTarget === "weapon" && item.type === "weapon"
-                    || dropTarget === "armor" && item.type === "armor"
-                    || dropTarget === "helmet" && item.type === "helmet" )
-                {
-                    // Un-requip previous armor/helmet in the same slot
-                    if (dropTarget === "armor") {
-                        await this.actor.system.equippedArmor?.update({ 
-                            ["system.worn"]: false,
-                            ["system.storage"]: false,
-                        });
-                    }
-                    else if (dropTarget === "helmet") {
-                        await this.actor.system.equippedHelmet?.update({
-                            ["system.worn"]: false,
-                            ["system.storage"]: false,
-                        });
-                    }
-
+        if ( this.actor.uuid === item.parent?.uuid) {
+            
+            if (dropTarget === "weapon" && item.type === "weapon") {
+                // Equip weapon
+                if (this.actor.canEquipWeapon() || item.hasWeaponFeature("unarmed")) {
+                    itemData.system.worn = true;
                     if (item.system.quantity > 1) {
-                        // If it's a stack, just equip one item
-                        const itemData = item.toObject();
+                        await item.update({["system.quantity"]: item.system.quantity - 1 });
                         itemData.system.quantity = 1;
-                        itemData.system.worn = true;
-                        itemData.system.storage = false;
-                        await this.actor.createEmbeddedDocuments("Item", [itemData]);
-                        return await item.update({["system.quantity"]: item.system.quantity - 1 });
-                    } else {
-                        await item.update({
-                            ["system.worn"]: true,
-                            ["system.storage"]: false,
-                        });
+                        const created = await this.actor.createEmbeddedDocuments("Item", [itemData]);
+                        return this._onDropItemUpdate(event, created[0]);
                     }
-                }
-                // Handle memento
-                else if (dropTarget === "memento") {
-                    const memento = this.actor.items.contents.find(i => i.system.memento);
-                    await memento?.update({ ["system.memento"]: false });
-                    await item.update({
-                        ["system.memento"]: true,
-                        ["system.storage"]: false,
-                    });
-                }
-                // Handle moving things to inventory and storage (tiny items are also inventory)
-                else if (dropTarget === "inventory" || dropTarget === "tiny" || dropTarget === "storage") {
-                    // Update item first so that stack can be found
-                    await item.update({
-                        ["system.worn"]: false,
-                        ["system.memento"]: false,
-                        ["system.storage"]: dropTarget === "storage",
-                    });
-                    // Stack items if possible
-                    const stack = this._findItemStack(item);
-                    if (stack) {
-                        // Item already exists in inventory, increase quantity and delete the original item
-                        const itemQuantity = item.system.quantity + stack.system.quantity;
-                        await this.actor.deleteEmbeddedDocuments("Item", [item.id]);
-                        return await stack.update({["system.quantity"]: itemQuantity});
-                    }
+                } else {
+                    DoD_Utility.WARNING("DoD.WARNING.maxWeaponsEquipped");
+                    return null; // do nothing
                 }
             }
-            return this._onSortItem(event, item);
-        }       
-   
-        // Remove kin and kin abilities
+            else if (dropTarget === "armor" && item.type === "armor" && !item.system.worn) {
+                await this.actor.system.equippedArmor?.update({ ["system.worn"]: false });
+                itemData.system.worn = true;
+                if (item.system.quantity > 1) {
+                    await item.update({["system.quantity"]: item.system.quantity - 1 });
+                    itemData.system.quantity = 1;
+                    const created = await this.actor.createEmbeddedDocuments("Item", [itemData]);
+                    return this._onDropItemUpdate(event, created[0]);
+                }
+            }
+            else if (dropTarget === "helmet" && item.type === "helmet" && !item.system.worn) {
+                await this.actor.system.equippedHelmet?.update({ ["system.worn"]: false });
+                itemData.system.worn = true;
+                if (item.system.quantity > 1) {
+                    await item.update({["system.quantity"]: item.system.quantity - 1 });
+                    itemData.system.quantity = 1;
+                    const created = await this.actor.createEmbeddedDocuments("Item", [itemData]);
+                    return this._onDropItemUpdate(event, created[0]);
+                }
+            }
+            else if (dropTarget === "memento" && !item.system.memento) {
+                // Remove old memento
+                const memento = this.actor.items.contents.find(i => i.system.memento);
+                await memento?.update({ ["system.memento"]: false });
+                itemData.system.memento = true;
+            }
+            else if (dropTarget === "inventory" || dropTarget === "tiny" || dropTarget === "storage") {
+                if (dropTarget === "storage") {
+                    itemData.system.storage = true;
+                }
+                const stack = this.#_findItemStack(item, itemData);
+                if (stack) {
+                    // Item already exists in inventory, increase quantity and delete the original item
+                    const itemQuantity = item.system.quantity + stack.system.quantity;
+                    await this.actor.deleteEmbeddedDocuments("Item", [item.id]);
+                    await stack.update({["system.quantity"]: itemQuantity});
+                    return null;
+                }
+            }
+            // Update item in actor
+            await item.update(itemData);
+            const result = await this._onSortItem(event, item);
+            return result?.length ? item : null;
+        }
+        else {
+            // Handle inventory items dropped from external sources
+            if (dropTarget === "storage") {
+                itemData.system.storage = true;
+            }
+            else if (dropTarget !== "inventory" && item.system.quantity === 1) {
+                // If not dropped at storage or inventory, try to equip
+                if (item.type === "weapon" && (this.actor.canEquipWeapon() || item.hasWeaponFeature("unarmed"))
+                    || item.type === "armor" && !this.actor.system.equippedArmor
+                    || item.type === "helmet" && !this.actor.system.equippedHelmet)
+                {
+                    itemData.system.worn = true;
+                }
+            }
+            // if not equipped, try to stack
+            if (!itemData.system.worn) {
+                const stack = this.#_findItemStack(item, itemData);
+                if (stack) {
+                    // Item already exists in inventory, increase quantity and forget the original item
+                    const itemQuantity = item.system.quantity + stack.system.quantity;
+                    await stack.update({["system.quantity"]: itemQuantity});
+                    return null;
+                }
+            }
+            // Handle item drop with extra data
+            return this._onDropItemUpdate(event, item, itemData);
+        }
+    }
+    
+
+    async _onDropItem(event, item)
+    {
+        if ( !this.actor.isOwner ) return null;
+
+        if (this.#isInventoryItem(item)) {
+            return this._onDropInventoryItem(event, item);
+        }
+
         if (item.type === "kin") {
+            // Remove kin and kin abilities
             await this.actor.removeKin();
         }
 
-        // Remove profession and profession abilities
         if (item.type === "profession") {
+            // Remove profession and profession abilities
             await this.actor.removeProfession();
-        }
-
-        const stack = this._findItemStack(item);
-        if (stack) {
-            // Item already exists in inventory, increase quantity
-            const itemQuantity = item.system.quantity + stack.system.quantity;
-            return await stack.update({["system.quantity"]: itemQuantity});
         }
 
         // Create the owned item
         const createdItem = await super._onDropItem(event, item);
-
-        if (this.isInventoryItem(item)) {
-            if (dropTarget === "storage") {
-                await createdItem.update({
-                    ["system.storage"]: true,
-                    ["system.worn"]: false,
-                    ["system.memento"]: false,
-                });
-            } else {
-                await createdItem.update({
-                    ["system.storage"]: false,
-                    ["system.worn"]: false,
-                    ["system.memento"]: false,
-                });
-            }
-        }
-
-        // If there are available slots, equip weapons, armor and helmet
-        if (createdItem.system.quantity === 1 && ["weapon", "armor", "helmet"].includes(createdItem.type)) {
-            const worn = createdItem.type === "weapon" && (this.actor.canEquipWeapon() || item.hasWeaponFeature("unarmed"))
-                        || createdItem.type === "armor" && !this.actor.system.equippedArmor
-                        || createdItem.type === "helmet" && !this.actor.system.equippedHelmet;
-            if (worn != createdItem.system.worn) {
-                await createdItem.update({ ["system.worn"]: worn});
-            }
-        }
 
         // Update kin and kin abilities
         if (item.type === "kin") {
@@ -754,7 +767,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                     await item.update({
                         ["system.worn"]: false,
                     });
-                    const stack = this._findItemStack(item);
+                    const stack = this.#_findItemStack(item);
                     if (stack) {
                         // Item already exists in inventory, increase quantity and delete the original item
                         const itemQuantity = item.system.quantity + stack.system.quantity;

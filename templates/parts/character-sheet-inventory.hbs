@@ -193,7 +193,32 @@
                     <td></td>
                 </tr>
                 {{/if}}
+            </table>
 
+            {{!-- Tiny Items --}}
+            <table class="sheet-table item-list" data-droptarget="tiny">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th class="thumbnail-header"></th>
+                    <th class="text-header">
+                        {{localize "DoD.ui.character-sheet.tiny-items"}}
+                    </th>
+                    {{#if canEquipItems}}
+                    <th class="checkbox-header">
+                        <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
+                            <span class="fa-solid fa-shirt"></span>
+                        </label>
+                    </th>
+                    {{/if}}
+                    <th></th>
+                </tr>
+                {{#if smallItems}}
+                {{#each smallItems as |item itemId|}}
+                    {{> itemRow item=item canEquipItems=../canEquipItems editable=../editable}}
+                {{/each}}
+                {{else}}
+                    <tr class="sheet-table-data"/>
+                {{/if}}
             </table>
 
             {{!-- Memento --}}
@@ -224,32 +249,8 @@
 
             </table>
 
-            {{!-- Tiny Items --}}
-            <table class="sheet-table item-list" data-droptarget="tiny">
-                <tr class="sheet-table-header">
-                    <th></th>
-                    <th class="thumbnail-header"></th>
-                    <th class="text-header">
-                        {{localize "DoD.ui.character-sheet.tiny-items"}}
-                    </th>
-                    {{#if canEquipItems}}
-                    <th class="checkbox-header">
-                        <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
-                            <span class="fa-solid fa-shirt"></span>
-                        </label>
-                    </th>
-                    {{/if}}
-                    <th></th>
-                </tr>
-                {{#if smallItems}}
-                {{#each smallItems as |item itemId|}}
-                    {{> itemRow item=item canEquipItems=../canEquipItems editable=../editable}}
-                {{/each}}
-                {{else}}
-                    <tr class="sheet-table-data"/>
-                {{/if}}
-            </table>
             <hr>
+
             {{!-- Storage --}}
             <table class="sheet-table item-list" data-droptarget="storage">
                 <tr class="sheet-table-header">
