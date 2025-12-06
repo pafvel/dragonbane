@@ -90,7 +90,7 @@
   "background": "systems/dragonbane/art/dragonbane-splash.webp",
   "url": "https://github.com/pafvel/dragonbane",
   "manifest": "https://github.com/pafvel/dragonbane/releases/latest/download/system.json",
-  "download": "https://github.com/pafvel/dragonbane/releases/download/2.6.99-rc.1/dragonbane.zip",
+  "download": "https://github.com/pafvel/dragonbane/releases/download/v2.6.99-rc.1/dragonbane.zip",
   "flags": {
   },
   "relationships": {
