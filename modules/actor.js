@@ -425,7 +425,7 @@ export class DoDActor extends Actor {
 
         // Max Encumbrance
         this.system.maxEncumbrance.base = Math.ceil(0.5 * this.system.attributes.str.value);
-        if (this.items.find(item => item.system.type === "backpack")) {
+        if (this.items.find(item => item.system.type === "backpack" && !item.system.storage)) {
             this.system.maxEncumbrance.base += 2;
         }
         this.system.maxEncumbrance.value = this.system.maxEncumbrance.base;

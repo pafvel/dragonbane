@@ -31,6 +31,9 @@ export default class DoDActiveEffect extends ActiveEffect {
         if (this.parent instanceof Item && !this.parent.system.worn && this.system.applyOnlyWhenEquipped && this.target?.type === "character") {
             return true;
         }
+        if (this.parent instanceof Item && this.parent.system.storage) {
+            return true;
+        }
         return false;
     }
 

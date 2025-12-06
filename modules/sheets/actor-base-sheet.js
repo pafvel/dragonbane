@@ -457,6 +457,11 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                     itemData.system.worn = true;
                 }
             }
+            // Don't replace memento
+            if (item.system.memento && !this.actor.items.contents.find(i => i.system.memento)) {
+                    itemData.system.memento = true;
+            }
+
             // if not equipped, try to stack
             if (!itemData.system.worn) {
                 const stack = this.#_findItemStack(item, itemData);
@@ -561,6 +566,12 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
             itemData.system.storage = true;
             if (itemData.system.worn !== undefined) itemData.system.worn = false;
             if (itemData.system.memento !== undefined) itemData.system.memento = false;
+        }
+
+        // If the create button is in the tiny items section, mark the item as zero weight
+        if (element.classList && element.classList.contains("tiny")) {
+            itemData.system = itemData.system || {};
+            itemData.system.weight = 0;
         }
 
         return this.actor.createEmbeddedDocuments("Item", [itemData]);
