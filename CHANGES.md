@@ -1,5 +1,41 @@
 # Change Log
 
+## Version 3.0.0
+
+- General
+
+  - Moved the Dragonbane Official Soundtrack to a separate recommended module.
+  - Removed support for Foundry v11 and v12. New system versions will likely only support a single Foundry version.
+
+- UI/UX
+
+  - Converted sheets and dialogs to Foundry ApplicationV2.
+    - This is a critical change in order to stay compatible with future Foundry versions and functionality.
+    - Better support for native Foundry look and feel.
+  - Improved font handling
+    - Tried to remove the worst offenders when it comes to drawing text outside their designated areas when using large font sizes.
+
+- Actor and Item sheets
+
+  - Added vertical ellipsis context menu to actor sheets, instead of delete and edit buttons. Added a Duplicate menu option to inventory items.
+  - Added GM Notes section to items. When updating, any un-revealed secrets in item descriptions will automatically be moved to the GM Notes section.
+  - Added Storage section to character inventory (contribution by @xdy).
+    - Items in the Storage section do not contribute to the character's Encumbrance.
+    - Active effects on items in the Storage are automatically suppressed.
+
+- Settings
+
+  - Improved the organization of the system's settings screens
+  - Added new settings
+    - Actor Settings -> Coin Encumbrance: If checked (default), coins will contribute to the character's total encumbrance.
+    - Core Module Overrides: Use custom Melee, Ranged, and Magic Mishap Tables + Treasure Table instead of those from the core module.
+    - Optional Rules -> Damage Types: If checked (default), armor values may be modified by damage types and weapon actions specific to weapon types will be available.
+
+- For developers
+  - Refactored CSS
+    - Changed from using less to scss.
+    - Major updates to architecture and organization. If your Dragonbane module uses CSS it will likely need an update.
+
 ## Version 2.6.1
 
 - Combat
