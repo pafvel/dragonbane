@@ -1753,6 +1753,9 @@
 .system-dragonbane .sheet.journal-entry h3, .system-dragonbane .sheet.journal-entry h4:not(.window-title), .system-dragonbane .sheet.journal-entry h5, .system-dragonbane .sheet.journal-entry h6 {
   color: black;
 }
+.system-dragonbane .sheet.journal-entry .window-content {
+  background: unset;
+}
 .system-dragonbane .sheet.journal-entry .scrollable {
   padding-right: 0;
 }
