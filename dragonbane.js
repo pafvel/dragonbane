@@ -152,7 +152,7 @@ function registerSettings() {
         type: Boolean,
         default: false
     });
-    
+
 }
 
 Hooks.once("init", function () {
@@ -165,7 +165,7 @@ Hooks.once("init", function () {
     CONFIG.DoD.ItemSheet    = foundry.appv1.sheets.ItemSheet;
     CONFIG.DoD.FilePicker   = foundry.applications.apps.FilePicker;
     CONFIG.DoD.TextEditor   = foundry.applications.ux.TextEditor;
-    
+
     CONFIG.DoD.ActiveEffectConfig = foundry.applications.sheets.ActiveEffectConfig;
     CONFIG.DoD.DocumentSheetConfig = foundry.applications.apps.DocumentSheetConfig;
 
@@ -203,7 +203,7 @@ Hooks.once("init", function () {
     CONFIG.DoD.Actors.registerSheet("DoD", DoDCharacterSheet, { types: ["character"], makeDefault: true });
     CONFIG.DoD.Actors.registerSheet("DoD", DoDNpcSheet, { types: ["npc"], makeDefault: true });
     CONFIG.DoD.Actors.registerSheet("DoD", DoDMonsterSheet, { types: ["monster"], makeDefault: true });
-    
+
     CONFIG.DoD.Items.unregisterSheet("core", foundry.appv1.sheets.ItemSheet);
     CONFIG.DoD.Items.registerSheet("DoD", DoDAbilitySheet, { types: ["ability"], makeDefault: true });
     CONFIG.DoD.Items.registerSheet("DoD", DoDArmorSheet, { types: ["armor"], makeDefault: true });
@@ -215,7 +215,7 @@ Hooks.once("init", function () {
     CONFIG.DoD.Items.registerSheet("DoD", DoDSkillSheet, { types: ["skill"], makeDefault: true });
     CONFIG.DoD.Items.registerSheet("DoD", DoDSpellSheet, { types: ["spell"], makeDefault: true });
     CONFIG.DoD.Items.registerSheet("DoD", DoDWeaponSheet, { types: ["weapon"], makeDefault: true });
-    
+
     CONFIG.DoD.DocumentSheetConfig.unregisterSheet(ActiveEffect, "core", CONFIG.DoD.ActiveEffectConfig);
     CONFIG.DoD.DocumentSheetConfig.registerSheet(ActiveEffect, "DoD", DoDActiveEffectConfig, {makeDefault :true});
 
@@ -360,7 +360,7 @@ Hooks.on('importAdventure', async (created, _updated) => {
                     exists = true;
                 }
             } catch { /* directory doesn't exist */ }
-                    
+
             if (!exists) {
                 const thumb = await scene.createThumbnail();
                 await scene.update({ "thumb": thumb.thumb });
@@ -463,7 +463,7 @@ Hooks.on("yzeCombatReady", () => {
     if (game.settings.get("dragonbane", "configuredYzeCombat")) {
         // Update to match new data model
         if (game.settings.get("yze-combat", "actorSpeedAttribute") === "system.ferocity") {
-            game.settings.set("yze-combat", "actorSpeedAttribute", "system.ferocity.value");    
+            game.settings.set("yze-combat", "actorSpeedAttribute", "system.ferocity.value");
         }
         return;
     }
