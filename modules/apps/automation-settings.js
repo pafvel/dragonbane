@@ -38,6 +38,7 @@ export default class DoDAutomationSettings extends HandlebarsApplicationMixin(Ap
         npcDeath: new foundry.data.fields.BooleanField({label : "DoD.SETTINGS.automateNpcDeath", hint : "DoD.SETTINGS.automateNpcDeathHint"}),
         monsterDeath: new foundry.data.fields.BooleanField({label : "DoD.SETTINGS.automateMonsterDeath", hint : "DoD.SETTINGS.automateMonsterDeathHint"}),
         skillAdvancementMark: new foundry.data.fields.BooleanField({label : "DoD.SETTINGS.automaticSkillAdvancementMark", hint : "DoD.SETTINGS.automaticSkillAdvancementMarkHint"}),
+        skillIntensiveTraining: new foundry.data.fields.BooleanField({label : "DoD.SETTINGS.automaticSkillIntensiveTraining", hint : "DoD.SETTINGS.automaticSkillIntensiveTrainingHint"}),
     });
 
     static get schema()
@@ -85,7 +86,7 @@ export default class DoDAutomationSettings extends HandlebarsApplicationMixin(Ap
             default: true,
             type: Boolean
         });
-        
+
         // If true, automatically set skill advancement mark on a Dragon or Demon roll
         game.settings.register("dragonbane", "automaticSkillAdvancementMark", {
             name: "DoD.SETTINGS.automaticSkillAdvancementMark",
@@ -95,18 +96,30 @@ export default class DoDAutomationSettings extends HandlebarsApplicationMixin(Ap
             default: true,
             type: Boolean
         });
+
+        // If true, support intensive training with a teacher
+        game.settings.register("dragonbane", "automaticSkillIntensiveTraining", {
+            name: "DoD.SETTINGS.automaticSkillIntensiveTraining",
+            hint: "DoD.SETTINGS.automaticSkillIntensiveTrainingHint",
+            scope: "world",
+            config: true,
+            default: false,
+            type: Boolean
+        });
+
     }
 
     async _prepareContext(options) {
         let context = await super._prepareContext(options);
-        
+
         context.schema = this.constructor.schema;
-        
+
         context.source = {};
         context.source.characterDeath = game.settings.get("dragonbane", "automateCharacterDeath");
         context.source.npcDeath = game.settings.get("dragonbane", "automateNpcDeath");
         context.source.monsterDeath = game.settings.get("dragonbane", "automateMonsterDeath");
         context.source.skillAdvancementMark = game.settings.get("dragonbane", "automaticSkillAdvancementMark");
+        context.source.skillIntensiveTraining = game.settings.get("dragonbane", "automaticSkillIntensiveTraining");
 
         context.buttons = [{ type: "submit", icon: "fa-solid fa-floppy-disk", label: "SETTINGS.Save" }];
 
@@ -114,12 +127,13 @@ export default class DoDAutomationSettings extends HandlebarsApplicationMixin(Ap
     }
 
 
-    static async _onSubmit(event, form, formData) 
+    static async _onSubmit(event, form, formData)
     {
         game.settings.set("dragonbane", "automateCharacterDeath", formData.object.characterDeath);
         game.settings.set("dragonbane", "automateNpcDeath", formData.object.npcDeath);
         game.settings.set("dragonbane", "automateMonsterDeath", formData.object.monsterDeath);
         game.settings.set("dragonbane", "automateMonsterDeath", formData.object.monsterDeath);
         game.settings.set("dragonbane", "automaticSkillAdvancementMark", formData.object.skillAdvancementMark);
+        game.settings.set("dragonbane", "automaticSkillIntensiveTraining", formData.object.skillIntensiveTraining);
     }
 }

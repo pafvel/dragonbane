@@ -29,7 +29,7 @@ export default class DoDItemBaseSheet extends HandlebarsApplicationMixin(ItemShe
             ],
             initial: 'details'
         }
-    }    
+    }
 
     constructor(options = {}) {
         super(options);
@@ -59,13 +59,14 @@ export default class DoDItemBaseSheet extends HandlebarsApplicationMixin(ItemShe
             item: this.item,
             system: this.item.system,
             effects: this.item.effects.contents,
-            config: CONFIG.DoD
+            config: CONFIG.DoD,
+            automaticSkillIntensiveTraining: game.settings.get("dragonbane", "automaticSkillIntensiveTraining") ?? false
         };
         sheetData.itemDescriptionHTML = await CONFIG.DoD.TextEditor.enrichHTML(sheetData.system.itemDescription, { async: true, secrets: this.item.isOwner });
         if (context.user.isGM) {
             sheetData.gmDescriptionHTML = await CONFIG.DoD.TextEditor.enrichHTML(sheetData.system.gmDescription, { async: true, secrets: true });
         }
-        return {...context, ...sheetData};        
+        return {...context, ...sheetData};
     }
 
     static async #createEffect(event, _target) {
@@ -79,7 +80,7 @@ export default class DoDItemBaseSheet extends HandlebarsApplicationMixin(ItemShe
             disabled: false,
         }]);
     }
-    
+
     static async #editEffect(event, target) {
         event.preventDefault();
 
@@ -87,7 +88,7 @@ export default class DoDItemBaseSheet extends HandlebarsApplicationMixin(ItemShe
         const effect = this.item.effects.get(effectId);
         return effect.sheet.render(true);
     }
-    
+
     static async #deleteEffect(event, target) {
         event.preventDefault();
 
@@ -110,5 +111,5 @@ export default class DoDItemBaseSheet extends HandlebarsApplicationMixin(ItemShe
 
     async _onDropItem(_event, _item) {
         // Override in subclass
-    }    
+    }
 }

@@ -4,7 +4,7 @@ import DoDActorBaseSheet from "./actor-base-sheet.js";
 
 export default class DoDCharacterSheet extends DoDActorBaseSheet {
 
-    static DEFAULT_OPTIONS =  {
+    static DEFAULT_OPTIONS = {
         classes: ["DoD", "sheet", "character"],
         position: { width: 700, height: 775 },
         window: { resizable: true, title: 'DoD.ActorSheetTitle' },
@@ -12,27 +12,26 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
             submitOnChange: true,
             closeOnSubmit: false
         },
-          actions: {  
-        }
+        actions: {}
     };
 
     static TABS = {
         primary: {
             tabs: [
-            { id: 'main', group: 'primary', label: 'DoD.ui.character-sheet.main' },
-            { id: 'skills', group: 'primary', label: 'DoD.ui.character-sheet.skills' },
-            { id: 'abilities', group: 'primary', label: 'DoD.ui.character-sheet.abilities' },
-            { id: 'inventory', group: 'primary', label: 'DoD.ui.character-sheet.inventory' },
-            { id: 'background', group: 'primary', label: 'DoD.ui.character-sheet.background' },
-            { id: 'effects', group: 'primary', label: 'DoD.ui.character-sheet.effects' },
+                { id: 'main', group: 'primary', label: 'DoD.ui.character-sheet.main' },
+                { id: 'skills', group: 'primary', label: 'DoD.ui.character-sheet.skills' },
+                { id: 'abilities', group: 'primary', label: 'DoD.ui.character-sheet.abilities' },
+                { id: 'inventory', group: 'primary', label: 'DoD.ui.character-sheet.inventory' },
+                { id: 'background', group: 'primary', label: 'DoD.ui.character-sheet.background' },
+                { id: 'effects', group: 'primary', label: 'DoD.ui.character-sheet.effects' },
             ],
             initial: 'main'
         }
     }
 
     static PARTS = {
-        header: { scrollable: [''], template: `systems/dragonbane/templates/parts/character-sheet-header.hbs`},
-        tabs: { scrollable: [''], template: `systems/dragonbane/templates/parts/character-sheet-tabs.hbs`},
+        header: { scrollable: [''], template: `systems/dragonbane/templates/parts/character-sheet-header.hbs` },
+        tabs: { scrollable: [''], template: `systems/dragonbane/templates/parts/character-sheet-tabs.hbs` },
         main: { scrollable: [''], template: 'systems/dragonbane/templates/parts/character-sheet-main.hbs' },
         skills: { scrollable: [''], template: 'systems/dragonbane/templates/parts/character-sheet-skills.hbs' },
         abilities: { scrollable: [''], template: 'systems/dragonbane/templates/parts/character-sheet-abilities.hbs' },
@@ -55,13 +54,14 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
             html.find(".condition-panel").click(this._onConditionClick.bind(this));
             html.find("[data-action='roll-advancement']").on("click contextmenu", this._onAdvancementRoll.bind(this))
             html.find(".mark-advancement").on("click", this._onMarkAdvancement.bind(this))
+            html.find(".mark-taught").on("click", this._onMarkTaught.bind(this))
 
             html.find(".death-rolls-success").on("click contextmenu", this._onDeathRollsSuccessClick.bind(this));
             html.find(".death-rolls-success-label").on("click contextmenu", this._onDeathRollsSuccessClick.bind(this));
             html.find(".death-rolls-failure").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
             html.find(".death-rolls-failure-label").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
             html.find("[data-action='roll-deathRoll']").click(this._onDeathRoll.bind(this))
-            
+
             let restRoundButton = html.find(".rest-round");
             if (restRoundButton?.length > 0) {
                 if (this.actor.system.canRestRound === false) {
@@ -145,11 +145,11 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         console.assert(successes >= 0 && successes <= 3, "Dragonbane: system.deathRolls.successes out of range for " + this.actor.uuid);
         if (event.type === "click") { // left click
             if (successes < 3) {
-                return await this.actor.update({ ["system.deathRolls.successes"]: successes+1});
+                return await this.actor.update({ ["system.deathRolls.successes"]: successes + 1 });
             }
         } else { // right click
             if (successes > 0) {
-                return await this.actor.update({ ["system.deathRolls.successes"]: successes-1});
+                return await this.actor.update({ ["system.deathRolls.successes"]: successes - 1 });
             }
         }
     }
@@ -161,11 +161,11 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         console.assert(failures >= 0 && failures <= 3, "Dragonbane: system.deathRolls.failures out of range for " + this.actor.uuid);
         if (event.type === "click") { // left click
             if (failures < 3) {
-                return await this.actor.update({ ["system.deathRolls.failures"]: failures+1});
+                return await this.actor.update({ ["system.deathRolls.failures"]: failures + 1 });
             }
         } else { // right click
             if (failures > 0) {
-                return await this.actor.update({ ["system.deathRolls.failures"]: failures-1});
+                return await this.actor.update({ ["system.deathRolls.failures"]: failures - 1 });
             }
         }
     }
@@ -191,7 +191,7 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         if (test.options.cancelled) {
             return;
         }
-        
+
         const success = test.postRollData.success;
         const isDragon = test.postRollData.isDragon;
         const isDemon = test.postRollData.isDemon;
@@ -199,20 +199,20 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         async function updateDeathRolls(actor) {
             if (success) {
                 if (actor.system.deathRolls.successes < 3) {
-                    await actor.update({ ["system.deathRolls.successes"]: Math.min(3, actor.system.deathRolls.successes + (isDragon ? 2 : 1))});
+                    await actor.update({ ["system.deathRolls.successes"]: Math.min(3, actor.system.deathRolls.successes + (isDragon ? 2 : 1)) });
                 }
             } else {
                 if (actor.system.deathRolls.failures < 3) {
-                    await actor.update({ ["system.deathRolls.failures"]: Math.min(3, actor.system.deathRolls.failures + (isDemon ? 2 : 1))});
+                    await actor.update({ ["system.deathRolls.failures"]: Math.min(3, actor.system.deathRolls.failures + (isDemon ? 2 : 1)) });
                 }
             }
             if (actor.system.deathRolls.failures === 3 && game.settings.get("dragonbane", "automateCharacterDeath")) {
                 const status = CONFIG.statusEffects.find(a => a.id === 'dead');
-                actor.toggleStatusEffect(status.id, {active: true,  overlay: true});
+                actor.toggleStatusEffect(status.id, { active: true, overlay: true });
 
                 const actorName = actor.isToken ? actor.token.name : actor.name;
-                const msg = "<p>" + game.i18n.format("DoD.ui.chat.characterDied", {actor: actorName}) + "</p>";
-                ChatMessage.create({ 
+                const msg = "<p>" + game.i18n.format("DoD.ui.chat.characterDied", { actor: actorName }) + "</p>";
+                ChatMessage.create({
                     user: game.user.id,
                     speaker: ChatMessage.getSpeaker({ actor }),
                     content: msg
@@ -220,18 +220,18 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
             }
             if (actor.system.deathRolls.successes === 3) {
                 const actorName = actor.isToken ? actor.token.name : actor.name;
-                const msg = "<p>" + game.i18n.format("DoD.ui.chat.characterSurvived", {actor: actorName}) + "</p>";
+                const msg = "<p>" + game.i18n.format("DoD.ui.chat.characterSurvived", { actor: actorName }) + "</p>";
                 ChatMessage.create({
                     user: game.user.id,
                     speaker: ChatMessage.getSpeaker({ actor }),
                     content: msg
                 });
-                await actor.update({["system.deathRolls.failures"]: 0, ["system.deathRolls.successes"]: 0});
+                await actor.update({ ["system.deathRolls.failures"]: 0, ["system.deathRolls.successes"]: 0 });
             }
 
         }
 
-        if(game.dice3d) {
+        if (game.dice3d) {
             game.dice3d.waitFor3DAnimationByMessageID(test.rollMessage.id).then(
                 () => updateDeathRolls(this.actor));
         } else {
@@ -291,7 +291,7 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         let kin = await DoD_Utility.findKin(kinName);
         if (!kin) {
             await this.actor.removeKin();
-            DoD_Utility.WARNING("DoD.WARNING.kin", {kin: kinName});
+            DoD_Utility.WARNING("DoD.WARNING.kin", { kin: kinName });
         } else {
             await this.actor.removeKin();
             await this.actor.createEmbeddedDocuments("Item", [kin.toObject()]);
@@ -306,7 +306,7 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         let profession = await DoD_Utility.findProfession(professionName);
         if (!profession) {
             await this.actor.removeProfession();
-            DoD_Utility.WARNING("DoD.WARNING.profession", {profession: professionName});
+            DoD_Utility.WARNING("DoD.WARNING.profession", { profession: professionName });
         } else {
             await this.actor.removeProfession();
             await this.actor.createEmbeddedDocuments("Item", [profession.toObject()]);
@@ -317,7 +317,7 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
                 if (skill) {
                     await this.actor.createEmbeddedDocuments("Item", [skill.toObject()]);
                 } else {
-                    DoD_Utility.WARNING("DoD.WARNING.professionSkill", {skill: skillName});
+                    DoD_Utility.WARNING("DoD.WARNING.professionSkill", { skill: skillName });
                 }
             }
         }
@@ -357,7 +357,7 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         const currentAge = this.actor.system.age || "adult";
         const newAge = event.currentTarget.value || "adult";
 
-        let newValues = {"system.age": newAge};
+        let newValues = { "system.age": newAge };
 
         for (const key in modifiers[currentAge]) {
             newValues[key] = modifiers[newAge][key] - modifiers[currentAge][key] + foundry.utils.getProperty(this.actor, key);
@@ -413,15 +413,15 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
 
             const result = await foundry.applications.api.DialogV2.confirm({
                 window: { title: game.i18n.localize("DoD.ui.dialog.trainSkillTitle") },
-                content: game.i18n.format("DoD.ui.dialog.trainSkillContent", {skill: skillItem.name}),
+                content: game.i18n.format("DoD.ui.dialog.trainSkillContent", { skill: skillItem.name }),
                 yes: { label: game.i18n.localize("DoD.ui.dialog.trainLabel") },
-                no:  { label: game.i18n.localize("DoD.ui.dialog.markLabel") },
+                no: { label: game.i18n.localize("DoD.ui.dialog.markLabel") },
             });
 
             if (result === true) { // Train
                 await skillItem.update({ "system.value": baseChance * 2 });
             } else if (result === false) { // Mark
-                await skillItem.update({ "system.advance": true });
+                await skillItem.update({ "system.advance": true, "system.taught": false });
             } else { // Cancelled
             }
         } else {
@@ -432,7 +432,7 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
     async _onAdvancementRoll(event) {
         event.preventDefault();
         const DoD = CONFIG.DoD;
-        
+
         const itemId = event.currentTarget.closest("tr").dataset.itemId;
         const skillItem = this.actor.items.get(itemId);
 
@@ -441,10 +441,14 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
 
             // Make roll
             const roll = await new Roll("D20").roll({});
-            const advance = Math.min(DoD.skillMaximum , roll.result) > skillItem.system.value;
+            const advance = Math.min(DoD.skillMaximum, roll.result) > skillItem.system.value;
             const flavorText = advance ?
-                game.i18n.format("DoD.skill.advancementSuccess", {skill: skillItem.name, old: skillItem.system.value, new: skillItem.system.value + 1}) :
-                game.i18n.format("DoD.skill.advancementFail", {skill: skillItem.name});
+                game.i18n.format("DoD.skill.advancementSuccess", {
+                    skill: skillItem.name,
+                    old: skillItem.system.value,
+                    new: skillItem.system.value + 1
+                }) :
+                game.i18n.format("DoD.skill.advancementFail", { skill: skillItem.name });
 
             const msg = await roll.toMessage({
                 user: game.user.id,
@@ -453,16 +457,20 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
             });
 
             if (advance) {
-                if(game.dice3d) {
+                if (game.dice3d) {
                     game.dice3d.waitFor3DAnimationByMessageID(msg.id).then(
-                        () => skillItem.update({ "system.value": skillItem.system.value + 1}));
+                        () => skillItem.update({ "system.value": skillItem.system.value + 1, "system.taught": false }));
                 } else {
-                    await skillItem.update({ "system.value": skillItem.system.value + 1});
+                    await skillItem.update({ "system.value": skillItem.system.value + 1, "system.taught": false });
                 }
             }
         }
         // always clear advancement
-        await skillItem.update({ "system.advance": false })
+        await skillItem.update({ "system.advance": false });
+        if (DoD.skillMaximum === skillItem.system.value) {
+            //I.e. disable training if skill is at max
+            await skillItem.update({ "system.taught": true });
+        }
     }
 
     async _onConditionClick(event) {
@@ -472,15 +480,15 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         const elements = event.currentTarget.getElementsByClassName("condition-input");
         if (elements.length > 0) {
             let name = elements[0].name;
-            await this.actor.update({[name]: !elements[0].checked});
+            await this.actor.update({ [name]: !elements[0].checked });
             event.stopPropagation();
         }
     }
 
     static async _onDropTable(actor, _sheet, data) {
         if (data.type === "RollTable" && actor.isOwner && actor.type === "monster") {
-            DoD_Utility.INFO("DoD.INFO.monsterAttackUpdated", {actor: actor.name});
-            actor.update({ ["system.attackTable"]: data.uuid});
+            DoD_Utility.INFO("DoD.INFO.monsterAttackUpdated", { actor: actor.name });
+            actor.update({ ["system.attackTable"]: data.uuid });
             return false; // Stop
         }
         return true; // Continue
