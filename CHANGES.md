@@ -22,6 +22,7 @@
   - Added Storage section to character inventory (contribution by @xdy).
     - Items in the Storage section do not contribute to the character's Encumbrance.
     - Active effects on items in the Storage are automatically suppressed.
+  - Added tracking and automation for training with teacher (contribution by @xdy).
 
 - Settings
 
