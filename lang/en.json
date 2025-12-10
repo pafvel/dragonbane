@@ -265,8 +265,11 @@
             "hide": "Hide",
             "hideTooltip": "Hides skill from the list of Skills on the character's main tab",
             "markAdvancement": "Mark skill for advancement",
-            "markTaught": "Immediately roll to advance skill due to intense training with a teacher.",
             "rollAdvancement": "Roll to advance skill at end of session.\rRight-click to remove mark without rolling.",
+            "taught": "Taught",
+            "taughtTooltip": "Marks skill as having been advanced with the help from a teacher.\rIt must be improved through experience before getting more help from a teacher.",
+            "trainWithTeacher": "Train with teacher",
+            "trainWithTeacherTooltip": "Roll to advance skill after training with a teacher",
             "type": "Type",
             "typeTooltip": "The skill's Type"
         },

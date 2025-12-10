@@ -52,6 +52,52 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                     }
                 }
             },
+            { //title="{{localize "DoD.skill.taughtTooltip"}}
+                name: "DoD.skill.trainWithTeacher",
+                icon: `<i title="${game.i18n.localize("DoD.skill.trainWithTeacherTooltip")}" class="fa-solid fa-graduation-cap"></i>`,
+                condition: li => {
+                    if (!li.dataset.itemId) return false;
+                    const item = this.actor.items.get(li.dataset.itemId);
+                    return item?.type === "skill" && !item.system.taught && item.system.value < 18;
+                },
+                callback: async li => {
+                    const itemId = li.dataset.itemId;
+                    const skillItem = this.actor.items.get(itemId);
+                    if (!skillItem || skillItem.system.taught) return;
+
+                    // Make roll
+                    const roll = await new Roll("D20").roll({});
+                    const advance = Math.min(CONFIG.DoD.skillMaximum, roll.result) > skillItem.system.value;
+                    const flavorText = advance ?
+                        game.i18n.format("DoD.skill.advancementSuccess", {
+                            skill: skillItem.name,
+                            old: skillItem.system.value,
+                            new: skillItem.system.value + 1
+                        }) :
+                        game.i18n.format("DoD.skill.advancementFail", { skill: skillItem.name });
+
+                    const msg = await roll.toMessage({
+                        user: game.user.id,
+                        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                        flavor: flavorText
+                    });
+
+                    if (advance) {
+                        if (game.dice3d) {
+                            game.dice3d.waitFor3DAnimationByMessageID(msg.id).then(
+                                () => skillItem.update({
+                                    "system.value": skillItem.system.value + 1,
+                                    "system.taught": true
+                                }));
+                        } else {
+                            await skillItem.update({
+                                "system.value": skillItem.system.value + 1,
+                                "system.taught": true
+                            });
+                        }
+                    }
+                }
+            },
             {
                 name: "CONTROLS.CommonDelete",
                 icon: '<i class="fa-solid fa-trash"></i>',
@@ -98,52 +144,6 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                         { save: true, addSource: true });
                 }
             },
-            {
-                name: "DoD.skill.markTaught",
-                icon: '<i class="fa-solid fa-chalkboard-user"></i>',
-                condition: li => {
-                    if (!li.dataset.itemId) return false;
-                    const item = this.actor.items.get(li.dataset.itemId);
-                    return item?.type === "skill" && !item.system.taught && !item.system.advance;
-                },
-                callback: async li => {
-                    const itemId = li.dataset.itemId;
-                    const skillItem = this.actor.items.get(itemId);
-                    if (!skillItem || skillItem.system.taught) return;
-
-                    // Make roll
-                    const roll = await new Roll("D20").roll(game.release.generation < 12 ? { async: true } : {});
-                    const advance = Math.min(CONFIG.DoD.skillMaximum, roll.result) > skillItem.system.value;
-                    const flavorText = advance ?
-                        game.i18n.format("DoD.skill.advancementSuccess", {
-                            skill: skillItem.name,
-                            old: skillItem.system.value,
-                            new: skillItem.system.value + 1
-                        }) :
-                        game.i18n.format("DoD.skill.advancementFail", { skill: skillItem.name });
-
-                    const msg = await roll.toMessage({
-                        user: game.user.id,
-                        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                        flavor: flavorText
-                    });
-
-                    if (advance) {
-                        if (game.dice3d) {
-                            game.dice3d.waitFor3DAnimationByMessageID(msg.id).then(
-                                () => skillItem.update({
-                                    "system.value": skillItem.system.value + 1,
-                                    "system.taught": true
-                                }));
-                        } else {
-                            await skillItem.update({
-                                "system.value": skillItem.system.value + 1,
-                                "system.taught": true
-                            });
-                        }
-                    }
-                }
-            }
         ];
     }
 

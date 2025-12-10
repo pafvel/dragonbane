@@ -54,7 +54,6 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
             html.find(".condition-panel").click(this._onConditionClick.bind(this));
             html.find("[data-action='roll-advancement']").on("click contextmenu", this._onAdvancementRoll.bind(this))
             html.find(".mark-advancement").on("click", this._onMarkAdvancement.bind(this))
-            html.find(".mark-taught").on("click", this._onMarkTaught.bind(this))
 
             html.find(".death-rolls-success").on("click contextmenu", this._onDeathRollsSuccessClick.bind(this));
             html.find(".death-rolls-success-label").on("click contextmenu", this._onDeathRollsSuccessClick.bind(this));

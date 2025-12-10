@@ -8,7 +8,7 @@ export default class DoDSkillData extends DoDItemBaseData {
             attribute: new fields.StringField({ required: true, initial: "" }),
             value: new fields.NumberField({ required: true, initial: 0 }),
             advance: new fields.NumberField({ required: true, initial: 0 }),
-            taught: new fields.NumberField({ required: true, initial: 0 }),
+            taught: new fields.BooleanField({ required: true, initial: false }),
             hideTrained: new fields.BooleanField({ required: true, initial: false }),
         });
     };

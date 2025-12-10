@@ -17,6 +17,11 @@
                     {{localize "DoD.skill.hide"}}
                     </label>
                 </th>
+                <th>
+                    <label title="{{localize "DoD.skill.taughtTooltip"}}">
+                    {{localize "DoD.skill.taught"}}
+                    </label>
+                </th>
             </tr>
             <tr>
                 <td>
@@ -31,6 +36,9 @@
                 </td>
                 <td>
                     <input class="inline-edit" name="system.hideTrained" data-field="system.hideTrained" type="checkbox" {{checked system.hideTrained}} />
+                </td>
+                <td>
+                    <input class="inline-edit" name="system.taught" data-field="system.taught" type="checkbox" {{checked system.taught}} />
                 </td>
             </tr>
         </table>
