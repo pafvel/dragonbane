@@ -38,7 +38,6 @@ export default class DoDAutomationSettings extends HandlebarsApplicationMixin(Ap
         npcDeath: new foundry.data.fields.BooleanField({label : "DoD.SETTINGS.automateNpcDeath", hint : "DoD.SETTINGS.automateNpcDeathHint"}),
         monsterDeath: new foundry.data.fields.BooleanField({label : "DoD.SETTINGS.automateMonsterDeath", hint : "DoD.SETTINGS.automateMonsterDeathHint"}),
         skillAdvancementMark: new foundry.data.fields.BooleanField({label : "DoD.SETTINGS.automaticSkillAdvancementMark", hint : "DoD.SETTINGS.automaticSkillAdvancementMarkHint"}),
-        skillIntensiveTraining: new foundry.data.fields.BooleanField({label : "DoD.SETTINGS.automaticSkillIntensiveTraining", hint : "DoD.SETTINGS.automaticSkillIntensiveTrainingHint"}),
     });
 
     static get schema()
@@ -119,7 +118,6 @@ export default class DoDAutomationSettings extends HandlebarsApplicationMixin(Ap
         context.source.npcDeath = game.settings.get("dragonbane", "automateNpcDeath");
         context.source.monsterDeath = game.settings.get("dragonbane", "automateMonsterDeath");
         context.source.skillAdvancementMark = game.settings.get("dragonbane", "automaticSkillAdvancementMark");
-        context.source.skillIntensiveTraining = game.settings.get("dragonbane", "automaticSkillIntensiveTraining");
 
         context.buttons = [{ type: "submit", icon: "fa-solid fa-floppy-disk", label: "SETTINGS.Save" }];
 
@@ -134,6 +132,5 @@ export default class DoDAutomationSettings extends HandlebarsApplicationMixin(Ap
         game.settings.set("dragonbane", "automateMonsterDeath", formData.object.monsterDeath);
         game.settings.set("dragonbane", "automateMonsterDeath", formData.object.monsterDeath);
         game.settings.set("dragonbane", "automaticSkillAdvancementMark", formData.object.skillAdvancementMark);
-        game.settings.set("dragonbane", "automaticSkillIntensiveTraining", formData.object.skillIntensiveTraining);
     }
 }
