@@ -379,14 +379,15 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         const systemObject = itemData ? foundry.utils.mergeObject(item.system.toObject(), itemData.system) : item.system.toObject();
         const hasQuantity = systemObject?.quantity !== undefined;
         const isItem = item?.type === "item";
+        const isMoney = item?.type === "money";
         const isEquippable = ["weapon", "armor", "helmet"].includes(item?.type);
         const isWorn = !!systemObject?.worn;
         let stack = null;
-        if (hasQuantity && (isItem || (isEquippable && !isWorn))) {
+        if (hasQuantity && (isItem || (isEquippable && !isWorn) || isMoney)) {
             stack = this.actor.items.find(i => {
                 // Stack exists if it is the same type, has the same name
                 // and has the same system data properties (except quantity)
-                if (i.type === item.type && i.name === item.name && i.uuid != item.uuid) {
+                if (i.type === item.type && i.name === item.name && i.uuid !== item.uuid) {
                     let itemTemplate = systemObject;
                     item.system.constructor.cleanData(itemTemplate);
                     delete itemTemplate.quantity;
@@ -469,7 +470,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                 const memento = this.actor.items.contents.find(i => i.system.memento);
                 await memento?.update({ ["system.memento"]: false });
                 itemData.system.memento = true;
-            } else if (dropTarget === "inventory" || dropTarget === "tiny" || dropTarget === "storage") {
+            } else if (dropTarget === "inventory" || dropTarget === "tiny" || dropTarget === "storage" || dropTarget === "storage") {
                 if (dropTarget === "storage") {
                     itemData.system.storage = true;
                 }
@@ -1127,6 +1128,15 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         context.injuries.push(injury);
     }
 
+    _prepareMoney(money, context) {
+        if (!context.moneyItems) {
+            context.moneyItems = [];
+        }
+        context.moneyItems.push(money);
+        // // Also add to inventory so it appears there too
+        // this._prepareItem(money, context);
+    }
+
     _prepareItemContext(item, context) {
         switch (item.type) {
             case 'ability':
@@ -1143,6 +1153,9 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                 break;
             case 'item':
                 this._prepareItem(item, context);
+                break;
+            case 'money':
+                this._prepareMoney(item, context);
                 break;
             case 'spell':
                 this._prepareSpell(item, context);
@@ -1227,6 +1240,9 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         context.tricks = context.tricks?.sort(DoD_Utility.nameSorter);
         context.hasTricks = context.tricks.length > 0;
         context.hasSpellsOrTricks = context.hasSpells || context.hasTricks;
+
+        // Money items
+        context.moneyItems = context.moneyItems?.sort(DoD_Utility.itemSorter) || [];
 
         // Inventory
         context.inventory = context.inventory?.sort(DoD_Utility.itemSorter);

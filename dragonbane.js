@@ -20,6 +20,7 @@ import DoDHelmetSheet from "./modules/sheets/item/helmet-sheet.js";
 import DoDInjurySheet from "./modules/sheets/item/injury-sheet.js";
 import DoDItemSheet from "./modules/sheets/item/item-sheet.js";
 import DoDKinSheet from "./modules/sheets/item/kin-sheet.js";
+import DoDMoneySheet from "./modules/sheets/item/money-sheet.js";
 import DoDProfessionSheet from "./modules/sheets/item/profession-sheet.js";
 import DoDSkillSheet from "./modules/sheets/item/skill-sheet.js";
 import DoDSpellSheet from "./modules/sheets/item/spell-sheet.js";
@@ -35,6 +36,7 @@ import DoDHelmetData from "./modules/data/items/helmetData.js";
 import DoDInjuryData from "./modules/data/items/injuryData.js";
 import DoDItemData from "./modules/data/items/itemData.js";
 import DoDKinData from "./modules/data/items/kinData.js";
+import DoDMoneyData from "./modules/data/items/moneyData.js";
 import DoDProfessionData from "./modules/data/items/professionData.js";
 import DoDSkillData from "./modules/data/items/skillData.js";
 import DoDWeaponData from "./modules/data/items/weaponData.js";
@@ -191,6 +193,7 @@ Hooks.once("init", function () {
         item: DoDItemData,
         injury: DoDInjuryData,
         kin: DoDKinData,
+        money: DoDMoneyData,
         profession: DoDProfessionData,
         skill: DoDSkillData,
         spell: DoDSpellData,
@@ -211,6 +214,7 @@ Hooks.once("init", function () {
     CONFIG.DoD.Items.registerSheet("DoD", DoDInjurySheet, { types: ["injury"], makeDefault: true });
     CONFIG.DoD.Items.registerSheet("DoD", DoDItemSheet, { types: ["item"], makeDefault: true });
     CONFIG.DoD.Items.registerSheet("DoD", DoDKinSheet, { types: ["kin"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDMoneySheet, {types: ["money"], makeDefault: true});
     CONFIG.DoD.Items.registerSheet("DoD", DoDProfessionSheet, { types: ["profession"], makeDefault: true });
     CONFIG.DoD.Items.registerSheet("DoD", DoDSkillSheet, { types: ["skill"], makeDefault: true });
     CONFIG.DoD.Items.registerSheet("DoD", DoDSpellSheet, { types: ["spell"], makeDefault: true });
@@ -251,6 +255,11 @@ Hooks.once("init", function () {
         }
     });
 
+    // Ensure world money items exist on ready
+    Hooks.once("ready", async () => {
+        await DoDMigrate.ensureWorldMoneyItems();
+    });
+
     Hooks.on("renderChatMessageHTML", DoDChat.addChatListeners);
     Hooks.on("getChatMessageContextOptions", DoDChat.addChatMessageContextMenuOptions);
     Hooks.on("renderChatMessageHTML", DoDChat.hideChatPermissions);
@@ -267,7 +276,7 @@ Hooks.once("ready", async function () {
 
     // Migration
     if (game.user.isGM) {
-        const SYSTEM_MIGRATION_VERSION = 0.01;
+        const SYSTEM_MIGRATION_VERSION = 0.02;
         const currentVersion = game.settings.get("dragonbane", "systemMigrationVersion");
         const needsMigration = !currentVersion || foundry.utils.isNewerVersion(SYSTEM_MIGRATION_VERSION, currentVersion);
 
