@@ -884,6 +884,12 @@
   border-width: 16px;
   border-top: 0;
 }
+.system-dragonbane .text-box-editor h1 {
+  color: var(--color-text-dark-header);
+}
+.system-dragonbane .text-box-editor h2, .system-dragonbane .text-box-editor h3, .system-dragonbane .text-box-editor h4, .system-dragonbane .text-box-editor h5, .system-dragonbane .text-box-editor h6 {
+  color: black;
+}
 .system-dragonbane .text-box-editor prose-mirror, .system-dragonbane .text-box-editor .prose-mirror {
   min-height: 80px;
 }

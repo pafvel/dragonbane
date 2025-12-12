@@ -59,6 +59,14 @@
         border-width: 16px;
         border-top: 0;
 
+        h1 {
+            color: var(--color-text-dark-header);
+        }
+
+        h2, h3, h4, h5, h6 {
+            color: black;
+        }
+
         prose-mirror, .prose-mirror {
             min-height: 80px;
         }
