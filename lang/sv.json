@@ -12,6 +12,7 @@
         "TypeInjury": "Skada",
         "TypeItem": "Föremål",
         "TypeKin": "Släkte",
+        "TypeMoney": "Pengar",
         "TypeProfession": "Yrke",
         "TypeSkill": "Färdighet",
         "TypeSpell": "Besvärjelse",
@@ -30,6 +31,7 @@
             "injury": "Skada",
             "item": "Föremål",
             "kin": "Släkte",
+            "money": "Pengar",
             "profession": "Yrke",
             "skill": "Färdighet",
             "spell": "Besvärjelse",
@@ -146,6 +148,11 @@
         },
         "item": {
             "new": "Nytt föremål"
+        },
+        "money": {
+            "new": "Nya pengar",
+            "abbreviation": "Förkortning",
+            "value": "Värde (i koppar)"
         },
         "gear": {
             "weight": "Vikt",
@@ -403,6 +410,7 @@
                 "create-effect": "Skapa effekt",
                 "create-helmet": "Skapa hjälm",
                 "create-item": "Skapa föremål",
+                "create-money": "Skapa pengar",
                 "create-weapon": "Skapa vapen",
                 "combat": "Strid",
                 "coreSkills": "Grundfärdigheter",

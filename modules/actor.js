@@ -3,20 +3,19 @@ import DoDSkillTest from "./tests/skill-test.js";
 import DoDRoll from "./roll.js";
 import DoDActiveEffect from "./active-effect.js";
 import { DoD } from "./config.js";
-import DoDActorSettings from "./apps/actor-settings.js";
 
 export class DoDActor extends Actor {
 
     /** @override */
-    async deleteDialog(options={}) {
+    async deleteDialog(options = {}) {
         // Warn if there are tokens referring to this actor
         let scenes = [];
         for (let scene of game.scenes.contents) {
-            let t = scene.tokens.find(t=>t.actorId === this.id);
+            let t = scene.tokens.find(t => t.actorId === this.id);
             if (t) scenes.push(scene.name);
         }
         let tokenMessage = "";
-        if (scenes.length > 0){
+        if (scenes.length > 0) {
             tokenMessage = `<blockquote class="info"><p>${game.i18n.localize("DoD.ui.dialog.deleteActorTokenOnScene")}:</p><ul>`;
             for (let scene of scenes) {
                 tokenMessage += `<li>${scene}</li>`;
@@ -26,14 +25,14 @@ export class DoDActor extends Actor {
 
         const type = game.i18n.localize(this.constructor.metadata.label);
         const ok = await foundry.applications.api.DialogV2.confirm({
-          title: `${game.i18n.format("DOCUMENT.Delete", {type})}: ${this.name}`,
-          content: `<h4>${game.i18n.localize("AreYouSure")}</h4><p>${game.i18n.format("SIDEBAR.DeleteWarning", {type})}</p>${tokenMessage}`,
-          options: options
+            title: `${game.i18n.format("DOCUMENT.Delete", {type})}: ${this.name}`,
+            content: `<h4>${game.i18n.localize("AreYouSure")}</h4><p>${game.i18n.format("SIDEBAR.DeleteWarning", {type})}</p>${tokenMessage}`,
+            options: options
         });
         if (ok) {
             this.delete();
         }
-    }
+        }
 
     /** @override */
     async _preCreate(data, options, user) {
@@ -41,8 +40,7 @@ export class DoDActor extends Actor {
         await super._preCreate(data, options, user);
 
         // If the created actor has items (only applicable to duplicated actors) bypass the new actor creation logic
-        if (!data.items?.length)
-        {
+        if (!data.items?.length) {
             if (this.type !== "monster") {
                 let baseSkills = await DoD_Utility.getBaseSkills();
                 if (baseSkills) {
@@ -79,7 +77,8 @@ export class DoDActor extends Actor {
                     break;
             }
         }
-    }
+            }
+
     static onPreUpdateActorEvent(actor, data, _options, _userId) {
         console.log("onUpdateActorEvent", actor);
 
@@ -122,7 +121,7 @@ export class DoDActor extends Actor {
         if (foundry.utils.hasProperty(data, "system.willPoints.value")) {
             options._deltaWP = foundry.utils.getProperty(data, "system.willPoints.value") - this.system.willPoints.value, options;
         }
-    }
+        }
 
     /** @override */
     async _onUpdate(data, options, user) {
@@ -188,18 +187,18 @@ export class DoDActor extends Actor {
                             const value = foundry.utils.getProperty(data, condition);
                             this.toggleStatusEffect(status.id, {active: value});
                         }
+                        }
                     }
                 }
             }
         }
-    }
 
     _displayScrollingText(change, options = {}) {
         if (!change) return;
         const tokens = this.isToken ? [this.token?.object] : this.getActiveTokens(true);
         const defaultOptions = {
-            anchor: (change<0) ? CONST.TEXT_ANCHOR_POINTS.BOTTOM: CONST.TEXT_ANCHOR_POINTS.TOP,
-            direction: (change<0) ? 1: 2,
+            anchor: (change < 0) ? CONST.TEXT_ANCHOR_POINTS.BOTTOM : CONST.TEXT_ANCHOR_POINTS.TOP,
+            direction: (change < 0) ? 1 : 2,
             fontSize: 30,
             fill: change < 0 ? "0xFF0000" : "0x00FF00",
             stroke: 0x000000,
@@ -213,8 +212,8 @@ export class DoDActor extends Actor {
             if (t) {
                 canvas.interface.createScrollingText(t.center, scrollingText, scrollOptions);
             }
+            }
         }
-    }
 
     /** @override */
     prepareData() {
@@ -249,8 +248,7 @@ export class DoDActor extends Actor {
     prepareEmbeddedDocuments() {
         super.prepareEmbeddedDocuments();
 
-        switch(this.type)
-        {
+        switch (this.type) {
             case "character":
                 this._prepareEquippedItems();
                 break;
@@ -264,13 +262,12 @@ export class DoDActor extends Actor {
                 break;
         }
 
-    }
+        }
 
     prepareDerivedData() {
         super.prepareDerivedData();
 
-        switch(this.type)
-        {
+        switch (this.type) {
             case "character":
                 this._prepareCharacterData();
                 break;
@@ -329,7 +326,7 @@ export class DoDActor extends Actor {
             if (item.type === 'armor' && item.system.worn) {
                 if (armor) {
                     // Already wearing armor
-                    item.update({ ["system.worn"]: false });
+                    item.update({["system.worn"]: false});
                 } else {
                     armor = item;
                 }
@@ -337,7 +334,7 @@ export class DoDActor extends Actor {
             if (item.type === 'helmet' && item.system.worn) {
                 if (helmet) {
                     // Already wearing helmet
-                    item.update({ ["system.worn"]: false });
+                    item.update({["system.worn"]: false});
                 } else {
                     helmet = item;
                 }
@@ -345,7 +342,7 @@ export class DoDActor extends Actor {
         }
         this.system.equippedArmor = armor;
         this.system.equippedHelmet = helmet;
-    }
+        }
 
     _prepareSkills() {
 
@@ -363,12 +360,12 @@ export class DoDActor extends Actor {
                 this.system.skills.push(skill);
                 if (skill.system.skillType === 'core') {
                     this.system.coreSkills.push(skill);
-                    if(skill.system.value > this._getBaseChance(skill)) {
+                    if (skill.system.value > this._getBaseChance(skill)) {
                         this.system.trainedSkills.push(skill);
                     }
-                }  else if (skill.system.skillType === 'weapon') {
+                } else if (skill.system.skillType === 'weapon') {
                     this.system.weaponSkills.push(skill);
-                    if(skill.system.value > this._getBaseChance(skill)) {
+                    if (skill.system.value > this._getBaseChance(skill)) {
                         this.system.trainedSkills.push(skill);
                     }
                 } else if (skill.system.skillType === 'magic') {
@@ -382,7 +379,7 @@ export class DoDActor extends Actor {
                 }
             }
         }
-    }
+                }
 
     _prepareCharacterStats() {
         // Clamp attributes
@@ -419,7 +416,7 @@ export class DoDActor extends Actor {
 
         // Movement
         const defaultMovement = Number(this.system.kin ? this.system.kin.system.movement : 10);
-        const movementModifier =  DoD_Utility.calculateMovementModifier(this.system.attributes.agl.value);
+        const movementModifier = DoD_Utility.calculateMovementModifier(this.system.attributes.agl.value);
         const moveBonuses = this.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "movement").length;
 
         this.system.movement.base = defaultMovement + movementModifier + 2 * moveBonuses;
@@ -457,11 +454,10 @@ export class DoDActor extends Actor {
 
     _getBaseChance(skill) {
         switch (this.type) {
-            case "character":
-                {
-                    const value = this._getAttributeValueFromName(skill.system.attribute);
-                    return DoD_Utility.calculateBaseChance(value);
-                }
+            case "character": {
+                const value = this._getAttributeValueFromName(skill.system.attribute);
+                return DoD_Utility.calculateBaseChance(value);
+            }
             case "npc":
                 return 5;
             case "monster":
@@ -535,12 +531,22 @@ export class DoDActor extends Actor {
         for (const item of this.items.contents) {
             // Exclude items placed in Storage from the encumbrance calculation.
             if (item.system && item.system.storage) continue;
+
+            const isMoney =
+                item.type === "money";
+
+            if (isMoney) {
+                const quantity = Number(item.system?.quantity ?? 0);
+                const weightPerCoin = Number(item.system?.weight ?? 0);
+
+                const fullHundreds = Math.floor(quantity / 100) * 100;
+                encumbrance += fullHundreds * weightPerCoin;
+                continue;
+            }
+
             encumbrance += item.totalWeight;
         }
-        if (this.system.currency && DoDActorSettings.coinEncumbrance) {
-            let coins = this.system.currency.gc + this.system.currency.sc + this.system.currency.cc;
-            encumbrance += Math.floor(coins/100);
-        }
+        // Money items are included above, but rounded down to full hundreds of coins.
         return encumbrance;
     }
 
@@ -584,7 +590,7 @@ export class DoDActor extends Actor {
             return this.system.damageBonus[attribute].value;
         } else {
             return "";
-        }
+    }
     }
 
     async applyDamage(damage) {
@@ -602,14 +608,14 @@ export class DoDActor extends Actor {
     findAbility(abilityName) {
         let name = abilityName.toLowerCase();
         return this.items.find(item => item.type === "ability" && item.name.toLowerCase() === name);
-    }
+        }
 
     async useAbility(ability) {
         let wp = Number(ability.system.wp);
         wp = isNaN(wp) ? 0 : wp;
 
         const use = await foundry.applications.api.DialogV2.confirm({
-            window: { title: game.i18n.localize("DoD.ui.dialog.useAbility") },
+            window: {title: game.i18n.localize("DoD.ui.dialog.useAbility")},
             content: wp > 0 ? game.i18n.format("DoD.ui.dialog.useAbilityWithWP", {wp: wp, ability: ability.name})
                 : game.i18n.format("DoD.ui.dialog.useAbilityWithoutWP", {ability: ability.name})
         });
@@ -626,7 +632,11 @@ export class DoDActor extends Actor {
                     this.update({"system.willPoints.value": newWP});
                     content = `
                     <div>
-                        <p class="ability-use" data-ability-id="${ability.id}">${game.i18n.format("DoD.ability.useWithWP", {actor: this.name, uuid: ability.uuid, wp: wp})}</p>
+                        <p class="ability-use" data-ability-id="${ability.id}">${game.i18n.format("DoD.ability.useWithWP", {
+                        actor: this.name,
+                        uuid: ability.uuid,
+                        wp: wp
+                    })}</p>
                     </div>
                     <div class="damage-details permission-observer" data-actor-id="${this.uuid}">
                         <i class="fa-solid fa-circle-info"></i>
@@ -638,7 +648,10 @@ export class DoDActor extends Actor {
             } else {
                 content = `
                 <div>
-                    <p class="ability-use" data-ability-id="${ability.id}">${game.i18n.format("DoD.ability.useWithoutWP", {actor: this.name, uuid: ability.uuid})}</p>
+                    <p class="ability-use" data-ability-id="${ability.id}">${game.i18n.format("DoD.ability.useWithoutWP", {
+                    actor: this.name,
+                    uuid: ability.uuid
+                })}</p>
                 </div>`;
             }
             ChatMessage.create({
@@ -718,8 +731,7 @@ export class DoDActor extends Actor {
         this.items.contents.forEach(i => {
             if ((i.type === "profession")
             || (i.type === "ability" && i.system.abilityType === "profession")
-            || (i.type === "skill" && (i.system.skillType === "secondary" || i.system.skillType === "magic") && i.system.value === 0))
-            {
+                || (i.type === "skill" && (i.system.skillType === "secondary" || i.system.skillType === "magic") && i.system.value === 0)) {
                 ids.push(i.id)
             }
         });
@@ -745,14 +757,14 @@ export class DoDActor extends Actor {
             if (ability.system.abilityType === "kin" && !kinAbilityNames.find(name => name === ability.name)) {
                 removeAbilityIds.push(ability.id);
             }
-        }
+            }
         if (removeAbilityIds.length) {
             await this.deleteEmbeddedDocuments("Item", removeAbilityIds);
         }
 
         // add missing kin abilities from current kin
         let createItemData = [];
-        for(const kinAbilityName of kinAbilityNames) {
+        for (const kinAbilityName of kinAbilityNames) {
             let kinAbility = this.findAbility(kinAbilityName);
             if (!kinAbility) {
                 const foundAbility = await DoD_Utility.findAbility(kinAbilityName);
@@ -763,12 +775,12 @@ export class DoDActor extends Actor {
                 } else {
                     DoD_Utility.WARNING("DoD.WARNING.kinAbility", {ability: kinAbilityName});
                 }
+                }
             }
-        }
         if (createItemData.length) {
             await this.createEmbeddedDocuments("Item", createItemData);
         }
-    }
+        }
 
     get kinAbilities() {
         return this.items.filter(item => item.type === "ability" && item.system.abilityType === "kin");
@@ -790,14 +802,14 @@ export class DoDActor extends Actor {
             if (ability.system.abilityType === "profession" && !proAbilityNames.find(name => name === ability.name)) {
                 removeAbilityIds.push(ability.id);
             }
-        }
+            }
         if (removeAbilityIds.length) {
             await this.deleteEmbeddedDocuments("Item", removeAbilityIds);
         }
 
         // add missing profession abilities from current profession
         let createItemData = [];
-        for(const proAbilityName of proAbilityNames) {
+        for (const proAbilityName of proAbilityNames) {
             let professionAbility = this.findAbility(proAbilityName);
             if (!professionAbility) {
                 const foundAbility = await DoD_Utility.findAbility(proAbilityName);
@@ -808,12 +820,12 @@ export class DoDActor extends Actor {
                 } else {
                     DoD_Utility.WARNING("DoD.WARNING.professionAbility", {ability: proAbilityName});
                 }
+                }
             }
-        }
         if (createItemData.length) {
             await this.createEmbeddedDocuments("Item", createItemData);
         }
-    }
+        }
 
     get professionAbilities() {
         return this.items.filter(item => item.type === "ability" && item.system.abilityType === "profession");
@@ -833,13 +845,12 @@ export class DoDActor extends Actor {
                 } else {
                     missingSkills.push(skillName);
                 }
+                }
             }
-        }
         return missingSkills;
     }
 
-    async updateProfession()
-    {
+    async updateProfession() {
         await this.updateProfessionAbilities();
         return this.updateProfessionSkills();
     }
@@ -861,7 +872,7 @@ export class DoDActor extends Actor {
             const minRoll = (await roll.reroll(minOption)).total;
             const maxOption = {maximize: true};
             const maxRoll = (await roll.reroll(maxOption)).total;
-            if ( (tableResult.range[0] > maxRoll) || (tableResult.range[1] < minRoll) ) {
+            if ((tableResult.range[0] > maxRoll) || (tableResult.range[1] < minRoll)) {
                 // Create a roll that guarantees the result
                 roll = DoDRoll.create(tableResult.range[0].toString());
             }
@@ -870,8 +881,8 @@ export class DoDActor extends Actor {
             // This is preferred if the roll is shown
             roll = await roll.reroll({});
             let iter = 0;
-            while ( !(tableResult.range[0] <= roll.total && roll.total <= tableResult.range[1]) ) {
-                if ( iter >= 100 ) {
+            while (!(tableResult.range[0] <= roll.total && roll.total <= tableResult.range[1])) {
+                if (iter >= 100) {
                     // Stop rolling and create a roll that guarantees the result
                     roll = DoDRoll.create(tableResult.range[0].toString());
                     break;
@@ -898,8 +909,7 @@ export class DoDActor extends Actor {
             let found = false;
             if (!tableResult && results[0].uuid === this.system.previousMonsterAttack) {
                 // Find next attack
-                for (let tableResult of table.results)
-                {
+                for (let tableResult of table.results) {
                     // initialize newResult with first result, used when matching attack is the last one
                     if (!newResult) {
                         newResult = tableResult;
@@ -958,7 +968,7 @@ export class DoDActor extends Actor {
                 // replace general spells school name with localized string if it matches
                 if (spell.system.school === generalSchoolLocalized || spell.system.school === generalSchoolSettings) {
                     spell.system.school = generalSchool;
-                    spell.update({ ["system.school"]: generalSchool});
+                    spell.update({["system.school"]: generalSchool});
                 }
 
                 // set skill values for spell corresponding to school
@@ -969,7 +979,7 @@ export class DoDActor extends Actor {
                 }
             }
         }
-    }
+                }
 
     async restRound() {
 
@@ -1001,7 +1011,7 @@ export class DoDActor extends Actor {
         formula += "</div></div>";
 
         // Render message
-        const context =  {
+        const context = {
             formula: formula,
             user: game.user.id,
             tooltip: await roll.getTooltip()
@@ -1010,7 +1020,7 @@ export class DoDActor extends Actor {
         const content = await DoD_Utility.renderTemplate(template, context);
         const msg = await roll.toMessage({
             user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: this }),
+            speaker: ChatMessage.getSpeaker({actor: this}),
             actor: this,
             flavor: game.i18n.format("DoD.ui.character-sheet.restRound", {actor: this.name, wp: newWP - currentWP}),
             content: content
@@ -1018,10 +1028,10 @@ export class DoDActor extends Actor {
 
         if (game.dice3d) {
             game.dice3d.waitFor3DAnimationByMessageID(msg.id).then(
-                () => this.update({["system.willPoints.value"]: newWP })
+                () => this.update({["system.willPoints.value"]: newWP})
             );
         } else {
-            await this.update({["system.willPoints.value"]: newWP });
+            await this.update({["system.willPoints.value"]: newWP});
         }
     }
 
@@ -1072,7 +1082,7 @@ export class DoDActor extends Actor {
         formula += "</div></div>";
 
         // Render message
-        const context =  {
+        const context = {
             formula: formula,
             user: game.user.id,
             tooltip: await roll.getTooltip()
@@ -1081,9 +1091,13 @@ export class DoDActor extends Actor {
         const content = await DoD_Utility.renderTemplate(template, context);
         const msg = await roll.toMessage({
             user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: this }),
+            speaker: ChatMessage.getSpeaker({actor: this}),
             actor: this,
-            flavor: game.i18n.format("DoD.ui.character-sheet.restStretch", {actor: this.name, hp: newHP - currentHP, wp: newWP - currentWP}),
+            flavor: game.i18n.format("DoD.ui.character-sheet.restStretch", {
+                actor: this.name,
+                hp: newHP - currentHP,
+                wp: newWP - currentWP
+            }),
             content: content
         });
 
@@ -1100,7 +1114,7 @@ export class DoDActor extends Actor {
                 ["system.hitPoints.value"]: newHP,
                 ["system.willPoints.value"]: newWP
             });
-        }
+    }
     }
 
     async restShift() {
@@ -1132,8 +1146,12 @@ export class DoDActor extends Actor {
 
         ChatMessage.create({
             user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: this }),
-            flavor: game.i18n.format("DoD.ui.character-sheet.restShift", {actor: this.name, hp: newHP - currentHP, wp: newWP - currentWP}),
+            speaker: ChatMessage.getSpeaker({actor: this}),
+            flavor: game.i18n.format("DoD.ui.character-sheet.restShift", {
+                actor: this.name,
+                hp: newHP - currentHP,
+                wp: newWP - currentWP
+            }),
             content: msg
         });
 
@@ -1160,18 +1178,18 @@ export class DoDActor extends Actor {
 
         ChatMessage.create({
             user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: this }),
+            speaker: ChatMessage.getSpeaker({actor: this}),
             flavor: game.i18n.format("DoD.ui.character-sheet.restReset", {actor: this.name})
         });
 
-       await this.healInjuriesDialog();
+        await this.healInjuriesDialog();
     }
 
     async healInjuriesDialog() {
         const healingInjuries = this.items.filter(i => i.type === "injury" && i.system.healingTime != "" && !isNaN(i.system.healingTime));
         if (healingInjuries.length > 0) {
             const heal = await foundry.applications.api.DialogV2.confirm({
-                window: { title: game.i18n.localize("DoD.ui.dialog.healInjuriesTitle") },
+                window: {title: game.i18n.localize("DoD.ui.dialog.healInjuriesTitle")},
                 content: game.i18n.format("DoD.ui.dialog.healInjuriesMessage"),
             });
 
@@ -1188,7 +1206,7 @@ export class DoDActor extends Actor {
         const title = game.i18n.format("DoD.ui.dialog.deleteItemTitle", {item: game.i18n.localize("TYPES.Item." + item.type)});
 
         const ok = await foundry.applications.api.DialogV2.confirm({
-            window: { title: title },
+            window: {title: title},
             content: content,
         });
 
@@ -1212,7 +1230,7 @@ export class DoDActor extends Actor {
             } else {
                 // INT and CHA
                 return 10;
-            }
+    }
         } else {
             // monster
             return 15;

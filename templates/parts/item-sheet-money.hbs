@@ -1,0 +1,27 @@
+<div class="tab sheet-tab {{tabs.details.cssClass}}" data-group="primary" data-tab="{{tabs.details.id}}">
+    <div class="item-tab dod-controls">
+        <table class="simple-table">
+            <tr>
+                <th>{{localize "DoD.money.abbreviation"}}</th>
+                <th>{{localize "DoD.money.value"}}</th>
+                <th>{{localize "DoD.gear.quantity"}}</th>
+                <th>{{localize "DoD.gear.weight"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <input name="system.abbreviation" type="text" value="{{system.abbreviation}}" />
+                </td>
+                <td>
+                    <input name="system.value" type="text" value="{{system.value}}" data-dtype="Number" />
+                </td>
+                <td>
+                    <input name="system.quantity" type="text" value="{{system.quantity}}" data-dtype="Number" />
+                </td>
+                <td>
+                    <input name="system.weight" type="text" value="{{system.weight}}" data-dtype="Number" />
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
