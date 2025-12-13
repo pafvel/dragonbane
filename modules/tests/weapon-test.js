@@ -318,23 +318,26 @@ export default class DoDWeaponTest extends DoDSkillTest  {
             case "normal":
                 if (this.postRollData.weapon.hasWeaponFeature("bludgeoning")) {
                     this.postRollData.damageType = DoD.damageTypes.bludgeoning;
-                    this.postRollData.isDamaging = true;
-                    break;
+                } else {
+                    this.postRollData.damageType = DoD.damageTypes.none;
                 }
+                this.postRollData.isDamaging = true;
+                break;
 
             case "throw":
             case "ranged":
                 this.postRollData.isRanged = true;
                 if (this.postRollData.weapon.hasWeaponFeature("piercing")) {
                     this.postRollData.damageType = DoD.damageTypes.piercing;
-                    this.postRollData.isDamaging = true;
-                    break;
-                }
-                if (this.postRollData.weapon.hasWeaponFeature("bludgeoning")) {
+                } else if (this.postRollData.weapon.hasWeaponFeature("bludgeoning")) {
                     this.postRollData.damageType = DoD.damageTypes.bludgeoning;
-                    this.postRollData.isDamaging = true;
-                    break;
+                } else if (this.postRollData.weapon.hasWeaponFeature("slashing")) {
+                    this.postRollData.damageType = DoD.damageTypes.slashing;
+                } else {
+                    this.postRollData.damageType = DoD.damageTypes.none;
                 }
+                this.postRollData.isDamaging = true;
+                break;
 
             default:
                 this.postRollData.damageType = DoD.damageTypes.none;
