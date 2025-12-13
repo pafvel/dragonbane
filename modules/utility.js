@@ -115,6 +115,8 @@ export default class DoD_Utility {
     }
 
     static findTable(name, options) {
+        if (!name) return null;
+        
         let table = game.tables.find(i => i.name.toLowerCase() === name.toLowerCase()) || fromUuidSync(name);
         if (!table) {
             if (!options?.noWarnings){

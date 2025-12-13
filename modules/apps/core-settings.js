@@ -50,8 +50,8 @@ export default class DoDCoreSettings extends HandlebarsApplicationMixin(Applicat
         for (const key of Object.keys(this.#schema.fields)) {
             Object.defineProperty(this, key, {
                 get() {
-                    const override = game.settings.get("dragonbane", "coreSettingOverrides")[key]; 
-                    return override !== "" ? override : game.settings.get("dragonbane", key);
+                    const override = game.settings.get("dragonbane", "coreSettingOverrides")[key];
+                    return override || game.settings.get("dragonbane", key);
                 },
                 enumerable: true,
             });
