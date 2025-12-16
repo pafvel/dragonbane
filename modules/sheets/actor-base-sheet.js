@@ -52,10 +52,11 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                     }
                 }
             },
-            { //title="{{localize "DoD.skill.taughtTooltip"}}
+            {
                 name: "DoD.skill.trainWithTeacher",
                 icon: `<i title="${game.i18n.localize("DoD.skill.trainWithTeacherTooltip")}" class="fa-solid fa-graduation-cap"></i>`,
                 condition: li => {
+                    if (!this.actor.isCharacter || !this.actor.isOwner) return false;
                     if (!li.dataset.itemId) return false;
                     const item = this.actor.items.get(li.dataset.itemId);
                     return item?.type === "skill" && !item.system.taught && item.system.value < 18;
