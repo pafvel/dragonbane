@@ -30,12 +30,16 @@
   - Added new settings
     - Actor Settings -> Coin Encumbrance: If checked (default), coins will contribute to the character's total encumbrance.
     - Core Module Overrides: Use custom Melee, Ranged, and Magic Mishap Tables + Treasure Table instead of those from the core module.
-    - Optional Rules -> Damage Types: If checked (default), armor values may be modified by damage types and weapon actions specific to weapon types will be available.
+    - Optional Rules -> Damage Types: If checked (default), armor values may be modified by damage types and weapon actions specific to damage types will be available.
+
+- Localization
+
+  - Updated DE translation (by @Athemis)
 
 - For developers
   - Refactored CSS
     - Changed from using less to scss.
-    - Major updates to architecture and organization. If your Dragonbane module uses CSS it will likely need an update.
+    - Major updates to architecture and organization. If your Dragonbane module uses CSS it may need an update.
 
 ## Version 2.6.1
 
