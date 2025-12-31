@@ -107,6 +107,11 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         // Automatic banes and boons
         //
 
+        // Bane if weapon is broken
+        if (this.weapon.system.broken) {
+            this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.broken"), value: true});       
+        }
+
         // Bane for strength below weapon requirement
         if (this.actor.type === "character" && this.weapon.requiredStr > this.actor.system.attributes.str.value) {
             this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.belowRequiredStr"), value: true});
