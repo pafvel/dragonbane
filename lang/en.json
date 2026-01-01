@@ -11,6 +11,7 @@
         "TypeInjury": "Injury",
         "TypeItem": "Item",
         "TypeKin": "Kin",
+        "TypeMoney": "Money",
         "TypeProfession": "Profession",
         "TypeSkill": "Skill",
         "TypeSpell": "Spell",
@@ -29,6 +30,7 @@
             "injury": "Injury",
             "item": "Item",
             "kin": "Kin",
+            "money": "Money",
             "profession": "Profession",
             "skill": "Skill",
             "spell": "Spell",
@@ -145,6 +147,11 @@
         },
         "item": {
             "new": "New Item"
+        },
+        "money": {
+            "new": "New Money",
+            "abbreviation": "Abbreviation",
+            "value": "Value (in copper)"
         },
         "gear": {
             "weight": "Weight",
@@ -403,6 +410,7 @@
                 "create-effect": "Create Effect",
                 "create-helmet": "Create Helmet",
                 "create-item": "Create Item",
+                "create-money": "Create Money",
                 "create-weapon": "Create Weapon",
                 "currency": "Coin",
                 "damageBonusAGL": "Dmg Bonus AGL",

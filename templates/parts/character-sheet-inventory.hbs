@@ -39,27 +39,28 @@
                 <tr class="sheet-table-header">
                     <th></th>
                     <th class="thumbnail-header">
-                        <button type="button" class="item-create" data-type="weapon" title="{{localize "DoD.ui.character-sheet.create-weapon"}}">
-                            <a  class="fas fa-plus"></a>
-                        </button>                        
+                        <button type="button" class="item-create" data-type="weapon"
+                                title="{{localize "DoD.ui.character-sheet.create-weapon"}}">
+                            <a class="fas fa-plus"></a>
+                        </button>
                     </th>
                     <th class="text-header">{{localize "DoD.ui.character-sheet.equipped-weapon"}}</th>
                     {{#if canEquipItems}}
-                    <th class="checkbox-header">
-                        <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
-                            <span class="fa-solid fa-shirt"></span>
-                        </label>
-                    </th>
+                        <th class="checkbox-header">
+                            <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
+                                <span class="fa-solid fa-shirt"></span>
+                            </label>
+                        </th>
                     {{/if}}
                     <th></th>
                 </tr>
                 {{#if equippedWeapons}}
-                {{#each equippedWeapons as |weapon weaponId|}}
-                    {{> itemRow item=weapon canEquipItems=../canEquipItems editable=../editable rollable=../owner}}
-                {{/each}}
+                    {{#each equippedWeapons as |weapon weaponId|}}
+                        {{> itemRow item=weapon canEquipItems=../canEquipItems editable=../editable rollable=../owner}}
+                    {{/each}}
                 {{else}}
                     <tr class="sheet-table-data"/>
-                {{/if}}                  
+                {{/if}}
             </table>
 
             {{!-- Armor --}}
@@ -67,19 +68,20 @@
                 <tr class="sheet-table-header">
                     <th></th>
                     <th class="thumbnail-header">
-                        <button type="button" class="item-create" data-type="armor" title="{{localize "DoD.ui.character-sheet.create-armor"}}">
-                            <a  class="fas fa-plus"></a>
-                        </button>                        
+                        <button type="button" class="item-create" data-type="armor"
+                                title="{{localize "DoD.ui.character-sheet.create-armor"}}">
+                            <a class="fas fa-plus"></a>
+                        </button>
                     </th>
                     <th class="text-header">
                         {{localize "DoD.ui.character-sheet.equipped-armor"}}
                     </th>
                     {{#if canEquipItems}}
-                    <th class="checkbox-header">
-                        <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
-                            <span class="fa-solid fa-shirt"></span>
-                        </label>
-                    </th>
+                        <th class="checkbox-header">
+                            <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
+                                <span class="fa-solid fa-shirt"></span>
+                            </label>
+                        </th>
                     {{/if}}
                     <th></th>
                 </tr>
@@ -95,19 +97,21 @@
                 <tr class="sheet-table-header">
                     <th></th>
                     <th class="thumbnail-header">
-                        <button type="button" class="item-create" data-type="helmet" title="{{localize "DoD.ui.character-sheet.create-helmet"}}"</a>
-                            <a  class="fas fa-plus"></a>
-                        </button>                        
+                        <button type="button" class="item-create" data-type="helmet"
+                                title="{{localize "DoD.ui.character-sheet.create-helmet"}}"
+                        </a>
+                        <a class="fas fa-plus"></a>
+                        </button>
                     </th>
                     <th class="text-header">
                         {{localize "DoD.ui.character-sheet.equipped-helmet"}}
                     </th>
                     {{#if canEquipItems}}
-                    <th class="checkbox-header">
-                        <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
-                            <span class="fa-solid fa-shirt"></span>
-                        </label>
-                    </th>
+                        <th class="checkbox-header">
+                            <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
+                                <span class="fa-solid fa-shirt"></span>
+                            </label>
+                        </th>
                     {{/if}}
                     <th></th>
                 </tr>
@@ -119,38 +123,63 @@
             </table>
 
             {{!-- Currency --}}
-            <div class="derived-stat-box">
-                <table class="derived-stat">
-                    <tr>
-                        <th>{{localize "DoD.currency.gold"}}</th>
-                        <td><input class="currency-input" name="system.currency.gc" type="text" value="{{system.currency.gc}}" data-dtype="Number" /></td>
-                    </tr>
-                    <tr>
-                        <th>{{localize "DoD.currency.silver"}}</th>
-                        <td><input class="currency-input" name="system.currency.sc" type="text" value="{{system.currency.sc}}" data-dtype="Number" /></td>
-                    </tr>
-                    <tr>
-                        <th>{{localize "DoD.currency.copper"}}</th>
-                        <td><input class="currency-input" name="system.currency.cc" type="text" value="{{system.currency.cc}}" data-dtype="Number" /></td>
-                    </tr>
-                </table>    
-            </div>
+            <table class="sheet-table item-list" data-droptarget="money">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th class="thumbnail-header">
+                        <button type="button" class="item-create" data-type="money"
+                                title="{{localize "DoD.ui.character-sheet.create-money"}}">
+                            <a class="fas fa-plus"></a>
+                        </button>
+                    </th>
+                    <th class="text-header">{{localize "DoD.ui.character-sheet.currency"}}</th>
+                    <th class="number-header">{{localize "DoD.gear.quantity"}}</th>
+                    <th></th>
+                </tr>
+                {{#if moneyItems}}
+                    {{#each moneyItems as |money moneyId|}}
+                        <tr class="sheet-table-data item draggable" data-item-id="{{money.id}}">
+                            <td></td>
+                            <td class="thumbnail-data">
+                                <img src="{{money.img}}" title="{{money.name}}"/>
+                            </td>
+                            <td class="text-data">
+                                <a class="item-edit">{{money.displayName}}</a>
+                            </td>
+                            <td class="number-data">
+                                {{money.system.quantity}}
+                            </td>
+                            <td>
+                                {{#if editable}}
+                                <button type="button" class="icon" data-action="itemControls"
+                                        data-item-id="{{money.id}}">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                {{/if}}
+                            </td>
+                        </tr>
+                    {{/each}}
+                {{else}}
+                    <tr class="sheet-table-data"/>
+                {{/if}}
+            </table>
         </div>
 
         <div>
             {{!-- Encumbrance --}}
             <table class="derived-stat">
                 <tr>
-                     
+
                     <th>{{localize "DoD.ui.character-sheet.max-encumbrance"}}</th>
-                    <td class="active-effect-property" data-property="system.maxEncumbrance">{{system.maxEncumbrance.value}}</td>
+                    <td class="active-effect-property"
+                        data-property="system.maxEncumbrance">{{system.maxEncumbrance.value}}</td>
                 </tr>
                 <tr>
                     <th>{{localize "DoD.ui.character-sheet.encumbrance"}}</th>
                     {{#if overEncumbered}}
-                    <td class="warning">{{encumbrance}}</td>
+                        <td class="warning">{{encumbrance}}</td>
                     {{else}}
-                    <td>{{encumbrance}}</td>
+                        <td>{{encumbrance}}</td>
                     {{/if}}
                 </tr>
             </table>
@@ -161,18 +190,19 @@
                     <th>
                     </th>
                     <th class="thumbnail-header">
-                        <button type="button" class="item-create" data-type="item" title="{{localize "DoD.ui.character-sheet.create-item"}}">
-                            <a  class="fas fa-plus"></a>
-                        </button>                        
+                        <button type="button" class="item-create" data-type="item"
+                                title="{{localize "DoD.ui.character-sheet.create-item"}}">
+                            <a class="fas fa-plus"></a>
+                        </button>
                     </th>
                     <th class="text-header">
                         {{localize "DoD.ui.character-sheet.inventory"}}
                     </th>
                     {{#if canEquipItems}}
-                    <th class="checkbox-header">
-                        <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
-                            <span class="fa-solid fa-shirt"></span>
-                        </label>
+                        <th class="checkbox-header">
+                            <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
+                                <span class="fa-solid fa-shirt"></span>
+                            </label>
                     </th>
                     {{/if}}
                     <th class="number-header">
@@ -182,16 +212,16 @@
                     </th>
                 </tr>
                 {{#if inventory}}
-                {{#each inventory as |item itemId|}}
-                    {{> itemRow item=item canEquipItems=../canEquipItems editable=../editable hasWeight=true}}
-                {{/each}}
+                    {{#each inventory as |item itemId|}}
+                        {{> itemRow item=item canEquipItems=../canEquipItems editable=../editable hasWeight=true}}
+                    {{/each}}
                 {{else}}
-                <tr class="sheet-table-data">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
+                    <tr class="sheet-table-data">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
                 {{/if}}
             </table>
 
@@ -200,26 +230,27 @@
                 <tr class="sheet-table-header">
                     <th></th>
                     <th class="thumbnail-header">
-                        <button type="button" class="item-create tiny" data-type="item" title="{{localize "DoD.ui.character-sheet.create-item"}}">
-                            <a  class="fas fa-plus"></a>
+                        <button type="button" class="item-create tiny" data-type="item"
+                                title="{{localize "DoD.ui.character-sheet.create-item"}}">
+                            <a class="fas fa-plus"></a>
                         </button>
                     </th>
                     <th class="text-header">
                         {{localize "DoD.ui.character-sheet.tiny-items"}}
                     </th>
                     {{#if canEquipItems}}
-                    <th class="checkbox-header">
-                        <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
-                            <span class="fa-solid fa-shirt"></span>
-                        </label>
-                    </th>
+                        <th class="checkbox-header">
+                            <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
+                                <span class="fa-solid fa-shirt"></span>
+                            </label>
+                        </th>
                     {{/if}}
                     <th></th>
                 </tr>
                 {{#if smallItems}}
-                {{#each smallItems as |item itemId|}}
-                    {{> itemRow item=item canEquipItems=../canEquipItems editable=../editable}}
-                {{/each}}
+                    {{#each smallItems as |item itemId|}}
+                        {{> itemRow item=item canEquipItems=../canEquipItems editable=../editable}}
+                    {{/each}}
                 {{else}}
                     <tr class="sheet-table-data"/>
                 {{/if}}
@@ -234,11 +265,11 @@
                         {{localize "DoD.ui.character-sheet.memento"}}
                     </th>
                     {{#if canEquipItems}}
-                    <th class="checkbox-header">
-                        <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
-                            <span class="fa-solid fa-shirt"></span>
-                        </label>
-                    </th>
+                        <th class="checkbox-header">
+                            <label title="{{localize "DoD.ui.character-sheet.equipped"}}">
+                                <span class="fa-solid fa-shirt"></span>
+                            </label>
+                        </th>
                     {{/if}}
                     <th class="number-header">
                         {{localize "DoD.gear.weight"}}
@@ -261,8 +292,9 @@
                     <th>
                     </th>
                     <th class="thumbnail-header">
-                        <button type="button" class="item-create storage" data-type="item" title="{{localize "DoD.ui.character-sheet.create-item"}}">
-                            <a  class="fas fa-plus"></a>
+                        <button type="button" class="item-create storage" data-type="item"
+                                title="{{localize "DoD.ui.character-sheet.create-item"}}">
+                            <a class="fas fa-plus"></a>
                         </button>
                     </th>
                     <th class="text-header">
@@ -275,12 +307,12 @@
                     </th>
                 </tr>
                 {{#if storage}}
-                {{#each storage as |item itemId|}}
-                    {{> itemRow item=item canEquipItems=false editable=../editable hasWeight=true}}
-                {{/each}}
+                    {{#each storage as |item itemId|}}
+                        {{> itemRow item=item canEquipItems=false editable=../editable hasWeight=true}}
+                    {{/each}}
                 {{else}}
-                <tr class="sheet-table-data">
-                </tr>
+                    <tr class="sheet-table-data">
+                    </tr>
                 {{/if}}
             </table>
         </div>
