@@ -237,7 +237,7 @@
             "healing": "<b>{actor}</b> cura <b>{damage}</b> HP.",
             "healingTarget": "<b>{actor}</b> cura <b>{target}</b> em <b>{damage}</b> HP.",
             "pushButtonLabel": "Forçar a rolagem",
-            "pushChoiceLabel": "Escolha a condição:",
+            "pushChoiceLabel": "Escolha a condição",
             "parryWeapon": "<p>Se o dano aparado exceder a durabilidade da sua arma (<b>{durability}</b>), a arma é danificada. Dano perfurante não pode danificar uma arma.</p>",
             "parryShield": "<p>Se o dano aparado exceder a durabilidade do seu escudo (<b>{durability}</b>), o escudo é danificado. Dano perfurante não pode danificar um escudo.</p>",
             "deathRoll": "Teste de Morte <b>{result}</b>"

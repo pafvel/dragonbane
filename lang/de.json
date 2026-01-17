@@ -237,7 +237,7 @@
             "healing": "<b>{actor}</b> heilt <b>{damage}</b> TP.",
             "healingTarget": "<b>{actor}</b> heilt <b>{target}</b> um <b>{damage}</b> TP.",
             "pushButtonLabel": "Wurf strapazieren",
-            "pushChoiceLabel": "Wähle einen Zustand:",
+            "pushChoiceLabel": "Wähle einen Zustand",
             "parryWeapon": "<p>Wenn der parierte Schaden die Haltbarkeit deiner Waffe übersteigt (<b>{durability}</b>), ist die Waffe beschädigt. Stichschaden kann eine Waffe nicht beschädigen.</p>",
             "parryShield": "<p>Wenn der parierte Schaden die Haltbarkeit deines Schildes übersteigt (<b>{durability}</b>), ist der Schild beschädigt. Stichschaden kann einen Schild nicht beschädigen.</p>",
             "deathRoll": "Todeswurf <b>{result}</b>"

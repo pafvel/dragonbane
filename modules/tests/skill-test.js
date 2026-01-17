@@ -34,10 +34,6 @@ export default class DoDSkillTest extends DoDTest {
         this.postRollData.isDemon = !this.autoSuccess && (this.postRollData.result >= 20 - (this.preRollData.extraDemons ?? 0));
         this.postRollData.canPush = this.preRollData.canPush && !this.postRollData.success && !this.postRollData.isDemon;
 
-        if (this.postRollData.canPush) {
-            this.updatePushRollChoices();
-        }
-
         if (this.options.targets) {
             this.postRollData.targetActor = this.options.targets[0].actor;
         }

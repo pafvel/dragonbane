@@ -217,7 +217,7 @@
       "damageWeaponTarget": "<b>{actor}</b> infligge <b>{damage}</b> punti <b>{damageType}</b> su {target} usando <b>{weapon}</b>.",
       "damageIgnoreArmorTarget": "<b>{actor}</b> infligge <b>{damage}</b> punti <b>{damageType} su {target} ignorando l'armatura'</b> usando <b>{weapon}</b>.",
       "pushButtonLabel": "Forza Tiro",
-      "pushChoiceLabel": "Scegli condizione:",
+      "pushChoiceLabel": "Scegli condizione",
       "parryWeapon": "<p>Se il danno parato eccede la durabilità della tua arma (<b>{durability}</b>), l'arma è danneggiata. Un danno perforante non può danneggiare un arma.</p>",
       "parryShield": "<p>Se il danno parato eccede la durabilità del tuo scudo (<b>{durability}</b>), lo scudo è danneggiato. Un danno perforante non può danneggiare uno scudo.</p>",
       "deathRoll": "Tiro Morte <b>{result}</b>"

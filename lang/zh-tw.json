@@ -237,7 +237,7 @@
             "healing": "<b>{actor}</b>恢復了 <b>{damage}</b> HP。",
             "healingTarget": "<b>{actor}</b>對<b>{target}</b>治療了 <b>{damage}</b> HP。",
             "pushButtonLabel": "強推檢定",
-            "pushChoiceLabel": "選擇狀態：",
+            "pushChoiceLabel": "選擇狀態",
             "parryWeapon": "<p>若傷害超過你武器的耐久度（<b>{durability}</b>），武器就會受損。穿刺傷害無法讓武器受損。</p>",
             "parryShield": "<p>若傷害超過你盾牌的耐久度（<b>{durability}</b>），盾牌就會受損。穿刺傷害無法讓盾牌受損。</p>",
             "deathRoll": "死亡檢定<b>{result}</b>"

@@ -238,7 +238,7 @@
             "healing": "<b>{actor}</b> helar <b>{damage}</b> KP.",
             "healingTarget": "<b>{actor}</b> helar <b>{target}</b> med <b>{damage}</b> KP.",
             "pushButtonLabel": "Pressa slag",
-            "pushChoiceLabel": "Välj tillstånd:",
+            "pushChoiceLabel": "Välj tillstånd",
             "parryShield": "<p>Om skadan är högre än brytvärdet (<b>{durability}</b>) skadas skölden och blir trasig (gäller ej stickskada).",
             "parryWeapon": "<p>Om skadan är högre än brytvärdet (<b>{durability}</b>) skadas vapnet och blir trasigt (gäller ej stickskada).",
             "deathRoll": "Dödsslaget <b>{result}</b>"

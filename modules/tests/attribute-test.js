@@ -31,10 +31,6 @@ export default class DoDAttributeTest extends DoDTest {
         this.postRollData.isDragon = this.postRollData.result <= 1 + (this.preRollData.extraDragons ?? 0);
         this.postRollData.isDemon = this.postRollData.result >= 20 - (this.preRollData.extraDemons ?? 0);
         this.postRollData.canPush = this.preRollData.canPush && !this.postRollData.success && !this.postRollData.isDemon;
-
-        if (this.postRollData.canPush) {
-            this.updatePushRollChoices();
-        }
     }
 
     formatRollMessage(postRollData) {

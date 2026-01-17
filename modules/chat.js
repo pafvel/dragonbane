@@ -478,7 +478,7 @@ async function onMagicDamageRoll(event) {
     }
 }
 
-function onPushRoll(event) {
+async function onPushRoll(event) {
     if (event.detail === 2) { // double-click
         return;
     };
@@ -490,16 +490,82 @@ function onPushRoll(event) {
     const actor = DoD_Utility.getActorFromUUID(actorId);
     if (!actor) return;
 
+    // Prepare push roll choices
+    const pushRollChoices = {};
+
+    for (const attribute in actor.system.attributes) {
+        const condition = actor.system.conditions[attribute];
+        if (condition) {
+            if (!condition.value) {
+                pushRollChoices[attribute] =
+                    game.i18n.localize("DoD.conditions." + attribute) + " (" +
+                    game.i18n.localize("DoD.attributes." + attribute) + ")";
+            }
+        } else {
+            DoD_Utility.ERROR("Missing condition for attribute " + attribute);
+        }
+    }
+
+    if (Object.keys(pushRollChoices).length === 0) {
+        DoD_Utility.WARNING("DoD.WARNING.conditionAlreadyTaken");
+        return;
+    }
+
+    // Create dialog content
+    const content = `
+    <form>
+        <fieldset>
+        <legend>${game.i18n.localize("DoD.roll.pushChoiceLabel")}</legend>
+
+        ${Object.entries(pushRollChoices).map(([attribute, label], i) => `
+            <label>
+            <input
+                type="radio"
+                name="pushChoice"
+                value="${attribute}"
+                ${i === 0 ? "checked" : ""}
+            >
+            ${label}
+            </label>
+        `).join("")}
+
+        </fieldset>
+    </form>
+    `;
+
+    // Determine dialog title
+    let rollTitle = "";
+    switch (element.dataset.rollType) {
+        case "DoDAttributeTest":
+            rollTitle =  element.dataset.attribute.toUpperCase();
+            break;
+        case "DoDSkillTest":
+        case "DoDWeaponTest":
+        case "DoDSpellTest":
+            rollTitle = element.dataset.skillName;
+            break;
+        default:
+            return;
+    }
+
+    // Show dialog
+    const choice = await foundry.applications.api.DialogV2.prompt({
+        window: { title: game.i18n.localize("DoD.roll.pushButtonLabel") + ": " + rollTitle },
+        content,
+        ok: {
+            label: game.i18n.localize("DoD.roll.pushButtonLabel"),
+            callback: (event, button) => button.form.elements.pushChoice.value
+    },
+    });
+    if (choice === null) return; // dialog was closed
+
     // Take condition
-    const parent = element.parentElement;
-    const pushChoices = parent.getElementsByTagName("input");
-    const choice = Array.from(pushChoices).find(e => e.name==="pushRollChoice" && e.checked);
-    if (!actor.hasCondition(choice.value)) {
-        actor.updateCondition(choice.value, true);
+    if (!actor.hasCondition(choice)) {
+        actor.updateCondition(choice, true);
         const msg = game.i18n.format("DoD.ui.chat.takeCondition",
             {
                 actor: actor.name,
-                condition: game.i18n.localize("DoD.conditions." + choice.value)
+                condition: game.i18n.localize("DoD.conditions." + choice)
             });
         ChatMessage.create({
             content: msg,

@@ -237,7 +237,7 @@
             "healing": "<b>{actor}</b> heals for <b>{damage}</b> HP.",
             "healingTarget": "<b>{actor}</b> heals <b>{target}</b> for <b>{damage}</b> HP.",
             "pushButtonLabel": "Push roll",
-            "pushChoiceLabel": "Choose condition:",
+            "pushChoiceLabel": "Choose condition",
             "parryWeapon": "<p>If the parried damage exceeds your weapon's durability (<b>{durability}</b>), the weapon is damaged. Piercing damage can not damage a weapon.</p>",
             "parryShield": "<p>If the parried damage exceeds your shield's durability (<b>{durability}</b>), the shield is damaged. Piercing damage can not damage a shield.</p>",
             "deathRoll": "Death Roll <b>{result}</b>"

@@ -75,33 +75,6 @@ export default class DoDTest {
         this.postRollData.result = Number(this.roll.result);
     }
 
-    updatePushRollChoices() {
-        const actor = this.postRollData.actor;
-        this.postRollData.pushRollChoices = {};
-        this.postRollData.pushRollChoice = null;
-
-        for (const attribute in actor.system.attributes) {
-            const condition = actor.system.conditions[attribute];
-            if (condition) {
-                if (!condition.value) {
-                    this.postRollData.pushRollChoices[attribute] =
-                        game.i18n.localize("DoD.conditions." + attribute) + " (" +
-                        game.i18n.localize("DoD.attributes." + attribute) + ")";
-                    if (!this.postRollData.pushRollChoice) {
-                        this.postRollData.pushRollChoice = attribute;
-                    }
-                }
-            } else {
-                DoD_Utility.ERROR("Missing condition for attribute " + attribute);
-            }
-        }
-        if (!this.postRollData.pushRollChoice) {
-            this.postRollData.canPush = false;
-            return;
-        }
-        this.postRollData.pushRollChoiceGroup = "pushRollChoice";        
-    }
-
     updateDialogData() {
 
         if (this.noBanesBoons || this.autoSuccess) {

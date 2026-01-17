@@ -237,7 +237,7 @@
       "healing": "<b>{actor}</b> cura <b>{damage}</b> PG.",
       "healingTarget": "<b>{actor}</b> cura a <b>{target}</b> un total de <b>{damage}</b> PG.",
       "pushButtonLabel": "Forzar tirada",
-      "pushChoiceLabel": "Elige un estado:",
+      "pushChoiceLabel": "Elige un estado",
       "parryWeapon": "<p>Si el daño parado excede la durabilidad del arma (<b>{durability}</b>), el arma resulta dañada. El daño perforante no puede dañar armas.</p>",
       "parryShield": "<p>Si el daño parado excede la durabilidad del escudo (<b>{durability}</b>), el escudo resulta dañado. El daño perforante no puede dañar un escudo.</p>",
       "deathRoll": "Tirada de Muerte <b>{result}</b>"

@@ -237,7 +237,7 @@
             "healing": "<b>{actor}</b> soigne <b>{damage}</b> PS.",
             "healingTarget": "<b>{actor}</b> soigne <b>{target}</b> de <b>{damage}</b> PS.",
             "pushButtonLabel": "Forcer la chance",
-            "pushChoiceLabel": "Choisissez un état:",
+            "pushChoiceLabel": "Choisissez un état",
             "parryWeapon": "<p>Si les dégâts parés excèdent la Solidité de votre arme (<b>{durability}</b>), celle-ci est endommagée. Les dégâts Perforants ne peuvent pas endommager une arme.</p>",
             "parryShield": "<p>Si les dégâts parés excèdent la Solidité de votre bouclier (<b>{durability}</b>), celui-ci est endommagé. Les dégâts Perforants ne peuvent pas endommager un bouclier.</p>",
             "deathRoll": "Jet contre la Mort <b>{result}</b>"

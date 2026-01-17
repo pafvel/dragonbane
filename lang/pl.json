@@ -237,7 +237,7 @@
             "healing": "<b>{actor}</b> leczy  <b>{damage}</b> punktów WT.",
             "healingTarget": "<b>{actor}</b> leczy <b>{target}</b> za <b>{damage}</b> punktów WT.",
             "pushButtonLabel": "Forsuj rzut",
-            "pushChoiceLabel": "Wybierz dolegliwość:",
+            "pushChoiceLabel": "Wybierz dolegliwość",
             "parryWeapon": "<p>Jeżeli sparowane obrażenie przekroczą trwałość broni (<b>{durability}</b>), ta zostanie ona uszkodzona. Obrażenia kłute nie mogą uszkodzić bronii.</p>",
             "parryShield": "<p>Jeżeli sparowane obrażenie przekroczą trwałość tarczy(<b>{durability}</b>), ta zostanie ona uszkodzona. Obrażenia kłute nie mogą uszkodzić tarczy.</p>",
             "deathRoll": "Death Roll <b>{result}</b>"
