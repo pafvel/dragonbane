@@ -10,15 +10,6 @@ Dragonbane / Drakar och Demoner tabletop RPG.
 All source code (javascript, hbs, scss, as well as system templates
 and the like) is licenced under the GNU General Public License v3.0.
 
-THIRD-PARTY ASSETS
-This module includes icons from game-icons.net.
-
-- Authors: Lorc, Delapouite & contributors
-- Source: https://game-icons.net/
-- License: Creative Commons Attribution 3.0 Unported (CC BY 3.0)
-  https://creativecommons.org/licenses/by/3.0/
-- Modifications: None
-
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
