@@ -14,28 +14,119 @@ export function addChatListeners(_app, html, _data) {
     DoD_Utility.addHtmlEventListener(html, "click", "button.push-roll", onPushRoll);
     DoD_Utility.addHtmlEventListener(html, "click", ".damage-details", onExpandableClick);
     DoD_Utility.addHtmlEventListener(html, 'click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
+
+    DoD_Utility.addHtmlEventListener(html, "click", "[data-action='dealDamage']", onDealDamage);
+    DoD_Utility.addHtmlEventListener(html, "click", "[data-action='dealDoubleDamage']", onDealDoubleDamage);
+    DoD_Utility.addHtmlEventListener(html, "click", "[data-action='dealHalfDamage']", onDealHalfDamage);
+    DoD_Utility.addHtmlEventListener(html, "click", "[data-action='dealDamageIgnoreArmor']", onDealDamageIgnoreArmor);
+    DoD_Utility.addHtmlEventListener(html, "click", "[data-action='healDamage']", onHealDamage);
+
+    DoD_Utility.addHtmlEventListener(html, "pointerenter",
+        "[data-action='dealDamage'], [data-action='dealDoubleDamage'], [data-action='dealHalfDamage'], [data-action='dealDamageIgnoreArmor'], [data-action='healDamage']",
+        onEnterDealDamage, { capture: true });
+    DoD_Utility.addHtmlEventListener(html, "pointerleave",
+        "[data-action='dealDamage'], [data-action='dealDoubleDamage'], [data-action='dealHalfDamage'], [data-action='dealDamageIgnoreArmor'], [data-action='healDamage']",
+        onLeaveDealDamage, { capture: true });
 }
 
-export function addChatMessageContextMenuOptions(_html, options) {
+function onDealDamage(event) {
+    const li = event.currentTarget.closest("li");
+    dealTargetDamage(li);
+}
 
-    const getTarget = function(element)
-    {
-        let target = null;
-        if (element) {
-            // Get target from message data
-            if (element.dataset.targetId) {
-                target = DoD_Utility.getActorFromUUID(element.dataset.targetId);
-            }
-            // Get target from user target
-            if (!target) {
-                const targets = Array.from(game.user.targets);
-                if (targets.length > 0) {
-                    target = targets[0].actor;
-                }
+function onDealDoubleDamage(event) {
+    const li = event.currentTarget.closest("li");
+    dealTargetDamage(li, 2);
+}
+
+function onDealHalfDamage(event) {
+    const li = event.currentTarget.closest("li");
+    dealTargetDamage(li, 0.5);
+}
+
+function onDealDamageIgnoreArmor(event) {
+    const li = event.currentTarget.closest("li");
+    dealTargetDamage(li, 1, true);
+}
+
+function onHealDamage(event) {
+    const li = event.currentTarget.closest("li");
+    healTarget(li);
+}
+
+function onEnterDealDamage(event) {
+    const li = event.currentTarget.closest("li");
+    const element = li.querySelector(".damage-roll") || li.querySelector(".healing-roll");
+    const actor = getTarget(element);
+    const token = actor?.token?.object;
+    token?._onHoverIn(event, { hoverOutOthers: true });
+}
+
+function onLeaveDealDamage(event) {
+    const li = event.currentTarget.closest("li");
+    const element = li.querySelector(".damage-roll") || li.querySelector(".healing-roll");
+    const actor = getTarget(element);
+    const token = actor?.token?.object;
+    token?._onHoverOut(event);
+}
+
+function getTarget(element) {
+    let target = null;
+    if (element) {
+        // Get target from message data
+        if (element.dataset.targetId) {
+            target = DoD_Utility.getActorFromUUID(element.dataset.targetId);
+        }
+        // Get target from user target
+        if (!target) {
+            const targets = Array.from(game.user.targets);
+            if (targets.length > 0) {
+                target = targets[0].actor;
             }
         }
-        return target;
     }
+    return target;
+}
+
+function dealTargetDamage(li, multiplier = 1, ignoreArmor = false) {
+    const damageData = {};
+    const element = li.querySelector(".damage-roll") || li.querySelector(".dice-total");
+
+    damageData.damage = element.dataset.damage ?? Number(element.innerText);
+    damageData.damageType = element.dataset.damageType?.substring(String("DoD.damageTypes.").length);
+    damageData.actor = getTarget(element);
+    damageData.multiplier = multiplier;
+    damageData.ignoreArmor = ignoreArmor || element.dataset.ignoreArmor;
+
+    if (!(damageData.actor instanceof DoDActor)) {
+        DoD_Utility.WARNING("TOKEN.WarningNoActor");
+    }
+    else if (!damageData.actor.isOwner) {
+        DoD_Utility.WARNING("DoD.WARNING.noPermissionToModifyActor");
+    } else {
+        applyDamageMessage(damageData);
+    }
+}
+
+function healTarget(li, _multiplier = 1, _ignoreArmor = false) {
+    const healingData = {};
+    const element = li.querySelector(".healing-roll") || li.querySelector(".dice-total");
+
+    healingData.damage = element.dataset.healing ?? Number(element.innerText);
+    healingData.actor = getTarget(element);
+
+    if (!(healingData.actor instanceof DoDActor)){
+        DoD_Utility.WARNING("TOKEN.WarningNoActor");
+    }
+    else if (!healingData.actor.isOwner) {
+        DoD_Utility.WARNING("DoD.WARNING.noPermissionToModifyActor");
+    } else {
+        applyHealingMessage(healingData);
+    }
+}
+
+
+export function addChatMessageContextMenuOptions(_html, options) {
 
     const canDealTargetDamage = li =>
     {
@@ -47,26 +138,6 @@ export function addChatMessageContextMenuOptions(_html, options) {
         return target ? target.isOwner : false;
     }
 
-    const dealTargetDamage = function(li, multiplier = 1, ignoreArmor = false) {
-        const damageData = {};
-        const element = li.querySelector(".damage-roll") || li.querySelector(".dice-total");
-
-        damageData.damage = element.dataset.damage ?? Number(element.innerText);
-        damageData.damageType = element.dataset.damageType?.substring(String("DoD.damageTypes.").length);
-        damageData.actor = getTarget(element);
-        damageData.multiplier = multiplier;
-        damageData.ignoreArmor = ignoreArmor || element.dataset.ignoreArmor;
-
-        if (!(damageData.actor instanceof DoDActor)) {
-            DoD_Utility.WARNING("TOKEN.WarningNoActor");
-        }
-        else if (!damageData.actor.isOwner) {
-            DoD_Utility.WARNING("DoD.WARNING.noPermissionToModifyActor");
-        } else {
-            applyDamageMessage(damageData);
-        }
-    }
-
     const canHealTarget = li =>
     {
         if (li.querySelector(".damage-roll")) {
@@ -75,23 +146,6 @@ export function addChatMessageContextMenuOptions(_html, options) {
         const element = li.querySelector(".healing-roll") || li.querySelector(".dice-total")
         const target = getTarget(element);
         return target ? target.isOwner : false;
-    }
-
-    const healTarget = function(li, _multiplier = 1, _ignoreArmor = false) {
-        const healingData = {};
-        const element = li.querySelector(".healing-roll") || li.querySelector(".dice-total");
-
-        healingData.damage = element.dataset.healing ?? Number(element.innerText);
-        healingData.actor = getTarget(element);
-
-        if (!(healingData.actor instanceof DoDActor)){
-            DoD_Utility.WARNING("TOKEN.WarningNoActor");
-        }
-        else if (!healingData.actor.isOwner) {
-            DoD_Utility.WARNING("DoD.WARNING.noPermissionToModifyActor");
-        } else {
-            applyHealingMessage(healingData);
-        }
     }
 
     const canDealSelectedDamage = li =>

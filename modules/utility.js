@@ -385,17 +385,15 @@ export default class DoD_Utility {
         }
     }
 
-    static addHtmlEventListener(html, eventNames, selector, eventHandler) {
-        for (const eventName of eventNames.split(" ")) {
-            const wrappedHandler = (e) => {
-                if (!e.target) return;
-                const target = e.target.closest(selector);
-                if (target) {
-                    eventHandler.call(target, e);
-                }
-            };
-            html.addEventListener(eventName, wrappedHandler);
-        }
+    static addHtmlEventListener(html, eventNames, selector, eventHandler, { capture = false } = {}) {
+    for (const eventName of eventNames.split(/\s+/)) {
+        const wrappedHandler = (e) => {
+        if (!e.target) return;
+        const target = e.target.closest(selector);
+        if (target) eventHandler.call(target, e);
+        };
+        html.addEventListener(eventName, wrappedHandler, { capture });
+    }
     }
 
     static async renderTemplate(path, data) {

@@ -1027,6 +1027,11 @@
   font-family: var(--dod-font-heading);
   font-weight: normal;
   width: 100%;
+  margin-top: 6px;
+}
+.system-dragonbane .chat-message .message-content .chat-button img {
+  height: 100%;
+  width: auto;
 }
 .system-dragonbane .chat-message .message-content .chat-button:disabled {
   color: var(--color-text-dark-inactive);

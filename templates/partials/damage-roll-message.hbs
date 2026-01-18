@@ -13,3 +13,35 @@
 {{/if}}
 {{> "systems/dragonbane/templates/partials/roll.hbs"}}
 </div>
+
+{{#if target}}
+    {{#if isHealing}}
+    <div class="flexrow permission-owner" data-actor-id="{{target.uuid}}">
+        <button class="chat-button" title="{{localize "DoD.ui.chat.healTarget"}}" data-action="healDamage">
+            <i class="fas fa-user-plus"></i>{{localize "DoD.ui.chat.healTarget"}}
+        </button>
+    </div>
+    {{else}}
+    <div class="flexrow permission-owner" data-actor-id="{{target.uuid}}">
+        <button class="chat-button" title="{{localize "DoD.ui.chat.dealDamage"}}" data-action="dealDamage">
+            <i class="fas fa-user-minus"></i>{{localize "DoD.ui.chat.dealDamage"}}
+        </button>
+    </div>
+    <!--
+    <div class="flexrow permission-owner" data-actor-id="{{target.uuid}}">
+        <button class="chat-button" title="{{localize "DoD.ui.chat.dealDamage"}}" data-action="dealDamage">
+            <img src="systems/dragonbane/art/ui/sword.webp"/>
+        </button>
+        <button class="chat-button" title="{{localize "DoD.ui.chat.dealDoubleDamage"}}" data-action="dealDoubleDamage">
+            <img src="systems/dragonbane/art/ui/crossed-swords.webp"/>
+        </button>
+        <button class="chat-button" title="{{localize "DoD.ui.chat.dealHalfDamage"}}" data-action="dealHalfDamage">
+            <img src="systems/dragonbane/art/ui/shield.webp"/>
+        </button>
+        <button class="chat-button" title="{{localize "DoD.ui.chat.dealDamageIgnoreArmor"}}" data-action="dealDamageIgnoreArmor">
+            <img src="systems/dragonbane/art/ui/broken-shield.webp"/>
+        </button>
+    </div>
+    -->
+    {{/if}}
+{{/if}}
