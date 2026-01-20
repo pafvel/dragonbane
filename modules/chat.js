@@ -607,6 +607,7 @@ async function onPushRoll(event) {
         window: { title: game.i18n.localize("DoD.roll.pushButtonLabel") + ": " + rollTitle },
         content,
         ok: {
+            icon: "fa-solid fa-arrow-rotate-right",
             label: game.i18n.localize("DoD.roll.pushButtonLabel"),
             callback: (event, button) => button.form.elements.pushChoice.value
     },

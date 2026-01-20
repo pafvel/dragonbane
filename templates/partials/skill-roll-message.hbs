@@ -27,7 +27,7 @@
                 {{#if targetActor }} data-target-id="{{targetActor.uuid}}" {{/if}}
                 {{#if extraDamage }} data-extra-damage="{{extraDamage}}" {{/if}}
                 >
-                {{localize "DoD.ui.chat.rollDamage"}}
+                <i class="fas fa-dice"></i>{{localize "DoD.ui.chat.rollDamage"}}
             </button>
         {{/if}} <!-- isDamaging -->
     {{/if}} <!-- weapon -->
@@ -63,7 +63,8 @@
                 {{#if isMagicCrit }} data-is-magic-crit="{{isMagicCrit}}" {{/if}}
                 {{#if targetActor }} data-target-id="{{targetActor.uuid}}" {{/if}}
                 >
-                {{#if isHealing}}
+                <i class="fas fa-dice"></i>
+                {{#if isHealing}}                
                 {{localize "DoD.ui.chat.rollHealing"}}
                 {{else}}
                 {{localize "DoD.ui.chat.rollDamage"}}
@@ -89,6 +90,7 @@
             {{#if wpCost }} data-wp-cost="{{wpCost}}" {{/if}}
             {{#if extraDamage }} data-extra-damage="{{extraDamage}}" {{/if}}
             >
+            <i class="fas fa-arrow-rotate-right"></i>
             {{localize "DoD.roll.pushButtonLabel"}}
         </button>
     </div>
