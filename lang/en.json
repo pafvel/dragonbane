@@ -36,6 +36,20 @@
         }
     },
     "DoD": {
+        "DoDCharacterSheet": "Dragonbane Character Sheet",
+        "DoDNpcSheet": "Dragonbane NPC Sheet",
+        "DoDMonsterSheet": "Dragonbane Monster Sheet",
+        "DoDAbilitySheet": "Dragonbane Ability Sheet",
+        "DoDArmorSheet": "Dragonbane Armor Sheet",
+        "DoDHelmetSheet": "Dragonbane Helmet Sheet",
+        "DoDInjurySheet": "Dragonbane Injury Sheet",
+        "DoDItemSheet": "Dragonbane Item Sheet",
+        "DoDKinSheet": "Dragonbane Kin Sheet",
+        "DoDProfessionSheet": "Dragonbane Profession Sheet",
+        "DoDSkillSheet": "Dragonbane Skill Sheet",
+        "DoDSpellSheet": "Dragonbane Spell Sheet",
+        "DoDWeaponSheet": "Dragonbane Weapon Sheet",
+
         "ability": {
             "requirement": "Requirement",
             "type": "Type",

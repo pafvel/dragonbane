@@ -37,6 +37,20 @@
         }
     },
     "DoD": {
+        "DoDCharacterSheet": "Drakar och Demoner Rollformulär",
+        "DoDNpcSheet": "Drakar och Demoner SLP-formulär",
+        "DoDMonsterSheet": "Drakar och Demoner Monsterformulär",
+        "DoDAbilitySheet": "Drakar och Demoner Förmågeformulär",
+        "DoDArmorSheet": "Drakar och Demoner Rustningsformulär",
+        "DoDHelmetSheet": "Drakar och Demoner Hjälmformulär",
+        "DoDInjurySheet": "Drakar och Demoner Skadeformulär",
+        "DoDItemSheet": "Drakar och Demoner Föremålsformulär",
+        "DoDKinSheet": "Drakar och Demoner Släktesformulär",
+        "DoDProfessionSheet": "Drakar och Demoner Yrkesformulär",
+        "DoDSkillSheet": "Drakar och Demoner Färdighetsformulär",
+        "DoDSpellSheet": "Drakar och Demoner Besvärjelseformulär",
+        "DoDWeaponSheet": "Drakar och Demoner Vapenformulär",
+
         "ability": {
             "requirement": "Krav",
             "type": "Typ",
