@@ -1,6 +1,6 @@
 import { DoDItem } from "../item.js";
 import DoDTest from "./dod-test.js";
-
+import DoDSkillTestMessageData from "../data/messages/skill-test-message.js";
 
 export default class DoDSkillTest extends DoDTest {
 
@@ -49,19 +49,9 @@ export default class DoDSkillTest extends DoDTest {
         await this.skill.update({ "system.advance": true })
     }
 
-    formatRollMessage(postRollData) {
-        const resultMsg = this.formatRollResult(postRollData);
-        const locString = postRollData.skill.uuid ? "DoD.roll.skillRollUUID" : "DoD.roll.skillRoll";
-        const content = game.i18n.format(locString, {
-            skill: postRollData.skill.name,
-            uuid: postRollData.skill.uuid,
-            result: resultMsg
-        });
-        return {
-            user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: postRollData.actor }),
-            content: "<p>" + content + "</p>"
-        };
+    async createMessageData() {
+        const model = DoDSkillTestMessageData.fromContext(this.postRollData);
+        return await model.createMessageData(this.roll);
     }
 
     getMessageTemplate() {

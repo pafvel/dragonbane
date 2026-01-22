@@ -1,6 +1,7 @@
 import DoDSkillTest from "./skill-test.js";
 import DoD_Utility from "../utility.js";
 import DoDOptionalRuleSettings from "../apps/optional-rule-settings.js";
+import DoDWeaponTestMessageData from "../data/messages/weapon-test-message.js";
 
 export default class DoDWeaponTest extends DoDSkillTest  {
 
@@ -234,34 +235,10 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         return this.getRollOptionsFromDialog(title, label);       
     }
 
-    formatRollMessage(postRollData) {
-        let result = this.formatRollResult(postRollData);
-        let locString = this.postRollData.targetActor ? "DoD.roll.weaponRollTarget" : "DoD.roll.weaponRoll";
-        let weapon = postRollData.weapon.name;
-
-        // Add durability info to message
-        if (postRollData.action === "parry" && postRollData.success) {
-            const durability = this.postRollData.weapon.system.durability ?? 0;
-            weapon += `<span class="permission-observer" data-actor-id="${this.postRollData.actor.uuid}" style="font-weight:normal;"> (${game.i18n.localize("DoD.weapon.durability")} ${durability})</span>`;
-        }
-
-        let content = game.i18n.format(locString, {
-                action: game.i18n.localize("DoD.attackTypes." + postRollData.action),
-                skill: weapon,
-                weapon: weapon,
-                uuid: postRollData.weapon.uuid,
-                result: result,
-                target: this.postRollData.targetActor?.isToken ? this.postRollData.targetActor.token.name : this.postRollData.targetActor?.name
-            }
-        );
-
-        return {
-            user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: postRollData.actor }),
-            content: "<p>" + content + "</p>"
-        };
+    async createMessageData() {
+        const model = DoDWeaponTestMessageData.fromContext(this.postRollData);
+        return await model.createMessageData(this.roll);
     }
-
 
     processDialogOptions(input) {
         const options = super.processDialogOptions(input);

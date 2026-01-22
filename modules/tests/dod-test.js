@@ -40,18 +40,10 @@ export default class DoDTest {
             extraBanes: this.options.extraBanes
         }
         this.roll = await new DoDRoll(formula, {}, rollOptions).roll({});
-
         this.updatePostRollData();
-        const messageData = this.formatRollMessage(this.postRollData);
-        const messageTemplate = this.getMessageTemplate();
-        if (messageTemplate) {
-            let renderedMessage = await this.renderRoll(this.roll, messageTemplate, this.postRollData);
-            if (messageData.content) {
-                messageData.content += renderedMessage;
-            } else {
-                messageData.content = renderedMessage
-            }
-        }
+
+        const messageData = await this.createMessageData();
+
         if (this.autoSuccess && game.dice3d) game.dice3d.messageHookDisabled = true;
         this.rollMessage = await this.roll.toMessage(messageData);
         if (this.autoSuccess && game.dice3d) game.dice3d.messageHookDisabled = false;

@@ -1,6 +1,6 @@
 import DoD_Utility from "../utility.js";
 import DoDSkillTest from "./skill-test.js";
-
+import DoDSpellTestMessageData from "../data/messages/spell-test-message.js";
 
 export default class DoDSpellTest extends DoDSkillTest  {
 
@@ -109,24 +109,8 @@ export default class DoDSpellTest extends DoDSkillTest  {
         }
     }
 
-    formatRollMessage(postRollData) {
-        const target = postRollData.targetActor;
-        const result = this.formatRollResult(postRollData);
-        const locString = postRollData.powerLevel > 0 ? (target ? "DoD.roll.spellRollTarget" : "DoD.roll.spellRoll") : "DoD.roll.skillRoll";
-        const content = game.i18n.format(locString, {
-                skill: postRollData.spell.name,
-                spell: postRollData.spell.name,
-                uuid: postRollData.spell.uuid,
-                powerLevel: postRollData.powerLevel,
-                target: postRollData.targetActor?.isToken ? postRollData.targetActor.token.name : postRollData.targetActor?.name,
-                result: result
-            }
-        );
-
-        return {
-            user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: postRollData.actor }),
-            content: "<p>" + content + "</p>"
-        };
+    async createMessageData() {
+        const model = DoDSpellTestMessageData.fromContext(this.postRollData);
+        return await model.createMessageData(this.roll);
     }
 }

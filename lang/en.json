@@ -524,7 +524,8 @@
                 "damageDetailDamage": "Damage",
                 "damageDetailArmor": "Armor",
                 "damageDetailMultiplier": "Multiplier",
-                "damageDetailTotal": "Total damage"
+                "damageDetailTotal": "Total damage",
+                "updateTarget": "Update Target"
             },
             "dialog": {
                 "banes": "Banes",

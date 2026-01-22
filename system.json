@@ -21,6 +21,15 @@
   "styles": [
     "dragonbane.css"
   ],
+  "documentTypes": {
+    "ChatMessage": { 
+      "attributeTest": {},
+      "skillTest": {},
+      "spellTest": {},
+      "weaponTest": {},
+      "rollDamage": {}
+    }
+  },
   "languages": [
     {
       "lang": "en",

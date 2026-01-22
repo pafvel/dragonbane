@@ -1,4 +1,5 @@
 import DoDTest from "./dod-test.js";
+import DoDAttributeTestMessageData from "../data/messages/attribute-test-message.js";
 
 export default class DoDAttributeTest extends DoDTest {
 
@@ -33,15 +34,9 @@ export default class DoDAttributeTest extends DoDTest {
         this.postRollData.canPush = this.preRollData.canPush && !this.postRollData.success && !this.postRollData.isDemon;
     }
 
-    formatRollMessage(postRollData) {
-        let result = this.formatRollResult(postRollData);
-        let localizedName = game.i18n.localize("DoD.attributes." + postRollData.attribute);
-        let label = game.i18n.format(game.i18n.localize(this.options.flavor ?? "DoD.roll.attributeRoll"), {attribute: localizedName, result: result});
-        return {
-            user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: postRollData.actor }),
-            flavor: label
-        };
+    async createMessageData() {
+        const model = DoDAttributeTestMessageData.fromContext(this.postRollData);
+        return await model.createMessageData(this.roll);
     }
 
     getMessageTemplate() {

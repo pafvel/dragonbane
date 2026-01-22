@@ -4,6 +4,7 @@ import DoDSkillTest from "./tests/skill-test.js";
 import DoDWeaponTest from "./tests/weapon-test.js";
 import DoDSpellTest from "./tests/spell-test.js";
 import { DoDActor } from "./actor.js";
+import DoDRollDamageMessageData from "./data/messages/roll-damage-message.js";
 
 export function addChatListeners(_app, html, _data) {
 
@@ -70,6 +71,11 @@ function onLeaveDealDamage(event) {
     token?._onHoverOut(event);
 }
 
+function messageFromElement(element) {
+    const messageId = element.closest(".chat-message")?.dataset.messageId;
+    return game.messages.get(messageId);
+}
+
 function getTarget(element) {
     let target = null;
     if (element) {
@@ -125,12 +131,21 @@ function healTarget(li, _multiplier = 1, _ignoreArmor = false) {
     }
 }
 
-
 export function addChatMessageContextMenuOptions(_html, options) {
+
+    function isTestMessage(message) {
+        return message.type === "attributeTest" ||
+               message.type === "skillTest" ||
+               message.type === "weaponTest" ||
+               message.type === "spellTest";
+    }
 
     const canDealTargetDamage = li =>
     {
         if (li.querySelector(".healing-roll")) {
+            return false;
+        }
+        if (isTestMessage(messageFromElement(li))) {
             return false;
         }
         const element = li.querySelector(".damage-roll") || li.querySelector(".dice-total");
@@ -141,6 +156,9 @@ export function addChatMessageContextMenuOptions(_html, options) {
     const canHealTarget = li =>
     {
         if (li.querySelector(".damage-roll")) {
+            return false;
+        }
+        if (isTestMessage(messageFromElement(li))) {
             return false;
         }
         const element = li.querySelector(".healing-roll") || li.querySelector(".dice-total")
@@ -155,6 +173,10 @@ export function addChatMessageContextMenuOptions(_html, options) {
         }
 
         if (!game.settings.get("dragonbane", "allowDealDamageOnSelected")) {
+            return false;
+        }
+
+        if (isTestMessage(messageFromElement(li))) {
             return false;
         }
 
@@ -204,6 +226,10 @@ export function addChatMessageContextMenuOptions(_html, options) {
         }
 
         if (canvas.tokens.controlled.length === 0 || li.querySelector(".damage-roll") || li.querySelector(".skill-roll")) {
+            return false;
+        }
+
+        if (isTestMessage(messageFromElement(li))) {
             return false;
         }
 
@@ -257,7 +283,7 @@ export function addChatMessageContextMenuOptions(_html, options) {
     }
 
 
-    options.push(
+    options.unshift(
         {
             name: game.i18n.format("DoD.ui.chat.dealDamage"),
             icon: '<i class="fas fa-user-minus"></i>',
@@ -539,11 +565,15 @@ async function onPushRoll(event) {
     event.stopPropagation();
     event.preventDefault();
 
-    const element = event.target;
-    const actorId = element.dataset.actorId;
-    const actor = DoD_Utility.getActorFromUUID(actorId);
-    if (!actor) return;
+    const messageId = event.target.closest(".chat-message")?.dataset.messageId;
+    const message = game.messages.get(messageId);
+    
+    if (!message) return;
 
+    const context = message.system.toContext();
+    const actor = context.actor;
+    if (!actor) return;
+    
     // Prepare push roll choices
     const pushRollChoices = {};
 
@@ -586,23 +616,23 @@ async function onPushRoll(event) {
         </fieldset>
     </form>
     `;
-
+    
     // Determine dialog title
     let rollTitle = "";
-    switch (element.dataset.rollType) {
-        case "DoDAttributeTest":
-            rollTitle =  element.dataset.attribute.toUpperCase();
+    switch (message.type) {
+        case "attributeTest":
+            rollTitle =  context.attribute.toUpperCase();
             break;
-        case "DoDSkillTest":
-        case "DoDWeaponTest":
-        case "DoDSpellTest":
-            rollTitle = element.dataset.skillName;
+        case "skillTest":
+        case "weaponTest":
+        case "spellTest":
+            rollTitle = context.skill.name || context.weapon?.name || context.spell?.name;
             break;
         default:
             return;
-    }
+    }    
 
-    // Show dialog
+     // Show dialog
     const choice = await foundry.applications.api.DialogV2.prompt({
         window: { title: game.i18n.localize("DoD.roll.pushButtonLabel") + ": " + rollTitle },
         content,
@@ -613,7 +643,7 @@ async function onPushRoll(event) {
     },
     });
     if (choice === null) return; // dialog was closed
-
+    
     // Take condition
     if (!actor.hasCondition(choice)) {
         actor.updateCondition(choice, true);
@@ -633,40 +663,44 @@ async function onPushRoll(event) {
     }
 
     // Re-roll
-    const messageElementID = event.target.closest('[data-message-id]');
-    const messageID = messageElementID?.getAttribute('data-message-id');
-    const message = messageID ? game.messages.get(messageID) : null;
     const rerollOptions = message?.rolls[0].options;
 
     const options = {
-        actorId: element.dataset.actorId,
-        attribute: element.dataset.attribute,
-        formula: element.dataset.formula,
+        actorId: message.system.actorUuid,
+        attribute: message.system.attribute,
+        formula: message.system.formula,
         canPush: false,
         skipDialog: true,
         isReroll: true,
         rerollOptions,
     };
 
+    if (context.targetActor) {
+        const targetToken = canvas.scene?.tokens?.find(t => t.actor?.uuid === context.targetActor.uuid);
+        if (targetToken) {
+            options.targets = [targetToken];
+        }
+    }
+
     let test = null;
-    switch (element.dataset.rollType) {
-        case "DoDAttributeTest":
+    switch (message.type) {
+        case "attributeTest":
             test = new DoDAttributeTest(actor, options.attribute, options);
             break;
-        case "DoDSkillTest":
-            options.skill = actor.findSkill(element.dataset.skillName)
+        case "skillTest":
+            options.skill = context.skill
             test = new DoDSkillTest(actor, options.skill, options);
             break;
-        case "DoDWeaponTest":
-            options.action = element.dataset.action;
-            options.extraDamage = element.dataset.extraDamage;
-            options.weapon = fromUuidSync(element.dataset.weaponId);
+        case "weaponTest":
+            options.action = context.action;
+            options.extraDamage = context.extraDamage;
+            options.weapon = context.weapon;
             test = new DoDWeaponTest(actor, options.weapon, options);
             break;
-        case "DoDSpellTest":
-            options.spell = actor.findSpell(element.dataset.spellName);
-            options.powerLevel = Number(element.dataset.powerLevel);
-            options.wpCost = Number(element.dataset.wpCost);
+        case "spellTest":
+            options.spell = context.spell;
+            options.powerLevel = context.powerLevel;
+            options.wpCost = Number(event.target.dataset.wpCost);
             test = new DoDSpellTest(actor, options.spell, options);
             break;
         default:
@@ -718,46 +752,19 @@ export async function inflictDamageMessage(damageData) {
 
     await roll.roll({});
 
-    const weaponName = damageData.weapon?.name ?? damageData.action;
-    let msg = isHealing ?
-        "DoD.roll.healing" :
-        (weaponName ? (damageData.ignoreArmor ? "DoD.roll.damageIgnoreArmor" : "DoD.roll.damageWeapon") : "DoD.roll.damage");
-
-    if (damageData.target) {
-        msg += "Target";
-    }
-    const actorName = damageData.actor ? (damageData.actor.isToken ? damageData.actor.token.name : damageData.actor.name) : "";
-    const targetName = damageData.target ? (damageData.target.isToken ? damageData.target.token.name : damageData.target.name) : "";
-    const damageTotal = damageData.doubleSpellDamage ? 2 * roll.total : roll.total;
-
-    const flavor = game.i18n.format(game.i18n.localize(msg), {
-        actor: actorName,
-        damage: damageTotal,
-        damageType: game.i18n.localize(damageData.damageType),
-        weapon: weaponName,
-        target: targetName
+    const rollDamageMessage = DoDRollDamageMessageData.fromContext({
+        actor: damageData.actor,
+        weapon: damageData.weapon,
+        targetActor: damageData.target,
+        damage: damageData.doubleSpellDamage ? 2 * roll.total : roll.total,
+        damageType: damageData.damageType,
+        formula: roll.formula,
+        isHealing: isHealing,
+        ignoreArmor: damageData.ignoreArmor
     });
 
-    const template = "systems/dragonbane/templates/partials/damage-roll-message.hbs";
-    const templateContext = {
-        formula: damageData.doubleSpellDamage ? "2 x (" + roll.formula + ")" : roll.formula,
-        user: game.user.id,
-        tooltip: await roll.getTooltip(),
-        total: damageTotal,
-        damageType: damageData.damageType,
-        ignoreArmor: damageData.ignoreArmor,
-        target: damageData.target,
-        isHealing: isHealing
-    };
-    const renderedTemplate = await DoD_Utility.renderTemplate(template, templateContext);
-
-    const messageData = {
-        user: game.user.id,
-        speaker: ChatMessage.getSpeaker({ actor: damageData.actor }),
-        flavor: flavor,
-        content: renderedTemplate
-    };
-    roll.toMessage(messageData);
+    const messageData = await rollDamageMessage.createMessageData(roll);
+    await roll.toMessage(messageData);
 }
 
 export async function applyDamageMessage(damageData) {
