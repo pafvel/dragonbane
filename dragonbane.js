@@ -314,7 +314,7 @@ Hooks.once("ready", async function () {
     }
 });
 
-for (const sheet of ["DoDActorBaseSheet", "DoDItemBaseSheet", "JournalPageSheet", "JournalEntryPageSheet"]) {
+for (const sheet of ["DoDActorBaseSheet", "DoDItemBaseSheet", "JournalEntryPageSheet"]) {
     Hooks.on(`render${sheet}`, (_app, html, _options) => {
         DoD_Utility.addHtmlEventListener(html, 'click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
         DoD_Utility.addHtmlEventListener(html, "click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);

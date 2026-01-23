@@ -385,15 +385,49 @@ export default class DoD_Utility {
         }
     }
 
+    static #listenerCache = new WeakMap(); // WeakMap<HTMLElement, Map<string, Function>>
+
     static addHtmlEventListener(html, eventNames, selector, eventHandler, { capture = false } = {}) {
-    for (const eventName of eventNames.split(/\s+/)) {
-        const wrappedHandler = (e) => {
-        if (!e.target) return;
-        const target = e.target.closest(selector);
-        if (target) eventHandler.call(target, e);
-        };
-        html.addEventListener(eventName, wrappedHandler, { capture });
+        const root = html?.jquery ? html[0] : html; // allow passing jQuery or HTMLElement
+        if (!root) return;
+
+        let map = this.#listenerCache.get(root);
+        if (!map) {
+            map = new Map();
+            this.#listenerCache.set(root, map);
+        }
+
+        for (const eventName of eventNames.split(/\s+/)) {
+            const key = `${eventName}|${selector}|${capture ? 1 : 0}|${eventHandler}`;
+
+            // Already added
+            if (map.has(key)) continue;
+
+            const wrappedHandler = (e) => {
+                const t = e.target?.closest?.(selector);
+                if (t) eventHandler.call(t, e);
+            };
+
+            root.addEventListener(eventName, wrappedHandler, { capture });
+            map.set(key, wrappedHandler);
+        }
     }
+
+    static removeHtmlEventListener(html, eventNames, selector, eventHandler, { capture = false } = {}) {
+        const root = html?.jquery ? html[0] : html;
+        if (!root) return;
+
+        const map = this.#listenerCache.get(root);
+        if (!map) return;
+
+        for (const eventName of eventNames.split(/\s+/)) {
+            const key = `${eventName}|${selector}|${capture ? 1 : 0}|${eventHandler}`;
+            const wrapped = map.get(key);
+            if (!wrapped) continue;
+
+            root.removeEventListener(eventName, wrapped, { capture });
+            map.delete(key);
+        }
     }
 
     static async renderTemplate(path, data) {
