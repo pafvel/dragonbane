@@ -1,5 +1,10 @@
 # Change Log
 
+## Version 3.0.1
+
+- Hotfix
+  - Fix for multiple rolls when clicking once
+
 ## Version 3.0.0
 
 - General
