@@ -1,5 +1,10 @@
 # Change Log
 
+## Version 3.0.2
+
+- Hotfix
+  - Fix for item descriptions reverting to their previous value when reloading the world. This issue affects items that existed in the world before v3.0.0. If the item description was modified after 3.0.0, then the modified description will re-appear after this fix.
+
 ## Version 3.0.1
 
 - Hotfix

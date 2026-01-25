@@ -12,7 +12,8 @@ export class DoDItemBaseData extends DragonbaneDataModel {
     };
 
     static migrateData(source) {
-        if (source.description !== undefined) {
+        // Migrate old description field to new fields
+        if (source.itemDescription === undefined && source.description !== undefined) {
             // Put unrevealed secrets in gmDescription and the rest in itemDescription
             source.gmDescription = "";
             const html = document.createElement("div");
