@@ -15,7 +15,9 @@ export class DoDItemBaseData extends DragonbaneDataModel {
         // Migrate old description field to new fields
         if (source.itemDescription === undefined && source.description !== undefined) {
             // Put unrevealed secrets in gmDescription and the rest in itemDescription
-            source.gmDescription = "";
+            if (source.gmDescription === undefined) {
+                source.gmDescription = "";
+            }
             const html = document.createElement("div");
             html.innerHTML = String(source.description || "");
             const secrets = html.querySelectorAll("section.secret:not(.revealed)");
@@ -34,8 +36,7 @@ export class DoDItemBaseData extends DragonbaneDataModel {
                 source.itemDescription = html.innerHTML;
             } else {
                 source.itemDescription = source.description;
-                source.gmDescription = "";
-            }
+           }
             delete source.description;
         }
         return super.migrateData(source);

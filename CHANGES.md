@@ -1,5 +1,10 @@
 # Change Log
 
+## Version 3.0.3
+
+- Hotfix
+  - Fix for newly added GM note on items disappearing when reloading the world. This issue affects items that don't have a description and existed in the world before v3.0.0. The newly added GM note will re-appear after this fix.
+
 ## Version 3.0.2
 
 - Hotfix
