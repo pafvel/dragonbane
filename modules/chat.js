@@ -5,6 +5,7 @@ import DoDWeaponTest from "./tests/weapon-test.js";
 import DoDSpellTest from "./tests/spell-test.js";
 import { DoDActor } from "./actor.js";
 import DoDRollDamageMessageData from "./data/messages/roll-damage-message.js";
+import { DoD } from "./config.js";
 
 export function addChatListeners(_app, html, _data) {
 
@@ -12,6 +13,7 @@ export function addChatListeners(_app, html, _data) {
     DoD_Utility.addHtmlEventListener(html, "click", ".treasure-roll", onTreasureRoll);
     DoD_Utility.addHtmlEventListener(html, "click", "button.weapon-roll", onWeaponDamageRoll);
     DoD_Utility.addHtmlEventListener(html, "click", "button.magic-roll", onMagicDamageRoll);
+    DoD_Utility.addHtmlEventListener(html, "click", "button.critical-roll", onCriticalDamageRoll);
     DoD_Utility.addHtmlEventListener(html, "click", "button.push-roll", onPushRoll);
     DoD_Utility.addHtmlEventListener(html, "click", ".damage-details", onExpandableClick);
     DoD_Utility.addHtmlEventListener(html, 'click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
@@ -403,15 +405,18 @@ async function onWeaponDamageRoll(event) {
     event.stopPropagation();
     event.preventDefault();
 
-    const element = event.target;
-    const actorId = element.dataset.actorId;
-    const actor = DoD_Utility.getActorFromUUID(actorId);
-    if (!actor) return;
+    // get the message
+    const messageId = event.target.closest(".chat-message")?.dataset.messageId;
+    const message = game.messages.get(messageId);
+    if (!message) return;
 
-    const weaponId = element.dataset.weaponId;
-    const damageType = element.dataset.damageType;
-    const ignoreArmor = element.dataset.ignoreArmor;
-    const weapon = actor.items.get(weaponId);
+    const context = message.system.toContext();
+    const actor = context.actor;
+    const weapon = context.weapon;
+    const target = context.targetActor;
+    const damageType = context.damageType;
+    const ignoreArmor = context.ignoreArmor || context.action === "weakpoint" && context.success || context.criticalEffect === "ignoreArmor";
+    const extraDamage = context.extraDamage;
     const weaponDamage = weapon ? weapon.system.damage : null;
     const skill = weapon ? actor.findSkill(weapon.system.skill.name) : null;
     const attribute = skill ? skill.system.attribute : null;
@@ -420,7 +425,6 @@ async function onWeaponDamageRoll(event) {
     if (weapon.hasWeaponFeature("noDamageBonus")) {
         damageBonus = 0;
     }
-    const extraDamage = element.dataset.extraDamage;
 
     let damage = weaponDamage;
     if (damageBonus && damageBonus !== "0" && damageBonus !== "none") {
@@ -430,31 +434,15 @@ async function onWeaponDamageRoll(event) {
         damage += " + " + extraDamage;
     }
 
-    let target = element.dataset.targetId ? DoD_Utility.getActorFromUUID(element.dataset.targetId) : null;
-
-
     const damageData = {
         actor: actor,
         weapon: weapon,
         damage: damage,
         damageType: damageType,
+        doubleWeaponDamage: context.criticalEffect === "doubleWeaponDamage",
         ignoreArmor: ignoreArmor,
         target: target
     };
-
-    if (element.dataset.isMeleeCrit) {
-        const parent = element.parentElement;
-        const critChoices = parent.getElementsByTagName("input");
-        const choice = Array.from(critChoices).find(e => e.name==="critChoice" && e.checked);
-
-        damageData[choice.value] = true;
-
-        ChatMessage.create({
-            content: game.i18n.localize("DoD.critChoices.choiceLabel") + ": "+ game.i18n.localize("DoD.critChoices." + choice.value),
-            user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: damageData.actor }),
-        });
-    }
 
     if (!target) {
         const targets = Array.from(game.user.targets)
@@ -466,7 +454,7 @@ async function onWeaponDamageRoll(event) {
             return;
         }
     }
-    inflictDamageMessage(damageData);
+    await inflictDamageMessage(damageData);
 }
 
 async function onMagicDamageRoll(event) {
@@ -476,86 +464,62 @@ async function onMagicDamageRoll(event) {
     event.stopPropagation();
     event.preventDefault();
 
-    const DoD = CONFIG.DoD;
-    const element = event.target;
-    const actorId = element.dataset.actorId;
-    const actor = DoD_Utility.getActorFromUUID(actorId);
-    if (!actor) return;
+    // get the message
+    const messageId = event.target.closest(".chat-message")?.dataset.messageId;
+    const message = game.messages.get(messageId);
+    if (!message) return;
 
-    const spellId = element.dataset.spellId;
-    const spell = spellId ? actor.items.get(spellId) : null;
-    const powerLevel = Number(element.dataset.powerLevel);
-    const isMagicCrit = element.dataset.isMagicCrit;
-    let doubleDamage = false;
+    const context = message.system.toContext();
+    const actor = context.actor;
+    const spell = context.spell;
 
-    if (isMagicCrit) {
+    if (!(actor && spell?.isDamaging)) return;
 
-        const parent = element.parentElement;
-        const critChoices = parent.getElementsByTagName("input");
-        const choice = Array.from(critChoices).find(e => e.name==="magicCritChoice" && e.checked);
-
-        const message = {
-            flavor: game.i18n.localize("DoD.magicCritChoices.choiceLabel") + ": "+ game.i18n.localize("DoD.magicCritChoices." + choice.value),
-            user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: actor }),
-        };
-
-        if (choice.value === "noCost") {
-            const wpOld = actor.system.willPoints.value;
-            const wpCost = Number(element.dataset.wpCost);
-            const wpNew = Math.min(actor.system.willPoints.max, wpOld + wpCost);
-            await actor.update({ ["system.willPoints.value"]: wpNew});
-
-            message.content = `
-            <div class="damage-details permission-observer" data-actor-id="${actor.uuid}">
-                <i class="fa-solid fa-circle-info"></i>
-                <div class="expandable" style="text-align: left; margin-left: 0.5em">
-                    <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${wpOld} <i class="fa-solid fa-arrow-right"></i> ${wpNew}<br>
-                </div>
-            </div>`;
+    let damage = spell.system.damage;
+    if (context.powerLevel > 1 && spell.system.damagePerPowerlevel?.length > 0) {
+        for (let i = 1; i < context.powerLevel; ++i) {
+            if (damage.length > 0) {
+                damage += " + ";
+            }
+            damage += spell.system.damagePerPowerlevel;
         }
-        if (choice.value === "doubleDamage") {
-            doubleDamage = true;
-        }
-
-        ChatMessage.create(message);
     }
 
-    if (spell?.isDamaging) {
+    const damageData = {
+        actor: actor,
+        weapon: spell,
+        damage: damage,
+        damageType: DoD.damageTypes.none,
+        doubleSpellDamage: context.criticalEffect === "doubleDamage",
+        target: context.targetActor
+    };
 
-        let damage = spell.system.damage;
-        if (powerLevel > 1 && spell.system.damagePerPowerlevel?.length > 0) {
-            for (let i = 1; i < powerLevel; ++i) {
-                if (damage.length > 0) {
-                    damage += " + ";
-                }
-                damage += spell.system.damagePerPowerlevel;
+    if (!damageData.target) {
+        const targets = Array.from(game.user.targets)
+        if (targets.length > 0) {
+            for (const target of targets) {
+                damageData.target = target.actor;
+                await inflictDamageMessage(damageData);
             }
+            return;
         }
-
-        const target = element.dataset.targetId ? DoD_Utility.getActorFromUUID(element.dataset.targetId) : null;
-
-        const damageData = {
-            actor: actor,
-            weapon: spell,
-            damage: damage,
-            damageType: DoD.damageTypes.none,
-            doubleSpellDamage: doubleDamage,
-            target: target
-        };
-
-        if (!target) {
-            const targets = Array.from(game.user.targets)
-            if (targets.length > 0) {
-                for (const target of targets) {
-                    damageData.target = target.actor;
-                    await inflictDamageMessage(damageData);
-                }
-                return;
-            }
-        }
-        inflictDamageMessage(damageData);
     }
+    await inflictDamageMessage(damageData);
+}
+
+async function onCriticalDamageRoll(event) {
+    if (event.detail === 2) { // double-click
+        return;
+    };
+    event.stopPropagation();
+    event.preventDefault(); 
+
+    // get the message
+    const messageId = event.target.closest(".chat-message")?.dataset.messageId;
+    const message = game.messages.get(messageId);
+    if (!message) return;
+
+    message.system.onCritical(message);
 }
 
 async function onPushRoll(event) {
@@ -741,6 +705,9 @@ export async function inflictDamageMessage(damageData) {
         }
     }
     
+    if (damageData.doubleSpellDamage) {
+        formula = "2*(" + formula + ")";
+    }
     const roll = new Roll(formula);
 
     if (damageData.doubleWeaponDamage && roll.terms.length > 0) {
@@ -756,15 +723,14 @@ export async function inflictDamageMessage(damageData) {
         actor: damageData.actor,
         weapon: damageData.weapon,
         targetActor: damageData.target,
-        damage: damageData.doubleSpellDamage ? 2 * roll.total : roll.total,
+        damage: roll.total,
         damageType: damageData.damageType,
         formula: roll.formula,
         isHealing: isHealing,
         ignoreArmor: damageData.ignoreArmor
     });
 
-    const messageData = await rollDamageMessage.createMessageData(roll);
-    await roll.toMessage(messageData);
+    rollDamageMessage.toMessage(roll);
 }
 
 export async function applyDamageMessage(damageData) {

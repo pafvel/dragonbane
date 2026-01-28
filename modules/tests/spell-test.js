@@ -66,47 +66,11 @@ export default class DoDSpellTest extends DoDSkillTest  {
             if (this.postRollData.wpNew !== this.postRollData.wpOld) {
                 // Pay WP cost
                 this.postRollData.actor.update({ ["system.willPoints.value"]: this.postRollData.wpNew});
-
-                // Add info to chat card
-                this.postRollData.formulaInfo =
-                `<div class="permission-observer dice-tooltip" data-actor-id="${this.postRollData.actor.uuid}" style="text-align: left">
-                    <div class="wrapper">
-                        <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${this.postRollData.wpOld} <i class="fa-solid fa-arrow-right"></i> ${this.postRollData.wpNew}<br>
-                    </div>
-                </div>`;
             }
         }
 
         this.postRollData.isDamaging = this.spell.isDamaging;
         this.postRollData.isHealing = this.spell.isHealing;
-
-        if (this.postRollData.isDemon) {
-            this.postRollData.isMagicMishap = true;
-            const table = DoD_Utility.findSystemTable("magicMishapTable", game.i18n.localize("DoD.tables.mishapMagic"));
-            if (table) {
-                this.postRollData.magicMishapTable = "@Table[" + table.uuid + "]{" + table.name + "}";
-            } else {
-                DoD_Utility.WARNING(game.i18n.localize("DoD.WARNING.noMagicMishapTable"));
-            }
-
-        }
-
-        if (this.postRollData.isDragon) {
-            this.postRollData.isMagicCrit = true;
-            this.postRollData.magicCritGroup = "magicCritChoice"
-            this.postRollData.magicCritChoices = {};
-
-            // populate crit choices
-            this.postRollData.magicCritChoices.noCost = game.i18n.localize("DoD.magicCritChoices.noCost");
-            if (this.preRollData.spell.isDamaging) {
-                this.postRollData.magicCritChoices.doubleDamage = game.i18n.localize("DoD.magicCritChoices.doubleDamage");
-            }
-            this.postRollData.magicCritChoices.doubleRange = game.i18n.localize("DoD.magicCritChoices.doubleRange");
-            this.postRollData.magicCritChoices.extraSpell = game.i18n.localize("DoD.magicCritChoices.extraSpell");
-
-            // set default choice
-            this.postRollData.magicCritChoice = "noCost";
-        }
     }
 
     async createMessageData() {

@@ -214,14 +214,16 @@
             "monsterAttacks": "Monster Attacks"
         },
         "magicCritChoices": {
-            "choiceLabel": "Critical effect",
+            "choiceLabel": "Choose critical effect",
+            "choiceTitle": "Critical effect",
             "doubleDamage": "Double damage",
             "doubleRange": "Double range",
             "noCost": "The spell does not cost any WP",
             "extraSpell": "You can immediately cast another spell, but get a bane on the roll"
         },
         "critChoices": {
-            "choiceLabel": "Critical effect",
+            "choiceLabel": "Choose critical effect",
+            "choiceTitle": "Critical effect",
             "doubleWeaponDamage": "Double weapon damage",
             "extraAttack": "Free attack against another enemy",
             "ignoreArmor": "Armor has no effect against the attack"
@@ -525,7 +527,8 @@
                 "damageDetailArmor": "Armor",
                 "damageDetailMultiplier": "Multiplier",
                 "damageDetailTotal": "Total damage",
-                "updateTarget": "Update Target"
+                "updateTarget": "Update Target",
+                "criticalHit": "Critical Hit"
             },
             "dialog": {
                 "banes": "Banes",

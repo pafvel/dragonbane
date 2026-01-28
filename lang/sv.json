@@ -529,7 +529,8 @@
                 "damageDetailArmor": "Skydd",
                 "damageDetailMultiplier": "Modifikation",
                 "damageDetailTotal": "Total skada",
-                "updateTarget": "Uppdatera mål"
+                "updateTarget": "Uppdatera mål",
+                "criticalHit": "Kritisk träff"
             },
             "dialog": {
                 "banes": "Nackdelar",

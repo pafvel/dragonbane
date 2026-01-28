@@ -1,5 +1,6 @@
 import DoDSkillTestMessageData from "./skill-test-message.js";
 import { DoD } from "../../config.js";
+import DoD_Utility from "../../utility.js";
 
 export default class DoDWeaponTestMessageData extends DoDSkillTestMessageData {
     static TYPE = "weaponTest";
@@ -15,6 +16,8 @@ export default class DoDWeaponTestMessageData extends DoDSkillTestMessageData {
             isDamaging: new fields.BooleanField({ required: true, initial: false }),
             targetActorUuid: new fields.StringField({ required: false, initial: "" }),
             weaponUuid: new fields.StringField({ required: true, initial: "" }),
+            criticalEffect: new fields.StringField({ required: false, initial: "" }),
+            isRanged: new fields.BooleanField({ required: true, initial: false }),
         });
     }
 
@@ -57,12 +60,79 @@ export default class DoDWeaponTestMessageData extends DoDSkillTestMessageData {
             }
         );
 
-        return {
-            content: "<p>" + content + "</p>"
-        };
+        let extraContent = "";
+
+        if (this.criticalEffect) {
+            extraContent = "<p><b>" + game.i18n.localize("DoD.critChoices.choiceTitle") + ":</b> "
+                        + "<em>" + game.i18n.localize(`DoD.critChoices.${this.criticalEffect}`) + "</em></p>";
+        } else if (this.isDemon) {
+            const tableName = this.isRanged ? "rangedMishapTable" : "meleeMishapTable";
+            const mishapTableName = this.isRanged ? game.i18n.localize("DoD.tables.mishapRanged") : game.i18n.localize("DoD.tables.mishapMelee");
+            const table = DoD_Utility.findSystemTable(tableName, mishapTableName);
+            if (table) {
+                extraContent = "<p>@Table[" + table.uuid + "]{" + table.name + "}</p>";
+            } else {
+                DoD_Utility.WARNING(game.i18n.localize("DoD.WARNING.noMeleeMishapTable"));
+            }
+        }        
+        return { content: "<p>" + content + "</p>" + extraContent };
     }
     
+    async onCritical(message) {
+        const context = this.toContext();
+        const actor = context.actor;
+        if (!actor) return;
 
+        // Prepare dialog template
+        const hb = Handlebars.compile(`
+            <form>
+                <fieldset>
+                <legend>{{legend}}</legend>
+                {{radioBoxes critGroup critChoices checked=critChoice localize=true}}
+                </fieldset>
+            </form>
+        `);
+
+        // Prepare crit options
+        const critGroup = "critChoice"
+        const critChoices = {};
+
+        // populate crit choices
+        if (context.isDamaging) {
+            critChoices.doubleWeaponDamage = game.i18n.localize("DoD.critChoices.doubleWeaponDamage");
+        }
+        if (!context.isRanged) {
+            critChoices.extraAttack = game.i18n.localize("DoD.critChoices.extraAttack");
+        }
+        if (context.damageType === DoD.damageTypes.piercing && context.action !== "weakpoint") {
+            critChoices.ignoreArmor = game.i18n.localize("DoD.critChoices.ignoreArmor");
+        }
+
+        // set default choice
+        const critChoice = critChoices.doubleWeaponDamage ? "doubleWeaponDamage" : "extraAttack";
+
+        // Create dialog content
+        const content = hb({
+            legend: game.i18n.localize("DoD.critChoices.choiceLabel"),
+            critGroup: critGroup,
+            critChoices: critChoices,
+            critChoice: critChoice
+        });
+
+        // Show dialog
+        const choice = await foundry.applications.api.DialogV2.input({
+            window: { title: game.i18n.localize("DoD.critChoices.choiceTitle") + ": " + context.weapon.name },
+            content,
+        });
+        if (choice === null) return; // dialog was closed
+
+        // Update message
+        const criticalEffect = choice.critChoice;
+        const systemData = { ...this, criticalEffect };
+        const model = new message.system.constructor(systemData);
+        const messageData = await model.createMessageData(message.rolls[0]);
+        await message.update(messageData);
+    }
 }
 
 Hooks.once("init", () => {

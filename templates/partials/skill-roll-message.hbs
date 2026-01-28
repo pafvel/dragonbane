@@ -4,75 +4,55 @@
 <div class="permission-owner" data-actor-id="{{actor.uuid}}">
 
 {{#if success}}
-
     {{#if weapon}}
-        {{#if isMeleeCrit}}
-            <hr>
-            <div class="form-group">
-                <label>{{localize "DoD.critChoices.choiceLabel"}}</label>
-                <div class="form-fields">
-                    {{radioBoxes meleeCritGroup critChoices checked=critChoice localize=true}}
-                </div>
-            </div>
-            <hr>
-        {{/if}} <!-- isMeleeCrit -->
-
-        {{#if isDamaging}}
-            <button class="chat-button weapon-roll"
-                data-actor-id="{{actor.uuid}}"
-                data-weapon-id="{{weapon.id}}"
-                data-damage-type="{{damageType}}"
-                {{#if ignoreArmor }} data-ignore-armor="{{ignoreArmor}}" {{/if}}
-                {{#if isMeleeCrit }} data-is-melee-crit="{{isMeleeCrit}}" {{/if}}
-                {{#if targetActor }} data-target-id="{{targetActor.uuid}}" {{/if}}
-                {{#if extraDamage }} data-extra-damage="{{extraDamage}}" {{/if}}
-                >
-                <i class="fas fa-dice"></i>{{localize "DoD.ui.chat.rollDamage"}}
+        {{#if (and isDragon (not criticalEffect))}}
+            <button class="chat-button critical-roll">
+                <img src="systems/dragonbane/art/ui/dsn/dod-ikon-drake-vit-256.png" style="transform: rotate(180deg);" alt="Dragon Icon" />
+                {{localize "DoD.ui.chat.criticalHit"}}
             </button>
-        {{/if}} <!-- isDamaging -->
+        {{else}}
+            {{#if isDamaging}}
+                <button class="chat-button weapon-roll"
+                    data-actor-id="{{actor.uuid}}"
+                    data-weapon-id="{{weapon.id}}"
+                    data-damage-type="{{damageType}}"
+                    {{#if ignoreArmor }} data-ignore-armor="{{ignoreArmor}}" {{/if}}
+                    {{#if isMeleeCrit }} data-is-melee-crit="{{isMeleeCrit}}" {{/if}}
+                    {{#if targetActor }} data-target-id="{{targetActor.uuid}}" {{/if}}
+                    {{#if extraDamage }} data-extra-damage="{{extraDamage}}" {{/if}}
+                    >
+                    <i class="fas fa-dice"></i>{{localize "DoD.ui.chat.rollDamage"}}
+                </button>
+            {{/if}} <!-- isDamaging -->
+        {{/if}}
     {{/if}} <!-- weapon -->
 
-
     {{#if spell}}
-        {{#if isMagicCrit}}
-            <hr>
-            <div class="form-group">
-                <label>{{localize "DoD.magicCritChoices.choiceLabel"}}</label>
-                <div class="form-fields">
-                    {{radioBoxes magicCritGroup magicCritChoices checked=magicCritChoice localize=true}}
-                </div>
-            </div>
-            <hr>
-            {{#unless isDamaging}}
+        {{#if (and isDragon (not criticalEffect))}}
+            <button class="chat-button critical-roll">
+                <img src="systems/dragonbane/art/ui/dsn/dod-ikon-drake-vit-256.png" style="transform: rotate(180deg);" alt="Dragon Icon" />
+                {{localize "DoD.ui.chat.criticalHit"}}
+            </button>
+        {{else}}
+            {{#if isDamaging}}
                 <button class="chat-button magic-roll"
                     data-actor-id="{{actor.uuid}}"
-                    data-is-magic-crit="{{isMagicCrit}}"
+                    data-spell-id="{{spell.id}}"
+                    data-power-level="{{powerLevel}}"
                     data-wp-cost="{{wpCost}}"
+                    {{#if isMagicCrit }} data-is-magic-crit="{{isMagicCrit}}" {{/if}}
+                    {{#if targetActor }} data-target-id="{{targetActor.uuid}}" {{/if}}
                     >
-                    {{localize "DoD.ui.chat.choose"}}
+                    <i class="fas fa-dice"></i>
+                    {{#if isHealing}}                
+                    {{localize "DoD.ui.chat.rollHealing"}}
+                    {{else}}
+                    {{localize "DoD.ui.chat.rollDamage"}}
+                    {{/if}}
                 </button>
-            {{/unless}} <!-- isDamaging -->
-        {{/if}} <!-- isMagicCrit -->
-
-        {{#if isDamaging}}
-            <button class="chat-button magic-roll"
-                data-actor-id="{{actor.uuid}}"
-                data-spell-id="{{spell.id}}"
-                data-power-level="{{powerLevel}}"
-                data-wp-cost="{{wpCost}}"
-                {{#if isMagicCrit }} data-is-magic-crit="{{isMagicCrit}}" {{/if}}
-                {{#if targetActor }} data-target-id="{{targetActor.uuid}}" {{/if}}
-                >
-                <i class="fas fa-dice"></i>
-                {{#if isHealing}}                
-                {{localize "DoD.ui.chat.rollHealing"}}
-                {{else}}
-                {{localize "DoD.ui.chat.rollDamage"}}
-                {{/if}}
-            </button>
-        {{/if}} <!-- isDamaging -->
+            {{/if}} <!-- isDamaging -->
+        {{/if}} <!-- isCritical -->
     {{/if}} <!-- spell -->
-
 {{else}} <!-- success -->
 
     {{#if canPush}}
@@ -95,18 +75,6 @@
         </button>
     </div>
     {{/if}}  <!-- canPush -->
-    
-    {{#if isMeleeMishap}}
-    <br>{{meleeMishapTable}}<br><br>
-    {{/if}}
-
-    {{#if isRangedMishap}}
-    <br>{{rangedMishapTable}}<br><br>
-    {{/if}}
-    
-    {{#if isMagicMishap}}
-    <br>{{magicMishapTable}}<br><br>
-    {{/if}}
 
 {{/if}}  <!-- success -->
 

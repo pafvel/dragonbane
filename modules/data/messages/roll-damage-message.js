@@ -40,7 +40,7 @@ export default class DoDRollDamageMessageData extends DoDChatMessageBaseData {
     static prepareSource(context) {
          // replace actor with actorUuid
         const { actor, targetActor, weapon, ...rest } = super.prepareSource(context);
-        return { ...rest, actorUuid: actor.uuid, weaponUuid: weapon?.uuid, targetActorUuid: targetActor?.uuid };
+        return { ...rest, actorUuid: actor?.uuid, weaponUuid: weapon?.uuid, targetActorUuid: targetActor?.uuid };
     }
 
     static fromContext(context) {
@@ -51,7 +51,6 @@ export default class DoDRollDamageMessageData extends DoDChatMessageBaseData {
     async createMessageData(roll) {
         const context = this.toContext();
 
-        const actorName = context.actor?.isToken ? context.actor.token.name : context.actor?.name;
         const weaponName = context.weapon ? (context.weapon?.isToken ? context.weapon.token.name : context.weapon?.name) : "";
         const targetName = context.targetActor ? (context.targetActor?.isToken ? context.targetActor.token.name : context.targetActor?.name) : "";;
         const damageTotal = Math.round(this.damage);
@@ -64,8 +63,8 @@ export default class DoDRollDamageMessageData extends DoDChatMessageBaseData {
             msg += "Target";
         }
 
-        const flavor = game.i18n.format(game.i18n.localize(msg), {
-            actor: actorName,
+        const content = game.i18n.format(game.i18n.localize(msg), {
+            actor: ChatMessage.getSpeaker({ actor: context.actor }).alias,
             damage: damageTotal,
             damageType: game.i18n.localize(context.damageType),
             weapon: weaponName,
@@ -87,12 +86,17 @@ export default class DoDRollDamageMessageData extends DoDChatMessageBaseData {
         return {
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: context.actor }),
-            flavor: flavor,
-            content: renderedTemplate,
+            content: "<p>" + content + "</p>" + renderedTemplate,
             type: this.type,
             system: this.toObject()
         };
     }
+
+    async toMessage(roll) {
+        const messageData = await this.createMessageData(roll);
+        const msg = await roll.toMessage(messageData);
+        return msg;
+    }    
 }
 
 Hooks.once("init", () => {

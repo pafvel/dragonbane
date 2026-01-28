@@ -187,32 +187,6 @@ export default class DoDTest {
 
     }
 
-    // This method should be overridden
-    formatRollMessage(postRollData) {
-        return {
-            user: game.user.id,
-            flavor: postRollData.result
-        };
-    }
-
-    async renderRoll(roll, template, templateContext) {
-        if ( !roll._evaluated ) await roll.evaluate({});
-
-        const defaultContext = {
-            formula: roll.formula,
-            user: game.user.id,
-            tooltip: await roll.getTooltip(),
-            total: Math.round(roll.total * 100) / 100,
-        };
-
-        const context = {...defaultContext, ...templateContext};
-        if (context.formulaInfo) {
-            context.tooltip = context.formulaInfo + context.tooltip;
-        }
-
-        return await DoD_Utility.renderTemplate(template, context);
-    }
-
     getMessageTemplate() {
         return null;
     }

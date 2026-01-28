@@ -54,19 +54,24 @@ export default class DoDTestMessageBaseData extends DoDChatMessageBaseData {
 
     }
 
+    async getTooltip(roll) {
+        return await roll.getTooltip();
+    }
+
     async renderRoll(roll) {
         if ( !roll._evaluated ) await roll.evaluate({});
 
         const defaultContext = {
             formula: roll.formula,
             user: game.user.id,
-            tooltip: await roll.getTooltip(),
             total: Math.round(roll.total * 100) / 100,
         };
 
         const renderContext = {...defaultContext, ...await this.toContext(), rollType: this.type};
         if (renderContext.formulaInfo) {
-            renderContext.tooltip = renderContext.formulaInfo + renderContext.tooltip;
+            renderContext.tooltip = renderContext.formulaInfo + await this.getTooltip(roll);
+        } else {
+            renderContext.tooltip = await this.getTooltip(roll);
         }
 
         return await DoD_Utility.renderTemplate(this.template, renderContext);
@@ -86,4 +91,15 @@ export default class DoDTestMessageBaseData extends DoDChatMessageBaseData {
             system: this.toObject()
         }
     }
+
+    async toMessage(roll) {
+        const messageData = await this.createMessageData(roll);
+        const msg = await roll.toMessage(messageData);
+        console.log(msg)
+    }
+
+    async onCritical(_message) {
+        // To be implemented in subclass if needed
+    }
+            
 }
