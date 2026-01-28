@@ -8,7 +8,7 @@ export default class DoDAbilityData extends DoDItemBaseData {
             requirement: new fields.StringField({ required: true, initial: "" }),
             wp: new fields.StringField({ required: true, initial: "" }),
             boons: new fields.StringField({ required: true, initial: "" }),
-            secondaryAttribute: new fields.StringField({ required: true, initial: "" }),
+            secondaryAttribute: new fields.StringField({ required: true, initial: "none" }),
             secondaryAttributeBonus: new fields.NumberField({ required: true, initial: 0 }),
         });
     };

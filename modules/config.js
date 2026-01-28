@@ -126,7 +126,8 @@ DoD.attributes = {
     "agl": "DoD.attributes.agl",
     "int": "DoD.attributes.int",
     "wil": "DoD.attributes.wil",
-    "cha": "DoD.attributes.cha"
+    "cha": "DoD.attributes.cha",
+    "none": "DoD.attributes.none",
 };
 
 DoD.activeEffectChanges = {

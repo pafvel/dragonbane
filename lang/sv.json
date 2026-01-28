@@ -106,7 +106,8 @@
             "agl": "SMI",
             "int": "INT",
             "wil": "PSY",
-            "cha": "KAR"
+            "cha": "KAR",
+            "none": "-"
         },
         "castingTimeTypes": {
             "action": "Handling",

@@ -105,7 +105,8 @@
             "agl": "AGL",
             "int": "INT",
             "wil": "WIL",
-            "cha": "CHA"
+            "cha": "CHA",
+            "none": "-"
         },
         "castingTimeTypes": {
             "action": "Action",

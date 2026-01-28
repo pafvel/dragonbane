@@ -4,8 +4,8 @@ export default class DoDSkillData extends DoDItemBaseData {
     static defineSchema() {
         const { fields } = foundry.data;
         return this.mergeSchema(super.defineSchema(), {
-            skillType: new fields.StringField({ required: true, initial: "" }),
-            attribute: new fields.StringField({ required: true, initial: "" }),
+            skillType: new fields.StringField({ required: true, initial: "core" }),
+            attribute: new fields.StringField({ required: true, initial: "none" }),
             value: new fields.NumberField({ required: true, initial: 0 }),
             advance: new fields.NumberField({ required: true, initial: 0 }),
             taught: new fields.BooleanField({ required: true, initial: false }),
