@@ -1,6 +1,7 @@
 import DoDActorSettings from "./apps/actor-settings.js";
 import DoDCoreSettings from "./apps/core-settings.js";
 import DoDSkillTest from "./tests/skill-test.js";
+import { DoD } from "./config.js";
 
 export default class DoD_Utility {
 
@@ -510,4 +511,18 @@ export default class DoD_Utility {
         // Measure distance between adjusted center points
         return  Math.round(canvas.grid.measurePath([centerA, centerB]).distance);
     }        
+
+    static parseDamageString(s) {
+        const regex = /((?:\d+)?[dD](?:\d+)(?:[\+\-]\d+)?)\s*(slashing|piercing|bludgeoning)?/i;
+        const match = s.match(regex);
+        if (!match) return {};
+        const result = { formula: match[1] };
+        if (match[2]) {
+            result.damageType =  CONFIG.DoD.damageTypes[match[2].toLowerCase()];
+        }
+        if (!result.damageType) {
+            result.damageType = DoD.damageTypes.none;
+        }
+        return result;
+    }
 }

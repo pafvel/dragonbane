@@ -5,7 +5,6 @@ import DoDWeaponTest from "./tests/weapon-test.js";
 import DoDSpellTest from "./tests/spell-test.js";
 import { DoDActor } from "./actor.js";
 import DoDRollDamageMessageData from "./data/messages/roll-damage-message.js";
-import { DoD } from "./config.js";
 
 export function addChatListeners(_app, html, _data) {
 
@@ -475,7 +474,14 @@ async function onMagicDamageRoll(event) {
 
     if (!(actor && spell?.isDamaging)) return;
 
-    let damage = spell.system.damage;
+    const { formula, damageType } = DoD_Utility.parseDamageString(spell.system.damage);
+    let damage = formula;
+
+    if (!damage) {
+        DoD_Utility.WARNING("DoD.WARNING.cannotEvaluateFormula");
+        return;
+    }
+    
     if (context.powerLevel > 1 && spell.system.damagePerPowerlevel?.length > 0) {
         for (let i = 1; i < context.powerLevel; ++i) {
             if (damage.length > 0) {
@@ -489,7 +495,7 @@ async function onMagicDamageRoll(event) {
         actor: actor,
         weapon: spell,
         damage: damage,
-        damageType: DoD.damageTypes.none,
+        damageType: damageType,
         doubleSpellDamage: context.criticalEffect === "doubleDamage",
         target: context.targetActor
     };
