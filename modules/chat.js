@@ -815,6 +815,14 @@ export async function applyDamageMessage(damageData) {
         }
     }
 
+    const baseArmorValue = ignoreArmor ? 0 : actor.getArmorValue();
+    const bonusArmor = armorValue - baseArmorValue;
+    let armorDetails = String(armorValue);
+    if (bonusArmor) {
+        armorDetails += " (" + (bonusArmor > 0 ? "+" : "") + bonusArmor + " vs " 
+        + game.i18n.localize(CONFIG.DoD.damageTypes[damageType]) + ")";
+    }
+
     let html = `
         <div class="damage-message permission-${permissionKey}" data-damage="${damageTaken}" data-actor-id="${actor.uuid}">
             ${game.i18n.format(game.i18n.localize("DoD.ui.chat.damageApplied"), {damage: damageTaken, actor: actorName})}
@@ -823,7 +831,7 @@ export async function applyDamageMessage(damageData) {
                 <i class="fa-solid fa-circle-info"></i>
                 <div class="expandable" style="text-align: left; margin-left: 0.5em">
                     <b>${game.i18n.localize("DoD.ui.chat.damageDetailDamage")}:</b> ${damage} ${game.i18n.localize("DoD.damageTypes." + (damageType ?? "none"))}<br>
-                    <b>${game.i18n.localize("DoD.ui.chat.damageDetailArmor")}:</b> ${armorValue}<br>
+                    <b>${game.i18n.localize("DoD.ui.chat.damageDetailArmor")}:</b> ${armorDetails}<br>
                     <b>${game.i18n.localize("DoD.ui.chat.damageDetailMultiplier")}:</b> x${multiplier}<br>
                     <b>${game.i18n.localize("DoD.ui.chat.damageDetailTotal")}:</b> ${damageToApply}<br>
                     <b>${game.i18n.localize("DoD.ui.character-sheet.hp")}:</b> ${oldHP} <i class="fa-solid fa-arrow-right"></i> ${newHP}<br>
