@@ -1668,6 +1668,10 @@
   flex-direction: column;
   font-family: var(--dod-font-primary);
 }
+.system-dragonbane .sheet.item .tab, .system-dragonbane .sheet.active-effect-config .tab {
+  overflow: hidden auto;
+  padding: 0 8px;
+}
 .system-dragonbane .sheet.item .standard-form, .system-dragonbane .sheet.active-effect-config .standard-form {
   gap: 0;
 }

@@ -8,6 +8,11 @@
             font-family: var(--dod-font-primary);
         }
 
+        .tab {
+            overflow: hidden auto; // Enable scrollbar
+            padding: 0 8px;
+        }
+
         .standard-form {
             gap: 0;
 
