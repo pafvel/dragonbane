@@ -23,7 +23,7 @@ export default class DoDSkillTestMessageData extends DoDTestMessageBaseData {
     static prepareSource(context) {
          // replace skill with skillUuid
         const { skill, ...rest } = super.prepareSource(context);
-        return { ...rest, skillUuid: skill.uuid };
+        return { ...rest, skillUuid: skill?.uuid };
     }
 
     static fromContext(context) {
