@@ -534,8 +534,13 @@ function displayTable(uuid, table, tableName, showDescription = false) {
                 <td>@UUID[Item.${DoD_Utility.getTableResultId(result)}]{${result.name}}</td>
             </tr>`;
         } else {
+            let description = result.description;
+            // Foundry v13 adds <p> when editing, strip it so it looks the same as if created before v13.
+            if (description.startsWith("<p>") && description.endsWith("</p>")) {
+                description = description.slice(3, -4);
+            }
             html += `</td>
-                <td>${result.description}</td>
+                <td>${description}</td>
             </tr>`;
         }
     }

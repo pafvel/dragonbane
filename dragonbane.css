@@ -996,6 +996,9 @@
 .system-dragonbane .chat-message .message-content .table-results li {
   display: list-item;
 }
+.system-dragonbane .chat-message .message-content .table-results img {
+  float: left;
+}
 .system-dragonbane .chat-message .message-content .dice-rolls .roll.die.d20.max {
   color: #aa0200;
   filter: sepia(0.5) hue-rotate(-60deg);
