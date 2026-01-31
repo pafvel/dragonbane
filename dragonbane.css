@@ -844,6 +844,7 @@
   position: relative;
   align-self: center;
   border-width: 0 16px;
+  min-height: 48px;
 }
 .system-dragonbane .text-box .text-box-title {
   text-align: center;
@@ -857,6 +858,10 @@
 }
 .system-dragonbane .text-box div {
   padding: 6px 2px;
+}
+.system-dragonbane .text-box p {
+  padding-left: 1em;
+  padding-right: 1em;
 }
 .system-dragonbane .text-box table {
   border-color: transparent;

@@ -567,6 +567,7 @@
                 "monsterAttack": "Attack",
                 "monsterAttackRandom": "Random",
                 "monsterAttackTitle": "Select Monster Attack",
+                "monsterAttackPerformRandom": "Perform random Monster Attack.",
                 "healInjuriesTitle": "Heal Injuries",
                 "healInjuriesMessage": "Reduce the healing time for all un-healed injuries by one day?",
                 "deleteKinAbility": "Deleting a Kin Ability will also remove the ability from the character's Kin.",

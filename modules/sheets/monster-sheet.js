@@ -111,25 +111,63 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
             // Render the monster attack dialog
             const template = "systems/dragonbane/templates/partials/monster-attack-dialog.hbs";
             const content = await DoD_Utility.renderTemplate(template, dialogData);
-            const input = await foundry.applications.api.DialogV2.input({
+            const dialog = new foundry.applications.api.DialogV2({
                 window: { title: game.i18n.localize("DoD.ui.dialog.monsterAttackTitle") },
-                content: content
-            });
-            if (input === null) return; // dialog was closed
-            
-            // Process selection
-            const selected = Number(input.selectMonsterAttack);
-            if (selected > 0) {
-                for (let tableResult of table.results) {
-                    if (selected === tableResult.range[0]) {
-                        // Specified attack
-                        return DoD_Utility.monsterAttack(this.actor, table, tableResult);
+                content: content,
+                buttons: [{
+                    action: "ok",
+                    label: game.i18n.localize("Confirm"),
+                    default: true,
+                    callback: (_event, button, _dlg) => button.form.elements.selectMonsterAttack.value,
+                }],
+                submit: result => {
+                    const selected = Number(result);
+                    if (selected > 0) {
+                        for (let tableResult of table.results) {
+                            if (selected === tableResult.range[0]) {
+                                // Specified attack
+                                return DoD_Utility.monsterAttack(this.actor, table, tableResult);
+                            }
+                        }
+                    } else {
+                        // Random attack
+                        return DoD_Utility.monsterAttack(this.actor, table);
                     }
+
                 }
-            } else {
-                // Random attack
-                return DoD_Utility.monsterAttack(this.actor, table);
-            }
+            });
+
+            // Attach listener when this dialog renders
+            // Update the attack description when the user changes attack
+            Hooks.once("renderDialogV2", (app, html) => {
+                if (app !== dialog) return;
+
+                const selectEl = html.querySelector("select[name='selectMonsterAttack']");
+                const descEl = html.querySelector(".monster-attack-description");
+                if (!selectEl || !descEl) return;
+
+                const updateDescription = async () => {
+                    const attackSelection = Number(selectEl.value);
+                    let description = "";
+                    if (attackSelection === 0) {
+                        description = "<em>" + game.i18n.localize("DoD.ui.dialog.monsterAttackPerformRandom") + "</em>";
+                    } else {
+                        for( const attack of dialogData.attacks ) {
+                            if (attackSelection == attack.index) {
+                                description = attack.description;
+                                break;
+                            }
+                        }
+                    }
+                    descEl.innerHTML = "<p>" + description + "</p>";
+                };
+
+                selectEl.addEventListener("change", updateDescription);
+                updateDescription(); // initialize on first render
+            });            
+
+            dialog.render({ force: true });
+
         } else { // right click -> edit table
             return DoD_Utility.monsterAttackTable(this.actor, table);
         }

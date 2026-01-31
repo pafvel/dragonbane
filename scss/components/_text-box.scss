@@ -8,6 +8,7 @@
         position: relative;
         align-self: center;
         border-width: 0 16px;
+        min-height: 48px;
 
         .text-box-title {
             text-align: center;
@@ -23,6 +24,11 @@
 
         div {
             padding: 6px 2px;
+        }
+
+        p {
+            padding-left: 1em;
+            padding-right: 1em;
         }
 
         table {

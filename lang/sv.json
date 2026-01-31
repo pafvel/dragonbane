@@ -569,6 +569,7 @@
                 "monsterAttack": "Attack",
                 "monsterAttackRandom": "Slump",
                 "monsterAttackTitle": "Välj monsterattack",
+                "monsterAttackPerformRandom": "Utför slumpvis vald monsterattack.",
                 "healInjuriesTitle": "Läk skador",
                 "healInjuriesMessage": "Minska läkningstiden för alla oläkta skador med en dag?",
                 "deleteKinAbility": "Släktesförmågan kommer även att tas bort från karaktärens Släkte.",
