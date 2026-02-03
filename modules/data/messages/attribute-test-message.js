@@ -19,7 +19,7 @@ export default class DoDAttributeTestMessageData extends DoDTestMessageBaseData 
     formatRollMessage() {
         let result = this.formatRollResult();
         let localizedName = game.i18n.localize("DoD.attributes." + this.attribute);
-        let content = game.i18n.format(game.i18n.localize("DoD.roll.attributeRoll"), {attribute: localizedName, result: result});
+        let content = game.i18n.format("DoD.roll.attributeRoll", {attribute: localizedName, result: result});
         return {
             content: "<p>" + content + "</p>"
         };
