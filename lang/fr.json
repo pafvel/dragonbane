@@ -9,7 +9,7 @@
         "TypeArmor": "Armure",
         "TypeHelmet": "Heaume",
         "TypeInjury": "Blessure",
-                "TypeItem": "Objet",
+        "TypeItem": "Objet",
         "TypeKin": "Famille",
         "TypeProfession": "Profession",
         "TypeSkill": "Compétence",
@@ -36,6 +36,20 @@
         }
     },
     "DoD": {
+        "DoDCharacterSheet": "Fiche de Personnage Dragonbane",
+        "DoDNpcSheet": "Fiche de PNJ Dragonbane",
+        "DoDMonsterSheet": "Fiche de Monstre Dragonbane",
+        "DoDAbilitySheet": "Fiche de Capacité Dragonbane",
+        "DoDArmorSheet": "Fiche d'Armure Dragonbane",
+        "DoDHelmetSheet": "Fiche de Casque Dragonbane",
+        "DoDInjurySheet": "Fiche de Blessure Dragonbane",
+        "DoDItemSheet": "Fiche d'Objet Dragonbane",
+        "DoDKinSheet": "Fiche de Lignée Dragonbane",
+        "DoDProfessionSheet": "Fiche de Profession Dragonbane",
+        "DoDSkillSheet": "Fiche de Compétence Dragonbane",
+        "DoDSpellSheet": "Fiche de Sort Dragonbane",
+        "DoDWeaponSheet": "Fiche d'Arme Dragonbane",
+
         "ability": {
             "requirement": "Condition",
             "type": "Type",
@@ -91,7 +105,8 @@
             "agl": "AGI",
             "int": "INT",
             "wil": "VOL",
-            "cha": "CHA"
+            "cha": "CHA",
+            "none": "-"
         },
         "castingTimeTypes": {
             "action": "Action",
@@ -200,14 +215,16 @@
             "monsterAttacks": "Le Monstre attaque"
         },
         "magicCritChoices": {
-            "choiceLabel": "Effet critique",
+            "choiceLabel": "Choisir l'effet critique",
+            "choiceTitle": "Effet critique",
             "doubleDamage": "Double les dégâts",
             "doubleRange": "Double la distance",
             "noCost": "Le sort ne coûte pas de PV",
             "extraSpell": "Vous pouvez immédiatement lancer un autre sort, mais avec un Désavantage au jet"
         },
         "critChoices": {
-            "choiceLabel": "Effet critique",
+            "choiceLabel": "Choisir l'effet critique",
+            "choiceTitle": "Effet critique",
             "doubleWeaponDamage": "Double les dégâts de l'arme",
             "extraAttack": "Attaque gratuite contre un autre ennemi",
             "ignoreArmor": "L'Armure n'a pas d'effet contre cette attaque"
@@ -262,10 +279,14 @@
             "advancementSuccess": "<b>{skill}</b> augmente de <b>{old}</b> à <b>{new}</b>.",
             "attribute": "Caractéristique",
             "attributeTooltip": "La caractéristique liée à la compétence",
-            "hide": "Cache",
-            "hideTooltip": "Cache la compétence de la liste des compétences acquises",
+            "hide": "Masquer",
+            "hideTooltip": "Masquer la compétence de la liste des compétences acquises",
             "markAdvancement": "Coche la compétence pour la progression",
             "rollAdvancement": "Jet de progression pour la compétence à la fin de la session.\rClic-droit pour retirer la marque de progression sans jeter de dé.",
+            "taught": "Enseigné",
+            "taughtTooltip": "Indique que la compétence a été améliorée avec l'aide d'un instructeur.\rElle doit être améliorée par l'expérience avant de pouvoir à nouveau bénéficier de l'aide d'un instructeur.",
+            "trainWithTeacher": "S'entraîner avec un instructeur",
+            "trainWithTeacherTooltip": "Jet d'amélioration de la compétence après l'entraînement avec un instructeur",
             "type": "Type",
             "typeTooltip": "Type de la compétence"
         },
@@ -339,7 +360,11 @@
             "brokenTooltip": "Indique si l'arme est brisée",
             "mainHandTooltip": "Tenir l'arme dans la main gauche.",
             "offHandTooltip": "Tenir l'arme dans la main droite.",
-            "belowRequiredStr": "En dessous de FOR"
+            "belowRequiredStr": "En dessous de FOR",
+            "pointBlank": "Bout Portant",
+            "longRange": "Longue Portée",
+            "lineOfSightToken": "Obstrué par un token",
+            "lineOfSightWall": "Obstrué par un mur"
         },
         "unit": {
             "meterPlural": "mètres"
@@ -454,6 +479,7 @@
                 "spell": "Sort",
                 "spells": "Sorts",
                 "spellsTooltip": "Sorts préparés",
+                "storage": "Stockage",
                 "successes": "Succès",
                 "tiny-items": "Objets minuscules",
                 "traits": "Traits",
@@ -501,13 +527,17 @@
                 "damageDetailDamage": "Dégâts",
                 "damageDetailArmor": "Armure",
                 "damageDetailMultiplier": "Multiplicateur",
-                "damageDetailTotal": "Total des dégâts"
+                "damageDetailTotal": "Total des dégâts",
+                "updateTarget": "Mettre à jour la cible",
+                "criticalHit": "Coup critique"
             },
             "dialog": {
                 "banes": "Fléaux",
                 "boons": "Faveurs",
                 "brokenWeaponTitle": "Arme brisée",
                 "brokenWeaponContent": "L'arme est brisée. Êtes-vous sûr de vouloir réaliser cette action ?",
+                "longRangeTitle": "Longue portée",
+                "longRangeContent": "La cible est plus éloignée que deux fois la portée de l'arme. Êtes-vous sûr de vouloir effectuer cette action ?",
                 "performAction": "Réaliser l'action",
                 "cancelAction": "Réaliser l'action",
                 "enchantedWeapon": "Arme enchantée",
@@ -537,15 +567,19 @@
                 "monsterAttack": "Attaque",
                 "monsterAttackRandom": "Aléatoire",
                 "monsterAttackTitle": "Sélectionnez une Attaque Monstrueuse",
+                "monsterAttackPerformRandom": "Attaquer un monstre aléatoire",
                 "healInjuriesTitle": "Soigner les blessures",
                 "healInjuriesMessage": "Réduire d'un jour le temps de guérison de toutes les blessures non guéries ?",
                 "deleteKinAbility": "La suppression d'une capacité de Famille entraînera également la suppression de la capacité de Famille du personnage.",
-                "deleteProfessionAbility": "La suppression d'une capacité de Profession entraînera également la suppression de la capacité de la Profession du personnage."
+                "deleteProfessionAbility": "La suppression d'une capacité de Profession entraînera également la suppression de la capacité de la Profession du personnage.",
+                "addMeleeDamageVsProneMessage": "Les attaques de mêlée contre des cibles à terre infligent 1D6 dégâts supplémentaires.<p>Souhaitez-vous ajouter 1D6 dégâts à l'attaque du monstre contre <b>{target}</b> ?",
+                "addMeleeDamageVsProneTitle": "Ajouter des dégâts"
             }
         },
         "item-sheet": {
             "details": "Détails",
             "description": "Description",
+            "gmDescription": "Notes du MJ",
             "effects": "Effets"
         },
         "INFO": {
@@ -553,14 +587,22 @@
             "professionSkillAdded": "Compétence professionnelle ajoutée: {skill}"
         },
         "SETTINGS": {
+            "actorSettings": "Paramètres des acteurs",
+            "actorSettingsHint": "Configurer les fiches de Personnage, PNJ et Monstre",
             "automateNpcDeath": "Mort des PNJ automatique",
             "automateNpcDeathHint": "Si cette case est cochée, marque automatiquement les PNJ comme morts lorsqu'ils atteignent 0 PS.",
             "automateMonsterDeath": "Mort des Monstres automatique",
             "automateMonsterDeathHint": "Si cette case est cochée, les monstres sont automatiquement marqués comme morts lorsqu'ils atteignent 0 PS.",
             "automateCharacterDeath": "Mort des personnages joueurs automatique",
             "automateCharacterDeathHint": "Si cette case est cochée, les personnages sont automatiquement déclarés morts lorsqu'ils échouent à 3 jets contre la Mort ou sont tués instantanément par des dégâts excessifs.",
+            "automationSettings": "Paramètres d'automatisation",
+            "automationSettingsHint": "Configurer le niveau d'automatisation pour diverses mécaniques de jeu.",
+            "automationSettingsTokens": "Tokens",
+            "automationSettingsSkills": "Compétences",
             "canEquipItems": "Équipe un objet",
             "canEquipItemsHint": "Si cette case est cochée, tous les objets de l'inventaire d'un personnage peuvent être équipés. Les objets équipés ne sont pas pris en compte dans le calcul de l'encombrement.",
+            "combatSettings": "Paramètres de combat",
+            "combatSettingsHint": "Configurer les paramètres liés au combat.",
             "hideNpcWpWidget": "Cacher les PV des PNJ",
             "hideNpcWpWidgetHint": "Cacher les points de Volonté du PNJ sur sa feuille si le PNJ n'a aucun point de Volonté et aucun sort ou capacité.",
             "keepOwnershipOnImport": "Conserver la propriété",
@@ -574,7 +616,25 @@
             "allowDealDamageOnSelected": "Dégât sur le token sélectionné",
             "allowDealDamageOnSelectedHint": "Si cette case est cochée, le MJ peut infliger des dégâts (et soigner) au token sélectionné si aucun token n'a été pris pour cible..",
             "automaticSkillAdvancementMark": "Automatiser la vérification des compétences",
-            "automaticSkillAdvancementMarkHint": "Mettre automatiquement une marque d'amélioration sur les jets de Dragon et de Démon."
+            "automaticSkillAdvancementMarkHint": "Mettre automatiquement une marque d'amélioration sur les jets de Dragon et de Démon.",
+            "automaticSkillIntensiveTraining": "Gérer l'entraînement intensif avec un instructeur.",
+            "automaticSkillIntensiveTrainingHint": "Gérer l'entraînement intensif avec un instructeur (ajoute l'entraînement intensif au menu contextuel pour toutes les compétences. Si l'entraînement intensif réussit, l'option est retirée jusqu'à ce que la compétence soit augmentée par l'expérience.)",
+            "optionalRuleSettings": "Règles optionnelles",
+            "optionalRuleSettingsHint": "Configurer les règles optionnelles à utiliser.",
+            "damageTypes": "Types de dégâts",
+            "damageTypesHint": "Activer les types de dégâts (Contondant, Perforant, Tranchant), les modificateurs d'indice d'armure et les actions d'arme liées aux types de dégâts.",
+            "coinEncumbrance": "Encombrement des pièces",
+            "coinEncumbranceHint": "Inclure les pièces dans les calculs d'encombrement.",
+            "coreSettingOverrides": "Remplacement des paramètres du module de base",
+            "coreSettingOverridesHint": "Remplacer les paramètres du module de base pour ce monde.",
+            "magicMishapTable": "Table des accidents magiques",
+            "magicMishapTableHint": "Remplacer la table à utiliser pour les accidents magiques.",
+            "meleeMishapTable": "Table des accidents de mêlée",
+            "meleeMishapTableHint": "Remplacer la table à utiliser pour les accidents de mêlée.",
+            "rangedMishapTable": "Table des accidents à distance",
+            "rangedMishapTableHint": "Remplacer la table à utiliser pour les accidents à distance.",
+            "treasureTable": "Table des trésors",
+            "treasureTableHint": "Remplacer la table à utiliser pour les trésors."
         },
         "WARNING": {
             "kinAbility": "Impossible de trouver la capacité innée: {ability}",
@@ -599,7 +659,8 @@
             "noMeleeMishapTable": "Il manque la table aléatoire des échecs critiques au corps à corps.",
             "noRangedMishapTable": "Il manque la table aléatoire des échecs critiques à distance.",
             "noMagicMishapTable": "Il manque la table aléatoire des échecs critiques magiques.",
-            "maxWeaponsEquipped": "Vous ne pouvez équiper plus de 3 armes à la fois."
+            "maxWeaponsEquipped": "Vous ne pouvez équiper plus de 3 armes à la fois.",
+            "noSkillsInCompendium": "Le module enregistré ne contient aucune compétence de base. Le module est peut-être endommagé et nécessite une réinstallation. Tentative de récupération des compétences depuis le monde."
         }
     }
 }
