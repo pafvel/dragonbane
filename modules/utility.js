@@ -121,14 +121,14 @@ export default class DoD_Utility {
         let table = game.tables.find(i => i.name.toLowerCase() === name.toLowerCase()) || fromUuidSync(name);
         if (!table) {
             if (!options?.noWarnings){
-                console.log(game.i18n.format(game.i18n.localize("DoD.WARNING.tableNotFound"), {id: name}));
+                console.log(game.i18n.format("DoD.WARNING.tableNotFound", {id: name}));
                 //DoD_Utility.WARNING("DoD.WARNING.tableNotFound", {id: name});
             }
             return null;
         }
         if (!(table instanceof RollTable)) {
             if (!options?.noWarning){
-                console.log(game.i18n.format(game.i18n.localize("DoD.WARNING.typeMismatch"), {id: name}));
+                console.log(game.i18n.format("DoD.WARNING.typeMismatch", {id: name}));
                 //DoD_Utility.WARNING("DoD.WARNING.typeMismatch", {id: name});
             }
             return null;
@@ -366,7 +366,7 @@ export default class DoD_Utility {
         if (!params) {
             return ui.notifications.info(game.i18n.localize(msg));
         } else {
-            return ui.notifications.info(game.i18n.format(game.i18n.localize(msg), params));
+            return ui.notifications.info(game.i18n.format(msg, params));
         }
     }
 
@@ -374,7 +374,7 @@ export default class DoD_Utility {
         if (!params) {
             return ui.notifications.warn(game.i18n.localize(msg));
         } else {
-            return ui.notifications.warn(game.i18n.format(game.i18n.localize(msg), params));
+            return ui.notifications.warn(game.i18n.format(msg, params));
         }
     }
 
@@ -382,7 +382,7 @@ export default class DoD_Utility {
         if (!params) {
             return ui.notifications.error(game.i18n.localize(msg));
         } else {
-            return ui.notifications.error(game.i18n.format(game.i18n.localize(msg), params));
+            return ui.notifications.error(game.i18n.format(msg, params));
         }
     }
 

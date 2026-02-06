@@ -831,7 +831,7 @@ export async function applyDamageMessage(damageData) {
 
     let html = `
         <div class="damage-message permission-${permissionKey}" data-damage="${damageTaken}" data-actor-id="${actor.uuid}">
-            ${game.i18n.format(game.i18n.localize("DoD.ui.chat.damageApplied"), {damage: damageTaken, actor: actorName})}
+            ${game.i18n.format("DoD.ui.chat.damageApplied", {damage: damageTaken, actor: actorName})}
             ${message}
             <div class="damage-details permission-observer" data-actor-id="${actor.uuid}">
                 <i class="fa-solid fa-circle-info"></i>
@@ -845,7 +845,7 @@ export async function applyDamageMessage(damageData) {
             </div>            
         </div>
         <div class="damage-message permission-not-${permissionKey}" data-actor-id="${actor.uuid}">
-            ${game.i18n.format(game.i18n.localize("DoD.ui.chat.damageApplied"), {damage: "???", actor: actorName})}
+            ${game.i18n.format("DoD.ui.chat.damageApplied", {damage: "???", actor: actorName})}
             ${message}
         </div>`;
     ChatMessage.create({ 
@@ -870,7 +870,7 @@ export async function applyHealingMessage(damageData) {
 
     const msg = `
     <div class="permission-${permissionKey}" data-actor-id="${actor.uuid}">
-        ${game.i18n.format(game.i18n.localize("DoD.ui.chat.healingApplied"), {damage: newHP - oldHP, actor: actorName})}
+        ${game.i18n.format("DoD.ui.chat.healingApplied", {damage: newHP - oldHP, actor: actorName})}
         <div class="damage-details permission-observer" data-actor-id="${actor.uuid}">
             <i class="fa-solid fa-circle-info"></i>
             <div class="expandable" style="text-align: left; margin-left: 0.5em">
@@ -879,7 +879,7 @@ export async function applyHealingMessage(damageData) {
         </div>            
     </div>
     <div class="permission-not-${permissionKey}" data-actor-id="${actor.uuid}">
-        ${game.i18n.format(game.i18n.localize("DoD.ui.chat.healingApplied"), {damage: "???", actor: actorName})}
+        ${game.i18n.format("DoD.ui.chat.healingApplied", {damage: "???", actor: actorName})}
     </div>`;
 
     if (oldHP === 0 && newHP > 0) {
