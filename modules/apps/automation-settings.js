@@ -95,17 +95,6 @@ export default class DoDAutomationSettings extends HandlebarsApplicationMixin(Ap
             default: true,
             type: Boolean
         });
-
-        // If true, support intensive training with a teacher
-        game.settings.register("dragonbane", "automaticSkillIntensiveTraining", {
-            name: "DoD.SETTINGS.automaticSkillIntensiveTraining",
-            hint: "DoD.SETTINGS.automaticSkillIntensiveTrainingHint",
-            scope: "world",
-            config: true,
-            default: false,
-            type: Boolean
-        });
-
     }
 
     async _prepareContext(options) {

@@ -598,8 +598,6 @@
         "allowDealDamageOnSelectedHint": "Wenn aktiviert, kann die SL Schaden (und Heilung) auf das ausgewählte Token anwenden, wenn kein Token als Ziel ausgewählt wurde.",
         "automaticSkillAdvancementMark": "Fertigkeits-Häkchen",
         "automaticSkillAdvancementMarkHint": "Setzt das Verbesserungs-Häkchen bei Drachen- und Dämon-Würfen automatisch.",
-        "automaticSkillIntensiveTraining": "Intensivtraining mit Lehrer verwalten",
-        "automaticSkillIntensiveTrainingHint": "Verwaltet Intensivtraining mit einem Lehrer (fügt die Option im Auslassungsmenü für alle Fertigkeiten hinzu. Bei Erfolg wird die Option entfernt, bis die Fertigkeit durch Erfahrung gesteigert wird).",
         "optionalRuleSettings": "Optionale Regeln",
         "optionalRuleSettingsHint": "Lege fest, welche optionalen Regeln verwendet werden.",
         "damageTypes": "Schadensarten",

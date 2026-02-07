@@ -617,8 +617,6 @@
             "allowDealDamageOnSelectedHint": "If checked, the GM may deal damage (and heal) the selected token if no token has been targeted.",
             "automaticSkillAdvancementMark": "Skill Checkmark",
             "automaticSkillAdvancementMarkHint": "Automatically set improvement checkmark on Dragon and Demon rolls.",
-          "automaticSkillIntensiveTraining": "Handle intensive training with a teacher.",
-            "automaticSkillIntensiveTrainingHint": "Manage intensive training with a teacher (adds intensive training to the ellipsis menu for all skills. If intensive training is successful, the option is removed until the skill is raised through experience.)",
             "optionalRuleSettings": "Optional Rules",
             "optionalRuleSettingsHint": "Configure which optional rules to use.",
             "damageTypes": "Damage Types",

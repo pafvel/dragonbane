@@ -619,8 +619,6 @@
             "allowDealDamageOnSelectedHint": "Spelledaren (GM) kan tillfoga skada (och hela skada) på vald spelfigur om ingen spelfigur satts som mål.",
             "automaticSkillAdvancementMark": "Automatiskt förbättringskryss",
             "automaticSkillAdvancementMarkHint": "Sätt automatiskt förbättringskryss vid Drakslag eller Demonslag.",
-            "automaticSkillIntensiveTraining": "Hantera intensiv träning med en lärare.",
-            "automaticSkillIntensiveTrainingHint": "Hantera intensiv träning med en lärare (lägger till intensiv träning på ellips-meny för alla färdigheter. Om intensivträning lyckas tas alternativet bort tills färdighet höjts genom erfarenhet.)",
             "optionalRuleSettings": "Frivilliga regler",
             "optionalRuleSettingsHint": "Slå av/på frivilliga regler.",
             "damageTypes": "Skadetyper",
