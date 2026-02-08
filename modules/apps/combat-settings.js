@@ -8,7 +8,7 @@ export default class DoDCombatSettings extends HandlebarsApplicationMixin(Applic
         tag: "form",
         window: {
             title: "DoD.SETTINGS.combatSettings",
-            contentClasses: ["dragonbane", "standard-form", "combat-settings"],
+            contentClasses: ["dragonbane", "standard-form", "dragonbane-settings", "combat-settings"],
             resizable : true,
             icon: "fa-solid fa-swords",
         },
@@ -44,6 +44,11 @@ export default class DoDCombatSettings extends HandlebarsApplicationMixin(Applic
         monsterAttackDialogIsDefault: new foundry.data.fields.BooleanField({
             label : "DoD.SETTINGS.monsterAttackDialogIsDefault",
             hint : "DoD.SETTINGS.monsterAttackDialogIsDefaultHint" }),
+
+        restDialogIsDefault: new foundry.data.fields.BooleanField({
+            label: "DoD.SETTINGS.restDialogIsDefault",
+            hint: "DoD.SETTINGS.restDialogIsDefaultHint"
+        }),
 
         allowDealDamageOnSelected: new foundry.data.fields.BooleanField({
             label : "DoD.SETTINGS.allowDealDamageOnSelected",
@@ -84,6 +89,16 @@ export default class DoDCombatSettings extends HandlebarsApplicationMixin(Applic
             type: Boolean
         });
 
+        // If true, showing the "Stretch rest" dialog is default when making a stretch rest.
+        game.settings.register("dragonbane", "restDialogIsDefault", {
+            name: "DoD.SETTINGS.restDialogIsDefault",
+            hint: "DoD.SETTINGS.restDialogIsDefaultHint",
+            scope: "world",
+            config: false,
+            default: true,
+            type: Boolean
+        });
+
         // If true, allows dealing damage using the selection method
         game.settings.register("dragonbane", "allowDealDamageOnSelected", {
             name: "DoD.SETTINGS.allowDealDamageOnSelected",
@@ -114,6 +129,7 @@ export default class DoDCombatSettings extends HandlebarsApplicationMixin(Applic
         
         context.source = {};
         context.source.monsterAttackDialogIsDefault = game.settings.get("dragonbane", "monsterAttackDialogIsDefault");
+        context.source.restDialogIsDefault = game.settings.get("dragonbane", "restDialogIsDefault");
         context.source.allowDealDamageOnSelected = game.settings.get("dragonbane", "allowDealDamageOnSelected");
         context.source.viewDamagePermission = game.settings.get("dragonbane", "viewDamagePermission");
 
@@ -126,6 +142,7 @@ export default class DoDCombatSettings extends HandlebarsApplicationMixin(Applic
     static async _onSubmit(event, form, formData) 
     {
         game.settings.set("dragonbane", "monsterAttackDialogIsDefault", formData.object.monsterAttackDialogIsDefault);
+        game.settings.set("dragonbane", "restDialogIsDefault", formData.object.restDialogIsDefault);
         game.settings.set("dragonbane", "allowDealDamageOnSelected", formData.object.allowDealDamageOnSelected);
         game.settings.set("dragonbane", "viewDamagePermission", formData.object.viewDamagePermission);
     }

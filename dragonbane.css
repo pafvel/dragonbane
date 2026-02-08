@@ -1058,6 +1058,14 @@
   top: 0;
 }
 
+.system-dragonbane .dragonbane-settings {
+  overflow: hidden auto;
+}
+.system-dragonbane .dragonbane-settings label {
+  flex: 2;
+  line-height: 1.25;
+}
+
 .theme-dark {
   --dod-color-text-primary: whitesmoke;
   --dod-dialog-background: transparent;

@@ -8,7 +8,7 @@ export default class DoDOptionalRuleSettings extends HandlebarsApplicationMixin(
         tag: "form",
         window: {
             title: "DoD.SETTINGS.optionalRuleSettings",
-            contentClasses: ["dragonbane", "standard-form", "optional-rule-settings"],
+            contentClasses: ["dragonbane", "standard-form", "dragonbane-settings", "optional-rule-settings"],
             resizable : true,
             icon: "fa-solid fa-check-square",
         },

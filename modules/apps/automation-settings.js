@@ -8,7 +8,7 @@ export default class DoDAutomationSettings extends HandlebarsApplicationMixin(Ap
         tag: "form",
         window: {
             title: "DoD.SETTINGS.automationSettings",
-            contentClasses: ["dragonbane", "standard-form", "automation-settings"],
+            contentClasses: ["dragonbane", "standard-form", "dragonbane-settings", "automation-settings"],
             resizable : true,
             icon: "fa-solid fa-gears",
         },

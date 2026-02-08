@@ -245,18 +245,108 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         await this.actor.restRound();
     }
 
+    async promptRestStretchOptions({ hpDice = 1, wpDice = 1, conditions = 1 } = {}) {
+        const toPositive = (v, fallback) => {
+            const n = Number.parseInt(v, 10);
+            return Number.isFinite(n) && n >= 0 ? n : fallback;
+        };
+
+        const content = await foundry.applications.handlebars.renderTemplate(
+            "systems/dragonbane/templates/partials/stretch-rest-dialog.hbs",
+            { hpDice, wpDice, conditions }
+        );
+
+        const result = await foundry.applications.api.DialogV2.wait({
+            window: {
+                title: game.i18n.localize("DoD.ui.dialog.restStretchTitle"),
+            },
+            content,
+            position: { width: 400 },
+            buttons: [
+                {
+                    action: "ok",
+                    icon: "fa-solid fa-check",
+                    label: game.i18n.localize("DoD.ui.dialog.restOk"),
+                    default: true,
+                    callback: (_event, button) => {
+                        const form = button.form;
+                        return {
+                            interrupted: false,
+                            hpDice: toPositive(form.elements.hpDice.value, hpDice),
+                            wpDice: toPositive(form.elements.wpDice.value, wpDice),
+                            conditions: toPositive(form.elements.conditions.value, conditions)
+                        };
+                    }
+                },
+                {
+                    action: "interrupted",
+                    icon: "fa-solid fa-ban",
+                    label: game.i18n.localize("DoD.ui.dialog.restInterrupt"),
+                    callback: () => ({ interrupted: true })
+                }
+            ]
+        });
+
+        return result ?? null; // null if user closed the dialog
+    }
+
+
     async _onRestStretch(event) {
         event.preventDefault();
         event.currentTarget?.blur();
 
-        await this.actor.restStretch();
+        const skipDialog = game.settings.get("dragonbane", "restDialogIsDefault") === (event.shiftKey || event.ctrlKey);
+        const options = skipDialog ? { hpDice: 1, wpDice: 1, conditions: 1 } : await this.promptRestStretchOptions();
+        if (!options) return; // user closed dialog
+
+        if (options.interrupted) {
+            // consume stretch rest without effect
+            await this.actor.update({ ["system.canRestStretch"]: false });
+            ChatMessage.create({
+                user: game.user.id,
+                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                flavor: game.i18n.format("DoD.ui.character-sheet.restStretchInterrupted", { actor: this.actor.name })
+            });
+            return;
+        }
+
+        await this.actor.restStretch(options);
     }
 
     async _onRestShift(event) {
         event.preventDefault();
         event.currentTarget?.blur();
 
-        await this.actor.restShift();
+        const skipDialog = game.settings.get("dragonbane", "restDialogIsDefault") === (event.shiftKey || event.ctrlKey);
+
+        if (skipDialog) {
+            await this.actor.restShift();
+            return;
+        } else {
+            const result = await foundry.applications.api.DialogV2.wait({
+                window: {
+                    title: game.i18n.localize("DoD.ui.dialog.restShiftTitle"),
+                },
+                content: `<p class="notes">${game.i18n.localize("DoD.ui.dialog.restNote")}</p>`,
+                buttons: [
+                    { action: "finish", label: game.i18n.localize("DoD.ui.dialog.restOk"), icon: "fa-solid fa-check", callback: () => ({ action: "finish" }) },
+                    { action: "interrupt", label: game.i18n.localize("DoD.ui.dialog.restInterrupt"), icon: "fa-solid fa-ban", callback: () => ({ action: "interrupt" }) }
+                ]
+            });
+            if (result === null) { // user closed the dialog
+                return;
+            } else if (result.action === "interrupt") { // interrupted
+                ChatMessage.create({
+                    user: game.user.id,
+                    speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+                    flavor: game.i18n.format("DoD.ui.character-sheet.restShiftInterrupted", { actor: this.actor.name })
+                });
+                return;
+            } else { // finished
+                await this.actor.restShift();
+                return;
+            }
+        }
     }
 
     async _onRestReset(event) {

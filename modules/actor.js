@@ -1025,12 +1025,12 @@ export class DoDActor extends Actor {
         }
     }
 
-    async restStretch() {
+    async restStretch({ hpDice = 1, wpDice = 1, conditions = 1 } = {}) {
 
         await this.update({["system.canRestStretch"]: false});
 
         // Make roll
-        const roll = await new Roll(`D6[${game.i18n.localize("DoD.secondaryAttributeTypes.hitPoints")}] + D6[${game.i18n.localize("DoD.secondaryAttributeTypes.willPoints")}]`).roll({});
+        const roll = await new Roll(`${hpDice}D6[${game.i18n.localize("DoD.secondaryAttributeTypes.hitPoints")}] + ${wpDice}D6[${game.i18n.localize("DoD.secondaryAttributeTypes.willPoints")}]`).roll({});
 
         if (game.dice3d) {
             // Red for HP
@@ -1079,11 +1079,14 @@ export class DoDActor extends Actor {
         };
         const template = "systems/dragonbane/templates/partials/roll-no-total.hbs";
         const content = await DoD_Utility.renderTemplate(template, context);
+        const flavor = conditions == 1
+            ? game.i18n.format("DoD.ui.character-sheet.restStretch", { actor: this.name, hp: newHP - currentHP, wp: newWP - currentWP })
+            : game.i18n.format("DoD.ui.character-sheet.restStretchConditions", { actor: this.name, hp: newHP - currentHP, wp: newWP - currentWP, cond: conditions })
         const msg = await roll.toMessage({
             user: game.user.id,
             speaker: ChatMessage.getSpeaker({ actor: this }),
             actor: this,
-            flavor: game.i18n.format("DoD.ui.character-sheet.restStretch", {actor: this.name, hp: newHP - currentHP, wp: newWP - currentWP}),
+            flavor: flavor,
             content: content
         });
 
