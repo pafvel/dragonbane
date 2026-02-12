@@ -19,15 +19,28 @@
             .table-results {
                 overflow-wrap: break-word;
 
-                li {
-                    display: list-item;
-                }
+                > li {
+                    display: flow-root; // contains floats; li height includes floated img
+                    clear: both;        // next li starts below previous float
 
-                img {
-                    float: left;
+                    > img {
+                        float: left;
+                        
+                        // Align top of table icon with content-link
+                        + a.content-link { 
+                            display: inline-block;
+                            transform: translateY(2px);
+                        }
+
+                        // Align top of table icon with content-link inside description
+                        + div.description {
+                            transform: translateY(2px);
+                        }
+                    }
                 }
             }
 
+            
             .dice-rolls {
 
                 .roll.die.d20.max {
