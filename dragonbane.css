@@ -998,11 +998,19 @@
 .system-dragonbane .chat-message .message-content .table-results {
   overflow-wrap: break-word;
 }
-.system-dragonbane .chat-message .message-content .table-results li {
-  display: list-item;
+.system-dragonbane .chat-message .message-content .table-results > li {
+  display: flow-root;
+  clear: both;
 }
-.system-dragonbane .chat-message .message-content .table-results img {
+.system-dragonbane .chat-message .message-content .table-results > li > img {
   float: left;
+}
+.system-dragonbane .chat-message .message-content .table-results > li > img + a.content-link {
+  display: inline-block;
+  transform: translateY(2px);
+}
+.system-dragonbane .chat-message .message-content .table-results > li > img + div.description {
+  transform: translateY(2px);
 }
 .system-dragonbane .chat-message .message-content .dice-rolls .roll.die.d20.max {
   color: #aa0200;
@@ -1679,6 +1687,13 @@
 .system-dragonbane .sheet.item .tab, .system-dragonbane .sheet.active-effect-config .tab {
   overflow: hidden auto;
   padding: 0 8px;
+  color: var(--dod-color-parchment-text);
+}
+.system-dragonbane .sheet.item .tab button, .system-dragonbane .sheet.active-effect-config .tab button {
+  color: var(--dod-color-parchment-text);
+}
+.system-dragonbane .sheet.item .tab th button, .system-dragonbane .sheet.active-effect-config .tab th button {
+  color: inherit;
 }
 .system-dragonbane .sheet.item .standard-form, .system-dragonbane .sheet.active-effect-config .standard-form {
   gap: 0;
@@ -1749,6 +1764,40 @@
 }
 .system-dragonbane .sheet.item .sheet-tab .text-box-editor, .system-dragonbane .sheet.active-effect-config .sheet-tab .text-box-editor {
   height: auto;
+}
+.system-dragonbane .sheet.item .effect-change .sheet-table-header button, .system-dragonbane .sheet.active-effect-config .effect-change .sheet-table-header button {
+  color: var(--dod-color-journal-table-header);
+}
+.system-dragonbane .sheet.item .effect-change .attribute, .system-dragonbane .sheet.active-effect-config .effect-change .attribute {
+  width: 1%;
+}
+.system-dragonbane .sheet.item .effect-change .key, .system-dragonbane .sheet.active-effect-config .effect-change .key {
+  width: auto;
+}
+.system-dragonbane .sheet.item .effect-change .key > input[type=text], .system-dragonbane .sheet.active-effect-config .effect-change .key > input[type=text] {
+  width: 100%;
+  min-width: 4rem;
+  text-align: left;
+  text-overflow: ellipsis;
+}
+.system-dragonbane .sheet.item .effect-change .type, .system-dragonbane .sheet.active-effect-config .effect-change .type {
+  width: 1%;
+}
+.system-dragonbane .sheet.item .effect-change .value, .system-dragonbane .sheet.active-effect-config .effect-change .value {
+  width: auto;
+}
+.system-dragonbane .sheet.item .effect-change .value > input[type=text], .system-dragonbane .sheet.active-effect-config .effect-change .value > input[type=text] {
+  width: 100%;
+  min-width: 4rem;
+  text-align: left;
+  text-overflow: ellipsis;
+}
+.system-dragonbane .sheet.item .effect-change input:read-only, .system-dragonbane .sheet.active-effect-config .effect-change input:read-only {
+  opacity: 0.7;
+  cursor: default;
+}
+.system-dragonbane .sheet.item .effect-change td, .system-dragonbane .sheet.active-effect-config .effect-change td {
+  padding: 0.5rem;
 }
 
 .system-dragonbane .sheet.journal-entry h1, .system-dragonbane .sheet.journal-entry h2, .system-dragonbane .sheet.journal-entry h3 {

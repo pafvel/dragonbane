@@ -3,33 +3,48 @@
         <table class="sheet-table changes-list">
             <tr class="sheet-table-header">
                 <th></th>
-                <th class="text-header">{{ localize "EFFECT.ChangeKey" }}</th>
-                <th class="text-header">{{ localize "EFFECT.ChangeMode" }}</th>
-                <th class="text-header">{{ localize "EFFECT.ChangeValue" }}</th>
+                <th class="text-header">{{ localize "DoD.effect.attribute" }}</th>
+                <th class="text-header">{{ localize "DoD.effect.key" }}</th>
+                <th class="text-header">{{ localize "EFFECT.FIELDS.changes.element.type.label" }}</th>
+                <th class="text-header">{{ localize "EFFECT.FIELDS.changes.element.value.label" }}</th>
                 <th>
-                    <button type="button" class="effect-control" data-action="addChange">
+                    <button type="button" class="effect-control" data-action="addChange" title="{{ localize "CONTROLS.CommonCreate" }}">
                         <a  class="fas fa-plus"></a>
                     </button>                        
                 </th>
                 <th></th>
             </tr>
-            {{#each source.changes as |change i|}}
+            {{#each changes as |change i|}}
             <tr class="effect-change" data-index="{{i}}">
                 <td></td>
-                <td class="key">
-                    <select name="changes.{{i}}.key">
-                        {{selectOptions ../config.activeEffectChanges selected=change.key localize=true}}
+                <td class="attribute">
+                    <select name="system.changes.{{i}}.keyChoice">
+                        {{selectOptions ../attributes selected=change.keyChoice localize=true}}
                     </select>
                 </td>
-                <td class="mode">
-                    <select name="changes.{{i}}.mode" data-dtype="Number">
-                        {{selectOptions ../modes selected=change.mode}}
+                <td class="key">
+                    <input
+                        type="text"
+                        name="system.changes.{{i}}.key"
+                        value="{{change.key}}"
+                        title="{{change.key}}"
+                        {{#unless (eq change.keyChoice "custom")}}readonly{{/unless}}
+                    />
+                </td>
+                <td class="type">
+                    <select name="system.changes.{{i}}.type">
+                        {{selectOptions ../changeTypes selected=change.type}}
                     </select>
                 </td>
                 <td class="value">
-                    <input type="text" name="changes.{{i}}.value" value="{{change.value}}"/>
+                    <input 
+                    type="text"
+                    name="system.changes.{{i}}.value"
+                    value="{{change.value}}"
+                    title="{{change.value}}"
+                />
                 </td>
-                <td class="effect-controls">
+                <td class="effect-controls" title="{{ localize "CONTROLS.CommonDelete" }}">
                     <a class="effect-control" data-action="deleteChange"><i class="fas fa-trash"></i></a>
                 </td>
                 <td></td>

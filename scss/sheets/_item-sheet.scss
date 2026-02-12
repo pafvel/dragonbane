@@ -11,6 +11,16 @@
         .tab {
             overflow: hidden auto; // Enable scrollbar
             padding: 0 8px;
+            color: var(--dod-color-parchment-text);
+            
+            button {
+                color: var(--dod-color-parchment-text);
+            }
+            
+            th button {
+                color: inherit;
+            }
+            
         }
 
         .standard-form {
@@ -92,8 +102,6 @@
             color: var(--dod-color-parchment-text);
         }
             
-            
-
         .sheet-tab {
             height: 100%;
             padding: 0 8px;
@@ -101,6 +109,55 @@
 
             .text-box-editor {
                 height: auto;
+            }
+        }
+        
+        .effect-change {
+
+            .sheet-table-header{
+
+                button {
+                    color: var(--dod-color-journal-table-header);
+                }
+            }
+
+            .attribute {
+                width: 1%;
+            }
+
+            .key {
+                width: auto;
+
+                &>input[type="text"] {
+                    width: 100%;
+                    min-width: 4rem;
+                    text-align: left;
+                    text-overflow: ellipsis;
+                }
+            }
+
+            .type {
+                width: 1%;
+            }
+
+            .value {
+                width: auto;
+
+                >input[type="text"] {
+                    width: 100%;
+                    min-width: 4rem;
+                    text-align: left;
+                    text-overflow: ellipsis;
+                }
+            }
+
+            input:read-only {
+                opacity: 0.7;
+                cursor: default;
+            }            
+
+            td {
+                padding: 0.5rem;
             }
         }
     }

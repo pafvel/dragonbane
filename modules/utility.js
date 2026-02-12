@@ -39,13 +39,13 @@ export default class DoD_Utility {
     }
 
     static calculateDamageBonus(attribute) {
-        const DoD = CONFIG.DoD;
+        const dice = Object.keys(DoD.dice);
         if (attribute <=12) {
-            return DoD.dice.none;
+            return dice[0]; // none
         } else if (attribute <=16) {
-            return DoD.dice.d4;
+            return dice[1]; // d4
         } else {
-            return DoD.dice.d6;
+            return dice[2]; // d6
         }
     }
 

@@ -235,7 +235,11 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
             } else {
                 title += "\r";
             }
-            title += game.i18n.format("DoD.ui.character-sheet.baseValue", { value: base });
+            if (propertyName.startsWith("system.damageBonus")) {
+                title += game.i18n.format("DoD.ui.character-sheet.baseValue", { value: CONFIG.DoD.dice[base] });
+            } else {
+                title += game.i18n.format("DoD.ui.character-sheet.baseValue", { value: base });
+            }
             $(e).attr("title", title);
 
             // Prepare strings
@@ -655,7 +659,8 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
 
         // validate the value
         const field = this.actor.system.schema.getField(fieldName);
-        const failure = field.validate(newValue);
+        const cleanValue = field.clean(newValue);
+        const failure = field.validate(cleanValue);
 
         if (failure) {
             DoD_Utility.WARNING(failure.message);
@@ -663,7 +668,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         }
 
         // set new value
-        await this.actor.update({ [propertyBase]: newValue });
+        await this.actor.update({ [propertyBase]: cleanValue });
     }
 
     _onFocusResource(event) {

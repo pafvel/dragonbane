@@ -156,7 +156,10 @@
         "effect": {
             "applyWhenEquipped": "Apply only when equipped",
             "applyWhenEquippedTooltip": "If checked, this effect will only be enabled if the item is equipped",
-            "new": "New Effect"
+            "new": "New Effect",
+            "custom": "Custom",
+            "attribute": "Attribute",
+            "key": "Key"
         },
         "item": {
             "new": "New Item"

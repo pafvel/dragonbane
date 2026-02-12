@@ -1,7 +1,6 @@
 import DoD_Utility from "./utility.js";
 import DoDSkillTest from "./tests/skill-test.js";
 import DoDRoll from "./roll.js";
-import DoDActiveEffect from "./active-effect.js";
 import { DoD } from "./config.js";
 import DoDActorSettings from "./apps/actor-settings.js";
 
@@ -220,9 +219,29 @@ export class DoDActor extends Actor {
     prepareData() {
         // Prepare data for the actor. Calling the super version of this executes
         // the following, in order: data reset (to clear active effects),
-        // prepareBaseData(), prepareEmbeddedDocuments() (including active effects),
-        // prepareDerivedData().
+        // prepareBaseData()
+        // prepareEmbeddedDocuments() - including active effects initial pass,
+        // prepareDerivedData() - including active effects final pass.
         super.prepareData();
+
+        // Prepare final data for the actor after active effects have been applied.
+        // This is where calculations that depend on derived attributes should be made.
+
+        // Will Points
+        if (foundry.utils.hasProperty(this.system, "attributes.wil")) {
+            const wpBonuses = this.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "willPoints").length;
+            this.system.willPoints.base += 2 * wpBonuses;
+            this.system.willPoints.max += 2 * wpBonuses;
+            this.system.willPoints.value = DoD_Utility.clamp(this.system.willPoints.value, 0, this.system.willPoints.max);
+        }
+
+        // Hit Points
+        if (foundry.utils.hasProperty(this.system, "attributes.con")) {
+            const hpBonuses = this.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "hitPoints").length;
+            this.system.hitPoints.base += 2 * hpBonuses;
+            this.system.hitPoints.max += 2 * hpBonuses;
+            this.system.hitPoints.value = DoD_Utility.clamp(this.system.hitPoints.value, 0, this.system.hitPoints.max);
+        }
     }
 
     /** @override */
@@ -282,13 +301,6 @@ export class DoDActor extends Actor {
                 break;
             default:
                 break;
-        }
-        DoDActiveEffect.applyDeferredChanges(this);
-        if (this.system.hitPoints?.value) {
-            this.system.hitPoints.value = DoD_Utility.clamp(this.system.hitPoints.value, 0, this.system.hitPoints.max);
-        }
-        if (this.system.willPoints?.value) {
-            this.system.willPoints.value = DoD_Utility.clamp(this.system.willPoints.value, 0, this.system.willPoints.max);
         }
     }
 
@@ -402,20 +414,6 @@ export class DoDActor extends Actor {
         let damageBonusStr = DoD_Utility.calculateDamageBonus(this.system.attributes.str.value);
         this.system.damageBonus.str.base = game.i18n.localize(damageBonusStr);
         this.system.damageBonus.str.value = this.system.damageBonus.str.base;
-
-        // Will Points
-        let maxWillPoints = this.system.attributes.wil.value;
-        const wpBonuses = this.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "willPoints").length;
-        maxWillPoints += 2 * wpBonuses;
-        this.system.willPoints.base = maxWillPoints;
-        this.system.willPoints.max = maxWillPoints;
-
-        // Hit Points
-        let maxHitPoints = this.system.attributes.con.value;
-        const hpBonuses = this.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "hitPoints").length;
-        maxHitPoints += 2 * hpBonuses;
-        this.system.hitPoints.base = maxHitPoints;
-        this.system.hitPoints.max = maxHitPoints;
 
         // Movement
         const defaultMovement = Number(this.system.kin ? this.system.kin.system.movement : 10);

@@ -130,21 +130,73 @@ DoD.attributes = {
     "none": "DoD.attributes.none",
 };
 
-DoD.activeEffectChanges = {
-    "system.attributes.str.value" : "DoD.attributes.str",
-    "system.attributes.con.value" : "DoD.attributes.con",
-    "system.attributes.agl.value" : "DoD.attributes.agl",
-    "system.attributes.int.value" : "DoD.attributes.int",
-    "system.attributes.wil.value" : "DoD.attributes.wil",
-    "system.attributes.cha.value" : "DoD.attributes.cha",
-    "system.hitPoints.max" : "DoD.secondaryAttributeTypes.hitPoints",
-    "system.willPoints.max" : "DoD.secondaryAttributeTypes.willPoints",
-    "system.movement.value" : "DoD.ui.character-sheet.movement",
-    "system.damageBonus.agl.value" : "DoD.ui.character-sheet.damageBonusAGL",
-    "system.damageBonus.str.value" : "DoD.ui.character-sheet.damageBonusSTR",
-    "system.ferocity.value" : "DoD.ui.character-sheet.ferocity",
-    "system.maxEncumbrance.value" : "DoD.ui.character-sheet.max-encumbrance",
-};
+DoD.activeEffectAttributes = [
+    {
+        key: "system.attributes.str.value",
+        label: "DoD.attributes.str",
+        phase: "initial"
+    },
+    {
+        key: "system.attributes.con.value",
+        label: "DoD.attributes.con",
+        phase: "initial"
+    },
+    {
+        key: "system.attributes.agl.value",
+        label: "DoD.attributes.agl",
+        phase: "initial"
+    },
+    {
+        key: "system.attributes.int.value",
+        label: "DoD.attributes.int",
+        phase: "initial"
+    },
+    {
+        key: "system.attributes.wil.value",
+        label: "DoD.attributes.wil",
+        phase: "initial"
+    },
+    {
+        key: "system.attributes.cha.value",
+        label: "DoD.attributes.cha",
+        phase: "initial"
+    },
+    {
+        key: "system.hitPoints.max",
+        label: "DoD.secondaryAttributeTypes.hitPoints",
+        phase: "final"
+    },
+    {
+        key: "system.willPoints.max",
+        label: "DoD.secondaryAttributeTypes.willPoints",
+        phase: "final"
+    },
+    {
+        key: "system.movement.value",
+        label: "DoD.ui.character-sheet.movement",
+        phase: "final"
+    },
+    {
+        key: "system.damageBonus.agl.value",
+        label: "DoD.ui.character-sheet.damageBonusAGL",
+        phase: "final"
+    },
+    {
+        key: "system.damageBonus.str.value",
+        label: "DoD.ui.character-sheet.damageBonusSTR",
+        phase: "final"
+    },
+    {
+        key: "system.ferocity.value",
+        label: "DoD.ui.character-sheet.ferocity",
+        phase: "initial"
+    },
+    {
+        key: "system.maxEncumbrance.value",
+        label: "DoD.ui.character-sheet.max-encumbrance",
+        phase: "final"
+    },
+];
 
 DoD.conditionEffects = {
     "system.conditions.str.value" :
