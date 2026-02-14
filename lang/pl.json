@@ -9,12 +9,12 @@
         "TypeArmor": "Zbroja",
         "TypeHelmet": "Hełm",
         "TypeInjury": "Uraz",
-        "TypeItem": "Przedmior",
+        "TypeItem": "Przedmiot",
         "TypeKin": "Ród",
         "TypeProfession": "Profesja",
         "TypeSkill": "Umiejętność",
         "TypeSpell": "Czar",
-        "TypeWeapon": "Breoń"
+        "TypeWeapon": "Broń"
     },
     "TYPES": {
         "Actor": {
@@ -139,8 +139,8 @@
             "textureTransparent": "Dragonbane (Transparent)"
         },
         "effect": {
-            "applyWhenEquipped": "Zastosuj tylko gdy wekwipowane",
-            "applyWhenEquippedTooltip": "Jeźeli zaznaczone, ten efekt będzie uruchomiony tylko gdy przedmiot jest wyekwipowany",
+            "applyWhenEquipped": "Zastosuj tylko gdy wyekwipowane",
+            "applyWhenEquippedTooltip": "Jeżeli zaznaczone, ten efekt będzie uruchomiony tylko gdy przedmiot jest wyekwipowany",
             "new": "Nowy efekt"
         },
         "item": {
@@ -170,7 +170,7 @@
             "ranged": "Broń dystansowa",
             "service": "Usługi",
             "tool": "Narzędzia",
-            "trade": "Przedmiotu użytkowe",
+            "trade": "Przedmioty użytkowe",
             "travel": "Środki transportu"
         },
         "gripTypes": {
@@ -203,31 +203,31 @@
             "choiceLabel": "Efekty krytyczne",
             "doubleDamage": "Podwojenie obrażeń",
             "doubleRange": "Podwojenie zasięgu",
-            "noCost": "Czar nie zurzywa żadnych punktów SW",
+            "noCost": "Czar nie zużywa żadnych punktów SW",
             "extraSpell": "Możesz natychmiast rzucić drugi czar, ale otrzymujesz Zgrzyt"
         },
         "critChoices": {
             "choiceLabel": "Efekty krytyczne",
-            "doubleWeaponDamage": "Podwujnie obrażenia bronii",
-            "extraAttack": "Możesz natychmiast wykonać drugi atak przeciw innemu wrogowi. Jest on akcją darmową.",
-            "ignoreArmor": "Zbroja nie chroni celu przed obrażeniami."
+            "doubleWeaponDamage": "Podwójnie obrażenia broni",
+            "extraAttack": "Możesz natychmiast wykonać drugi atak przeciw innemu wrogowi. Jest on akcją darmową",
+            "ignoreArmor": "Zbroja nie chroni celu przed obrażeniami"
         },
         "profession": {
             "key-attribute": "Kluczowa cecha",
             "skills": "Umiejętności"
         },
         "roll": {
-            "dragon": "Sukces, się wyrzucony został Smok!",
-            "demon": "Porażka, wyrzucony został Demon",
+            "dragon": "Sukces, wyrzucony został Smok!",
+            "demon": "Porażka, wyrzucony został Demon!",
             "success": "Sukces",
             "failure": "Porażka",
-            "attributeRoll": "Rzut na chechę <b>{attribute}</b> <b>{result}</b>",
-            "skillRoll": "Rzut na Umiejętność <b>{skill}</b> <b>{result}</b>",
-            "skillRollUUID": "Rzut na Umiejętność @UUID[{uuid}] <b>{result}</b>",
-            "spellRoll": "@UUID[{uuid}] z Potęgą na poziomie <b>{powerLevel}</b> <b>{result}</b>",
-            "spellRollTarget": "@UUID[{uuid}] z Potęgą na poziomie <b>{powerLevel}</b> wycelowany w <b>{target}</b> <b>{result}</b>",
-            "weaponRoll": "<b>{action}</b> przy użyciu @UUID[{uuid}] <b>{result}</b>",
-            "weaponRollTarget": "<b>{action}</b> przy użyciu @UUID[{uuid}] wycelowany w <b>{target}</b> <b>{result}</b>",
+            "attributeRoll": "Rzut na cechę <b>{attribute}</b> = <b>{result}</b>",
+            "skillRoll": "Rzut na Umiejętność <b>{skill}</b> = <b>{result}</b>",
+			"skillRollUUID": "Rzut na Umiejętność @UUID[{uuid}] = <b>{result}</b>",
+            "spellRoll": "<b>{spell}</b> z Potęgą na <b>{powerLevel}</b> poziomie = <b>{result}</b>",
+            "spellRollTarget": "<b>{spell}</b> z Potęgą na <b>{powerLevel}</b> poziomie, cel czaru to <b>{target}</b> = <b>{result}</b>",
+            "weaponRoll": "<b>{action}</b> przy użyciu <b>{skill}</b> <b>{result}</b>",
+            "weaponRollTarget": "<b>{action}</b> przy użyciu <b>{skill}</b> wycelowany w <b>{target}</b> = <b>{result}</b>",
             "damage": "<b>{actor}</b> zadaje <b>{damage}</b> punktów <b>{damageType}</b>.",
             "damageWeapon": "<b>{actor}</b> zadaje <b>{damage}</b> punktów <b>{damageType}</b> używając <b>{weapon}</b>.",
             "damageIgnoreArmor": "<b>{actor}</b> zadaje <b>{damage}</b> punktów <b>{damageType} z pomięciem pancerza </b> używając <b>{weapon}</b>.",
@@ -237,10 +237,10 @@
             "healing": "<b>{actor}</b> leczy  <b>{damage}</b> punktów WT.",
             "healingTarget": "<b>{actor}</b> leczy <b>{target}</b> za <b>{damage}</b> punktów WT.",
             "pushButtonLabel": "Forsuj rzut",
-            "pushChoiceLabel": "Wybierz dolegliwość",
-            "parryWeapon": "<p>Jeżeli sparowane obrażenie przekroczą trwałość broni (<b>{durability}</b>), ta zostanie ona uszkodzona. Obrażenia kłute nie mogą uszkodzić bronii.</p>",
+            "pushChoiceLabel": "Wybierz dolegliwość:",
+            "parryWeapon": "<p>Jeżeli sparowane obrażenie przekroczą trwałość broni (<b>{durability}</b>), ta zostanie ona uszkodzona. Obrażenia kłute nie mogą uszkodzić broni.</p>",
             "parryShield": "<p>Jeżeli sparowane obrażenie przekroczą trwałość tarczy(<b>{durability}</b>), ta zostanie ona uszkodzona. Obrażenia kłute nie mogą uszkodzić tarczy.</p>",
-            "deathRoll": "Death Roll <b>{result}</b>"
+            "deathRoll": "Test Agonii = <b>{result}</b>"
         },
         "secondaryAttributeTypes": {
             "none": "-",
@@ -263,14 +263,14 @@
             "attribute": "Cecha",
             "attributeTooltip": "Cecha powiązana z umiejętnością",
             "hide": "Ukryj",
-            "hideTooltip": "Ukryj umiejętnośc na głównej stronie karty postaci",
-            "markAdvancement": "Zaznacz umiejętnosć do rozwoju",
-            "rollAdvancement": "Rzuć na rozwuj na koniec sesji.\r Kliknij prawym by usunąć bez wykonania rzutu.",
+            "hideTooltip": "Ukryj umiejętność na głównej stronie karty postaci",
+            "markAdvancement": "Zaznacz umiejętność do rozwoju",
+            "rollAdvancement": "Rzuć na rozwój na koniec sesji.\r Kliknij prawym, by usunąć bez wykonania rzutu.",
             "type": "Rodzaj",
-            "typeTooltip": "Rodzaj umiejętnosć"
+            "typeTooltip": "Rodzaj umiejętności"
         },
         "skillTypes": {
-            "core": "Podstawa umiejętnośś",
+            "core": "Podstawowa umiejętność",
             "weapon": "Władanie bronią",
             "secondary": "Umiejętności dodatkowe",
             "magic": "Szkoły magii"
@@ -288,7 +288,7 @@
             "rangeType": "Zasięg",
             "rank": "Potęga",
             "requirement": "Techniki",
-            "school": "School of Magic"
+            "school": "Szkoła magii"
         },
         "spellDurationTypes": {
             "instant": "Natychmiast",
@@ -319,26 +319,26 @@
         "weapon": {
             "new": "Nowa broń",
             "grip": "Chwyt",
-            "gripTooltip": "Określa czy potrzebujesz jednej czy dwóch rąk do używania tej bronii.",
+            "gripTooltip": "Określa czy potrzebujesz jednej, czy dwóch rąk do używania tej broni.",
             "str": "SIŁ",
             "strTooltip": "To minimalna wartość SIŁ konieczna, by skutecznie posługiwać się bronią.",
             "range": "Zasięg",
             "rangeShort": "Z",
-            "rangeTooltip": "wskazuje maksymalny dystans skutecznego używania broni, liczony w metrach.",
+            "rangeTooltip": "Wskazuje maksymalny dystans skutecznego używania broni, liczony w metrach.",
             "damage": "Obrażenia",
             "damageShort": "Obr",
             "damageTooltip": "Wskazują, jak groźne jest trafienie danym orężem.",
             "durability": "Trwałość",
             "durabilityShort": "TRW",
-            "durabilityTooltip": "Mierzy, jak dużo obrażeń możesz sparować, nie uszkadzając broni",
+            "durabilityTooltip": "Mierzy, jak dużo obrażeń możesz sparować, nie uszkadzając broni.",
             "features": "Właściwości",
             "skill": "Umiejętność",
             "skillValue": "Umiejętność",
-            "skillValueTooltip": "Wartość umiejętności której używasz do posługiwnaia się tą broią.",
+            "skillValueTooltip": "Wartość umiejętności, której używasz do posługiwania się tą bronią.",
             "broken": "Uszkodzona",
             "brokenTooltip": "Wskazuje, że broń jest uszkodzona.",
-            "mainHandTooltip": "Trzymaj broń w lewej ręce",
-            "offHandTooltip": "Trzymaj broń w prawej ręce",
+            "mainHandTooltip": "Trzymaj broń w lewej ręce.",
+            "offHandTooltip": "Trzymaj broń w prawej ręce.",
             "belowRequiredStr": "Poniżej wymagań SIŁ"
         },
         "unit": {
@@ -376,7 +376,7 @@
             "toppling": "Obalająca",
             "topplingTooltip": "Wywołuje błysk w próbach obalenia przeciwnika.",
             "unarmed": "Bez broni",
-            "unarmedTooltip": "Atak bez broni nie wlicza się do limitu używaniych broni"
+            "unarmedTooltip": "Atak bez broni nie wlicza się do limitu używanych broni"
         },
         "ui": {
             "character-sheet": {
@@ -404,7 +404,7 @@
                 "disabled": "Nieaktywny",
                 "effect": "Efekt",
                 "effects": "Efekty",
-                "encumbrance": "Przeciążenie",
+                "encumbrance": "Obecny udźwig",
                 "equipped": "Noszony",
                 "equipped-armor": "Noszona zbroja",
                 "equipped-helmet": "Noszony hełm",
@@ -413,7 +413,7 @@
                 "ferocity": "Zawziętość",
                 "gear": "Wyposażenie",
                 "heroicAbilities": "Zdolności heroiczne",
-                "heroicAbilitiesTooltip": "Dodaj zdolność heroiczną przez przeciągięcie i upuszczenie jej na kartę postaci",
+                "heroicAbilitiesTooltip": "Dodaj zdolność heroiczną przez przeciągnięcie i upuszczenie jej na kartę postaci",
                 "hitPoints": "Wytrzymałość",
                 "hitPointsCurrent": "Obecna WT",
                 "hitPointsMax": "Maksymalna WT",
@@ -421,7 +421,7 @@
                 "injuries": "Poważne urazy",
                 "inventory": "Ekwipunek",
                 "kin": "Ród",
-                "kinAbilities": "Zdolność rodowa",
+                "kinAbilities": "Zdolności rodowe",
                 "kinAbilitiesTooltip": "Zdolność rodowa jest definiowana przez wybrany ród",
                 "main": "Główna",
                 "max-encumbrance": "Maksymalny udźwig",
@@ -437,16 +437,16 @@
                 "professionAbilities": "Zdolność profesji",
                 "professionAbilitiesTooltip": "Zdolność profesji jest definiowana przez wybraną profesję",
                 "restRound": "<b>{actor}</b> odpoczywa przez rundę i przywraca <b>{wp}</b> SW.",
-                "restRoundTooltip": "Runda odpoczynku:\r Jedna runda poświęcona na złapanie oddechu pozwala odzyskać k6 SW, ale nie przywraca WT.\rMożesz odpoczywać przez rundę tylko raz na kwartę",
+                "restRoundTooltip": "Runda odpoczynku:\rJedna runda poświęcona na złapanie oddechu pozwala odzyskać k6 SW, ale nie przywraca WT.\rMożesz odpoczywać przez rundę tylko raz na kwartę.",
                 "restStretch": "<b>{actor}</b> odpoczywa przez kwadrans i przywraca <b>{hp}</b> WT, <b>{wp}</b> SW oraz usuwa jedną dolegliwość",
-                "restStretchTooltip": "Kwadrans odpoczynku:\rKrótki, trwający jeden kwadrans odpoczynek powoduje odzyskanie K6 WT, K6 SW i pozbywasz się wybranej dolegliwości.\rMożesz użyć pamiątki by pozbyć się dodatkowej dolegliwości.\rTaki odpoczynek można zafundować sobie raz na kwartę.",
+                "restStretchTooltip": "Kwadrans odpoczynku:\rKrótki, trwający jeden kwadrans odpoczynek powoduje odzyskanie K6 WT, K6 SW i pozbywasz się wybranej dolegliwości.\rMożesz użyć pamiątki, by pozbyć się dodatkowej dolegliwości.\rTaki odpoczynek można zafundować sobie raz na kwartę.",
                 "restShift": "<b>{actor}</b> odpoczywasz przez kwartę i leczysz <b>{hp}</b> WT, <b>{wp}</b> SW i wszystkie dolegliwości.",
-                "restShiftTooltip": "Kwarta odpoczynku\rOdpoczynek zajmujący całą kwartę, odzyskujesz całą utraconą WT oraz SW i pozbywasz się wszystkich dolegliwości",
-                "restReset": "Jedna kwarta mineła dla <b>{actor}</b>.",
-                "restResetTooltip": "Minęła kwarta \rZresetowano odpoczynek przez kwadrans i rundę",
-                "rollDeathRoll": "Rzuć test agoni",
+                "restShiftTooltip": "Kwarta odpoczynku:\rOdpoczynek zajmujący całą kwartę, odzyskujesz całą utraconą WT oraz SW i pozbywasz się wszystkich dolegliwości.",
+                "restReset": "Jedna kwarta minęła dla <b>{actor}</b>.",
+                "restResetTooltip": "Minęła kwarta:\rResetuje możliwość odpoczynku przez rundę i kwadrans.",
+                "rollDeathRoll": "Rzuć test agonii",
                 "school": "Szkoły magii",
-                "secondarySkills": "Umiejętności dodatkowe,",
+                "secondarySkills": "Umiejętności dodatkowe",
                 "size": "Rozmiar",
                 "skills": "Umiejętności",
                 "skillValue": "",
@@ -468,7 +468,8 @@
                 "willPointsCurrent": "Obecna SW",
                 "willPointsMax": "Maksymalna SW",
                 "worn": "Noszona",
-                "wp": "SW"
+                "wp": "SW",
+                "storage": "Przechowywane"
             },
             "chat": {
                 "damageApplied": "<b>{damage}</b> punktów obrażań zadano <b>{actor}</b>.",
@@ -492,12 +493,12 @@
                 "takeCondition": "<b>{actor}</b> otrzymuje dolegliwość <b>{condition}</b>.",
                 "treasureCard": "1 karta skarbu",
                 "treasureCards": "{count} karty skarbu",
-                "failedDeathRoll": "<b>{actor}</b> nie zdaje testu agoni, gdyż otrzymał obrażenia mając 0 WT.",
+                "failedDeathRoll": "<b>{actor}</b> nie zdaje testu agonii, gdyż otrzymał obrażenia mając 0 WT.",
                 "characterDied": "<b>{actor}</b> umiera.",
                 "characterDiedInstantly": "<b>{actor}</b> umiera natychmiast.",
                 "characterSurvived": "<b>{actor}</b> unika śmierci i odzyskuje [[/roll D6]] WT.",
                 "characterProne": "<b>{actor}</b> posiada 0 WT i upada.",
-                "castMagicTrick": "<b>{actor}</b> rzucza czar <b>{spell}</b>.",
+                "castMagicTrick": "<b>{actor}</b> rzuca czar <b>{spell}</b>.",
                 "damageDetailDamage": "Obrażenia",
                 "damageDetailArmor": "Zbroja",
                 "damageDetailMultiplier": "Mnożnik",
@@ -510,27 +511,27 @@
                 "brokenWeaponContent": "Ta broń jest uszkodzona, czy na pewno chcesz wykonać akcje z jej użyciem?",
                 "performAction": "Wykonaj akcje",
                 "cancelAction": "Anuluj akcje",
-                "enchantedWeapon": "Zakleta broń",
+                "enchantedWeapon": "Zaklęta broń",
                 "extra": "Dodatkowe",
                 "extraDamage": "Dodatkowe obrażenia",
                 "skillRollTitle": "Rzut na umiejętność",
                 "skillRollLabel": "Rzut",
-                "attributeRollTitle": "Rzut na chechę",
+                "attributeRollTitle": "Rzut na cechę",
                 "attributeRollLabel": "Rzut",
                 "powerLevel": "Potęga",
                 "labelCancel": "Anuluj",
                 "labelOk": "Ok",
                 "chooseAction": "Wybierz akcje",
                 "useAbility": "Aktywne zdolności",
-                "useAbilityWithWP": "Użyto <b>{wp}</b> SW na uzycie <b>{ability}</b>?",
+                "useAbilityWithWP": "Zużyć <b>{wp}</b> SW na aktywowanie <b>{ability}</b>?",
                 "useAbilityWithoutWP": "Użyj <b>{ability}</b>?",
-                "weaponFeatures": "Właściwości bronii",
+                "weaponFeatures": "Właściwości broni",
                 "castMagicTrickTitle": "Rzuć magiczną sztuczkę",
-                "castMagicTrickContent": "Wydano <b>1</b> SW aby rzucić <b>{spell}</b>?",
+                "castMagicTrickContent": "Wydano <b>1</b> SW, aby rzucić <b>{spell}</b>?",
                 "deleteItemTitle": "Usuń {item}",
-                "deleteItemContent": "Czy na pewno chcesz usunąc <b>{item}</b>?",
+                "deleteItemContent": "Czy na pewno chcesz usunąć <b>{item}</b>?",
                 "trainSkillTitle": "Wyspecjalizowana umiejętność?",
-                "trainSkillContent": "<p>Zaznaczas umiejętność <b>{skill}</b> do rozwoju, ale posiadasz mniej umiejętności wyspecjalizowanych niż dozwolina ich ilość.</p><p>Czt chcesz wybrać umiejętność <b>{skill}</b> jako jedna z wyspecjalizowanych?</p><p style=\"font-size:smaller\"><b>Uwaga:</b> Umiejętności wyspecjalizowane posiadają podwójną wartość podstawową. Zresetuj do wartości podstawowej poprzez usunięcie wartości dla umiejętności.</p>",
+                "trainSkillContent": "<p>Zaznaczasz umiejętność <b>{skill}</b> do rozwoju, ale posiadasz mniej umiejętności wyspecjalizowanych niż dozwolona ich ilość.</p><p>Czy chcesz wybrać umiejętność <b>{skill}</b> jako jedna z wyspecjalizowanych?</p><p style=\"font-size:smaller\"><b>Uwaga:</b> Umiejętności wyspecjalizowane posiadają podwójną wartość podstawową. Zresetuj do wartości podstawowej poprzez usunięcie wartości dla umiejętności.</p>",
                 "trainLabel": "Specjalności",
                 "markLabel": "Zaznaczona",
                 "deleteActorTokenOnScene": "Sceny z tokenami odnoszące się do postaci",
@@ -538,7 +539,7 @@
                 "monsterAttackRandom": "Losowy",
                 "monsterAttackTitle": "Wybierz atak potwora",
                 "healInjuriesTitle": "Wylecz poważny uraz",
-                "healInjuriesMessage": "Zredukować czas wyleczenia dla wszystkich nie wyleczonych urazów o jeden dzień?"
+                "healInjuriesMessage": "Zredukować czas wyleczenia dla wszystkich niewyleczonych urazów o jeden dzień?"
             }
         },
         "item-sheet": {
@@ -547,8 +548,8 @@
             "effects": "Efekty"
         },
         "INFO": {
-            "monsterAttackUpdated": "Zaktualizowano tabele ataków porwora dla {actor}.",
-            "professionSkillAdded": "Dodaj umiejętnosć profesji: {skill}"
+            "monsterAttackUpdated": "Zaktualizowano tabele ataków potwora dla {actor}.",
+            "professionSkillAdded": "Dodaj umiejętność profesji: {skill}"
         },
         "SETTINGS": {
           
@@ -603,4 +604,9 @@
 
         }
     
+
 }
+
+
+
+
