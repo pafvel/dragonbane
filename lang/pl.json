@@ -472,8 +472,8 @@
                 "storage": "Przechowywane"
             },
             "chat": {
-                "damageApplied": "<b>{damage}</b> punktów obrażań zadano <b>{actor}</b>.",
-                "damageAppliedDetails": "{damage} punktów obrażań względem {armor} punktów pancerza.",
+                "damageApplied": "<b>{damage}</b> punktów obrażeń zadano <b>{actor}</b>.",
+                "damageAppliedDetails": "{damage} punktów obrażeń względem {armor} punktów pancerza.",
                 "damageAppliedMultiplier": "Mnożnik obrażeń x{multiplier}",
                 "healingApplied": "<b>{actor}</b> leczy <b>{damage}</b> punktów WT.",
                 "rollDamage": "Rzuć na obrażenia",
@@ -606,6 +606,7 @@
     
 
 }
+
 
 
 
