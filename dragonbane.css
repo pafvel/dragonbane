@@ -888,6 +888,7 @@
   margin-top: 4px;
   border-width: 16px;
   border-top: 0;
+  min-height: 80px;
 }
 .system-dragonbane .text-box-editor h1 {
   color: var(--color-text-dark-header);
@@ -925,14 +926,14 @@
 .system-dragonbane .text-box-editor .editor-container {
   margin: 0;
 }
-.system-dragonbane .text-box-editor .editor-content {
+.system-dragonbane .text-box-editor .editor-content, .system-dragonbane .text-box-editor > p {
   padding: 0;
   border-left: 12px;
   border-right: 12px;
   border-top: 16px;
   border-style: solid;
   border-color: transparent;
-  min-height: 80px;
+  min-height: 40px;
   position: static;
 }
 .system-dragonbane .text-box-editor .editor-container > .editor-content {
