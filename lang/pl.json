@@ -40,7 +40,7 @@
             "requirement": "Wymaganie",
             "type": "Rodzaj",
             "wp": "Siła Woli",
-            "secondaryAttribute": "Bonus z cechy",
+            "secondaryAttribute": "Bonus do cechy",
             "useWithWP": "<b>{actor}</b> wydaje <b>{wp}</b> SW żeby aktywować @UUID[{uuid}].",
             "useWithoutWP": "<b>{actor}</b> aktywuje @UUID[{uuid}]. Zobacz zdolność aby sprawdzić koszt SW."
         },
@@ -606,6 +606,7 @@
     
 
 }
+
 
 
 
