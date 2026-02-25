@@ -354,7 +354,7 @@
             "enchanted3": "Zaklęty (3)",
             "enchanted3Tooltip": "Ten sam efekt co czar Zaklęcie Oręża na potędze 3",
             "long": "Długa",
-            "longTooltip": "Pozwala atakować wręcz cele odległe o 4 metry (dwa pola).",
+            "longTooltip": "Pozwala atakować wręcz cele odległe o 4 metry (dwa pola)",
             "mounted": "Jazda wierzchem",
             "mountedTooltip": "Wymaga rumaka bojowego",
             "noDamageBonus": "Bez modyfikatora obrażeń",
@@ -364,17 +364,17 @@
             "piercing": "Kłujący",
             "piercingTooltip": "Zadaje obrażenia kłute, co może mieć wpływ na skuteczność pancerza",
             "quiver": "Kołczan",
-            "quiverTooltip": "Wymaga kołczanu,",
+            "quiverTooltip": "Wymaga kołczanu",
             "shield": "Tarcza",
             "shieldTooltip": "Używa umiejętności walki bronią opartej o SIŁ z najwyższą wartością",
             "slashing": "Sieczna",
-            "slashingTooltip": "Zadaje obrażenia cięte. Jeśli broń jest sieczna oraz kłująca, musisz wybrać, czy tniesz, czy pchasz, przed wykonaniem testu ataku.",
+            "slashingTooltip": "Zadaje obrażenia cięte. Jeśli broń jest sieczna oraz kłująca, musisz wybrać, czy tniesz, czy pchasz, przed wykonaniem testu ataku",
             "subtle": "Dyskretna",
             "subtleTooltip": "Wywołuje błysk w teście trafienia i zwiększa obrażenia podczas ataku z ukrycia",
             "thrown": "Rzucana",
             "thrownTooltip": "Można rzucać",
             "toppling": "Obalająca",
-            "topplingTooltip": "Wywołuje błysk w próbach obalenia przeciwnika.",
+            "topplingTooltip": "Wywołuje błysk w próbach obalenia przeciwnika",
             "unarmed": "Bez broni",
             "unarmedTooltip": "Atak bez broni nie wlicza się do limitu używanych broni"
         },
@@ -606,6 +606,9 @@
     
 
 }
+
+
+
 
 
 
