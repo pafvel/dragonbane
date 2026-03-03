@@ -267,7 +267,8 @@
             "markAdvancement": "Zaznacz umiejętność do rozwoju",
             "rollAdvancement": "Rzuć na rozwój na koniec sesji.\r Kliknij prawym, by usunąć bez wykonania rzutu.",
             "type": "Rodzaj",
-            "typeTooltip": "Rodzaj umiejętności"
+            "typeTooltip": "Rodzaj umiejętności",
+            "taught": "Nauczany"
         },
         "skillTypes": {
             "core": "Podstawowa umiejętność",
@@ -606,7 +607,6 @@
     
 
 }
-
 
 
 
