@@ -1068,13 +1068,15 @@
 }
 
 .theme-dark {
-  --dod-color-text-primary: whitesmoke;
+  --dod-color-text-primary: var(--color-light-2);
   --dod-dialog-background: transparent;
+  --dod-sheet-background: transparent;
 }
 
 .theme-light {
   --dod-color-text-primary: black;
   --dod-dialog-background: url("art/ui/dialog-bg.webp") repeat;
+  --dod-sheet-background: url("art/ui/item-sheet-bg.webp") repeat;
 }
 .system-dragonbane .sheet.character {
   display: flex;
@@ -1092,7 +1094,7 @@
   align-items: start;
 }
 .system-dragonbane .sheet.character .window-content {
-  background: url("art/ui/item-sheet-bg.webp") repeat;
+  background: var(--dod-sheet-background);
   background-position: top center;
   padding: 0;
 }
@@ -1257,7 +1259,7 @@
   text-align: center;
   border: none;
   background-color: transparent;
-  color: black;
+  color: var(--dod-color-text-primary);
 }
 .system-dragonbane .sheet.character .attributes-container .attributes .attribute-panel .attribute-input.value-increased {
   color: var(--dod-color-positive-effect);
@@ -1269,7 +1271,7 @@
   box-shadow: 0 0 5px var(--color-shadow-primary);
   transition: none;
   outline: 0;
-  color: black;
+  color: var(--dod-color-text-primary);
 }
 .system-dragonbane .sheet.character .attributes-container .attributes .attribute1 {
   left: 18%;
@@ -1417,7 +1419,7 @@
   position: relative;
   width: 200px;
   height: 75px;
-  color: black;
+  color: var(--dod-color-text-primary);
 }
 .system-dragonbane .sheet.character .resource-points .resource-points-text-label label {
   position: absolute;
@@ -1446,6 +1448,7 @@
   font-weight: bold;
   border-color: transparent;
   padding: 0;
+  color: var(--dod-color-text-primary);
 }
 .system-dragonbane .sheet.character .resource-points .resource-points-box {
   display: flex;
@@ -1481,7 +1484,7 @@
 .system-dragonbane .sheet.character .resource-points .resource-points-current-box .resource-points-current-label {
   display: inline-block;
   text-align: center;
-  color: black;
+  color: var(--dod-color-text-primary);
   width: 100%;
   height: 100%;
   font-size: 18px;
@@ -1548,6 +1551,7 @@
   white-space: nowrap;
   max-height: 16px;
   max-width: 65px;
+  text-overflow: ellipsis;
 }
 .system-dragonbane .sheet.character .resource-points .death-rolls-box .death-rolls-success, .system-dragonbane .sheet.character .resource-points .death-rolls-box .death-rolls-failure {
   font-size: 12px;
@@ -1672,7 +1676,7 @@
   font-size: small;
   vertical-align: top;
   font-weight: normal;
-  color: black;
+  color: var(--dod-color-text-primary);
   padding: 2px;
 }
 .system-dragonbane .sheet.character input:focus {
@@ -1711,7 +1715,7 @@
   width: 100%;
 }
 .system-dragonbane .sheet.item .window-content, .system-dragonbane .sheet.active-effect-config .window-content {
-  background: url("art/ui/item-sheet-bg.webp") repeat;
+  background: var(--dod-sheet-background);
   background-position: top center;
   padding: 0;
 }
@@ -1765,7 +1769,7 @@
 .system-dragonbane .sheet.item .sheet-tab, .system-dragonbane .sheet.active-effect-config .sheet-tab {
   height: 100%;
   padding: 0 8px;
-  color: var(--dod-color-journal-text);
+  color: var(--dod-color-text-primary);
 }
 .system-dragonbane .sheet.item .sheet-tab .text-box-editor, .system-dragonbane .sheet.active-effect-config .sheet-tab .text-box-editor {
   height: auto;

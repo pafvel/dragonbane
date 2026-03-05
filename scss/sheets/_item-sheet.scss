@@ -33,7 +33,7 @@
         }
 
         .window-content {
-            background:url("art/ui/item-sheet-bg.webp") repeat;
+            background: var(--dod-sheet-background);
             background-position: top center;
             padding: 0;
         }
@@ -100,7 +100,7 @@
         .sheet-tab {
             height: 100%;
             padding: 0 8px;
-            color: var(--dod-color-journal-text);
+            color: var(--dod-color-text-primary);
 
             .text-box-editor {
                 height: auto;
