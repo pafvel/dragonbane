@@ -636,7 +636,7 @@
 
         .armor {
             background-image: url("art/ui/banner-right.webp");
-            background-size: 221px 61px;
+            background-size: 85% 61px;
             background-repeat: no-repeat;
             background-position: 42px center;
             min-width: 266px;
@@ -646,6 +646,15 @@
 
             td {
                 border: 0 solid transparent;
+
+                a {
+                    display: inline-block;
+                    width: 85%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    vertical-align: middle;
+                }                
             }
 
             tr {

@@ -64,6 +64,9 @@
                 border: 0;
                 margin: 8px;
                 outline: 0;
+                padding-left: 0.75rem;
+                padding-right: 1.5rem;
+                text-overflow: ellipsis;
 
                 &:focus {
                     box-shadow: 0 0 5px var(--color-shadow-primary);

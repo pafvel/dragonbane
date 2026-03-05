@@ -1607,7 +1607,7 @@
 }
 .system-dragonbane .sheet.character .armor {
   background-image: url("art/ui/banner-right.webp");
-  background-size: 221px 61px;
+  background-size: 85% 61px;
   background-repeat: no-repeat;
   background-position: 42px center;
   min-width: 266px;
@@ -1617,6 +1617,14 @@
 }
 .system-dragonbane .sheet.character .armor td {
   border: 0 solid transparent;
+}
+.system-dragonbane .sheet.character .armor td a {
+  display: inline-block;
+  width: 85%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: middle;
 }
 .system-dragonbane .sheet.character .armor tr {
   height: 40px;
@@ -1732,6 +1740,9 @@
   border: 0;
   margin: 8px;
   outline: 0;
+  padding-left: 0.75rem;
+  padding-right: 1.5rem;
+  text-overflow: ellipsis;
 }
 .system-dragonbane .sheet.item .sheet-header input:focus, .system-dragonbane .sheet.active-effect-config .sheet-header input:focus {
   box-shadow: 0 0 5px var(--color-shadow-primary);
