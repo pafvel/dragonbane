@@ -411,7 +411,7 @@
                 "equipped-helmet": "Noszony hełm",
                 "equipped-weapon": "Noszone bronie",
                 "failures": "Porażka",
-                "ferocity": "Zawziętość",
+                "ferocity": "Zajadłość",
                 "gear": "Wyposażenie",
                 "heroicAbilities": "Zdolności heroiczne",
                 "heroicAbilitiesTooltip": "Dodaj zdolność heroiczną przez przeciągnięcie i upuszczenie jej na kartę postaci",
@@ -607,6 +607,7 @@
     
 
 }
+
 
 
 
