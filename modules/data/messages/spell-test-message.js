@@ -34,8 +34,6 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
         context.targetActor = this.targetActorUuid ? fromUuidSync(this.targetActorUuid) : "";
         delete context.targetActorUuid;
 
-        context.renderCriticalEffect = this.isDragon && !this.criticalEffect;
-
         return context;
     }
 

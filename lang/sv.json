@@ -217,6 +217,7 @@
         },
         "magicCritChoices": {
             "choiceLabel": "Kritisk effekt",
+            "choiceTitle": "Kritisk effekt",
             "doubleDamage": "Skadan av besvärjelsen fördubblas",
             "doubleRange": "Räckvidden av besvärjelsen fördubblas",
             "noCost": "Besvärjelsen kostar dig inga VP",
