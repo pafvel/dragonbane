@@ -216,7 +216,7 @@
             "monsterAttacks": "Monsterattacker"
         },
         "magicCritChoices": {
-            "choiceLabel": "Kritisk effekt",
+            "choiceLabel": "Välj kritisk effekt",
             "choiceTitle": "Kritisk effekt",
             "doubleDamage": "Skadan av besvärjelsen fördubblas",
             "doubleRange": "Räckvidden av besvärjelsen fördubblas",
@@ -224,7 +224,8 @@
             "extraSpell": "Du får omedelbart lägga en besvärjelse till, fast med nackdel på slaget."
         },
         "critChoices": {
-            "choiceLabel": "Kritisk effekt",
+            "choiceLabel": "Välj kritisk effekt",
+            "choiceTitle": "Kritisk effekt",
             "doubleWeaponDamage": "Dubbel vapenskada",
             "extraAttack": "Extra attack mot annan fiende (fri handling)",
             "ignoreArmor": "Rustning och skydd har ingen effekt"
