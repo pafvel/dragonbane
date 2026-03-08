@@ -111,7 +111,7 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
         const magicCritChoices = {};
 
         magicCritChoices.noCost = game.i18n.localize("DoD.magicCritChoices.noCost");
-        if (context.spell.isDamaging) {
+        if (context.isDamaging && !context.isHealing) {
             magicCritChoices.doubleDamage = game.i18n.localize("DoD.magicCritChoices.doubleDamage");
         }
         magicCritChoices.doubleRange = game.i18n.localize("DoD.magicCritChoices.doubleRange");
