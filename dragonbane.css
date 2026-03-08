@@ -806,6 +806,9 @@
   text-align: center;
   padding: 0.25em 0 0.25em 1em;
 }
+.system-dragonbane .simple-table td {
+  color: var(--dod-color-journal-text);
+}
 .system-dragonbane .simple-table th:last-child {
   padding-right: 20px;
 }
