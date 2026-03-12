@@ -16,13 +16,7 @@ export default class DoD_Utility {
     };
 
     static nameSorter(a, b) {
-        let aa = a.name.toLowerCase();
-        let bb = b.name.toLowerCase();
-        if (aa < bb)
-            return -1;
-        if (aa > bb)
-            return 1;
-        return 0;
+        return a.name.localeCompare(b.name, game.i18n.lang, { sensitivity: "accent" });
     }
 
     static itemSorter(a, b) {
