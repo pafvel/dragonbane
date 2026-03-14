@@ -13,6 +13,10 @@
             border: 2px solid var(--color-shadow-primary);
         }
 
+        .message-header {
+            line-height: 1.25;
+        }
+
         .message-content {
             padding-top: 2px;
 
@@ -20,7 +24,8 @@
                 overflow-wrap: break-word;
 
                 li {
-                    display: list-item;
+                    display: flex;
+                    flex-wrap: nowrap;
                 }
 
                 img {

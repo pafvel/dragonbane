@@ -996,6 +996,9 @@
   background-position-x: center;
   border: 2px solid var(--color-shadow-primary);
 }
+.system-dragonbane .chat-message .message-header {
+  line-height: 1.25;
+}
 .system-dragonbane .chat-message .message-content {
   padding-top: 2px;
 }
@@ -1003,7 +1006,8 @@
   overflow-wrap: break-word;
 }
 .system-dragonbane .chat-message .message-content .table-results li {
-  display: list-item;
+  display: flex;
+  flex-wrap: nowrap;
 }
 .system-dragonbane .chat-message .message-content .table-results img {
   float: left;
