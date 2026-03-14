@@ -896,7 +896,11 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
             } else if (item.type === "spell") {
                 if (item.system.rank > 0) {
                     if (this.actor.type === "monster") {
-                        options.autoSuccess = true;
+                        if (!this.actor.findMagicSkill(item.system.school)) {
+                            options.autoSuccess = true;
+                        } else {
+                            options.noWPCost = true;
+                        }
                     }
                     test = new DoDSpellTest(this.actor, item, options);
                 } else {
