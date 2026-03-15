@@ -12,6 +12,7 @@
   - Monster attack descriptions are displayed in the Select Monster Attack dialog.
   - Broken weapons get a bane by default.
   - Spell damage now supports damage types.
+  - Monsters casting spells will use the skill value of the magic school if they know it; auto success otherwise.
 
 - Resting
   - The stretch rest button now opens a dialog that allows changing the amount to recover and makes it possible to spend the rest without recovering. Pressing Shift or Ctrl while clicking the button skips the dialog and the default values are used. Elves around the world can finally find their inner peace.
@@ -27,6 +28,7 @@
   - Fix for the WP box not showing up when an NPC has 0 WP but has spells or abilities.
   - Added localization for sheet types.
   - Short attribute names on boons and banes on items can be written in English or, if localization exists, the preferred language from Foundry's settings. (contributed by bb46003)
+  - Sorting based on item names will now handle special characters from different languages correctly (contributed by bb46003)
 
 - Localization
   - Updated ES translation (contributed by Tarot)

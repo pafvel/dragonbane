@@ -1,3 +1,8 @@
-2025/12/27-13:08:46.587 ddac Recovering log #560
-2025/12/27-13:08:46.591 ddac Delete type=0 #560
-2025/12/27-13:08:46.591 ddac Delete type=3 #559
+2026/03/15-01:24:13.337 8a24 Recovering log #602
+2026/03/15-01:24:13.339 8a24 Delete type=0 #602
+2026/03/15-01:24:13.339 8a24 Delete type=3 #600
+2026/03/15-01:24:54.193 41d0 Level-0 table #607: started
+2026/03/15-01:24:54.193 41d0 Level-0 table #607: 0 bytes OK
+2026/03/15-01:24:54.193 41d0 Delete type=0 #605
+2026/03/15-01:24:54.193 41d0 Manual compaction at level-0 from '!adventures!vsdhUE4l5CfVXDDj' @ 72057594037927935 : 1 .. '!adventures!vsdhUE4l5CfVXDDj' @ 0 : 0; will stop at (end)
+2026/03/15-01:24:54.193 41d0 Manual compaction at level-1 from '!adventures!vsdhUE4l5CfVXDDj' @ 72057594037927935 : 1 .. '!adventures!vsdhUE4l5CfVXDDj' @ 0 : 0; will stop at (end)
