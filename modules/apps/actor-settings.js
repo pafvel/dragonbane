@@ -8,7 +8,7 @@ export default class DoDActorSettings extends HandlebarsApplicationMixin(Applica
         tag: "form",
         window: {
             title: "DoD.SETTINGS.actorSettings",
-            contentClasses: ["dragonbane", "standard-form", "actor-settings"],
+            contentClasses: ["dragonbane", "standard-form", "dragonbane-settings", "actor-settings"],
             resizable : true,
             icon: "fa-solid fa-user",
         },

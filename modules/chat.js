@@ -10,8 +10,8 @@ export function addChatListeners(_app, html, _data) {
 
     DoD_Utility.addHtmlEventListener(html, "click", ".inline-damage-roll", onInlineDamageRoll);   
     DoD_Utility.addHtmlEventListener(html, "click", ".treasure-roll", onTreasureRoll);
-    DoD_Utility.addHtmlEventListener(html, "click", "button.weapon-roll", onWeaponDamageRoll);
-    DoD_Utility.addHtmlEventListener(html, "click", "button.magic-roll", onMagicDamageRoll);
+    DoD_Utility.addHtmlEventListener(html, "click", "[data-action='rollWeaponDamage']", onRollWeaponDamage);
+    DoD_Utility.addHtmlEventListener(html, "click", "[data-action='rollSpellDamage']", onRollSpellDamage);
     DoD_Utility.addHtmlEventListener(html, "click", "button.critical-roll", onCriticalDamageRoll);
     DoD_Utility.addHtmlEventListener(html, "click", "button.push-roll", onPushRoll);
     DoD_Utility.addHtmlEventListener(html, "click", ".damage-details", onExpandableClick);
@@ -24,11 +24,11 @@ export function addChatListeners(_app, html, _data) {
     DoD_Utility.addHtmlEventListener(html, "click", "[data-action='healDamage']", onHealDamage);
 
     DoD_Utility.addHtmlEventListener(html, "pointerenter",
-        "[data-action='dealDamage'], [data-action='dealDoubleDamage'], [data-action='dealHalfDamage'], [data-action='dealDamageIgnoreArmor'], [data-action='healDamage']",
-        onEnterDealDamage, { capture: true });
+        "[data-action='dealDamage'], [data-action='healDamage'], [data-action='rollWeaponDamage'], [data-action='rollSpellDamage']",
+        onEnterTargetAction, { capture: true });
     DoD_Utility.addHtmlEventListener(html, "pointerleave",
-        "[data-action='dealDamage'], [data-action='dealDoubleDamage'], [data-action='dealHalfDamage'], [data-action='dealDamageIgnoreArmor'], [data-action='healDamage']",
-        onLeaveDealDamage, { capture: true });
+        "[data-action='dealDamage'], [data-action='healDamage'], [data-action='rollWeaponDamage'], [data-action='rollSpellDamage']",
+        onLeaveTargetAction, { capture: true });
 }
 
 function onDealDamage(event) {
@@ -56,17 +56,17 @@ function onHealDamage(event) {
     healTarget(li);
 }
 
-function onEnterDealDamage(event) {
+function onEnterTargetAction(event) {
     const li = event.currentTarget.closest("li");
-    const element = li.querySelector(".damage-roll") || li.querySelector(".healing-roll");
+    const element = li.querySelector("[data-target-id]");
     const actor = getTarget(element);
     const token = actor?.token?.object;
     token?._onHoverIn(event, { hoverOutOthers: true });
 }
 
-function onLeaveDealDamage(event) {
+function onLeaveTargetAction(event) {
     const li = event.currentTarget.closest("li");
-    const element = li.querySelector(".damage-roll") || li.querySelector(".healing-roll");
+    const element = li.querySelector("[data-target-id]");
     const actor = getTarget(element);
     const token = actor?.token?.object;
     token?._onHoverOut(event);
@@ -397,7 +397,7 @@ export async function onTreasureRoll(event) {
     DoD_Utility.drawTreasureCards(count);
 }
 
-async function onWeaponDamageRoll(event) {
+async function onRollWeaponDamage(event) {
     if (event.detail === 2) { // double-click
         return;
     };
@@ -456,7 +456,7 @@ async function onWeaponDamageRoll(event) {
     await inflictDamageMessage(damageData);
 }
 
-async function onMagicDamageRoll(event) {
+async function onRollSpellDamage(event) {
     if (event.detail === 2) { // double-click
         return;
     };
@@ -496,6 +496,7 @@ async function onMagicDamageRoll(event) {
         weapon: spell,
         damage: damage,
         damageType: damageType,
+        isHealing: context.isHealing,
         doubleSpellDamage: context.criticalEffect === "doubleDamage",
         target: context.targetActor
     };
@@ -687,6 +688,8 @@ export async function inflictDamageMessage(damageData) {
     if (formula[0] === "-") {
         isHealing = true;
         formula = formula.substring(1);
+    } else {
+        isHealing = damageData.isHealing;
     }
 
     // Add "1" in front of D to make sure the first roll term is a Die.
@@ -695,7 +698,7 @@ export async function inflictDamageMessage(damageData) {
     }
 
     // Check for monster vs prone target
-    if (damageData.actor?.isMonster && damageData.target) {
+    if (damageData.actor?.isMonster && damageData.target && !isHealing) {
         const actorToken = canvas.scene.tokens.find(t => t.actor.uuid === damageData.actor.uuid);
         const targetToken = canvas.scene.tokens.find(t => t.actor.uuid === damageData.target.uuid);
         if (actorToken && !actorToken.hasStatusEffect("prone") && targetToken && targetToken.hasStatusEffect("prone")) {

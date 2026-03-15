@@ -8,7 +8,7 @@ export default class DoDCoreSettings extends HandlebarsApplicationMixin(Applicat
         tag: "form",
         window: {
             title: "DoD.SETTINGS.coreSettingOverrides",
-            contentClasses: ["dragonbane", "standard-form", "core-settings"],
+            contentClasses: ["dragonbane", "standard-form", "dragonbane-settings", "core-settings"],
             resizable : true,
             icon: "fa-solid fa-th-list",
         },

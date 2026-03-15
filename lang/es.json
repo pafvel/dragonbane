@@ -597,8 +597,6 @@
       "allowDealDamageOnSelectedHint": "Si se selecciona, el GM puede causar daño (y sanar) al token seleccionado si no se ha apuntado a ningún token.",
       "automaticSkillAdvancementMark": "Automatizar las marcas de mejora de habilidad",
       "automaticSkillAdvancementMarkHint": "Coloca una marca de mejora de habilidad automáticamente con los resultados de Dragón y Demonio.",
-      "automaticSkillIntensiveTraining": "Gestiona el entrenamiento intensivo con un maestro.",
-      "automaticSkillIntensiveTrainingHint": "Añade la opción de entrenamiento intensivo con un maestro (la opción de entrenamiento intensivo aparece en el menú de elipsis de todas las habilidades. Si este entrenamiento tiene éxito, la opción desaparece hasta que la habilidad vuelva a mejorar mediante la experiencia).",
       "optionalRuleSettings": "Reglas Opcionales",
       "optionalRuleSettingsHint": "Configura qué reglas opcionales quieres utilizar.",
       "damageTypes": "Tipos de Daño",

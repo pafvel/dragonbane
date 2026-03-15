@@ -231,6 +231,10 @@
             padding: 0.25em 0 0.25em 1em;
         }
 
+        td {
+            color: var(--dod-color-journal-text);
+        }
+
         th:last-child {
             padding-right: 20px;
         }

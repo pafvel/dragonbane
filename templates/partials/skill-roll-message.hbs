@@ -13,6 +13,7 @@
         {{else}}
             {{#if isDamaging}}
                 <button class="chat-button weapon-roll"
+                    data-action="rollWeaponDamage"
                     data-actor-id="{{actor.uuid}}"
                     data-weapon-id="{{weapon.id}}"
                     data-damage-type="{{damageType}}"
@@ -36,6 +37,7 @@
         {{else}}
             {{#if isDamaging}}
                 <button class="chat-button magic-roll"
+                    data-action="rollSpellDamage"
                     data-actor-id="{{actor.uuid}}"
                     data-spell-id="{{spell.id}}"
                     data-power-level="{{powerLevel}}"

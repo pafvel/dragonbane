@@ -1,5 +1,47 @@
 # Change Log
 
+## Version 3.1
+
+- Chat
+  - Damage chat cards display a Deal Damage button when there is a target. Hovering the button highlights the targeted token. Right-clicking the chat card gives you more damage dealing options.
+  - The token targeted by a chat card can be updated by targeting another token and right-clicking the chat card.
+  - Pushing rolls and choosing critical effects now use dialog boxes instead of radio buttons in the chat.
+  - The armor bonus against certain damage types is now displayed in the damage info on the damage application chat card.
+
+- Combat
+  - Monster attack descriptions are displayed in the Select Monster Attack dialog.
+  - Broken weapons get a bane by default.
+  - Spell damage now supports damage types.
+
+- Resting
+  - The stretch rest button now opens a dialog that allows changing the amount to recover and makes it possible to spend the rest without recovering. Pressing Shift or Ctrl while clicking the button skips the dialog and the default values are used. Elves around the world can finally find their inner peace.
+  - The shift rest button now opens a dialog that makes it possible to spend the rest without recovering. Pressing Shift or Ctrl while clicking the button skips the dialog.
+  - Added a setting which reverses the behavior when clicking the stretch and shift rest buttons, i.e. skips the dialog by default and shows the dialog when pressing Shift or Ctrl when clicking.
+
+- Sheets
+  - Dark theme for character & item sheets now have a dark background.
+  - Enabled scrollbars on item sheets.
+  - Fixed the formatting when replacing edit boxes with a regular paragraph due to Limited & Observer permissions.
+  - Improved the display of long names on armor and helmets in the character sheet main tab.
+  - Improved the display of long item names in the item sheet header.
+  - Fix for the WP box not showing up when an NPC has 0 WP but has spells or abilities.
+  - Added localization for sheet types.
+  - Short attribute names on boons and banes on items can be written in English or, if localization exists, the preferred language from Foundry's settings. (contributed by bb46003)
+
+- Localization
+  - Updated ES translation (contributed by Tarot)
+  - Updated FR translation (contributed by u8slvn)
+  - Updated PL translation (contributed by GregorHak)
+
+- Misc
+  - Added attributions to game-icons.net.
+  - Stripped \<p\> from enriched table result.
+  - Removed a setting for training that was not used.
+
+- For developers
+  - Typed chat messages for damage messages and test messages (skills, weapons, spells, attributes). These messages store all damage and test data in ChatMessage.system. This improves how modules can customize and react to messages. See https://github.com/pafvel/dragonbane/issues/147 for a simple example. Note that html data properties may be removed in a future update since they are now redundant, developers should use ChatMessage.system instead.
+  - Item fields now get proper default values.
+
 ## Version 3.0.3
 
 - Hotfix

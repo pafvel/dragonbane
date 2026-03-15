@@ -1,0 +1,45 @@
+<div class="dod-controls">
+    <div>
+        <table class="derived-stat" title="{{localize "DoD.ui.dialog.restStretchHpHint"}}">
+            <tr>
+                <th>{{localize "DoD.ui.dialog.restStretchHp"}}</th>
+                <td>
+                    <select name="hpDice">
+                        <option value="0" {{#if (eq hpDice 0)}}selected{{/if}}>-</option>
+                        <option value="1" {{#if (eq hpDice 1)}}selected{{/if}}>+D6</option>
+                        <option value="2" {{#if (eq hpDice 2)}}selected{{/if}}>+2D6</option>
+                        <option value="3" {{#if (eq hpDice 3)}}selected{{/if}}>+3D6</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <table class="derived-stat" title="{{localize "DoD.ui.dialog.restStretchWpHint"}}">
+            <tr>
+                <th>{{localize "DoD.ui.dialog.restStretchWp"}}</th>
+                <td>
+                    <select name="wpDice">
+                        <option value="0" {{#if (eq wpDice 0)}}selected{{/if}}>-</option>
+                        <option value="1" {{#if (eq wpDice 1)}}selected{{/if}}>+D6</option>
+                        <option value="2" {{#if (eq wpDice 2)}}selected{{/if}}>+2D6</option>
+                        <option value="3" {{#if (eq wpDice 3)}}selected{{/if}}>+3D6</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <table class="derived-stat" title="{{localize "DoD.ui.dialog.restStretchConditionsHint"}}">
+            <tr>
+                <th>{{localize "DoD.ui.dialog.restStretchConditions"}}</th>
+                <td>
+                    <select name="conditions">
+                        <option value="0" {{#if (eq conditions 0)}}selected{{/if}}>0</option>
+                        <option value="1" {{#if (eq conditions 1)}}selected{{/if}}>1</option>
+                        <option value="2" {{#if (eq conditions 2)}}selected{{/if}}>2</option>
+                        <option value="3" {{#if (eq conditions 3)}}selected{{/if}}>3</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <p class="notes">{{localize "DoD.ui.dialog.restNote"}}</p>
+</div>

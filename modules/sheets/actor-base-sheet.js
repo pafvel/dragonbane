@@ -362,7 +362,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
 
         // WP widget data
         if (this.actor.system.willPoints !== undefined) {
-            context.hasWillpower = this.actor.system.willPoints.max > 0 || context.abilities?.length > 0 || context.spells?.length > 0 || !DoDActorSettings.hideNpcWpWidget;
+            context.hasWillpower = this.actor.system.willPoints.max > 0 || context.actor.hasAbilities || context.actor.hasSpells > 0 || !DoDActorSettings.hideNpcWpWidget;
             if (context.hasWillpower) {
                 context.maxWP = this.actor.system.willPoints.max;
                 context.currentWP = this.actor.system.willPoints.value;

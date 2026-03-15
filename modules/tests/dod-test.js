@@ -85,14 +85,26 @@ export default class DoDTest {
 
         for (let item of this.actor.items.contents) {
             if (item.system.banes?.length) {
-                let itemBanes = DoD_Utility.splitAndTrimString(item.system.banes.toLowerCase());
+                let allBanes = DoD_Utility.splitAndTrimString(item.system.banes.toLowerCase());
+                let itemBanes =[];
+                const attrs = game.i18n.translations.DoD.attributes;
+                allBanes.forEach(bane =>{
+                    const atr = Object.keys(attrs).find(key => attrs[key].toLowerCase() === bane) || bane;
+                    itemBanes.push(atr)
+                })
                 if (itemBanes.find(element => element.toLowerCase() === rollTarget || element.toLowerCase() === rollAttribute)) {
                     let value = !!item.system.worn || item.type === "injury";
                     banes.push( {source: item.name, value: value});
                 }
             }
             if (item.system.boons?.length) {
-                let itemBoons = DoD_Utility.splitAndTrimString(item.system.boons.toLowerCase());
+                let allBoons = DoD_Utility.splitAndTrimString(item.system.boons.toLowerCase());
+                let itemBoons =[];
+                const attrs = game.i18n.translations.DoD.attributes;
+                allBoons.forEach(boon =>{
+                    const atr = Object.keys(attrs).find(key => attrs[key].toLowerCase()=== boon) || boon;
+                    itemBoons.push(atr)
+                })
                 if (itemBoons.find(element => element.toLowerCase() === rollTarget || element.toLowerCase() === rollAttribute)) {
                     let value = !!item.system.worn;
                     boons.push( {source: item.name, value: value});

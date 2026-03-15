@@ -60,7 +60,6 @@ export default class DoDItemBaseSheet extends HandlebarsApplicationMixin(ItemShe
             system: this.item.system,
             effects: this.item.effects.contents,
             config: CONFIG.DoD,
-            automaticSkillIntensiveTraining: game.settings.get("dragonbane", "automaticSkillIntensiveTraining") ?? false
         };
         sheetData.itemDescriptionHTML = await CONFIG.DoD.TextEditor.enrichHTML(sheetData.system.itemDescription, { async: true, secrets: this.item.isOwner });
         if (context.user.isGM) {

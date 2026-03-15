@@ -51,7 +51,7 @@ export default class DoDChatMessageBaseData extends DragonbaneDataModel {
                     if (targetActorUuid === message.system.targetActorUuid) {
                         return false;
                     }
-                    return true;
+                    return message.isOwner;
                 },
                 callback: async (el) => {
                     const message = this.messageFromElement(el);
@@ -65,6 +65,9 @@ export default class DoDChatMessageBaseData extends DragonbaneDataModel {
                     const systemData = { ...message.system.toObject(), targetActorUuid };
                     const model = new message.system.constructor(systemData);
                     const messageData = await model.createMessageData(message.rolls[0]);
+
+                    // Keep same author
+                    messageData.user = message.author.id;
 
                     // Persist the update
                     await message.update(messageData);

@@ -44,11 +44,11 @@
             <table>
                 <tr>
                     <th rowspan="2"><button type="button" class="roll-deathRoll" data-action="roll-deathRoll"  title="{{localize "DoD.ui.character-sheet.rollDeathRoll"}}">{{localize "DoD.ui.character-sheet.deathRolls"}}</button></th>
-                    <th><span class="death-rolls-success-label">{{localize "DoD.ui.character-sheet.successes"}}</span></th>
-                    <th><span class="death-rolls-failure-label">{{localize "DoD.ui.character-sheet.failures"}}</span></th>
+                    <th><span class="death-rolls-success-label" title="{{localize "DoD.ui.character-sheet.successes"}}">{{localize "DoD.ui.character-sheet.successes"}}</span></th>
+                    <th><span class="death-rolls-failure-label" title="{{localize "DoD.ui.character-sheet.failures"}}">{{localize "DoD.ui.character-sheet.failures"}}</span></th>
                 </tr>
                 <tr>
-                    <td class="death-rolls-success">
+                    <td class="death-rolls-success" title="{{localize "DoD.ui.character-sheet.successes"}}">
                         {{#times deathRollsSuccesses }}
                         <img class="hit-point" src="./systems/dragonbane/art/ui/point-checked.webp"/>
                         {{/times}}
@@ -56,7 +56,7 @@
                         <img class="hit-point" src="./systems/dragonbane/art/ui/point-unchecked.webp"/>
                         {{/times}}
                     </td>
-                    <td class="death-rolls-failure">
+                    <td class="death-rolls-failure" title="{{localize "DoD.ui.character-sheet.failures"}}">
                         {{#times deathRollsFailures }}
                         <img class="hit-point" src="./systems/dragonbane/art/ui/point-checked.webp"/>
                         {{/times}}
