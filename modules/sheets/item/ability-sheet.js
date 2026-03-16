@@ -15,4 +15,13 @@ export default class DoDAbilitySheet extends DoDItemBaseSheet {
         description: { scrollable: [''], template: 'systems/dragonbane/templates/parts/item-sheet-description.hbs' },
         effects: { scrollable: [''], template: 'systems/dragonbane/templates/parts/item-sheet-effects.hbs' },
     }
+
+    // override to set "description" as initial tab
+    static TABS = {
+        ...super.TABS,
+        primary: {
+            ...super.TABS.primary,
+            initial: "description"
+        }
+    };
 }
