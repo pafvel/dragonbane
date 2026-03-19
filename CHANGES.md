@@ -10,6 +10,7 @@
 
 - Combat
   - Monster attack descriptions are displayed in the Select Monster Attack dialog.
+  - Monster attack names now use the table result name when available; otherwise the \<strong\> text in the description is used.
   - Broken weapons get a bane by default.
   - Spell damage now supports damage types.
   - Monsters casting spells will use the skill value of the magic school if they know it; auto success otherwise.
