@@ -275,6 +275,20 @@
   flex-grow: 0;
   display: inline;
 }
+.system-dragonbane .inline-damage-roll, .system-dragonbane .table-roll, .system-dragonbane .treasure-roll {
+  font-family: var(--dod-font-secondary);
+  font-style: normal;
+  flex-grow: 0;
+  display: inline;
+  background: var(--content-link-background);
+  border: 1px solid var(--content-link-border-color);
+  border-radius: 2px;
+  color: var(--content-link-text-color);
+  margin: -1px 0;
+  padding: 1px 4px 0;
+  white-space: nowrap;
+  word-break: break-all;
+}
 .system-dragonbane img[data-action=editImage] {
   cursor: var(--cursor-pointer);
 }
@@ -1002,16 +1016,6 @@
 .system-dragonbane .chat-message .message-content {
   padding-top: 2px;
 }
-.system-dragonbane .chat-message .message-content .table-results {
-  overflow-wrap: break-word;
-}
-.system-dragonbane .chat-message .message-content .table-results li {
-  display: flex;
-  flex-wrap: nowrap;
-}
-.system-dragonbane .chat-message .message-content .table-results img {
-  float: left;
-}
 .system-dragonbane .chat-message .message-content .dice-rolls .roll.die.d20.max {
   color: #aa0200;
   filter: sepia(0.5) hue-rotate(-60deg);
@@ -1064,6 +1068,9 @@
 }
 .system-dragonbane .chat-message .message-content label.checkbox input[type=radio] {
   top: 0;
+}
+.system-dragonbane .chat-message .table-draw ul.table-results li > .description:not(.name + .description) {
+  flex-basis: auto;
 }
 
 .system-dragonbane .dragonbane-settings {

@@ -273,7 +273,18 @@ export default class DoD_Utility {
         }
         // Enrich HTML with knowledge of actor
         for (let r of messageResults) {
-            r.details = await CONFIG.DoD.TextEditor.enrichHTML(r.description, {actor: actor, async: true});
+            // Split attack name and description
+            if (!r.name) {
+                const match = r.description.match(/<(b|strong)>(.*?)<\/\1>(.*)/);
+                if (match) {
+                    r.name = match[2];
+                    r.description = match[3];
+                }
+            }
+            r.details = "<strong class=\"name\">" + r.name + "</strong>"
+                + "<div class=\"description\">" 
+                + await CONFIG.DoD.TextEditor.enrichHTML(r.description, {actor: actor, async: true}) 
+                + "</div>";
         }
 
         // Render the chat card which combines the dice roll with the drawn results
