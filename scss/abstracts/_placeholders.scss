@@ -24,6 +24,10 @@
             border: 0 solid transparent;
             background-color: transparent;
             color: var(--dod-color-journal-text);
+
+            > i {
+                color: var(--color-dark-6);
+            }
         }
     }
 
@@ -36,6 +40,10 @@
             border: 0 solid transparent;
             background-color: transparent;
             color: var(--dod-color-journal-text);
+
+            > i {
+                color: var(--color-dark-6);
+            }
         }
     }
 
