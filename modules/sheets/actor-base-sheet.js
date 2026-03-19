@@ -900,6 +900,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                             options.autoSuccess = true;
                         } else {
                             options.noWPCost = true;
+                            options.canPush = false;
                         }
                     }
                     test = new DoDSpellTest(this.actor, item, options);
