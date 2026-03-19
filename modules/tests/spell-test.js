@@ -61,9 +61,9 @@ export default class DoDSpellTest extends DoDSkillTest  {
         super.updatePostRollData();
 
         if (this.actor.type !== "monster") {
-            this.postRollData.wpOld = this.postRollData.actor.system.willPoints.value;
-            this.postRollData.wpNew = this.isReroll ? this.postRollData.wpOld : this.postRollData.actor.system.willPoints.value - this.postRollData.wpCost;
-            if (this.postRollData.wpNew !== this.postRollData.wpOld) {
+            this.postRollData.wpOld = this.isReroll ? this.postRollData.actor.system.willPoints.value + this.postRollData.wpCost : this.postRollData.actor.system.willPoints.value;
+            this.postRollData.wpNew = this.isReroll ? this.postRollData.actor.system.willPoints.value : this.postRollData.actor.system.willPoints.value - this.postRollData.wpCost;
+            if (!this.isReroll && (this.postRollData.wpNew !== this.postRollData.wpOld)) {
                 // Pay WP cost
                 this.postRollData.actor.update({ ["system.willPoints.value"]: this.postRollData.wpNew});
             }

@@ -671,7 +671,7 @@ async function onPushRoll(event) {
         case "spellTest":
             options.spell = context.spell;
             options.powerLevel = context.powerLevel;
-            options.wpCost = Number(event.target.dataset.wpCost);
+            options.wpCost = Number(context.wpOld - context.wpNew);
             test = new DoDSpellTest(actor, options.spell, options);
             break;
         default:
