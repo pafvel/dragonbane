@@ -486,7 +486,6 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
         pattern: /\[\[\/damage\s((?:\d+)?[dD](?:\d+)(?:[\+\-]\d+)?)\s?(slashing|piercing|bludgeoning)?(?:\s(.+?))?\]\]/gm,
         enricher: (match, options) => {
             const a = document.createElement("a");
-            a.classList.add("inline-roll");
             a.classList.add("inline-damage-roll");
             a.dataset.damage = match[1];
             a.dataset.damageType = DoDOptionalRuleSettings.damageTypes ? "DoD.damageTypes." + (match[2] ?? "none") : "DoD.damageTypes.none";
@@ -505,7 +504,6 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
             const tableName = match[2] ?? table?.name;
             const a = document.createElement("a");
             if (table) {
-                a.classList.add("inline-roll");
                 a.classList.add("table-roll");
                 a.dataset.tableId = table.uuid;
                 a.dataset.tableName = table.name;
@@ -527,7 +525,6 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
         enricher: (match, _options) => {
             const count = match[1] ?? 1;
             const a = document.createElement("a");
-            a.classList.add("inline-roll");
             a.classList.add("treasure-roll");
             a.dataset.count = count;
 

@@ -284,24 +284,24 @@
             "general": "Geral",
             "memorized": "Preparado",
             "prerequisite": "Pré-requisito",
-            "range": "Distância",
+            "range": "Distância (M)",
             "rangeType": "Alcance",
-            "rank": "Rank",
+            "rank": "Grau",
             "requirement": "Requerimento",
             "school": "Escola de Magia"
         },
         "spellDurationTypes": {
-            "instant": "Instante",
+            "instant": "Instantânea",
             "round": "Rodada",
-            "stretch": "Intervalo",
-            "shift": "Turno",
+            "stretch": "Entretempo",
+            "shift": "Ciclo",
             "concentration": "Concentração",
             "permanent": "Permanente"
         },
         "spellRangeTypes": {
             "personal": "Pessoal",
             "touch": "Toque",
-            "range": "Distância",
+            "range": "Alcance",
             "cone": "Cone",
             "sphere": "Esfera"
         },        
@@ -309,7 +309,7 @@
             "common": "Comum",
             "uncommon": "Incomum",
             "rare": "Raro",
-            "unique": "Exclusivo"
+            "unique": "Único"
         },
         "tables": {
             "mishapMagic": "Acidente - Magia",

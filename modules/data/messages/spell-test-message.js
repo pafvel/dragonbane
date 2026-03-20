@@ -110,14 +110,16 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
         const magicCritGroup = "magicCritChoice"
         const magicCritChoices = {};
 
-        magicCritChoices.noCost = game.i18n.localize("DoD.magicCritChoices.noCost");
+        if (context.actor.system.willPoints !== undefined) {
+            magicCritChoices.noCost = game.i18n.localize("DoD.magicCritChoices.noCost");
+        }
         if (context.isDamaging && !context.isHealing) {
             magicCritChoices.doubleDamage = game.i18n.localize("DoD.magicCritChoices.doubleDamage");
         }
         magicCritChoices.doubleRange = game.i18n.localize("DoD.magicCritChoices.doubleRange");
         magicCritChoices.extraSpell = game.i18n.localize("DoD.magicCritChoices.extraSpell");
 
-        const magicCritChoice = "noCost";
+        const magicCritChoice = magicCritChoices.noCost ? "noCost" : (magicCritChoices.doubleDamage ? "doubleDamage" : (magicCritChoices.doubleRange ? "doubleRange" : "extraSpell"))   ;
 
         // Create dialog content
         const content = hb({

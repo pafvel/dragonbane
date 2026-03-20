@@ -28,7 +28,7 @@ export default class DoDSpellTest extends DoDSkillTest  {
         let options = await this.getRollOptionsFromDialog(title, label);
         if (options.cancelled) return options;
 
-        if (!this.isReroll && !this.autoSuccess) {
+        if (!this.isReroll && !(this.autoSuccess || this.options.noWPCost)) {
             // Check if the character has enough WP to cast spell
             let powerLevel = this.hasPowerLevel ? 1 : 0;
             if (!this.skipDialog && this.hasPowerLevel) {
@@ -61,9 +61,9 @@ export default class DoDSpellTest extends DoDSkillTest  {
         super.updatePostRollData();
 
         if (this.actor.type !== "monster") {
-            this.postRollData.wpOld = this.postRollData.actor.system.willPoints.value;
-            this.postRollData.wpNew = this.isReroll ? this.postRollData.wpOld : this.postRollData.actor.system.willPoints.value - this.postRollData.wpCost;
-            if (this.postRollData.wpNew !== this.postRollData.wpOld) {
+            this.postRollData.wpOld = this.isReroll ? this.postRollData.actor.system.willPoints.value + this.postRollData.wpCost : this.postRollData.actor.system.willPoints.value;
+            this.postRollData.wpNew = this.isReroll ? this.postRollData.actor.system.willPoints.value : this.postRollData.actor.system.willPoints.value - this.postRollData.wpCost;
+            if (!this.isReroll && (this.postRollData.wpNew !== this.postRollData.wpOld)) {
                 // Pay WP cost
                 this.postRollData.actor.update({ ["system.willPoints.value"]: this.postRollData.wpNew});
             }

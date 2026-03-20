@@ -13,34 +13,14 @@
             border: 2px solid var(--color-shadow-primary);
         }
 
+        .message-header {
+            line-height: 1.25;
+        }
+
         .message-content {
             padding-top: 2px;
 
-            .table-results {
-                overflow-wrap: break-word;
 
-                > li {
-                    display: flow-root; // contains floats; li height includes floated img
-                    clear: both;        // next li starts below previous float
-
-                    > img {
-                        float: left;
-                        
-                        // Align top of table icon with content-link
-                        + a.content-link { 
-                            display: inline-block;
-                            transform: translateY(2px);
-                        }
-
-                        // Align top of table icon with content-link inside description
-                        + div.description {
-                            transform: translateY(2px);
-                        }
-                    }
-                }
-            }
-
-            
             .dice-rolls {
 
                 .roll.die.d20.max {
@@ -103,6 +83,20 @@
 
                 input[type="radio"] {
                     top: 0;
+                }
+            }
+        }
+
+        .table-draw {
+
+            ul.table-results {
+
+                li {
+                    // If name doesn't exist, description can take up remaining space
+                    // next to icon instead of 100% of next row
+                    > .description:not(.name + .description) {
+                        flex-basis: auto; // overrides flex-basis: 100%
+                    }
                 }
             }
         }

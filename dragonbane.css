@@ -70,6 +70,9 @@
   background-color: transparent;
   color: var(--dod-color-journal-text);
 }
+.system-dragonbane .journal-entry-content .display-skill h3 .content-link > i, .system-dragonbane .journal-entry-content .display-spell h3 .content-link > i, .system-dragonbane .journal-entry-content .display-ability h3 .content-link > i {
+  color: var(--color-dark-6);
+}
 .system-dragonbane .journal-entry-content .display-skill h4, .system-dragonbane .journal-entry-content .display-spell h4, .system-dragonbane .journal-entry-content .display-ability h4 {
   font-size: large;
   font-weight: bold;
@@ -80,6 +83,9 @@
   background-color: transparent;
   color: var(--dod-color-journal-text);
 }
+.system-dragonbane .journal-entry-content .display-skill h4 .content-link > i, .system-dragonbane .journal-entry-content .display-spell h4 .content-link > i, .system-dragonbane .journal-entry-content .display-ability h4 .content-link > i {
+  color: var(--color-dark-6);
+}
 .system-dragonbane .journal-entry-content .display-skill li, .system-dragonbane .journal-entry-content .display-spell li, .system-dragonbane .journal-entry-content .display-ability li {
   color: var(--dod-color-text-dark-title);
 }
@@ -87,23 +93,23 @@
   color: var(--dod-color-journal-text);
 }
 
-.system-dragonbane .simple-table tr:nth-child(1n+2) td, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h2, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional h2, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h3, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional h3, .system-dragonbane .journal-entry-content .display-table table caption h2, .system-dragonbane .journal-entry-content .display-generic-table table caption h2, .system-dragonbane .journal-entry-content .display-table table caption h3, .system-dragonbane .journal-entry-content .display-generic-table table caption h3, .system-dragonbane .journal-entry-content .display-table table caption span, .system-dragonbane .journal-entry-content .display-generic-table table caption span {
+.system-dragonbane .simple-table tr:nth-child(1n+2) td, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h2, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional h2, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h3, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional h3, .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption h2, .system-dragonbane .journal-entry-content .display-generic-table table caption h2, .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption h3, .system-dragonbane .journal-entry-content .display-generic-table table caption h3, .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption span, .system-dragonbane .journal-entry-content .display-generic-table table caption span {
   white-space: nowrap; /* Prevent text from wrapping */
   overflow: hidden; /* Hide the overflowed text */
   text-overflow: ellipsis; /* Add ellipsis when the text overflows */
 }
 
-.system-dragonbane .journal-entry-content .display-table table, .system-dragonbane .journal-entry-content .display-generic-table table {
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table, .system-dragonbane .journal-entry-content .display-generic-table table {
   border: 0;
   background: transparent;
 }
-.system-dragonbane .journal-entry-content .display-table table caption, .system-dragonbane .journal-entry-content .display-generic-table table caption {
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption, .system-dragonbane .journal-entry-content .display-generic-table table caption {
   width: 100%;
   height: 32px;
   left: calc(50% - 170px);
   color: var(--dod-color-journal-table-title);
 }
-.system-dragonbane .journal-entry-content .display-table table caption:not(:has(> :is(h2, h3, span))), .system-dragonbane .journal-entry-content .display-generic-table table caption:not(:has(> :is(h2, h3, span))) {
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption:not(:has(> :is(h2, h3, span))), .system-dragonbane .journal-entry-content .display-generic-table table caption:not(:has(> :is(h2, h3, span))) {
   padding: 6px 24px 12px;
   background-image: url("art/ui/text-box-title-wide-bg.webp"), url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp");
   background-size: contain, auto 24px, auto 24px, calc(100% - 24px) 16px;
@@ -111,7 +117,7 @@
   background-position: center center, left center, right center, center center;
   background-clip: border-box, border-box, border-box, padding-box;
 }
-.system-dragonbane .journal-entry-content .display-table table caption:has(> :is(h2, h3, span)), .system-dragonbane .journal-entry-content .display-generic-table table caption:has(> :is(h2, h3, span)) {
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption:has(> :is(h2, h3, span)), .system-dragonbane .journal-entry-content .display-generic-table table caption:has(> :is(h2, h3, span)) {
   padding: 2px 24px;
   background-image: url("art/ui/arrow-left.webp"), url("art/ui/arrow-right.webp"), url("art/ui/separator-middle.webp");
   background-size: auto 24px, auto 24px, calc(100% - 24px) 16px;
@@ -119,7 +125,7 @@
   background-position: left center, right center, center center;
   background-clip: border-box, border-box, border-box, padding-box;
 }
-.system-dragonbane .journal-entry-content .display-table table caption h2, .system-dragonbane .journal-entry-content .display-generic-table table caption h2, .system-dragonbane .journal-entry-content .display-table table caption h3, .system-dragonbane .journal-entry-content .display-generic-table table caption h3, .system-dragonbane .journal-entry-content .display-table table caption span, .system-dragonbane .journal-entry-content .display-generic-table table caption span {
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption h2, .system-dragonbane .journal-entry-content .display-generic-table table caption h2, .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption h3, .system-dragonbane .journal-entry-content .display-generic-table table caption h3, .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption span, .system-dragonbane .journal-entry-content .display-generic-table table caption span {
   display: inline-block;
   text-align: center;
   text-transform: none;
@@ -137,28 +143,28 @@
   background-position: left -68px center, right -68px center, center center;
   background-clip: border-box, border-box, padding-box;
 }
-.system-dragonbane .journal-entry-content .display-table table caption .content-link, .system-dragonbane .journal-entry-content .display-generic-table table caption .content-link, .system-dragonbane .journal-entry-content .display-table table caption .table-roll, .system-dragonbane .journal-entry-content .display-generic-table table caption .table-roll {
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption .content-link, .system-dragonbane .journal-entry-content .display-generic-table table caption .content-link, .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption .table-roll, .system-dragonbane .journal-entry-content .display-generic-table table caption .table-roll {
   border: 0;
   background-color: transparent;
 }
-.system-dragonbane .journal-entry-content .display-table table caption .content-link i, .system-dragonbane .journal-entry-content .display-generic-table table caption .content-link i, .system-dragonbane .journal-entry-content .display-table table caption .table-roll i, .system-dragonbane .journal-entry-content .display-generic-table table caption .table-roll i {
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption .content-link i, .system-dragonbane .journal-entry-content .display-generic-table table caption .content-link i, .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table caption .table-roll i, .system-dragonbane .journal-entry-content .display-generic-table table caption .table-roll i {
   color: inherit;
 }
-.system-dragonbane .journal-entry-content .display-table table tr, .system-dragonbane .journal-entry-content .display-generic-table table tr {
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table tr, .system-dragonbane .journal-entry-content .display-generic-table table tr {
   color: var(--dod-color-journal-table-text);
   border-bottom: 1px solid var(--dod-color-journal-table-text);
   background: transparent;
 }
-.system-dragonbane .journal-entry-content .display-table table tr:first-child, .system-dragonbane .journal-entry-content .display-generic-table table tr:first-child {
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table tr:first-child, .system-dragonbane .journal-entry-content .display-generic-table table tr:first-child {
   border-bottom: 2px solid var(--dod-color-journal-table-text);
 }
-.system-dragonbane .journal-entry-content .display-table table tr:last-child, .system-dragonbane .journal-entry-content .display-generic-table table tr:last-child {
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table tr:last-child, .system-dragonbane .journal-entry-content .display-generic-table table tr:last-child {
   border-bottom: 0;
 }
-.system-dragonbane .journal-entry-content .display-table table tr:nth-child(2n), .system-dragonbane .journal-entry-content .display-generic-table table tr:nth-child(2n) {
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table tr:nth-child(2n), .system-dragonbane .journal-entry-content .display-generic-table table tr:nth-child(2n) {
   background-color: var(--dod-color-journal-table-tint);
 }
-.system-dragonbane .journal-entry-content .display-table table td, .system-dragonbane .journal-entry-content .display-generic-table table td, .system-dragonbane .journal-entry-content .display-table table th, .system-dragonbane .journal-entry-content .display-generic-table table th {
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table td, .system-dragonbane .journal-entry-content .display-generic-table table td, .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table th, .system-dragonbane .journal-entry-content .display-generic-table table th {
   padding: 2px;
 }
 
@@ -274,6 +280,20 @@
   font-style: normal;
   flex-grow: 0;
   display: inline;
+}
+.system-dragonbane .inline-damage-roll, .system-dragonbane .table-roll, .system-dragonbane .treasure-roll {
+  font-family: var(--dod-font-secondary);
+  font-style: normal;
+  flex-grow: 0;
+  display: inline;
+  background: var(--content-link-background);
+  border: 1px solid var(--content-link-border-color);
+  border-radius: 2px;
+  color: var(--content-link-text-color);
+  margin: -1px 0;
+  padding: 1px 4px 0;
+  white-space: nowrap;
+  word-break: break-all;
 }
 .system-dragonbane img[data-action=editImage] {
   cursor: var(--cursor-pointer);
@@ -515,16 +535,22 @@
   width: auto;
 }
 
-.system-dragonbane .journal-entry-content .display-table table td:first-child, .system-dragonbane .journal-entry-content .display-table table th:first-child {
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table td:first-child, .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table th:first-child {
   text-align: center;
   width: 0;
 }
-.system-dragonbane .journal-entry-content .display-table.gear-table td .content-link, .system-dragonbane .journal-entry-content .display-table.gear-table th .content-link {
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table td p:first-child {
+  margin-top: 0;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table table td p:last-child {
+  margin-bottom: 0;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table.gear-table td .content-link, .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table.gear-table th .content-link {
   border: 0;
   background-color: transparent;
   color: unset;
 }
-.system-dragonbane .journal-entry-content .display-table.gear-table td .content-link i, .system-dragonbane .journal-entry-content .display-table.gear-table th .content-link i {
+.system-dragonbane .sheet.journal-entry .journal-entry-content .display-table.gear-table td .content-link i, .system-dragonbane .sheet.journal-entry .journal-entry-content .display-table.gear-table th .content-link i {
   color: inherit;
 }
 
@@ -996,25 +1022,11 @@
   background-position-x: center;
   border: 2px solid var(--color-shadow-primary);
 }
+.system-dragonbane .chat-message .message-header {
+  line-height: 1.25;
+}
 .system-dragonbane .chat-message .message-content {
   padding-top: 2px;
-}
-.system-dragonbane .chat-message .message-content .table-results {
-  overflow-wrap: break-word;
-}
-.system-dragonbane .chat-message .message-content .table-results > li {
-  display: flow-root;
-  clear: both;
-}
-.system-dragonbane .chat-message .message-content .table-results > li > img {
-  float: left;
-}
-.system-dragonbane .chat-message .message-content .table-results > li > img + a.content-link {
-  display: inline-block;
-  transform: translateY(2px);
-}
-.system-dragonbane .chat-message .message-content .table-results > li > img + div.description {
-  transform: translateY(2px);
 }
 .system-dragonbane .chat-message .message-content .dice-rolls .roll.die.d20.max {
   color: #aa0200;
@@ -1068,6 +1080,9 @@
 }
 .system-dragonbane .chat-message .message-content label.checkbox input[type=radio] {
   top: 0;
+}
+.system-dragonbane .chat-message .table-draw ul.table-results li > .description:not(.name + .description) {
+  flex-basis: auto;
 }
 
 .system-dragonbane .dragonbane-settings {
