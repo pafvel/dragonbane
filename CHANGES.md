@@ -36,6 +36,7 @@
   - Updated ES translation (contributed by Tarot)
   - Updated FR translation (contributed by u8slvn)
   - Updated PL translation (contributed by GregorHak)
+  - Updated PT-BR translation (contributed by Brn086)
 
 - Misc
   - Added attributions to game-icons.net.
