@@ -98,12 +98,21 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
                 attack.description = await CONFIG.DoD.TextEditor.enrichHTML(attack.description, { async: true });
 
                 // Split attack name and description
-                const match = attack.description.match(/<(b|strong)>(.*?)<\/\1>(.*)/);
-                if (match) {
-                    attack.name = match[2];
-                    attack.description = match[3]
+                if (result.name) {
+                    const prefix = table.name + " - ";
+                    if (result.name.startsWith(prefix)) {
+                        attack.name = result.name.substring(prefix.length);
+                    } else {
+                        attack.name = result.name;
+                    }
                 } else {
-                    attack.name = String(attack.index);
+                    const match = attack.description.match(/<(b|strong)>(.*?)<\/\1>(.*)/);
+                    if (match) {
+                        attack.name = match[2];
+                        attack.description = match[3]
+                    } else {
+                        attack.name = String(attack.index);
+                    }
                 }
                 dialogData.attacks.push(attack);
             }

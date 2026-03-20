@@ -2,30 +2,44 @@
 
 .system-dragonbane {
 
-  .journal-entry-content {
+  .sheet.journal-entry {
 
-    .display-table {
+    .journal-entry-content {
 
-      table {
-        @extend %base-table;
+      .display-table {
 
-        td:first-child, th:first-child {
-            text-align: center;
-            width: 0;
+        table {
+          @extend %base-table;
+
+          td:first-child, th:first-child {
+              text-align: center;
+              width: 0;
+          }
+
+          td {
+
+            p:first-child {
+              margin-top: 0;
+            }
+
+            p:last-child {
+              margin-bottom: 0;
+            }
+          }
         }
-      }
 
-      &.gear-table {
+        &.gear-table {
 
-        td, th {
+          td, th {
 
-          .content-link {
-            border: 0;
-            background-color: transparent;
-            color: unset;
+            .content-link {
+              border: 0;
+              background-color: transparent;
+              color: unset;
 
-            i {
-              color: inherit;
+              i {
+                color: inherit;
+              }
             }
           }
         }

@@ -10,6 +10,7 @@
 
 - Combat
   - Monster attack descriptions are displayed in the Select Monster Attack dialog.
+  - Monster attack names now use the table result name when available; otherwise the \<strong\> text in the description is used.
   - Broken weapons get a bane by default.
   - Spell damage now supports damage types.
   - Monsters casting spells will use the skill value of the magic school if they know it; auto success otherwise.
@@ -29,6 +30,7 @@
   - Added localization for sheet types.
   - Short attribute names on boons and banes on items can be written in English or, if localization exists, the preferred language from Foundry's settings. (contributed by bb46003)
   - Sorting based on item names will now handle special characters from different languages correctly (contributed by bb46003)
+  - Item sheets for abilities, skills and spells now have the Description tab as the initial tab.
 
 - Localization
   - Updated ES translation (contributed by Tarot)

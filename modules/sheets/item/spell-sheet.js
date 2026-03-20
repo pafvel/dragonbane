@@ -16,6 +16,15 @@ export default class DoDSpellSheet extends DoDItemBaseSheet {
         effects: { scrollable: [''], template: 'systems/dragonbane/templates/parts/item-sheet-effects.hbs' },
     }
 
+    // override to set "description" as initial tab
+    static TABS = {
+        ...super.TABS,
+        primary: {
+            ...super.TABS.primary,
+            initial: "description"
+        }
+    };
+
     async _prepareContext(options) {
         const context = await super._prepareContext(options);
 

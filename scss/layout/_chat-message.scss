@@ -20,18 +20,6 @@
         .message-content {
             padding-top: 2px;
 
-            .table-results {
-                overflow-wrap: break-word;
-
-                li {
-                    display: flex;
-                    flex-wrap: nowrap;
-                }
-
-                img {
-                    float: left;
-                }
-            }
 
             .dice-rolls {
 
@@ -95,6 +83,20 @@
 
                 input[type="radio"] {
                     top: 0;
+                }
+            }
+        }
+
+        .table-draw {
+
+            ul.table-results {
+
+                li {
+                    // If name doesn't exist, description can take up remaining space
+                    // next to icon instead of 100% of next row
+                    > .description:not(.name + .description) {
+                        flex-basis: auto; // overrides flex-basis: 100%
+                    }
                 }
             }
         }

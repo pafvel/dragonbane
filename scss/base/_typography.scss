@@ -23,6 +23,22 @@
         display: inline;
     }
 
+    // Specific styles for certain inline elements
+    .inline-damage-roll, .table-roll, .treasure-roll {
+        font-family: var(--dod-font-secondary);
+        font-style: normal;
+        flex-grow: 0;
+        display: inline;
+        background: var(--content-link-background);
+        border: 1px solid var(--content-link-border-color);
+        border-radius: 2px;
+        color: var(--content-link-text-color);
+        margin: -1px 0;
+        padding: 1px 4px 0;
+        white-space: nowrap;
+        word-break: break-all;
+    }
+
     img[data-action="editImage"] {
         cursor: var(--cursor-pointer);
     }
