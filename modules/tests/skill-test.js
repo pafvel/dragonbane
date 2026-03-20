@@ -9,7 +9,6 @@ export default class DoDSkillTest extends DoDTest {
         this.actor = actor;
         this.skill = skill;
         this.attribute = skill?.system.attribute;
-        this.canPush = options ? options.canPush !== false : true;
     }
 
     async getRollOptions() {
@@ -23,7 +22,7 @@ export default class DoDSkillTest extends DoDTest {
         this.preRollData.actor = this.actor;
         this.preRollData.skill = this.skill;
         this.preRollData.target = this.skill?.system.value;
-        this.preRollData.canPush = this.options ? this.options.canPush !== false : true;
+        this.preRollData.canPush = this.options.canPush !== undefined ? this.options.canPush : this.actor.type === "character";
     }
 
     updatePostRollData() {
