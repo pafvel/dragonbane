@@ -965,7 +965,13 @@ export class DoDActor extends Actor {
                 if (magicSchools.has(spell.system.school)) {
                     spell.system.skillValue = magicSchools.get(spell.system.school);
                 } else {
-                    spell.system.skillValue = 0;
+                    // fallback: find any matching skill
+                    const skill = this.findMagicSkill(spell.system.school);
+                    if (skill) {
+                        spell.system.skillValue = skill.system.value;
+                    } else {
+                        spell.system.skillValue = 0;
+                    }
                 }
             }
         }
