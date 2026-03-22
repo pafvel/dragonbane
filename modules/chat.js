@@ -60,16 +60,16 @@ function onEnterTargetAction(event) {
     const li = event.currentTarget.closest("li");
     const element = li.querySelector("[data-target-id]");
     const actor = getTarget(element);
-    const token = actor?.token?.object;
-    token?._onHoverIn(event, { hoverOutOthers: true });
+    const token = actor?.token || canvas.scene?.tokens?.find(t => t.actor?.uuid === actor?.uuid);
+    token?.object?._onHoverIn(event, { hoverOutOthers: true });
 }
 
 function onLeaveTargetAction(event) {
     const li = event.currentTarget.closest("li");
     const element = li.querySelector("[data-target-id]");
     const actor = getTarget(element);
-    const token = actor?.token?.object;
-    token?._onHoverOut(event);
+    const token = actor?.token || canvas.scene?.tokens?.find(t => t.actor?.uuid === actor?.uuid);
+    token?.object?._onHoverOut(event);
 }
 
 function messageFromElement(element) {
