@@ -208,11 +208,13 @@
   vertical-align: middle;
   font-size: 16px;
   font-style: normal;
-  border: 0 solid transparent;
-  padding: 8px 8px 12px;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h2 .content-link, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional h2 .content-link, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h3 .content-link, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional h3 .content-link {
   color: rgb(222, 233, 230);
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h2, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional h2, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info h3, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional h3 {
+  border: 0 solid transparent;
+  padding: 8px 8px 12px;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info p, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional p {
   padding: 4px 16px 0;
@@ -978,6 +980,11 @@
 .system-dragonbane .text-box-editor button.toggle:hover {
   text-shadow: 0 0 8px var(--color-shadow-primary);
   box-shadow: none;
+}
+.system-dragonbane .text-box-editor table {
+  background: transparent;
+  --table-row-color-odd: transparent;
+  --table-row-color-even: rgba(0, 0, 0, 0.1);
 }
 
 .system-dragonbane .waypoint-label .move-range {
@@ -1928,10 +1935,12 @@
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info table {
   color: var(--dod-color-journal-info-text);
-  margin-left: 1em;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info table td, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info table th {
   padding: 0.25em 0;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info table {
+  margin-left: 1em;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info ol li, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info ul li {
   color: var(--dod-color-journal-info-text);
