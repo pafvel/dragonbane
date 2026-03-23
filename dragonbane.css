@@ -983,8 +983,8 @@
 }
 .system-dragonbane .text-box-editor table {
   background: transparent;
-  --table-row-color-odd: transparent;
-  --table-row-color-even: rgba(0, 0, 0, 0.1);
+  --table-row-color-even: transparent;
+  --table-row-color-odd: rgba(0, 0, 0, 0.1);
 }
 
 .system-dragonbane .waypoint-label .move-range {

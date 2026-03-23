@@ -1,5 +1,10 @@
 # Change Log
 
+## Version 3.1.4
+- Fix for monster defend chat message missing skill reference.
+- Fix for items not being draggable on skill and ability tabs.
+- Fix for table background inside item text-box.
+
 ## Version 3.1.3
 - Fix for hover roll/deal damage button not highlighting linked actors.
 - Fix for incorrect skill value on character sheet for spells with non-nagic school as skill.
