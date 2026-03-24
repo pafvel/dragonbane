@@ -322,8 +322,6 @@ for (const sheet of ["DoDActorBaseSheet", "DoDItemBaseSheet", "JournalEntryPageS
     });
 }
 
-Hooks.on("dropActorSheetData", DoDCharacterSheet._onDropTable);
-
 Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
     // Apply seeting to keep ownership permission on import
     const keepOwnership = game.settings.get("dragonbane", "keepOwnershipOnImport");

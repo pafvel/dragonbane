@@ -404,6 +404,43 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         return item?.system?.quantity !== undefined;
     }
 
+    // add support for droping roll tables
+    async _onDropDocument(event, document) {
+        let result = await super._onDropDocument(event, document);
+        if (!result) {
+            if (document.documentName === "RollTable") {
+                result = await this._onDropRollTable(event, document);
+            }
+        }         
+        return result;
+    }
+
+    async _onDropRollTable(_event, _document) {
+        return null; // Continue
+    }
+
+    // handle dropping of folders containing items
+    async _onDropFolder(event, folder) {
+        if (!this.actor.isOwner) return null;
+        if (folder.type !== "Item") return null;
+
+        const results = [];
+
+        const addFolderItems = async (currentFolder) => {
+            for (const item of currentFolder.contents) {
+                const result = await this._onDropItem(event, item);
+                if (result) results.push(result);
+            }
+
+            for (const child of currentFolder.children) {
+                await addFolderItems(child.folder);
+            }
+        };
+
+        await addFolderItems(folder);
+        return results.length ? results : null;
+    }   
+
     // Re-implements super._onDropItem and adds update data to prevent multiple data changes
     async _onDropItemUpdate(event, item, update) {
         if (!this.actor.isOwner) return null;

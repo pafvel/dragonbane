@@ -573,13 +573,4 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
             event.stopPropagation();
         }
     }
-
-    static async _onDropTable(actor, _sheet, data) {
-        if (data.type === "RollTable" && actor.isOwner && actor.type === "monster") {
-            DoD_Utility.INFO("DoD.INFO.monsterAttackUpdated", { actor: actor.name });
-            actor.update({ ["system.attackTable"]: data.uuid });
-            return false; // Stop
-        }
-        return true; // Continue
-    }
 }
