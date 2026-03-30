@@ -33,9 +33,9 @@ export default class DoDChatMessageBaseData extends DragonbaneDataModel {
                 // Register context menu action for all types with targetActorUuid field
                 // Requires createMessageData(roll) to be implemented in subclass
                 // Maybe this could be made more elegant later
-                name: "DoD.ui.chat.updateTarget",
+                label: "DoD.ui.chat.updateTarget",
                 icon: '<i class="fas fa-bullseye"></i>',
-                condition: (el) => {
+                visible: (el) => {
                     // Check if the message type matches
                     const message = this.messageFromElement(el);
                     if (message?.type !== this.TYPE) {
@@ -53,7 +53,7 @@ export default class DoDChatMessageBaseData extends DragonbaneDataModel {
                     }
                     return message.isOwner;
                 },
-                callback: async (el) => {
+                onClick: async (_event, el) => {
                     const message = this.messageFromElement(el);
                     if (!message) return;
 
