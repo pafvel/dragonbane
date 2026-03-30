@@ -405,6 +405,14 @@ export class DoDActor extends Actor {
         this.system.attributes.wil.value = DoD_Utility.clamp(this.system.attributes.wil.value, 1, 18);
         this.system.attributes.cha.value = DoD_Utility.clamp(this.system.attributes.cha.value, 1, 18);
 
+        // Hit Points
+        this.system.hitPoints.max = this.system.attributes.con.value;
+        this.system.hitPoints.base = this.system.attributes.con.value;
+
+        // Will Points
+        this.system.willPoints.max = this.system.attributes.wil.value;
+        this.system.willPoints.base = this.system.attributes.wil.value;
+
         // Damage Bonus AGL
         let damageBonusAgl = DoD_Utility.calculateDamageBonus(this.system.attributes.agl.value);
         this.system.damageBonus.agl.base = game.i18n.localize(damageBonusAgl);
