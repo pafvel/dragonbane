@@ -1,5 +1,20 @@
 # Change Log
 
+## Version 3.1.4
+- Fix for monster defend chat message missing skill reference.
+- Fix for items not being draggable on skill and ability tabs.
+- Fix for table background inside item text-box.
+
+## Version 3.1.3
+- Fix for hover roll/deal damage button not highlighting linked actors.
+- Fix for incorrect skill value on character sheet for spells with non-nagic school as skill.
+
+## Version 3.1.2
+- Skipped (contained a failed fix)
+
+## Version 3.1.1
+- Fix for shift-clicking weapon test resulting in error when there are banes/boons to ignore.
+
 ## Version 3.1
 
 - Chat
@@ -36,6 +51,7 @@
   - Updated ES translation (contributed by Tarot)
   - Updated FR translation (contributed by u8slvn)
   - Updated PL translation (contributed by GregorHak)
+  - Updated PT-BR translation (contributed by Brn086)
 
 - Misc
   - Added attributions to game-icons.net.

@@ -194,5 +194,14 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
 
         const test = new DoDSkillTest(this.actor, skill, {skipDialog: true});
         await test.roll();
-    }    
+    }
+
+    async _onDropRollTable(_event, document) {
+        if (this.actor.isOwner && this.actor.type === "monster") {
+            DoD_Utility.INFO("DoD.INFO.monsterAttackUpdated", { actor: this.actor.name });
+            await this.actor.update({ ["system.attackTable"]: document.uuid });
+            return document; // Stop
+        }
+        return null; // Continue
+    }
 }

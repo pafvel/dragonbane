@@ -136,6 +136,13 @@
                 box-shadow: none;
             }
         }
+
+        table {
+            background: transparent;
+            
+            --table-row-color-even: transparent;
+            --table-row-color-odd: rgba(0, 0, 0, 0.1);
+        }        
     }
 
 }

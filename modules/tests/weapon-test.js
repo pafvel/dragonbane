@@ -107,63 +107,65 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         //
         // Automatic banes and boons
         //
+        if (!this.noBanesBoons) {
 
-        // Bane if weapon is broken
-        if (this.weapon.system.broken) {
-            this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.broken"), value: true});       
-        }
+            // Bane if weapon is broken
+            if (this.weapon.system.broken) {
+                this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.broken"), value: true});       
+            }
 
-        // Bane for strength below weapon requirement
-        if (this.actor.type === "character" && this.weapon.requiredStr > this.actor.system.attributes.str.value) {
-            this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.belowRequiredStr"), value: true});
-        }
+            // Bane for strength below weapon requirement
+            if (this.actor.type === "character" && this.weapon.requiredStr > this.actor.system.attributes.str.value) {
+                this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.belowRequiredStr"), value: true});
+            }
 
-        if (actorToken && targetToken) {
+            if (actorToken && targetToken) {
 
-            // Boon and extra damage on melee attack on prone target
-            if (hasMeleeAttack && isInMeleeRange) {
-                if (targetToken.hasStatusEffect("prone") && !actorToken.hasStatusEffect("prone")) {
-                    this.dialogData.boons.push({source: game.i18n.localize("EFFECT.StatusProne"), value: true});
-                    this.dialogData.extraDamage = "D6";
+                // Boon and extra damage on melee attack on prone target
+                if (hasMeleeAttack && isInMeleeRange) {
+                    if (targetToken.hasStatusEffect("prone") && !actorToken.hasStatusEffect("prone")) {
+                        this.dialogData.boons.push({source: game.i18n.localize("EFFECT.StatusProne"), value: true});
+                        this.dialogData.extraDamage = "D6";
+                    }
                 }
-            }
-            // Bane on ranged attacks at point blank
-            if (isRangedWeapon && distance <= 2) {
-                this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.pointBlank"), value: true});
-            }
-            // Bane on ranged attacks at more than max range
-            if ((isRangedWeapon || isThrownWeapon) && distance > this.weapon.calculateRange()) {
-                this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.longRange"), value: true});
-            }
-            // Bane if walls or tokens obstruct line of sight
-            if ((isRangedWeapon || isThrownWeapon && !isInMeleeRange)) {
-
-                const origin = actorToken.object.bounds.center;
-                const destination = targetToken.object.bounds.center;
-
-                // Check walls
-                const sightBackend = CONFIG.Canvas.polygonBackends["sight"];
-                const blockedByWall = sightBackend.testCollision(origin, destination, { mode: "any", type: "sight" });
-                if (blockedByWall) {
-                    this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.lineOfSightWall"), value: true});
+                // Bane on ranged attacks at point blank
+                if (isRangedWeapon && distance <= 2) {
+                    this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.pointBlank"), value: true});
                 }
+                // Bane on ranged attacks at more than max range
+                if ((isRangedWeapon || isThrownWeapon) && distance > this.weapon.calculateRange()) {
+                    this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.longRange"), value: true});
+                }
+                // Bane if walls or tokens obstruct line of sight
+                if ((isRangedWeapon || isThrownWeapon && !isInMeleeRange)) {
 
-                // Check tokens
-                const ray = new foundry.canvas.geometry.Ray(origin, destination);
-                const potentialBlockers = canvas.tokens.placeables.filter(t => t.id !== targetToken.id && t.id !== actorToken.id && !t.document.hidden);
-                const blockers = potentialBlockers.filter(t => {
-                    const { x, y, width, height } = t.bounds;
-                    const sides = [
-                        [ x,            y,          x + width, y            ], // top
-                        [ x + width,    y,          x + width, y + height   ], // right
-                        [ x + width,    y + height, x,         y + height   ], // bottom
-                        [ x,            y + height, x,         y            ]  // left
-                    ];
-                    return sides.some(coords => !!ray.intersectSegment(coords));
-                });
-                if (blockers.length > 0) {
-                    const notProne = blockers.some( blocker => !blocker.document.hasStatusEffect("prone") );
-                    this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.lineOfSightToken"), value: notProne});
+                    const origin = actorToken.object.bounds.center;
+                    const destination = targetToken.object.bounds.center;
+
+                    // Check walls
+                    const sightBackend = CONFIG.Canvas.polygonBackends["sight"];
+                    const blockedByWall = sightBackend.testCollision(origin, destination, { mode: "any", type: "sight" });
+                    if (blockedByWall) {
+                        this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.lineOfSightWall"), value: true});
+                    }
+
+                    // Check tokens
+                    const ray = new foundry.canvas.geometry.Ray(origin, destination);
+                    const potentialBlockers = canvas.tokens.placeables.filter(t => t.id !== targetToken.id && t.id !== actorToken.id && !t.document.hidden);
+                    const blockers = potentialBlockers.filter(t => {
+                        const { x, y, width, height } = t.bounds;
+                        const sides = [
+                            [ x,            y,          x + width, y            ], // top
+                            [ x + width,    y,          x + width, y + height   ], // right
+                            [ x + width,    y + height, x,         y + height   ], // bottom
+                            [ x,            y + height, x,         y            ]  // left
+                        ];
+                        return sides.some(coords => !!ray.intersectSegment(coords));
+                    });
+                    if (blockers.length > 0) {
+                        const notProne = blockers.some( blocker => !blocker.document.hasStatusEffect("prone") );
+                        this.dialogData.banes.push({source: game.i18n.localize("DoD.weapon.lineOfSightToken"), value: notProne});
+                    }
                 }
             }
         }
