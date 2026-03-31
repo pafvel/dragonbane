@@ -275,7 +275,7 @@ export default class DoD_Utility {
         for (let r of messageResults) {
             // Split attack name and description
             if (!r.name) {
-                const match = r.description.match(/<(b|strong)>(.*?)<\/\1>(.*)/);
+                const match = r.description.match(/<(b|strong)>(.*?)<\/\1>([\s\S]*)/);
                 if (match) {
                     r.name = match[2];
                     r.description = match[3];
