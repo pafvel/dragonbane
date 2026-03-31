@@ -1,5 +1,10 @@
 # Change Log
 
+## Version 3.1.5
+- Fix for dropping a folder of items on a character. It has not been working since system version 3.0 / Foundry v13.
+- Fix for nested monster attack tables not displaying properly in chat (e.g. the Demon's Curse attack).
+- Updated PL translation (by GregorHak).
+
 ## Version 3.1.4
 - Fix for monster defend chat message missing skill reference.
 - Fix for items not being draggable on skill and ability tabs.
