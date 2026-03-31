@@ -431,7 +431,15 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         const results = [];
 
         const addFolderItems = async (currentFolder) => {
-            for (const item of currentFolder.contents) {
+            let items = currentFolder.contents;
+            const pack = currentFolder.compendium;
+
+            if (pack && currentFolder.contents.length) {
+                const ids = currentFolder.contents.map(i => i._id);
+                items = await pack.getDocuments({ _id__in: ids });
+            }
+
+            for (const item of items) {
                 const result = await this._onDropItem(event, item);
                 if (result) results.push(result);
             }
