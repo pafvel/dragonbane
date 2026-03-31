@@ -296,7 +296,7 @@ export default class DoD_Utility {
         });
   
         // Create the chat message
-        ChatMessage.applyRollMode(messageData, game.settings.get("core", "rollMode"));
+        ChatMessage.applyMode(messageData, game.settings.get("core", "messageMode"));
         return ChatMessage.create(messageData);
     }
 
