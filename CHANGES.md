@@ -1,5 +1,9 @@
 # Change Log
 
+## Version 3.1.6
+- Fix for dropping an item compendium folder on a character.
+- Fix for the monster description being rendered in the monster sheet header if the user has Limited permission.
+
 ## Version 3.1.5
 - Fix for dropping a folder of items on a character. It has not been working since system version 3.0 / Foundry v13.
 - Fix for nested monster attack tables not displaying properly in chat (e.g. the Demon's Curse attack).
