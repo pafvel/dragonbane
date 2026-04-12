@@ -47,7 +47,8 @@ export default class DoDItemBaseSheet extends HandlebarsApplicationMixin(ItemShe
         })
     }
 
-    _onRender(_context, _options) {
+    async _onRender(context, options) {
+        await super._onRender(context, options);
         this.#dragDropHandler.bind(this.element);
     }
 

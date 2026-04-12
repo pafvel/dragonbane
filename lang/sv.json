@@ -159,6 +159,17 @@
             "applyWhenEquippedTooltip": "Effekten appliceras endast om aktören har föremålet till hands eller har på sig föremålet",
             "new": "Ny effekt"
         },
+        "enchantments": {
+            "charge": "Laddning",
+            "chargeTooltip": "Alla som är i kontakt med föremålet kan använda dess VP i stället för sina egna",
+            "enchantment": "Förtrollning",
+            "powerLevel": "Effektgrad",
+            "powerLevelTooltip": "Besvärjelsens effektgrad",
+            "castable": "Kan läggas",
+            "castableTooltip": "Kan läggas direkt från karaktärsarket",
+            "free": "Gratis",
+            "freeTooltip": "Kostar inga VP att lägga"
+        },
         "item": {
             "new": "Nytt föremål"
         },
@@ -597,7 +608,8 @@
             "details": "Detaljer",
             "description": "Beskrivning",
             "gmDescription": "SL-anteckningar",
-            "effects": "Effekter"
+            "effects": "Effekter",
+            "enchantments": "Förtrollningar"
         },
         "INFO": {
             "monsterAttackUpdated": "Uppdaterade monsterattacker för {actor}.",

@@ -1,6 +1,6 @@
-import DoDItemBaseSheet from "./item-base-sheet.js";
+import DoDGearBaseSheet from "./gear-base-sheet.js";
 
-export default class DoDItemSheet extends DoDItemBaseSheet {
+export default class DoDItemSheet extends DoDGearBaseSheet {
 
     static type = 'item';
 
@@ -17,6 +17,7 @@ export default class DoDItemSheet extends DoDItemBaseSheet {
         details: { scrollable: [''], template: 'systems/dragonbane/templates/parts/item-sheet-item.hbs' },
         description: { scrollable: [''], template: 'systems/dragonbane/templates/parts/item-sheet-description.hbs' },
         effects: { scrollable: [''], template: 'systems/dragonbane/templates/parts/item-sheet-effects.hbs' },
+        enchantments: { scrollable: [''], template: 'systems/dragonbane/templates/parts/item-sheet-enchantments.hbs' },
     }
 
     static async #toggleMemento(event, target) {
@@ -30,5 +31,5 @@ export default class DoDItemSheet extends DoDItemBaseSheet {
             }
         }
         await this.item.update({ ["system.memento"]: checked});
-    }
+    } 
 }

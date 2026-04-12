@@ -158,6 +158,17 @@
             "applyWhenEquippedTooltip": "If checked, this effect will only be enabled if the item is equipped",
             "new": "New Effect"
         },
+        "enchantments": {
+            "charge": "Charge",
+            "chargeTooltip": "Anyone in contact with the object can use its WP instead of their own.",
+            "enchantment": "Enchantment",
+            "powerLevel": "Power Level",
+            "powerLevelTooltip": "The Power Level of the spell cast.",
+            "castable": "Cast",
+            "castableTooltip": "If checked, the spell can be cast directly from the character sheet.",
+            "free": "Free",
+            "freeTooltip": "If checked, the spell can be cast without spending WP."
+        },
         "item": {
             "new": "New Item"
         },
@@ -594,7 +605,8 @@
             "details": "Details",
             "description": "Description",
             "gmDescription": "GM Notes",
-            "effects": "Effects"
+            "effects": "Effects",
+            "enchantments": "Enchantments"
         },
         "INFO": {
             "monsterAttackUpdated": "Updated monster attack table for {actor}.",
