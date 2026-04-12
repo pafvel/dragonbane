@@ -38,9 +38,9 @@ export default class DoDGearBaseSheet extends DoDItemBaseSheet {
       
     async onEditPowerLevel(event) {
         const target = event.currentTarget;
-        const uuid = event.target.dataset.uuid;
+        const index = parseInt(target.dataset.index);
         const spells = this.item.system.enchantments.spells;
-        const enchantment = spells.find(e => e.uuid === uuid);
+        const enchantment = spells[index];
 
         if (enchantment) {
             const value = parseInt(target.value);
@@ -54,9 +54,10 @@ export default class DoDGearBaseSheet extends DoDItemBaseSheet {
     static async #toggleFree(event, target) {
         event.stopPropagation();
         event.preventDefault();
-        const uuid = target.dataset.uuid;
+
+        const index = parseInt(target.dataset.index);
         const spells = this.item.system.enchantments.spells;
-        const enchantment = spells.find(e => e.uuid === uuid);
+        const enchantment = spells[index];
 
         if (enchantment && enchantment.free !== target.checked) {
             enchantment.free = target.checked;
@@ -67,9 +68,10 @@ export default class DoDGearBaseSheet extends DoDItemBaseSheet {
     static async #toggleCastable(event, target) {
         event.stopPropagation();
         event.preventDefault();
-        const uuid = target.dataset.uuid;
+
+        const index = parseInt(target.dataset.index);
         const spells = this.item.system.enchantments.spells;
-        const enchantment = spells.find(e => e.uuid === uuid);
+        const enchantment = spells[index];
 
         if (enchantment && enchantment.castable !== target.checked) {
             enchantment.castable = target.checked;
@@ -80,6 +82,7 @@ export default class DoDGearBaseSheet extends DoDItemBaseSheet {
     static async #editEnchantment(event, target) {
         event.stopPropagation();
         event.preventDefault();
+
         const item = fromUuidSync(target.dataset.uuid);
         item?.sheet.render(true);
     }
@@ -88,23 +91,22 @@ export default class DoDGearBaseSheet extends DoDItemBaseSheet {
     static async #deleteEnchantment(event, target) {
         event.stopPropagation();
         event.preventDefault();
+
         const uuid = target.dataset.uuid;
-        const spells = this.item.system.enchantments.spells.filter(e => e.uuid !== uuid);
+        const index = parseInt(target.dataset.index);
 
-        if (spells.length !== this.item.system.enchantments.spells.length) {
+        const name = fromUuidSync(uuid)?.name ?? game.i18n.localize("DoD.enchantments.enchantment");
+        const content = game.i18n.format("DoD.ui.dialog.deleteItemContent", { item: name });
+        const title = game.i18n.format("DoD.ui.dialog.deleteItemTitle", { item: game.i18n.localize("DoD.enchantments.enchantment") });
 
-            const name = fromUuidSync(uuid)?.name ?? game.i18n.localize("DoD.enchantments.enchantment");
-            const content = game.i18n.format("DoD.ui.dialog.deleteItemContent", { item: name });
-            const title = game.i18n.format("DoD.ui.dialog.deleteItemTitle", { item: game.i18n.localize("DoD.enchantments.enchantment") });
+        const ok = await foundry.applications.api.DialogV2.confirm({
+            window: { title: title },
+            content: content,
+        });
 
-            const ok = await foundry.applications.api.DialogV2.confirm({
-                window: { title: title },
-                content: content,
-            });
-
-            if (ok) {
-                await this.item.update({ ["system.enchantments.spells"]: spells });
-            }
+        if (ok) {
+            this.item.system.enchantments.spells.splice(index, 1);
+            await this.item.update({ ["system.enchantments.spells"]: this.item.system.enchantments.spells });
         }
     }
 

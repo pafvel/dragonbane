@@ -27,20 +27,20 @@
                     <a data-action="editEnchantment" data-uuid="{{enchantment.uuid}}">{{enchantment.name}}</a>
                 </td>
                 <td title="{{localize "DoD.enchantments.powerLevelTooltip"}}">
-                    <select data-action="editEnchantmentPowerLevel" data-uuid="{{enchantment.uuid}}">
+                    <select data-action="editEnchantmentPowerLevel" data-uuid="{{enchantment.uuid}}" data-index="{{@index}}">
                         <option value="1" {{#if (eq enchantment.powerLevel 1)}}selected{{/if}}>1</option>
                         <option value="2" {{#if (eq enchantment.powerLevel 2)}}selected{{/if}}>2</option>
                         <option value="3" {{#if (eq enchantment.powerLevel 3)}}selected{{/if}}>3</option>
                     </select>
                 </td>
                 <td title="{{localize "DoD.enchantments.freeTooltip"}}">
-                    <input type="checkbox" data-action="toggleEnchantmentFree" data-uuid="{{enchantment.uuid}}" {{checked enchantment.free}} />
+                    <input type="checkbox" data-action="toggleEnchantmentFree" data-uuid="{{enchantment.uuid}}" data-index="{{@index}}" {{checked enchantment.free}} />
                 </td>
                 <td title="{{localize "DoD.enchantments.castableTooltip"}}">
-                    <input type="checkbox" data-action="toggleEnchantmentCastable" data-uuid="{{enchantment.uuid}}" {{checked enchantment.castable}} />
+                    <input type="checkbox" data-action="toggleEnchantmentCastable" data-uuid="{{enchantment.uuid}}" data-index="{{@index}}" {{checked enchantment.castable}} />
                 </td>
                 <td class="icon-data">
-                    <a data-action="deleteEnchantment" data-uuid="{{enchantment.uuid}}">
+                    <a data-action="deleteEnchantment" data-uuid="{{enchantment.uuid}}" data-index="{{@index}}">
                         <i class="fas fa-trash"></i>
                     </a>
                 </td>
