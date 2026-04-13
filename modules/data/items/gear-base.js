@@ -15,6 +15,7 @@ export class DoDGearBaseData extends DoDItemBaseData {
             storage: new fields.BooleanField({ required: false, initial: false }),
             enchantments: new fields.SchemaField({
                 charge: new fields.NumberField({ required: true, integer: true, initial: 0, min: 0 }),
+                applyOnlyWhenEquipped: new fields.BooleanField({ required: true, initial: false }),
                 spells: new fields.ArrayField( new fields.SchemaField({
                     uuid: new fields.DocumentUUIDField({ required: true, nullable: true, initial: undefined }),
                     powerLevel: new fields.NumberField({ required: true, integer: true, initial: 1, min: 1 }),

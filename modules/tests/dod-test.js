@@ -70,6 +70,7 @@ export default class DoDTest {
     updateDialogData() {
 
         if (this.noBanesBoons || this.autoSuccess) {
+            this.dialogData.autoSuccess = this.autoSuccess;
             return;
         }
 
@@ -140,7 +141,7 @@ export default class DoDTest {
         const content = await DoD_Utility.renderTemplate(template, this.dialogData);
 
         const values = await foundry.applications.api.DialogV2.input({
-            window: { title },
+            window: { title, resizable: true },
             content: content,
             ok: { label }
         });
@@ -176,6 +177,9 @@ export default class DoDTest {
     }
 
     formatRollFormula(rollData) {
+        if (this.autoSuccess) {
+            return "0";
+        }
         const banes = rollData.banes;
         const boons = rollData.boons;
 

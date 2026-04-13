@@ -1,5 +1,7 @@
 <form>
     <div  class="dod-controls">
+
+    {{#unless autoSuccess}}
     <div class="flexrow">
 
         {{!-- Boons --}}
@@ -61,7 +63,6 @@
 
             <tr class="sheet-table-data">
                 <td class="number-data">
-                    <!-- <input class="extraBanes" name="extraBanes" type="number" value="0"/> -->
                     <select class="extraBanes" name="extraBanes"> 
                         <option value="0">0</option> 
                         <option value="1">1</option> 
@@ -77,9 +78,9 @@
                 </td>
                 <td class="text-data wide">{{localize "DoD.ui.dialog.extra"}}</td>
             </tr>
-        </table>
-        
+        </table>  
     </div>
+    {{/unless}}
 
 
     {{!-- Spells --}}
@@ -90,13 +91,27 @@
                 <th>{{localize "DoD.ui.dialog.powerLevel"}}</th>
                 <td>
                     <select class="power-level" name="powerLevel">
-                        <option value="1" selected>1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                        <option value="1" {{#if (eq powerLevel 1)}}selected{{/if}}>1</option>
+                        <option value="2" {{#if (eq powerLevel 2)}}selected{{/if}}>2</option>
+                        <option value="3" {{#if (eq powerLevel 3)}}selected{{/if}}>3</option>
                     </select>
                 </td>
             </tr>
         </table>
+        {{#if wpSources}}
+        <table class="derived-stat">
+            <tr title="{{localize "DoD.ui.dialog.powerSourceTooltip"}}">
+                <th>{{localize "DoD.ui.dialog.powerSource"}}</th>
+                <td>
+                    <select class="power-source" name="powerSource">
+                        {{#each wpSources as |wpSource|}}
+                        <option value="{{@index}}">{{wpSource.name}}</option>
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
+        </table>
+        {{/if}}
     </div>
     {{/if}}
 

@@ -16,6 +16,7 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
             criticalEffect: new fields.StringField({ required: false, initial: "" }),
             wpOld: new fields.NumberField({ required: true, initial: 0 }),
             wpNew: new fields.NumberField({ required: true, initial: 0 }),
+            wpSourceName: new fields.StringField({ required: false, initial: "" }),
         });
     }
 
@@ -52,7 +53,8 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
         const toolTip =
         `<div class="permission-observer dice-tooltip" data-actor-id="${this.actorUuid}" style="text-align: left">
             <div class="wrapper">
-                <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${this.wpOld} <i class="fa-solid fa-arrow-right"></i> ${this.wpNew}<br>
+                <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${this.wpOld} <i class="fa-solid fa-arrow-right"></i> ${this.wpNew}
+                ${this.wpSourceName ? `(${this.wpSourceName})` : ""}<br>
             </div>
         </div>`;
 

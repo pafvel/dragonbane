@@ -562,6 +562,8 @@
                 "attributeRollTitle": "Attribute Roll",
                 "attributeRollLabel": "Roll",
                 "powerLevel": "Power Level",
+                "powerSource": "Power Source",
+                "powerSourceTooltip": "Willpower Points will be spent from this source.",
                 "labelCancel": "Cancel",
                 "labelOk": "Ok",
                 "chooseAction": "Choose action",
@@ -606,7 +608,8 @@
             "description": "Description",
             "gmDescription": "GM Notes",
             "effects": "Effects",
-            "enchantments": "Enchantments"
+            "enchantments": "Enchantments",
+            "enchantmentsTooltip": "Castable enchantments"
         },
         "INFO": {
             "monsterAttackUpdated": "Updated monster attack table for {actor}.",

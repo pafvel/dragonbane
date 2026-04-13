@@ -1,11 +1,21 @@
 <div class="tab sheet-tab {{tabs.enchantments.cssClass}}" data-group="primary" data-tab="{{tabs.enchantments.id}}">
     <div class="enchantments-tab dod-controls">
+
+        <table class="derived-stat">
+            <tr>
+                <th title="{{localize "DoD.effect.applyWhenEquippedTooltip"}}">{{localize "DoD.effect.applyWhenEquipped"}}</th>
+                <td>
+                    <input class="inline-edit" name="system.enchantments.applyOnlyWhenEquipped" data-field="system.enchantments.applyOnlyWhenEquipped" type="checkbox" {{checked system.enchantments.applyOnlyWhenEquipped}} />
+                </td>
+            </tr>
+        </table>    
+
         <table class="derived-stat">
             <tr>
                 <th title="{{localize "DoD.enchantments.chargeTooltip"}}">{{localize "DoD.enchantments.charge"}}</th>
                 <td><input name="system.enchantments.charge" type="number" value="{{system.enchantments.charge}}" /></td>
             </tr>
-        </table>
+        </table>    
 
         <table class="sheet-table enchantments-list">
 
@@ -50,6 +60,7 @@
             {{/each}}
         </table>
 
-    </div></div>
+    </div>
+</div>
 
 

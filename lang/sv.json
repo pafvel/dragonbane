@@ -566,6 +566,8 @@
                 "attributeRollTitle": "Grundegenskapsslag",
                 "attributeRollLabel": "Slå grundegenskapsslag",
                 "powerLevel": "Effektgrad",
+                "powerSource": "Kraftkälla",
+                "powerSourceTooltip": "Kraftkällan som VP dras ifrån.",
                 "labelCancel": "Avbryt",
                 "labelOk": "Ok",
                 "chooseAction": "Välj handling",
@@ -609,7 +611,9 @@
             "description": "Beskrivning",
             "gmDescription": "SL-anteckningar",
             "effects": "Effekter",
-            "enchantments": "Förtrollningar"
+            "enchantments": "Förtrollningar",
+            "enchantmentsTooltip": "Förtrollningar som går att aktivera"
+
         },
         "INFO": {
             "monsterAttackUpdated": "Uppdaterade monsterattacker för {actor}.",

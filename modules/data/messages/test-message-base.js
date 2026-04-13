@@ -9,6 +9,7 @@ export default class DoDTestMessageBaseData extends DoDChatMessageBaseData {
         const { fields } = foundry.data;
         return this.mergeSchema(super.defineSchema(), {
             actorUuid: new fields.StringField({ required: true, initial: "" }),
+            autoSuccess: new fields.BooleanField({ required: true, initial: false }),
             banes: new fields.NumberField({ required: true, initial: 0 }),
             boons: new fields.NumberField({ required: true, initial: 0 }),
             canPush: new fields.BooleanField({ required: true, initial: false }),

@@ -311,6 +311,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
             // Skills, abilities & weapon damage
             html.find(".rollable-skill").on("click contextmenu", this._onSkillRoll.bind(this));
             html.find(".use-ability").on("click contextmenu", this._onUseAbility.bind(this));
+            html.find(".use-enchantment").on("click contextmenu", this._onUseEnchantment.bind(this));
             html.find(".rollable-damage").on("click contextmenu", this._onDamageRoll.bind(this));
 
             // Effects & injuries
@@ -943,8 +944,6 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                     if (this.actor.type === "monster") {
                         if (!this.actor.findMagicSkill(item.system.school)) {
                             options.autoSuccess = true;
-                        } else {
-                            options.noWPCost = true;
                         }
                     }
                     test = new DoDSpellTest(this.actor, item, options);
@@ -1009,6 +1008,31 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
             }
         } else { // right click - edit item
             item.sheet.render(true);
+        }
+    }
+
+    async _onUseEnchantment(event) {
+        event.preventDefault();
+
+        const dataSet = event.currentTarget.closest(".sheet-table-data").dataset;
+        const itemUuid = dataSet.itemUuid;
+        const enchantmentIndex = dataSet.enchantmentIndex;
+        const item = fromUuidSync(itemUuid);
+        const enchantment = item?.system.enchantments.spells[enchantmentIndex];
+
+        if (event.type === "click") { // left click - use item
+            const spell = fromUuidSync(enchantment.uuid);
+            if (spell) {
+                const options = {
+                   autoSuccess: true,
+                   noWpCost: enchantment.free,
+                   powerLevel: enchantment.powerLevel,
+                   wpSource: item,
+                };
+                await new DoDSpellTest(this.actor, spell, options).roll();
+            }
+        } else { // right click - edit item
+            item.sheet.render(true, { tab: "enchantments" });
         }
     }
 
@@ -1207,6 +1231,9 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
             default:
                 DoD_Utility.WARNING(`DoDActorBaseSheet._prepareItemContext: Unknown item type ${item.type}`);
         }
+        if (item.system.enchantments?.spells?.length > 0) {
+            this._prepareEnchantmentsContext(item, context);
+        }
     }
 
     _prepareItems(context) {
@@ -1221,6 +1248,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         context.storage = [];
         context.equippedWeapons = [];
         context.injuries = [];
+        context.enchantments = [];
 
         context.equippedArmor = this.actor.system.equippedArmor;
         context.equippedHelmet = this.actor.system.equippedHelmet;
@@ -1306,5 +1334,24 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
     _prepareEffects(context) {
         // Don't show conditions as effects
         context.effects = Array.from(this.actor.allApplicableEffects()).filter((effect) => !effect.isCondition);
+    }
+
+    _prepareEnchantmentsContext(item, context) {
+        if (item.system.enchantments?.applyOnlyWhenEquipped && !item.system.worn) return;
+
+        const name = item.name;
+        for (let i = 0; i < item.system.enchantments.spells.length; i++) {
+            const enchantment = item.system.enchantments.spells[i];
+            if (enchantment.castable) {
+                const spell = fromUuidSync(enchantment.uuid);
+                if(!spell) continue;
+                const enchantmentData = {
+                    name: spell.name + " (" + name + ")",
+                    itemUuid: item.uuid,
+                    enchantmentIndex: i,
+                }
+                context.enchantments.push(enchantmentData);
+            }
+        }
     }
 }
