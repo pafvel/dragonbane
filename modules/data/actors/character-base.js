@@ -42,4 +42,15 @@ export default class DoDCharacterBaseData extends DoDActorBaseData {
         }
         return super.migrateData(source);
     }
+    async tokensUpdate(tokenName) {
+        await this.parent.prototypeToken.update({ name: tokenName });
+        const dependedTokens = this.parent._dependentTokens;
+  		for (const scene of dependedTokens) {
+			for (const token of scene[0].tokens) {
+				if (token.actorId === this.parent.id) {
+					token.update({ name: tokenName });
+				}
+			}
+		}
+    }
 }
