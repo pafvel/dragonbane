@@ -134,7 +134,7 @@ export default class DoDGearBaseSheet extends DoDItemBaseSheet {
                         uuid: enchantment.uuid,
                         name: spell.name,
                         img: spell.img,
-                        powerLevel: enchantment.powerLevel,
+                        powerLevel: spell.system.rank > 0 ? enchantment.powerLevel : null,
                         castable: enchantment.castable,
                         free: enchantment.free,
                     };

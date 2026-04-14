@@ -28,14 +28,14 @@
                 <th>{{!-- column for icons --}}&nbsp</th>
                 <th></th>
             </tr>
-
+           
             {{#each enchantments as |enchantment|}}
-
             <tr class="sheet-table-data enchantment">
                 <td></td>
                 <td class="text-data">
                     <a data-action="editEnchantment" data-uuid="{{enchantment.uuid}}">{{enchantment.name}}</a>
                 </td>
+                {{#if enchantment.powerLevel}}
                 <td title="{{localize "DoD.enchantments.powerLevelTooltip"}}">
                     <select data-action="editEnchantmentPowerLevel" data-uuid="{{enchantment.uuid}}" data-index="{{@index}}">
                         <option value="1" {{#if (eq enchantment.powerLevel 1)}}selected{{/if}}>1</option>
@@ -43,6 +43,9 @@
                         <option value="3" {{#if (eq enchantment.powerLevel 3)}}selected{{/if}}>3</option>
                     </select>
                 </td>
+                {{else}}
+                <td></td>
+                {{/if}}
                 <td title="{{localize "DoD.enchantments.freeTooltip"}}">
                     <input type="checkbox" data-action="toggleEnchantmentFree" data-uuid="{{enchantment.uuid}}" data-index="{{@index}}" {{checked enchantment.free}} />
                 </td>
@@ -56,8 +59,14 @@
                 </td>
                 <td></td>
             </tr>
-
             {{/each}}
+
+            {{#unless enchantments }}
+            <tr class="sheet-table-data enchantment">
+                <td colspan="8" class="text-data" style="text-align:center; font-style:italic;">{{localize "DoD.item-sheet.noEnchantments"}}</td>
+            </tr>
+            {{/unless}}
+
         </table>
 
     </div>
