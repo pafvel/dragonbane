@@ -224,6 +224,7 @@
         },
         "critChoices": {
             "choiceLabel": "Efekty krytyczne",
+            "choiceTitle": "Efekt krytyczny",
             "doubleWeaponDamage": "Podwójnie obrażenia broni",
             "extraAttack": "Możesz natychmiast wykonać drugi atak przeciw innemu wrogowi. Jest on akcją darmową",
             "ignoreArmor": "Zbroja nie chroni celu przed obrażeniami"
