@@ -21,37 +21,7 @@ export default class DoDSpellTest extends DoDSkillTest  {
 
         if (!this.options.noWpCost) {
             // Find all possible wp sources, in priority order
-            const wpSources = [];
-    
-            // Specified source, for example from an item being used to cast the spell
-            if (this.options.wpSource) {
-                if (this.options.wpSource.system.willPoints?.value > 0 || this.options.wpSource.system.enchantments?.charge > 0) {
-                    wpSources.push(this.options.wpSource);
-                }                
-            }
-    
-            // Actor itself
-            wpSources.push(this.actor);
-    
-            // Enchanted items with Charge
-            for (let item of this.actor.items.contents) {
-                if (item.system.enchantments?.charge > 0 
-                    && (item.system.worn || item.system.enchantments?.applyOnlyWhenEquipped !== true)
-                    && !(item.uuid === this.options.wpSource?.uuid))
-                {
-                    wpSources.push(item);
-                }
-            }
-    
-            // Other owned actors on the current scene (for example a familiar)
-            const scene = this.actor.getActiveTokens()?.[0]?.scene;
-            if (scene) {
-                for (let token of scene.tokens) {
-                    if (token.actor?.isOwner && token.actor.uuid !== this.actor.uuid && token.actor.system.willPoints?.value > 0) {
-                        wpSources.push(token);
-                    }
-                }
-            }
+            const wpSources = this.actor.getPowerSources({ source: this.options.wpSource });
     
             // Only select WP source if there are multiple options
             if (wpSources.length > 1) {
