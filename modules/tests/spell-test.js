@@ -66,10 +66,31 @@ export default class DoDSpellTest extends DoDSkillTest  {
             DoD_Utility.WARNING("DoD.WARNING.missingMagicSchool", {spell: this.spell.name});
             return {cancelled: true};
         }
-        const label = game.i18n.localize("DoD.ui.dialog.skillRollLabel");
-        const title = game.i18n.localize("DoD.ui.dialog.skillRollTitle") + ": " + this.spell.name;
+        
+        let title = this.options.title;
+        if (!title) {
+            if (this.options.autoSuccess) {
+                title = game.i18n.localize("DoD.ui.dialog.castSpellTitle") + ": " + this.spell.name;
+            } else {
+                title = game.i18n.localize("DoD.ui.dialog.skillRollTitle") + ": " + this.spell.name;
+            }
+        }
 
-        let options = await this.getRollOptionsFromDialog(title, label);
+        let label = this.options.label;
+        if (!label) {
+            if (this.options.autoSuccess) {
+                label = game.i18n.localize("DoD.ui.dialog.castSpellLabel");
+            } else {
+                label = game.i18n.localize("DoD.ui.dialog.skillRollLabel");
+            }
+        }
+
+        let icon = this.options.icon;
+        if (!icon && !this.options.autoSuccess) {
+            icon = "fa-solid fa-dice";
+        }
+
+        let options = await this.getRollOptionsFromDialog(title, label, icon);
         if (options.cancelled) return options;
 
         if (!this.isReroll && !this.options.noWpCost) {
@@ -101,7 +122,7 @@ export default class DoDSpellTest extends DoDSkillTest  {
 
     processDialogOptions(input) {
         const options = super.processDialogOptions(input);
-        const powerLevel = Number(input.powerLevel);
+        const powerLevel = this.dialogData.hasPowerLevel ? Number(input.powerLevel) : 0;
         const wpSource = this.dialogData.wpSources?.length > 1 ? this.dialogData.wpSources[Number(input.powerSource)] : this.actor;
 
         return { ...options, powerLevel, wpSource };
@@ -110,7 +131,7 @@ export default class DoDSpellTest extends DoDSkillTest  {
     updatePreRollData() {
         super.updatePreRollData();
         this.preRollData.spell = this.spell;
-        this.preRollData.powerLevel = this.options.powerLevel ?? 1;
+        this.preRollData.powerLevel = this.options.powerLevel ?? (this.spell.system.rank > 0 ? 1 : 0);
         this.preRollData.wpCost = this.options.noWpCost ? 0 : this.options.wpCost ?? this.spell.getSpellCost(this.preRollData.powerLevel);
     }
 

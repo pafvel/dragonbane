@@ -12,9 +12,13 @@ export default class DoDSkillTest extends DoDTest {
     }
 
     async getRollOptions() {
-        const label = game.i18n.localize("DoD.ui.dialog.skillRollLabel");
-        const title = game.i18n.localize("DoD.ui.dialog.skillRollTitle") + ": " + this.skill.name;
-        return this.getRollOptionsFromDialog(title, label);
+        const label = this.options.label ?? game.i18n.localize("DoD.ui.dialog.skillRollLabel");
+        const title = this.options.title ?? game.i18n.localize("DoD.ui.dialog.skillRollTitle") + ": " + this.skill.name;
+        let icon = this.options.icon;
+        if (!icon && !this.options.autoSuccess) {
+            icon = "fa-solid fa-dice";
+        }        
+        return this.getRollOptionsFromDialog(title, label, icon);
     }
 
     updatePreRollData() {

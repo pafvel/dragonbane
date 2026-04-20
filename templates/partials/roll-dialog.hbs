@@ -86,6 +86,7 @@
     {{!-- Spells --}}
     {{#if spell}}
     <div>
+        {{#if spell.system.rank }}
         <table class="derived-stat">
             <tr>
                 <th>{{localize "DoD.ui.dialog.powerLevel"}}</th>
@@ -98,6 +99,7 @@
                 </td>
             </tr>
         </table>
+        {{/if}}
         {{#if wpSources}}
         <table class="derived-stat">
             <tr title="{{localize "DoD.ui.dialog.powerSourceTooltip"}}">

@@ -61,13 +61,14 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
         return toolTip + await super.getTooltip(roll);
     }
 
-
     formatRollMessage() {
         const result = this.formatRollResult();
         const spell = fromUuidSync(this.spellUuid);
+        const actor = fromUuidSync(this.actorUuid);
         const targetActor = this.targetActorUuid ? fromUuidSync(this.targetActorUuid) : null;
-        const locString = this.powerLevel > 0 ? (targetActor ? "DoD.roll.spellRollTarget" : "DoD.roll.spellRoll") : "DoD.roll.skillRoll";
+        const locString = this.powerLevel > 0 ? (targetActor ? "DoD.roll.spellRollTarget" : "DoD.roll.spellRoll") : "DoD.ui.chat.castMagicTrick";
         const content = game.i18n.format(locString, {
+                actor: actor?.name,
                 skill: spell?.name,
                 spell: spell?.name,
                 uuid: this.spellUuid,

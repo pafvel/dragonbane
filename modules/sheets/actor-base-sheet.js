@@ -940,51 +940,18 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
             if (item.type === "skill") {
                 test = new DoDSkillTest(this.actor, item, options);
             } else if (item.type === "spell") {
-                if (item.system.rank > 0) {
-                    if (this.actor.type === "monster") {
-                        if (!this.actor.findMagicSkill(item.system.school)) {
-                            options.autoSuccess = true;
-                        }
-                    }
-                    test = new DoDSpellTest(this.actor, item, options);
-                } else {
-
-                    const use = await foundry.applications.api.DialogV2.confirm({
-                        window: { title: game.i18n.localize("DoD.ui.dialog.castMagicTrickTitle") },
-                        content: game.i18n.format("DoD.ui.dialog.castMagicTrickContent", { spell: item.name }),
-                    });
-
-                    if (use) {
-                        if (this.actor.type !== "monster" && this.actor.system.willPoints.value < 1) {
-                            DoD_Utility.WARNING("DoD.WARNING.notEnoughWPForSpell");
-                            return;
-                        } else {
-                            let content = "<p>" + game.i18n.format("DoD.ui.chat.castMagicTrick", {
-                                actor: this.actor.name,
-                                spell: item.name,
-                                uuid: item.uuid
-                            }) + "</p>";
-                            if (this.actor.type !== "monster") {
-                                const oldWP = this.actor.system.willPoints.value;
-                                const newWP = oldWP - 1;
-                                await this.actor.update({ "system.willPoints.value": newWP });
-                                content +=
-                                    `<div class="damage-details permission-observer" data-actor-id="${this.actor.uuid}">
-                                    <i class="fa-solid fa-circle-info"></i>
-                                    <div class="expandable" style="text-align: left; margin-left: 0.5em">
-                                        <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${oldWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>
-                                    </div>
-                                </div>`;
-                            }
-
-                            ChatMessage.create({
-                                user: game.user.id,
-                                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                                content: content,
-                            });
-                        }
-                    }
+                // Monsters use magic school if available, auto success otherwise.
+                if (this.actor.type === "monster" && !this.actor.findMagicSkill(item.system.school)) {
+                    options.autoSuccess = true;
                 }
+                // Magic tricks always succeed
+                if (item.system.rank === 0) {
+                    options.autoSuccess = true;
+                    options.title = game.i18n.localize("DoD.ui.dialog.castMagicTrickTitle");
+                    options.label = options.title;
+                    options.content = game.i18n.format("DoD.ui.dialog.castMagicTrickContent", { spell: item.name });
+                }
+                test = new DoDSpellTest(this.actor, item, options);
             } else if (item.type === "weapon") {
                 test = new DoDWeaponTest(this.actor, item, options);
             }

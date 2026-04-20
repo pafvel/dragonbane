@@ -577,6 +577,8 @@
                 "weaponFeatures": "Vapenegenskaper",
                 "castMagicTrickTitle": "Utför trolleritrick",
                 "castMagicTrickContent": "Spendera <b>1</b> VP och utför trolleritricket <b>{spell}</b>?",
+                "castSpellTitle": "Kasta besvärjelse",
+                "castSpellLabel": "Kasta",
                 "deleteItemTitle": "Radera {item}",
                 "deleteItemContent": "Vill du radera <b>{item}</b>?",
                 "trainSkillTitle": "Träna färdighet?",

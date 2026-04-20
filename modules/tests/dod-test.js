@@ -122,7 +122,7 @@ export default class DoDTest {
     }
 
 
-    async getRollOptionsFromDialog(title, label) {
+    async getRollOptionsFromDialog(title, label, icon) {
 
         if (this.isReroll) {
             return this.options.rerollOptions;
@@ -142,8 +142,10 @@ export default class DoDTest {
 
         const values = await foundry.applications.api.DialogV2.input({
             window: { title, resizable: true },
-            content: content,
-            ok: { label }
+            content: this.options.content 
+                ? `<div style="text-align: center">${this.options.content}</div><div>${content}</div>`
+                : content,
+            ok: { label, icon: icon ?? this.autoSuccess ? "fa-solid fa-check" : "fa-solid fa-dice" },
         });
 
         if (values === null) return { cancelled: true };  // user closed the dialog

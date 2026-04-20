@@ -187,13 +187,13 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         this.dialogData.enchantedWeaponLevels = {"0": "-", "1": 1, "2": 2, "3": 3};
     }   
 
-    async getRollOptionsFromDialog(title, label) {
+    async getRollOptionsFromDialog(title, label, icon) {
         if (this.skipDialog) {
             const defaultOptions = {"enchantedWeapon": this.dialogData.enchantedWeapon};
             const options = await super.getRollOptionsFromDialog(title, label);
             return {...defaultOptions, ...options};
         } else {
-            return super.getRollOptionsFromDialog(title, label);
+            return super.getRollOptionsFromDialog(title, label, icon);
         }
 
     }
