@@ -137,8 +137,23 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
 
         context.damageBonusStr = DoD.dice[this.actor.system.damageBonus.str.value];
         context.damageBonusAgl = DoD.dice[this.actor.system.damageBonus.agl.value];
-
+        const memorizedSpells =  await this.memorizedSpells()
+        const totalSpells = this.actor.system.attributes.int.value;
+         Object.assign(context, { memorizedSpells, totalSpells });
         return context;
+    }
+
+    async memorizedSpells() {
+        const spellItems = this.actor.items.filter(i => i.type === "spell");
+        let memorizedSpells = 0;
+
+        for (const spell of spellItems) {
+            if (spell.system.memorized && spell.system.rank > 0) {
+                memorizedSpells++;
+            }
+        }
+
+        return memorizedSpells;
     }
 
     async _onDeathRollsSuccessClick(event) {
