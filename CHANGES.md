@@ -1,5 +1,13 @@
 # Change Log
 
+## Version 4.0
+- General
+  - Foundry v14 compatibility
+- Active effects
+  - Support for custom keys, which enables the use of modules that require those.
+- Localization
+  - Updated PL translation (by GregorHak).
+
 ## Version 3.1.6
 - Fix for dropping an item compendium folder on a character.
 - Fix for the monster description being rendered in the monster sheet header if the user has Limited permission.

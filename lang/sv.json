@@ -157,7 +157,10 @@
         "effect": {
             "applyWhenEquipped": "Applicera om föremålet är till hands",
             "applyWhenEquippedTooltip": "Effekten appliceras endast om aktören har föremålet till hands eller har på sig föremålet",
-            "new": "Ny effekt"
+            "new": "Ny effekt",
+            "custom": "Anpassad",
+            "attribute": "Egenskap",
+            "key": "Nyckel"            
         },
         "item": {
             "new": "Nytt föremål"

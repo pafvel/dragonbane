@@ -1,6 +1,7 @@
 import DoDAttributeTest from "../tests/attribute-test.js";
 import DoD_Utility from "../utility.js";
 import DoDActorBaseSheet from "./actor-base-sheet.js";
+import { DoD } from "../config.js";
 
 export default class DoDCharacterSheet extends DoDActorBaseSheet {
 
@@ -133,6 +134,9 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
             context.deathRollsFailures = this.actor.system.deathRolls.failures;
             context.deathRollsFailuresRemaining = 3 - this.actor.system.deathRolls.failures;
         }
+
+        context.damageBonusStr = DoD.dice[this.actor.system.damageBonus.str.value];
+        context.damageBonusAgl = DoD.dice[this.actor.system.damageBonus.agl.value];
 
         return context;
     }

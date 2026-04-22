@@ -35,12 +35,12 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
     _getItemContextOptions() {
         return [
             {
-                name: "CONTROLS.CommonOpenSheet",
+                label: "CONTROLS.CommonOpenSheet",
                 icon: '<i class="fa-solid fa-suitcase"></i>',
-                condition: li => {
+                visible: li => {
                     return li.dataset.itemId || li.dataset.effectUuid;
                 },
-                callback: li => {
+                onClick: (_event, li) => {
                     const itemId = li.dataset.itemId;
                     if (itemId !== undefined) {
                         const item = this.actor.items.get(itemId);
@@ -53,15 +53,15 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                 }
             },
             {
-                name: "DoD.skill.trainWithTeacher",
+                label: "DoD.skill.trainWithTeacher",
                 icon: `<i title="${game.i18n.localize("DoD.skill.trainWithTeacherTooltip")}" class="fa-solid fa-graduation-cap"></i>`,
-                condition: li => {
+                visible: li => {
                     if (!this.actor.isCharacter || !this.actor.isOwner) return false;
                     if (!li.dataset.itemId) return false;
                     const item = this.actor.items.get(li.dataset.itemId);
                     return item?.type === "skill" && !item.system.taught && item.system.value < 18;
                 },
-                callback: async li => {
+                onClick: async (_event, li) => {
                     const itemId = li.dataset.itemId;
                     const skillItem = this.actor.items.get(itemId);
                     if (!skillItem || skillItem.system.taught) return;
@@ -100,9 +100,9 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                 }
             },
             {
-                name: "CONTROLS.CommonDelete",
+                label: "CONTROLS.CommonDelete",
                 icon: '<i class="fa-solid fa-trash"></i>',
-                condition: li => {
+                visible: li => {
                     if (li.dataset.itemId) {
                         return this.actor.isOwner;
                     }
@@ -111,7 +111,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                     }
 
                 },
-                callback: async (li) => {
+                onClick: async (_event, li) => {
                     const itemId = li.dataset.itemId;
                     if (itemId !== undefined) {
                         const item = this.actor.items.get(itemId);
@@ -126,16 +126,16 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                 }
             },
             {
-                name: "SIDEBAR.Duplicate",
+                label: "SIDEBAR.Duplicate",
                 icon: '<i class="fa-regular fa-copy"></i>',
-                condition: li => {
+                visible: li => {
                     if (li.dataset.itemId && this.actor.isOwner) {
                         const item = this.actor.items.get(li.dataset.itemId);
                         return (["item", "weapon", "armor", "helmet"].includes(item.type));
                     }
                     return false;
                 },
-                callback: li => {
+                onClick: (_event, li) => {
                     const original = this.actor.items.get(li.dataset.itemId);
                     return original.clone({
                             name: game.i18n.format("DOCUMENT.CopyOf", { name: original.name }),
@@ -235,7 +235,11 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
             } else {
                 title += "\r";
             }
-            title += game.i18n.format("DoD.ui.character-sheet.baseValue", { value: base });
+            if (propertyName.startsWith("system.damageBonus")) {
+                title += game.i18n.format("DoD.ui.character-sheet.baseValue", { value: CONFIG.DoD.dice[base] });
+            } else {
+                title += game.i18n.format("DoD.ui.character-sheet.baseValue", { value: base });
+            }
             $(e).attr("title", title);
 
             // Prepare strings
@@ -700,7 +704,8 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
 
         // validate the value
         const field = this.actor.system.schema.getField(fieldName);
-        const failure = field.validate(newValue);
+        const cleanValue = field.clean(newValue);
+        const failure = field.validate(cleanValue);
 
         if (failure) {
             DoD_Utility.WARNING(failure.message);
@@ -708,7 +713,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         }
 
         // set new value
-        await this.actor.update({ [propertyBase]: newValue });
+        await this.actor.update({ [propertyBase]: cleanValue });
     }
 
     _onFocusResource(event) {

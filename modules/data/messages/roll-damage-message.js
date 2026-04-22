@@ -63,7 +63,7 @@ export default class DoDRollDamageMessageData extends DoDChatMessageBaseData {
             msg += "Target";
         }
 
-        const content = game.i18n.format(game.i18n.localize(msg), {
+        const content = game.i18n.format(msg, {
             actor: ChatMessage.getSpeaker({ actor: context.actor }).alias,
             damage: damageTotal,
             damageType: game.i18n.localize(context.damageType),

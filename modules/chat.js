@@ -286,70 +286,70 @@ export function addChatMessageContextMenuOptions(_html, options) {
 
     options.unshift(
         {
-            name: game.i18n.format("DoD.ui.chat.dealDamage"),
+            label: game.i18n.format("DoD.ui.chat.dealDamage"),
             icon: '<i class="fas fa-user-minus"></i>',
-            condition: canDealTargetDamage,
-            callback: li => dealTargetDamage(li)
+            visible: canDealTargetDamage,
+            onClick: (_event, li) => dealTargetDamage(li)
         },
         {
-            name: game.i18n.format("DoD.ui.chat.dealHalfDamage"),
+            label: game.i18n.format("DoD.ui.chat.dealHalfDamage"),
             icon: '<i class="fas fa-user-minus"></i>',
-            condition: canDealTargetDamage,
-            callback: li => dealTargetDamage(li, 0.5)
+            visible: canDealTargetDamage,
+            onClick: (_event, li) => dealTargetDamage(li, 0.5)
         },
         {
-            name: game.i18n.format("DoD.ui.chat.dealDoubleDamage"),
+            label: game.i18n.format("DoD.ui.chat.dealDoubleDamage"),
             icon: '<i class="fas fa-user-minus"></i>',
-            condition: canDealTargetDamage,
-            callback: li => dealTargetDamage(li, 2)
+            visible: canDealTargetDamage,
+            onClick: (_event, li) => dealTargetDamage(li, 2)
         },
         {
-            name: game.i18n.format("DoD.ui.chat.dealDamageIgnoreArmor"),
+            label: game.i18n.format("DoD.ui.chat.dealDamageIgnoreArmor"),
             icon: '<i class="fas fa-user-minus"></i>',
-            condition: canDealTargetDamage,
-            callback: li => dealTargetDamage(li, 1, true)
+            visible: canDealTargetDamage,
+            onClick: (_event, li) => dealTargetDamage(li, 1, true)
         },
         {
-            name: game.i18n.format("DoD.ui.chat.dealSelectedDamage"),
+            label: game.i18n.format("DoD.ui.chat.dealSelectedDamage"),
             icon: '<i class="fas fa-user-minus"></i>',
-            condition: canDealSelectedDamage,
-            callback: li => dealSelectedDamage(li)
+            visible: canDealSelectedDamage,
+            onClick: (_event, li) => dealSelectedDamage(li)
         },
         {
-            name: game.i18n.format("DoD.ui.chat.dealSelectedHalfDamage"),
+            label: game.i18n.format("DoD.ui.chat.dealSelectedHalfDamage"),
             icon: '<i class="fas fa-user-minus"></i>',
-            condition: canDealSelectedDamage,
-            callback: li => dealSelectedDamage(li, 0.5)
+            visible: canDealSelectedDamage,
+            onClick: (_event, li) => dealSelectedDamage(li, 0.5)
         },
         {
-            name: game.i18n.format("DoD.ui.chat.dealSelectedDoubleDamage"),
+            label: game.i18n.format("DoD.ui.chat.dealSelectedDoubleDamage"),
             icon: '<i class="fas fa-user-minus"></i>',
-            condition: canDealSelectedDamage,
-            callback: li => dealSelectedDamage(li, 2)
+            visible: canDealSelectedDamage,
+            onClick: (_event, li) => dealSelectedDamage(li, 2)
         },
         {
-            name: game.i18n.format("DoD.ui.chat.dealSelectedDamageIgnoreArmor"),
+            label: game.i18n.format("DoD.ui.chat.dealSelectedDamageIgnoreArmor"),
             icon: '<i class="fas fa-user-minus"></i>',
-            condition: canDealSelectedDamage,
-            callback: li => dealSelectedDamage(li, 1, true)
+            visible: canDealSelectedDamage,
+            onClick: (_event, li) => dealSelectedDamage(li, 1, true)
         },
         {
-            name: game.i18n.format("DoD.ui.chat.healTarget"),
+            label: game.i18n.format("DoD.ui.chat.healTarget"),
             icon: '<i class="fas fa-user-plus"></i>',
-            condition: canHealTarget,
-            callback: li => healTarget(li)
+            visible: canHealTarget,
+            onClick: (_event, li) => healTarget(li)
         },
         {
-            name: game.i18n.format("DoD.ui.chat.healSelectedDamage"),
+            label: game.i18n.format("DoD.ui.chat.healSelectedDamage"),
             icon: '<i class="fas fa-user-plus"></i>',
-            condition: canHealSelectedDamage,
-            callback: li => healSelectedDamage(li)
+            visible: canHealSelectedDamage,
+            onClick: (_event, li) => healSelectedDamage(li)
         },
         {
-            name: game.i18n.format("DoD.ui.chat.undoDamage"),
+            label: game.i18n.format("DoD.ui.chat.undoDamage"),
             icon: '<i class="fas fa-undo-alt"></i>',
-            condition: canUndoDamage,
-            callback: li => undoDamage(li)
+            visible: canUndoDamage,
+            onClick: (_event, li) => undoDamage(li)
         }
     );
 }
@@ -834,7 +834,7 @@ export async function applyDamageMessage(damageData) {
 
     let html = `
         <div class="damage-message permission-${permissionKey}" data-damage="${damageTaken}" data-actor-id="${actor.uuid}">
-            ${game.i18n.format(game.i18n.localize("DoD.ui.chat.damageApplied"), {damage: damageTaken, actor: actorName})}
+            ${game.i18n.format("DoD.ui.chat.damageApplied", {damage: damageTaken, actor: actorName})}
             ${message}
             <div class="damage-details permission-observer" data-actor-id="${actor.uuid}">
                 <i class="fa-solid fa-circle-info"></i>
@@ -848,7 +848,7 @@ export async function applyDamageMessage(damageData) {
             </div>            
         </div>
         <div class="damage-message permission-not-${permissionKey}" data-actor-id="${actor.uuid}">
-            ${game.i18n.format(game.i18n.localize("DoD.ui.chat.damageApplied"), {damage: "???", actor: actorName})}
+            ${game.i18n.format("DoD.ui.chat.damageApplied", {damage: "???", actor: actorName})}
             ${message}
         </div>`;
     ChatMessage.create({ 
@@ -873,7 +873,7 @@ export async function applyHealingMessage(damageData) {
 
     const msg = `
     <div class="permission-${permissionKey}" data-actor-id="${actor.uuid}">
-        ${game.i18n.format(game.i18n.localize("DoD.ui.chat.healingApplied"), {damage: newHP - oldHP, actor: actorName})}
+        ${game.i18n.format("DoD.ui.chat.healingApplied", {damage: newHP - oldHP, actor: actorName})}
         <div class="damage-details permission-observer" data-actor-id="${actor.uuid}">
             <i class="fa-solid fa-circle-info"></i>
             <div class="expandable" style="text-align: left; margin-left: 0.5em">
@@ -882,7 +882,7 @@ export async function applyHealingMessage(damageData) {
         </div>            
     </div>
     <div class="permission-not-${permissionKey}" data-actor-id="${actor.uuid}">
-        ${game.i18n.format(game.i18n.localize("DoD.ui.chat.healingApplied"), {damage: "???", actor: actorName})}
+        ${game.i18n.format("DoD.ui.chat.healingApplied", {damage: "???", actor: actorName})}
     </div>`;
 
     if (oldHP === 0 && newHP > 0) {

@@ -33,13 +33,13 @@ export default class DoD_Utility {
     }
 
     static calculateDamageBonus(attribute) {
-        const DoD = CONFIG.DoD;
+        const dice = Object.keys(DoD.dice);
         if (attribute <=12) {
-            return DoD.dice.none;
+            return dice[0]; // none
         } else if (attribute <=16) {
-            return DoD.dice.d4;
+            return dice[1]; // d4
         } else {
-            return DoD.dice.d6;
+            return dice[2]; // d6
         }
     }
 
@@ -115,14 +115,14 @@ export default class DoD_Utility {
         let table = game.tables.find(i => i.name.toLowerCase() === name.toLowerCase()) || fromUuidSync(name);
         if (!table) {
             if (!options?.noWarnings){
-                console.log(game.i18n.format(game.i18n.localize("DoD.WARNING.tableNotFound"), {id: name}));
+                console.log(game.i18n.format("DoD.WARNING.tableNotFound", {id: name}));
                 //DoD_Utility.WARNING("DoD.WARNING.tableNotFound", {id: name});
             }
             return null;
         }
         if (!(table instanceof RollTable)) {
             if (!options?.noWarning){
-                console.log(game.i18n.format(game.i18n.localize("DoD.WARNING.typeMismatch"), {id: name}));
+                console.log(game.i18n.format("DoD.WARNING.typeMismatch", {id: name}));
                 //DoD_Utility.WARNING("DoD.WARNING.typeMismatch", {id: name});
             }
             return null;
@@ -296,7 +296,7 @@ export default class DoD_Utility {
         });
   
         // Create the chat message
-        ChatMessage.applyRollMode(messageData, game.settings.get("core", "rollMode"));
+        ChatMessage.applyMode(messageData, game.settings.get("core", "messageMode"));
         return ChatMessage.create(messageData);
     }
 
@@ -371,7 +371,7 @@ export default class DoD_Utility {
         if (!params) {
             return ui.notifications.info(game.i18n.localize(msg));
         } else {
-            return ui.notifications.info(game.i18n.format(game.i18n.localize(msg), params));
+            return ui.notifications.info(game.i18n.format(msg, params));
         }
     }
 
@@ -379,7 +379,7 @@ export default class DoD_Utility {
         if (!params) {
             return ui.notifications.warn(game.i18n.localize(msg));
         } else {
-            return ui.notifications.warn(game.i18n.format(game.i18n.localize(msg), params));
+            return ui.notifications.warn(game.i18n.format(msg, params));
         }
     }
 
@@ -387,7 +387,7 @@ export default class DoD_Utility {
         if (!params) {
             return ui.notifications.error(game.i18n.localize(msg));
         } else {
-            return ui.notifications.error(game.i18n.format(game.i18n.localize(msg), params));
+            return ui.notifications.error(game.i18n.format(msg, params));
         }
     }
 

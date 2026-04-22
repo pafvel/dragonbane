@@ -1,7 +1,10 @@
-import DragonbaneDataModel from "../DragonbaneDataModel.js";
+export default class DoDActiveEffectData extends foundry.data.ActiveEffectTypeDataModel {
 
-export default class DoDActiveEffectData extends DragonbaneDataModel {
-
+    static mergeSchema(target, source) {
+        Object.assign(target, source);
+        return target;
+    }
+        
     static defineSchema() {
         const { fields } = foundry.data;
         return this.mergeSchema(super.defineSchema(), {

@@ -1,4 +1,5 @@
 import DoDActorBaseData from "./actor-base.js";
+import StepDiceField from "../fields/step-dice-field.js";
 
 export default class DoDCharacterBaseData extends DoDActorBaseData {
     static defineSchema() {
@@ -15,12 +16,12 @@ export default class DoDCharacterBaseData extends DoDActorBaseData {
             }),
             damageBonus: new fields.SchemaField({
                 agl: new fields.SchemaField({
-                    base: new fields.StringField({ required: true, initial: "" }),
-                    value: new fields.StringField({ required: true, initial: "" })
+                    base: new StepDiceField({ required: true, initial: "" }),
+                    value: new StepDiceField({ required: true, initial: "" })
                 }),
                 str: new fields.SchemaField({
-                    base: new fields.StringField({ required: true, initial: "" }),
-                    value: new fields.StringField({ required: true, initial: "" })
+                    base: new StepDiceField({ required: true, initial: "" }),
+                    value: new StepDiceField({ required: true, initial: "" })
                 }),
             }),
         });
