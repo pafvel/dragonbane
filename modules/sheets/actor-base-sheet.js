@@ -912,6 +912,19 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                 let effect = effects.find((e) => e.uuid === effectUuid);
                 return await effect.update({ ["disabled"]: element.checked });
             }
+            if (field === "system.memorized" && element.checked) {
+                const spellCount = element.offsetParent.querySelector(".memorized-spells");
+                const numberOfMemorizedSpells = parseInt(spellCount.dataset.memorized);
+                const newNumberOfMemorizedSpells = numberOfMemorizedSpells + 1;
+                if(newNumberOfMemorizedSpells > this.actor.system.attributes.int.value){
+                    DoD_Utility.WARNING("DoD.WARNING.memorizedSpellLimit", { limit: this.actor.system.attributes.int.value });
+                    element.checked = false;
+                    return;
+                }else{
+                    return await item.update({ [field]: element.checked });
+                }
+
+            }
             return await item.update({ [field]: element.checked });
         }
 

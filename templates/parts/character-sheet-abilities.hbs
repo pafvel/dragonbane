@@ -123,7 +123,18 @@
         {{#if hasSpells }}
         <div>
             {{!-- Spells --}}
+
             <table class="sheet-table item-list spells">
+                <tr class="sheet-table-header">
+                    <th></th> 
+                    <th colspan="5">
+                        <div class="flexrow memorized-spells" data-memorized="{{memorizedSpells}}" data-total="{{totalSpells}}">
+                            {{localize "DoD.ui.character-sheet.memorizedSpells"}} 
+                            {{memorizedSpells}} / {{totalSpells}}
+                        </div>
+                    </th>  
+                    <th></th>         
+                </tr>
                 <tr class="sheet-table-header">
                     <th></th>
                     <th class="number-header">
