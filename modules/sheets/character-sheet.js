@@ -376,6 +376,19 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         delete data?.system?.attributes?.cha?.value
         return data;
     }
+    _processFormData(event, form, formData) {
+        let name = event?.target?.name;
+        const isString = typeof name;
+
+        if (!(isString === "string")) {
+            name = event?.target?.name.name;
+        }
+        if(name.includes("name")){
+            this.actor.system.tokensUpdate(formData.object.name)
+        }
+
+        return super._processFormData(event, form, formData);
+    }
 
     async _onKinEdit(event) {
         event.preventDefault();
