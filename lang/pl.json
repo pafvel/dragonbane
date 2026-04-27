@@ -224,6 +224,7 @@
         },
         "critChoices": {
             "choiceLabel": "Efekty krytyczne",
+            "choiceTitle": "Efekt krytyczny",
             "doubleWeaponDamage": "Podwójnie obrażenia broni",
             "extraAttack": "Możesz natychmiast wykonać drugi atak przeciw innemu wrogowi. Jest on akcją darmową",
             "ignoreArmor": "Zbroja nie chroni celu przed obrażeniami"
@@ -639,16 +640,16 @@
             "damageTypesHint": "Włącz rodzaje obrażeń (cięte, kłute i obuchowe), bonus skuteczności zbroi i akcje powiązane z typami obrażeń.",
             "coinEncumbrance": "Monety jako Obciążenie",
             "coinEncumbranceHint": "Wlicza monety od sumy obciążenia.",
-            "coreSettingOverrides": "Core Module Overrides",
-            "coreSettingOverridesHint": "Override core module settings for this world.",
-            "magicMishapTable": "Magic Mishap Table",
-            "magicMishapTableHint": "Override the table to use for magic mishaps.",
-            "meleeMishapTable": "Melee Mishap Table",
-            "meleeMishapTableHint": "Override the table to use for melee mishaps.",
-            "rangedMishapTable": "Ranged Mishap Table",
-            "rangedMishapTableHint": "Override the table to use for ranged mishaps.",
-            "treasureTable": "Treasure Table",
-            "treasureTableHint": "Override the table to use for treasures."
+            "coreSettingOverrides": "Nadpisanie tabel z głównego modułu",
+            "coreSettingOverridesHint": "Zastąp tabele z głównego modułu dla tego świata.",
+            "magicMishapTable": "Tabela: Magiczne Tarapaty",
+            "magicMishapTableHint": "Wpisz ID tabeli, która zastąpi tabele Magicznych Tarapatów.",
+            "meleeMishapTable": "Tabela: Tarapaty Walka wręcz",
+            "meleeMishapTableHint": "Wpisz ID tabeli, która zastąpi tabele Tarapatów Walki wręcz.",
+            "rangedMishapTable": "Tabela: Tarapaty Walka dystansowa",
+            "rangedMishapTableHint": "Wpisz ID tabeli, która zastąpi tabele Tarapatów Walki dystansowej.",
+            "treasureTable": "Tabela: Skarby",
+            "treasureTableHint": "Wpisz ID tabeli, która zastąpi tabele Skarbów."
 
         },
         "WARNING": {
