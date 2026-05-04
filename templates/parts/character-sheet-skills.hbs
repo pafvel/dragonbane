@@ -7,7 +7,7 @@
                     <i class="fas fa-circle-arrow-up"></i>
                 </button>
                 {{else}}
-                    <input  title="{{localize "DoD.skill.markAdvancement"}}" class="mark-advancement" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
+                    <input  title="{{localize "DoD.skill.markAdvancement"}}" class="mark-advancement" data-action="markAdvancement" data-field="system.advance" type="checkbox" {{checked skill.system.advance}} />
                 {{/if}}
             {{/if}}
         </td>
@@ -16,9 +16,9 @@
         </td>
         <td class="skill-name text-data">
             {{#if skill.system.isProfessionSkill}}
-            <a class="rollable-skill"><b>{{skill.name}}</b> ({{localize skill.system.attributeShort}})</a>
+            <a data-action="skillRoll"><b>{{skill.name}}</b> ({{localize skill.system.attributeShort}})</a>
             {{else}}
-            <a class="rollable-skill">{{skill.name}} ({{localize skill.system.attributeShort}})</a>
+            <a data-action="skillRoll">{{skill.name}} ({{localize skill.system.attributeShort}})</a>
             {{/if}}
         </td>
         <td>

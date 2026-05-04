@@ -6,9 +6,9 @@
         </td>
         <td class="text-data">
             {{#if rollable}}
-            <a class="rollable-skill">{{item.displayName}}</a>
+            <a data-action="skillRoll">{{item.displayName}}</a>
             {{else}}
-            <a class="item-edit">{{item.displayName}}</a>
+            <a  data-action="editItem">{{item.displayName}}</a>
             {{/if}}
         </td>
         {{#if canEquipItems}}
@@ -39,7 +39,7 @@
                 <tr class="sheet-table-header">
                     <th></th>
                     <th class="thumbnail-header">
-                        <button type="button" class="item-create" data-type="weapon" title="{{localize "DoD.ui.character-sheet.create-weapon"}}">
+                        <button type="button" data-action="createItem" data-type="weapon" title="{{localize "DoD.ui.character-sheet.create-weapon"}}">
                             <a  class="fas fa-plus"></a>
                         </button>                        
                     </th>
@@ -67,7 +67,7 @@
                 <tr class="sheet-table-header">
                     <th></th>
                     <th class="thumbnail-header">
-                        <button type="button" class="item-create" data-type="armor" title="{{localize "DoD.ui.character-sheet.create-armor"}}">
+                        <button type="button" data-action="createItem" data-type="armor" title="{{localize "DoD.ui.character-sheet.create-armor"}}">
                             <a  class="fas fa-plus"></a>
                         </button>                        
                     </th>
@@ -95,7 +95,7 @@
                 <tr class="sheet-table-header">
                     <th></th>
                     <th class="thumbnail-header">
-                        <button type="button" class="item-create" data-type="helmet" title="{{localize "DoD.ui.character-sheet.create-helmet"}}"</a>
+                        <button type="button" data-action="createItem" data-type="helmet" title="{{localize "DoD.ui.character-sheet.create-helmet"}}"</a>
                             <a  class="fas fa-plus"></a>
                         </button>                        
                     </th>
@@ -161,7 +161,7 @@
                     <th>
                     </th>
                     <th class="thumbnail-header">
-                        <button type="button" class="item-create" data-type="item" title="{{localize "DoD.ui.character-sheet.create-item"}}">
+                        <button type="button" data-action="createItem" data-type="item" title="{{localize "DoD.ui.character-sheet.create-item"}}">
                             <a  class="fas fa-plus"></a>
                         </button>                        
                     </th>
@@ -200,7 +200,7 @@
                 <tr class="sheet-table-header">
                     <th></th>
                     <th class="thumbnail-header">
-                        <button type="button" class="item-create tiny" data-type="item" title="{{localize "DoD.ui.character-sheet.create-item"}}">
+                        <button type="button" class="tiny" data-action="createItem" data-type="item" title="{{localize "DoD.ui.character-sheet.create-item"}}">
                             <a  class="fas fa-plus"></a>
                         </button>
                     </th>
@@ -261,7 +261,7 @@
                     <th>
                     </th>
                     <th class="thumbnail-header">
-                        <button type="button" class="item-create storage" data-type="item" title="{{localize "DoD.ui.character-sheet.create-item"}}">
+                        <button type="button" class="storage" data-action="createItem" data-type="item" title="{{localize "DoD.ui.character-sheet.create-item"}}">
                             <a  class="fas fa-plus"></a>
                         </button>
                     </th>

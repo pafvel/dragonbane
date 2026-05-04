@@ -4,7 +4,7 @@ import DoDSkillTest from "../tests/skill-test.js";
 
 export default class DoDMonsterSheet extends DoDActorBaseSheet {
 
-    static DEFAULT_OPTIONS =  {
+    static DEFAULT_OPTIONS = {
         classes: ["DoD", "sheet", "character"],
         position: { width: 580, height: 670 },
         window: { resizable: true, title: 'DoD.NpcSheetTitle' },
@@ -12,7 +12,9 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
             submitOnChange: true,
             closeOnSubmit: false
         },
-          actions: {  
+        actions: {
+            monsterAttack: this.prototype._onMonsterAttack,
+            monsterDefend: this.prototype._onMonsterDefend
         }
     };
 
@@ -45,18 +47,10 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
         return context;        
     }
 
-    async _onRender(context, options) {
-        await super._onRender(context, options);
+    async _onMonsterAttack(event, _target) {
+        
+        if (!this.actor.isOwner) return;
 
-        const html = $(this.element);
-
-        if (this.actor.isOwner) {
-            html.find(".monster-attack").on("click contextmenu", this._onMonsterAttack.bind(this));
-            html.find(".monster-defend").on("click", this._onMonsterDefend.bind(this));
-        }
-    }
-
-    async _onMonsterAttack(event) {
         event.preventDefault();
         event.currentTarget?.blur();
 
@@ -182,7 +176,10 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
         }
     }
 
-    async _onMonsterDefend(event) {
+    async _onMonsterDefend(event, _target) {
+        
+        if (!this.actor.isOwner) return;
+        
         event.preventDefault();
         event.currentTarget?.blur();
 

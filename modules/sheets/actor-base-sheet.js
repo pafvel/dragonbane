@@ -14,6 +14,21 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
     #keydownListener = null; // Keydown listener to handle delete/backspace key
     #focusElement = null; // Element that has focus and can be deleted with delete/backspace key
 
+    static DEFAULT_OPTIONS = {
+        actions: {
+            editItem: this.prototype._onItemEdit,
+            createItem: this.prototype._onItemCreate,
+            deleteItem: this.prototype._onItemDelete,
+            editEffect: this.prototype._onEffectEdit,
+            skillRoll: { handler: this.prototype._onSkillRoll, buttons: [0,2] },
+            useAbility: { handler: this.prototype._onUseAbility, buttons: [0,2] },
+            hitPointClick: { handler: this.prototype._onHitPointClick, buttons: [0,2] },
+            willPointClick: { handler: this.prototype._onWillPointClick, buttons: [0,2] },
+            rollDamage: { handler: this.prototype._onDamageRoll, buttons: [0,2] },
+            rollHealingTime: { handler: this.prototype._onHealingTimeRoll, buttons: [0,2] },
+        }
+    };
+
     constructor(options = {}, ...args) {
         super(options, ...args);
         this.#focusElement = null;
@@ -266,68 +281,80 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         }
     }
 
-    async _onRender(context, options) {
-        await super._onRender(context, options);
+// event handlers
+#handlers = {};
 
-        this._formatActiveEffectProperties();
+async _onRender(context, options) {
+    await super._onRender(context, options);
 
-        const html = $(this.element);
+    this._formatActiveEffectProperties();
 
-        // Open item for editing/viewing
-        html.find(".item-edit").on("click contextmenu", this._onItemEdit.bind(this));
+    const html = $(this.element);
 
-        if (this.actor.isOwner) {
-            // Elements need focus for the keydown event to to work
-            html.find(".item-delete-key").mouseenter(event => {
-                this.#focusElement = event.currentTarget;
-            });
-            html.find(".item-delete-key").mouseleave(_event => {
-                this.#focusElement = null;
-            });
+    this.#handlers = {
+        ...(this.#handlers ?? {}),
 
-            // Create & Delete item buttons
-            html.find(".item-create").click(this._onItemCreate.bind(this));
-            html.find(".item-delete").click(this._onItemDelete.bind(this));
+        editAttribute: this._onEditAttribute.bind(this),
+        focusAttribute: this._onFocusAttribute.bind(this),
+        blurAttribute: this._onBlurAttribute.bind(this),
 
+        editResource: this._onEditResource.bind(this),
+        focusResource: this._onFocusResource.bind(this),
+        blurResource: this._onBlurResource.bind(this),
+        
+        editCurrentHp: this._onEditCurrentHp.bind(this),
+        editCurrentWp: this._onEditCurrentWp.bind(this),
 
-            // Attributes with .base and .value must be handled separately
-            html.find(".attribute-input").change(this._onEditAttribute.bind(this));
-            html.find(".attribute-input").focus(this._onFocusAttribute.bind(this));
-            html.find(".attribute-input").blur(this._onBlurAttribute.bind(this));
+        inlineEdit: this._onInlineEdit.bind(this),
 
-            // Hit points
-            html.find(".hit-points-max-label").focus(this._onFocusResource.bind(this));
-            html.find(".hit-points-max-label").blur(this._onBlurResource.bind(this));
-            html.find(".hit-points-max-label").change(this._onEditResource.bind(this));
-            html.find(".hit-points-current-label").change(this._onEditCurrentHp.bind(this));
-            html.find(".hit-points-box").on("click contextmenu", this._onHitPointClick.bind(this));
+        mouseEnterDeleteKey: (event) => { this.#focusElement = event.currentTarget; },
+        mouseLeaveDeleteKey: (_event) => { this.#focusElement = null; }
+    };
 
-            // Will points
-            html.find(".will-points-max-label").focus(this._onFocusResource.bind(this));
-            html.find(".will-points-max-label").blur(this._onBlurResource.bind(this));
-            html.find(".will-points-max-label").change(this._onEditResource.bind(this));
-            html.find(".will-points-current-label").change(this._onEditCurrentWp.bind(this));
-            html.find(".will-points-box").on("click contextmenu", this._onWillPointClick.bind(this));
+    if (this.actor.isOwner) {
+        html.off("mouseenter", ".item-delete-key");
+        html.on("mouseenter", ".item-delete-key", this.#handlers.mouseEnterDeleteKey);
 
-            // Inline editing
-            html.find(".inline-edit").change(this._onInlineEdit.bind(this));
+        html.off("mouseleave", ".item-delete-key");
+        html.on("mouseleave", ".item-delete-key", this.#handlers.mouseLeaveDeleteKey);
 
-            // Skills, abilities & weapon damage
-            html.find(".rollable-skill").on("click contextmenu", this._onSkillRoll.bind(this));
-            html.find(".use-ability").on("click contextmenu", this._onUseAbility.bind(this));
-            html.find(".rollable-damage").on("click contextmenu", this._onDamageRoll.bind(this));
+        html.off("change", ".attribute-input");
+        html.on("change", ".attribute-input", this.#handlers.editAttribute);
 
-            // Effects & injuries
-            html.find(".effect-edit").on("click contextmenu", this._onEffectEdit.bind(this));
-            html.find(".effect-delete").click(this._onEffectDelete.bind(this));
-            html.find(".rollable-healingTime").on("click contextmenu", this._onHealingTimeRoll.bind(this));
-        } else if (this.actor.isObserver) {
-            // Enable right-clicking skills and abilities
-            html.find(".rollable-skill").on("contextmenu", this._onSkillRoll.bind(this));
-            html.find(".use-ability").on("contextmenu", this._onUseAbility.bind(this));
-        }
+        html.off("focus", ".attribute-input");
+        html.on("focus", ".attribute-input", this.#handlers.focusAttribute);
 
+        html.off("blur", ".attribute-input");
+        html.on("blur", ".attribute-input", this.#handlers.blurAttribute);
+
+        html.off("change", ".hit-points-max-label");
+        html.on("change", ".hit-points-max-label", this.#handlers.editResource);
+
+        html.off("focus", ".hit-points-max-label");
+        html.on("focus", ".hit-points-max-label", this.#handlers.focusResource);
+
+        html.off("blur", ".hit-points-max-label");
+        html.on("blur", ".hit-points-max-label", this.#handlers.blurResource);
+
+        html.off("change", ".hit-points-current-label");
+        html.on("change", ".hit-points-current-label", this.#handlers.editCurrentHp);
+
+        html.off("focus", ".will-points-max-label");
+        html.on("focus", ".will-points-max-label", this.#handlers.focusResource);
+
+        html.off("blur", ".will-points-max-label");
+        html.on("blur", ".will-points-max-label", this.#handlers.blurResource);
+
+        html.off("change", ".will-points-max-label");
+        html.on("change", ".will-points-max-label", this.#handlers.editResource);
+
+        html.off("change", ".will-points-current-label");
+        html.on("change", ".will-points-current-label", this.#handlers.editCurrentWp);
+
+        html.off("change", ".inline-edit");
+        html.on("change", ".inline-edit", this.#handlers.inlineEdit);
     }
+}
 
     async enrich(html) {
         if (html) {
@@ -610,18 +637,21 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         return createdItem;
     }
 
-    _onItemEdit(event) {
+    _onItemEdit(event, target) {
         event.preventDefault();
-        let element = event.currentTarget;
+        let element = target;
         let itemId = element.closest(".sheet-table-data").dataset.itemId;
         let item = this.actor.items.get(itemId);
 
         item?.sheet.render(true);
     }
 
-    async _onItemCreate(event) {
+    async _onItemCreate(event, target) {
         event.preventDefault();
-        const element = event.currentTarget;
+
+        if (!this.actor.isOwner) return;
+
+        const element = target;
         const type = element.dataset.type;
 
         // Create effect
@@ -667,9 +697,12 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         return this.actor.createEmbeddedDocuments("Item", [itemData]);
     }
 
-    async _onItemDelete(event) {
+    async _onItemDelete(event, target) {
         event.preventDefault();
-        let element = event.currentTarget;
+
+        if (!this.actor.isOwner) return;
+
+        let element = target;
         let itemId = element.closest(".sheet-table-data").dataset.itemId;
         let item = this.actor.items.get(itemId);
         return await this._onDeleteItem(item, itemId);
@@ -796,8 +829,10 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         });
     }
 
-    _onHitPointClick(event) {
+    _onHitPointClick(event, _target) {
         event.preventDefault();
+
+        if(!this.actor.isOwner) return;
 
         let hp = this.actor.system.hitPoints;
         if (event.type === "click") { // left click
@@ -811,8 +846,10 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         }
     }
 
-    _onWillPointClick(event) {
+    _onWillPointClick(event, _target) {
         event.preventDefault();
+
+        if(!this.actor.isOwner) return;
 
         let wp = this.actor.system.willPoints;
         if (event.type === "click") { // left click
@@ -923,10 +960,12 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         return result;
     }
 
-    async _onSkillRoll(event) {
+    async _onSkillRoll(event, target) {
         event.preventDefault();
 
-        let itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
+        if (!this.actor.isObserver) return;
+
+        let itemId = target.closest(".sheet-table-data").dataset.itemId;
         let item = this.actor.items.get(itemId);
 
         if (event.type === "click") { // left click - skill roll
@@ -1002,10 +1041,12 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         }
     }
 
-    async _onUseAbility(event) {
+    async _onUseAbility(event, target) {
         event.preventDefault();
 
-        const itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
+        if (!this.actor.isObserver) return;
+
+        const itemId = target.closest(".sheet-table-data").dataset.itemId;
         const item = this.actor.items.get(itemId);
 
         if (event.type === "click") { // left click - use item
@@ -1017,11 +1058,13 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         }
     }
 
-    async _onDamageRoll(event) {
+    async _onDamageRoll(event, target) {
         event.preventDefault();
         const DoD = CONFIG.DoD;
 
-        const itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
+        if (!this.actor.isOwner) return;
+
+        const itemId = target.closest(".sheet-table-data").dataset.itemId;
         const weapon = this.actor.items.get(itemId);
 
         if (event.type === "click") { // left click - roll damage
@@ -1064,32 +1107,19 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         }
     }
 
-    async _onEffectEdit(event) {
+    async _onEffectEdit(event, target) {
         event.preventDefault();
-        const element = event.currentTarget;
+        const element = target;
         const effectUuid = element.closest(".sheet-table-data").dataset.effectUuid;
         const effect = Array.from(this.actor.allApplicableEffects()).find(e => e.uuid === effectUuid);
 
         effect?.sheet.render(true);
     }
 
-    async _onEffectDelete(event) {
-        event.preventDefault();
-        let element = event.currentTarget;
-        let effectUuid = element.closest(".sheet-table-data").dataset.effectUuid;
-        let effect = fromUuidSync(effectUuid);
-
-        const ok = await this._itemDeleteDialog(effect);
-        if (!ok) {
-            return;
-        }
-        return effect.delete();
-    }
-
-    async _onHealingTimeRoll(event) {
+    async _onHealingTimeRoll(event, target) {
         event.preventDefault();
 
-        const itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
+        const itemId = target.closest(".sheet-table-data").dataset.itemId;
         const injury = this.actor.items.get(itemId);
         const healingTime = injury.system.healingTime;
 

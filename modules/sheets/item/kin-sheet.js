@@ -18,9 +18,13 @@ export default class DoDKinSheet extends DoDItemBaseSheet {
 
     async _onRender(context, options) {
         await super._onRender(context, options);
-        if (this.item.isOwner) {
-            $(this.element).find(".edit-kin-abilities").change(this._onEditKinAbilities.bind(this));
-        }
+
+        if (!this.item.isOwner) return;
+
+        const html = $(this.element);
+
+        html.off("change", ".edit-kin-abilities");
+        html.on("change", ".edit-kin-abilities", this._onEditKinAbilities.bind(this));
     }
 
     async _onEditKinAbilities(event) {

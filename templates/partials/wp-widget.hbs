@@ -21,7 +21,7 @@
             <input class="resource-points-current-label will-points-current-label" title="{{localize "DoD.ui.character-sheet.willPointsCurrent"}}" type="number" value="{{system.willPoints.value}}" data-dtype="Number" />
         </div>
         {{else}}
-            <div class="resource-points-box will-points-box">
+            <div class="resource-points-box" data-action="willPointClick">
                 {{#times lostWP}}
                 <img class="resource-point" src="./systems/dragonbane/art/ui/point-checked.webp"/>
                 {{/times}}

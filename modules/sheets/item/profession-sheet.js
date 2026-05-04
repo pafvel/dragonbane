@@ -18,9 +18,13 @@ export default class DoDProfessionSheet extends DoDItemBaseSheet {
 
     async _onRender(context, options) {
         await super._onRender(context, options);
-        if (this.item.isOwner) {
-            $(this.element).find(".edit-profession-abilities").change(this._onEditProfessionAbilities.bind(this));
-        }
+
+        if (!this.item.isOwner) return;
+
+        const html = $(this.element);
+
+        html.off("change", ".edit-profession-abilities");
+        html.on("change", ".edit-profession-abilities", this._onEditProfessionAbilities.bind(this));
     }
 
     async _onEditProfessionAbilities(event) {

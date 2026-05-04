@@ -3,9 +3,9 @@
         <td></td>
         <td class="text-data">
             {{#if owner}}
-            <a class="use-ability">{{ability.name}}</a>
+            <a data-action="useAbility">{{ability.name}}</a>
             {{else}}
-            <a class="item-edit">{{ability.name}}</a>
+            <a  data-action="editItem">{{ability.name}}</a>
             {{/if}}
         </td>
         <td>
@@ -100,9 +100,9 @@
                     <td></td>
                     <td class="text-data">
                         {{#if ../owner}}
-                        <a class="rollable-skill">{{spell.name}}</a>
+                        <a data-action="skillRoll">{{spell.name}}</a>
                         {{else}}
-                        <a class="item-edit">{{spell.name}}</a>
+                        <a  data-action="editItem">{{spell.name}}</a>
                         {{/if}}
                     </td>
                     <td>
@@ -160,9 +160,9 @@
                     </td>
                     <td class="text-data">
                         {{#if ../owner}}
-                        <a class="rollable-skill">{{spell.name}}</a>
+                        <a data-action="skillRoll">{{spell.name}}</a>
                         {{else}}
-                        <a class="item-edit">{{spell.name}}</a>
+                        <a  data-action="editItem">{{spell.name}}</a>
                         {{/if}}
                     </td>
                     <td class="number-data">

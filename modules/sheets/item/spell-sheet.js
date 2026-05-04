@@ -38,9 +38,12 @@ export default class DoDSpellSheet extends DoDItemBaseSheet {
     async _onRender(context, options) {
         await super._onRender(context, options);
 
-        if (this.item.isOwner) {
-           $(this.element).find(".edit-school").change(this._onEditSchool.bind(this));
-        }
+        if (!this.item.isOwner) return;
+
+        const html = $(this.element);
+
+        html.off("change", ".edit-school");
+        html.on("change", ".edit-school", this._onEditSchool.bind(this));
     }
 
     _onEditSchool(event) {

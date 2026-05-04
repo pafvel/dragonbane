@@ -21,10 +21,10 @@
                         <img src="{{injury.img}}" title="{{injury.name}}"/>
                     </td>
                     <td class="text-data">
-                        <a class="item-edit" title="{{injury.system.tooltip}}">{{injury.name}}</a>
+                        <a  data-action="editItem" title="{{injury.system.tooltip}}">{{injury.name}}</a>
                     </td>
                     <td class="text-data">
-                        <a class="rollable-healingTime" title="{{injury.system.healingTimeTooltip}}">{{injury.system.healingTime}}</a>
+                        <a data-action="rollHealingTime" title="{{injury.system.healingTimeTooltip}}">{{injury.system.healingTime}}</a>
                     </td>
                     <td class="icon-data">
                         {{#if ../editable}}
@@ -43,7 +43,7 @@
                 <tr class="sheet-table-header">
                     <th></th>
                     <th class="thumbnail-header">
-                        <button type="button" class="item-create" data-type="effect" title="{{localize "DoD.ui.character-sheet.create-effect"}}">
+                        <button type="button" data-action="createItem" data-type="effect" title="{{localize "DoD.ui.character-sheet.create-effect"}}">
                             <a  class="fas fa-plus"></a>
                         </button>                        
                     </th>
@@ -59,10 +59,10 @@
                         <img src="{{effect.img}}"/>
                     </td>
                     <td class="text-data">
-                        <a class="effect-edit">{{effect.name}}</a>
+                        <a data-action="editEffect">{{effect.name}}</a>
                     </td>
                     <td class="text-data">
-                        <a class="item-edit">{{effect.parent.name}}</a>
+                        <a  data-action="editItem">{{effect.parent.name}}</a>
                     </td>
                     <td class="checkbox-data">
                         <input class="inline-edit" data-field="effect.disabled"  type="checkbox" {{checked effect.disabled}} />
