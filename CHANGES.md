@@ -1,5 +1,8 @@
 # Change Log
 
+## Version 4.0.1
+- Fix for sheets firing multiple events when using the pop-out functionality
+
 ## Version 4.0
 - General
   - Foundry v14 compatibility
