@@ -539,6 +539,10 @@ function displayTable(uuid, table, tableName, showDescription = false) {
             if (description.startsWith("<p>") && description.endsWith("</p>")) {
                 description = description.slice(3, -4);
             }
+            const resultName = DoD_Utility.getTableResultName(result, table);
+            if (resultName && !DoD_Utility.hasEmbeddedResultName(description)) {
+                description = `<strong>${resultName}</strong> ${description}`;
+            }
             html += `</td>
                 <td>${description}</td>
             </tr>`;

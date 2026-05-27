@@ -177,8 +177,9 @@ export default class DoD_Utility {
     }
 
     static async handleTableRoll(event) {
-        const tableId = event.target.dataset.tableId;
-        const tableName = event.target.dataset.tableName;
+        const el = event.target.classList.contains("table-roll") ? event.target : event.target.closest(".table-roll");
+        const tableId = el?.dataset.tableId;
+        const tableName = el?.dataset.tableName;
         const table = fromUuidSync(tableId) || this.findTable(tableName);
         if (table) {
             if (event.type === "click") { // left click
@@ -189,6 +190,22 @@ export default class DoD_Utility {
         }
         event.preventDefault();
         event.stopPropagation();
+    }
+
+    static getTableResultName(result, table) {
+        if (!result.name) return null;
+        const prefix = table.name + " - ";
+        return result.name.startsWith(prefix) ? result.name.substring(prefix.length) : result.name;
+    }
+
+    static hasEmbeddedResultName(description) {
+        return /<(b|strong)>(.*?)<\/\1>/.test(description);
+    }
+
+    static getEmbeddedResultName(description) {
+        const match = description.match(/<(b|strong)>(.*?)<\/\1>([\s\S]*)/);
+        if (!match) return null;
+        return { name: match[2], description: match[3] };
     }
 
     static async expandTableResult(tableResult)
@@ -275,10 +292,10 @@ export default class DoD_Utility {
         for (let r of messageResults) {
             // Split attack name and description
             if (!r.name) {
-                const match = r.description.match(/<(b|strong)>(.*?)<\/\1>([\s\S]*)/);
-                if (match) {
-                    r.name = match[2];
-                    r.description = match[3];
+                const embedded = this.getEmbeddedResultName(r.description);
+                if (embedded) {
+                    r.name = embedded.name;
+                    r.description = embedded.description;
                 }
             }
             r.details = "<strong class=\"name\">" + r.name + "</strong>"
