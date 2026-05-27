@@ -461,6 +461,7 @@
                 "monsterDefendTooltip": "Dodge or Parry",
                 "movement": "Movement",
                 "notes": "Notes",
+                "postToChat": "Post to Chat",
                 "profession": "Profession",
                 "professionAbilities": "Profession Abilities",
                 "professionAbilitiesTooltip": "Profession Abilities are determined by the character's Profession",

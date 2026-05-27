@@ -1,0 +1,33 @@
+.chat-item{
+    .chat-item-name{
+            background-image: url(art/ui/arrow-left.webp), url(art/ui/arrow-right.webp), url(art/ui/title-bar.webp);
+    background-position: left center, right center, center center;
+    background-repeat: no-repeat, no-repeat, repeat-x;
+    background-size: contain, contain, contain;
+    background-clip: border-box, border-box, content-box;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin: 0;
+    font-weight: 400;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60px;
+    }
+    h1{
+        label{
+                font-size: 20px;
+    text-align: center;
+    justify-self: center;
+    color: white;
+    font-weight: lighter;
+    font-family: var(--dod-font-heading);
+        }
+    }
+    h4{
+      text-align: center;
+      font-size: 18px;
+      margin: 0px;
+    }
+}

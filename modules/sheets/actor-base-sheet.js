@@ -160,6 +160,23 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                         { save: true, addSource: true });
                 }
             },
+            {
+                label: "DoD.ui.character-sheet.postToChat",
+                icon: '<i class="fa-regular fa-message"></i>',
+                visible: li => {
+                    return li.dataset.itemId || li.dataset.effectUuid;
+                },
+                onClick: async (_event, li) => {
+                    const item = this.actor.items.get(li.dataset.itemId);
+                    console.log(item)
+                    const content = await DoD_Utility.renderTemplate("systems/dragonbane/templates/chat-item.hbs", {item: item})
+                ChatMessage.create({
+                user: game.user.id,
+                speaker: ChatMessage.getSpeaker({ actor: this }),
+                content: content,
+            });
+            }
+        }
         ];
     }
 
