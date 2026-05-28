@@ -11,7 +11,9 @@
         "TypeInjury": "Injury",
         "TypeItem": "Item",
         "TypeKin": "Kin",
+        "TypeMaterial": "Ingredient",
         "TypeProfession": "Profession",
+        "TypeRecipe": "Recipe",
         "TypeSkill": "Skill",
         "TypeSpell": "Spell",
         "TypeWeapon": "Weapon"
@@ -29,7 +31,9 @@
             "injury": "Injury",
             "item": "Item",
             "kin": "Kin",
+            "material": "Ingredient",
             "profession": "Profession",
+            "recipe": "Recipe",
             "skill": "Skill",
             "spell": "Spell",
             "weapon": "Weapon"
@@ -45,7 +49,9 @@
         "DoDInjurySheet": "Dragonbane Injury Sheet",
         "DoDItemSheet": "Dragonbane Item Sheet",
         "DoDKinSheet": "Dragonbane Kin Sheet",
+        "DoDMaterialSheet": "Dragonbane Ingredient Sheet",
         "DoDProfessionSheet": "Dragonbane Profession Sheet",
+        "DoDRecipeSheet": "Dragonbane Recipe Sheet",
         "DoDSkillSheet": "Dragonbane Skill Sheet",
         "DoDSpellSheet": "Dragonbane Spell Sheet",
         "DoDWeaponSheet": "Dragonbane Weapon Sheet",
@@ -243,6 +249,15 @@
         "profession": {
             "key-attribute": "Key Attribute",
             "skills": "Skills"
+        },
+        "recipe": {
+            "isPoison": "Poison",
+            "potency": "Potency",
+            "potencyPerPowerlevel": "Potency per Power Level",
+            "materials": "Ingredients",
+            "item": "Substance",
+            "noMaterials": "Drag and drop to add ingredients",
+            "noItem": "Drag and drop to add item"
         },
         "roll": {
             "dragon": "succeeded with a Dragon!",
@@ -611,7 +626,8 @@
             "gmDescription": "GM Notes",
             "effects": "Effects",
             "enchantments": "Enchantments",
-            "enchantmentsTooltip": "Castable enchantments"
+            "enchantmentsTooltip": "Castable enchantments",
+            "formula": "Formula"
         },
         "INFO": {
             "monsterAttackUpdated": "Updated monster attack table for {actor}.",

@@ -1,0 +1,57 @@
+<div class="tab sheet-tab {{tabs.details.cssClass}}" data-group="primary" data-tab="{{tabs.details.id}}">
+    <div class="spell-tab dod-controls">
+        <table class="simple-table">
+            <tr>
+                <th>{{localize "TYPES.Item.skill"}}</th>
+                <th>{{localize "DoD.spell.rank"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <input class="edit-school" data-field="system.school" name="system.school" type="text" value="{{localize system.school}}" />
+                </td>
+                <td>
+                    <input name="system.rank" type="text" value="{{system.rank}}" data-dtype="Number" />
+                </td>
+            </tr>
+        </table>
+
+        <table class="simple-table">
+            <tr>
+                <th>{{localize "DoD.spell.prerequisite"}}</th>
+            </tr>
+            <tr>
+                <td>
+                    <input name="system.prerequisite" type="text" value="{{system.prerequisite}}" />
+                </td>
+            </tr>
+        </table>
+
+        <table class="simple-table">
+            <tr>
+                <th>{{localize "DoD.recipe.isPoison"}}</th>
+                <th>{{localize "DoD.recipe.potency"}}</th>
+                <th>{{localize "DoD.recipe.potencyPerPowerlevel"}}</th>
+            </tr>
+            
+            <tr>
+                <td>
+                    <input type="checkbox" name="system.hasPotency" {{checked system.hasPotency}} />
+                </td>    
+                <td>
+                    {{#if system.hasPotency}}
+                        <input name="system.potency" type="text" data-dtype="Number" value="{{system.potency}}" />
+                    {{else}}
+                        <input name="system.potency" type="text" data-dtype="Number" value="-" disabled />
+                    {{/if}}
+                </td>    
+                <td>
+                    {{#if system.hasPotency}}
+                        <input name="system.potencyPerPowerlevel" type="text" data-dtype="Number" value="{{system.potencyPerPowerlevel}}" />
+                    {{else}}
+                        <input name="system.potencyPerPowerlevel" type="text" data-dtype="Number" value="-" disabled />
+                    {{/if}}
+                </td>    
+            </tr>
+        </table>
+    </div>
+</div>

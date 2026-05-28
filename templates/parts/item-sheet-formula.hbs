@@ -1,0 +1,86 @@
+<div class="tab sheet-tab {{tabs.formula.cssClass}}" data-group="primary" data-tab="{{tabs.formula.id}}">
+    <div class="flex dod-controls">
+        {{!-- Ingredients --}}
+        <div>
+            <table class="sheet-table">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th class="thumbnail-header">
+                        <button type="button" data-action="addMaterial" title="{{localize "DoD.recipe.addMaterial"}}">
+                            <a  class="fas fa-plus"></a>
+                        </button>                        
+                    </th>
+                    <th class="text-header">{{localize "DoD.recipe.materials"}}</th>
+                    <th>{{!-- column for icons --}}&nbsp</th>
+                    <th></th>
+                </tr>
+
+                {{#each system.materials as |material i|}}
+                <tr class="sheet-table-data effect">
+                    <td></td>
+                    <td colspan="2" class="text-data">
+                        <input type="text" name="system.materials.{{i}}.name" value="{{material.name}}"/>
+                    </td>
+                    <td class="icon-data">
+                        <a data-action="removeMaterial" data-material-index="{{i}}">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                    <td></td>
+                </tr>
+                {{/each}}
+
+                {{#unless system.materials }}
+                <tr class="sheet-table-data effect">
+                    <td></td>
+                    <td></td>
+                    <td class="text-data" style="font-style:italic;">{{localize "DoD.recipe.noMaterials"}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {{/unless}}
+
+            </table>
+        </div>
+        {{!-- Item --}}
+        <div>
+            <table class="sheet-table">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th  class="thumbnail-header"></th>
+                    <th class="text-header">{{localize "DoD.recipe.item"}}</th>
+                    <th>{{!-- column for icons --}}&nbsp</th>
+                    <th></th>
+                </tr>
+
+                <tr class="sheet-table-data effect">
+                    {{#if recipeItem}}
+                    <td></td>
+                    <td class="thumbnail-data">
+                        <img src="{{recipeItem.img}}"/>
+                    </td>
+                    <td class="text-data">
+                        <a data-action="editRecipeItem" data-item-uuid="{{recipeItem.uuid}}"><span class="fa-solid fa-link"></span> {{recipeItem.name}}</a>
+                    </td>
+                    <td class="icon-data">
+                        <a data-action="removeRecipeItem">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                    <td></td>
+                    {{else}}
+                    <tr class="sheet-table-data effect">
+                        <td></td>
+                        <td></td>
+                        <td class="text-data" style="font-style:italic;">{{localize "DoD.recipe.noItem"}}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {{/if}}
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+

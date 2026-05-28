@@ -798,6 +798,9 @@
 .system-dragonbane .sheet-table-data .text-data {
   text-align: left;
 }
+.system-dragonbane .sheet-table-data .text-data input[type=text] {
+  text-align: left;
+}
 .system-dragonbane .sheet-table-data .number-data {
   text-align: center;
   padding-left: 0.5em;

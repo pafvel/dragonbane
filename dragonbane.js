@@ -20,7 +20,9 @@ import DoDHelmetSheet from "./modules/sheets/item/helmet-sheet.js";
 import DoDInjurySheet from "./modules/sheets/item/injury-sheet.js";
 import DoDItemSheet from "./modules/sheets/item/item-sheet.js";
 import DoDKinSheet from "./modules/sheets/item/kin-sheet.js";
+import DoDMaterialSheet from "./modules/sheets/item/material-sheet.js";
 import DoDProfessionSheet from "./modules/sheets/item/profession-sheet.js";
+import DoDRecipeSheet from "./modules/sheets/item/recipe-sheet.js";
 import DoDSkillSheet from "./modules/sheets/item/skill-sheet.js";
 import DoDSpellSheet from "./modules/sheets/item/spell-sheet.js";
 import DoDWeaponSheet from "./modules/sheets/item/weapon-sheet.js";
@@ -35,7 +37,9 @@ import DoDHelmetData from "./modules/data/items/helmetData.js";
 import DoDInjuryData from "./modules/data/items/injuryData.js";
 import DoDItemData from "./modules/data/items/itemData.js";
 import DoDKinData from "./modules/data/items/kinData.js";
+import DoDMaterialData from "./modules/data/items/materialData.js";
 import DoDProfessionData from "./modules/data/items/professionData.js";
+import DoDRecipeData from "./modules/data/items/recipeData.js";
 import DoDSkillData from "./modules/data/items/skillData.js";
 import DoDWeaponData from "./modules/data/items/weaponData.js";
 import DoDSpellData from "./modules/data/items/spellData.js";
@@ -191,7 +195,9 @@ Hooks.once("init", function () {
         item: DoDItemData,
         injury: DoDInjuryData,
         kin: DoDKinData,
+        material: DoDMaterialData,
         profession: DoDProfessionData,
+        recipe: DoDRecipeData,
         skill: DoDSkillData,
         spell: DoDSpellData,
         weapon: DoDWeaponData
@@ -211,11 +217,12 @@ Hooks.once("init", function () {
     CONFIG.DoD.Items.registerSheet("DoD", DoDInjurySheet, { types: ["injury"], makeDefault: true });
     CONFIG.DoD.Items.registerSheet("DoD", DoDItemSheet, { types: ["item"], makeDefault: true });
     CONFIG.DoD.Items.registerSheet("DoD", DoDKinSheet, { types: ["kin"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDMaterialSheet, { types: ["material"], makeDefault: true });
     CONFIG.DoD.Items.registerSheet("DoD", DoDProfessionSheet, { types: ["profession"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDRecipeSheet, { types: ["recipe"], makeDefault: true });
     CONFIG.DoD.Items.registerSheet("DoD", DoDSkillSheet, { types: ["skill"], makeDefault: true });
     CONFIG.DoD.Items.registerSheet("DoD", DoDSpellSheet, { types: ["spell"], makeDefault: true });
     CONFIG.DoD.Items.registerSheet("DoD", DoDWeaponSheet, { types: ["weapon"], makeDefault: true });
-
     CONFIG.DoD.DocumentSheetConfig.unregisterSheet(ActiveEffect, "core", CONFIG.DoD.ActiveEffectConfig);
     CONFIG.DoD.DocumentSheetConfig.registerSheet(ActiveEffect, "DoD", DoDActiveEffectConfig, {makeDefault :true});
 
