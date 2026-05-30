@@ -100,7 +100,7 @@ export class DoDItem extends Item {
 
     getSpellCost(powerLevel)
     {
-        if (this.type !== "spell") return 0;
+        if (!this.isSpellType) return 0;
         if (this.system.rank === 0) return 1; // Trick cost
         return powerLevel * 2; // Spell cost
     }
@@ -217,5 +217,13 @@ export class DoDItem extends Item {
 
     get isRangedWeapon() {
         return this.type === "weapon" && this.calculatedRange >= 10;
+    }
+
+    get isSpellType() {
+        return this.type === "spell" || this.type === "recipe";
+    }
+
+    get isInventoryItem() {
+        return ["armor", "helmet", "item", "material", "weapon"].includes(this.type);
     }
 }

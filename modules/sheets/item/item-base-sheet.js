@@ -18,7 +18,7 @@ export default class DoDItemBaseSheet extends HandlebarsApplicationMixin(ItemShe
             editEffect: this.#editEffect,
             deleteEffect: this.#deleteEffect
         },
-    };
+};
 
     static TABS = {
         primary: {
@@ -38,10 +38,13 @@ export default class DoDItemBaseSheet extends HandlebarsApplicationMixin(ItemShe
 
     #createDragDropHandlers() {
         return new DragDrop({
+            dragSelector: "[data-item-drag]",
             permissions: {
-                drop: this._canDragDrop.bind(this)
+                dragstart: this._canDragStart.bind(this),
+                drop: this._canDrop.bind(this)
             },
             callbacks: {
+                dragstart: this._onDragStart.bind(this),
                 drop: this._onDrop.bind(this)
             }
         })
@@ -97,8 +100,18 @@ export default class DoDItemBaseSheet extends HandlebarsApplicationMixin(ItemShe
         return effect.delete();
     }
 
-    _canDragDrop(_selector) {
+    _canDragStart(_selector) {
+        return true;
+    }
+
+    _canDrop(_selector) {
         return this.document.isOwner && this.isEditable;
+    }
+
+    
+    async _onDragStart(event) {
+        const document = fromUuidSync(event.currentTarget.dataset.itemUuid);
+        event.dataTransfer.setData("text/plain", JSON.stringify(document.toDragData()));
     }
 
     async _onDrop(event) {

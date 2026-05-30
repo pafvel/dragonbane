@@ -1,4 +1,5 @@
 import DoDItemBaseSheet from "./item-base-sheet.js";
+import DoDItemRef from "../../data/items/item-ref.js";
 
 export default class DoDRecipeSheet extends DoDItemBaseSheet {
 
@@ -37,27 +38,43 @@ export default class DoDRecipeSheet extends DoDItemBaseSheet {
 
     async _prepareContext(options) {
         const context = await super._prepareContext(options);
-        const uuid = this.item.system.item.uuid;
-        const recipeItem = fromUuidSync(uuid);
-
-        context.recipeItem = uuid ? {
-            uuid: recipeItem?.uuid ?? uuid,
-            name: recipeItem?.name ?? `${uuid} (unknown)`,
-            img: recipeItem?.img
-        } : null;
-
+        context.materials = this.item.system.materials;
+        context.materials?.forEach(material => material.resolve());
+        context.recipeItem = this.item.system.item;
+        context.recipeItem?.resolve();
         return context;
     }
 
     async _onDropItem(_event, item) {
+
+        // Drop skill to update magic school
         if (item.type === "skill") {
+            this.changeTab("details", "primary");
             await this.item.update({ ["system.school"]: item.name});
-        } else if (item.type === "material") {
-            const material = { name: item.name };
+            return;
+        }
+
+        if (!item.isInventoryItem) return;
+
+        // Determine drop target based on data attribute or item type if dropping outside drop targets
+        let dropTarget = event.target.closest("[data-drop-target]")?.dataset?.dropTarget ;
+        if (!dropTarget) {
+            if (item.type === "material") {
+                dropTarget = "material";
+            } else if (item.type === "item" && !this.item.system.item?.uuid) {
+                dropTarget = "item";
+            }
+        }
+
+        // Handle drop based on target
+        if (dropTarget === "material") {
+            const material = new DoDItemRef({ uuid: item.uuid, name: item.name, img: item.img });
             const materials = this.item.system.materials || [];
             materials.push(material);
+            this.changeTab("formula", "primary");
             await this.item.update({ ["system.materials"]: materials });
-        } else if (item.type === "item" && !this.item.system.item?.uuid) {
+        } else if (dropTarget === "item") {
+            this.changeTab("formula", "primary");
             await this.item.update({ ["system.item"]: { uuid: item.uuid, name: item.name, img: item.img }});
         }
     }    
@@ -75,7 +92,7 @@ export default class DoDRecipeSheet extends DoDItemBaseSheet {
         event.stopPropagation();
         event.preventDefault();
 
-        const index = parseInt(target.dataset.index);
+        const index = parseInt(target.dataset.materialIndex);
         const materials = this.item.system.materials;
         materials.splice(index, 1);
         await this.item.update({ ["system.materials"]: materials });
@@ -103,21 +120,35 @@ export default class DoDRecipeSheet extends DoDItemBaseSheet {
     async _onRender(context, options) {
         super._onRender(context, options);
 
-        if (this.#updateHook) return;
+        if (!this.#updateHook) {
+            this.#updateHook = async (item, change) => {
+                if ("name" in change || "img" in change) {
+                    if (item.uuid === this.item.system.item?.uuid) {
+                        await this.item.update({ ["system.item"]: { name: item.name, img: item.img } });
+                        this.render(false);
+                    } else {
+                        const materials = this.item.system.materials || [];
+                        const materialIndex = materials.findIndex(material => material.uuid === item.uuid);
+                        if (materialIndex !== -1) {
+                            materials[materialIndex] = { ...materials[materialIndex], name: item.name, img: item.img };
+                            await this.item.update({ ["system.materials"]: materials });
+                            this.render(false);
+                        }
+                    }
+                }
+            };
+            Hooks.on("updateItem", this.#updateHook);
+        }
 
-        this.#updateHook = (item, change) => {
-            if (item.uuid !== this.item.system.item?.uuid) return;
-            if ("name" in change || "img" in change) {
-                this.render(false);
-            }            
-        };
-
-        this.#deleteHook = deleted => {
-            if (deleted.uuid !== this.item.system.item?.uuid) return;
-            this.render(false);
-        };
-
-        Hooks.on("updateItem", this.#updateHook);
+        if (!this.#deleteHook) {
+            this.#deleteHook = deleted => {
+                if (deleted.uuid === this.item.system.item?.uuid
+                    || this.item.system.materials?.some(material => material.uuid === deleted.uuid))
+                {
+                    this.render(false);
+                }
+            };
+        }
         Hooks.on("deleteItem", this.#deleteHook);
     }
 

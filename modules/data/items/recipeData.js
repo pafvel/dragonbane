@@ -1,4 +1,5 @@
 import {DoDItemBaseData} from "./item-base.js";
+import DoDItemRef from "./item-ref.js";
 
 export default class DoDRecipeData extends DoDItemBaseData {
     static defineSchema() {
@@ -10,13 +11,11 @@ export default class DoDRecipeData extends DoDItemBaseData {
             prerequisite: new fields.StringField({ required: true, initial: "" }),
             memorized: new fields.BooleanField({ required: true, initial: false }),
             // Crafting specific fields
-            materials: new fields.ArrayField(new fields.SchemaField({
-                name: new fields.StringField({ required: true, initial: "" }),
-                quantity: new fields.NumberField({ required: true, initial: 1 }),
-            }), { required: true, initial: [] }),
-            item: new fields.SchemaField({
-                uuid: new fields.StringField({ required: true, initial: "" }),
-            }),
+            materials: new fields.ArrayField(
+                new foundry.data.fields.EmbeddedDataField(DoDItemRef),
+                { required: true, initial: [] }
+            ),
+            item: new foundry.data.fields.EmbeddedDataField(DoDItemRef, { nullable: true, required: false, initial: null }),
             // Poison specific fields
             hasPotency: new fields.BooleanField({ required: true, initial: false }),
             potency: new fields.NumberField({ required: true, initial: 0 }),

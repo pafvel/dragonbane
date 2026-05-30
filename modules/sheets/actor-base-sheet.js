@@ -939,7 +939,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
             }
             if (item.type === "skill") {
                 test = new DoDSkillTest(this.actor, item, options);
-            } else if (item.type === "spell") {
+            } else if (item.isSpellType) {
                 // Monsters use magic school if available, auto success otherwise.
                 if (this.actor.type === "monster" && !this.actor.findMagicSkill(item.system.school)) {
                     options.autoSuccess = true;
@@ -1183,9 +1183,11 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                 this._prepareInjury(item, context);
                 break;
             case 'item':
+            case 'material':
                 this._prepareItem(item, context);
                 break;
             case 'spell':
+            case 'recipe':
                 this._prepareSpell(item, context);
                 break;
             case 'weapon':

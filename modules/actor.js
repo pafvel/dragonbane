@@ -514,7 +514,7 @@ export class DoDActor extends Actor {
     }
 
     get hasSpells() {
-        return this.items.find(i => i.type === "spell") != null;
+        return this.items.find(i => i.isSpellType) != null;
     }
 
     get hasSkills() {
@@ -773,7 +773,7 @@ export class DoDActor extends Actor {
 
     findSpell(spellName) {
         let name = spellName.toLowerCase();
-        return this.items.find(item => item.type === "spell" && item.name.toLowerCase() === name);
+        return this.items.find(item => item.isSpellType && item.name.toLowerCase() === name);
     }
 
     hasCondition(attributeName) {
@@ -1040,7 +1040,7 @@ export class DoDActor extends Actor {
         const generalSchoolSettings = game.settings.get("dragonbane", "generalMagicSchoolName");
 
         for (let item of this.items.contents) {
-            if (item.type === "spell") {
+            if (item.isSpellType) {
                 let spell = item;
 
                 // replace general spells school name with localized string if it matches

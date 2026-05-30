@@ -270,7 +270,7 @@ export async function enrichDisplayNpcCard(match, options) {
         }
 
         // Magic tricks
-        const tricks = npc.items.filter(i => i.type === "spell" && !(i.system.rank > 0));
+        const tricks = npc.items.filter(i => i.isSpellType && !(i.system.rank > 0));
         if (tricks.length > 0) {
             html += `
             <tr><td>
@@ -287,7 +287,7 @@ export async function enrichDisplayNpcCard(match, options) {
         }
 
         // Spells
-        const spells = npc.items.filter(i => i.type === "spell" && i.system.rank > 0);
+        const spells = npc.items.filter(i => i.isSpellType && i.system.rank > 0);
         if (spells.length) {
             html += `
             <tr><td>
