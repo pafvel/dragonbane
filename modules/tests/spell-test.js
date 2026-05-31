@@ -103,34 +103,46 @@ export default class DoDSpellTest extends DoDSkillTest  {
         this.preRollData.spell = this.spell;
         this.preRollData.powerLevel = this.options.powerLevel ?? (this.spell.system.rank > 0 ? 1 : 0);
         this.preRollData.wpCost = this.options.noWpCost ? 0 : this.options.wpCost ?? this.spell.getSpellCost(this.preRollData.powerLevel);
+        this.preRollData.wpNew = this.options.wpNew;
+        this.preRollData.wpOld = this.options.wpOld;
     }
 
     updatePostRollData() {
         super.updatePostRollData();
 
-        // Pay WP cost
-        if (this.postRollData.wpCost > 0) {
-            const powerSource = this.options.wpSource;
+        const powerSource = this.options.wpSource ?? this.actor;
+        if (powerSource.uuid !== this.actor.uuid) {
+            this.postRollData.wpSourceUuid = powerSource.uuid;
+        }
+
+        // Update wpNew and wpOld
+        if (!this.isReroll) {
             if (powerSource.system?.willPoints) { // actor
                 this.postRollData.wpOld = powerSource.system.willPoints.value;
                 this.postRollData.wpNew = powerSource.system.willPoints.value - this.postRollData.wpCost;
-                powerSource.update({ ["system.willPoints.value"]: this.postRollData.wpNew});
             } else if (powerSource.system?.enchantments?.charge) { // gear
                 this.postRollData.wpOld = powerSource.system.enchantments.charge;
                 this.postRollData.wpNew = powerSource.system.enchantments.charge - this.postRollData.wpCost;
-                powerSource.update({ ["system.enchantments.charge"]: this.postRollData.wpNew});
             } else if (powerSource.actor?.system.willPoints) { // token
                 this.postRollData.wpOld = powerSource.actor.system.willPoints.value;
                 this.postRollData.wpNew = powerSource.actor.system.willPoints.value - this.postRollData.wpCost;
+            } else if (powerSource.uuid === this.actor.uuid && this.actor.type === "monster") {
+                // Monsters without a WP source can still cast spells, but it doesn't cost them WP
+            }
+        }
+
+        // Pay WP cost
+        if (!this.isReroll && this.postRollData.wpNew !== this.postRollData.wpOld) {
+            if (powerSource.system?.willPoints) { // actor
+                powerSource.update({ ["system.willPoints.value"]: this.postRollData.wpNew});
+            } else if (powerSource.system?.enchantments?.charge) { // gear
+                powerSource.update({ ["system.enchantments.charge"]: this.postRollData.wpNew});
+            } else if (powerSource.actor?.system.willPoints) { // token
                 powerSource.actor.update({ ["system.willPoints.value"]: this.postRollData.wpNew});
             } else if (powerSource.uuid === this.actor.uuid && this.actor.type === "monster") {
                 // Monsters without a WP source can still cast spells, but it doesn't cost them WP
-
             } else {
                 console.warn("Power source does not have WP or Charge", powerSource);
-            }
-            if (powerSource.name !== this.actor.name) {
-                this.postRollData.wpSourceName = powerSource.name;
             }
         }
 

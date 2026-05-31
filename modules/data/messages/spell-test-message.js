@@ -16,7 +16,7 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
             criticalEffect: new fields.StringField({ required: false, initial: "" }),
             wpOld: new fields.NumberField({ required: true, initial: 0 }),
             wpNew: new fields.NumberField({ required: true, initial: 0 }),
-            wpSourceName: new fields.StringField({ required: false, initial: "" }),
+            wpSourceUuid: new fields.StringField({ required: false, initial: "" }),
         });
     }
 
@@ -35,6 +35,9 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
         context.targetActor = this.targetActorUuid ? fromUuidSync(this.targetActorUuid) : "";
         delete context.targetActorUuid;
 
+        context.wpSource = this.wpSourceUuid ? fromUuidSync(this.wpSourceUuid) : null;
+        delete context.wpSourceUuid;
+
         return context;
     }
 
@@ -50,11 +53,13 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
     } 
 
     async getTooltip(roll) {
+        const wpSourceName = this.wpSourceUuid ? fromUuidSync(this.wpSourceUuid)?.name : null;
+
         const toolTip =
         `<div class="permission-observer dice-tooltip" data-actor-id="${this.actorUuid}" style="text-align: left">
             <div class="wrapper">
                 <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${this.wpOld} <i class="fa-solid fa-arrow-right"></i> ${this.wpNew}
-                ${this.wpSourceName ? `(${this.wpSourceName})` : ""}<br>
+                ${wpSourceName ? `(${wpSourceName})` : ""}<br>
             </div>
         </div>`;
 
@@ -144,8 +149,18 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
         const criticalEffect = choice.magicCritChoice;
 
         if (choice.magicCritChoice === "noCost") {
+            const powerSource = context.wpSource ?? context.actor;
             const wpNew = this.wpOld;
-            await actor.update({ ["system.willPoints.value"]: wpNew});
+
+            // Restore WP cost
+            if (powerSource.system?.willPoints) { // actor
+                powerSource.update({ ["system.willPoints.value"]: wpNew});
+            } else if (powerSource.system?.enchantments?.charge) { // gear
+                powerSource.update({ ["system.enchantments.charge"]: wpNew});
+            } else if (powerSource.actor?.system.willPoints) { // token
+                powerSource.actor.update({ ["system.willPoints.value"]: wpNew});
+            }
+
             systemData = { ...this, criticalEffect, wpNew };
         } else {
             systemData = { ...this, criticalEffect };
