@@ -376,30 +376,6 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         return context;
     }
 
-    // Increase quantity when dropped item already exists in inventory
-    #_findItemStack(item, itemData) {
-        const systemObject = itemData ? foundry.utils.mergeObject(item.system.toObject(), itemData.system) : item.system.toObject();
-        const hasQuantity = systemObject?.quantity !== undefined;
-        const isItem = item?.type === "item";
-        const isEquippable = ["weapon", "armor", "helmet"].includes(item?.type);
-        const isWorn = !!systemObject?.worn;
-        let stack = null;
-        if (hasQuantity && (isItem || (isEquippable && !isWorn))) {
-            stack = this.actor.items.find(i => {
-                // Stack exists if it is the same type, has the same name
-                // and has the same system data properties (except quantity)
-                if (i.type === item.type && i.name === item.name && i.uuid != item.uuid) {
-                    let itemTemplate = systemObject;
-                    item.system.constructor.cleanData(itemTemplate);
-                    delete itemTemplate.quantity;
-                    return foundry.utils.objectsEqual(foundry.utils.filterObject(i.system.toObject(), itemTemplate), itemTemplate);
-                }
-                return null;
-            });
-        }
-        return stack;
-    };
-
     // simple check, could check types instead
     #isInventoryItem(item) {
         return item?.system?.quantity !== undefined;
@@ -520,7 +496,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                 if (dropTarget === "storage") {
                     itemData.system.storage = true;
                 }
-                const stack = this.#_findItemStack(item, itemData);
+                const stack = this.actor.findStackableItem(item, itemData);
                 if (stack) {
                     // Item already exists in inventory, increase quantity and delete the original item
                     const itemQuantity = item.system.quantity + stack.system.quantity;
@@ -552,7 +528,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
 
             // if not equipped, try to stack
             if (!itemData.system.worn) {
-                const stack = this.#_findItemStack(item, itemData);
+                const stack = this.actor.findStackableItem(item, itemData);
                 if (stack) {
                     // Item already exists in inventory, increase quantity and forget the original item
                     const itemQuantity = item.system.quantity + stack.system.quantity;
@@ -866,7 +842,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                     await item.update({
                         ["system.worn"]: false,
                     });
-                    const stack = this.#_findItemStack(item);
+                    const stack = this.actor.findStackableItem(item);
                     if (stack) {
                         // Item already exists in inventory, increase quantity and delete the original item
                         const itemQuantity = item.system.quantity + stack.system.quantity;

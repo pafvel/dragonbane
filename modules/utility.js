@@ -547,4 +547,55 @@ export default class DoD_Utility {
         }
         return result;
     }
+
+    static hasDefinition(str, varName = null) {
+        const pattern = varName ? new RegExp(`@${varName}\\[[^\\]]+\\]`) : /@\w+\[[^\]]+\]/;
+        return pattern.test(str);
+    }
+
+    static async resolveDefinitions(str, knownVars = {}) {
+        const definePattern = /@(\w+)\[([^\]]+)\]/g;
+        let match;
+        const resolved = { varName: null, value: null };
+
+        while ((match = definePattern.exec(str)) !== null) {
+            const [, varName, expression] = match;
+
+            const resolvedExpr = expression.replace(/@(\w+)/g, (_, key) => {
+                if (knownVars[key] === undefined) throw new Error(`Unknown variable: @${key}`);
+                return knownVars[key];
+            });
+
+            const roll = await new Roll(resolvedExpr).evaluate({ async: true });
+            resolved.varName = varName;
+            resolved.value = roll.total;
+        }
+
+        const resolvedStr = str.replace(/@(\w+)\[([^\]]+)\]/g, () => resolved.value);
+        return { resolvedStr, resolved };
+    }
+
+    static async resolveInlineVars(str, resolved) {
+        const substituted = str.replace(/@(\w+)/g, (_, key) => {
+            if (key !== resolved.varName) throw new Error(`Unknown variable: @${key}`);
+            return resolved.value;
+        });
+
+        const mathPattern = /([\d\s\+\-\*\/\.]+)/g;
+        const parts = [];
+        let lastIndex = 0;
+        let m;
+
+        while ((m = mathPattern.exec(substituted)) !== null) {
+            const candidate = m[1].trim();
+            if (/[\+\-\*\/]/.test(candidate)) {
+                parts.push(substituted.slice(lastIndex, m.index));
+                const roll = await new Roll(candidate).evaluate({ async: true });
+                parts.push(roll.total);
+                lastIndex = m.index + m[0].length;
+            }
+        }
+        parts.push(substituted.slice(lastIndex));
+        return parts.join(" ").trim();
+    }
 }

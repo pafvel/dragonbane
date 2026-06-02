@@ -28,6 +28,10 @@ export default class DoDSpellTest extends DoDSkillTest  {
                 this.dialogData.wpSources = wpSources;
             }
         }
+
+        if (this.spell.type === "recipe") {
+            this.dialogData.recipe = this.spell;
+        }
     }
 
     async getRollOptions() {
@@ -94,8 +98,9 @@ export default class DoDSpellTest extends DoDSkillTest  {
         const options = super.processDialogOptions(input);
         const powerLevel = this.dialogData.hasPowerLevel ? Number(input.powerLevel) : 0;
         const wpSource = this.dialogData.wpSources?.length > 1 ? this.dialogData.wpSources[Number(input.powerSource)] : this.actor;
+        const craftItem = input.craftItem;
 
-        return { ...options, powerLevel, wpSource };
+        return { ...options, powerLevel, wpSource, craftItem };
     }
 
     updatePreRollData() {
@@ -148,6 +153,53 @@ export default class DoDSpellTest extends DoDSkillTest  {
 
         this.postRollData.isDamaging = this.spell.isDamaging;
         this.postRollData.isHealing = this.spell.isHealing;
+
+        if (this.spell.type === "recipe" && this.options.craftItem) {
+            this.postRollData.craftItem = true;
+            if (!this.isReroll && !this.spell.hasMaterials({ actor: this.actor, count: this.powerLevel ?? 1 })) {
+                DoD_Utility.WARNING("DoD.WARNING.missingMaterialsForCrafting");
+                this.postRollData.craftItem = false;
+            }
+            const itemToCraft = this.spell.system.item.resolve();
+            if (!itemToCraft) {
+                this.postRollData.craftItem = false;
+                DoD_Utility.WARNING("DoD.WARNING.missingCraftingResultItem", {item: this.spell.system.item.name});
+            }
+            if (!this.spell.system.item.resolve()) {
+                DoD_Utility.WARNING("DoD.WARNING.missingCraftingResultItem", {item: this.spell.system.item.name});
+                this.postRollData.craftItem = false;
+            }
+            if (this.postRollData.craftItem) {
+                const hasPotency = itemToCraft.hasPotency();
+                const doses = hasPotency ? 1 : (this.options.powerLevel ?? 1);
+                const powerLevel = hasPotency ? (this.options.powerLevel ?? 1) : 1;
+
+                this.postRollData.craftedItemCount = doses;
+                this.postRollData.consumedMaterialsCount = doses;
+
+                if (!this.isReroll) {
+                    // Consume materials
+                    const consumedMaterials = [];
+                    if (this.spell.hasMaterials({actor: this.actor, count: doses})) {
+                        this.spell.consumeMaterials({actor: this.actor, count: doses});
+                        for (const material of this.spell.system.materials) {
+                            consumedMaterials.push(material.name);
+                        }
+                    } else {
+                        DoD_Utility.WARNING("DoD.WARNING.missingMaterialsForCrafting");
+                        this.postRollData.craftItem = false;
+                    }
+                    if (consumedMaterials.length > 0) {
+                        this.postRollData.consumedMaterials = consumedMaterials;
+                    }
+                }
+                if (this.postRollData.craftItem && this.postRollData.success) {
+                    // Add crafted item to inventory
+                    this.spell.createCraftedItem({ actor: this.actor, count: doses, powerLevel });
+                    this.postRollData.craftedItem = this.spell.system.item.name;
+                }
+            }
+        }
     }
 
     async createMessageData() {

@@ -7,6 +7,9 @@
                     <th></th>
                     <th  class="thumbnail-header"></th>
                     <th class="text-header">{{localize "DoD.recipe.materials"}}</th>
+                    {{#if materialCounts}}
+                    <th class="number-header"></th>
+                    {{/if}}
                     <th>{{!-- column for icons --}}&nbsp</th>
                     <th></th>
                 </tr>
@@ -20,6 +23,9 @@
                     <td class="text-data">
                         <a data-action="editRecipeItem" data-item-uuid="{{material.uuid}}"><span class="{{material.cssClass}}"></span> {{material.label}}</a>
                     </td>
+                    {{#if ../materialCounts}}
+                    <td>({{lookup ../materialCounts i}})</th>
+                    {{/if}}                    
                     <td class="icon-data">
                         <a data-action="removeMaterial" data-material-index="{{i}}">
                             <i class="fas fa-trash"></i>
@@ -48,7 +54,9 @@
                     <th></th>
                     <th  class="thumbnail-header"></th>
                     <th class="text-header">{{localize "DoD.recipe.item"}}</th>
-                    <th>{{!-- column for icons --}}&nbsp</th>
+                    {{#if recipeItemCount}}
+                    <th class="number-header"></th>
+                    {{/if}}                    <th>{{!-- column for icons --}}&nbsp</th>
                     <th></th>
                 </tr>
 
@@ -62,6 +70,9 @@
                         <a data-action="editRecipeItem" data-item-uuid="{{recipeItem.uuid}}">
                         <span class="{{recipeItem.cssClass}}"></span> {{recipeItem.label}}</a>
                     </td>
+                    {{#if recipeItemCount}}
+                    <td>({{recipeItemCount}})</th>
+                    {{/if}}                    
                     <td class="icon-data">
                         <a data-action="removeRecipeItem">
                             <i class="fas fa-trash"></i>
@@ -80,6 +91,18 @@
                 {{/if}}
             </table>
         </div>
+        {{#if item.actor}}
+        <div class="standard-form">
+            <div class="form-footer">
+                <button type="button" data-action="craftItem"
+                    {{#if canCraft}} title="{{localize "DoD.recipe.craftItemEnabledTooltip"}}"
+                    {{else}}disabled title="{{localize "DoD.recipe.craftItemDisabledTooltip"}}"{{/if}}
+                >
+                    {{localize "DoD.recipe.craftItem"}}
+                </button>
+            </div>
+        </div>
+        {{/if}}
     </div>
 </div>
 

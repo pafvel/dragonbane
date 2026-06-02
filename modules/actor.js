@@ -1315,4 +1315,27 @@ export class DoDActor extends Actor {
             return 15;
         }
     }
+
+    findStackableItem(item, itemData = null) {
+        const systemObject = itemData ? foundry.utils.mergeObject(item.system.toObject(), itemData.system) : item.system.toObject();
+        const hasQuantity = systemObject?.quantity !== undefined;
+        const isItem = item?.type === "item";
+        const isEquippable = ["weapon", "armor", "helmet"].includes(item?.type);
+        const isWorn = !!systemObject?.worn;
+        let stackable = null;
+        if (hasQuantity && (isItem || (isEquippable && !isWorn))) {
+            stackable = this.items.find(i => {
+                // Stack exists if it is the same type, has the same name
+                // and has the same system data properties (except quantity)
+                if (i.type === item.type && i.name === item.name && i.uuid != item.uuid) {
+                    let itemTemplate = systemObject;
+                    item.system.constructor.cleanData(itemTemplate);
+                    delete itemTemplate.quantity;
+                    return foundry.utils.objectsEqual(foundry.utils.filterObject(i.system.toObject(), itemTemplate), itemTemplate);
+                }
+                return null;
+            });
+        }
+        return stackable;
+    };
 }

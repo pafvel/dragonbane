@@ -258,6 +258,8 @@
   --dod-color-dash-range: yellow;
   --dod-color-out-of-range: #E83031;
   --dod-color-border-bottom: #00604D;
+  --dod-color-button-text: whitesmoke;
+  --dod-color-button-text-disabled: #777;
   --dod-journal-background: url("art/ui/journal-page-bg.webp");
   --dod-font-primary: "QTFrizQuad";
   --dod-font-secondary: "QTFrizQuad";
@@ -1745,10 +1747,13 @@
   background-repeat: repeat-x;
   background-size: cover;
   background-clip: border-box;
-  color: whitesmoke;
+  color: var(--dod-color-button-text);
   font-family: var(--dod-font-heading);
   font-weight: normal;
   width: 100%;
+}
+.system-dragonbane .sheet.item .standard-form .form-footer button[disabled], .system-dragonbane .sheet.active-effect-config .standard-form .form-footer button[disabled] {
+  color: var(--dod-color-button-text-disabled);
 }
 .system-dragonbane .sheet.item .window-content, .system-dragonbane .sheet.active-effect-config .window-content {
   background: var(--dod-sheet-background);

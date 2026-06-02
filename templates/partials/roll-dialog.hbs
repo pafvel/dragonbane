@@ -116,6 +116,21 @@
         {{/if}}
     </div>
     {{/if}}
+    
+    {{#if recipe}}
+    <table class="derived-stat">
+        <tr {{#if recipe.canCraftItem}} title="{{localize "DoD.recipe.craftItemEnabledTooltip"}}"
+            {{else}} title="{{localize "DoD.recipe.craftItemDisabledTooltip"}}"
+            {{/if}}>
+            <th>{{localize "DoD.recipe.craftItem"}}</th>
+            <td>
+                <input type="checkbox" name="craftItem"
+                    {{checked recipe.canCraftItem}}
+                    {{#unless recipe.canCraftItem}}disabled{{/unless}}/>
+            </td>
+        </tr>
+    </table>
+    {{/if}}
 
     {{!-- Weapons --}}
     {{#if actions}}

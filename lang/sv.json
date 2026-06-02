@@ -12,7 +12,9 @@
         "TypeInjury": "Skada",
         "TypeItem": "Föremål",
         "TypeKin": "Släkte",
+        "TypeMaterial": "Ingrediens",
         "TypeProfession": "Yrke",
+        "TypeRecipe": "Recept",
         "TypeSkill": "Färdighet",
         "TypeSpell": "Besvärjelse",
         "TypeWeapon": "Vapen"
@@ -30,7 +32,9 @@
             "injury": "Skada",
             "item": "Föremål",
             "kin": "Släkte",
+            "material": "Ingrediens",
             "profession": "Yrke",
+            "recipe": "Recept",
             "skill": "Färdighet",
             "spell": "Besvärjelse",
             "weapon": "Vapen"
@@ -45,7 +49,9 @@
         "DoDHelmetSheet": "Drakar och Demoner Hjälmformulär",
         "DoDInjurySheet": "Drakar och Demoner Skadeformulär",
         "DoDItemSheet": "Drakar och Demoner Föremålsformulär",
+        "DoDMaterialSheet": "Drakar och Demoner Ingrediensformulär",
         "DoDKinSheet": "Drakar och Demoner Släktesformulär",
+        "DoDRecipeSheet": "Drakar och Demoner Receptformulär",
         "DoDProfessionSheet": "Drakar och Demoner Yrkesformulär",
         "DoDSkillSheet": "Drakar och Demoner Färdighetsformulär",
         "DoDSpellSheet": "Drakar och Demoner Besvärjelseformulär",
@@ -245,6 +251,20 @@
             "key-attribute": "Viktigaste Grundegenskap",
             "skills": "Färdigheter"
         },
+        "recipe": {
+            "isPoison": "Gift",
+            "potency": "Giftstyrka",
+            "potencyPerPowerlevel": "Giftstyrka per effektgrad",
+            "materials": "Ingredienser",
+            "item": "Substans",
+            "noMaterials": "Drag och släpp ingredienser här",
+            "noItem": "Drag och släpp för att lägga till föremål",
+            "craftItem": "Skapa föremål",
+            "craftItemEnabledTooltip": "Materialet förbrukas och om besvärjelsen lyckas skapas ett föremål",
+            "craftItemDisabledTooltip": "Inaktiverad. Saknar material eller länk till skapade föremål",
+            "consumedMaterials": "Förbrukade material",
+            "craftedItem": "Skapade föremål"
+        },        
         "roll": {
             "dragon": "lyckades med ett Drakslag!",
             "demon": "misslyckades med ett Demonslag!",
@@ -614,8 +634,8 @@
             "gmDescription": "SL-anteckningar",
             "effects": "Effekter",
             "enchantments": "Förtrollningar",
-            "enchantmentsTooltip": "Förtrollningar som går att aktivera"
-
+            "enchantmentsTooltip": "Förtrollningar som går att aktivera",
+            "formula": "Formel"
         },
         "INFO": {
             "monsterAttackUpdated": "Uppdaterade monsterattacker för {actor}.",
@@ -696,7 +716,8 @@
             "noRangedMishapTable": "Tabellen för missöde för avståndsvapen saknas.",
             "noMagicMishapTable": "Tabellen för magiska missöden saknas.",
             "maxWeaponsEquipped": "Högst 3 vapen till hands.",
-            "noSkillsInCompendium": "Den registrerade grundmodulen innehåller inga färdigheter. Modulen kan vara skadad och bör ominstalleras. Försöker att hitta färdigheter i världen istället."
-        }
+            "noSkillsInCompendium": "Den registrerade grundmodulen innehåller inga färdigheter. Modulen kan vara skadad och bör ominstalleras. Försöker att hitta färdigheter i världen istället.",
+             "missingMaterialsForCrafting": "Saknar material för att tillverka föremålet."
+       }
     }
 }

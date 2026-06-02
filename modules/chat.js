@@ -675,6 +675,7 @@ async function onPushRoll(event) {
             options.wpOld = context.wpOld;
             options.wpCost = context.wpOld - context.wpNew;
             options.wpSource = context.wpSource;
+            options.craftItem = context.craftItem;
             test = new DoDSpellTest(actor, options.spell, options);
             break;
         default:

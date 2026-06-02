@@ -17,6 +17,11 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
             wpOld: new fields.NumberField({ required: true, initial: 0 }),
             wpNew: new fields.NumberField({ required: true, initial: 0 }),
             wpSourceUuid: new fields.StringField({ required: false, initial: "" }),
+            craftItem: new fields.BooleanField({ required: false, initial: false }),
+            craftedItem: new fields.StringField({ required: false, initial: "" }),
+            craftedItemCount: new fields.NumberField({ required: false, initial: 0 }),
+            consumedMaterials: new fields.ArrayField(new fields.StringField(), { required: false, initial: [] }),
+            consumedMaterialsCount: new fields.NumberField({ required: false, initial: 0 }),
         });
     }
 
@@ -83,20 +88,27 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
             }
         );
 
-        let extraContent = "";
+        let craftContent = "";
+        if (this.consumedMaterials.length > 0) {
+            craftContent = "<p><b>" + game.i18n.localize("DoD.recipe.consumedMaterials") + ":</b> <em>" + this.consumedMaterials.join(` (${this.consumedMaterialsCount}), `) + ` (${this.consumedMaterialsCount})</em></p>`;
+        }
+        if (this.craftedItem) {
+            craftContent += "<p><b>" + game.i18n.localize("DoD.recipe.craftedItem") + ":</b> <em>" + this.craftedItem + ` (${this.craftedItemCount})</em></p>`;
+        }
 
+        let critContent = "";
         if (this.criticalEffect) {
-            extraContent = "<p><b>" + game.i18n.localize("DoD.magicCritChoices.choiceTitle") + ":</b> "
+            critContent = "<p><b>" + game.i18n.localize("DoD.magicCritChoices.choiceTitle") + ":</b> "
                         + "<em>" + game.i18n.localize(`DoD.magicCritChoices.${this.criticalEffect}`) + "</em></p>";
         } else if (this.isDemon) {
             const table = DoD_Utility.findSystemTable("magicMishapTable", game.i18n.localize("DoD.tables.mishapMagic"));
             if (table) {
-                extraContent = "<p>@Table[" + table.uuid + "]{" + table.name + "}</p>";
+                critContent = "<p>@Table[" + table.uuid + "]{" + table.name + "}</p>";
             } else {
                 DoD_Utility.WARNING(game.i18n.localize("DoD.WARNING.noMagicMishapTable"));
             }
         }        
-        return { content: "<p>" + content + "</p>" + extraContent };
+        return { content: "<p>" + content + craftContent + "</p>" + critContent };
     }
     
     async onCritical(message) {

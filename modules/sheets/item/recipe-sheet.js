@@ -1,5 +1,6 @@
 import DoDItemBaseSheet from "./item-base-sheet.js";
 import DoDItemRef from "../../data/items/item-ref.js";
+import DoDSpellTest from "../../tests/spell-test.js";
 
 export default class DoDRecipeSheet extends DoDItemBaseSheet {
 
@@ -11,7 +12,8 @@ export default class DoDRecipeSheet extends DoDItemBaseSheet {
             addMaterial: this.#addMaterial,
             removeMaterial: this.#removeMaterial,
             editRecipeItem: this.#editRecipeItem,
-            removeRecipeItem: this.#removeRecipeItem
+            removeRecipeItem: this.#removeRecipeItem,
+            craftItem: this.#craftItem,
         },
     };
 
@@ -42,6 +44,13 @@ export default class DoDRecipeSheet extends DoDItemBaseSheet {
         context.materials?.forEach(material => material.resolve());
         context.recipeItem = this.item.system.item;
         context.recipeItem?.resolve();
+        if(this.item.actor) {
+            context.materialCounts = this.item.countMaterials(this.item.actor);
+            context.canCraft = this.item.hasMaterials({ actor: this.item.actor });
+            if (context.recipeItem) {
+                context.recipeItemCount = this.item.countMaterial(context.recipeItem.name, this.item.actor);
+            }
+        }
         return context;
     }
 
@@ -112,16 +121,37 @@ export default class DoDRecipeSheet extends DoDItemBaseSheet {
         await this.item.update({ ["system.item"]: null });
     }
 
+    static async #craftItem(_event, _target) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        const actor = this.item.actor;
+        if (!actor) return;
+
+        const options = {};
+
+        // Monsters use craftingSkill if available, auto success otherwise.
+        if (this.actor.type === "monster") {
+            const skillName = this.item.system.school;
+            const craftingSkill = skillName ? actor.findMagicSkill(skillName) : null;
+            if (!craftingSkill) {
+                options.autoSuccess = true;
+            }
+        }
+        const test = new DoDSpellTest(this.actor, this.item, options);
+        await test.roll();
+    }
 
     // Listen to updates on the recipe Item
-    #updateHook;
-    #deleteHook;
+    #updateItemHook;
+    #deleteItemHook;
+    #createItemHook;
 
     async _onRender(context, options) {
         super._onRender(context, options);
 
-        if (!this.#updateHook) {
-            this.#updateHook = async (item, change) => {
+        if (!this.#updateItemHook) {
+            this.#updateItemHook = async (item, change) => {
                 if ("name" in change || "img" in change) {
                     if (item.uuid === this.item.system.item?.uuid) {
                         await this.item.update({ ["system.item"]: { name: item.name, img: item.img } });
@@ -136,30 +166,54 @@ export default class DoDRecipeSheet extends DoDItemBaseSheet {
                         }
                     }
                 }
+                if (foundry.utils.hasProperty(change, "system.quantity")) {
+                    const materials = this.item.system.materials || [];
+                    const materialIndex = materials.findIndex(material => material.name === item.name);
+                    if (materialIndex !== -1) {
+                        this.render(false);
+                    }
+                }
             };
-            Hooks.on("updateItem", this.#updateHook);
+            Hooks.on("updateItem", this.#updateItemHook);
         }
 
-        if (!this.#deleteHook) {
-            this.#deleteHook = deleted => {
+        if (!this.#deleteItemHook) {
+            this.#deleteItemHook = deleted => {
                 if (deleted.uuid === this.item.system.item?.uuid
-                    || this.item.system.materials?.some(material => material.uuid === deleted.uuid))
+                    || this.item.system.materials?.some(material => material.uuid === deleted.uuid)
+                    || (this.item.actor?.uuid === deleted.actor?.uuid && deleted.isInventoryItem && this.item.system.materials?.some(material => material.name === deleted.name)))
                 {
                     this.render(false);
                 }
             };
         }
-        Hooks.on("deleteItem", this.#deleteHook);
+        Hooks.on("deleteItem", this.#deleteItemHook);
+
+        if (!this.#createItemHook) {
+            this.#createItemHook = created => {
+                if (this.item.actor?.uuid === created.actor?.uuid
+                    && created.isInventoryItem 
+                    && this.item.system.materials?.some(material => material.name === created.name))
+                {
+                    this.render(false);
+                }
+            };
+        }
+        Hooks.on("createItem", this.#createItemHook);
     }
 
     async _tearDown(options) {
-        if (this.#updateHook) {
-            Hooks.off("updateItem", this.#updateHook);
-            this.#updateHook = null;
+        if (this.#updateItemHook) {
+            Hooks.off("updateItem", this.#updateItemHook);
+            this.#updateItemHook = null;
         }
-        if (this.#deleteHook) {
-            Hooks.off("deleteItem", this.#deleteHook);
-            this.#deleteHook = null;
+        if (this.#deleteItemHook) {
+            Hooks.off("deleteItem", this.#deleteItemHook);
+            this.#deleteItemHook = null;
+        }
+        if (this.#createItemHook) {
+            Hooks.off("createItem", this.#createItemHook);
+            this.#createItemHook = null;
         }
 
         return super._tearDown(options);

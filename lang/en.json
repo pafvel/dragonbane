@@ -257,7 +257,12 @@
             "materials": "Ingredients",
             "item": "Substance",
             "noMaterials": "Drag and drop to add ingredients",
-            "noItem": "Drag and drop to add item"
+            "noItem": "Drag and drop to add item",
+            "craftItem": "Craft Item",
+            "craftItemEnabledTooltip": "The material is consumed and if successfully cast the spell crafts an item",
+            "craftItemDisabledTooltip": "Disabled. Missing material or link to crafted item",
+            "consumedMaterials": "Consumed materials",
+            "craftedItem": "Crafted item"
         },
         "roll": {
             "dragon": "succeeded with a Dragon!",
@@ -709,7 +714,8 @@
             "noRangedMishapTable": "Missing the mishap table for ranged weapons.",
             "noMagicMishapTable": "Missing the magic mishap table.",
             "maxWeaponsEquipped": "Maximum 3 equipped weapons.",
-            "noSkillsInCompendium": "The registered core module did not contain any base skills. The core module may be damaged and should be re-installed. Trying to find skills in the world instead."
+            "noSkillsInCompendium": "The registered core module did not contain any base skills. The core module may be damaged and should be re-installed. Trying to find skills in the world instead.",
+            "missingMaterialsForCrafting": "Missing materials for crafting the item."
         }
     }
 }
