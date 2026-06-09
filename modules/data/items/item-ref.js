@@ -18,14 +18,14 @@ export default class DoDItemRef extends foundry.abstract.DataModel {
         }
     }
 
-    resolve() {
-        this.item = fromUuidSync(this.uuid);
+    async resolve() {
+        this.item = await fromUuid(this.uuid);
         this.refresh();
         return this.item;
     }
 
-    async resolveAsync() {
-        this.item = await fromUuid(this.uuid);
+    resolveSync() {
+        this.item = fromUuidSync(this.uuid);
         this.refresh();
         return this.item;
     }
@@ -49,12 +49,6 @@ export default class DoDItemRef extends foundry.abstract.DataModel {
     get isResolved() {
         return !!this.item;
     }
-
-    /*
-    get isResolvable() {
-        return this.resolve() !== null;
-    }
-    */
 
     get cssClass() {
         return this.isResolved ? "fa-solid fa-link" : "fa-solid fa-link-slash";

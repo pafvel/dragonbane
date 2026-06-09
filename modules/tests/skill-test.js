@@ -29,7 +29,7 @@ export default class DoDSkillTest extends DoDTest {
         this.preRollData.canPush = this.options.canPush !== undefined ? this.options.canPush : this.actor.type === "character";
     }
 
-    updatePostRollData() {
+    async updatePostRollData() {
         super.updatePostRollData();
         this.postRollData.result = Number(this.roll.result);
         this.postRollData.success = this.autoSuccess || (this.postRollData.result <= this.preRollData.target);

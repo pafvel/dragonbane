@@ -217,12 +217,12 @@ export class DoDItem extends Item {
 
     findMaterial(name, actor = this.actor) {
         return actor.items.find(item =>
-            item.name === name && item.isInventoryItem && item.system.quantity > 0);
+            item.name.toLowerCase() === name.toLowerCase() && item.isInventoryItem && item.system.quantity > 0);
     }
 
     countMaterial(name, actor = this.actor) {
         return actor.items.reduce((sum, item) => {
-            if (item.name === name && item.isInventoryItem) {
+            if (item.name.toLowerCase() === name.toLowerCase() && item.isInventoryItem) {
                 return sum + item.system.quantity;
             }
             return sum;
@@ -242,10 +242,11 @@ export class DoDItem extends Item {
         if (this.type !== "recipe") return;
         const materialMap = {};
         for (const m of this.system.materials) {
-            if (!materialMap[m.name]) {
-                materialMap[m.name] = 0;
+            const name = m.name.toLowerCase();
+            if (!materialMap[name]) {
+                materialMap[name] = 0;
             }
-            materialMap[m.name]++;
+            materialMap[name]++;
         }
         for (const materialName in materialMap) {
             if (this.countMaterial(materialName, actor) < count * materialMap[materialName]) {
@@ -282,7 +283,7 @@ export class DoDItem extends Item {
 
     get canCraftItem() {
         if (this.type !== "recipe") return false;
-        if (!this.system.item.resolve()) {
+        if (!this.system.item.resolveSync()) {
             return false;
         }
         return this.hasMaterials(this.actor);
@@ -294,7 +295,7 @@ export class DoDItem extends Item {
 
     async createCraftedItem({ actor, count = 1, powerLevel = 1 } = { actor: this.actor, count: 1, powerLevel: 1 }) {
         if (this.type !== "recipe") return;
-        const item = this.system.item.resolve();
+        const item = await this.system.item.resolve();
         if (item) {
             const stackableItem = actor.findStackableItem(item);
             if (stackableItem) {

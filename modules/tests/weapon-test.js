@@ -271,8 +271,8 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         this.preRollData.extraDragons = this.options.enchantedWeapon ?? 0;
     }
 
-    updatePostRollData() {
-        super.updatePostRollData();
+    async updatePostRollData() {
+        await super.updatePostRollData();
         const DoD = CONFIG.DoD;
 
         switch(this.postRollData.action) {

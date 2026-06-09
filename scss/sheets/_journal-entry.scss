@@ -156,11 +156,11 @@
                         color: var(--dod-color-journal-info-text);
                     }
 
-                    p:first-of-type {
+                    > :is(p, div):first-of-type {
                         padding-top: 16px;
                     }
 
-                    p:last-of-type {
+                    > ::is(p, div):last-of-type {
                         margin-bottom: 16px;
                     }
 
@@ -177,7 +177,7 @@
                     ol, ul {
 
                         li {
-                            color: var(--dod-color-journal-info-text);;
+                            color: var(--dod-color-journal-info-text);
                         }
                     }
                 }

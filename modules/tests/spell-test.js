@@ -112,8 +112,8 @@ export default class DoDSpellTest extends DoDSkillTest  {
         this.preRollData.wpOld = this.options.wpOld;
     }
 
-    updatePostRollData() {
-        super.updatePostRollData();
+    async updatePostRollData() {
+        await super.updatePostRollData();
 
         const powerSource = this.options.wpSource ?? this.actor;
         if (powerSource.uuid !== this.actor.uuid) {
@@ -160,12 +160,12 @@ export default class DoDSpellTest extends DoDSkillTest  {
                 DoD_Utility.WARNING("DoD.WARNING.missingMaterialsForCrafting");
                 this.postRollData.craftItem = false;
             }
-            const itemToCraft = this.spell.system.item.resolve();
+            const itemToCraft = await this.spell.system.item.resolve();
             if (!itemToCraft) {
                 this.postRollData.craftItem = false;
                 DoD_Utility.WARNING("DoD.WARNING.missingCraftingResultItem", {item: this.spell.system.item.name});
             }
-            if (!this.spell.system.item.resolve()) {
+            if (!await this.spell.system.item.resolve()) {
                 DoD_Utility.WARNING("DoD.WARNING.missingCraftingResultItem", {item: this.spell.system.item.name});
                 this.postRollData.craftItem = false;
             }

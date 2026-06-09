@@ -40,7 +40,7 @@ export default class DoDTest {
             extraBanes: this.options.extraBanes
         }
         this.roll = await new DoDRoll(formula, {}, rollOptions).roll({});
-        this.updatePostRollData();
+        await this.updatePostRollData();
 
         const messageData = await this.createMessageData();
 
@@ -62,7 +62,7 @@ export default class DoDTest {
         this.preRollData.autoSuccess = this.autoSuccess;
     }
 
-    updatePostRollData() {
+    async updatePostRollData() {
         this.postRollData = this.preRollData;
         this.postRollData.result = Number(this.roll.result);
     }

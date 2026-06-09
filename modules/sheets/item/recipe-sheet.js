@@ -41,9 +41,9 @@ export default class DoDRecipeSheet extends DoDItemBaseSheet {
     async _prepareContext(options) {
         const context = await super._prepareContext(options);
         context.materials = this.item.system.materials;
-        context.materials?.forEach(material => material.resolve());
+        await Promise.all(context.materials?.map(mat => mat.resolve()) ?? []);
         context.recipeItem = this.item.system.item;
-        context.recipeItem?.resolve();
+        await context.recipeItem?.resolve();
         if(this.item.actor) {
             context.materialCounts = this.item.countMaterials(this.item.actor);
             context.canCraft = this.item.hasMaterials({ actor: this.item.actor });
@@ -111,7 +111,7 @@ export default class DoDRecipeSheet extends DoDItemBaseSheet {
         event.stopPropagation();
         event.preventDefault();
 
-        const item = fromUuidSync(target.dataset.itemUuid);
+        const item = await fromUuid(target.dataset.itemUuid);
         item?.sheet.render(true);
     }
 
@@ -168,8 +168,8 @@ export default class DoDRecipeSheet extends DoDItemBaseSheet {
                 }
                 if (foundry.utils.hasProperty(change, "system.quantity")) {
                     const materials = this.item.system.materials || [];
-                    const materialIndex = materials.findIndex(material => material.name === item.name);
-                    if (materialIndex !== -1) {
+                    const materialIndex = materials.findIndex(material => material.name.toLowerCase() === item.name.toLowerCase());
+                    if (materialIndex !== -1 || (item.name.toLowerCase() === this.item.system.item?.name.toLowerCase())) {
                         this.render(false);
                     }
                 }
@@ -193,7 +193,7 @@ export default class DoDRecipeSheet extends DoDItemBaseSheet {
             this.#createItemHook = created => {
                 if (this.item.actor?.uuid === created.actor?.uuid
                     && created.isInventoryItem 
-                    && this.item.system.materials?.some(material => material.name === created.name))
+                    && this.item.system.materials?.some(material => material.name.toLowerCase() === created.name.toLowerCase()))
                 {
                     this.render(false);
                 }

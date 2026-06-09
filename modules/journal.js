@@ -594,6 +594,39 @@ export async function enrichDisplayTrick(match, _options) {
     return a;
 }
 
+export async function enrichDisplayRecipe(match, _options) {
+    const recipe = await fromUuid(match[1]);
+    const recipeName = match[2] ?? recipe?.name;
+    const a = document.createElement("div");
+    if (recipe) {
+        const substance = await recipe.system.item.resolve();
+        const substanceHtml = substance ? `@UUID[${substance.uuid}]{${substance.name}}` : "-";
+        
+        await Promise.all(recipe.system.materials?.map(mat => mat.resolve()) ?? []);
+        const materialsHtml = recipe.system.materials.length > 0 ? recipe.system.materials.map(m => `@UUID[${m.uuid}]{${m.name}}`).join(", ") : "-";
+
+        let html = `
+        <div class="display-spell">
+            <h4>@UUID[${match[1]}]{${recipeName}}</h4>
+            <ul>
+            <li><b class="heading">${game.i18n.localize("DoD.spell.rank")}: </b><span>${recipe.system.rank}</span>
+            <li><b class="heading">${game.i18n.localize("DoD.spell.prerequisite")}: </b><span>${recipe.system.prerequisite !== "" ? recipe.system.prerequisite : "-"}</span>
+            <li><b class="heading">${game.i18n.localize("DoD.recipe.materials")}: </b><span>${materialsHtml}</span>
+            <li><b class="heading">${game.i18n.localize("DoD.recipe.item")}: </b><span>${substanceHtml}</span>
+            </ul>
+            ${recipe.system.itemDescription}
+        </div>`;
+        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
+    } else {
+        a.dataset.recipeId = match[1];
+        if (match[2]) a.dataset.recipeName = match[2];
+        a.classList.add("content-link");
+        a.classList.add("broken");
+        a.innerHTML = `<i class="fas fa-unlink"></i> ${recipeName}`;
+    }
+    return a;
+}
+
 export async function enrichGearTable(match, _options) {
     const type = match[1];
     const name = match[2];
