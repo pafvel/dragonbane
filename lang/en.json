@@ -118,7 +118,8 @@
             "action": "Action",
             "reaction": "Reaction",
             "stretch": "Stretch",
-            "shift": "Shift"
+            "shift": "Shift",
+            "special": "Special"
         },
         "conditions": {
             "str": "Exhausted",
@@ -348,7 +349,8 @@
             "stretch": "Stretch",
             "shift": "Shift",
             "concentration": "Concentration",
-            "permanent": "Permanent"
+            "permanent": "Permanent",
+            "special": "Special"
         },
         "spellRangeTypes": {
             "personal": "Personal",

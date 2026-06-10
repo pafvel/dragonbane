@@ -42,7 +42,8 @@ DoD.castingTimeTypes = {
     action: "DoD.castingTimeTypes.action",
     reaction: "DoD.castingTimeTypes.reaction",
     stretch: "DoD.castingTimeTypes.stretch",
-    shift: "DoD.castingTimeTypes.shift"
+    shift: "DoD.castingTimeTypes.shift",
+    special: "DoD.castingTimeTypes.special"
 };
 
 DoD.dice = {
@@ -92,6 +93,7 @@ DoD.spellDurationTypes = {
     shift: "DoD.spellDurationTypes.shift",
     concentration: "DoD.spellDurationTypes.concentration",
     permanent: "DoD.spellDurationTypes.permanent",
+    special: "DoD.spellDurationTypes.special"
 };
 
 DoD.supplyTypes = {

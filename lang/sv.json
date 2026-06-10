@@ -119,7 +119,8 @@
             "action": "Handling",
             "reaction": "Reaktiv",
             "stretch": "Kvart",
-            "shift": "Skift"
+            "shift": "Skift",
+            "special": "Speciell"
         },
          "conditions": {
             "str": "Utmattad",
@@ -350,7 +351,8 @@
             "stretch": "Kvart",
             "shift": "Skift",
             "concentration": "Koncentration",
-            "permanent": "Permanent"
+            "permanent": "Permanent",
+            "special": "Speciell"
         },
         "spellRangeTypes": {
             "personal": "Personlig",
