@@ -549,12 +549,15 @@ export default class DoD_Utility {
     }
 
     static hasDefinition(str, varName = null) {
-        const pattern = varName ? new RegExp(`@${varName}\\[[^\\]]+\\]`) : /@\w+\[[^\]]+\]/;
+        const inner = `(?![A-Za-z]+\\.)[^\\]]+`;
+        const pattern = varName
+            ? new RegExp(`@${varName}\\[${inner}\\]`)
+            : new RegExp(`@\\w+\\[${inner}\\]`);
         return pattern.test(str);
     }
 
     static async resolveDefinitions(str, knownVars = {}) {
-        const definePattern = /@(\w+)\[([^\]]+)\]/g;
+        const definePattern = /@(\w+)\[((?![A-Za-z]+\.)[^\]]+)\]/g;
         let match;
         const resolved = { varName: null, value: null };
 
@@ -566,12 +569,12 @@ export default class DoD_Utility {
                 return knownVars[key];
             });
 
-            const roll = await new Roll(resolvedExpr).evaluate({ async: true });
+            const roll = await new Roll(resolvedExpr).evaluate();
             resolved.varName = varName;
             resolved.value = roll.total;
         }
 
-        const resolvedStr = str.replace(/@(\w+)\[([^\]]+)\]/g, () => resolved.value);
+        const resolvedStr = str.replace(/@(\w+)\[((?![A-Za-z]+\.)[^\]]+)\]/g, () => resolved.value);
         return { resolvedStr, resolved };
     }
 
@@ -581,7 +584,7 @@ export default class DoD_Utility {
             return resolved.value;
         });
 
-        const mathPattern = /([\d\s\+\-\*\/\.]+)/g;
+        const mathPattern = /(\d[\d\s\+\-\*\/\.]*\d|\d)/g;
         const parts = [];
         let lastIndex = 0;
         let m;
@@ -590,12 +593,13 @@ export default class DoD_Utility {
             const candidate = m[1].trim();
             if (/[\+\-\*\/]/.test(candidate)) {
                 parts.push(substituted.slice(lastIndex, m.index));
-                const roll = await new Roll(candidate).evaluate({ async: true });
+                const roll = await new Roll(candidate).evaluate();
                 parts.push(roll.total);
                 lastIndex = m.index + m[0].length;
             }
         }
         parts.push(substituted.slice(lastIndex));
-        return parts.join(" ").trim();
+        return parts.join("");
     }
+
 }

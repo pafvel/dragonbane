@@ -297,24 +297,22 @@ export class DoDItem extends Item {
         if (this.type !== "recipe") return;
         const item = await this.system.item.resolve();
         if (item) {
-            const stackableItem = actor.findStackableItem(item);
-            if (stackableItem) {
-                await stackableItem.update({"system.quantity": stackableItem.system.quantity + count});
-                return stackableItem;
-            } else {
-                const newItemData = duplicate(item.toObject());
+            // Loop one at a time so dice formulas in properties roll independently per item
+            for (let i = 0; i < count; i++) {
+                const newItemData = foundry.utils.duplicate(item.toObject());
+                const { resolvedStr: description, resolved } =
+                    await DoD_Utility.resolveDefinitions(item.system.itemDescription, { powerLevel });
+                newItemData.system.itemDescription = description;
+                const cost = await DoD_Utility.resolveInlineVars(item.system.cost, resolved);
+                newItemData.system.cost = cost;
 
-                newItemData.system.quantity = count;
-
-                if(DoD_Utility.hasDefinition(newItemData.system.itemDescription, "potency")) {
-                    const { resolvedStr: description, resolved } =
-                        await DoD_Utility.resolveDefinitions(item.system.itemDescription, { powerLevel });
-                    newItemData.system.itemDescription = description;
-                    const cost = await DoD_Utility.resolveInlineVars(item.system.cost, resolved);
-                    newItemData.system.cost = cost;
+                const stackableItem = actor.findStackableItem(item, newItemData);
+                if (stackableItem) {
+                    await stackableItem.update({"system.quantity": stackableItem.system.quantity + 1});
+                } else {
+                    newItemData.system.quantity = 1;
+                    await actor.createEmbeddedDocuments("Item", [newItemData]);
                 }
-
-                return await actor.createEmbeddedDocuments("Item", [newItemData]);
             }
         } else {
             DoD_Utility.WARNING("DoD.WARNING.cannotCreateCraftedItem");
