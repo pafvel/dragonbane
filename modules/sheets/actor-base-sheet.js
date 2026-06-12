@@ -1005,11 +1005,17 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                 }
             }
 
+            const penetrating = weapon.hasWeaponFeature("penetrating3") ? 3
+                : weapon.hasWeaponFeature("penetrating2") ? 2
+                : weapon.hasWeaponFeature("penetrating1") ? 1
+                : 0;
+
             const damageData = {
                 actor: this.actor,
                 weapon: weapon,
                 damage: damage,
-                damageType: damageType
+                damageType: damageType,
+                penetrating: penetrating
             };
 
             const targets = Array.from(game.user.targets)

@@ -119,7 +119,10 @@ DoD.weaponFeatureTypes = {
     unarmed: "DoD.weaponFeatureTypes.unarmed",
     enchanted1: "DoD.weaponFeatureTypes.enchanted1",
     enchanted2: "DoD.weaponFeatureTypes.enchanted2",
-    enchanted3: "DoD.weaponFeatureTypes.enchanted3"
+    enchanted3: "DoD.weaponFeatureTypes.enchanted3",
+    penetrating1: "DoD.weaponFeatureTypes.penetrating1",
+    penetrating2: "DoD.weaponFeatureTypes.penetrating2",
+    penetrating3: "DoD.weaponFeatureTypes.penetrating3"
 };
 
 DoD.attributes = {
