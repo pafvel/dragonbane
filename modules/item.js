@@ -102,7 +102,8 @@ export class DoDItem extends Item {
     {
         if (!this.isSpellType) return 0;
         if (this.system.rank === 0) return 1; // Trick cost
-        return powerLevel * 2; // Spell cost
+        const rankMultiplier = this.system.rank === 6 ? 3 : 1; // Rank 6 spells, e.g. Dracomancy, cost triple
+        return powerLevel * 2 * rankMultiplier; // Spell cost
     }
 
     get isDamaging() {
