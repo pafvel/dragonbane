@@ -16,10 +16,6 @@ export default class DoDRecipeData extends DoDItemBaseData {
                 { required: true, initial: [] }
             ),
             item: new foundry.data.fields.EmbeddedDataField(DoDItemRef, { nullable: true, required: false, initial: null }),
-            // Poison specific fields
-            hasPotency: new fields.BooleanField({ required: true, initial: false }),
-            potency: new fields.NumberField({ required: true, initial: 0 }),
-            potencyPerPowerlevel: new fields.NumberField({ required: true, initial: 0 }),
         });
     };
 
