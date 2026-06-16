@@ -83,7 +83,7 @@ export default class DoDGearBaseSheet extends DoDItemBaseSheet {
         event.stopPropagation();
         event.preventDefault();
 
-        const item = fromUuidSync(target.dataset.uuid);
+        const item = await fromUuid(target.dataset.uuid);
         item?.sheet.render(true);
     }
 
@@ -95,7 +95,7 @@ export default class DoDGearBaseSheet extends DoDItemBaseSheet {
         const uuid = target.dataset.uuid;
         const index = parseInt(target.dataset.index);
 
-        const name = fromUuidSync(uuid)?.name ?? game.i18n.localize("DoD.enchantments.enchantment");
+        const name = await fromUuid(uuid)?.name ?? game.i18n.localize("DoD.enchantments.enchantment");
         const content = game.i18n.format("DoD.ui.dialog.deleteItemContent", { item: name });
         const title = game.i18n.format("DoD.ui.dialog.deleteItemTitle", { item: game.i18n.localize("DoD.enchantments.enchantment") });
 
@@ -128,17 +128,19 @@ export default class DoDGearBaseSheet extends DoDItemBaseSheet {
 
         switch (partId) {
             case "enchantments":
-                partContext.enchantments = this.item.system.enchantments.spells.map(enchantment => {
-                    const spell = fromUuidSync(enchantment.uuid);
-                    return {
-                        uuid: enchantment.uuid,
-                        name: spell.name,
-                        img: spell.img,
-                        powerLevel: spell.system.rank > 0 ? enchantment.powerLevel : null,
-                        castable: enchantment.castable,
-                        free: enchantment.free,
-                    };
-                });
+                partContext.enchantments = await Promise.all(
+                    this.item.system.enchantments.spells.map(async enchantment => {
+                        const spell = await fromUuid(enchantment.uuid);
+                        return {
+                            uuid: enchantment.uuid,
+                            name: spell.name,
+                            img: spell.img,
+                            powerLevel: spell.system.rank > 0 ? enchantment.powerLevel : null,
+                            castable: enchantment.castable,
+                            free: enchantment.free,
+                        };
+                    })
+                );
                 break;
         }
         return partContext;

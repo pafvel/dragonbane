@@ -58,7 +58,7 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
     } 
 
     async getTooltip(roll) {
-        const wpSourceName = this.wpSourceUuid ? fromUuidSync(this.wpSourceUuid)?.name : null;
+        const wpSourceName = this.wpSourceUuid ? (await fromUuid(this.wpSourceUuid))?.name : null;
 
         const toolTip =
         `<div class="permission-observer dice-tooltip" data-actor-id="${this.actorUuid}" style="text-align: left">

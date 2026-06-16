@@ -110,7 +110,7 @@ export default class DoDItemBaseSheet extends HandlebarsApplicationMixin(ItemShe
 
     
     async _onDragStart(event) {
-        const document = fromUuidSync(event.currentTarget.dataset.itemUuid);
+        const document = await fromUuid(event.currentTarget.dataset.itemUuid);
         event.dataTransfer.setData("text/plain", JSON.stringify(document.toDragData()));
     }
 

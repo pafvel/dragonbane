@@ -118,7 +118,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                         return this._onDeleteItem(item, itemId);
                     } else {
                         const effectUuid = li.dataset.effectUuid;
-                        const effect = fromUuidSync(effectUuid);
+                        const effect = await fromUuid(effectUuid);
                         if (await this._itemDeleteDialog(effect)) {
                             return effect.delete();
                         }
@@ -960,11 +960,11 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         const dataSet = event.currentTarget.closest(".sheet-table-data").dataset;
         const itemUuid = dataSet.itemUuid;
         const enchantmentIndex = dataSet.enchantmentIndex;
-        const item = fromUuidSync(itemUuid);
+        const item = await fromUuid(itemUuid);
         const enchantment = item?.system.enchantments.spells[enchantmentIndex];
 
         if (event.type === "click") { // left click - use item
-            const spell = fromUuidSync(enchantment.uuid);
+            const spell = await fromUuid(enchantment.uuid);
             if (spell) {
                 const options = {
                    autoSuccess: true,
@@ -1045,7 +1045,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         event.preventDefault();
         let element = event.currentTarget;
         let effectUuid = element.closest(".sheet-table-data").dataset.effectUuid;
-        let effect = fromUuidSync(effectUuid);
+        let effect = await fromUuid(effectUuid);
 
         const ok = await this._itemDeleteDialog(effect);
         if (!ok) {

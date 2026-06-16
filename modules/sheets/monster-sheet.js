@@ -60,7 +60,7 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
         event.preventDefault();
         event.currentTarget?.blur();
 
-        const table = this.actor.system.attackTable ? fromUuidSync(this.actor.system.attackTable) : null;
+        const table = this.actor.system.attackTable ? await fromUuid(this.actor.system.attackTable) : null;
         if (!table) {
             DoD_Utility.WARNING("DoD.WARNING.missingMonsterAttackTable");
             return;

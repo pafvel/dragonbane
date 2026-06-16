@@ -86,7 +86,7 @@ export default class DoDTestMessageBaseData extends DoDChatMessageBaseData {
         }
         return {
             user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: fromUuidSync(this.actorUuid) }),
+            speaker: ChatMessage.getSpeaker({ actor: await fromUuid(this.actorUuid) }),
             ...messageData,
             type: this.type,
             system: this.toObject()

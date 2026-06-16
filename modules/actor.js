@@ -933,7 +933,7 @@ export class DoDActor extends Actor {
     }
 
     async drawMonsterAttack(t, tableResult = null) {
-        const table = t || (this.system.attackTable ? fromUuidSync(this.system.attackTable) : null);
+        const table = t || (this.system.attackTable ? await fromUuid(this.system.attackTable) : null);
         if (!table) return null;
 
         let draw = null;

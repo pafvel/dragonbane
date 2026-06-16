@@ -18,7 +18,7 @@ function parseMatch(match) {
 }
 
 export async function enrichDisplayAbility (match, options) {
-    const ability = fromUuidSync(match[1]);
+    const ability = await fromUuid(match[1]);
     const abilityName = match[2] ?? ability?.name;
     const a = document.createElement("div");
     if (ability) {
@@ -123,7 +123,7 @@ export async function enrichDisplayMonsterDescriptionCard (match, _options) {
     const parsedMatch = parseMatch(match[1]);
     const monster = await DoD_Utility.findMonster(parsedMatch.uuid);
     const monsterName = match[2] ?? monster?.name;
-    const table = monster?.system.attackTable ? fromUuidSync(monster.system.attackTable) : null;
+    const table = monster?.system.attackTable ? await fromUuid(monster.system.attackTable) : null;
     let titleClasses = "monster-title";
     if(parsedMatch.named) {
         titleClasses += " named";
@@ -413,7 +413,7 @@ export async function enrichDisplayNpcDescription (match, _options) {
 
 
 export async function enrichDisplaySkill (match, _options) {
-    const skill = fromUuidSync(match[1]);
+    const skill = await fromUuid(match[1]);
     const skillName = match[2] ?? skill?.name;
     const a = document.createElement("div");
     if (skill) {
@@ -434,7 +434,7 @@ export async function enrichDisplaySkill (match, _options) {
 }
 
 export async function enrichDisplaySpell (match, _options) {
-    const spell = fromUuidSync(match[1]);
+    const spell = await fromUuid(match[1]);
     const spellName = match[2] ?? spell?.name;
     const a = document.createElement("div");
     if (spell) {
@@ -574,7 +574,7 @@ export async function enrichDisplayTable (match, _options) {
 }
 
 export async function enrichDisplayTrick(match, _options) {
-    const spell = fromUuidSync(match[1]);
+    const spell = await fromUuid(match[1]);
     const spellName = match[2] ?? spell?.name;
     const a = document.createElement("div");
     if (spell) {
@@ -710,7 +710,7 @@ export async function enrichGearTable(match, _options) {
     const matches = content.matchAll(regexp);
     for (const match of matches) {
         const uuid = match[1];
-        const item = fromUuidSync(uuid);
+        const item = await fromUuid(uuid);
         const itemName = match[2] ?? item?.name;
 
         if (item) {

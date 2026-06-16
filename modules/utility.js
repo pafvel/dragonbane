@@ -180,7 +180,7 @@ export default class DoD_Utility {
         const el = event.target.classList.contains("table-roll") ? event.target : event.target.closest(".table-roll");
         const tableId = el?.dataset.tableId;
         const tableName = el?.dataset.tableName;
-        const table = fromUuidSync(tableId) || this.findTable(tableName);
+        const table = (tableId ? await fromUuid(tableId) : null) || this.findTable(tableName);
         if (table) {
             if (event.type === "click") { // left click
                 table.draw();
@@ -231,7 +231,7 @@ export default class DoD_Utility {
         }
 
         if (!table) {
-            table = actor.system.attackTable ? fromUuidSync(actor.system.attackTable) : null;
+            table = actor.system.attackTable ? await fromUuid(actor.system.attackTable) : null;
             if (!table) {
                 DoD_Utility.WARNING("DoD.WARNING.missingMonsterAttackTable");
                 return;
@@ -253,7 +253,7 @@ export default class DoD_Utility {
         }
 
         if (!table) {
-            table = actor.system.attackTable ? fromUuidSync(actor.system.attackTable) : null;
+            table = actor.system.attackTable ? await fromUuid(actor.system.attackTable) : null;
             if (!table) {
                 DoD_Utility.WARNING("DoD.WARNING.missingMonsterAttackTable");
                 return;
