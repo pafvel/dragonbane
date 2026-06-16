@@ -1910,6 +1910,24 @@
   border-color: black;
   top: 28px;
 }
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page .frame {
+  position: relative;
+  display: inline-block;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page .frame > img {
+  display: block;
+  width: calc(100% - 32px);
+  height: auto;
+  margin: 16px;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page .frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  --edge: 33px;
+  background: url("art/ui/frame-tl.webp") top left no-repeat, url("art/ui/frame-tr.webp") top right no-repeat, url("art/ui/frame-bl.webp") bottom left no-repeat, url("art/ui/frame-br.webp") bottom right no-repeat, url("art/ui/frame-h.webp") top left/auto var(--edge) repeat-x, url("art/ui/frame-h.webp") bottom left/auto var(--edge) repeat-x, url("art/ui/frame-v.webp") top left/var(--edge) auto repeat-y, url("art/ui/frame-v.webp") top right/var(--edge) auto repeat-y;
+}
 .system-dragonbane .sheet.journal-entry .journal-entry-content img {
   display: block;
   margin: auto;
@@ -1919,6 +1937,9 @@
   height: 3.5em;
   width: auto;
   pointer-events: none;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content img.art-multiply {
+  mix-blend-mode: multiply;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content table {
   background: transparent;
