@@ -80,33 +80,13 @@ export default class DoD_Utility {
         return skills.map(skill => skill.toObject());
     }
 
-    static async findAbility(abilityName) {
-        // Prio 1: World items
-        let ability = this.findItem(abilityName, "ability", game.items);
-        return ability;
-    }
-
-    static async findKin(kinName) {
-        // Prio 1: World items
-        let kin = this.findItem(kinName, "kin", game.items);
-        return kin;
-    }
+    static findAbility(abilityName) { return this.findItem(abilityName, "ability"); }
+    static findKin(kinName) { return this.findItem(kinName, "kin"); }
+    static findSkill(skillName) { return this.findItem(skillName, "skill"); }
+    static findProfession(profName) { return this.findItem(profName, "profession"); }
 
     static async findMonster(monsterUUID) {
-        const monster = await this.getActorFromUUID(monsterUUID);
-        return monster;
-    }
-
-    static async findSkill(skillName) {
-        // Prio 1: World items
-        let kin = this.findItem(skillName, "skill", game.items);
-        return kin;
-    }
-
-    static async findProfession(professionName) {
-        // Prio 1: World items
-        let kin = this.findItem(professionName, "profession", game.items);
-        return kin;
+        return this.getActorFromUUID(monsterUUID);
     }
 
     static async findTable(name, options) {
@@ -140,10 +120,19 @@ export default class DoD_Utility {
         return table;
     }
 
-    static async findItem(itemName, itemType, collection) {
-        let name = itemName.toLowerCase();
-        let item = collection.find(i => i.type === itemType && i.name.toLowerCase() === name);
-        return item?.clone();
+    static async findItem(itemName, itemType) {
+        const name = itemName.toLowerCase();
+        const worldItem = game.items.find(i => i.type === itemType && i.name.toLowerCase() === name);
+        if (worldItem) return worldItem.clone();
+        for (const pack of game.packs) {
+            if (pack.documentName !== "Item") continue;
+            const entry = pack.index.find(i => i.type === itemType && i.name.toLowerCase() === name);
+            if (entry) {
+                const doc = await pack.getDocument(entry._id);
+                return doc?.clone() ?? null;
+            }
+        }
+        return null;
     }
 
     static getActorFromUUIDSync(uuid, options = {noWarnings: false}) {
