@@ -82,7 +82,7 @@ function getTarget(element) {
     if (element) {
         // Get target from message data
         if (element.dataset.targetId) {
-            target = DoD_Utility.getActorFromUUID(element.dataset.targetId);
+            target = DoD_Utility.getActorFromUUIDSync(element.dataset.targetId);
         }
         // Get target from user target
         if (!target) {
@@ -270,7 +270,7 @@ export function addChatMessageContextMenuOptions(_html, options) {
     {
         const element = li.querySelector(".damage-message");
         if (element?.dataset.actorId) {
-            const target = DoD_Utility.getActorFromUUID(element.dataset.actorId);
+            const target = DoD_Utility.getActorFromUUIDSync(element.dataset.actorId);
             return target?.isOwner && Number(element?.dataset.damage) !== 0;
         }
         return false;
@@ -279,7 +279,7 @@ export function addChatMessageContextMenuOptions(_html, options) {
     const undoDamage = function(li) {
         const element = li.querySelector(".damage-message");
         const healingData = {
-            actor: DoD_Utility.getActorFromUUID(element?.dataset.actorId),
+            actor: DoD_Utility.getActorFromUUIDSync(element?.dataset.actorId),
             damage: Number(element?.dataset.damage)
         };
         applyHealingMessage(healingData);
@@ -365,7 +365,7 @@ export async function onInlineDamageRoll(event) {
 
     const element = event.target;
     const actorId = element.dataset.actorId;
-    const actor = actorId ? DoD_Utility.getActorFromUUID(actorId) : null;
+    const actor = actorId ? DoD_Utility.getActorFromUUIDSync(actorId) : null;
     const damageType = element.dataset.damageType;
     const damage = element.dataset.damage;
     const action = element.dataset.action;
@@ -932,42 +932,42 @@ export function hideChatPermissions(_app, html, _data) {
     }
 
     for (const el of html.querySelectorAll(".permission-owner")) {
-        const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
+        const actor = DoD_Utility.getActorFromUUIDSync(el.dataset.actorId, {noWarnings: true});
         if (actor && !actor.isOwner) {
             el.remove();
         }
     }
 
     for (const el of html.querySelectorAll(".permission-not-owner")) {
-        const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
+        const actor = DoD_Utility.getActorFromUUIDSync(el.dataset.actorId, {noWarnings: true});
         if (actor && actor.isOwner) {
             el.remove();
         }
     }
 
     for (const el of html.querySelectorAll(".permission-observer")) {
-        const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
+        const actor = DoD_Utility.getActorFromUUIDSync(el.dataset.actorId, {noWarnings: true});
         if (actor && !actor.isObserver) {
             el.remove();
         }
     }
 
     for (const el of html.querySelectorAll(".permission-not-observer")) {
-        const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
+        const actor = DoD_Utility.getActorFromUUIDSync(el.dataset.actorId, {noWarnings: true});
         if (actor && actor.isObserver) {
             el.remove();
         }
     }
 
     for (const el of html.querySelectorAll(".permission-limited")) {
-        const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
+        const actor = DoD_Utility.getActorFromUUIDSync(el.dataset.actorId, {noWarnings: true});
         if (actor && !actor.isLimited) {
             el.remove();
         }
     }
 
     for (const el of html.querySelectorAll(".permission-not-limited")) {
-        const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
+        const actor = DoD_Utility.getActorFromUUIDSync(el.dataset.actorId, {noWarnings: true});
         if (actor && actor.isLimited) {
             el.remove();
         }

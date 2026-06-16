@@ -335,7 +335,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         if (this.postRollData.isDemon) {
             if (this.postRollData.isRanged) {
                 this.postRollData.isRangedMishap = true;
-                const table = DoD_Utility.findSystemTable("rangedMishapTable", game.i18n.localize("DoD.tables.mishapRanged"));
+                const table = await DoD_Utility.findSystemTable("rangedMishapTable", game.i18n.localize("DoD.tables.mishapRanged"));
                 if (table) {
                     this.postRollData.rangedMishapTable = "@Table[" + table.uuid + "]{" + table.name + "}";
                 } else {
@@ -343,7 +343,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
                 }
             } else {
                 this.postRollData.isMeleeMishap = true;
-                const table = DoD_Utility.findSystemTable("meleeMishapTable", game.i18n.localize("DoD.tables.mishapMelee"));
+                const table = await DoD_Utility.findSystemTable("meleeMishapTable", game.i18n.localize("DoD.tables.mishapMelee"));
                 if (table) {
                     this.postRollData.meleeMishapTable = "@Table[" + table.uuid + "]{" + table.name + "}";
                 } else {

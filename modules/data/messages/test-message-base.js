@@ -79,7 +79,7 @@ export default class DoDTestMessageBaseData extends DoDChatMessageBaseData {
     }
 
     async createMessageData(roll) {
-        const messageData = this.formatRollMessage();
+        const messageData = await this.formatRollMessage();
         if (this.template) {
             if (!messageData.content) { messageData.content = ""; }
             messageData.content += await this.renderRoll(roll);

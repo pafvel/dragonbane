@@ -504,8 +504,8 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     {
         // Rollable table
         pattern: /@Table\[(.+?)\](?:{(.+?)})?/gm,
-        enricher: (match, _options) => {
-            const table = DoD_Utility.findTable(match[1]);
+        enricher: async (match, _options) => {
+            const table = await DoD_Utility.findTable(match[1]);
             const tableName = match[2] ?? table?.name;
             const a = document.createElement("a");
             if (table) {

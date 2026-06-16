@@ -71,7 +71,7 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
         return toolTip + await super.getTooltip(roll);
     }
 
-    formatRollMessage() {
+    async formatRollMessage() {
         const result = this.formatRollResult();
         const spell = fromUuidSync(this.spellUuid);
         const actor = fromUuidSync(this.actorUuid);
@@ -101,7 +101,7 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
             critContent = "<p><b>" + game.i18n.localize("DoD.magicCritChoices.choiceTitle") + ":</b> "
                         + "<em>" + game.i18n.localize(`DoD.magicCritChoices.${this.criticalEffect}`) + "</em></p>";
         } else if (this.isDemon) {
-            const table = DoD_Utility.findSystemTable("magicMishapTable", game.i18n.localize("DoD.tables.mishapMagic"));
+            const table = await DoD_Utility.findSystemTable("magicMishapTable", game.i18n.localize("DoD.tables.mishapMagic"));
             if (table) {
                 critContent = "<p>@Table[" + table.uuid + "]{" + table.name + "}</p>";
             } else {

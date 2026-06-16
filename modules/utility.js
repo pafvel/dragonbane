@@ -93,7 +93,7 @@ export default class DoD_Utility {
     }
 
     static async findMonster(monsterUUID) {
-        const monster = this.getActorFromUUID(monsterUUID);
+        const monster = await this.getActorFromUUID(monsterUUID);
         return monster;
     }
 
@@ -109,35 +109,33 @@ export default class DoD_Utility {
         return kin;
     }
 
-    static findTable(name, options) {
+    static async findTable(name, options) {
         if (!name) return null;
-        
-        let table = game.tables.find(i => i.name.toLowerCase() === name.toLowerCase()) || fromUuidSync(name);
+        let table = game.tables.find(i => i.name.toLowerCase() === name.toLowerCase())
+            || await fromUuid(name).catch(() => null);
         if (!table) {
             if (!options?.noWarnings){
                 console.log(game.i18n.format(game.i18n.localize("DoD.WARNING.tableNotFound"), {id: name}));
-                //DoD_Utility.WARNING("DoD.WARNING.tableNotFound", {id: name});
             }
             return null;
         }
         if (!(table instanceof RollTable)) {
             if (!options?.noWarning){
                 console.log(game.i18n.format(game.i18n.localize("DoD.WARNING.typeMismatch"), {id: name}));
-                //DoD_Utility.WARNING("DoD.WARNING.typeMismatch", {id: name});
             }
             return null;
         }
         return table;
     }
 
-    static findSystemTable(settingName, tableName) {
+    static async findSystemTable(settingName, tableName) {
         const tableId = DoDCoreSettings[settingName];
-        let table = DoD_Utility.findTable(tableId, {noWarnings: true});
+        let table = await DoD_Utility.findTable(tableId, {noWarnings: true});
         if (!table) {
-            table = DoD_Utility.findTable("RollTable." + tableId, {noWarnings: true});
+            table = await DoD_Utility.findTable("RollTable." + tableId, {noWarnings: true});
         }
         if (!table && tableName) {
-            table = DoD_Utility.findTable(tableName, {noWarnings: true});
+            table = await DoD_Utility.findTable(tableName, {noWarnings: true});
         }
         return table;
     }
@@ -148,7 +146,7 @@ export default class DoD_Utility {
         return item?.clone();
     }
 
-    static getActorFromUUID(uuid, options = {noWarnings: false}) {
+    static getActorFromUUIDSync(uuid, options = {noWarnings: false}) {
         let doc = null;
         try {
             doc = fromUuidSync(uuid);
@@ -156,7 +154,25 @@ export default class DoD_Utility {
             if(!options.noWarnings) {
                 DoD_Utility.WARNING(err.message);
             }
+        }
+        let actor = doc?.actor ?? doc;
+        if (!actor) {
+            if(!options.noWarnings) {
+                DoD_Utility.WARNING("DoD.WARNING.actorNotFound", {id: uuid});
+            }
+            return null;
+        }
+        return actor;
+    }
 
+    static async getActorFromUUID(uuid, options = {noWarnings: false}) {
+        let doc = null;
+        try {
+            doc = await fromUuid(uuid);
+        } catch (err) {
+            if(!options.noWarnings) {
+                DoD_Utility.WARNING(err.message);
+            }
         }
         let actor = doc?.actor ?? doc;
         if (!actor) {
@@ -180,7 +196,7 @@ export default class DoD_Utility {
         const el = event.target.classList.contains("table-roll") ? event.target : event.target.closest(".table-roll");
         const tableId = el?.dataset.tableId;
         const tableName = el?.dataset.tableName;
-        const table = (tableId ? await fromUuid(tableId) : null) || this.findTable(tableName);
+        const table = (tableId ? await fromUuid(tableId) : null) || await this.findTable(tableName);
         if (table) {
             if (event.type === "click") { // left click
                 table.draw();
@@ -330,7 +346,7 @@ export default class DoD_Utility {
     }
 
      static async drawTreasureCards(number) {
-        const table = DoD_Utility.findSystemTable("treasureTable");
+        const table = await DoD_Utility.findSystemTable("treasureTable");
         const count = table ? DoD_Utility.clamp(number, 1, table.results.size) : 0;
 
         if (!table || count === 0) {

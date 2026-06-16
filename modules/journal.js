@@ -131,6 +131,7 @@ export async function enrichDisplayMonsterDescriptionCard (match, _options) {
 
     const a = document.createElement("div");
     if (monster) {
+        const attackTableHtml = await displayTable(monster?.system.attackTable, table, game.i18n.localize("DoD.journal.monsterAttacks"));
         let html = `
         <div class="display-monster">
             <div class="${titleClasses}">@UUID[${monster.uuid}]{${monsterName}}</div>
@@ -152,7 +153,7 @@ export async function enrichDisplayMonsterDescriptionCard (match, _options) {
                 ${monster.system.traits}
             </div>
             <div class="display-table">
-                ${displayTable(monster?.system.attackTable, table, game.i18n.localize("DoD.journal.monsterAttacks"))}
+                ${attackTableHtml}
             </div>
         </div>`;
         a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
@@ -485,7 +486,7 @@ function hasEnclosingHtmlTags(str) {
  return /^\s*<([A-Za-z][A-Za-z0-9-]*)\b[^>]*>[\s\S]*<\/\1>\s*$/.test(str);;
 }
 
-function displayTable(uuid, table, tableName, showDescription = false) {
+async function displayTable(uuid, table, tableName, showDescription = false) {
     if (!table) {
         return "";
     }
@@ -513,7 +514,7 @@ function displayTable(uuid, table, tableName, showDescription = false) {
         const resultType = DoD_Utility.getTableResultType(result);
         if (resultType === "RollTable") {
             let subTableName = result.name;
-            let subTable = DoD_Utility.findTable(subTableName);
+            let subTable = await DoD_Utility.findTable(subTableName);
             if (subTable?.uuid !== table.uuid) {
                 if(subTableName.startsWith(table.name)) {
                     subTableName = subTableName.slice(table.name.length);
@@ -555,13 +556,13 @@ function displayTable(uuid, table, tableName, showDescription = false) {
 export async function enrichDisplayTable (match, _options) {
 
     const parsedMatch = parseMatch(match[1]);
-    const table = DoD_Utility.findTable(parsedMatch.uuid);
+    const table = await DoD_Utility.findTable(parsedMatch.uuid);
     const tableName = match[2] ?? table?.name;
     const a = document.createElement("div");
     
     if (table) {
         a.classList.add("display-table");
-        let html = displayTable(parsedMatch.uuid, table, tableName, parsedMatch.description === true);
+        let html = await displayTable(parsedMatch.uuid, table, tableName, parsedMatch.description === true);
         a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
     } else {
         a.dataset.tableId = parsedMatch.uuid;

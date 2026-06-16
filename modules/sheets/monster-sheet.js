@@ -86,7 +86,7 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
                 let documentType = DoD_Utility.getTableResultType(result);
 
                 if (documentType === "RollTable") {
-                    let subTable = DoD_Utility.findTable(result.name);
+                    let subTable = await DoD_Utility.findTable(result.name);
                     if (subTable?.uuid !== table.uuid) {
                         attack.description = subTable?.description;
                     } else {
