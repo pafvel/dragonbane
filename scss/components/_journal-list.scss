@@ -2,7 +2,31 @@
 
     .journal-entry-content {
 
+        .list-title {
+                font-weight: 600;
+                margin-bottom: 0;
+        }
+
+        .list-title + ul {
+            margin-top: 0;
+        }
+
         ul {
+
+            list-style: none;
+
+            li {
+                display: list-item;
+                
+                p {
+                    margin: 0.25rem 0;
+                }
+            }
+
+            li::marker {
+                content: "✦ ";
+                font-style: normal;
+            }
 
             .description {
                 list-style-type: "✦ ";

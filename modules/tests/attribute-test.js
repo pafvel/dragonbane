@@ -6,9 +6,6 @@ export default class DoDAttributeTest extends DoDTest {
     constructor(actor, attribute, options) {
         super(actor, options);
         this.attribute = attribute?.toLowerCase();
-        if (this.options.canPush === undefined) {
-            this.options.canPush = true;
-        }
     }
 
     async getRollOptions() {
@@ -23,11 +20,11 @@ export default class DoDAttributeTest extends DoDTest {
         this.preRollData.actor = this.actor;
         this.preRollData.attribute = this.attribute;
         this.preRollData.target = this.actor.getAttribute(this.attribute);
-        this.preRollData.canPush = this.actor.type === "character" ? this.options.canPush : false;
+        this.preRollData.canPush = this.options.canPush !== undefined ? this.options.canPush : this.actor.type === "character";
     }
 
-    updatePostRollData() {
-        super.updatePostRollData();
+    async updatePostRollData() {
+        await super.updatePostRollData();
         this.postRollData.success = this.postRollData.result <= this.preRollData.target;
         this.postRollData.isDragon = this.postRollData.result <= 1 + (this.preRollData.extraDragons ?? 0);
         this.postRollData.isDemon = this.postRollData.result >= 20 - (this.preRollData.extraDemons ?? 0);

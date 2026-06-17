@@ -71,12 +71,10 @@
             
             <tr>
                 <td>
-                    <input name="system.damage" type="text" value="{{system.damage}}" 
-                        pattern="-?(?:\d+)?[dD](?:\d+)(?:[+\-]\d+)?\s*([sS]lashing|[pP]iercing|[bB]ludgeoning)?"
-                    />
+                    <input name="system.damage" type="text" value="{{system.damage}}" pattern="{{spellDamagePattern}}"/>
                 </td>    
                 <td>
-                    <input name="system.damagePerPowerlevel" type="text" value="{{system.damagePerPowerlevel}}" pattern="(\d+)?[dD](\d+)([\+\-]\d+)?|(([\+\-])?\d+)?"/>
+                    <input name="system.damagePerPowerlevel" type="text" value="{{system.damagePerPowerlevel}}" pattern="{{dicePattern}}"/>
                 </td>    
             </tr>
         </table>

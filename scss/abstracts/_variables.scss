@@ -55,6 +55,8 @@ $colors: (
     --dod-color-dash-range:             yellow;
     --dod-color-out-of-range:           #{color(red-1)};
     --dod-color-border-bottom:          #{color(green-cold-3)};
+    --dod-color-button-text:              whitesmoke;
+    --dod-color-button-text-disabled:   #{color(gray-1)};
     --dod-journal-background:           url("art/ui/journal-page-bg.webp");
     --dod-font-primary:     "QTFrizQuad";
     --dod-font-secondary:   "QTFrizQuad";

@@ -3,7 +3,7 @@ import { DoD } from "./modules/config.js";
 import { DoDActor } from "./modules/actor.js";
 import { DoDItem } from "./modules/item.js";
 
-import DoD_Utility from "./modules/utility.js";
+import DoD_Utility, { DICE_FORMULA } from "./modules/utility.js";
 import DoDRoll from "./modules/roll.js";
 
 import * as DoDChat from "./modules/chat.js";
@@ -20,7 +20,9 @@ import DoDHelmetSheet from "./modules/sheets/item/helmet-sheet.js";
 import DoDInjurySheet from "./modules/sheets/item/injury-sheet.js";
 import DoDItemSheet from "./modules/sheets/item/item-sheet.js";
 import DoDKinSheet from "./modules/sheets/item/kin-sheet.js";
+import DoDMaterialSheet from "./modules/sheets/item/material-sheet.js";
 import DoDProfessionSheet from "./modules/sheets/item/profession-sheet.js";
+import DoDRecipeSheet from "./modules/sheets/item/recipe-sheet.js";
 import DoDSkillSheet from "./modules/sheets/item/skill-sheet.js";
 import DoDSpellSheet from "./modules/sheets/item/spell-sheet.js";
 import DoDWeaponSheet from "./modules/sheets/item/weapon-sheet.js";
@@ -35,7 +37,9 @@ import DoDHelmetData from "./modules/data/items/helmetData.js";
 import DoDInjuryData from "./modules/data/items/injuryData.js";
 import DoDItemData from "./modules/data/items/itemData.js";
 import DoDKinData from "./modules/data/items/kinData.js";
+import DoDMaterialData from "./modules/data/items/materialData.js";
 import DoDProfessionData from "./modules/data/items/professionData.js";
+import DoDRecipeData from "./modules/data/items/recipeData.js";
 import DoDSkillData from "./modules/data/items/skillData.js";
 import DoDWeaponData from "./modules/data/items/weaponData.js";
 import DoDSpellData from "./modules/data/items/spellData.js";
@@ -84,6 +88,9 @@ function registerHandlebarsHelpers() {
         }
         return result;
     });
+
+    Handlebars.registerHelper("dicePattern", () => new Handlebars.SafeString(DICE_FORMULA));
+    Handlebars.registerHelper("spellDamagePattern", () => new Handlebars.SafeString(String.raw`-?${DICE_FORMULA}\s*(?:[sS]lashing|[pP]iercing|[bB]ludgeoning)?`));
 }
 
 async function preloadHandlebarsTemplates() {
@@ -191,7 +198,9 @@ Hooks.once("init", function () {
         item: DoDItemData,
         injury: DoDInjuryData,
         kin: DoDKinData,
+        material: DoDMaterialData,
         profession: DoDProfessionData,
+        recipe: DoDRecipeData,
         skill: DoDSkillData,
         spell: DoDSpellData,
         weapon: DoDWeaponData
@@ -211,11 +220,12 @@ Hooks.once("init", function () {
     CONFIG.DoD.Items.registerSheet("DoD", DoDInjurySheet, { types: ["injury"], makeDefault: true });
     CONFIG.DoD.Items.registerSheet("DoD", DoDItemSheet, { types: ["item"], makeDefault: true });
     CONFIG.DoD.Items.registerSheet("DoD", DoDKinSheet, { types: ["kin"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDMaterialSheet, { types: ["material"], makeDefault: true });
     CONFIG.DoD.Items.registerSheet("DoD", DoDProfessionSheet, { types: ["profession"], makeDefault: true });
+    CONFIG.DoD.Items.registerSheet("DoD", DoDRecipeSheet, { types: ["recipe"], makeDefault: true });
     CONFIG.DoD.Items.registerSheet("DoD", DoDSkillSheet, { types: ["skill"], makeDefault: true });
     CONFIG.DoD.Items.registerSheet("DoD", DoDSpellSheet, { types: ["spell"], makeDefault: true });
     CONFIG.DoD.Items.registerSheet("DoD", DoDWeaponSheet, { types: ["weapon"], makeDefault: true });
-
     CONFIG.DoD.DocumentSheetConfig.unregisterSheet(ActiveEffect, "core", CONFIG.DoD.ActiveEffectConfig);
     CONFIG.DoD.DocumentSheetConfig.registerSheet(ActiveEffect, "DoD", DoDActiveEffectConfig, {makeDefault :true});
 
@@ -321,8 +331,6 @@ for (const sheet of ["DoDActorBaseSheet", "DoDItemBaseSheet", "JournalEntryPageS
         DoD_Utility.addHtmlEventListener(html, "click", ".treasure-roll", DoDChat.onTreasureRoll);
     });
 }
-
-Hooks.on("dropActorSheetData", DoDCharacterSheet._onDropTable);
 
 Hooks.on("preImportAdventure", (_adventure, _formData, _toCreate, toUpdate) => {
     // Apply seeting to keep ownership permission on import
@@ -483,7 +491,8 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     {
         // Rollable damage
         // Format [[/damage <formula> [<slashing|piercing|bludgeoning>]]]
-        pattern: /\[\[\/damage\s((?:\d+)?[dD](?:\d+)(?:[\+\-]\d+)?)\s?(slashing|piercing|bludgeoning)?(?:\s(.+?))?\]\]/gm,
+        // Formula supports multiple die types, e.g. D10+D6+2
+        pattern: new RegExp(String.raw`\[\[\/damage\s([+\-]?${DICE_FORMULA})\s?(slashing|piercing|bludgeoning)?(?:\s(.+?))?\]\]`, "gm"),
         enricher: (match, options) => {
             const a = document.createElement("a");
             a.classList.add("inline-damage-roll");
@@ -499,8 +508,8 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     {
         // Rollable table
         pattern: /@Table\[(.+?)\](?:{(.+?)})?/gm,
-        enricher: (match, _options) => {
-            const table = DoD_Utility.findTable(match[1]);
+        enricher: async (match, _options) => {
+            const table = await DoD_Utility.findTable(match[1]);
             const tableName = match[2] ?? table?.name;
             const a = document.createElement("a");
             if (table) {
@@ -585,6 +594,10 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     {
         pattern: /@DisplayTrick\[(.+?)\](?:{(.+?)})?/gm,
         enricher: DoDJournal.enrichDisplayTrick
+    },
+    {
+        pattern: /@DisplayRecipe\[(.+?)\](?:{(.+?)})?/gm,
+        enricher: DoDJournal.enrichDisplayRecipe
     },
     {
         pattern: /@GearTableStart\[(.+?)\](?:{(.+?)})((?:(?!@GearTableEnd)[\S\s])+)@GearTableEnd/gm,

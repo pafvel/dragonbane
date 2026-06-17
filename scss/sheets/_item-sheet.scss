@@ -23,10 +23,14 @@
                     background-repeat: repeat-x;
                     background-size: cover;
                     background-clip: border-box;
-                    color: whitesmoke;            
+                    color: var(--dod-color-button-text);            
                     font-family: var(--dod-font-heading);
                     font-weight: normal;
                     width: 100%;
+
+                    &[disabled] {
+                        color: var(--dod-color-button-text-disabled);
+                    }
                 }
             }
 

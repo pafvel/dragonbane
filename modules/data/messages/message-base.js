@@ -47,7 +47,7 @@ export default class DoDChatMessageBaseData extends DragonbaneDataModel {
                     }
                     // Check if the target is different
                     const targets = Array.from(game.user.targets);
-                    const targetActorUuid = targets.length > 0 ? targets[0].actor.uuid : "";
+                    const targetActorUuid = targets.length > 0 ? targets[0].document.uuid : "";
                     if (targetActorUuid === message.system.targetActorUuid) {
                         return false;
                     }
@@ -59,7 +59,7 @@ export default class DoDChatMessageBaseData extends DragonbaneDataModel {
 
                     // Choose the new target (first targeted token)
                     const targets = Array.from(game.user.targets);
-                    const targetActorUuid = targets.length > 0 ? targets[0].actor.uuid : "";
+                    const targetActorUuid = targets.length > 0 ? targets[0].document.uuid : "";
 
                     // Update message data
                     const systemData = { ...message.system.toObject(), targetActorUuid };

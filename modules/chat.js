@@ -60,16 +60,16 @@ function onEnterTargetAction(event) {
     const li = event.currentTarget.closest("li");
     const element = li.querySelector("[data-target-id]");
     const actor = getTarget(element);
-    const token = actor?.token?.object;
-    token?._onHoverIn(event, { hoverOutOthers: true });
+    const token = actor?.token || canvas.scene?.tokens?.find(t => t.actor?.uuid === actor?.uuid);
+    token?.object?._onHoverIn(event, { hoverOutOthers: true });
 }
 
 function onLeaveTargetAction(event) {
     const li = event.currentTarget.closest("li");
     const element = li.querySelector("[data-target-id]");
     const actor = getTarget(element);
-    const token = actor?.token?.object;
-    token?._onHoverOut(event);
+    const token = actor?.token || canvas.scene?.tokens?.find(t => t.actor?.uuid === actor?.uuid);
+    token?.object?._onHoverOut(event);
 }
 
 function messageFromElement(element) {
@@ -82,7 +82,7 @@ function getTarget(element) {
     if (element) {
         // Get target from message data
         if (element.dataset.targetId) {
-            target = DoD_Utility.getActorFromUUID(element.dataset.targetId);
+            target = DoD_Utility.getActorFromUUIDSync(element.dataset.targetId);
         }
         // Get target from user target
         if (!target) {
@@ -104,6 +104,7 @@ function dealTargetDamage(li, multiplier = 1, ignoreArmor = false) {
     damageData.actor = getTarget(element);
     damageData.multiplier = multiplier;
     damageData.ignoreArmor = ignoreArmor || element.dataset.ignoreArmor;
+    damageData.penetrating = Number(element.dataset.penetrating) || 0;
 
     if (!(damageData.actor instanceof DoDActor)) {
         DoD_Utility.WARNING("TOKEN.WarningNoActor");
@@ -205,6 +206,7 @@ export function addChatMessageContextMenuOptions(_html, options) {
         damageData.actor = canvas.tokens.controlled[0].actor;
         damageData.multiplier = multiplier;
         damageData.ignoreArmor = ignoreArmor || element.dataset.ignoreArmor;
+        damageData.penetrating = Number(element.dataset.penetrating) || 0;
 
         const targets = canvas.tokens.controlled;
         for (const target of targets) {
@@ -268,7 +270,7 @@ export function addChatMessageContextMenuOptions(_html, options) {
     {
         const element = li.querySelector(".damage-message");
         if (element?.dataset.actorId) {
-            const target = DoD_Utility.getActorFromUUID(element.dataset.actorId);
+            const target = DoD_Utility.getActorFromUUIDSync(element.dataset.actorId);
             return target?.isOwner && Number(element?.dataset.damage) !== 0;
         }
         return false;
@@ -277,7 +279,7 @@ export function addChatMessageContextMenuOptions(_html, options) {
     const undoDamage = function(li) {
         const element = li.querySelector(".damage-message");
         const healingData = {
-            actor: DoD_Utility.getActorFromUUID(element?.dataset.actorId),
+            actor: DoD_Utility.getActorFromUUIDSync(element?.dataset.actorId),
             damage: Number(element?.dataset.damage)
         };
         applyHealingMessage(healingData);
@@ -363,7 +365,7 @@ export async function onInlineDamageRoll(event) {
 
     const element = event.target;
     const actorId = element.dataset.actorId;
-    const actor = actorId ? DoD_Utility.getActorFromUUID(actorId) : null;
+    const actor = actorId ? DoD_Utility.getActorFromUUIDSync(actorId) : null;
     const damageType = element.dataset.damageType;
     const damage = element.dataset.damage;
     const action = element.dataset.action;
@@ -433,6 +435,11 @@ async function onRollWeaponDamage(event) {
         damage += " + " + extraDamage;
     }
 
+    const penetrating = weapon?.hasWeaponFeature("penetrating3") ? 3
+        : weapon?.hasWeaponFeature("penetrating2") ? 2
+        : weapon?.hasWeaponFeature("penetrating1") ? 1
+        : 0;
+
     const damageData = {
         actor: actor,
         weapon: weapon,
@@ -440,6 +447,7 @@ async function onRollWeaponDamage(event) {
         damageType: damageType,
         doubleWeaponDamage: context.criticalEffect === "doubleWeaponDamage",
         ignoreArmor: ignoreArmor,
+        penetrating: penetrating,
         target: target
     };
 
@@ -671,7 +679,11 @@ async function onPushRoll(event) {
         case "spellTest":
             options.spell = context.spell;
             options.powerLevel = context.powerLevel;
-            options.wpCost = Number(context.wpOld - context.wpNew);
+            options.wpNew = context.wpNew;
+            options.wpOld = context.wpOld;
+            options.wpCost = context.wpOld - context.wpNew;
+            options.wpSource = context.wpSource;
+            options.craftItem = context.craftItem;
             test = new DoDSpellTest(actor, options.spell, options);
             break;
         default:
@@ -736,7 +748,8 @@ export async function inflictDamageMessage(damageData) {
         damageType: damageData.damageType,
         formula: roll.formula,
         isHealing: isHealing,
-        ignoreArmor: damageData.ignoreArmor
+        ignoreArmor: damageData.ignoreArmor,
+        penetrating: damageData.penetrating ?? 0
     });
 
     rollDamageMessage.toMessage(roll);
@@ -749,7 +762,8 @@ export async function applyDamageMessage(damageData) {
     const damageType = damageData.damageType;
     const multiplier = damageData.multiplier;
     const ignoreArmor = damageData.ignoreArmor;
-    const armorValue = ignoreArmor ? 0 : actor.getArmorValue(damageType);
+    const penetrating = damageData.penetrating ?? 0;
+    const armorValue = ignoreArmor ? 0 : Math.max(0, actor.getArmorValue(damageType) - penetrating);
     const damageToApply = Math.max(0, Math.floor((damage - armorValue) * multiplier));
     const oldHP = actor.system.hitPoints.value;
 
@@ -825,12 +839,19 @@ export async function applyDamageMessage(damageData) {
     }
 
     const baseArmorValue = ignoreArmor ? 0 : actor.getArmorValue();
-    const bonusArmor = armorValue - baseArmorValue;
+    const rawArmorValue = ignoreArmor ? 0 : actor.getArmorValue(damageType);
+    const bonusArmor = rawArmorValue - baseArmorValue;
     let armorDetails = String(armorValue);
+    if (bonusArmor || penetrating) armorDetails += " (";
     if (bonusArmor) {
-        armorDetails += " (" + (bonusArmor > 0 ? "+" : "") + bonusArmor + " vs " 
-        + game.i18n.localize(CONFIG.DoD.damageTypes[damageType]) + ")";
+        armorDetails += (bonusArmor > 0 ? "+" : "") + bonusArmor + " vs "
+            + game.i18n.localize(CONFIG.DoD.damageTypes[damageType]);
     }
+    if (penetrating) {
+        if (bonusArmor) armorDetails += ", ";
+        armorDetails += "-" + penetrating + " " + game.i18n.localize("DoD.ui.chat.penetrating");
+    }
+    if (bonusArmor || penetrating) armorDetails += ")";
 
     let html = `
         <div class="damage-message permission-${permissionKey}" data-damage="${damageTaken}" data-actor-id="${actor.uuid}">
@@ -911,42 +932,42 @@ export function hideChatPermissions(_app, html, _data) {
     }
 
     for (const el of html.querySelectorAll(".permission-owner")) {
-        const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
+        const actor = DoD_Utility.getActorFromUUIDSync(el.dataset.actorId, {noWarnings: true});
         if (actor && !actor.isOwner) {
             el.remove();
         }
     }
 
     for (const el of html.querySelectorAll(".permission-not-owner")) {
-        const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
+        const actor = DoD_Utility.getActorFromUUIDSync(el.dataset.actorId, {noWarnings: true});
         if (actor && actor.isOwner) {
             el.remove();
         }
     }
 
     for (const el of html.querySelectorAll(".permission-observer")) {
-        const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
+        const actor = DoD_Utility.getActorFromUUIDSync(el.dataset.actorId, {noWarnings: true});
         if (actor && !actor.isObserver) {
             el.remove();
         }
     }
 
     for (const el of html.querySelectorAll(".permission-not-observer")) {
-        const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
+        const actor = DoD_Utility.getActorFromUUIDSync(el.dataset.actorId, {noWarnings: true});
         if (actor && actor.isObserver) {
             el.remove();
         }
     }
 
     for (const el of html.querySelectorAll(".permission-limited")) {
-        const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
+        const actor = DoD_Utility.getActorFromUUIDSync(el.dataset.actorId, {noWarnings: true});
         if (actor && !actor.isLimited) {
             el.remove();
         }
     }
 
     for (const el of html.querySelectorAll(".permission-not-limited")) {
-        const actor = DoD_Utility.getActorFromUUID(el.dataset.actorId, {noWarnings: true});
+        const actor = DoD_Utility.getActorFromUUIDSync(el.dataset.actorId, {noWarnings: true});
         if (actor && actor.isLimited) {
             el.remove();
         }

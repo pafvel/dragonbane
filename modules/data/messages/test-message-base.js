@@ -9,6 +9,7 @@ export default class DoDTestMessageBaseData extends DoDChatMessageBaseData {
         const { fields } = foundry.data;
         return this.mergeSchema(super.defineSchema(), {
             actorUuid: new fields.StringField({ required: true, initial: "" }),
+            autoSuccess: new fields.BooleanField({ required: true, initial: false }),
             banes: new fields.NumberField({ required: true, initial: 0 }),
             boons: new fields.NumberField({ required: true, initial: 0 }),
             canPush: new fields.BooleanField({ required: true, initial: false }),
@@ -78,14 +79,14 @@ export default class DoDTestMessageBaseData extends DoDChatMessageBaseData {
     }
 
     async createMessageData(roll) {
-        const messageData = this.formatRollMessage();
+        const messageData = await this.formatRollMessage();
         if (this.template) {
             if (!messageData.content) { messageData.content = ""; }
             messageData.content += await this.renderRoll(roll);
         }
         return {
             user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: fromUuidSync(this.actorUuid) }),
+            speaker: ChatMessage.getSpeaker({ actor: await fromUuid(this.actorUuid) }),
             ...messageData,
             type: this.type,
             system: this.toObject()

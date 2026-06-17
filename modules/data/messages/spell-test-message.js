@@ -16,6 +16,12 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
             criticalEffect: new fields.StringField({ required: false, initial: "" }),
             wpOld: new fields.NumberField({ required: true, initial: 0 }),
             wpNew: new fields.NumberField({ required: true, initial: 0 }),
+            wpSourceUuid: new fields.StringField({ required: false, initial: "" }),
+            craftItem: new fields.BooleanField({ required: false, initial: false }),
+            craftedItem: new fields.StringField({ required: false, initial: "" }),
+            craftedItemCount: new fields.NumberField({ required: false, initial: 0 }),
+            consumedMaterials: new fields.ArrayField(new fields.StringField(), { required: false, initial: [] }),
+            consumedMaterialsCount: new fields.NumberField({ required: false, initial: 0 }),
         });
     }
 
@@ -34,6 +40,9 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
         context.targetActor = this.targetActorUuid ? fromUuidSync(this.targetActorUuid) : "";
         delete context.targetActorUuid;
 
+        context.wpSource = this.wpSourceUuid ? fromUuidSync(this.wpSourceUuid) : null;
+        delete context.wpSourceUuid;
+
         return context;
     }
 
@@ -49,23 +58,27 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
     } 
 
     async getTooltip(roll) {
+        const wpSourceName = this.wpSourceUuid ? (await fromUuid(this.wpSourceUuid))?.name : null;
+
         const toolTip =
         `<div class="permission-observer dice-tooltip" data-actor-id="${this.actorUuid}" style="text-align: left">
             <div class="wrapper">
-                <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${this.wpOld} <i class="fa-solid fa-arrow-right"></i> ${this.wpNew}<br>
+                <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${this.wpOld} <i class="fa-solid fa-arrow-right"></i> ${this.wpNew}
+                ${wpSourceName ? `(${wpSourceName})` : ""}<br>
             </div>
         </div>`;
 
         return toolTip + await super.getTooltip(roll);
     }
 
-
-    formatRollMessage() {
+    async formatRollMessage() {
         const result = this.formatRollResult();
         const spell = fromUuidSync(this.spellUuid);
+        const actor = fromUuidSync(this.actorUuid);
         const targetActor = this.targetActorUuid ? fromUuidSync(this.targetActorUuid) : null;
-        const locString = this.powerLevel > 0 ? (targetActor ? "DoD.roll.spellRollTarget" : "DoD.roll.spellRoll") : "DoD.roll.skillRoll";
+        const locString = this.powerLevel > 0 ? (targetActor ? "DoD.roll.spellRollTarget" : "DoD.roll.spellRoll") : "DoD.ui.chat.castMagicTrick";
         const content = game.i18n.format(locString, {
+                actor: actor?.name,
                 skill: spell?.name,
                 spell: spell?.name,
                 uuid: this.spellUuid,
@@ -75,20 +88,27 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
             }
         );
 
-        let extraContent = "";
+        let craftContent = "";
+        if (this.consumedMaterials.length > 0) {
+            craftContent = "<p><b>" + game.i18n.localize("DoD.recipe.consumedMaterials") + ":</b> <em>" + this.consumedMaterials.join(` (${this.consumedMaterialsCount}), `) + ` (${this.consumedMaterialsCount})</em></p>`;
+        }
+        if (this.craftedItem) {
+            craftContent += "<p><b>" + game.i18n.localize("DoD.recipe.craftedItem") + ":</b> <em>" + this.craftedItem + ` (${this.craftedItemCount})</em></p>`;
+        }
 
+        let critContent = "";
         if (this.criticalEffect) {
-            extraContent = "<p><b>" + game.i18n.localize("DoD.magicCritChoices.choiceTitle") + ":</b> "
+            critContent = "<p><b>" + game.i18n.localize("DoD.magicCritChoices.choiceTitle") + ":</b> "
                         + "<em>" + game.i18n.localize(`DoD.magicCritChoices.${this.criticalEffect}`) + "</em></p>";
         } else if (this.isDemon) {
-            const table = DoD_Utility.findSystemTable("magicMishapTable", game.i18n.localize("DoD.tables.mishapMagic"));
+            const table = await DoD_Utility.findSystemTable("magicMishapTable", game.i18n.localize("DoD.tables.mishapMagic"));
             if (table) {
-                extraContent = "<p>@Table[" + table.uuid + "]{" + table.name + "}</p>";
+                critContent = "<p>@Table[" + table.uuid + "]{" + table.name + "}</p>";
             } else {
                 DoD_Utility.WARNING(game.i18n.localize("DoD.WARNING.noMagicMishapTable"));
             }
         }        
-        return { content: "<p>" + content + "</p>" + extraContent };
+        return { content: "<p>" + content + craftContent + "</p>" + critContent };
     }
     
     async onCritical(message) {
@@ -141,8 +161,18 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
         const criticalEffect = choice.magicCritChoice;
 
         if (choice.magicCritChoice === "noCost") {
+            const powerSource = context.wpSource ?? context.actor;
             const wpNew = this.wpOld;
-            await actor.update({ ["system.willPoints.value"]: wpNew});
+
+            // Restore WP cost
+            if (powerSource.system?.willPoints) { // actor
+                powerSource.update({ ["system.willPoints.value"]: wpNew});
+            } else if (powerSource.system?.enchantments?.charge) { // gear
+                powerSource.update({ ["system.enchantments.charge"]: wpNew});
+            } else if (powerSource.actor?.system.willPoints) { // token
+                powerSource.actor.update({ ["system.willPoints.value"]: wpNew});
+            }
+
             systemData = { ...this, criticalEffect, wpNew };
         } else {
             systemData = { ...this, criticalEffect };
