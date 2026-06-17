@@ -19,7 +19,9 @@
       "injury",
       "item",
       "kin",
+      "material",
       "profession",
+      "recipe",
       "skill",
       "spell",
       "weapon"
@@ -30,7 +32,9 @@
     "injury": {},
     "item": {},
     "kin": {},
+    "material": {},
     "profession": {},
+    "recipe": {},
     "skill": {},
     "spell": {},
     "weapon": {}

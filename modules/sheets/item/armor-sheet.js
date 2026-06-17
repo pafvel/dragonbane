@@ -1,7 +1,7 @@
-import DoDItemBaseSheet from "./item-base-sheet.js";
+import DoDGearBaseSheet from "./gear-base-sheet.js";
 import DoD_Utility from "../../utility.js";
 
-export default class DoDArmorSheet extends DoDItemBaseSheet {
+export default class DoDArmorSheet extends DoDGearBaseSheet {
 
     static type = 'armor';
 
@@ -18,6 +18,7 @@ export default class DoDArmorSheet extends DoDItemBaseSheet {
         details: { scrollable: [''], template: 'systems/dragonbane/templates/parts/item-sheet-armor.hbs' },
         description: { scrollable: [''], template: 'systems/dragonbane/templates/parts/item-sheet-description.hbs' },
         effects: { scrollable: [''], template: 'systems/dragonbane/templates/parts/item-sheet-effects.hbs' },
+        enchantments: { scrollable: [''], template: 'systems/dragonbane/templates/parts/item-sheet-enchantments.hbs' },
     }
 
     async _prepareContext(options) {

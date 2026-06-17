@@ -3,8 +3,17 @@
     <div class="dice-flavor">{{flavor}}</div>
     {{/if}}
     <div class="dice-result">
+        {{#if autoSuccess}}
+        <div class="damage-details permission-observer" data-actor-id="${actor.uuid}">
+            <i class="fa-solid fa-circle-info"></i>
+            <div class="expandable" style="text-align: left; margin-left: 0.5em">
+                {{{tooltip}}}
+            </div>
+        </div>            
+        {{else}}
         <div class="dice-formula">{{formula}}</div>
         {{{tooltip}}}
         <h4 class="dice-total">{{total}}</h4>
+        {{/if}}
     </div>
 </div>

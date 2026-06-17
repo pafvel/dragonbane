@@ -217,7 +217,7 @@
   padding: 8px 8px 12px;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info p, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional p {
-  padding: 4px 16px 0;
+  padding: 0px 16px 0;
   font-style: normal;
   font-size: 13px;
 }
@@ -258,6 +258,8 @@
   --dod-color-dash-range: yellow;
   --dod-color-out-of-range: #E83031;
   --dod-color-border-bottom: #00604D;
+  --dod-color-button-text: whitesmoke;
+  --dod-color-button-text-disabled: #777;
   --dod-journal-background: url("art/ui/journal-page-bg.webp");
   --dod-font-primary: "QTFrizQuad";
   --dod-font-secondary: "QTFrizQuad";
@@ -581,7 +583,7 @@
   padding-bottom: 36px;
   margin-bottom: 0;
   margin-left: 0;
-  z-index: 1;
+  z-index: 2;
 }
 .system-dragonbane .journal-entry-content .journal-header .title {
   font-size: 2em;
@@ -595,6 +597,26 @@
   border-color: transparent;
 }
 
+.system-dragonbane .journal-entry-content .list-title {
+  font-weight: 600;
+  margin-bottom: 0;
+}
+.system-dragonbane .journal-entry-content .list-title + ul {
+  margin-top: 0;
+}
+.system-dragonbane .journal-entry-content ul {
+  list-style: none;
+}
+.system-dragonbane .journal-entry-content ul li {
+  display: list-item;
+}
+.system-dragonbane .journal-entry-content ul li p {
+  margin: 0.25rem 0;
+}
+.system-dragonbane .journal-entry-content ul li::marker {
+  content: "✦ ";
+  font-style: normal;
+}
 .system-dragonbane .journal-entry-content ul .description {
   list-style-type: "✦ ";
   font-weight: bold;
@@ -796,6 +818,9 @@
   vertical-align: -webkit-baseline-middle;
 }
 .system-dragonbane .sheet-table-data .text-data {
+  text-align: left;
+}
+.system-dragonbane .sheet-table-data .text-data input[type=text] {
   text-align: left;
 }
 .system-dragonbane .sheet-table-data .number-data {
@@ -1750,10 +1775,13 @@
   background-repeat: repeat-x;
   background-size: cover;
   background-clip: border-box;
-  color: whitesmoke;
+  color: var(--dod-color-button-text);
   font-family: var(--dod-font-heading);
   font-weight: normal;
   width: 100%;
+}
+.system-dragonbane .sheet.item .standard-form .form-footer button[disabled], .system-dragonbane .sheet.active-effect-config .standard-form .form-footer button[disabled] {
+  color: var(--dod-color-button-text-disabled);
 }
 .system-dragonbane .sheet.item .window-content, .system-dragonbane .sheet.active-effect-config .window-content {
   background: var(--dod-sheet-background);
@@ -1924,6 +1952,24 @@
   border-color: black;
   top: 28px;
 }
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page .frame {
+  position: relative;
+  display: inline-block;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page .frame > img {
+  display: block;
+  width: calc(100% - 32px);
+  height: auto;
+  margin: 16px;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content .journal-entry-pages .journal-entry-page .frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  --edge: 33px;
+  background: url("art/ui/frame-tl.webp") top left no-repeat, url("art/ui/frame-tr.webp") top right no-repeat, url("art/ui/frame-bl.webp") bottom left no-repeat, url("art/ui/frame-br.webp") bottom right no-repeat, url("art/ui/frame-h.webp") top left/auto var(--edge) repeat-x, url("art/ui/frame-h.webp") bottom left/auto var(--edge) repeat-x, url("art/ui/frame-v.webp") top left/var(--edge) auto repeat-y, url("art/ui/frame-v.webp") top right/var(--edge) auto repeat-y;
+}
 .system-dragonbane .sheet.journal-entry .journal-entry-content img {
   display: block;
   margin: auto;
@@ -1933,6 +1979,9 @@
   height: 3.5em;
   width: auto;
   pointer-events: none;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content img.art-multiply {
+  mix-blend-mode: multiply;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content table {
   background: transparent;
@@ -1969,10 +2018,10 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info p {
   color: var(--dod-color-journal-info-text);
 }
-.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info p:first-of-type {
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info > :is(p, div):first-of-type {
   padding-top: 16px;
 }
-.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info p:last-of-type {
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info > ::is(p, div):last-of-type {
   margin-bottom: 16px;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info table {

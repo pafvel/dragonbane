@@ -22,6 +22,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
             editEffect: this.prototype._onEffectEdit,
             skillRoll: { handler: this.prototype._onSkillRoll, buttons: [0,2] },
             useAbility: { handler: this.prototype._onUseAbility, buttons: [0,2] },
+            useEnchantment: { handler: this.prototype._onUseEnchantment, buttons: [0,2] },
             hitPointClick: { handler: this.prototype._onHitPointClick, buttons: [0,2] },
             willPointClick: { handler: this.prototype._onWillPointClick, buttons: [0,2] },
             rollDamage: { handler: this.prototype._onDamageRoll, buttons: [0,2] },
@@ -133,7 +134,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                         return this._onDeleteItem(item, itemId);
                     } else {
                         const effectUuid = li.dataset.effectUuid;
-                        const effect = fromUuidSync(effectUuid);
+                        const effect = await fromUuid(effectUuid);
                         if (await this._itemDeleteDialog(effect)) {
                             return effect.delete();
                         }
@@ -406,30 +407,6 @@ async _onRender(context, options) {
         return context;
     }
 
-    // Increase quantity when dropped item already exists in inventory
-    #_findItemStack(item, itemData) {
-        const systemObject = itemData ? foundry.utils.mergeObject(item.system.toObject(), itemData.system) : item.system.toObject();
-        const hasQuantity = systemObject?.quantity !== undefined;
-        const isItem = item?.type === "item";
-        const isEquippable = ["weapon", "armor", "helmet"].includes(item?.type);
-        const isWorn = !!systemObject?.worn;
-        let stack = null;
-        if (hasQuantity && (isItem || (isEquippable && !isWorn))) {
-            stack = this.actor.items.find(i => {
-                // Stack exists if it is the same type, has the same name
-                // and has the same system data properties (except quantity)
-                if (i.type === item.type && i.name === item.name && i.uuid != item.uuid) {
-                    let itemTemplate = systemObject;
-                    item.system.constructor.cleanData(itemTemplate);
-                    delete itemTemplate.quantity;
-                    return foundry.utils.objectsEqual(foundry.utils.filterObject(i.system.toObject(), itemTemplate), itemTemplate);
-                }
-                return null;
-            });
-        }
-        return stack;
-    };
-
     // simple check, could check types instead
     #isInventoryItem(item) {
         return item?.system?.quantity !== undefined;
@@ -550,7 +527,7 @@ async _onRender(context, options) {
                 if (dropTarget === "storage") {
                     itemData.system.storage = true;
                 }
-                const stack = this.#_findItemStack(item, itemData);
+                const stack = this.actor.findStackableItem(item, itemData);
                 if (stack) {
                     // Item already exists in inventory, increase quantity and delete the original item
                     const itemQuantity = item.system.quantity + stack.system.quantity;
@@ -582,7 +559,7 @@ async _onRender(context, options) {
 
             // if not equipped, try to stack
             if (!itemData.system.worn) {
-                const stack = this.#_findItemStack(item, itemData);
+                const stack = this.actor.findStackableItem(item, itemData);
                 if (stack) {
                     // Item already exists in inventory, increase quantity and forget the original item
                     const itemQuantity = item.system.quantity + stack.system.quantity;
@@ -907,7 +884,7 @@ async _onRender(context, options) {
                     await item.update({
                         ["system.worn"]: false,
                     });
-                    const stack = this.#_findItemStack(item);
+                    const stack = this.actor.findStackableItem(item);
                     if (stack) {
                         // Item already exists in inventory, increase quantity and delete the original item
                         const itemQuantity = item.system.quantity + stack.system.quantity;
@@ -982,54 +959,19 @@ async _onRender(context, options) {
             }
             if (item.type === "skill") {
                 test = new DoDSkillTest(this.actor, item, options);
-            } else if (item.type === "spell") {
-                if (item.system.rank > 0) {
-                    if (this.actor.type === "monster") {
-                        if (!this.actor.findMagicSkill(item.system.school)) {
-                            options.autoSuccess = true;
-                        } else {
-                            options.noWPCost = true;
-                        }
-                    }
-                    test = new DoDSpellTest(this.actor, item, options);
-                } else {
-
-                    const use = await foundry.applications.api.DialogV2.confirm({
-                        window: { title: game.i18n.localize("DoD.ui.dialog.castMagicTrickTitle") },
-                        content: game.i18n.format("DoD.ui.dialog.castMagicTrickContent", { spell: item.name }),
-                    });
-
-                    if (use) {
-                        if (this.actor.type !== "monster" && this.actor.system.willPoints.value < 1) {
-                            DoD_Utility.WARNING("DoD.WARNING.notEnoughWPForSpell");
-                            return;
-                        } else {
-                            let content = "<p>" + game.i18n.format("DoD.ui.chat.castMagicTrick", {
-                                actor: this.actor.name,
-                                spell: item.name,
-                                uuid: item.uuid
-                            }) + "</p>";
-                            if (this.actor.type !== "monster") {
-                                const oldWP = this.actor.system.willPoints.value;
-                                const newWP = oldWP - 1;
-                                await this.actor.update({ "system.willPoints.value": newWP });
-                                content +=
-                                    `<div class="damage-details permission-observer" data-actor-id="${this.actor.uuid}">
-                                    <i class="fa-solid fa-circle-info"></i>
-                                    <div class="expandable" style="text-align: left; margin-left: 0.5em">
-                                        <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${oldWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>
-                                    </div>
-                                </div>`;
-                            }
-
-                            ChatMessage.create({
-                                user: game.user.id,
-                                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                                content: content,
-                            });
-                        }
-                    }
+            } else if (item.isSpellType) {
+                // Monsters use magic school if available, auto success otherwise.
+                if (this.actor.type === "monster" && !this.actor.findMagicSkill(item.system.school)) {
+                    options.autoSuccess = true;
                 }
+                // Magic tricks always succeed
+                if (item.system.rank === 0) {
+                    options.autoSuccess = true;
+                    options.title = game.i18n.localize("DoD.ui.dialog.castMagicTrickTitle");
+                    options.label = options.title;
+                    options.content = game.i18n.format("DoD.ui.dialog.castMagicTrickContent", { spell: item.name });
+                }
+                test = new DoDSpellTest(this.actor, item, options);
             } else if (item.type === "weapon") {
                 test = new DoDWeaponTest(this.actor, item, options);
             }
@@ -1055,6 +997,31 @@ async _onRender(context, options) {
             }
         } else { // right click - edit item
             item.sheet.render(true);
+        }
+    }
+
+    async _onUseEnchantment(event, target) {
+        event.preventDefault();
+
+        const dataSet = target.closest(".sheet-table-data").dataset;
+        const itemUuid = dataSet.itemUuid;
+        const enchantmentIndex = dataSet.enchantmentIndex;
+        const item = await fromUuid(itemUuid);
+        const enchantment = item?.system.enchantments.spells[enchantmentIndex];
+
+        if (event.type === "click") { // left click - use item
+            const spell = await fromUuid(enchantment.uuid);
+            if (spell) {
+                const options = {
+                   autoSuccess: true,
+                   noWpCost: enchantment.free,
+                   powerLevel: enchantment.powerLevel,
+                   wpSource: item,
+                };
+                await new DoDSpellTest(this.actor, spell, options).roll();
+            }
+        } else { // right click - edit item
+            item.sheet.render(true, { tab: "enchantments" });
         }
     }
 
@@ -1086,11 +1053,17 @@ async _onRender(context, options) {
                 }
             }
 
+            const penetrating = weapon.hasWeaponFeature("penetrating3") ? 3
+                : weapon.hasWeaponFeature("penetrating2") ? 2
+                : weapon.hasWeaponFeature("penetrating1") ? 1
+                : 0;
+
             const damageData = {
                 actor: this.actor,
                 weapon: weapon,
                 damage: damage,
-                damageType: damageType
+                damageType: damageType,
+                penetrating: penetrating
             };
 
             const targets = Array.from(game.user.targets)
@@ -1114,6 +1087,19 @@ async _onRender(context, options) {
         const effect = Array.from(this.actor.allApplicableEffects()).find(e => e.uuid === effectUuid);
 
         effect?.sheet.render(true);
+    }
+
+    async _onEffectDelete(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let effectUuid = element.closest(".sheet-table-data").dataset.effectUuid;
+        let effect = await fromUuid(effectUuid);
+
+        const ok = await this._itemDeleteDialog(effect);
+        if (!ok) {
+            return;
+        }
+        return effect.delete();
     }
 
     async _onHealingTimeRoll(event, target) {
@@ -1227,9 +1213,11 @@ async _onRender(context, options) {
                 this._prepareInjury(item, context);
                 break;
             case 'item':
+            case 'material':
                 this._prepareItem(item, context);
                 break;
             case 'spell':
+            case 'recipe':
                 this._prepareSpell(item, context);
                 break;
             case 'weapon':
@@ -1241,6 +1229,9 @@ async _onRender(context, options) {
                 break;
             default:
                 DoD_Utility.WARNING(`DoDActorBaseSheet._prepareItemContext: Unknown item type ${item.type}`);
+        }
+        if (item.system.enchantments?.spells?.length > 0) {
+            this._prepareEnchantmentsContext(item, context);
         }
     }
 
@@ -1256,6 +1247,7 @@ async _onRender(context, options) {
         context.storage = [];
         context.equippedWeapons = [];
         context.injuries = [];
+        context.enchantments = [];
 
         context.equippedArmor = this.actor.system.equippedArmor;
         context.equippedHelmet = this.actor.system.equippedHelmet;
@@ -1341,5 +1333,24 @@ async _onRender(context, options) {
     _prepareEffects(context) {
         // Don't show conditions as effects
         context.effects = Array.from(this.actor.allApplicableEffects()).filter((effect) => !effect.isCondition);
+    }
+
+    _prepareEnchantmentsContext(item, context) {
+        if (item.system.enchantments?.applyOnlyWhenEquipped && !item.system.worn) return;
+
+        const name = item.name;
+        for (let i = 0; i < item.system.enchantments.spells.length; i++) {
+            const enchantment = item.system.enchantments.spells[i];
+            if (enchantment.castable) {
+                const spell = fromUuidSync(enchantment.uuid);
+                if(!spell) continue;
+                const enchantmentData = {
+                    name: spell.name + " (" + name + ")",
+                    itemUuid: item.uuid,
+                    enchantmentIndex: i,
+                }
+                context.enchantments.push(enchantmentData);
+            }
+        }
     }
 }

@@ -46,7 +46,7 @@ export default class DoDWeaponTestMessageData extends DoDSkillTestMessageData {
         return new this(source);
     } 
 
-    formatRollMessage() {
+    async formatRollMessage() {
         const context = this.toContext();
         const locString = context.targetActor ? "DoD.roll.weaponRollTarget" : "DoD.roll.weaponRoll";
 
@@ -68,7 +68,7 @@ export default class DoDWeaponTestMessageData extends DoDSkillTestMessageData {
         } else if (this.isDemon) {
             const tableName = this.isRanged ? "rangedMishapTable" : "meleeMishapTable";
             const mishapTableName = this.isRanged ? game.i18n.localize("DoD.tables.mishapRanged") : game.i18n.localize("DoD.tables.mishapMelee");
-            const table = DoD_Utility.findSystemTable(tableName, mishapTableName);
+            const table = await DoD_Utility.findSystemTable(tableName, mishapTableName);
             if (table) {
                 extraContent = "<p>@Table[" + table.uuid + "]{" + table.name + "}</p>";
             } else {
