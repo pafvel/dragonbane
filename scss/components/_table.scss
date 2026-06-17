@@ -184,6 +184,9 @@
 
         .text-data {
             text-align: left;
+            input[type=text] {
+                text-align: left;
+            }
         }
 
         .number-data {

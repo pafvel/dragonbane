@@ -42,7 +42,8 @@ DoD.castingTimeTypes = {
     action: "DoD.castingTimeTypes.action",
     reaction: "DoD.castingTimeTypes.reaction",
     stretch: "DoD.castingTimeTypes.stretch",
-    shift: "DoD.castingTimeTypes.shift"
+    shift: "DoD.castingTimeTypes.shift",
+    special: "DoD.castingTimeTypes.special"
 };
 
 DoD.dice = {
@@ -92,6 +93,7 @@ DoD.spellDurationTypes = {
     shift: "DoD.spellDurationTypes.shift",
     concentration: "DoD.spellDurationTypes.concentration",
     permanent: "DoD.spellDurationTypes.permanent",
+    special: "DoD.spellDurationTypes.special"
 };
 
 DoD.supplyTypes = {
@@ -117,7 +119,10 @@ DoD.weaponFeatureTypes = {
     unarmed: "DoD.weaponFeatureTypes.unarmed",
     enchanted1: "DoD.weaponFeatureTypes.enchanted1",
     enchanted2: "DoD.weaponFeatureTypes.enchanted2",
-    enchanted3: "DoD.weaponFeatureTypes.enchanted3"
+    enchanted3: "DoD.weaponFeatureTypes.enchanted3",
+    penetrating1: "DoD.weaponFeatureTypes.penetrating1",
+    penetrating2: "DoD.weaponFeatureTypes.penetrating2",
+    penetrating3: "DoD.weaponFeatureTypes.penetrating3"
 };
 
 DoD.attributes = {

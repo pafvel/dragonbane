@@ -16,6 +16,7 @@ export default class DoDRollDamageMessageData extends DoDChatMessageBaseData {
             formula: new fields.StringField({ required: false, initial: "" }),
             isHealing: new fields.BooleanField({ required: true, initial: false }),
             ignoreArmor: new fields.BooleanField({ required: true, initial: false }),
+            penetrating: new fields.NumberField({ required: true, initial: 0 }),
         });
     }
 
@@ -78,6 +79,7 @@ export default class DoDRollDamageMessageData extends DoDChatMessageBaseData {
             total: damageTotal,
             damageType: context.damageType,
             ignoreArmor: context.ignoreArmor,
+            penetrating: context.penetrating,
             target: context.targetActor,
             isHealing: context.isHealing
         };

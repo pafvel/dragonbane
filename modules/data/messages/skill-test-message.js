@@ -40,7 +40,7 @@ export default class DoDSkillTestMessageData extends DoDTestMessageBaseData {
         return new this(source);
     } 
 
-    formatRollMessage() {
+    async formatRollMessage() {
         const result = this.formatRollResult();
         const content = this.skillUuid
         ? game.i18n.format("DoD.roll.skillRollUUID", { uuid: this.skillUuid, result: result})

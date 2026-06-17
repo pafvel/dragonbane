@@ -1,0 +1,109 @@
+<div class="tab sheet-tab {{tabs.formula.cssClass}}" data-group="primary" data-tab="{{tabs.formula.id}}">
+    <div class="flex dod-controls">
+        {{!-- Ingredients --}}
+        <div data-drop-target="material">
+            <table class="sheet-table">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th  class="thumbnail-header"></th>
+                    <th class="text-header">{{localize "DoD.recipe.materials"}}</th>
+                    {{#if materialCounts}}
+                    <th class="number-header"></th>
+                    {{/if}}
+                    <th>{{!-- column for icons --}}&nbsp</th>
+                    <th></th>
+                </tr>
+
+                {{#each materials as |material i|}}
+                <tr class="sheet-table-data effect">
+                    <td></td>
+                    <td class="thumbnail-data">
+                        <img src="{{material.img}}"/>
+                    </td>
+                    <td class="text-data">
+                        <a data-action="editRecipeItem" data-item-uuid="{{material.uuid}}"><span class="{{material.cssClass}}"></span> {{material.label}}</a>
+                    </td>
+                    {{#if ../materialCounts}}
+                    <td>({{lookup ../materialCounts i}})</th>
+                    {{/if}}                    
+                    <td class="icon-data">
+                        <a data-action="removeMaterial" data-material-index="{{i}}">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                    <td></td>
+                </tr>
+                {{/each}}
+
+                {{#unless materials }}
+                <tr class="sheet-table-data effect">
+                    <td></td>
+                    <td></td>
+                    <td class="text-data" style="font-style:italic;">{{localize "DoD.recipe.noMaterials"}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {{/unless}}
+
+            </table>
+        </div>
+        {{!-- Item --}}
+        <div data-drop-target="item">
+            <table class="sheet-table">
+                <tr class="sheet-table-header">
+                    <th></th>
+                    <th  class="thumbnail-header"></th>
+                    <th class="text-header">{{localize "DoD.recipe.item"}}</th>
+                    {{#if recipeItemCount}}
+                    <th class="number-header"></th>
+                    {{/if}}                    <th>{{!-- column for icons --}}&nbsp</th>
+                    <th></th>
+                </tr>
+
+                {{#if recipeItem}}
+                <tr class="sheet-table-data effect" data-item-drag="true" data-item-uuid="{{recipeItem.uuid}}">
+                    <td></td>
+                    <td class="thumbnail-data">
+                        <img src="{{recipeItem.img}}"/>
+                    </td>
+                    <td class="text-data">
+                        <a data-action="editRecipeItem" data-item-uuid="{{recipeItem.uuid}}">
+                        <span class="{{recipeItem.cssClass}}"></span> {{recipeItem.label}}</a>
+                    </td>
+                    {{#if recipeItemCount}}
+                    <td>({{recipeItemCount}})</th>
+                    {{/if}}                    
+                    <td class="icon-data">
+                        <a data-action="removeRecipeItem">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                    <td></td>
+                </tr>
+                {{else}}
+                <tr class="sheet-table-data effect">
+                    <td></td>
+                    <td></td>
+                    <td class="text-data" style="font-style:italic;">{{localize "DoD.recipe.noItem"}}</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {{/if}}
+            </table>
+        </div>
+        {{#if item.actor}}
+        <div class="standard-form">
+            <div class="form-footer">
+                <button type="button" data-action="craftItem"
+                    {{#if canCraft}} title="{{localize "DoD.recipe.craftItemEnabledTooltip"}}"
+                    {{else}}disabled title="{{localize "DoD.recipe.craftItemDisabledTooltip"}}"{{/if}}
+                >
+                    {{localize "DoD.recipe.craftItem"}}
+                </button>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</div>
+
+

@@ -100,9 +100,10 @@ export class DoDItem extends Item {
 
     getSpellCost(powerLevel)
     {
-        if (this.type !== "spell") return 0;
+        if (!this.isSpellType) return 0;
         if (this.system.rank === 0) return 1; // Trick cost
-        return powerLevel * 2; // Spell cost
+        const rankMultiplier = this.system.rank === 6 ? 3 : 1; // Rank 6 spells, e.g. Dracomancy, cost triple
+        return powerLevel * 2 * rankMultiplier; // Spell cost
     }
 
     get isDamaging() {
@@ -215,7 +216,119 @@ export class DoDItem extends Item {
         }
     }
 
+    findMaterial(name, actor = this.actor) {
+        return actor.items.find(item =>
+            item.name.toLowerCase() === name.toLowerCase() && item.isInventoryItem && item.system.quantity > 0);
+    }
+
+    countMaterial(name, actor = this.actor) {
+        return actor.items.reduce((sum, item) => {
+            if (item.name.toLowerCase() === name.toLowerCase() && item.isInventoryItem) {
+                return sum + item.system.quantity;
+            }
+            return sum;
+        }, 0);
+    }
+
+    countMaterials(actor = this.actor) {
+        if (this.type !== "recipe") return [];
+        const materialCounts = [];
+        for (const m of this.system.materials) {
+            materialCounts.push(this.countMaterial(m.name, actor));
+        }
+        return materialCounts;
+    }
+
+    hasMaterials({ actor, count = 1 } = { actor: this.actor, count: 1 }) {
+        if (this.type !== "recipe") return;
+        const materialMap = {};
+        for (const m of this.system.materials) {
+            const name = m.name.toLowerCase();
+            if (!materialMap[name]) {
+                materialMap[name] = 0;
+            }
+            materialMap[name]++;
+        }
+        for (const materialName in materialMap) {
+            if (this.countMaterial(materialName, actor) < count * materialMap[materialName]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    async consumeMaterials({ actor, count } = { actor: this.actor, count: 1 }) {
+        if (this.type !== "recipe") return;
+
+        if (!this.hasMaterials({ actor, count })) {
+            DoD_Utility.WARNING("DoD.WARNING.missingMaterial");
+            return;
+        }
+
+        for (const m of this.system.materials) {
+            let consumed = 0;
+            while (consumed < count) {
+                const material = this.findMaterial(m.name, actor);
+                if (material) {
+                    // Consume the material
+                    const toConsume = Math.min(material.system.quantity, count - consumed);
+                    await material.update({"system.quantity": material.system.quantity - toConsume});
+                    consumed += toConsume;
+                } else {
+                    DoD_Utility.ERROR("DoD.WARNING.missingMaterial"); // This should not happen
+                    break;
+                }
+            }
+        }
+    }
+
+    get canCraftItem() {
+        if (this.type !== "recipe") return false;
+        if (!this.system.item.resolveSync()) {
+            return false;
+        }
+        return this.hasMaterials(this.actor);
+    }
+
+    hasPotency() {
+        return DoD_Utility.hasDefinition(this.system.itemDescription, "potency");
+    }
+
+    async createCraftedItem({ actor, count = 1, powerLevel = 1 } = { actor: this.actor, count: 1, powerLevel: 1 }) {
+        if (this.type !== "recipe") return;
+        const item = await this.system.item.resolve();
+        if (item) {
+            // Loop one at a time so dice formulas in properties roll independently per item
+            for (let i = 0; i < count; i++) {
+                const newItemData = foundry.utils.duplicate(item.toObject());
+                const { resolvedStr: description, resolved } =
+                    await DoD_Utility.resolveDefinitions(item.system.itemDescription, { powerLevel });
+                newItemData.system.itemDescription = description;
+                const cost = await DoD_Utility.resolveInlineVars(item.system.cost, resolved);
+                newItemData.system.cost = cost;
+
+                const stackableItem = actor.findStackableItem(item, newItemData);
+                if (stackableItem) {
+                    await stackableItem.update({"system.quantity": stackableItem.system.quantity + 1});
+                } else {
+                    newItemData.system.quantity = 1;
+                    await actor.createEmbeddedDocuments("Item", [newItemData]);
+                }
+            }
+        } else {
+            DoD_Utility.WARNING("DoD.WARNING.cannotCreateCraftedItem");
+        }
+    }
+
     get isRangedWeapon() {
         return this.type === "weapon" && this.calculatedRange >= 10;
+    }
+
+    get isSpellType() {
+        return this.type === "spell" || this.type === "recipe";
+    }
+
+    get isInventoryItem() {
+        return ["armor", "helmet", "item", "material", "weapon"].includes(this.type);
     }
 }

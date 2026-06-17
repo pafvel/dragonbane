@@ -514,7 +514,7 @@ export class DoDActor extends Actor {
     }
 
     get hasSpells() {
-        return this.items.find(i => i.type === "spell") != null;
+        return this.items.find(i => i.isSpellType) != null;
     }
 
     get hasSkills() {
@@ -604,49 +604,137 @@ export class DoDActor extends Actor {
         return this.items.find(item => item.type === "ability" && item.name.toLowerCase() === name);
     }
 
+    getPowerSources({ source = null, cost = 0 } = {}) {
+        // Find all possible wp sources, in priority order
+        const wpSources = [];
+
+        // Specified source, for example from an item being used to cast the spell
+        if (source?.system?.enchantments?.charge > cost) {
+            wpSources.push(source);
+        }
+
+        // Actor itself
+        wpSources.push(this);
+
+        // Enchanted items with Charge
+        for (let item of this.items.contents) {
+            if (item.system.enchantments?.charge > cost
+                && (item.system.worn || item.system.enchantments?.applyOnlyWhenEquipped !== true)
+                && !(item.uuid === source?.uuid)) {
+                wpSources.push(item);
+            }
+        }
+
+        // Other owned actors on the current scene (for example a familiar)
+        const scene = this.getActiveTokens()?.[0]?.scene;
+        if (scene) {
+            for (let token of scene.tokens) {
+                if (token.actor?.isOwner && token.actor.uuid !== this.uuid && token.actor.system.willPoints?.value > 0) {
+                    wpSources.push(token);
+                }
+            }
+        }
+        return wpSources;
+    }
+
     async useAbility(ability) {
         let wp = Number(ability.system.wp);
         wp = isNaN(wp) ? 0 : wp;
 
-        const use = await foundry.applications.api.DialogV2.confirm({
+        const wpSources = wp > 0 ? this.getPowerSources({cost: wp}) : [];
+        
+        // Build dialog content
+        let dialogContent = `<div style="text-align: center">`;
+        if (wp > 0) {
+            dialogContent += game.i18n.format("DoD.ui.dialog.useAbilityWithWP", {wp: wp, ability: ability.name});
+        } else {
+            dialogContent += game.i18n.format("DoD.ui.dialog.useAbilityWithoutWP", {ability: ability.name});
+        }
+        dialogContent += `</div>`;
+
+        // Add power source selector if multiple sources available
+        if (wpSources.length > 1) {
+            dialogContent += `
+                <table class="derived-stat dod-controls">
+                    <tr title="${game.i18n.localize("DoD.ui.dialog.powerSourceTooltip")}">
+                        <th>${game.i18n.localize("DoD.ui.dialog.powerSource")}</th>
+                        <td>
+                            <select class="powerSource" name="powerSource">
+                                ${wpSources.map((source, index) => `<option value="${index}">${source.name}</option>`).join("")}
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            `;
+        }
+
+        const values = await foundry.applications.api.DialogV2.input({
             window: { title: game.i18n.localize("DoD.ui.dialog.useAbility") },
-            content: wp > 0 ? game.i18n.format("DoD.ui.dialog.useAbilityWithWP", {wp: wp, ability: ability.name})
-                : game.i18n.format("DoD.ui.dialog.useAbilityWithoutWP", {ability: ability.name})
+            content: dialogContent,
+            ok: { label: game.i18n.localize("DoD.ui.dialog.useAbility"), icon: "fa-solid fa-check" }
         });
 
-        if (use) {
-            let content;
-            if (wp > 0) {
-                const oldWP = this.system.willPoints.value;
+        if (!values) return;
+
+        let powerSource = this;
+        if (wpSources.length > 1) {
+            powerSource = wpSources[Number(values.powerSource)] || this;
+        }
+
+        let content;
+        if (wp > 0) {
+            let oldWP, newWP;
+            if (powerSource.system?.willPoints) {
+                oldWP = powerSource.system.willPoints.value;
+                newWP = oldWP - wp;
                 if (oldWP < wp) {
                     DoD_Utility.WARNING("DoD.WARNING.notEnoughWPForAbility");
                     return;
-                } else {
-                    const newWP = oldWP - wp;
-                    this.update({"system.willPoints.value": newWP});
-                    content = `
-                    <div>
-                        <p class="ability-use" data-ability-id="${ability.id}">${game.i18n.format("DoD.ability.useWithWP", {actor: this.name, uuid: ability.uuid, wp: wp})}</p>
-                    </div>
-                    <div class="damage-details permission-observer" data-actor-id="${this.uuid}">
-                        <i class="fa-solid fa-circle-info"></i>
-                        <div class="expandable" style="text-align: left; margin-left: 0.5em">
-                            <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${oldWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>
-                        </div>
-                    </div>`;
                 }
+                await powerSource.update({ ["system.willPoints.value"]: newWP });
+            } else if (powerSource.system?.enchantments?.charge) {
+                oldWP = powerSource.system.enchantments.charge;
+                newWP = oldWP - wp;
+                if (oldWP < wp) {
+                    DoD_Utility.WARNING("DoD.WARNING.notEnoughWPForAbility");
+                    return;
+                }
+                await powerSource.update({ ["system.enchantments.charge"]: newWP });
+            } else if (powerSource.actor?.system.willPoints) {
+                oldWP = powerSource.actor.system.willPoints.value;
+                newWP = oldWP - wp;
+                if (oldWP < wp) {
+                    DoD_Utility.WARNING("DoD.WARNING.notEnoughWPForAbility");
+                    return;
+                }
+                await powerSource.actor.update({ ["system.willPoints.value"]: newWP });
             } else {
-                content = `
+                DoD_Utility.WARNING("DoD.WARNING.notEnoughWPForAbility");
+                return;
+            }
+
+            const sourceInfo = powerSource.name !== this.name ? `(${powerSource.name})` : "";
+            content = `
+                <div>
+                    <p class="ability-use" data-ability-id="${ability.id}">${game.i18n.format("DoD.ability.useWithWP", {actor: this.name, uuid: ability.uuid, wp: wp})}</p>
+                </div>
+                <div class="damage-details permission-observer" data-actor-id="${this.uuid}">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <div class="expandable" style="text-align: left; margin-left: 0.5em">
+                        <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${oldWP} <i class="fa-solid fa-arrow-right"></i> ${newWP} ${sourceInfo}<br>
+                    </div>
+                </div>`;
+        } else {
+            content = `
                 <div>
                     <p class="ability-use" data-ability-id="${ability.id}">${game.i18n.format("DoD.ability.useWithoutWP", {actor: this.name, uuid: ability.uuid})}</p>
                 </div>`;
-            }
-            ChatMessage.create({
-                user: game.user.id,
-                speaker: ChatMessage.getSpeaker({ actor: this }),
-                content: content,
-            });
         }
+        ChatMessage.create({
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this }),
+            content: content,
+        });
     }
 
     findSkill(skillName) {
@@ -685,7 +773,7 @@ export class DoDActor extends Actor {
 
     findSpell(spellName) {
         let name = spellName.toLowerCase();
-        return this.items.find(item => item.type === "spell" && item.name.toLowerCase() === name);
+        return this.items.find(item => item.isSpellType && item.name.toLowerCase() === name);
     }
 
     hasCondition(attributeName) {
@@ -845,7 +933,7 @@ export class DoDActor extends Actor {
     }
 
     async drawMonsterAttack(t, tableResult = null) {
-        const table = t || (this.system.attackTable ? fromUuidSync(this.system.attackTable) : null);
+        const table = t || (this.system.attackTable ? await fromUuid(this.system.attackTable) : null);
         if (!table) return null;
 
         let draw = null;
@@ -952,7 +1040,7 @@ export class DoDActor extends Actor {
         const generalSchoolSettings = game.settings.get("dragonbane", "generalMagicSchoolName");
 
         for (let item of this.items.contents) {
-            if (item.type === "spell") {
+            if (item.isSpellType) {
                 let spell = item;
 
                 // replace general spells school name with localized string if it matches
@@ -1227,4 +1315,27 @@ export class DoDActor extends Actor {
             return 15;
         }
     }
+
+    findStackableItem(item, itemData = null) {
+        const systemObject = itemData ? foundry.utils.mergeObject(item.system.toObject(), itemData.system) : item.system.toObject();
+        const hasQuantity = systemObject?.quantity !== undefined;
+        const isItem = item?.type === "item";
+        const isEquippable = ["weapon", "armor", "helmet"].includes(item?.type);
+        const isWorn = !!systemObject?.worn;
+        let stackable = null;
+        if (hasQuantity && (isItem || (isEquippable && !isWorn))) {
+            stackable = this.items.find(i => {
+                // Stack exists if it is the same type, has the same name
+                // and has the same system data properties (except quantity)
+                if (i.type === item.type && i.name === item.name && i.uuid != item.uuid) {
+                    let itemTemplate = systemObject;
+                    item.system.constructor.cleanData(itemTemplate);
+                    delete itemTemplate.quantity;
+                    return foundry.utils.objectsEqual(foundry.utils.filterObject(i.system.toObject(), itemTemplate), itemTemplate);
+                }
+                return null;
+            });
+        }
+        return stackable;
+    };
 }

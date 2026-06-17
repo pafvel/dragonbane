@@ -187,13 +187,13 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         this.dialogData.enchantedWeaponLevels = {"0": "-", "1": 1, "2": 2, "3": 3};
     }   
 
-    async getRollOptionsFromDialog(title, label) {
+    async getRollOptionsFromDialog(title, label, icon) {
         if (this.skipDialog) {
             const defaultOptions = {"enchantedWeapon": this.dialogData.enchantedWeapon};
             const options = await super.getRollOptionsFromDialog(title, label);
             return {...defaultOptions, ...options};
         } else {
-            return super.getRollOptionsFromDialog(title, label);
+            return super.getRollOptionsFromDialog(title, label, icon);
         }
 
     }
@@ -271,8 +271,8 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         this.preRollData.extraDragons = this.options.enchantedWeapon ?? 0;
     }
 
-    updatePostRollData() {
-        super.updatePostRollData();
+    async updatePostRollData() {
+        await super.updatePostRollData();
         const DoD = CONFIG.DoD;
 
         switch(this.postRollData.action) {
@@ -335,7 +335,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
         if (this.postRollData.isDemon) {
             if (this.postRollData.isRanged) {
                 this.postRollData.isRangedMishap = true;
-                const table = DoD_Utility.findSystemTable("rangedMishapTable", game.i18n.localize("DoD.tables.mishapRanged"));
+                const table = await DoD_Utility.findSystemTable("rangedMishapTable", game.i18n.localize("DoD.tables.mishapRanged"));
                 if (table) {
                     this.postRollData.rangedMishapTable = "@Table[" + table.uuid + "]{" + table.name + "}";
                 } else {
@@ -343,7 +343,7 @@ export default class DoDWeaponTest extends DoDSkillTest  {
                 }
             } else {
                 this.postRollData.isMeleeMishap = true;
-                const table = DoD_Utility.findSystemTable("meleeMishapTable", game.i18n.localize("DoD.tables.mishapMelee"));
+                const table = await DoD_Utility.findSystemTable("meleeMishapTable", game.i18n.localize("DoD.tables.mishapMelee"));
                 if (table) {
                     this.postRollData.meleeMishapTable = "@Table[" + table.uuid + "]{" + table.name + "}";
                 } else {

@@ -60,7 +60,7 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
         event.preventDefault();
         event.currentTarget?.blur();
 
-        const table = this.actor.system.attackTable ? fromUuidSync(this.actor.system.attackTable) : null;
+        const table = this.actor.system.attackTable ? await fromUuid(this.actor.system.attackTable) : null;
         if (!table) {
             DoD_Utility.WARNING("DoD.WARNING.missingMonsterAttackTable");
             return;
@@ -86,7 +86,7 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
                 let documentType = DoD_Utility.getTableResultType(result);
 
                 if (documentType === "RollTable") {
-                    let subTable = DoD_Utility.findTable(result.name);
+                    let subTable = await DoD_Utility.findTable(result.name);
                     if (subTable?.uuid !== table.uuid) {
                         attack.description = subTable?.description;
                     } else {
@@ -98,18 +98,14 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
                 attack.description = await CONFIG.DoD.TextEditor.enrichHTML(attack.description, { async: true });
 
                 // Split attack name and description
-                if (result.name) {
-                    const prefix = table.name + " - ";
-                    if (result.name.startsWith(prefix)) {
-                        attack.name = result.name.substring(prefix.length);
-                    } else {
-                        attack.name = result.name;
-                    }
+                const resultName = DoD_Utility.getTableResultName(result, table);
+                if (resultName) {
+                    attack.name = resultName;
                 } else {
-                    const match = attack.description.match(/<(b|strong)>(.*?)<\/\1>(.*)/);
-                    if (match) {
-                        attack.name = match[2];
-                        attack.description = match[3]
+                    const embedded = DoD_Utility.getEmbeddedResultName(attack.description);
+                    if (embedded) {
+                        attack.name = embedded.name;
+                        attack.description = embedded.description;
                     } else {
                         attack.name = String(attack.index);
                     }

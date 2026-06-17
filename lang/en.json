@@ -11,7 +11,9 @@
         "TypeInjury": "Injury",
         "TypeItem": "Item",
         "TypeKin": "Kin",
+        "TypeMaterial": "Ingredient",
         "TypeProfession": "Profession",
+        "TypeRecipe": "Recipe",
         "TypeSkill": "Skill",
         "TypeSpell": "Spell",
         "TypeWeapon": "Weapon"
@@ -29,7 +31,9 @@
             "injury": "Injury",
             "item": "Item",
             "kin": "Kin",
+            "material": "Ingredient",
             "profession": "Profession",
+            "recipe": "Recipe",
             "skill": "Skill",
             "spell": "Spell",
             "weapon": "Weapon"
@@ -45,7 +49,9 @@
         "DoDInjurySheet": "Dragonbane Injury Sheet",
         "DoDItemSheet": "Dragonbane Item Sheet",
         "DoDKinSheet": "Dragonbane Kin Sheet",
+        "DoDMaterialSheet": "Dragonbane Ingredient Sheet",
         "DoDProfessionSheet": "Dragonbane Profession Sheet",
+        "DoDRecipeSheet": "Dragonbane Recipe Sheet",
         "DoDSkillSheet": "Dragonbane Skill Sheet",
         "DoDSpellSheet": "Dragonbane Spell Sheet",
         "DoDWeaponSheet": "Dragonbane Weapon Sheet",
@@ -112,7 +118,8 @@
             "action": "Action",
             "reaction": "Reaction",
             "stretch": "Stretch",
-            "shift": "Shift"
+            "shift": "Shift",
+            "special": "Special"
         },
         "conditions": {
             "str": "Exhausted",
@@ -157,6 +164,17 @@
             "applyWhenEquipped": "Apply only when equipped",
             "applyWhenEquippedTooltip": "If checked, this effect will only be enabled if the item is equipped",
             "new": "New Effect"
+        },
+        "enchantments": {
+            "charge": "Charge",
+            "chargeTooltip": "Anyone in contact with the object can use its WP instead of their own.",
+            "enchantment": "Enchantment",
+            "powerLevel": "Power Level",
+            "powerLevelTooltip": "The Power Level of the spell cast.",
+            "castable": "Cast",
+            "castableTooltip": "If checked, the spell can be cast directly from the character sheet.",
+            "free": "Free",
+            "freeTooltip": "If checked, the spell can be cast without spending WP."
         },
         "item": {
             "new": "New Item"
@@ -232,6 +250,20 @@
         "profession": {
             "key-attribute": "Key Attribute",
             "skills": "Skills"
+        },
+        "recipe": {
+            "isPoison": "Poison",
+            "potency": "Potency",
+            "potencyPerPowerlevel": "Potency per Power Level",
+            "materials": "Ingredients",
+            "item": "Substance",
+            "noMaterials": "Drag and drop to add ingredients",
+            "noItem": "Drag and drop to add item",
+            "craftItem": "Craft Item",
+            "craftItemEnabledTooltip": "The material is consumed and if successfully cast the spell crafts an item",
+            "craftItemDisabledTooltip": "Disabled. Missing material or link to crafted item",
+            "consumedMaterials": "Consumed materials",
+            "craftedItem": "Crafted item"
         },
         "roll": {
             "dragon": "succeeded with a Dragon!",
@@ -317,7 +349,8 @@
             "stretch": "Stretch",
             "shift": "Shift",
             "concentration": "Concentration",
-            "permanent": "Permanent"
+            "permanent": "Permanent",
+            "special": "Special"
         },
         "spellRangeTypes": {
             "personal": "Personal",
@@ -378,6 +411,12 @@
             "enchanted2Tooltip": "Same effect as Enchanted Weapon at Power Level 2",
             "enchanted3": "Enchanted (3)",
             "enchanted3Tooltip": "Same effect as Enchanted Weapon at Power Level 3",
+            "penetrating1": "Penetrating (1)",
+            "penetrating1Tooltip": "Ignores 1 point of armor",
+            "penetrating2": "Penetrating (2)",
+            "penetrating2Tooltip": "Ignores 2 points of armor",
+            "penetrating3": "Penetrating (3)",
+            "penetrating3Tooltip": "Ignores 3 points of armor",
             "long": "Long",
             "longTooltip": "Long",
             "mounted": "Mounted",
@@ -529,6 +568,7 @@
                 "castMagicTrick": "<b>{actor}</b> casts @UUID[{uuid}].",
                 "damageDetailDamage": "Damage",
                 "damageDetailArmor": "Armor",
+                "penetrating": "Penetrating",
                 "damageDetailMultiplier": "Multiplier",
                 "damageDetailTotal": "Total damage",
                 "updateTarget": "Update Target",
@@ -551,15 +591,19 @@
                 "attributeRollTitle": "Attribute Roll",
                 "attributeRollLabel": "Roll",
                 "powerLevel": "Power Level",
+                "powerSource": "Power Source",
+                "powerSourceTooltip": "Willpower Points will be spent from this source.",
                 "labelCancel": "Cancel",
                 "labelOk": "Ok",
                 "chooseAction": "Choose action",
                 "useAbility": "Activate Ability",
-                "useAbilityWithWP": "Spend <b>{wp}</b> WP to use <b>{ability}</b>?",
-                "useAbilityWithoutWP": "Use <b>{ability}</b>?",
+                "useAbilityWithWP": "Spend <b>{wp}</b> WP to activate <b>{ability}</b>?",
+                "useAbilityWithoutWP": "Activate <b>{ability}</b>?",
                 "weaponFeatures": "Weapon Features",
                 "castMagicTrickTitle": "Cast Magic Trick",
                 "castMagicTrickContent": "Spend <b>1</b> WP to cast <b>{spell}</b>?",
+                "castSpellTitle": "Cast Spell",
+                "castSpellLabel": "Cast",
                 "deleteItemTitle": "Delete {item}",
                 "deleteItemContent": "Do you want to delete <b>{item}</b>?",
                 "trainSkillTitle": "Train skill?",
@@ -594,7 +638,10 @@
             "details": "Details",
             "description": "Description",
             "gmDescription": "GM Notes",
-            "effects": "Effects"
+            "effects": "Effects",
+            "enchantments": "Enchantments",
+            "enchantmentsTooltip": "Castable enchantments",
+            "formula": "Formula"
         },
         "INFO": {
             "monsterAttackUpdated": "Updated monster attack table for {actor}.",
@@ -676,7 +723,8 @@
             "noRangedMishapTable": "Missing the mishap table for ranged weapons.",
             "noMagicMishapTable": "Missing the magic mishap table.",
             "maxWeaponsEquipped": "Maximum 3 equipped weapons.",
-            "noSkillsInCompendium": "The registered core module did not contain any base skills. The core module may be damaged and should be re-installed. Trying to find skills in the world instead."
+            "noSkillsInCompendium": "The registered core module did not contain any base skills. The core module may be damaged and should be re-installed. Trying to find skills in the world instead.",
+            "missingMaterialsForCrafting": "Missing materials for crafting the item."
         }
     }
 }

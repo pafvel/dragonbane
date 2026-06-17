@@ -40,7 +40,7 @@ export default class DoDTest {
             extraBanes: this.options.extraBanes
         }
         this.roll = await new DoDRoll(formula, {}, rollOptions).roll({});
-        this.updatePostRollData();
+        await this.updatePostRollData();
 
         const messageData = await this.createMessageData();
 
@@ -62,7 +62,7 @@ export default class DoDTest {
         this.preRollData.autoSuccess = this.autoSuccess;
     }
 
-    updatePostRollData() {
+    async updatePostRollData() {
         this.postRollData = this.preRollData;
         this.postRollData.result = Number(this.roll.result);
     }
@@ -70,6 +70,7 @@ export default class DoDTest {
     updateDialogData() {
 
         if (this.noBanesBoons || this.autoSuccess) {
+            this.dialogData.autoSuccess = this.autoSuccess;
             return;
         }
 
@@ -121,7 +122,7 @@ export default class DoDTest {
     }
 
 
-    async getRollOptionsFromDialog(title, label) {
+    async getRollOptionsFromDialog(title, label, icon) {
 
         if (this.isReroll) {
             return this.options.rerollOptions;
@@ -140,9 +141,11 @@ export default class DoDTest {
         const content = await DoD_Utility.renderTemplate(template, this.dialogData);
 
         const values = await foundry.applications.api.DialogV2.input({
-            window: { title },
-            content: content,
-            ok: { label }
+            window: { title, resizable: true },
+            content: this.options.content 
+                ? `<div style="text-align: center">${this.options.content}</div><div>${content}</div>`
+                : content,
+            ok: { label, icon: icon ?? this.autoSuccess ? "fa-solid fa-check" : "fa-solid fa-dice" },
         });
 
         if (values === null) return { cancelled: true };  // user closed the dialog
@@ -176,6 +179,9 @@ export default class DoDTest {
     }
 
     formatRollFormula(rollData) {
+        if (this.autoSuccess) {
+            return "0";
+        }
         const banes = rollData.banes;
         const boons = rollData.boons;
 
