@@ -100,7 +100,7 @@
                     <th title="{{localize "DoD.item-sheet.enchantmentsTooltip"}}"><b>{{localize "DoD.item-sheet.enchantments"}}</b></th>
                     <td class="comma-list item-list">
                         {{#each enchantments as |enchantment|}}
-                        <a class="sheet-table-data use-enchantment item" data-item-uuid="{{enchantment.itemUuid}}" data-enchantment-index="{{enchantment.enchantmentIndex}}">
+                        <a class="sheet-table-data item" data-action="useEnchantment" data-item-uuid="{{enchantment.itemUuid}}" data-enchantment-index="{{enchantment.enchantmentIndex}}">
                             {{enchantment.name}}
                         </a>
                         {{/each}}
