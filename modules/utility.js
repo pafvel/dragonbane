@@ -3,6 +3,10 @@ import DoDCoreSettings from "./apps/core-settings.js";
 import DoDSkillTest from "./tests/skill-test.js";
 import { DoD } from "./config.js";
 
+// Matches a dice formula: one or more die/number terms joined by + or -
+// e.g. D6, 2D6, 2D6+2, D10+D6+2
+export const DICE_FORMULA = String.raw`(?:(?:\d+)?[dD]\d+|\d+)(?:[+\-](?:(?:\d+)?[dD]\d+|\d+))*`;
+
 export default class DoD_Utility {
 
     static clamp(value, min, max) {
@@ -540,8 +544,8 @@ export default class DoD_Utility {
     }        
 
     static parseDamageString(s) {
-        const regex = /((?:\d+)?[dD](?:\d+)(?:[\+\-]\d+)?)\s*(slashing|piercing|bludgeoning)?/i;
-        const match = s.match(regex);
+        const regex = new RegExp(String.raw`^(-?${DICE_FORMULA})\s*(slashing|piercing|bludgeoning)?$`, "i");
+        const match = s?.trim().match(regex);
         if (!match) return {};
         const result = { formula: match[1] };
         if (match[2]) {

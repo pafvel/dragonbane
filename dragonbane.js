@@ -3,7 +3,7 @@ import { DoD } from "./modules/config.js";
 import { DoDActor } from "./modules/actor.js";
 import { DoDItem } from "./modules/item.js";
 
-import DoD_Utility from "./modules/utility.js";
+import DoD_Utility, { DICE_FORMULA } from "./modules/utility.js";
 import DoDRoll from "./modules/roll.js";
 
 import * as DoDChat from "./modules/chat.js";
@@ -88,6 +88,9 @@ function registerHandlebarsHelpers() {
         }
         return result;
     });
+
+    Handlebars.registerHelper("dicePattern", () => new Handlebars.SafeString(DICE_FORMULA));
+    Handlebars.registerHelper("spellDamagePattern", () => new Handlebars.SafeString(String.raw`-?${DICE_FORMULA}\s*(?:[sS]lashing|[pP]iercing|[bB]ludgeoning)?`));
 }
 
 async function preloadHandlebarsTemplates() {
@@ -488,7 +491,8 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     {
         // Rollable damage
         // Format [[/damage <formula> [<slashing|piercing|bludgeoning>]]]
-        pattern: /\[\[\/damage\s((?:\d+)?[dD](?:\d+)(?:[\+\-]\d+)?)\s?(slashing|piercing|bludgeoning)?(?:\s(.+?))?\]\]/gm,
+        // Formula supports multiple die types, e.g. D10+D6+2
+        pattern: new RegExp(String.raw`\[\[\/damage\s([+\-]?${DICE_FORMULA})\s?(slashing|piercing|bludgeoning)?(?:\s(.+?))?\]\]`, "gm"),
         enricher: (match, options) => {
             const a = document.createElement("a");
             a.classList.add("inline-damage-roll");
