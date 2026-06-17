@@ -1,5 +1,35 @@
 # Change Log
 
+## Version 3.2
+
+### Magic
+- Gear can be enchanted with spells and charged with willpower.
+  - Actors can cast spells from enchanted gear.
+  - Actors can use their charged gear, or other owned actors in the same scene, as power sources when casting spells and activating abilities.
+- New spell type Recipe and new item type Ingredient.
+  - Casting a Recipe spell can consume ingredients and create a substance.
+  - Recipe spells can be cast directly from the Recipe sheet.
+  - Substances can contain formulas that depend on the spell's power level. This can be used to create poisons with varying potency and cost, for example.
+- Spells
+  - Rank 6 spells cost 3 times the normal WP cost.
+  - Added "special" option for casting time and spell duration.
+  - Magic tricks now use same execution path as ranked spells.
+
+### Weapons
+- Added Penetrating weapon feature that ignores 1, 2 or 3 armor.
+
+### Journals
+- Images in journals can now be framed by adding the CSS class "frame".
+- Fix for page header being covered by embedded monster and npc cards.
+
+### Compendiums
+- Improved support for using compendiums. For example, monster attack tables can now reside in a compendium and function properly.
+- Internal functions that look for items in the world will now look also in compendiums if the item wasn't found.
+
+### Miscellaneous
+- Multiple dice terms allowed in dice formulas, for example [[/damage D10+D6]] and in weapon and spell sheets.
+- Fix for the entire table-roll box not being clickable.
+
 ## Version 3.1.6
 - Fix for dropping an item compendium folder on a character.
 - Fix for the monster description being rendered in the monster sheet header if the user has Limited permission.
