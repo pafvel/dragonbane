@@ -61,20 +61,6 @@ export default class DoDCharacterData extends DoDCharacterBaseData {
             }),
             canRestRound: new fields.BooleanField({ required: false, initial: true }),
             canRestStretch: new fields.BooleanField({ required: false, initial: true }),
-            maxEncumbrance:  new fields.SchemaField({
-                base: new fields.NumberField({
-                    required: true, 
-                    integer: true,
-                    initial: 0,
-                    min: 0,
-                }),
-                value: new fields.NumberField({
-                    required: true, 
-                    integer: true,
-                    initial: 0,
-                    min: 0,
-                })
-            }),
         });
     };
 
