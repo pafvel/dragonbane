@@ -404,9 +404,11 @@ async _onRender(context, options) {
         this._prepareEncumbrance(context);
         this._prepareEffects(context);
 
-        context.maxPreparedSpells = this.actor.system.maxPreparedSpells.value;
-        context.numPreparedSpells = context.spells.filter(s => s.system.memorized).length;
-        context.overPreparedSpells = context.numPreparedSpells > context.maxPreparedSpells;
+        if (this.actor.system.maxPreparedSpells?.value !== undefined) {
+            context.maxPreparedSpells = this.actor.system.maxPreparedSpells.value;
+            context.numPreparedSpells = context.spells.filter(s => s.system.memorized).length;
+            context.overPreparedSpells = context.numPreparedSpells > context.maxPreparedSpells;
+        }
 
         return context;
     }
