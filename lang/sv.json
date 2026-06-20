@@ -498,6 +498,8 @@
                 "labelOk": "Ok",
                 "main": "Översikt",
                 "max-encumbrance": "Bärförmåga",
+                "max-prepared-spells": "Max Förberedda",
+                "num-prepared-spells": "Förberedda",
                 "monsterAttackFlavor": "<b>{actor}</b> utför en monsterattack från tabellen <b>{table}</b>.",
                 "monsterAttackTooltip": "Monsterattack",
                 "monsterDefendSkillFlavor": "ducka eller parera",

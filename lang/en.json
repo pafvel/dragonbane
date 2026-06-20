@@ -494,6 +494,8 @@
                 "kinAbilitiesTooltip": "Kin abilities are determined by the character's Kin",
                 "main": "Main",
                 "max-encumbrance": "Max Encumbrance",
+                "max-prepared-spells": "Max Prepared Spells",
+                "num-prepared-spells": "Prepared Spells",
                 "memento": "Memento",
                 "memorized": "P",
                 "monsterAttackFlavor": "<b>{actor}</b> performs a Monster Attack from <b>{table}</b>.",

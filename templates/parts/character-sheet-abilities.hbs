@@ -62,6 +62,10 @@
                     {{/each}}
                 </table>
                 {{/if}}
+            </div>
+        </div>
+        <div>
+            <div>
                 {{!-- Heroic Abilities --}}
                 <table class="sheet-table heroic-abilities item-list">
                     <tr class="sheet-table-header">
@@ -79,116 +83,6 @@
                     {{/each}}
                 </table>
             </div>
-        </div>
-        <div class="flexrow">
-        {{#if hasTricks }}
-        <div>
-            {{!-- Tricks --}}
-            <table class="sheet-table item-list spells">
-                <tr class="sheet-table-header">
-                    <th></th>
-                    <th class="text-header">
-                        {{localize "DoD.ui.character-sheet.trick"}}
-                    </th>
-                    <th></th>
-                    {{#unless hasSpells}}
-                    <th></th>
-                    {{/unless}}
-                </tr>
-                {{#each tricks as |spell spellId|}}
-                <tr class="sheet-table-data item draggable" data-item-id="{{spell.id}}">
-                    <td></td>
-                    <td class="text-data">
-                        {{#if ../owner}}
-                        <a data-action="skillRoll">{{spell.name}}</a>
-                        {{else}}
-                        <a  data-action="editItem">{{spell.name}}</a>
-                        {{/if}}
-                    </td>
-                    <td>
-                        {{#if ../editable}}
-                        <button type="button" class="icon" data-action="itemControls" data-item-id="{{spell.id}}">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
-                        {{/if}}
-                    </td>
-                    {{#unless ../hasSpells}}
-                    <td></td>
-                    {{/unless}}
-                </tr>
-                {{/each}}
-            </table>
-        </div>
-        {{/if}}
-        {{#if hasSpells }}
-        <div>
-            {{!-- Spells --}}
-            <table class="sheet-table item-list spells">
-                <tr class="sheet-table-header">
-                    <th></th>
-                    <th class="number-header">
-                        {{localize "DoD.ui.character-sheet.skillValue"}}
-                    </th>
-                    <th class="text-header">
-                        {{localize "DoD.ui.character-sheet.spell"}}&nbsp
-                    </th>
-                    <th class="number-header">
-                        {{localize "DoD.spell.rank"}}
-                    </th>        
-                    <th class="checkbox-header">
-                        <label title="{{localize "DoD.spell.memorized"}}">
-                            {{localize "DoD.ui.character-sheet.memorized"}}
-                        </label>
-                    </th>
-                    <th class="text-header">
-                        {{localize "DoD.ui.character-sheet.school"}}
-                    </th>
-                    <th></th>
-                    {{#unless hasTricks}}
-                    <th></th>
-                    {{/unless}}
-                </tr>
-                {{#each spells as |spell spellId|}}
-                <tr class="sheet-table-data item draggable" data-item-id="{{spell.id}}">
-                    <td></td>
-                    <td class="number-data">
-                        {{#if spell.system.rank}}
-                        {{spell.system.skillValue}}
-                        {{else}}
-                        -
-                        {{/if}}
-                    </td>
-                    <td class="text-data">
-                        {{#if ../owner}}
-                        <a data-action="skillRoll">{{spell.name}}</a>
-                        {{else}}
-                        <a  data-action="editItem">{{spell.name}}</a>
-                        {{/if}}
-                    </td>
-                    <td class="number-data">
-                        {{spell.system.rank}}
-                    </td>
-                    <td class="checkbox-data">
-                        <input class="inline-edit" data-field="system.memorized"  type="checkbox" {{checked spell.system.memorized}} />
-                    </td>
-                    <td class="text-data">
-                        {{localize spell.system.school}}
-                    </td>
-                    <td>
-                        {{#if ../editable}}
-                        <button type="button" class="icon" data-action="itemControls" data-item-id="{{spell.id}}">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button>
-                        {{/if}}
-                    </td>
-                    {{#unless ../hasTricks}}
-                    <td></td>
-                    {{/unless}}
-                </tr>
-                {{/each}}
-            </table>
-        </div>
-        {{/if}}
         </div>
     </div>
 </div>

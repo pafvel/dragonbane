@@ -437,6 +437,10 @@ export class DoDActor extends Actor {
             this.system.maxEncumbrance.base += 2;
         }
         this.system.maxEncumbrance.value = this.system.maxEncumbrance.base;
+
+        this.system.maxPreparedSpells = {};
+        this.system.maxPreparedSpells.base = DoD_Utility.calculateBaseChance(this.system.attributes.int.value);
+        this.system.maxPreparedSpells.value = this.system.maxPreparedSpells.base;
     }
 
     _prepareActorStats() {

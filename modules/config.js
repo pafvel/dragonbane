@@ -201,6 +201,11 @@ DoD.activeEffectAttributes = [
         label: "DoD.ui.character-sheet.max-encumbrance",
         phase: "final"
     },
+    {
+        key: "system.maxPreparedSpells.value",
+        label: "DoD.ui.character-sheet.max-prepared-spells",
+        phase: "final"
+    },
 ];
 
 DoD.conditionEffects = {
