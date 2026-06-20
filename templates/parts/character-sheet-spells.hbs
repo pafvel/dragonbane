@@ -74,18 +74,18 @@
                         {{localize "DoD.ui.character-sheet.skillValue"}}
                     </th>
                     <th class="text-header">
-                        {{localize "DoD.ui.character-sheet.spell"}}&nbsp
+                        <a class="spell-sort-toggle" data-action="sortSpells" data-sort-key="name">{{localize "DoD.ui.character-sheet.spell"}} {{spellSortKeys.name.icon}}</a>
                     </th>
                     <th class="number-header">
-                        {{localize "DoD.spell.rank"}}
-                    </th>        
+                        <a class="spell-sort-toggle" data-action="sortSpells" data-sort-key="rank">{{localize "DoD.spell.rank"}} {{spellSortKeys.rank.icon}}</a>
+                    </th>
                     <th class="checkbox-header">
                         <label title="{{localize "DoD.spell.memorized"}}">
                             {{localize "DoD.ui.character-sheet.memorized"}}
                         </label>
                     </th>
                     <th class="text-header">
-                        {{localize "DoD.ui.character-sheet.school"}}
+                        <a class="spell-sort-toggle" data-action="sortSpells" data-sort-key="school">{{localize "DoD.ui.character-sheet.school"}} {{spellSortKeys.school.icon}}</a>
                     </th>
                     <th></th>
                     {{#unless hasTricks}}

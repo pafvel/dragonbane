@@ -5,6 +5,7 @@ import DoDSpellTest from "../tests/spell-test.js";
 import DoDWeaponTest from "../tests/weapon-test.js";
 import DoDOptionalRuleSettings from "../apps/optional-rule-settings.js";
 import DoDActorSettings from "../apps/actor-settings.js";
+import { getSortedSpells } from "../utility/spell-sort.js";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
@@ -27,6 +28,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
             willPointClick: { handler: this.prototype._onWillPointClick, buttons: [0,2] },
             rollDamage: { handler: this.prototype._onDamageRoll, buttons: [0,2] },
             rollHealingTime: { handler: this.prototype._onHealingTimeRoll, buttons: [0,2] },
+            sortSpells: this.prototype._onSortSpells,
         }
     };
 
@@ -618,6 +620,21 @@ async _onRender(context, options) {
             }
         }
         return createdItem;
+    }
+
+    async _onSortSpells(_event, target) {
+        const key = target.dataset.sortKey;
+        if (!["rank", "school", "name"].includes(key)) return;
+        const priority = this.actor.getFlag("dragonbane", "spellSortPriority") ?? [];
+        const idx = priority.findIndex(p => p.key === key);
+        if (idx === -1) {
+            priority.push({ key, direction: "asc" });
+        } else if (priority[idx].direction === "asc") {
+            priority[idx].direction = "desc";
+        } else {
+            priority.splice(idx, 1);
+        }
+        await this.actor.setFlag("dragonbane", "spellSortPriority", priority);
     }
 
     _onItemEdit(event, target) {
@@ -1241,6 +1258,20 @@ async _onRender(context, options) {
         }
     }
 
+    static _buildSpellSortKeys(priority) {
+        const keys = {
+            rank: { active: false, icon: "" },
+            school: { active: false, icon: "" },
+            name: { active: false, icon: "" }
+        };
+        for (const p of priority) {
+            if (p.key in keys) {
+                keys[p.key] = { active: true, icon: (p.direction ?? "asc") === "asc" ? "▲" : "▼" };
+            }
+        }
+        return keys;
+    }
+
     _prepareItems(context) {
 
         context.heroicAbilities = [];
@@ -1302,9 +1333,11 @@ async _onRender(context, options) {
         context.abilities = formattedAbilities;
 
         // Spells
-        context.spells = context.spells?.sort(DoD_Utility.nameSorter);
+        const spellSortPriority = this.actor.getFlag("dragonbane", "spellSortPriority") ?? [];
+        context.spells = getSortedSpells(this.actor, spellSortPriority);
         context.hasSpells = context.spells.length > 0;
-        context.memorizedSpells = context.spells?.filter(s => s.system.memorized);
+        context.memorizedSpells = context.spells.filter(s => s.system.memorized);
+        context.spellSortKeys = DoDActorBaseSheet._buildSpellSortKeys(spellSortPriority);
 
         // Tricks
         context.tricks = context.tricks?.sort(DoD_Utility.nameSorter);

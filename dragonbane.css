@@ -758,6 +758,16 @@
 .system-dragonbane .sheet-table-header .number-header {
   text-align: center;
 }
+.system-dragonbane .sheet-table-header .spell-sort-toggle {
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+  user-select: none;
+  transition: text-shadow 0.15s ease, color 0.15s ease;
+}
+.system-dragonbane .sheet-table-header .spell-sort-toggle:hover {
+  text-shadow: 0 0 6px var(--dod-color-journal-table-header);
+}
 .system-dragonbane .sheet-table-data {
   background-color: transparent;
 }
