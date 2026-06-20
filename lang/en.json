@@ -219,6 +219,7 @@
             "rating": "Armor Rating"
         },
         "injury": {
+            "new": "New Injury",
             "healingTime": "Healing Time",
             "healingTimeTooltip": "The number of days it takes to heal the injury",
             "healingTimeExpired": "<b>{injury}</b> has healed.",
@@ -462,6 +463,7 @@
                 "create-effect": "Create Effect",
                 "create-helmet": "Create Helmet",
                 "create-item": "Create Item",
+                "create-injury": "Create Injury",
                 "create-weapon": "Create Weapon",
                 "currency": "Coin",
                 "damageBonusAGL": "Dmg Bonus AGL",

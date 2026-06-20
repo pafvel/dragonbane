@@ -220,6 +220,7 @@
             "rating": "Skyddsvärde"
         },
         "injury": {
+            "new": "Ny skada",
             "healingTime": "Läkningstid",
             "healingTimeTooltip": "Antal dagar som det tar för skadan att läka",
             "healingTimeExpired": "<b>{injury}</b> har läkt.",
@@ -462,6 +463,7 @@
                 "create-effect": "Skapa effekt",
                 "create-helmet": "Skapa hjälm",
                 "create-item": "Skapa föremål",
+                "create-injury": "Skapa skada",
                 "create-weapon": "Skapa vapen",
                 "combat": "Strid",
                 "coreSkills": "Grundfärdigheter",

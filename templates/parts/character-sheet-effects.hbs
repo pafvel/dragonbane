@@ -5,7 +5,11 @@
             <table class="sheet-table injuries item-list">
                 <tr class="sheet-table-header">
                     <th></th>
-                    <th class="thumbnail-header">{{!-- column for icons --}}&nbsp</th>
+                    <th class="thumbnail-header">
+                        <button type="button" data-action="createItem" data-type="injury" title="{{localize "DoD.ui.character-sheet.create-injury"}}">
+                            <a  class="fas fa-plus"></a>
+                        </button>                        
+                    </th>
                     <th class="text-header">
                         {{localize "DoD.ui.character-sheet.injuries"}}
                     </th>
