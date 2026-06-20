@@ -216,7 +216,13 @@ export default class DoD_Utility {
     static getEmbeddedResultName(description) {
         const match = description.match(/<(b|strong)>(.*?)<\/\1>([\s\S]*)/);
         if (!match) return null;
-        return { name: match[2], description: match[3] };
+
+        const name = match[2].trim();
+        let desc = match[3].trim();
+
+        desc = desc.replace(/<\/p>\s*$/i, '').trim(); // Strip a trailing closing </p>
+
+        return { name, description: desc };
     }
 
     static async expandTableResult(tableResult)
