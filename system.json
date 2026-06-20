@@ -22,6 +22,55 @@
     "dragonbane.css"
   ],
   "documentTypes": {
+    "Actor": {
+      "character": {
+        "htmlFields": ["appearance", "weakness", "notes"]
+      },
+      "npc": {
+        "htmlFields": ["description", "traits"]
+      },
+      "monster": {
+        "htmlFields": ["description", "traits"]
+      }
+    },
+    "Item": {
+      "ability": {
+        "htmlFields": ["itemDescription", "gmDescription"]
+      },
+      "armor": {
+        "htmlFields": ["itemDescription", "gmDescription"]
+      },
+      "helmet": {
+        "htmlFields": ["itemDescription", "gmDescription"]
+      },
+      "injury": {
+        "htmlFields": ["itemDescription", "gmDescription"]
+      },
+      "item": {
+        "htmlFields": ["itemDescription", "gmDescription"]
+      },
+      "kin": {
+        "htmlFields": ["itemDescription", "gmDescription"]
+      },
+      "material": {
+        "htmlFields": ["itemDescription", "gmDescription"]
+      },
+      "profession": {
+        "htmlFields": ["itemDescription", "gmDescription"]
+      },
+      "recipe": {
+        "htmlFields": ["itemDescription", "gmDescription"]
+      },
+      "skill": {
+        "htmlFields": ["itemDescription", "gmDescription"]
+      },
+      "spell": {
+        "htmlFields": ["itemDescription", "gmDescription"]
+      },
+      "weapon": {
+        "htmlFields": ["itemDescription", "gmDescription"]
+      }
+    },
     "ChatMessage": { 
       "attributeTest": {},
       "skillTest": {},
