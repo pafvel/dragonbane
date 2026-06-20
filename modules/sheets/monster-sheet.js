@@ -13,7 +13,7 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
             closeOnSubmit: false
         },
         actions: {
-            monsterAttack: this.prototype._onMonsterAttack,
+            monsterAttack: { handler: this.prototype._onMonsterAttack, buttons: [0,2] },
             monsterDefend: this.prototype._onMonsterDefend
         }
     };
