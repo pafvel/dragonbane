@@ -639,17 +639,17 @@
                 "restNote": "Finish the rest to recover. Interrupt to spend the rest without recovering.",
                 "restOk": "Finish",
                 "restInterrupt": "Interrupt"
-            },
-            "item-sheet": {
-                "postToChat": "Post to Chat",
-                "details": "Details",
-                "description": "Description",
-                "gmDescription": "GM Notes",
-                "effects": "Effects",
-                "enchantments": "Enchantments",
-                "enchantmentsTooltip": "Castable enchantments",
-                "formula": "Formula"
             }
+        },
+        "item-sheet": {
+            "postToChat": "Post to Chat",
+            "details": "Details",
+            "description": "Description",
+            "gmDescription": "GM Notes",
+            "effects": "Effects",
+            "enchantments": "Enchantments",
+            "enchantmentsTooltip": "Castable enchantments",
+            "formula": "Formula"
         },
         "INFO": {
             "monsterAttackUpdated": "Updated monster attack table for {actor}.",

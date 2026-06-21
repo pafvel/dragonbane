@@ -111,7 +111,7 @@ export default class DoDItemBaseSheet extends HandlebarsApplicationMixin(ItemShe
         controls.push({
             action: "postToChat",
             icon: "fa-solid fa-message",
-            label: "DoD.ui.item-sheet.postToChat",
+            label: "DoD.item-sheet.postToChat",
             ownership: "OWNER"
         });
         return controls;

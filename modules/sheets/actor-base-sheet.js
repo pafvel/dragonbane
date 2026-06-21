@@ -118,7 +118,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                 }
             },
             {
-                label: "DoD.ui.item-sheet.postToChat",
+                label: "DoD.item-sheet.postToChat",
                 icon: '<i class="fa-solid fa-message"></i>',
                 visible: li => !!li.dataset.itemId,
                 onClick: (_event, li) => {

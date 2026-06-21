@@ -643,17 +643,17 @@
                 "restNote": "Vila klart för att läka KP, VP och tillstånd. Avbryt för att spendera vilan utan läkning.",
                 "restOk": "Vila klart",
                 "restInterrupt": "Avbryt vila"
-            },
-            "item-sheet": {
-                "postToChat": "Posta i chatten",
-                "details": "Detaljer",
-                "description": "Beskrivning",
-                "gmDescription": "SL-anteckningar",
-                "effects": "Effekter",
-                "enchantments": "Förtrollningar",
-                "enchantmentsTooltip": "Förtrollningar som går att aktivera",
-                "formula": "Formel"
             }
+        },
+        "item-sheet": {
+            "postToChat": "Posta i chatten",
+            "details": "Detaljer",
+            "description": "Beskrivning",
+            "gmDescription": "SL-anteckningar",
+            "effects": "Effekter",
+            "enchantments": "Förtrollningar",
+            "enchantmentsTooltip": "Förtrollningar som går att aktivera",
+            "formula": "Formel"
         },
         "INFO": {
             "monsterAttackUpdated": "Uppdaterade monsterattacker för {actor}.",
