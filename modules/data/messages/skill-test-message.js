@@ -48,7 +48,7 @@ export default class DoDSkillTestMessageData extends DoDTestMessageBaseData {
 
         return {
             user: game.user.id,
-            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            speaker: ChatMessage.getSpeaker({ actor: fromUuidSync(this.actorUuid) }),
             content: "<p>" + content + "</p>"
         };
     }
