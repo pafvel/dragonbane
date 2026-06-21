@@ -14,6 +14,10 @@
   - Rank 6 spells cost 3 times the normal WP cost.
   - Added "special" option for casting time and spell duration.
   - Magic tricks now use same execution path as ranked spells.
+- Character sheet
+  - Spells moved from Abilities & Spells tab to it's own Spells tab. Displayed if the character has spells.
+  - Max number of memorized spells and currently memorized spells shown on spells tab.
+  - Spells can be sorted. Sort order will be the same on the main tab.
 
 ### Weapons
 - Added Penetrating weapon feature that ignores 1, 2 or 3 armor.
@@ -21,6 +25,10 @@
 ### Journals
 - Images in journals can now be framed by adding the CSS class "frame".
 - Fix for page header being covered by embedded monster and npc cards.
+- @DisplayItem added, can be used to render any item type in journals.
+
+### Chat
+- Items can be posted to chat, from the item or from the owning actor.
 
 ### Compendiums
 - Improved support for using compendiums. For example, monster attack tables can now reside in a compendium and function properly.
