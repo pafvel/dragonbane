@@ -12,4 +12,15 @@ export default class DoDInjuryData extends DoDItemBaseData {
     static migrateData(source) {
         return super.migrateData(source);
     }
+
+    async getCardData(context) {
+        const data = await super.getCardData(context);
+        if (this.healingTime) {
+            data.properties.push({ label: game.i18n.localize("DoD.injury.healingTime"), value: this.healingTime });
+        }
+        if (this.banes) {
+            data.properties.push({ label: game.i18n.localize("DoD.ui.character-sheet.banes"), value: this.banes });
+        }
+        return data;
+    }
 }

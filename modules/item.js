@@ -1,4 +1,4 @@
-import DoD_Utility from "./utility.js";
+import DoD_Utility, { renderItemCard } from "./utility.js";
 
 export class DoDItem extends Item {
     /**
@@ -318,6 +318,16 @@ export class DoDItem extends Item {
         } else {
             DoD_Utility.WARNING("DoD.WARNING.cannotCreateCraftedItem");
         }
+    }
+
+    async toChatCard(_options = {}) {
+        const content = await renderItemCard(this, "chat");
+        return ChatMessage.create({
+            user: game.user.id,
+            speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+            content,
+            flags: { dragonbane: { itemUuid: this.uuid, itemType: this.type } }
+        });
     }
 
     get isRangedWeapon() {

@@ -29,6 +29,26 @@ export class DoDGearBaseData extends DoDItemBaseData {
     static migrateData(source) {
         return super.migrateData(source);
     }
+
+    async getCardData(context) {
+        const data = await super.getCardData(context);
+        if (this.cost) {
+            data.properties.push({ label: game.i18n.localize("DoD.gear.cost"), value: this.cost });
+        }
+        if (this.supply) {
+            data.properties.push({ label: game.i18n.localize("DoD.gear.supply"), value: game.i18n.localize("DoD.supplyTypes." + this.supply) });
+        }
+        await this.addCardProperties(context, data);
+        if (this.boons) {
+            data.properties.push({ label: game.i18n.localize("DoD.ui.dialog.boons"), value: this.boons });
+        }
+        if (this.banes) {
+            data.properties.push({ label: game.i18n.localize("DoD.ui.dialog.banes"), value: this.banes });
+        }
+        return data;
+    }
+
+    async addCardProperties(_context, _data) {}
 }
 
 

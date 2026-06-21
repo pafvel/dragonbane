@@ -1,6 +1,22 @@
 import DragonbaneDataModel from "../DragonbaneDataModel.js";
 
 export class DoDItemBaseData extends DragonbaneDataModel {
+
+    async getCardData(_context) {
+        const item = this.parent;
+        return {
+            uuid: item.uuid,
+            name: item.name,
+            img: item.img,
+            itemType: item.type,
+            nameLink: `@UUID[${item.uuid}]{${item.name}}`,
+            subtitle: null,
+            description: this.itemDescription ?? "",
+            properties: [],
+            actions: []
+        };
+    }
+
     static defineSchema() {
         const { fields } = foundry.data;
         return this.mergeSchema(super.defineSchema(), {

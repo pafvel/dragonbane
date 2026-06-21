@@ -11,4 +11,11 @@ export default class DoDHelmetData extends DoDGearBaseData {
     static migrateData(source) {
         return super.migrateData(source);
     }
+
+    async addCardProperties(_context, data) {
+        data.properties.push({ label: game.i18n.localize("DoD.armor.rating"), value: this.rating });
+        if (this.weight > 0) {
+            data.properties.push({ label: game.i18n.localize("DoD.gear.weight"), value: this.weight });
+        }
+    }
 }

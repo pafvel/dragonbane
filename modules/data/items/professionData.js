@@ -13,4 +13,18 @@ export default class DoDProfessionData extends DoDItemBaseData {
     static migrateData(source) {
         return super.migrateData(source);
     }
+
+    async getCardData(context) {
+        const data = await super.getCardData(context);
+        if (this.attribute && this.attribute !== "none") {
+            data.properties.push({ label: game.i18n.localize("DoD.profession.key-attribute"), value: game.i18n.localize("DoD.attributes." + this.attribute) });
+        }
+        if (this.skills) {
+            data.properties.push({ label: game.i18n.localize("DoD.ui.character-sheet.skills"), value: this.skills });
+        }
+        if (this.abilities) {
+            data.properties.push({ label: game.i18n.localize("DoD.ui.character-sheet.abilities"), value: this.abilities });
+        }
+        return data;
+    }
 }

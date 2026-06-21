@@ -1,4 +1,4 @@
-import DoD_Utility from "./utility.js";
+import DoD_Utility, { renderItemCard } from "./utility.js";
 
 /**
  * Used to parse e.g. the brackets part of @DisplayNpc[Actor.gwFbDqFlJJrjeM3a named] to get {uuid: Actor.gwFbDqFlJJrjeM3a , named: true}
@@ -17,50 +17,15 @@ function parseMatch(match) {
     return result;
 }
 
-export async function enrichDisplayAbility (match, options) {
-    const ability = await fromUuid(match[1]);
-    const abilityName = match[2] ?? ability?.name;
-    const a = document.createElement("div");
-    if (ability) {
-        const requirement = ability.system.requirement?.length > 0 ? ability.system.requirement : "-";
-        const wp = ability.system.wp ?? "-";
-        let html = "";
-        if (options.box) {
-            html += `
-            <blockquote class="info">
-            <div class="display-ability">
-                <h3>@UUID[${match[1]}]{${abilityName}}</h3>
-                <p></p>
-                <ul>`;
-        } else {
-            html += `
-            <div class="display-ability">
-                <h4>@UUID[${match[1]}]{${abilityName}}</h4>
-                <ul>`;
-        }
-        if (ability.system.abilityType !== "kin") {
-            html += `
-                    <li><b>${game.i18n.localize("DoD.ability.requirement")}: </b><span>${requirement}</span>`;
-        }
-        html += `
-                    <li><b>${game.i18n.localize("DoD.ability.wp")}: </b><span>${wp}</span>
-                </ul>
-                ${ability.system.itemDescription}
-            </div>`;
-        if (options.box) {
-            html += `</blockquote>`;
-        }
-        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
-    } else {
-        a.dataset.abilityId = match[1];
-        if (match[2]) a.dataset.abilityName = match[2];
-        a.classList.add("content-link");
-        a.classList.add("broken");
-        a.innerHTML = `<i class="fas fa-unlink"></i> ${abilityName}`;
+export async function enrichDisplayAbility(match, options) {
+    const a = await enrichDisplayItem(match, options);
+    if (options?.box) {
+        a.innerHTML = `<blockquote class="info">${a.innerHTML}</blockquote>`;
     }
     return a;
 }
-export async function enrichDisplayAbilityBox (match, options = {}) {
+
+export async function enrichDisplayAbilityBox(match, options = {}) {
     options.box = true;
     return enrichDisplayAbility(match, options);
 }
@@ -412,72 +377,19 @@ export async function enrichDisplayNpcDescription (match, _options) {
     return a;
 }
 
-
-export async function enrichDisplaySkill (match, _options) {
-    const skill = await fromUuid(match[1]);
-    const skillName = match[2] ?? skill?.name;
+export async function enrichDisplayItem (match, _options) {
+    const item = await fromUuid(match[1]);
+    const itemName = match[2] ?? item?.name;
     const a = document.createElement("div");
-    if (skill) {
-        let html = `
-        <div class="display-skill">
-            <h4>@UUID[${match[1]}]{${skillName}} <small>(${game.i18n.localize("DoD.attributes." + skill.system.attribute)})</small></h4>
-            ${skill.system.itemDescription}
-        </div>`;
-        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
+    if (item) {
+        const rawHtml = await renderItemCard(item, "journal");
+        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(rawHtml, { async: true });
     } else {
-        a.dataset.skillId = match[1];
-        if (match[2]) a.dataset.skillName = match[2];
+        a.dataset.itemId = match[1];
+        if (match[2]) a.dataset.itemName = match[2];
         a.classList.add("content-link");
         a.classList.add("broken");
-        a.innerHTML = `<i class="fas fa-unlink"></i> ${skillName}`;
-    }
-    return a;
-}
-
-export async function enrichDisplaySpell (match, _options) {
-    const spell = await fromUuid(match[1]);
-    const spellName = match[2] ?? spell?.name;
-    const a = document.createElement("div");
-    if (spell) {
-        let range = "";
-        switch (spell.system.rangeType) {
-            case "range":
-                range = spell.system.range ? spell.system.range + " " + game.i18n.localize("DoD.unit.meterPlural") : "-";
-                break;
-            case "personal":
-                range = game.i18n.localize("DoD.spellRangeTypes.personal");
-                break;
-            case "touch":
-                range = game.i18n.localize("DoD.spellRangeTypes.touch");
-                break;
-            case "cone":
-                range = `${spell.system.range} ${game.i18n.localize("DoD.unit.meterPlural")} (${game.i18n.localize("DoD.spellRangeTypes.cone")})`;
-                break;
-            case "sphere":
-                range = `${spell.system.range} ${game.i18n.localize("DoD.unit.meterPlural")} (${game.i18n.localize("DoD.spellRangeTypes.sphere")})`;
-                break;
-        }
-
-        let html = `
-        <div class="display-spell">
-            <h4>@UUID[${match[1]}]{${spell.name}}</h4>
-            <ul>
-            <li><b class="heading">${game.i18n.localize("DoD.spell.rank")}: </b><span>${spell.system.rank}</span>
-            <li><b class="heading">${game.i18n.localize("DoD.spell.prerequisite")}: </b><span>${spell.system.prerequisite !== "" ? spell.system.prerequisite : "-"}</span>
-            <li><b class="heading">${game.i18n.localize("DoD.spell.requirement")}: </b><span>${spell.system.requirement !== "" ? spell.system.requirement : "-"}</span>
-            <li><b class="heading">${game.i18n.localize("DoD.spell.castingTime")}: </b><span>${game.i18n.localize("DoD.castingTimeTypes." + spell.system.castingTime)}</span>
-            <li><b class="heading">${game.i18n.localize("DoD.spell.rangeType")}: </b><span>${range}</span>
-            <li><b class="heading">${game.i18n.localize("DoD.spell.duration")}: </b><span>${game.i18n.localize("DoD.spellDurationTypes." + spell.system.duration)}</span>
-            </ul>
-            ${spell.system.itemDescription}
-        </div>`;
-        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
-    } else {
-        a.dataset.spellId = match[1];
-        if (match[2]) a.dataset.spellName = match[2];
-        a.classList.add("content-link");
-        a.classList.add("broken");
-        a.innerHTML = `<i class="fas fa-unlink"></i> ${spellName}`;
+        a.innerHTML = `<i class="fas fa-unlink"></i> ${itemName}`;
     }
     return a;
 }
@@ -570,60 +482,6 @@ export async function enrichDisplayTable (match, _options) {
         a.classList.add("content-link");
         a.classList.add("broken");
         a.innerHTML = `<i class="fas fa-unlink"></i> ${tableName}`;
-    }
-    return a;
-}
-
-export async function enrichDisplayTrick(match, _options) {
-    const spell = await fromUuid(match[1]);
-    const spellName = match[2] ?? spell?.name;
-    const a = document.createElement("div");
-    if (spell) {
-        let html = `
-        <div class="display-spell">
-            <h4>@UUID[${match[1]}]{${spellName}}</h4>
-            ${spell.system.itemDescription}
-        </div>`;
-        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
-    } else {
-        a.dataset.spellId = match[1];
-        if (match[2]) a.dataset.spellName = match[2];
-        a.classList.add("content-link");
-        a.classList.add("broken");
-        a.innerHTML = `<i class="fas fa-unlink"></i> ${spellName}`;
-    }
-    return a;
-}
-
-export async function enrichDisplayRecipe(match, _options) {
-    const recipe = await fromUuid(match[1]);
-    const recipeName = match[2] ?? recipe?.name;
-    const a = document.createElement("div");
-    if (recipe) {
-        const substance = await recipe.system.item.resolve();
-        const substanceHtml = substance ? `@UUID[${substance.uuid}]{${substance.name}}` : "-";
-        
-        await Promise.all(recipe.system.materials?.map(mat => mat.resolve()) ?? []);
-        const materialsHtml = recipe.system.materials.length > 0 ? recipe.system.materials.map(m => `@UUID[${m.uuid}]{${m.name}}`).join(", ") : "-";
-
-        let html = `
-        <div class="display-spell">
-            <h4>@UUID[${match[1]}]{${recipeName}}</h4>
-            <ul>
-            <li><b class="heading">${game.i18n.localize("DoD.spell.rank")}: </b><span>${recipe.system.rank}</span>
-            <li><b class="heading">${game.i18n.localize("DoD.spell.prerequisite")}: </b><span>${recipe.system.prerequisite !== "" ? recipe.system.prerequisite : "-"}</span>
-            <li><b class="heading">${game.i18n.localize("DoD.recipe.materials")}: </b><span>${materialsHtml}</span>
-            <li><b class="heading">${game.i18n.localize("DoD.recipe.item")}: </b><span>${substanceHtml}</span>
-            </ul>
-            ${recipe.system.itemDescription}
-        </div>`;
-        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
-    } else {
-        a.dataset.recipeId = match[1];
-        if (match[2]) a.dataset.recipeName = match[2];
-        a.classList.add("content-link");
-        a.classList.add("broken");
-        a.innerHTML = `<i class="fas fa-unlink"></i> ${recipeName}`;
     }
     return a;
 }

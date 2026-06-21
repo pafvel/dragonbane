@@ -95,6 +95,8 @@ function registerHandlebarsHelpers() {
 
 async function preloadHandlebarsTemplates() {
     const templatePaths = [
+        "systems/dragonbane/templates/partials/chat-item-card.hbs",
+        "systems/dragonbane/templates/partials/journal-item-card.hbs",
         "systems/dragonbane/templates/partials/damage-roll-message.hbs",
         "systems/dragonbane/templates/partials/hp-widget.hbs",
         "systems/dragonbane/templates/partials/item-sheet-effects.hbs",
@@ -581,11 +583,11 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     },
     {
         pattern: /@DisplaySkill\[(.+?)\](?:{(.+?)})?/gm,
-        enricher: DoDJournal.enrichDisplaySkill
+        enricher: DoDJournal.enrichDisplayItem
     },
     {
         pattern: /@DisplaySpell\[(.+?)\](?:{(.+?)})?/gm,
-        enricher: DoDJournal.enrichDisplaySpell
+        enricher: DoDJournal.enrichDisplayItem
     },
     {
         pattern: /@DisplayTable\[(.+?)\](?:{(.+?)})?/gm,
@@ -593,11 +595,15 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     },
     {
         pattern: /@DisplayTrick\[(.+?)\](?:{(.+?)})?/gm,
-        enricher: DoDJournal.enrichDisplayTrick
+        enricher: DoDJournal.enrichDisplayItem
+    },
+    {
+        pattern: /@DisplayItem\[(.+?)\](?:{(.+?)})?/gm,
+        enricher: DoDJournal.enrichDisplayItem
     },
     {
         pattern: /@DisplayRecipe\[(.+?)\](?:{(.+?)})?/gm,
-        enricher: DoDJournal.enrichDisplayRecipe
+        enricher: DoDJournal.enrichDisplayItem
     },
     {
         pattern: /@GearTableStart\[(.+?)\](?:{(.+?)})((?:(?!@GearTableEnd)[\S\s])+)@GearTableEnd/gm,

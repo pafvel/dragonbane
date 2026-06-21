@@ -8,7 +8,7 @@ import DoDRollDamageMessageData from "./data/messages/roll-damage-message.js";
 
 export function addChatListeners(_app, html, _data) {
 
-    DoD_Utility.addHtmlEventListener(html, "click", ".inline-damage-roll", onInlineDamageRoll);   
+    DoD_Utility.addHtmlEventListener(html, "click", ".inline-damage-roll", onInlineDamageRoll);
     DoD_Utility.addHtmlEventListener(html, "click", ".treasure-roll", onTreasureRoll);
     DoD_Utility.addHtmlEventListener(html, "click", "[data-action='rollWeaponDamage']", onRollWeaponDamage);
     DoD_Utility.addHtmlEventListener(html, "click", "[data-action='rollSpellDamage']", onRollSpellDamage);
@@ -16,6 +16,8 @@ export function addChatListeners(_app, html, _data) {
     DoD_Utility.addHtmlEventListener(html, "click", "button.push-roll", onPushRoll);
     DoD_Utility.addHtmlEventListener(html, "click", ".damage-details", onExpandableClick);
     DoD_Utility.addHtmlEventListener(html, 'click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
+
+    DoD_Utility.addHtmlEventListener(html, "click", ".dragonbane-card [data-action='useSkill']", onCardUseSkill);
 
     DoD_Utility.addHtmlEventListener(html, "click", "[data-action='dealDamage']", onDealDamage);
     DoD_Utility.addHtmlEventListener(html, "click", "[data-action='dealDoubleDamage']", onDealDoubleDamage);
@@ -976,6 +978,28 @@ export function hideChatPermissions(_app, html, _data) {
     for (const el of html.querySelectorAll(".permission-not-none")) {
         el.remove();
     }        
+}
+
+async function onCardUseSkill(event) {
+    const card = event.target.closest(".dragonbane-card");
+    const itemUuid = card?.dataset.itemUuid;
+    const skillTemplate = itemUuid ? await fromUuid(itemUuid) : null;
+    if (!skillTemplate) {
+        DoD_Utility.WARNING("DoD.WARNING.itemNotFound");
+        return;
+    }
+    const controlled = canvas.tokens?.controlled ?? [];
+    const actors = controlled.length > 0
+        ? controlled.map(t => t.actor).filter(Boolean)
+        : [game.user.character].filter(Boolean);
+    for (const actor of actors) {
+        const skill = actor.getSkill(skillTemplate.name);
+        if (skill) {
+            await new DoDSkillTest(actor, skill).roll();
+        } else {
+            DoD_Utility.WARNING("DoD.WARNING.actorMissingSkill");
+        }
+    }
 }
 
 export function onExpandableClick(event) {

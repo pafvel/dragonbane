@@ -22,4 +22,30 @@ export default class DoDRecipeData extends DoDItemBaseData {
     static migrateData(source) {
         return super.migrateData(source);
     }
+
+    async getCardData(context) {
+        const data = await super.getCardData(context);
+        if (this.school) {
+            data.properties.push({ label: game.i18n.localize("DoD.weapon.skill"), value: this.school });
+        }
+        data.properties.push(
+            { label: game.i18n.localize("DoD.spell.rank"), value: this.rank },
+            { label: game.i18n.localize("DoD.spell.prerequisite"), value: this.prerequisite || "-" }
+        );
+        if (this.materials.length > 0) {
+            await Promise.all(this.materials.map(m => m.resolve()));
+            const materialValue = this.materials.filter(m => m.name).map(m =>
+                context === "journal" && m.uuid ? `@UUID[${m.uuid}]{${m.name}}` : m.name
+            ).join(", ");
+            if (materialValue) {
+                data.properties.push({ label: game.i18n.localize("DoD.recipe.materials"), value: materialValue });
+            }
+        }
+        const resultItem = await this.item?.resolve();
+        if (resultItem) {
+            const resultValue = context === "journal" && resultItem.uuid ? `@UUID[${resultItem.uuid}]{${resultItem.name}}` : resultItem.name;
+            data.properties.push({ label: game.i18n.localize("DoD.recipe.item"), value: resultValue });
+        }
+        return data;
+    }
 }

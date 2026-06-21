@@ -15,6 +15,20 @@ export default class DoDMaterialData extends DoDItemBaseData {
     static migrateData(source) {
         return super.migrateData(source);
     }
+
+    async getCardData(context) {
+        const data = await super.getCardData(context);
+        if (this.weight > 0) {
+            data.properties.push({ label: game.i18n.localize("DoD.gear.weight"), value: this.weight });
+        }
+        if (this.cost) {
+            data.properties.push({ label: game.i18n.localize("DoD.gear.cost"), value: this.cost });
+        }
+        if (this.supply) {
+            data.properties.push({ label: game.i18n.localize("DoD.gear.supply"), value: game.i18n.localize("DoD.supplyTypes." + this.supply) });
+        }
+        return data;
+    }
 }
 
 

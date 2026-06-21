@@ -642,16 +642,18 @@
                 "restStretchConditionsHint": "Antal tillstånd som återhämtas",
                 "restNote": "Vila klart för att läka KP, VP och tillstånd. Avbryt för att spendera vilan utan läkning.",
                 "restOk": "Vila klart",
-                "restInterrupt": "Avbryt vila"           }
-        },
-        "item-sheet": {
-            "details": "Detaljer",
-            "description": "Beskrivning",
-            "gmDescription": "SL-anteckningar",
-            "effects": "Effekter",
-            "enchantments": "Förtrollningar",
-            "enchantmentsTooltip": "Förtrollningar som går att aktivera",
-            "formula": "Formel"
+                "restInterrupt": "Avbryt vila"
+            },
+            "item-sheet": {
+                "postToChat": "Posta i chatten",
+                "details": "Detaljer",
+                "description": "Beskrivning",
+                "gmDescription": "SL-anteckningar",
+                "effects": "Effekter",
+                "enchantments": "Förtrollningar",
+                "enchantmentsTooltip": "Förtrollningar som går att aktivera",
+                "formula": "Formel"
+            }
         },
         "INFO": {
             "monsterAttackUpdated": "Uppdaterade monsterattacker för {actor}.",
@@ -733,7 +735,8 @@
             "noMagicMishapTable": "Tabellen för magiska missöden saknas.",
             "maxWeaponsEquipped": "Högst 3 vapen till hands.",
             "noSkillsInCompendium": "Den registrerade grundmodulen innehåller inga färdigheter. Modulen kan vara skadad och bör ominstalleras. Försöker att hitta färdigheter i världen istället.",
-             "missingMaterialsForCrafting": "Saknar material för att tillverka föremålet."
+             "missingMaterialsForCrafting": "Saknar material för att tillverka föremålet.",
+             "actorMissingSkill": "Den valda karaktären saknar denna färdighet."
        }
     }
 }

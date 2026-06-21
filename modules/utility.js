@@ -620,3 +620,8 @@ export default class DoD_Utility {
     }
 
 }
+
+export async function renderItemCard(item, context = "chat") {
+    const data = await item.system.getCardData(context);
+    return foundry.applications.handlebars.renderTemplate(`systems/dragonbane/templates/partials/${context}-item-card.hbs`, data);
+}

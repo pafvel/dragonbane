@@ -4,15 +4,7 @@
 
     .journal-entry-content {
 
-        .display-skill {
-            @extend %display-item;
-       }
-
-        .display-spell {
-            @extend %display-item;
-        }
-
-        .display-ability {
+        .display-item {
             @extend %display-item;
         }
     }

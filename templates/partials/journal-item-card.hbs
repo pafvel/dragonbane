@@ -1,0 +1,11 @@
+<div class="display-item display-{{itemType}}">
+    <h4>{{{nameLink}}}{{#if subtitle}} <small>({{subtitle}})</small>{{/if}}</h4>
+    {{#if properties.length}}
+    <ul>
+        {{#each properties}}
+        <li><b class="heading">{{label}}: </b><span>{{value}}</span></li>
+        {{/each}}
+    </ul>
+    {{/if}}
+    {{{description}}}
+</div>

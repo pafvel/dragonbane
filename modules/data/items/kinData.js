@@ -12,4 +12,13 @@ export default class DoDKinData extends DoDItemBaseData {
     static migrateData(source) {
         return super.migrateData(source);
     }
+
+    async getCardData(context) {
+        const data = await super.getCardData(context);
+        if (this.abilities) {
+            data.properties.push({ label: game.i18n.localize("DoD.ui.character-sheet.kinAbilities"), value: this.abilities });
+        }
+        data.properties.push({ label: game.i18n.localize("DoD.ui.character-sheet.movement"), value: this.movement });
+        return data;
+    }
 }

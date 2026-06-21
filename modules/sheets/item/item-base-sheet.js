@@ -16,7 +16,8 @@ export default class DoDItemBaseSheet extends HandlebarsApplicationMixin(ItemShe
         actions: {
             createEffect: this.#createEffect,
             editEffect: this.#editEffect,
-            deleteEffect: this.#deleteEffect
+            deleteEffect: this.#deleteEffect,
+            postToChat: this.#postToChat
         },
 };
 
@@ -98,6 +99,22 @@ export default class DoDItemBaseSheet extends HandlebarsApplicationMixin(ItemShe
         const effectId = target.dataset.effectId;
         const effect = this.item.effects.get(effectId);
         return effect.delete();
+    }
+
+    static async #postToChat(event) {
+        event.preventDefault();
+        return this.item.toChatCard();
+    }
+
+    _getHeaderControls() {
+        const controls = super._getHeaderControls();
+        controls.push({
+            action: "postToChat",
+            icon: "fa-solid fa-message",
+            label: "DoD.ui.item-sheet.postToChat",
+            ownership: "OWNER"
+        });
+        return controls;
     }
 
     _canDragStart(_selector) {

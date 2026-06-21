@@ -11,4 +11,10 @@ export default class DoDItemData extends DoDGearBaseData {
     static migrateData(source) {
         return super.migrateData(source);
     }
+
+    async addCardProperties(_context, data) {
+        if (this.weight > 0) {
+            data.properties.push({ label: game.i18n.localize("DoD.gear.weight"), value: this.weight });
+        }
+    }
 }

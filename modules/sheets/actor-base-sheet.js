@@ -118,6 +118,35 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                 }
             },
             {
+                label: "DoD.ui.item-sheet.postToChat",
+                icon: '<i class="fa-solid fa-message"></i>',
+                visible: li => !!li.dataset.itemId,
+                onClick: (_event, li) => {
+                    const item = this.actor.items.get(li.dataset.itemId);
+                    return item?.toChatCard();
+                }
+            },
+            {
+                label: "SIDEBAR.Duplicate",
+                icon: '<i class="fa-regular fa-copy"></i>',
+                visible: li => {
+                    if (li.dataset.itemId && this.actor.isOwner) {
+                        const item = this.actor.items.get(li.dataset.itemId);
+                        return (["item", "weapon", "armor", "helmet"].includes(item.type));
+                    }
+                    return false;
+                },
+                onClick: (_event, li) => {
+                    const original = this.actor.items.get(li.dataset.itemId);
+                    return original.clone({
+                            name: game.i18n.format("DOCUMENT.CopyOf", { name: original.name }),
+                            "system.worn": original.system.worn && this.actor.canEquip(original),
+                            "system.memento": false,
+                        },
+                        { save: true, addSource: true });
+                }
+            },
+            {
                 label: "CONTROLS.CommonDelete",
                 icon: '<i class="fa-solid fa-trash"></i>',
                 visible: li => {
@@ -141,26 +170,6 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                             return effect.delete();
                         }
                     }
-                }
-            },
-            {
-                label: "SIDEBAR.Duplicate",
-                icon: '<i class="fa-regular fa-copy"></i>',
-                visible: li => {
-                    if (li.dataset.itemId && this.actor.isOwner) {
-                        const item = this.actor.items.get(li.dataset.itemId);
-                        return (["item", "weapon", "armor", "helmet"].includes(item.type));
-                    }
-                    return false;
-                },
-                onClick: (_event, li) => {
-                    const original = this.actor.items.get(li.dataset.itemId);
-                    return original.clone({
-                            name: game.i18n.format("DOCUMENT.CopyOf", { name: original.name }),
-                            "system.worn": original.system.worn && this.actor.canEquip(original),
-                            "system.memento": false,
-                        },
-                        { save: true, addSource: true });
                 }
             },
         ];
