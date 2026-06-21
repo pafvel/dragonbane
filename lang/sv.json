@@ -653,7 +653,8 @@
             "effects": "Effekter",
             "enchantments": "Förtrollningar",
             "enchantmentsTooltip": "Förtrollningar som går att aktivera",
-            "formula": "Formel"
+            "formula": "Formel",
+            "noEffects": "Inga effekter"
         },
         "INFO": {
             "monsterAttackUpdated": "Uppdaterade monsterattacker för {actor}.",
