@@ -66,36 +66,5 @@ export default class DoDCharacterBaseData extends DoDActorBaseData {
     }
     return super.migrateData(source);
   }
-  async tokensUpdate(tokenName) {
-    const changeTokenName = await new Promise((resolve) => {
-      const dialog = new foundry.applications.api.DialogV2({
-        title: game.i18n.localize("DoD.ui.dialog.ChangeTokenName.Title"),
-        content: `<p>${game.i18n.localize("DoD.ui.dialog.ChangeTokenName.Content", { name: tokenName })}</p>`,
-        buttons: [
-          {
-            label: game.i18n.localize("DoD.ui.dialog.ChangeTokenName.Confirm"),
-            action: "ok",
-            callback: () => resolve(true),
-          },
-          {
-            label: game.i18n.localize("DoD.ui.dialog.ChangeTokenName.Cancel"),
-            action: "cancel",
-            callback: () => resolve(false),
-          },
-        ],
-      });
-      dialog.render({ force: true });
-    });
-    if (changeTokenName) {
-      await this.parent.prototypeToken.update({ name: tokenName });
-      const dependedTokens = this.parent._dependentTokens;
-      for (const scene of dependedTokens) {
-        for (const token of scene[0].tokens) {
-          if (token.actorId === this.parent.id) {
-            token.update({ name: tokenName });
-          }
-        }
-      }
-    }
-  }
+
 }
