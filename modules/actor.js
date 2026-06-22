@@ -202,9 +202,9 @@ export class DoDActor extends Actor {
            
 
             if (dialog) {
-                const actor = await game.actors.get(data._id);
+                const actor = this;
                 await actor.prototypeToken.update({ name: tokenName });
-                const dependedTokens = actor._dependentTokens;
+                const dependedTokens = actor.getDependentTokens();
                 for (const scene of dependedTokens) {
                     for (const token of scene[0].tokens) {
                         if (token.actorId === actor.id) {

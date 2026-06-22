@@ -46,4 +46,4 @@ export default class DoDActorBaseData extends DragonbaneDataModel {
         }
         return super.migrateData(source);
     }
-}
+ }

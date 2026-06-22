@@ -382,7 +382,6 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         return data;
     }
 
-
     async _onKinEdit(event) {
         event.preventDefault();
         event.currentTarget.blur();
