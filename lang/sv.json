@@ -12,7 +12,9 @@
         "TypeInjury": "Skada",
         "TypeItem": "Föremål",
         "TypeKin": "Släkte",
+        "TypeMaterial": "Ingrediens",
         "TypeProfession": "Yrke",
+        "TypeRecipe": "Recept",
         "TypeSkill": "Färdighet",
         "TypeSpell": "Besvärjelse",
         "TypeWeapon": "Vapen"
@@ -30,7 +32,9 @@
             "injury": "Skada",
             "item": "Föremål",
             "kin": "Släkte",
+            "material": "Ingrediens",
             "profession": "Yrke",
+            "recipe": "Recept",
             "skill": "Färdighet",
             "spell": "Besvärjelse",
             "weapon": "Vapen"
@@ -45,7 +49,9 @@
         "DoDHelmetSheet": "Drakar och Demoner Hjälmformulär",
         "DoDInjurySheet": "Drakar och Demoner Skadeformulär",
         "DoDItemSheet": "Drakar och Demoner Föremålsformulär",
+        "DoDMaterialSheet": "Drakar och Demoner Ingrediensformulär",
         "DoDKinSheet": "Drakar och Demoner Släktesformulär",
+        "DoDRecipeSheet": "Drakar och Demoner Receptformulär",
         "DoDProfessionSheet": "Drakar och Demoner Yrkesformulär",
         "DoDSkillSheet": "Drakar och Demoner Färdighetsformulär",
         "DoDSpellSheet": "Drakar och Demoner Besvärjelseformulär",
@@ -113,7 +119,8 @@
             "action": "Handling",
             "reaction": "Reaktiv",
             "stretch": "Kvart",
-            "shift": "Skift"
+            "shift": "Skift",
+            "special": "Speciell"
         },
          "conditions": {
             "str": "Utmattad",
@@ -162,6 +169,17 @@
             "attribute": "Egenskap",
             "key": "Nyckel"            
         },
+        "enchantments": {
+            "charge": "Laddning",
+            "chargeTooltip": "Alla som är i kontakt med föremålet kan använda dess VP i stället för sina egna",
+            "enchantment": "Förtrollning",
+            "powerLevel": "Effektgrad",
+            "powerLevelTooltip": "Besvärjelsens effektgrad",
+            "castable": "Kan läggas",
+            "castableTooltip": "Kan läggas direkt från karaktärsarket",
+            "free": "Gratis",
+            "freeTooltip": "Kostar inga VP att lägga"
+        },
         "item": {
             "new": "Nytt föremål"
         },
@@ -202,6 +220,7 @@
             "rating": "Skyddsvärde"
         },
         "injury": {
+            "new": "Ny skada",
             "healingTime": "Läkningstid",
             "healingTimeTooltip": "Antal dagar som det tar för skadan att läka",
             "healingTimeExpired": "<b>{injury}</b> har läkt.",
@@ -237,6 +256,20 @@
             "key-attribute": "Viktigaste Grundegenskap",
             "skills": "Färdigheter"
         },
+        "recipe": {
+            "isPoison": "Gift",
+            "potency": "Giftstyrka",
+            "potencyPerPowerlevel": "Giftstyrka per effektgrad",
+            "materials": "Ingredienser",
+            "item": "Substans",
+            "noMaterials": "Drag och släpp ingredienser här",
+            "noItem": "Drag och släpp för att lägga till föremål",
+            "craftItem": "Skapa föremål",
+            "craftItemEnabledTooltip": "Materialet förbrukas och om besvärjelsen lyckas skapas ett föremål",
+            "craftItemDisabledTooltip": "Inaktiverad. Saknar material eller länk till skapade föremål",
+            "consumedMaterials": "Förbrukade material",
+            "craftedItem": "Skapade föremål"
+        },        
         "roll": {
             "dragon": "lyckades med ett Drakslag!",
             "demon": "misslyckades med ett Demonslag!",
@@ -322,7 +355,8 @@
             "stretch": "Kvart",
             "shift": "Skift",
             "concentration": "Koncentration",
-            "permanent": "Permanent"
+            "permanent": "Permanent",
+            "special": "Speciell"
         },
         "spellRangeTypes": {
             "personal": "Personlig",
@@ -383,6 +417,12 @@
             "enchanted2Tooltip": "Har samma effekt som Förtrolla Vapen effektgrad 2",
             "enchanted3": "Förtrollad (3)",
             "enchanted3Tooltip": "Har samma effekt som Förtrolla Vapen effektgrad 3",
+            "penetrating1": "Penetrerande (1)",
+            "penetrating1Tooltip": "Ignorerar 1 poäng rustning",
+            "penetrating2": "Penetrerande (2)",
+            "penetrating2Tooltip": "Ignorerar 2 poäng rustning",
+            "penetrating3": "Penetrerande (3)",
+            "penetrating3Tooltip": "Ignorerar 3 poäng rustning",
             "long": "Lång",
             "longTooltip": "Lång",
             "mounted": "Riddjur",
@@ -423,6 +463,7 @@
                 "create-effect": "Skapa effekt",
                 "create-helmet": "Skapa hjälm",
                 "create-item": "Skapa föremål",
+                "create-injury": "Skapa skada",
                 "create-weapon": "Skapa vapen",
                 "combat": "Strid",
                 "coreSkills": "Grundfärdigheter",
@@ -457,6 +498,8 @@
                 "labelOk": "Ok",
                 "main": "Översikt",
                 "max-encumbrance": "Bärförmåga",
+                "max-prepared-spells": "Max Förberedda",
+                "num-prepared-spells": "Förberedda",
                 "monsterAttackFlavor": "<b>{actor}</b> utför en monsterattack från tabellen <b>{table}</b>.",
                 "monsterAttackTooltip": "Monsterattack",
                 "monsterDefendSkillFlavor": "ducka eller parera",
@@ -536,6 +579,7 @@
                 "castMagicTrick": "<b>{actor}</b> utför trolleritricket @UUID[{uuid}].",
                 "damageDetailDamage": "Skada",
                 "damageDetailArmor": "Skydd",
+                "penetrating": "Penetrerande",
                 "damageDetailMultiplier": "Modifikation",
                 "damageDetailTotal": "Total skada",
                 "updateTarget": "Uppdatera mål",
@@ -558,6 +602,8 @@
                 "attributeRollTitle": "Grundegenskapsslag",
                 "attributeRollLabel": "Slå grundegenskapsslag",
                 "powerLevel": "Effektgrad",
+                "powerSource": "Kraftkälla",
+                "powerSourceTooltip": "Kraftkällan som VP dras ifrån.",
                 "labelCancel": "Avbryt",
                 "labelOk": "Ok",
                 "chooseAction": "Välj handling",
@@ -567,6 +613,8 @@
                 "weaponFeatures": "Vapenegenskaper",
                 "castMagicTrickTitle": "Utför trolleritrick",
                 "castMagicTrickContent": "Spendera <b>1</b> VP och utför trolleritricket <b>{spell}</b>?",
+                "castSpellTitle": "Kasta besvärjelse",
+                "castSpellLabel": "Kasta",
                 "deleteItemTitle": "Radera {item}",
                 "deleteItemContent": "Vill du radera <b>{item}</b>?",
                 "trainSkillTitle": "Träna färdighet?",
@@ -594,13 +642,19 @@
                 "restStretchConditionsHint": "Antal tillstånd som återhämtas",
                 "restNote": "Vila klart för att läka KP, VP och tillstånd. Avbryt för att spendera vilan utan läkning.",
                 "restOk": "Vila klart",
-                "restInterrupt": "Avbryt vila"           }
+                "restInterrupt": "Avbryt vila"
+            }
         },
         "item-sheet": {
+            "postToChat": "Posta i chatten",
             "details": "Detaljer",
             "description": "Beskrivning",
             "gmDescription": "SL-anteckningar",
-            "effects": "Effekter"
+            "effects": "Effekter",
+            "enchantments": "Förtrollningar",
+            "enchantmentsTooltip": "Förtrollningar som går att aktivera",
+            "formula": "Formel",
+            "noEffects": "Inga effekter"
         },
         "INFO": {
             "monsterAttackUpdated": "Uppdaterade monsterattacker för {actor}.",
@@ -681,7 +735,9 @@
             "noRangedMishapTable": "Tabellen för missöde för avståndsvapen saknas.",
             "noMagicMishapTable": "Tabellen för magiska missöden saknas.",
             "maxWeaponsEquipped": "Högst 3 vapen till hands.",
-            "noSkillsInCompendium": "Den registrerade grundmodulen innehåller inga färdigheter. Modulen kan vara skadad och bör ominstalleras. Försöker att hitta färdigheter i världen istället."
-        }
+            "noSkillsInCompendium": "Den registrerade grundmodulen innehåller inga färdigheter. Modulen kan vara skadad och bör ominstalleras. Försöker att hitta färdigheter i världen istället.",
+             "missingMaterialsForCrafting": "Saknar material för att tillverka föremålet.",
+             "actorMissingSkill": "Den valda karaktären saknar denna färdighet."
+       }
     }
 }

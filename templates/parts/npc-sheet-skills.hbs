@@ -6,9 +6,9 @@
         </td>
         <td class="skill-name text-data">
             {{#if skill.system.isProfessionSkill}}
-            <a class="rollable-skill"><b>{{skill.name}}</b> ({{localize skill.system.attributeShort}})</a>
+            <a data-action="skillRoll"><b>{{skill.name}}</b> ({{localize skill.system.attributeShort}})</a>
             {{else}}
-            <a class="rollable-skill">{{skill.name}} ({{localize skill.system.attributeShort}})</a>
+            <a data-action="skillRoll">{{skill.name}} ({{localize skill.system.attributeShort}})</a>
             {{/if}}
         </td>
         <td>

@@ -16,4 +16,18 @@ export default class DoDAbilityData extends DoDItemBaseData {
     static migrateData(source) {
         return super.migrateData(source);
     }
+
+    async getCardData(context) {
+        const data = await super.getCardData(context);
+
+        if (this.abilityType !== "kin") {
+            data.properties.push({ label: game.i18n.localize("DoD.ability.requirement"), value: this.requirement || "-" });
+        }
+        data.properties.push({ label: game.i18n.localize("DoD.ability.wp"), value: this.wp || "-" });
+        if (this.boons) {
+            data.properties.push({ label: game.i18n.localize("DoD.ui.dialog.boons"), value: this.boons });
+        }
+
+        return data;
+    }
 }

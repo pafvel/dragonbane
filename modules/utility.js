@@ -3,6 +3,10 @@ import DoDCoreSettings from "./apps/core-settings.js";
 import DoDSkillTest from "./tests/skill-test.js";
 import { DoD } from "./config.js";
 
+// Matches a dice formula: one or more die/number terms joined by + or -
+// e.g. D6, 2D6, 2D6+2, D10+D6+2
+export const DICE_FORMULA = String.raw`(?:(?:\d+)?[dD]\d+|\d+)(?:[+\-](?:(?:\d+)?[dD]\d+|\d+))*`;
+
 export default class DoD_Utility {
 
     static clamp(value, min, max) {
@@ -80,39 +84,19 @@ export default class DoD_Utility {
         return skills.map(skill => skill.toObject());
     }
 
-    static async findAbility(abilityName) {
-        // Prio 1: World items
-        let ability = this.findItem(abilityName, "ability", game.items);
-        return ability;
-    }
-
-    static async findKin(kinName) {
-        // Prio 1: World items
-        let kin = this.findItem(kinName, "kin", game.items);
-        return kin;
-    }
+    static findAbility(abilityName) { return this.findItem(abilityName, "ability"); }
+    static findKin(kinName) { return this.findItem(kinName, "kin"); }
+    static findSkill(skillName) { return this.findItem(skillName, "skill"); }
+    static findProfession(profName) { return this.findItem(profName, "profession"); }
 
     static async findMonster(monsterUUID) {
-        const monster = this.getActorFromUUID(monsterUUID);
-        return monster;
+        return this.getActorFromUUID(monsterUUID);
     }
 
-    static async findSkill(skillName) {
-        // Prio 1: World items
-        let kin = this.findItem(skillName, "skill", game.items);
-        return kin;
-    }
-
-    static async findProfession(professionName) {
-        // Prio 1: World items
-        let kin = this.findItem(professionName, "profession", game.items);
-        return kin;
-    }
-
-    static findTable(name, options) {
+    static async findTable(name, options) {
         if (!name) return null;
-        
-        let table = game.tables.find(i => i.name.toLowerCase() === name.toLowerCase()) || fromUuidSync(name);
+        let table = game.tables.find(i => i.name.toLowerCase() === name.toLowerCase())
+            || await fromUuid(name).catch(() => null);
         if (!table) {
             if (!options?.noWarnings){
                 console.log(game.i18n.format("DoD.WARNING.tableNotFound", {id: name}));
@@ -130,25 +114,34 @@ export default class DoD_Utility {
         return table;
     }
 
-    static findSystemTable(settingName, tableName) {
+    static async findSystemTable(settingName, tableName) {
         const tableId = DoDCoreSettings[settingName];
-        let table = DoD_Utility.findTable(tableId, {noWarnings: true});
+        let table = await DoD_Utility.findTable(tableId, {noWarnings: true});
         if (!table) {
-            table = DoD_Utility.findTable("RollTable." + tableId, {noWarnings: true});
+            table = await DoD_Utility.findTable("RollTable." + tableId, {noWarnings: true});
         }
         if (!table && tableName) {
-            table = DoD_Utility.findTable(tableName, {noWarnings: true});
+            table = await DoD_Utility.findTable(tableName, {noWarnings: true});
         }
         return table;
     }
 
-    static async findItem(itemName, itemType, collection) {
-        let name = itemName.toLowerCase();
-        let item = collection.find(i => i.type === itemType && i.name.toLowerCase() === name);
-        return item?.clone();
+    static async findItem(itemName, itemType) {
+        const name = itemName.toLowerCase();
+        const worldItem = game.items.find(i => i.type === itemType && i.name.toLowerCase() === name);
+        if (worldItem) return worldItem.clone();
+        for (const pack of game.packs) {
+            if (pack.documentName !== "Item") continue;
+            const entry = pack.index.find(i => i.type === itemType && i.name.toLowerCase() === name);
+            if (entry) {
+                const doc = await pack.getDocument(entry._id);
+                return doc?.clone() ?? null;
+            }
+        }
+        return null;
     }
 
-    static getActorFromUUID(uuid, options = {noWarnings: false}) {
+    static getActorFromUUIDSync(uuid, options = {noWarnings: false}) {
         let doc = null;
         try {
             doc = fromUuidSync(uuid);
@@ -156,7 +149,25 @@ export default class DoD_Utility {
             if(!options.noWarnings) {
                 DoD_Utility.WARNING(err.message);
             }
+        }
+        let actor = doc?.actor ?? doc;
+        if (!actor) {
+            if(!options.noWarnings) {
+                DoD_Utility.WARNING("DoD.WARNING.actorNotFound", {id: uuid});
+            }
+            return null;
+        }
+        return actor;
+    }
 
+    static async getActorFromUUID(uuid, options = {noWarnings: false}) {
+        let doc = null;
+        try {
+            doc = await fromUuid(uuid);
+        } catch (err) {
+            if(!options.noWarnings) {
+                DoD_Utility.WARNING(err.message);
+            }
         }
         let actor = doc?.actor ?? doc;
         if (!actor) {
@@ -177,9 +188,10 @@ export default class DoD_Utility {
     }
 
     static async handleTableRoll(event) {
-        const tableId = event.target.dataset.tableId;
-        const tableName = event.target.dataset.tableName;
-        const table = fromUuidSync(tableId) || this.findTable(tableName);
+        const el = event.target.classList.contains("table-roll") ? event.target : event.target.closest(".table-roll");
+        const tableId = el?.dataset.tableId;
+        const tableName = el?.dataset.tableName;
+        const table = (tableId ? await fromUuid(tableId) : null) || await this.findTable(tableName);
         if (table) {
             if (event.type === "click") { // left click
                 table.draw();
@@ -189,6 +201,28 @@ export default class DoD_Utility {
         }
         event.preventDefault();
         event.stopPropagation();
+    }
+
+    static getTableResultName(result, table) {
+        if (!result.name) return null;
+        const prefix = table.name + " - ";
+        return result.name.startsWith(prefix) ? result.name.substring(prefix.length) : result.name;
+    }
+
+    static hasEmbeddedResultName(description) {
+        return /<(b|strong)>(.*?)<\/\1>/.test(description);
+    }
+
+    static getEmbeddedResultName(description) {
+        const match = description.match(/<(b|strong)>(.*?)<\/\1>([\s\S]*)/);
+        if (!match) return null;
+
+        const name = match[2].trim();
+        let desc = match[3].trim();
+
+        desc = desc.replace(/<\/p>\s*$/i, '').trim(); // Strip a trailing closing </p>
+
+        return { name, description: desc };
     }
 
     static async expandTableResult(tableResult)
@@ -214,7 +248,7 @@ export default class DoD_Utility {
         }
 
         if (!table) {
-            table = actor.system.attackTable ? fromUuidSync(actor.system.attackTable) : null;
+            table = actor.system.attackTable ? await fromUuid(actor.system.attackTable) : null;
             if (!table) {
                 DoD_Utility.WARNING("DoD.WARNING.missingMonsterAttackTable");
                 return;
@@ -236,7 +270,7 @@ export default class DoD_Utility {
         }
 
         if (!table) {
-            table = actor.system.attackTable ? fromUuidSync(actor.system.attackTable) : null;
+            table = actor.system.attackTable ? await fromUuid(actor.system.attackTable) : null;
             if (!table) {
                 DoD_Utility.WARNING("DoD.WARNING.missingMonsterAttackTable");
                 return;
@@ -275,10 +309,10 @@ export default class DoD_Utility {
         for (let r of messageResults) {
             // Split attack name and description
             if (!r.name) {
-                const match = r.description.match(/<(b|strong)>(.*?)<\/\1>([\s\S]*)/);
-                if (match) {
-                    r.name = match[2];
-                    r.description = match[3];
+                const embedded = this.getEmbeddedResultName(r.description);
+                if (embedded) {
+                    r.name = embedded.name;
+                    r.description = embedded.description;
                 }
             }
             r.details = "<strong class=\"name\">" + r.name + "</strong>"
@@ -313,7 +347,7 @@ export default class DoD_Utility {
     }
 
      static async drawTreasureCards(number) {
-        const table = DoD_Utility.findSystemTable("treasureTable");
+        const table = await DoD_Utility.findSystemTable("treasureTable");
         const count = table ? DoD_Utility.clamp(number, 1, table.results.size) : 0;
 
         if (!table || count === 0) {
@@ -518,8 +552,8 @@ export default class DoD_Utility {
     }        
 
     static parseDamageString(s) {
-        const regex = /((?:\d+)?[dD](?:\d+)(?:[\+\-]\d+)?)\s*(slashing|piercing|bludgeoning)?/i;
-        const match = s.match(regex);
+        const regex = new RegExp(String.raw`^(-?${DICE_FORMULA})\s*(slashing|piercing|bludgeoning)?$`, "i");
+        const match = s?.trim().match(regex);
         if (!match) return {};
         const result = { formula: match[1] };
         if (match[2]) {
@@ -530,4 +564,64 @@ export default class DoD_Utility {
         }
         return result;
     }
+
+    static hasDefinition(str, varName = null) {
+        const inner = `(?![A-Za-z]+\\.)[^\\]]+`;
+        const pattern = varName
+            ? new RegExp(`@${varName}\\[${inner}\\]`)
+            : new RegExp(`@\\w+\\[${inner}\\]`);
+        return pattern.test(str);
+    }
+
+    static async resolveDefinitions(str, knownVars = {}) {
+        const definePattern = /@(\w+)\[((?![A-Za-z]+\.)[^\]]+)\]/g;
+        let match;
+        const resolved = { varName: null, value: null };
+
+        while ((match = definePattern.exec(str)) !== null) {
+            const [, varName, expression] = match;
+
+            const resolvedExpr = expression.replace(/@(\w+)/g, (_, key) => {
+                if (knownVars[key] === undefined) throw new Error(`Unknown variable: @${key}`);
+                return knownVars[key];
+            });
+
+            const roll = await new Roll(resolvedExpr).evaluate();
+            resolved.varName = varName;
+            resolved.value = roll.total;
+        }
+
+        const resolvedStr = str.replace(/@(\w+)\[((?![A-Za-z]+\.)[^\]]+)\]/g, () => resolved.value);
+        return { resolvedStr, resolved };
+    }
+
+    static async resolveInlineVars(str, resolved) {
+        const substituted = str.replace(/@(\w+)/g, (_, key) => {
+            if (key !== resolved.varName) throw new Error(`Unknown variable: @${key}`);
+            return resolved.value;
+        });
+
+        const mathPattern = /(\d[\d\s\+\-\*\/\.]*\d|\d)/g;
+        const parts = [];
+        let lastIndex = 0;
+        let m;
+
+        while ((m = mathPattern.exec(substituted)) !== null) {
+            const candidate = m[1].trim();
+            if (/[\+\-\*\/]/.test(candidate)) {
+                parts.push(substituted.slice(lastIndex, m.index));
+                const roll = await new Roll(candidate).evaluate();
+                parts.push(roll.total);
+                lastIndex = m.index + m[0].length;
+            }
+        }
+        parts.push(substituted.slice(lastIndex));
+        return parts.join("");
+    }
+
+}
+
+export async function renderItemCard(item, context = "chat") {
+    const data = await item.system.getCardData(context);
+    return foundry.applications.handlebars.renderTemplate(`systems/dragonbane/templates/partials/${context}-item-card.hbs`, data);
 }

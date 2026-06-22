@@ -16,9 +16,10 @@ export default class DoDItemBaseSheet extends HandlebarsApplicationMixin(ItemShe
         actions: {
             createEffect: this.#createEffect,
             editEffect: this.#editEffect,
-            deleteEffect: this.#deleteEffect
+            deleteEffect: this.#deleteEffect,
+            postToChat: this.#postToChat
         },
-    };
+};
 
     static TABS = {
         primary: {
@@ -38,16 +39,20 @@ export default class DoDItemBaseSheet extends HandlebarsApplicationMixin(ItemShe
 
     #createDragDropHandlers() {
         return new DragDrop({
+            dragSelector: "[data-item-drag]",
             permissions: {
-                drop: this._canDragDrop.bind(this)
+                dragstart: this._canDragStart.bind(this),
+                drop: this._canDrop.bind(this)
             },
             callbacks: {
+                dragstart: this._onDragStart.bind(this),
                 drop: this._onDrop.bind(this)
             }
         })
     }
 
-    _onRender(_context, _options) {
+    async _onRender(context, options) {
+        await super._onRender(context, options);
         this.#dragDropHandler.bind(this.element);
     }
 
@@ -96,8 +101,34 @@ export default class DoDItemBaseSheet extends HandlebarsApplicationMixin(ItemShe
         return effect.delete();
     }
 
-    _canDragDrop(_selector) {
+    static async #postToChat(event) {
+        event.preventDefault();
+        return this.item.toChatCard();
+    }
+
+    _getHeaderControls() {
+        const controls = super._getHeaderControls();
+        controls.push({
+            action: "postToChat",
+            icon: "fa-solid fa-message",
+            label: "DoD.item-sheet.postToChat",
+            ownership: "OWNER"
+        });
+        return controls;
+    }
+
+    _canDragStart(_selector) {
+        return true;
+    }
+
+    _canDrop(_selector) {
         return this.document.isOwner && this.isEditable;
+    }
+
+    
+    async _onDragStart(event) {
+        const document = await fromUuid(event.currentTarget.dataset.itemUuid);
+        event.dataTransfer.setData("text/plain", JSON.stringify(document.toDragData()));
     }
 
     async _onDrop(event) {

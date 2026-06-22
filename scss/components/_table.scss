@@ -110,6 +110,18 @@
         .number-header {
             text-align: center;
         }
+
+        .spell-sort-toggle {
+            cursor: pointer;
+            color: inherit;
+            text-decoration: none;
+            user-select: none;
+            transition: text-shadow 0.15s ease, color 0.15s ease;
+
+            &:hover {
+                text-shadow: 0 0 6px var(--dod-color-journal-table-header);
+            }
+        }
     }
 
     .sheet-table-data {
@@ -184,6 +196,10 @@
 
         .text-data {
             text-align: left;
+
+            input[type="text"] {
+                text-align: left;
+            }
         }
 
         .number-data {

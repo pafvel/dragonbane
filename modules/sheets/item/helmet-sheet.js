@@ -1,6 +1,6 @@
-import DoDItemBaseSheet from "./item-base-sheet.js";
+import DoDGearBaseSheet from "./gear-base-sheet.js";
 
-export default class DoDHelmetSheet extends DoDItemBaseSheet {
+export default class DoDHelmetSheet extends DoDGearBaseSheet {
 
     static type = 'helmet';
 
@@ -14,5 +14,6 @@ export default class DoDHelmetSheet extends DoDItemBaseSheet {
         details: { scrollable: [''], template: 'systems/dragonbane/templates/parts/item-sheet-helmet.hbs' },
         description: { scrollable: [''], template: 'systems/dragonbane/templates/parts/item-sheet-description.hbs' },
         effects: { scrollable: [''], template: 'systems/dragonbane/templates/parts/item-sheet-effects.hbs' },
+        enchantments: { scrollable: [''], template: 'systems/dragonbane/templates/parts/item-sheet-enchantments.hbs' },
     }
 }

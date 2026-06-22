@@ -14,7 +14,7 @@ export async function createItemMacro(data, slot) {
     let document = await fromUuid(data.uuid);
     let macro = null;
     let command = "";
-    if (document.type === "skill" || document.type === "spell" || document.type === "weapon" || document.type === "ability") {
+    if (document.type === "skill" || document.type === "spell" || document.type === "weapon" || document.type === "ability" || document.type === "recipe") {
         command = `game.dragonbane.useItem("${document.name}", "${document.type}");`;
     } else {
         command = `Hotbar.toggleDocumentSheet("${document.uuid}");`;

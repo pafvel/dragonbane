@@ -5,6 +5,7 @@ import DoDSpellTest from "../tests/spell-test.js";
 import DoDWeaponTest from "../tests/weapon-test.js";
 import DoDOptionalRuleSettings from "../apps/optional-rule-settings.js";
 import DoDActorSettings from "../apps/actor-settings.js";
+import { getSortedSpells } from "../utility/spell-sort.js";
 
 const { HandlebarsApplicationMixin } = foundry.applications.api;
 const { ActorSheetV2 } = foundry.applications.sheets;
@@ -13,6 +14,23 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
 
     #keydownListener = null; // Keydown listener to handle delete/backspace key
     #focusElement = null; // Element that has focus and can be deleted with delete/backspace key
+
+    static DEFAULT_OPTIONS = {
+        actions: {
+            editItem: this.prototype._onItemEdit,
+            createItem: this.prototype._onItemCreate,
+            deleteItem: this.prototype._onItemDelete,
+            editEffect: this.prototype._onEffectEdit,
+            skillRoll: { handler: this.prototype._onSkillRoll, buttons: [0,2] },
+            useAbility: { handler: this.prototype._onUseAbility, buttons: [0,2] },
+            useEnchantment: { handler: this.prototype._onUseEnchantment, buttons: [0,2] },
+            hitPointClick: { handler: this.prototype._onHitPointClick, buttons: [0,2] },
+            willPointClick: { handler: this.prototype._onWillPointClick, buttons: [0,2] },
+            rollDamage: { handler: this.prototype._onDamageRoll, buttons: [0,2] },
+            rollHealingTime: { handler: this.prototype._onHealingTimeRoll, buttons: [0,2] },
+            sortSpells: this.prototype._onSortSpells,
+        }
+    };
 
     constructor(options = {}, ...args) {
         super(options, ...args);
@@ -100,29 +118,12 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                 }
             },
             {
-                label: "CONTROLS.CommonDelete",
-                icon: '<i class="fa-solid fa-trash"></i>',
-                visible: li => {
-                    if (li.dataset.itemId) {
-                        return this.actor.isOwner;
-                    }
-                    if (li.dataset.effectUuid && li.dataset.parentId) {
-                        return li.dataset.parentId === this.actor.id && this.actor.isOwner;
-                    }
-
-                },
-                onClick: async (_event, li) => {
-                    const itemId = li.dataset.itemId;
-                    if (itemId !== undefined) {
-                        const item = this.actor.items.get(itemId);
-                        return this._onDeleteItem(item, itemId);
-                    } else {
-                        const effectUuid = li.dataset.effectUuid;
-                        const effect = fromUuidSync(effectUuid);
-                        if (await this._itemDeleteDialog(effect)) {
-                            return effect.delete();
-                        }
-                    }
+                label: "DoD.item-sheet.postToChat",
+                icon: '<i class="fa-solid fa-message"></i>',
+                visible: li => !!li.dataset.itemId,
+                onClick: (_event, li) => {
+                    const item = this.actor.items.get(li.dataset.itemId);
+                    return item?.toChatCard();
                 }
             },
             {
@@ -143,6 +144,32 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                             "system.memento": false,
                         },
                         { save: true, addSource: true });
+                }
+            },
+            {
+                label: "CONTROLS.CommonDelete",
+                icon: '<i class="fa-solid fa-trash"></i>',
+                visible: li => {
+                    if (li.dataset.itemId) {
+                        return this.actor.isOwner;
+                    }
+                    if (li.dataset.effectUuid && li.dataset.parentId) {
+                        return li.dataset.parentId === this.actor.id && this.actor.isOwner;
+                    }
+
+                },
+                onClick: async (_event, li) => {
+                    const itemId = li.dataset.itemId;
+                    if (itemId !== undefined) {
+                        const item = this.actor.items.get(itemId);
+                        return this._onDeleteItem(item, itemId);
+                    } else {
+                        const effectUuid = li.dataset.effectUuid;
+                        const effect = await fromUuid(effectUuid);
+                        if (await this._itemDeleteDialog(effect)) {
+                            return effect.delete();
+                        }
+                    }
                 }
             },
         ];
@@ -266,68 +293,80 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         }
     }
 
-    async _onRender(context, options) {
-        await super._onRender(context, options);
+// event handlers
+#handlers = {};
 
-        this._formatActiveEffectProperties();
+async _onRender(context, options) {
+    await super._onRender(context, options);
 
-        const html = $(this.element);
+    this._formatActiveEffectProperties();
 
-        // Open item for editing/viewing
-        html.find(".item-edit").on("click contextmenu", this._onItemEdit.bind(this));
+    const html = $(this.element);
 
-        if (this.actor.isOwner) {
-            // Elements need focus for the keydown event to to work
-            html.find(".item-delete-key").mouseenter(event => {
-                this.#focusElement = event.currentTarget;
-            });
-            html.find(".item-delete-key").mouseleave(_event => {
-                this.#focusElement = null;
-            });
+    this.#handlers = {
+        ...(this.#handlers ?? {}),
 
-            // Create & Delete item buttons
-            html.find(".item-create").click(this._onItemCreate.bind(this));
-            html.find(".item-delete").click(this._onItemDelete.bind(this));
+        editAttribute: this._onEditAttribute.bind(this),
+        focusAttribute: this._onFocusAttribute.bind(this),
+        blurAttribute: this._onBlurAttribute.bind(this),
 
+        editResource: this._onEditResource.bind(this),
+        focusResource: this._onFocusResource.bind(this),
+        blurResource: this._onBlurResource.bind(this),
+        
+        editCurrentHp: this._onEditCurrentHp.bind(this),
+        editCurrentWp: this._onEditCurrentWp.bind(this),
 
-            // Attributes with .base and .value must be handled separately
-            html.find(".attribute-input").change(this._onEditAttribute.bind(this));
-            html.find(".attribute-input").focus(this._onFocusAttribute.bind(this));
-            html.find(".attribute-input").blur(this._onBlurAttribute.bind(this));
+        inlineEdit: this._onInlineEdit.bind(this),
 
-            // Hit points
-            html.find(".hit-points-max-label").focus(this._onFocusResource.bind(this));
-            html.find(".hit-points-max-label").blur(this._onBlurResource.bind(this));
-            html.find(".hit-points-max-label").change(this._onEditResource.bind(this));
-            html.find(".hit-points-current-label").change(this._onEditCurrentHp.bind(this));
-            html.find(".hit-points-box").on("click contextmenu", this._onHitPointClick.bind(this));
+        mouseEnterDeleteKey: (event) => { this.#focusElement = event.currentTarget; },
+        mouseLeaveDeleteKey: (_event) => { this.#focusElement = null; }
+    };
 
-            // Will points
-            html.find(".will-points-max-label").focus(this._onFocusResource.bind(this));
-            html.find(".will-points-max-label").blur(this._onBlurResource.bind(this));
-            html.find(".will-points-max-label").change(this._onEditResource.bind(this));
-            html.find(".will-points-current-label").change(this._onEditCurrentWp.bind(this));
-            html.find(".will-points-box").on("click contextmenu", this._onWillPointClick.bind(this));
+    if (this.actor.isOwner) {
+        html.off("mouseenter", ".item-delete-key");
+        html.on("mouseenter", ".item-delete-key", this.#handlers.mouseEnterDeleteKey);
 
-            // Inline editing
-            html.find(".inline-edit").change(this._onInlineEdit.bind(this));
+        html.off("mouseleave", ".item-delete-key");
+        html.on("mouseleave", ".item-delete-key", this.#handlers.mouseLeaveDeleteKey);
 
-            // Skills, abilities & weapon damage
-            html.find(".rollable-skill").on("click contextmenu", this._onSkillRoll.bind(this));
-            html.find(".use-ability").on("click contextmenu", this._onUseAbility.bind(this));
-            html.find(".rollable-damage").on("click contextmenu", this._onDamageRoll.bind(this));
+        html.off("change", ".attribute-input");
+        html.on("change", ".attribute-input", this.#handlers.editAttribute);
 
-            // Effects & injuries
-            html.find(".effect-edit").on("click contextmenu", this._onEffectEdit.bind(this));
-            html.find(".effect-delete").click(this._onEffectDelete.bind(this));
-            html.find(".rollable-healingTime").on("click contextmenu", this._onHealingTimeRoll.bind(this));
-        } else if (this.actor.isObserver) {
-            // Enable right-clicking skills and abilities
-            html.find(".rollable-skill").on("contextmenu", this._onSkillRoll.bind(this));
-            html.find(".use-ability").on("contextmenu", this._onUseAbility.bind(this));
-        }
+        html.off("focus", ".attribute-input");
+        html.on("focus", ".attribute-input", this.#handlers.focusAttribute);
 
+        html.off("blur", ".attribute-input");
+        html.on("blur", ".attribute-input", this.#handlers.blurAttribute);
+
+        html.off("change", ".hit-points-max-label");
+        html.on("change", ".hit-points-max-label", this.#handlers.editResource);
+
+        html.off("focus", ".hit-points-max-label");
+        html.on("focus", ".hit-points-max-label", this.#handlers.focusResource);
+
+        html.off("blur", ".hit-points-max-label");
+        html.on("blur", ".hit-points-max-label", this.#handlers.blurResource);
+
+        html.off("change", ".hit-points-current-label");
+        html.on("change", ".hit-points-current-label", this.#handlers.editCurrentHp);
+
+        html.off("focus", ".will-points-max-label");
+        html.on("focus", ".will-points-max-label", this.#handlers.focusResource);
+
+        html.off("blur", ".will-points-max-label");
+        html.on("blur", ".will-points-max-label", this.#handlers.blurResource);
+
+        html.off("change", ".will-points-max-label");
+        html.on("change", ".will-points-max-label", this.#handlers.editResource);
+
+        html.off("change", ".will-points-current-label");
+        html.on("change", ".will-points-current-label", this.#handlers.editCurrentWp);
+
+        html.off("change", ".inline-edit");
+        html.on("change", ".inline-edit", this.#handlers.inlineEdit);
     }
+}
 
     async enrich(html) {
         if (html) {
@@ -376,32 +415,14 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         this._prepareEncumbrance(context);
         this._prepareEffects(context);
 
+        if (this.actor.system.maxPreparedSpells?.value !== undefined) {
+            context.maxPreparedSpells = this.actor.system.maxPreparedSpells.value;
+            context.numPreparedSpells = context.spells.filter(s => s.system.memorized).length;
+            context.overPreparedSpells = context.numPreparedSpells > context.maxPreparedSpells;
+        }
+
         return context;
     }
-
-    // Increase quantity when dropped item already exists in inventory
-    #_findItemStack(item, itemData) {
-        const systemObject = itemData ? foundry.utils.mergeObject(item.system.toObject(), itemData.system) : item.system.toObject();
-        const hasQuantity = systemObject?.quantity !== undefined;
-        const isItem = item?.type === "item";
-        const isEquippable = ["weapon", "armor", "helmet"].includes(item?.type);
-        const isWorn = !!systemObject?.worn;
-        let stack = null;
-        if (hasQuantity && (isItem || (isEquippable && !isWorn))) {
-            stack = this.actor.items.find(i => {
-                // Stack exists if it is the same type, has the same name
-                // and has the same system data properties (except quantity)
-                if (i.type === item.type && i.name === item.name && i.uuid != item.uuid) {
-                    let itemTemplate = systemObject;
-                    item.system.constructor.cleanData(itemTemplate);
-                    delete itemTemplate.quantity;
-                    return foundry.utils.objectsEqual(foundry.utils.filterObject(i.system.toObject(), itemTemplate), itemTemplate);
-                }
-                return null;
-            });
-        }
-        return stack;
-    };
 
     // simple check, could check types instead
     #isInventoryItem(item) {
@@ -523,7 +544,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                 if (dropTarget === "storage") {
                     itemData.system.storage = true;
                 }
-                const stack = this.#_findItemStack(item, itemData);
+                const stack = this.actor.findStackableItem(item, itemData);
                 if (stack) {
                     // Item already exists in inventory, increase quantity and delete the original item
                     const itemQuantity = item.system.quantity + stack.system.quantity;
@@ -555,7 +576,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
 
             // if not equipped, try to stack
             if (!itemData.system.worn) {
-                const stack = this.#_findItemStack(item, itemData);
+                const stack = this.actor.findStackableItem(item, itemData);
                 if (stack) {
                     // Item already exists in inventory, increase quantity and forget the original item
                     const itemQuantity = item.system.quantity + stack.system.quantity;
@@ -610,18 +631,36 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         return createdItem;
     }
 
-    _onItemEdit(event) {
+    async _onSortSpells(_event, target) {
+        const key = target.dataset.sortKey;
+        if (!["rank", "school", "name"].includes(key)) return;
+        const priority = this.actor.getFlag("dragonbane", "spellSortPriority") ?? [];
+        const idx = priority.findIndex(p => p.key === key);
+        if (idx === -1) {
+            priority.push({ key, direction: "asc" });
+        } else if (priority[idx].direction === "asc") {
+            priority[idx].direction = "desc";
+        } else {
+            priority.splice(idx, 1);
+        }
+        await this.actor.setFlag("dragonbane", "spellSortPriority", priority);
+    }
+
+    _onItemEdit(event, target) {
         event.preventDefault();
-        let element = event.currentTarget;
+        let element = target;
         let itemId = element.closest(".sheet-table-data").dataset.itemId;
         let item = this.actor.items.get(itemId);
 
         item?.sheet.render(true);
     }
 
-    async _onItemCreate(event) {
+    async _onItemCreate(event, target) {
         event.preventDefault();
-        const element = event.currentTarget;
+
+        if (!this.actor.isOwner) return;
+
+        const element = target;
         const type = element.dataset.type;
 
         // Create effect
@@ -667,9 +706,12 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         return this.actor.createEmbeddedDocuments("Item", [itemData]);
     }
 
-    async _onItemDelete(event) {
+    async _onItemDelete(event, target) {
         event.preventDefault();
-        let element = event.currentTarget;
+
+        if (!this.actor.isOwner) return;
+
+        let element = target;
         let itemId = element.closest(".sheet-table-data").dataset.itemId;
         let item = this.actor.items.get(itemId);
         return await this._onDeleteItem(item, itemId);
@@ -796,8 +838,10 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         });
     }
 
-    _onHitPointClick(event) {
+    _onHitPointClick(event, _target) {
         event.preventDefault();
+
+        if(!this.actor.isOwner) return;
 
         let hp = this.actor.system.hitPoints;
         if (event.type === "click") { // left click
@@ -811,8 +855,10 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         }
     }
 
-    _onWillPointClick(event) {
+    _onWillPointClick(event, _target) {
         event.preventDefault();
+
+        if(!this.actor.isOwner) return;
 
         let wp = this.actor.system.willPoints;
         if (event.type === "click") { // left click
@@ -870,7 +916,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                     await item.update({
                         ["system.worn"]: false,
                     });
-                    const stack = this.#_findItemStack(item);
+                    const stack = this.actor.findStackableItem(item);
                     if (stack) {
                         // Item already exists in inventory, increase quantity and delete the original item
                         const itemQuantity = item.system.quantity + stack.system.quantity;
@@ -923,10 +969,12 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         return result;
     }
 
-    async _onSkillRoll(event) {
+    async _onSkillRoll(event, target) {
         event.preventDefault();
 
-        let itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
+        if (!this.actor.isObserver) return;
+
+        let itemId = target.closest(".sheet-table-data").dataset.itemId;
         let item = this.actor.items.get(itemId);
 
         if (event.type === "click") { // left click - skill roll
@@ -943,54 +991,19 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
             }
             if (item.type === "skill") {
                 test = new DoDSkillTest(this.actor, item, options);
-            } else if (item.type === "spell") {
-                if (item.system.rank > 0) {
-                    if (this.actor.type === "monster") {
-                        if (!this.actor.findMagicSkill(item.system.school)) {
-                            options.autoSuccess = true;
-                        } else {
-                            options.noWPCost = true;
-                        }
-                    }
-                    test = new DoDSpellTest(this.actor, item, options);
-                } else {
-
-                    const use = await foundry.applications.api.DialogV2.confirm({
-                        window: { title: game.i18n.localize("DoD.ui.dialog.castMagicTrickTitle") },
-                        content: game.i18n.format("DoD.ui.dialog.castMagicTrickContent", { spell: item.name }),
-                    });
-
-                    if (use) {
-                        if (this.actor.type !== "monster" && this.actor.system.willPoints.value < 1) {
-                            DoD_Utility.WARNING("DoD.WARNING.notEnoughWPForSpell");
-                            return;
-                        } else {
-                            let content = "<p>" + game.i18n.format("DoD.ui.chat.castMagicTrick", {
-                                actor: this.actor.name,
-                                spell: item.name,
-                                uuid: item.uuid
-                            }) + "</p>";
-                            if (this.actor.type !== "monster") {
-                                const oldWP = this.actor.system.willPoints.value;
-                                const newWP = oldWP - 1;
-                                await this.actor.update({ "system.willPoints.value": newWP });
-                                content +=
-                                    `<div class="damage-details permission-observer" data-actor-id="${this.actor.uuid}">
-                                    <i class="fa-solid fa-circle-info"></i>
-                                    <div class="expandable" style="text-align: left; margin-left: 0.5em">
-                                        <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${oldWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>
-                                    </div>
-                                </div>`;
-                            }
-
-                            ChatMessage.create({
-                                user: game.user.id,
-                                speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-                                content: content,
-                            });
-                        }
-                    }
+            } else if (item.isSpellType) {
+                // Monsters use magic school if available, auto success otherwise.
+                if (this.actor.type === "monster" && !this.actor.findMagicSkill(item.system.school)) {
+                    options.autoSuccess = true;
                 }
+                // Magic tricks always succeed
+                if (item.system.rank === 0) {
+                    options.autoSuccess = true;
+                    options.title = game.i18n.localize("DoD.ui.dialog.castMagicTrickTitle");
+                    options.label = options.title;
+                    options.content = game.i18n.format("DoD.ui.dialog.castMagicTrickContent", { spell: item.name });
+                }
+                test = new DoDSpellTest(this.actor, item, options);
             } else if (item.type === "weapon") {
                 test = new DoDWeaponTest(this.actor, item, options);
             }
@@ -1002,10 +1015,12 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         }
     }
 
-    async _onUseAbility(event) {
+    async _onUseAbility(event, target) {
         event.preventDefault();
 
-        const itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
+        if (!this.actor.isObserver) return;
+
+        const itemId = target.closest(".sheet-table-data").dataset.itemId;
         const item = this.actor.items.get(itemId);
 
         if (event.type === "click") { // left click - use item
@@ -1017,11 +1032,38 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         }
     }
 
-    async _onDamageRoll(event) {
+    async _onUseEnchantment(event, target) {
+        event.preventDefault();
+
+        const dataSet = target.closest(".sheet-table-data").dataset;
+        const itemUuid = dataSet.itemUuid;
+        const enchantmentIndex = dataSet.enchantmentIndex;
+        const item = await fromUuid(itemUuid);
+        const enchantment = item?.system.enchantments.spells[enchantmentIndex];
+
+        if (event.type === "click") { // left click - use item
+            const spell = await fromUuid(enchantment.uuid);
+            if (spell) {
+                const options = {
+                   autoSuccess: true,
+                   noWpCost: enchantment.free,
+                   powerLevel: enchantment.powerLevel,
+                   wpSource: item,
+                };
+                await new DoDSpellTest(this.actor, spell, options).roll();
+            }
+        } else { // right click - edit item
+            item.sheet.render(true, { tab: "enchantments" });
+        }
+    }
+
+    async _onDamageRoll(event, target) {
         event.preventDefault();
         const DoD = CONFIG.DoD;
 
-        const itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
+        if (!this.actor.isOwner) return;
+
+        const itemId = target.closest(".sheet-table-data").dataset.itemId;
         const weapon = this.actor.items.get(itemId);
 
         if (event.type === "click") { // left click - roll damage
@@ -1043,11 +1085,17 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                 }
             }
 
+            const penetrating = weapon.hasWeaponFeature("penetrating3") ? 3
+                : weapon.hasWeaponFeature("penetrating2") ? 2
+                : weapon.hasWeaponFeature("penetrating1") ? 1
+                : 0;
+
             const damageData = {
                 actor: this.actor,
                 weapon: weapon,
                 damage: damage,
-                damageType: damageType
+                damageType: damageType,
+                penetrating: penetrating
             };
 
             const targets = Array.from(game.user.targets)
@@ -1064,9 +1112,9 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         }
     }
 
-    async _onEffectEdit(event) {
+    async _onEffectEdit(event, target) {
         event.preventDefault();
-        const element = event.currentTarget;
+        const element = target;
         const effectUuid = element.closest(".sheet-table-data").dataset.effectUuid;
         const effect = Array.from(this.actor.allApplicableEffects()).find(e => e.uuid === effectUuid);
 
@@ -1077,7 +1125,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         event.preventDefault();
         let element = event.currentTarget;
         let effectUuid = element.closest(".sheet-table-data").dataset.effectUuid;
-        let effect = fromUuidSync(effectUuid);
+        let effect = await fromUuid(effectUuid);
 
         const ok = await this._itemDeleteDialog(effect);
         if (!ok) {
@@ -1086,10 +1134,10 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         return effect.delete();
     }
 
-    async _onHealingTimeRoll(event) {
+    async _onHealingTimeRoll(event, target) {
         event.preventDefault();
 
-        const itemId = event.currentTarget.closest(".sheet-table-data").dataset.itemId;
+        const itemId = target.closest(".sheet-table-data").dataset.itemId;
         const injury = this.actor.items.get(itemId);
         const healingTime = injury.system.healingTime;
 
@@ -1197,9 +1245,11 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
                 this._prepareInjury(item, context);
                 break;
             case 'item':
+            case 'material':
                 this._prepareItem(item, context);
                 break;
             case 'spell':
+            case 'recipe':
                 this._prepareSpell(item, context);
                 break;
             case 'weapon':
@@ -1212,6 +1262,23 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
             default:
                 DoD_Utility.WARNING(`DoDActorBaseSheet._prepareItemContext: Unknown item type ${item.type}`);
         }
+        if (item.system.enchantments?.spells?.length > 0) {
+            this._prepareEnchantmentsContext(item, context);
+        }
+    }
+
+    static _buildSpellSortKeys(priority) {
+        const keys = {
+            rank: { active: false, icon: "" },
+            school: { active: false, icon: "" },
+            name: { active: false, icon: "" }
+        };
+        for (const p of priority) {
+            if (p.key in keys) {
+                keys[p.key] = { active: true, icon: (p.direction ?? "asc") === "asc" ? "▲" : "▼" };
+            }
+        }
+        return keys;
     }
 
     _prepareItems(context) {
@@ -1226,6 +1293,7 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         context.storage = [];
         context.equippedWeapons = [];
         context.injuries = [];
+        context.enchantments = [];
 
         context.equippedArmor = this.actor.system.equippedArmor;
         context.equippedHelmet = this.actor.system.equippedHelmet;
@@ -1274,9 +1342,11 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
         context.abilities = formattedAbilities;
 
         // Spells
-        context.spells = context.spells?.sort(DoD_Utility.nameSorter);
+        const spellSortPriority = this.actor.getFlag("dragonbane", "spellSortPriority") ?? [];
+        context.spells = getSortedSpells(this.actor, spellSortPriority);
         context.hasSpells = context.spells.length > 0;
-        context.memorizedSpells = context.spells?.filter(s => s.system.memorized);
+        context.memorizedSpells = context.spells.filter(s => s.system.memorized);
+        context.spellSortKeys = DoDActorBaseSheet._buildSpellSortKeys(spellSortPriority);
 
         // Tricks
         context.tricks = context.tricks?.sort(DoD_Utility.nameSorter);
@@ -1311,5 +1381,24 @@ export default class DoDActorBaseSheet extends HandlebarsApplicationMixin(ActorS
     _prepareEffects(context) {
         // Don't show conditions as effects
         context.effects = Array.from(this.actor.allApplicableEffects()).filter((effect) => !effect.isCondition);
+    }
+
+    _prepareEnchantmentsContext(item, context) {
+        if (item.system.enchantments?.applyOnlyWhenEquipped && !item.system.worn) return;
+
+        const name = item.name;
+        for (let i = 0; i < item.system.enchantments.spells.length; i++) {
+            const enchantment = item.system.enchantments.spells[i];
+            if (enchantment.castable) {
+                const spell = fromUuidSync(enchantment.uuid);
+                if(!spell) continue;
+                const enchantmentData = {
+                    name: spell.name + " (" + name + ")",
+                    itemUuid: item.uuid,
+                    enchantmentIndex: i,
+                }
+                context.enchantments.push(enchantmentData);
+            }
+        }
     }
 }

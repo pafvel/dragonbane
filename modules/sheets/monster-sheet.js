@@ -4,7 +4,7 @@ import DoDSkillTest from "../tests/skill-test.js";
 
 export default class DoDMonsterSheet extends DoDActorBaseSheet {
 
-    static DEFAULT_OPTIONS =  {
+    static DEFAULT_OPTIONS = {
         classes: ["DoD", "sheet", "character"],
         position: { width: 580, height: 670 },
         window: { resizable: true, title: 'DoD.NpcSheetTitle' },
@@ -12,7 +12,9 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
             submitOnChange: true,
             closeOnSubmit: false
         },
-          actions: {  
+        actions: {
+            monsterAttack: { handler: this.prototype._onMonsterAttack, buttons: [0,2] },
+            monsterDefend: this.prototype._onMonsterDefend
         }
     };
 
@@ -45,22 +47,14 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
         return context;        
     }
 
-    async _onRender(context, options) {
-        await super._onRender(context, options);
+    async _onMonsterAttack(event, _target) {
+        
+        if (!this.actor.isOwner) return;
 
-        const html = $(this.element);
-
-        if (this.actor.isOwner) {
-            html.find(".monster-attack").on("click contextmenu", this._onMonsterAttack.bind(this));
-            html.find(".monster-defend").on("click", this._onMonsterDefend.bind(this));
-        }
-    }
-
-    async _onMonsterAttack(event) {
         event.preventDefault();
         event.currentTarget?.blur();
 
-        const table = this.actor.system.attackTable ? fromUuidSync(this.actor.system.attackTable) : null;
+        const table = this.actor.system.attackTable ? await fromUuid(this.actor.system.attackTable) : null;
         if (!table) {
             DoD_Utility.WARNING("DoD.WARNING.missingMonsterAttackTable");
             return;
@@ -86,7 +80,7 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
                 let documentType = DoD_Utility.getTableResultType(result);
 
                 if (documentType === "RollTable") {
-                    let subTable = DoD_Utility.findTable(result.name);
+                    let subTable = await DoD_Utility.findTable(result.name);
                     if (subTable?.uuid !== table.uuid) {
                         attack.description = subTable?.description;
                     } else {
@@ -98,18 +92,14 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
                 attack.description = await CONFIG.DoD.TextEditor.enrichHTML(attack.description, { async: true });
 
                 // Split attack name and description
-                if (result.name) {
-                    const prefix = table.name + " - ";
-                    if (result.name.startsWith(prefix)) {
-                        attack.name = result.name.substring(prefix.length);
-                    } else {
-                        attack.name = result.name;
-                    }
+                const resultName = DoD_Utility.getTableResultName(result, table);
+                if (resultName) {
+                    attack.name = resultName;
                 } else {
-                    const match = attack.description.match(/<(b|strong)>(.*?)<\/\1>(.*)/);
-                    if (match) {
-                        attack.name = match[2];
-                        attack.description = match[3]
+                    const embedded = DoD_Utility.getEmbeddedResultName(attack.description);
+                    if (embedded) {
+                        attack.name = embedded.name;
+                        attack.description = embedded.description;
                     } else {
                         attack.name = String(attack.index);
                     }
@@ -182,7 +172,10 @@ export default class DoDMonsterSheet extends DoDActorBaseSheet {
         }
     }
 
-    async _onMonsterDefend(event) {
+    async _onMonsterDefend(event, _target) {
+        
+        if (!this.actor.isOwner) return;
+        
         event.preventDefault();
         event.currentTarget?.blur();
 

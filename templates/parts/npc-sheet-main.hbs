@@ -19,7 +19,7 @@
                     <th><b>{{localize "DoD.ui.character-sheet.trained-skills"}}</b></th>
                     <td class="comma-list">
                         {{#each trainedSkills as |skill skillId|}}
-                        <a class="rollable-skill sheet-table-data item-delete-key item" data-item-id="{{skill.id}}">{{skill.name}} {{skill.system.value}}</a>
+                        <a class="sheet-table-data item-delete-key item" data-action="skillRoll" data-item-id="{{skill.id}}">{{skill.name}} {{skill.system.value}}</a>
                         {{/each}}
                     </td>
                 </tr>
@@ -28,7 +28,7 @@
                     <th><b>{{localize "DoD.ui.character-sheet.tricks"}}</b></th>
                     <td class="comma-list">
                         {{#each tricks as |spell spellId|}}
-                        <a class="rollable-skill sheet-table-data item-delete-key item" data-item-id="{{spell.id}}">{{spell.name}}</a>
+                        <a class="sheet-table-data item-delete-key item" data-action="skillRoll" data-item-id="{{spell.id}}">{{spell.name}}</a>
                         {{/each}}
                     </td>
                 </tr>
@@ -38,7 +38,7 @@
                     <th><b>{{localize "DoD.ui.character-sheet.spells"}}</b></th>
                     <td class="comma-list">
                         {{#each spells as |spell spellId|}}
-                        <a class="rollable-skill sheet-table-data item-delete-key item" data-item-id="{{spell.id}}">{{spell.name}} {{spell.system.skillValue}}</a>
+                        <a class="sheet-table-data item-delete-key item" data-action="skillRoll" data-item-id="{{spell.id}}">{{spell.name}} {{spell.system.skillValue}}</a>
                         {{/each}}
                     </td>
                 </tr>
@@ -49,7 +49,7 @@
                     <th><b>{{localize "DoD.ui.character-sheet.abilities"}}</b></th>
                     <td class="comma-list">
                         {{#each abilities as |ability abilityId|}}
-                        <a class="sheet-table-data use-ability item-delete-key item" tabindex="-1" data-item-id="{{ability.id}}">{{ability.name}}</a>
+                        <a class="sheet-table-data item-delete-key item" tabindex="-1" data-action="useAbility" data-item-id="{{ability.id}}">{{ability.name}}</a>
                         {{/each}}
                     </td>
                 </tr>
@@ -60,7 +60,7 @@
                     <th><b>{{localize "DoD.ui.character-sheet.weapons"}}</b></th>
                     <td class="comma-list">
                         {{#each equippedWeapons as |weapon weaponId|}}
-                        <a class="rollable-skill sheet-table-data item-delete-key item" data-item-id="{{weapon.id}}">
+                        <a class="sheet-table-data item-delete-key item" data-action="skillRoll" data-item-id="{{weapon.id}}">
                             {{weapon.name}} {{weapon.system.skill.value}} ({{weapon.system.damage}})</a>
                         {{/each}}
                     </td>
@@ -73,11 +73,11 @@
                     <th><b>{{localize "DoD.ui.character-sheet.equipped-armor"}}</b></th>
                     <td class="comma-list">
                         {{#if equippedArmor}}
-                        <a class="item-edit sheet-table-data item-delete-key item" data-item-id="{{equippedArmor.id}}">
+                        <a class="sheet-table-data item-delete-key item" data-action="editItem" data-item-id="{{equippedArmor.id}}">
                             {{equippedArmor.name}} ({{equippedArmor.system.rating}})</a>
                         {{/if}}
                         {{#if equippedHelmet}}
-                        <a class="item-edit sheet-table-data item-delete-key item" data-item-id="{{equippedHelmet.id}}">
+                        <a class="sheet-table-data item-delete-key item" data-action="editItem" data-item-id="{{equippedHelmet.id}}">
                             {{equippedHelmet.name}} ({{equippedHelmet.system.rating}})</a>
                         {{/if}}
                     </td>
@@ -89,8 +89,21 @@
                     <th><b>{{localize "DoD.ui.character-sheet.gear"}}</b></th>
                     <td class="comma-list">
                     {{#each inventory as |item itemId|}}
-                        <a class="item-edit sheet-table-data item-delete-key item" data-item-id="{{item.id}}">{{item.displayName}}</a>
+                        <a class="sheet-table-data item-delete-key item" data-action="editItem" data-item-id="{{item.id}}">{{item.displayName}}</a>
                     {{/each}}
+                    </td>
+                </tr>
+                {{/if}}
+
+                {{#if enchantments}}
+                <tr>
+                    <th title="{{localize "DoD.item-sheet.enchantmentsTooltip"}}"><b>{{localize "DoD.item-sheet.enchantments"}}</b></th>
+                    <td class="comma-list item-list">
+                        {{#each enchantments as |enchantment|}}
+                        <a class="sheet-table-data item" data-action="useEnchantment" data-item-uuid="{{enchantment.itemUuid}}" data-enchantment-index="{{enchantment.enchantmentIndex}}">
+                            {{enchantment.name}}
+                        </a>
+                        {{/each}}
                     </td>
                 </tr>
                 {{/if}}

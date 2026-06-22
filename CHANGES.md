@@ -1,5 +1,48 @@
 # Change Log
 
+## Version 4.1
+
+### Magic
+- Gear can be enchanted with spells and charged with willpower.
+  - Actors can cast spells from enchanted gear.
+  - Actors can use their charged gear, or other owned actors in the same scene, as power sources when casting spells and activating abilities.
+- New spell type Recipe and new item type Ingredient.
+  - Casting a Recipe spell can consume ingredients and create a substance.
+  - Recipe spells can be cast directly from the Recipe sheet.
+  - Substances can contain formulas that depend on the spell's power level. This can be used to create poisons with varying potency and cost, for example.
+- Spells
+  - Rank 6 spells cost 3 times the normal WP cost.
+  - Added "special" option for casting time and spell duration.
+  - Magic tricks now use same execution path as ranked spells.
+- Character sheet
+  - Spells moved from Abilities & Spells tab to it's own Spells tab. Displayed if the character has spells.
+  - Max number of memorized spells and currently memorized spells shown on spells tab.
+  - Spells can be sorted. Sort order will be the same on the main tab.
+
+### Weapons
+- Added Penetrating weapon feature that ignores 1, 2 or 3 armor.
+
+### Journals
+- Images in journals can now be framed by adding the CSS class "frame".
+- Fix for page header being covered by embedded monster and npc cards.
+- @DisplayItem added, can be used to render any item type in journals.
+
+### Chat
+- Items can be posted to chat, from the item or from the owning actor.
+
+### Compendiums
+- Improved support for using compendiums. For example, monster attack tables can now reside in a compendium and function properly.
+- Internal functions that look for items in the world will now look also in compendiums if the item wasn't found.
+
+### Miscellaneous
+- Multiple dice terms allowed in dice formulas, for example [[/damage D10+D6]] and in weapon and spell sheets.
+- Fix for the entire table-roll box not being clickable.
+
+
+
+## Version 4.0.1
+- Fix for sheets firing multiple events when using the pop-out functionality
+
 ## Version 4.0
 - General
   - Foundry v14 compatibility

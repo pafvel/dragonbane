@@ -23,8 +23,8 @@ export default class DoDAttributeTest extends DoDTest {
         this.preRollData.canPush = this.options.canPush !== undefined ? this.options.canPush : this.actor.type === "character";
     }
 
-    updatePostRollData() {
-        super.updatePostRollData();
+    async updatePostRollData() {
+        await super.updatePostRollData();
         this.postRollData.success = this.postRollData.result <= this.preRollData.target;
         this.postRollData.isDragon = this.postRollData.result <= 1 + (this.preRollData.extraDragons ?? 0);
         this.postRollData.isDemon = this.postRollData.result >= 20 - (this.preRollData.extraDemons ?? 0);

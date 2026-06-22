@@ -13,7 +13,19 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
             submitOnChange: true,
             closeOnSubmit: false
         },
-        actions: {}
+        actions: {
+            rollAttribute: this.prototype._onAttributeRoll,
+            toggleCondition: this.prototype._onConditionClick,
+            'roll-advancement': { handler: this.prototype._onAdvancementRoll, buttons: [0,2] },
+            markAdvancement: this.prototype._onMarkAdvancement,
+            deathRollSuccess: { handler: this.prototype._onDeathRollsSuccessClick, buttons: [0,2] },
+            deathRollFailure: { handler: this.prototype._onDeathRollsFailureClick, buttons: [0,2] },
+            'roll-deathRoll': this.prototype._onDeathRoll,
+            restRound: this.prototype._onRestRound,
+            restStretch: this.prototype._onRestStretch,
+            restShift: this.prototype._onRestShift,
+            restReset: this.prototype._onRestReset,
+        }
     };
 
     static TABS = {
@@ -22,6 +34,7 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
                 { id: 'main', group: 'primary', label: 'DoD.ui.character-sheet.main' },
                 { id: 'skills', group: 'primary', label: 'DoD.ui.character-sheet.skills' },
                 { id: 'abilities', group: 'primary', label: 'DoD.ui.character-sheet.abilities' },
+                { id: 'spells', group: 'primary', label: 'DoD.ui.character-sheet.spells' },
                 { id: 'inventory', group: 'primary', label: 'DoD.ui.character-sheet.inventory' },
                 { id: 'background', group: 'primary', label: 'DoD.ui.character-sheet.background' },
                 { id: 'effects', group: 'primary', label: 'DoD.ui.character-sheet.effects' },
@@ -36,65 +49,43 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         main: { scrollable: [''], template: 'systems/dragonbane/templates/parts/character-sheet-main.hbs' },
         skills: { scrollable: [''], template: 'systems/dragonbane/templates/parts/character-sheet-skills.hbs' },
         abilities: { scrollable: [''], template: 'systems/dragonbane/templates/parts/character-sheet-abilities.hbs' },
+        spells: { scrollable: [''], template: 'systems/dragonbane/templates/parts/character-sheet-spells.hbs' },
         inventory: { scrollable: [''], template: 'systems/dragonbane/templates/parts/character-sheet-inventory.hbs' },
         background: { scrollable: [''], template: 'systems/dragonbane/templates/parts/character-sheet-background.hbs' },
         effects: { scrollable: [''], template: 'systems/dragonbane/templates/parts/character-sheet-effects.hbs' },
     }
+
+    // event handlers
+    #handlers = {};
 
     async _onRender(context, options) {
         await super._onRender(context, options);
 
         const html = $(this.element);
 
-        if (this.actor.isOwner) {
-            html.find(".kin-edit").change(this._onKinEdit.bind(this));
-            html.find(".profession-edit").change(this._onProfessionEdit.bind(this));
-            html.find(".age-edit").change(this._onAgeEdit.bind(this));
+        this.#handlers = {
+            ...(this.#handlers ?? {}),
+            kinEdit: this._onKinEdit.bind(this),
+            professionEdit: this._onProfessionEdit.bind(this),
+            ageEdit: this._onAgeEdit.bind(this),
+            dragStart: this._onDragStart.bind(this),
+        };
 
-            html.find(".rollable-attribute").click(this._onAttributeRoll.bind(this));
-            html.find(".condition-panel").click(this._onConditionClick.bind(this));
-            html.find("[data-action='roll-advancement']").on("click contextmenu", this._onAdvancementRoll.bind(this))
-            html.find(".mark-advancement").on("click", this._onMarkAdvancement.bind(this))
+        html.off("change", ".kin-edit");
+        html.on("change", ".kin-edit", this.#handlers.kinEdit);
 
-            html.find(".death-rolls-success").on("click contextmenu", this._onDeathRollsSuccessClick.bind(this));
-            html.find(".death-rolls-success-label").on("click contextmenu", this._onDeathRollsSuccessClick.bind(this));
-            html.find(".death-rolls-failure").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
-            html.find(".death-rolls-failure-label").on("click contextmenu", this._onDeathRollsFailureClick.bind(this));
-            html.find("[data-action='roll-deathRoll']").click(this._onDeathRoll.bind(this))
+        html.off("change", ".profession-edit");
+        html.on("change", ".profession-edit", this.#handlers.professionEdit);
 
-            let restRoundButton = html.find(".rest-round");
-            if (restRoundButton?.length > 0) {
-                if (this.actor.system.canRestRound === false) {
-                    restRoundButton[0].disabled = true;
-                } else {
-                    restRoundButton[0].disabled = false;
-                    restRoundButton.on("click", this._onRestRound.bind(this));
-                }
-            }
-
-            let restStretchButton = html.find(".rest-stretch");
-            if (restStretchButton?.length > 0) {
-                if (this.actor.system.canRestStretch === false) {
-                    restStretchButton[0].disabled = true;
-                } else {
-                    restStretchButton[0].disabled = false;
-                    restStretchButton.on("click", this._onRestStretch.bind(this));
-                }
-            }
-
-            html.find(".rest-shift").on("click", this._onRestShift.bind(this));
-            html.find(".rest-reset").on("click", this._onRestReset.bind(this));
-
-            if (this.actor.type === "monster") {
-                html.find(".monster-attack").on("click contextmenu", this._onMonsterAttack.bind(this));
-                html.find(".monster-defend").on("click", this._onMonsterDefend.bind(this));
-            }
-        } else if (this.actor.isObserver) {
+        html.off("change", ".age-edit");
+        html.on("change", ".age-edit", this.#handlers.ageEdit);
+        
+        if (this.actor.isObserver) {
             // Enable dragging items from this sheet
-            let handler = this._onDragStart.bind(this);
             html.find('.draggable-item').each((_i, li) => {
                 li.setAttribute("draggable", true);
-                li.addEventListener("dragstart", handler, false);
+                li.removeEventListener("dragstart", this.#handlers.dragStart);
+                li.addEventListener("dragstart", this.#handlers.dragStart, false);
             });
         }
     }
@@ -141,7 +132,9 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         return context;
     }
 
-    async _onDeathRollsSuccessClick(event) {
+    async _onDeathRollsSuccessClick(event, _target) {
+        if (!this.actor.isOwner) return;
+
         event.preventDefault();
 
         let successes = this.actor.system.deathRolls.successes;
@@ -157,7 +150,9 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         }
     }
 
-    async _onDeathRollsFailureClick(event) {
+    async _onDeathRollsFailureClick(event, _target) {
+        if (!this.actor.isOwner) return;
+
         event.preventDefault();
 
         let failures = this.actor.system.deathRolls.failures;
@@ -173,9 +168,11 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         }
     }
 
-    async _onDeathRoll(event) {
+    async _onDeathRoll(event, target) {
+        if (!this.actor.isOwner) return;
+
         event.preventDefault();
-        event.currentTarget?.blur();
+        target?.blur();
 
         let options = {
             canPush: false,
@@ -246,6 +243,8 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         event.preventDefault();
         event.currentTarget?.blur();
 
+        if (!this.actor.isOwner || !this.actor.system.canRestRound) return;
+
         await this.actor.restRound();
     }
 
@@ -299,6 +298,8 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         event.preventDefault();
         event.currentTarget?.blur();
 
+        if (!this.actor.isOwner || !this.actor.system.canRestStretch) return;
+
         const skipDialog = game.settings.get("dragonbane", "restDialogIsDefault") === (event.shiftKey || event.ctrlKey);
         const options = skipDialog ? { hpDice: 1, wpDice: 1, conditions: 1 } : await this.promptRestStretchOptions();
         if (!options) return; // user closed dialog
@@ -320,6 +321,8 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
     async _onRestShift(event) {
         event.preventDefault();
         event.currentTarget?.blur();
+
+        if (!this.actor.isOwner) return;
 
         const skipDialog = game.settings.get("dragonbane", "restDialogIsDefault") === (event.shiftKey || event.ctrlKey);
 
@@ -356,6 +359,8 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
     async _onRestReset(event) {
         event.preventDefault();
         event.currentTarget?.blur();
+
+        if (!this.actor.isOwner) return;
 
         await this.actor.restReset();
     }
@@ -485,7 +490,10 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         }
     }
 
-    async _onAttributeRoll(event) {
+    async _onAttributeRoll(event, target) {
+
+        if (!this.actor.isOwner) return;
+
         event.preventDefault();
 
         let options = {};
@@ -495,14 +503,16 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
                 defaultBanesBoons: event.ctrlKey
             };
         }
-        let attributeName = event.currentTarget.dataset.attribute;
+        let attributeName = target.dataset.attribute;
         let test = new DoDAttributeTest(this.actor, attributeName, options);
         await test.roll();
     }
 
-    async _onMarkAdvancement(event) {
+    async _onMarkAdvancement(event, target) {
+        if (!this.actor.isOwner) return;
+
         event.preventDefault();
-        const itemId = event.currentTarget.closest("tr").dataset.itemId;
+        const itemId = target.closest("tr").dataset.itemId;
         const skillItem = this.actor.items.get(itemId);
         const skillValue = skillItem.system.value;
         const baseChance = this.actor._getBaseChance(skillItem);
@@ -535,11 +545,13 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         }
     }
 
-    async _onAdvancementRoll(event) {
+    async _onAdvancementRoll(event, target) {
+        if (!this.actor.isOwner) return;
+
         event.preventDefault();
         const DoD = CONFIG.DoD;
 
-        const itemId = event.currentTarget.closest("tr").dataset.itemId;
+        const itemId = target.closest("tr").dataset.itemId;
         const skillItem = this.actor.items.get(itemId);
 
         // left click to roll, right-click to clear
@@ -579,11 +591,13 @@ export default class DoDCharacterSheet extends DoDActorBaseSheet {
         }
     }
 
-    async _onConditionClick(event) {
+    async _onConditionClick(event, target) {
+        if (!this.actor.isOwner) return;
+
         if (event.target.className === "condition-input") {
             return; // event is handled by input element
         }
-        const elements = event.currentTarget.getElementsByClassName("condition-input");
+        const elements = target.getElementsByClassName("condition-input");
         if (elements.length > 0) {
             let name = elements[0].name;
             await this.actor.update({ [name]: !elements[0].checked });

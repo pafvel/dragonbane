@@ -27,4 +27,34 @@ export default class DoDWeaponData extends DoDGearBaseData {
     static migrateData(source) {
         return super.migrateData(source);
     }
+
+    async addCardProperties(_context, data) {
+        const item = this.parent;
+        if (this.skill.name) {
+            data.properties.push({ label: game.i18n.localize("DoD.weapon.skill"), value: this.skill.name });
+        }
+        if (this.grip.value && this.grip.value !== "none") {
+            data.properties.push({ label: game.i18n.localize("DoD.weapon.grip"), value: game.i18n.localize("DoD.gripTypes." + this.grip.value) });
+        }
+        if (this.str > 0) {
+            data.properties.push({ label: game.i18n.localize("DoD.weapon.str"), value: this.str });
+        }
+        const range = item.calculatedRange;
+        if (range) {
+            data.properties.push({ label: game.i18n.localize("DoD.weapon.range"), value: range });
+        }
+        if (this.damage) {
+            data.properties.push({ label: game.i18n.localize("DoD.weapon.damage"), value: this.damage });
+        }
+        if (this.durability > 0) {
+            data.properties.push({ label: game.i18n.localize("DoD.weapon.durability"), value: this.durability });
+        }
+        if (this.features?.length > 0) {
+            const names = this.features.map(f => game.i18n.localize(CONFIG.DoD.weaponFeatureTypes[f])).filter(Boolean).join(", ");
+            if (names) data.properties.push({ label: game.i18n.localize("DoD.weapon.features"), value: names });
+        }
+        if (this.weight > 0) {
+            data.properties.push({ label: game.i18n.localize("DoD.gear.weight"), value: this.weight });
+        }
+    }
 }

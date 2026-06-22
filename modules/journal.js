@@ -1,4 +1,4 @@
-import DoD_Utility from "./utility.js";
+import DoD_Utility, { renderItemCard } from "./utility.js";
 
 /**
  * Used to parse e.g. the brackets part of @DisplayNpc[Actor.gwFbDqFlJJrjeM3a named] to get {uuid: Actor.gwFbDqFlJJrjeM3a , named: true}
@@ -17,50 +17,15 @@ function parseMatch(match) {
     return result;
 }
 
-export async function enrichDisplayAbility (match, options) {
-    const ability = fromUuidSync(match[1]);
-    const abilityName = match[2] ?? ability?.name;
-    const a = document.createElement("div");
-    if (ability) {
-        const requirement = ability.system.requirement?.length > 0 ? ability.system.requirement : "-";
-        const wp = ability.system.wp ?? "-";
-        let html = "";
-        if (options.box) {
-            html += `
-            <blockquote class="info">
-            <div class="display-ability">
-                <h3>@UUID[${match[1]}]{${abilityName}}</h3>
-                <p></p>
-                <ul>`;
-        } else {
-            html += `
-            <div class="display-ability">
-                <h4>@UUID[${match[1]}]{${abilityName}}</h4>
-                <ul>`;
-        }
-        if (ability.system.abilityType !== "kin") {
-            html += `
-                    <li><b>${game.i18n.localize("DoD.ability.requirement")}: </b><span>${requirement}</span>`;
-        }
-        html += `
-                    <li><b>${game.i18n.localize("DoD.ability.wp")}: </b><span>${wp}</span>
-                </ul>
-                ${ability.system.itemDescription}
-            </div>`;
-        if (options.box) {
-            html += `</blockquote>`;
-        }
-        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
-    } else {
-        a.dataset.abilityId = match[1];
-        if (match[2]) a.dataset.abilityName = match[2];
-        a.classList.add("content-link");
-        a.classList.add("broken");
-        a.innerHTML = `<i class="fas fa-unlink"></i> ${abilityName}`;
+export async function enrichDisplayAbility(match, options) {
+    const a = await enrichDisplayItem(match, options);
+    if (options?.box) {
+        a.innerHTML = `<blockquote class="info">${a.innerHTML}</blockquote>`;
     }
     return a;
 }
-export async function enrichDisplayAbilityBox (match, options = {}) {
+
+export async function enrichDisplayAbilityBox(match, options = {}) {
     options.box = true;
     return enrichDisplayAbility(match, options);
 }
@@ -95,7 +60,7 @@ export async function enrichDisplayMonster (match, options) {
             <div class="${titleClasses}">@UUID[${monster.uuid}]{${monsterName}}</div>
             <table>
                 <tr>
-                    <th><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity.base}</td>
+                    <td><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.ferocity")}: </b>${monster.system.ferocity.base}</td>
                     <td><b class="heading">${game.i18n.localize("DoD.ui.character-sheet.size")}: </b>${game.i18n.localize("DoD.sizeTypes." + monster.system.size)}</td>
                 </tr>
                 <tr>
@@ -123,7 +88,7 @@ export async function enrichDisplayMonsterDescriptionCard (match, _options) {
     const parsedMatch = parseMatch(match[1]);
     const monster = await DoD_Utility.findMonster(parsedMatch.uuid);
     const monsterName = match[2] ?? monster?.name;
-    const table = monster?.system.attackTable ? fromUuidSync(monster.system.attackTable) : null;
+    const table = monster?.system.attackTable ? await fromUuid(monster.system.attackTable) : null;
     let titleClasses = "monster-title";
     if(parsedMatch.named) {
         titleClasses += " named";
@@ -131,6 +96,7 @@ export async function enrichDisplayMonsterDescriptionCard (match, _options) {
 
     const a = document.createElement("div");
     if (monster) {
+        const attackTableHtml = await displayTable(monster?.system.attackTable, table, game.i18n.localize("DoD.journal.monsterAttacks"));
         let html = `
         <div class="display-monster">
             <div class="${titleClasses}">@UUID[${monster.uuid}]{${monsterName}}</div>
@@ -152,7 +118,7 @@ export async function enrichDisplayMonsterDescriptionCard (match, _options) {
                 ${monster.system.traits}
             </div>
             <div class="display-table">
-                ${displayTable(monster?.system.attackTable, table, game.i18n.localize("DoD.journal.monsterAttacks"))}
+                ${attackTableHtml}
             </div>
         </div>`;
         a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
@@ -270,7 +236,7 @@ export async function enrichDisplayNpcCard(match, options) {
         }
 
         // Magic tricks
-        const tricks = npc.items.filter(i => i.type === "spell" && !(i.system.rank > 0));
+        const tricks = npc.items.filter(i => i.isSpellType && !(i.system.rank > 0));
         if (tricks.length > 0) {
             html += `
             <tr><td>
@@ -287,7 +253,7 @@ export async function enrichDisplayNpcCard(match, options) {
         }
 
         // Spells
-        const spells = npc.items.filter(i => i.type === "spell" && i.system.rank > 0);
+        const spells = npc.items.filter(i => i.isSpellType && i.system.rank > 0);
         if (spells.length) {
             html += `
             <tr><td>
@@ -411,72 +377,19 @@ export async function enrichDisplayNpcDescription (match, _options) {
     return a;
 }
 
-
-export async function enrichDisplaySkill (match, _options) {
-    const skill = fromUuidSync(match[1]);
-    const skillName = match[2] ?? skill?.name;
+export async function enrichDisplayItem (match, _options) {
+    const item = await fromUuid(match[1]);
+    const itemName = match[2] ?? item?.name;
     const a = document.createElement("div");
-    if (skill) {
-        let html = `
-        <div class="display-skill">
-            <h4>@UUID[${match[1]}]{${skillName}} <small>(${game.i18n.localize("DoD.attributes." + skill.system.attribute)})</small></h4>
-            ${skill.system.itemDescription}
-        </div>`;
-        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
+    if (item) {
+        const rawHtml = await renderItemCard(item, "journal");
+        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(rawHtml, { async: true });
     } else {
-        a.dataset.skillId = match[1];
-        if (match[2]) a.dataset.skillName = match[2];
+        a.dataset.itemId = match[1];
+        if (match[2]) a.dataset.itemName = match[2];
         a.classList.add("content-link");
         a.classList.add("broken");
-        a.innerHTML = `<i class="fas fa-unlink"></i> ${skillName}`;
-    }
-    return a;
-}
-
-export async function enrichDisplaySpell (match, _options) {
-    const spell = fromUuidSync(match[1]);
-    const spellName = match[2] ?? spell?.name;
-    const a = document.createElement("div");
-    if (spell) {
-        let range = "";
-        switch (spell.system.rangeType) {
-            case "range":
-                range = spell.system.range ? spell.system.range + " " + game.i18n.localize("DoD.unit.meterPlural") : "-";
-                break;
-            case "personal":
-                range = game.i18n.localize("DoD.spellRangeTypes.personal");
-                break;
-            case "touch":
-                range = game.i18n.localize("DoD.spellRangeTypes.touch");
-                break;
-            case "cone":
-                range = `${spell.system.range} ${game.i18n.localize("DoD.unit.meterPlural")} (${game.i18n.localize("DoD.spellRangeTypes.cone")})`;
-                break;
-            case "sphere":
-                range = `${spell.system.range} ${game.i18n.localize("DoD.unit.meterPlural")} (${game.i18n.localize("DoD.spellRangeTypes.sphere")})`;
-                break;
-        }
-
-        let html = `
-        <div class="display-spell">
-            <h4>@UUID[${match[1]}]{${spell.name}}</h4>
-            <ul>
-            <li><b class="heading">${game.i18n.localize("DoD.spell.rank")}: </b><span>${spell.system.rank}</span>
-            <li><b class="heading">${game.i18n.localize("DoD.spell.prerequisite")}: </b><span>${spell.system.prerequisite !== "" ? spell.system.prerequisite : "-"}</span>
-            <li><b class="heading">${game.i18n.localize("DoD.spell.requirement")}: </b><span>${spell.system.requirement !== "" ? spell.system.requirement : "-"}</span>
-            <li><b class="heading">${game.i18n.localize("DoD.spell.castingTime")}: </b><span>${game.i18n.localize("DoD.castingTimeTypes." + spell.system.castingTime)}</span>
-            <li><b class="heading">${game.i18n.localize("DoD.spell.rangeType")}: </b><span>${range}</span>
-            <li><b class="heading">${game.i18n.localize("DoD.spell.duration")}: </b><span>${game.i18n.localize("DoD.spellDurationTypes." + spell.system.duration)}</span>
-            </ul>
-            ${spell.system.itemDescription}
-        </div>`;
-        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
-    } else {
-        a.dataset.spellId = match[1];
-        if (match[2]) a.dataset.spellName = match[2];
-        a.classList.add("content-link");
-        a.classList.add("broken");
-        a.innerHTML = `<i class="fas fa-unlink"></i> ${spellName}`;
+        a.innerHTML = `<i class="fas fa-unlink"></i> ${itemName}`;
     }
     return a;
 }
@@ -485,7 +398,7 @@ function hasEnclosingHtmlTags(str) {
  return /^\s*<([A-Za-z][A-Za-z0-9-]*)\b[^>]*>[\s\S]*<\/\1>\s*$/.test(str);;
 }
 
-function displayTable(uuid, table, tableName, showDescription = false) {
+async function displayTable(uuid, table, tableName, showDescription = false) {
     if (!table) {
         return "";
     }
@@ -513,7 +426,7 @@ function displayTable(uuid, table, tableName, showDescription = false) {
         const resultType = DoD_Utility.getTableResultType(result);
         if (resultType === "RollTable") {
             let subTableName = result.name;
-            let subTable = DoD_Utility.findTable(subTableName);
+            let subTable = await DoD_Utility.findTable(subTableName);
             if (subTable?.uuid !== table.uuid) {
                 if(subTableName.startsWith(table.name)) {
                     subTableName = subTableName.slice(table.name.length);
@@ -539,6 +452,10 @@ function displayTable(uuid, table, tableName, showDescription = false) {
             if (description.startsWith("<p>") && description.endsWith("</p>")) {
                 description = description.slice(3, -4);
             }
+            const resultName = DoD_Utility.getTableResultName(result, table);
+            if (resultName && !DoD_Utility.hasEmbeddedResultName(description)) {
+                description = `<strong>${resultName}</strong> ${description}`;
+            }
             html += `</td>
                 <td>${description}</td>
             </tr>`;
@@ -551,13 +468,13 @@ function displayTable(uuid, table, tableName, showDescription = false) {
 export async function enrichDisplayTable (match, _options) {
 
     const parsedMatch = parseMatch(match[1]);
-    const table = DoD_Utility.findTable(parsedMatch.uuid);
+    const table = await DoD_Utility.findTable(parsedMatch.uuid);
     const tableName = match[2] ?? table?.name;
     const a = document.createElement("div");
     
     if (table) {
         a.classList.add("display-table");
-        let html = displayTable(parsedMatch.uuid, table, tableName, parsedMatch.description === true);
+        let html = await displayTable(parsedMatch.uuid, table, tableName, parsedMatch.description === true);
         a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
     } else {
         a.dataset.tableId = parsedMatch.uuid;
@@ -565,27 +482,6 @@ export async function enrichDisplayTable (match, _options) {
         a.classList.add("content-link");
         a.classList.add("broken");
         a.innerHTML = `<i class="fas fa-unlink"></i> ${tableName}`;
-    }
-    return a;
-}
-
-export async function enrichDisplayTrick(match, _options) {
-    const spell = fromUuidSync(match[1]);
-    const spellName = match[2] ?? spell?.name;
-    const a = document.createElement("div");
-    if (spell) {
-        let html = `
-        <div class="display-spell">
-            <h4>@UUID[${match[1]}]{${spellName}}</h4>
-            ${spell.system.itemDescription}
-        </div>`;
-        a.innerHTML = await CONFIG.DoD.TextEditor.enrichHTML(html, {async: true});
-    } else {
-        a.dataset.spellId = match[1];
-        if (match[2]) a.dataset.spellName = match[2];
-        a.classList.add("content-link");
-        a.classList.add("broken");
-        a.innerHTML = `<i class="fas fa-unlink"></i> ${spellName}`;
     }
     return a;
 }
@@ -673,7 +569,7 @@ export async function enrichGearTable(match, _options) {
     const matches = content.matchAll(regexp);
     for (const match of matches) {
         const uuid = match[1];
-        const item = fromUuidSync(uuid);
+        const item = await fromUuid(uuid);
         const itemName = match[2] ?? item?.name;
 
         if (item) {

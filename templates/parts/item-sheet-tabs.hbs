@@ -1,5 +1,26 @@
 <nav class="sheet-tabs tabs" data-group="primary">
-    <a class="{{tabs.details.cssClass}}" data-action="tab" data-group="{{tabs.details.group}}" data-tab="details"><label>{{localize "DoD.item-sheet.details"}}</label></a>
-    <a class="{{tabs.description.cssClass}}" data-action="tab" data-group="{{tabs.description.group}}" data-tab="description"><label>{{localize "DoD.item-sheet.description"}}</label></a>
-    <a class="{{tabs.effects.cssClass}}" data-action="tab" data-group="{{tabs.effects.group}}" data-tab="effects"><label>{{localize "DoD.item-sheet.effects"}}</label></a>
+
+    <a class="{{tabs.description.cssClass}}" data-action="tab" data-group="{{tabs.description.group}}" data-tab="description">
+        <label>{{localize "DoD.item-sheet.description"}}</label>
+    </a>
+
+    <a class="{{tabs.details.cssClass}}" data-action="tab" data-group="{{tabs.details.group}}" data-tab="details">
+        <label>{{localize "DoD.item-sheet.details"}}</label>
+    </a>
+
+    {{#if tabs.formula}}
+    <a class="{{tabs.formula.cssClass}}" data-action="tab" data-group="{{tabs.formula.group}}" data-tab="formula">
+        <label>{{localize "DoD.item-sheet.formula"}}</label>
+    </a>
+    {{/if}}
+
+    {{#if tabs.enchantments}}
+    <a class="{{tabs.enchantments.cssClass}}" data-action="tab" data-group="{{tabs.enchantments.group}}" data-tab="enchantments">
+        <label>{{localize "DoD.item-sheet.enchantments"}}</label>
+    </a>
+    {{/if}}
+
+    <a class="{{tabs.effects.cssClass}}" data-action="tab" data-group="{{tabs.effects.group}}" data-tab="effects">
+        <label>{{localize "DoD.item-sheet.effects"}}</label>
+    </a>
 </nav>
