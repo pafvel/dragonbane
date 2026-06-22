@@ -194,14 +194,14 @@ export class DoDActor extends Actor {
         const  changeName = data?.name ?? false
         if(changeName){
             const tokenName = data.name
-            const changeTokenName = await new Promise(async (resolve) => {
+           
                 const dialog =  await foundry.applications.api.DialogV2.confirm({
                     title: game.i18n.localize("DoD.ui.dialog.ChangeTokenName.Title"),
                      content: `<p>${game.i18n.format("DoD.ui.dialog.ChangeTokenName.Content", { name: tokenName })}</p>`,
                 });
-                resolve (dialog)
-            });
-            if (changeTokenName) {
+           
+
+            if (dialog) {
                 const actor = await game.actors.get(data._id);
                 await actor.prototypeToken.update({ name: tokenName });
                 const dependedTokens = actor._dependentTokens;
