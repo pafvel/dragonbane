@@ -196,8 +196,8 @@ export class DoDActor extends Actor {
             const tokenName = data.name
            
                 const dialog =  await foundry.applications.api.DialogV2.confirm({
-                    title: game.i18n.localize("DoD.ui.dialog.ChangeTokenName.Title"),
-                     content: `<p>${game.i18n.format("DoD.ui.dialog.ChangeTokenName.Content", { name: tokenName })}</p>`,
+                    title: game.i18n.localize("DoD.ui.dialog.changeTokenName.title"),
+                     content: `<p>${game.i18n.format("DoD.ui.dialog.changeTokenName.content", { name: tokenName })}</p>`,
                 });
            
 
