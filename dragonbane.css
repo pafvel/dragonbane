@@ -1136,6 +1136,13 @@
   line-height: 1.25;
 }
 
+.system-dragonbane .scenes-sidebar .scene .entry-name {
+  text-shadow: -1px -1px 0 var(--color-shadow-dark), 1px -1px 0 var(--color-shadow-dark), -1px 1px 0 var(--color-shadow-dark), 1px 1px 0 var(--color-shadow-dark), 0 0 4px var(--color-shadow-dark);
+}
+.system-dragonbane .compendium-sidebar .compendium .compendium-name strong {
+  text-shadow: -1px -1px 0 var(--color-shadow-dark), 1px -1px 0 var(--color-shadow-dark), -1px 1px 0 var(--color-shadow-dark), 1px 1px 0 var(--color-shadow-dark), 0 0 4px var(--color-shadow-dark);
+}
+
 .theme-dark {
   --dod-color-text-primary: var(--color-light-2);
   --dod-dialog-background: transparent;
