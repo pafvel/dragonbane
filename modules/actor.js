@@ -1301,6 +1301,7 @@ export class DoDActor extends Actor {
             if (attribute === "con") {
                 return this.system.hitPoints.max - 2 * this.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "hitPoints").length;
             } else if (attribute === "wil") {
+                if (!this.system.willPoints.max) { return 10; }
                 return this.system.willPoints.max - 2 * this.items.filter(i => i.type === "ability" && i.system.secondaryAttribute === "willPoints").length;
             } else if (attribute === "str") {
                 return DoD_Utility.getAttributeFromDamageBonus(this.system.damageBonus.str.value);
