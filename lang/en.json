@@ -641,7 +641,9 @@
             "effects": "Effects",
             "enchantments": "Enchantments",
             "enchantmentsTooltip": "Castable enchantments",
-            "formula": "Formula"
+            "formula": "Formula",
+            "noEffects": "No effects",
+            "noEnchantments": "Drag and drop spells here"
         },
         "INFO": {
             "monsterAttackUpdated": "Updated monster attack table for {actor}.",
