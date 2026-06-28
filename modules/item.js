@@ -59,8 +59,8 @@ export class DoDItem extends Item {
         if (this.actor && this.system.range !== "") {
             const str = this.actor.getAttribute("str");
             const agl = this.actor.getAttribute("agl");
-            let r = new Roll(String(this.system.range), {str, agl});
             try {
+                let r = new Roll(String(this.system.range), {str, agl});
                 r.evaluateSync({});
                 return r.total;
             } catch {
