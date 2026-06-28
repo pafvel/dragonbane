@@ -654,7 +654,8 @@
             "enchantments": "Förtrollningar",
             "enchantmentsTooltip": "Förtrollningar som går att aktivera",
             "formula": "Formel",
-            "noEffects": "Inga effekter"
+            "noEffects": "Inga effekter",
+            "noEnchantments": "Dra besvärjelser hit"
         },
         "INFO": {
             "monsterAttackUpdated": "Uppdaterade monsterattacker för {actor}.",
