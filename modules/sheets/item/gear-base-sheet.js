@@ -131,14 +131,25 @@ export default class DoDGearBaseSheet extends DoDItemBaseSheet {
                 partContext.enchantments = await Promise.all(
                     this.item.system.enchantments.spells.map(async enchantment => {
                         const spell = await fromUuid(enchantment.uuid);
-                        return {
-                            uuid: enchantment.uuid,
-                            name: spell.name,
-                            img: spell.img,
-                            powerLevel: spell.system.rank > 0 ? enchantment.powerLevel : null,
-                            castable: enchantment.castable,
-                            free: enchantment.free,
-                        };
+                        if (spell) {
+                            return {
+                                uuid: enchantment.uuid,
+                                name: spell.name,
+                                img: spell.img,
+                                powerLevel: spell.system.rank > 0 ? enchantment.powerLevel : null,
+                                castable: enchantment.castable,
+                                free: enchantment.free,
+                            };
+                        } else {
+                            return {
+                                uuid: enchantment.uuid,
+                                name: enchantment.uuid,
+                                img: "icons/svg/item-bag.svg",
+                                powerLevel: null,
+                                castable: false,
+                                free: false,
+                            };
+                        }
                     })
                 );
                 break;
