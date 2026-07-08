@@ -11,7 +11,9 @@
         "TypeInjury": "Uraz",
         "TypeItem": "Przedmiot",
         "TypeKin": "Ród",
+		"TypeMaterial": "Składnik", 
         "TypeProfession": "Profesja",
+		"TypeRecipe": "Receptura", 
         "TypeSkill": "Umiejętność",
         "TypeSpell": "Czar",
         "TypeWeapon": "Broń"
@@ -29,7 +31,9 @@
             "injury": "Uraz",
             "item": "Przedmiot",
             "kin": "Ród",
+			"material": "Składnik", 
             "profession": "Profesja",
+			"recipe": "Receptura", 
             "skill": "Umiejętność",
             "spell": "Czar",
             "weapon": "Broń"
@@ -45,7 +49,9 @@
         "DoDInjurySheet": "Dragonbane Karta Urazu",
         "DoDItemSheet": "Dragonbane Karta Przedmiotu",
         "DoDKinSheet": "Dragonbane Karta Rodu",
+		"DoDMaterialSheet": "Dragonbane Karta Składnika", 
         "DoDProfessionSheet": "Dragonbane Karta Profesji",
+		"DoDRecipeSheet": "Dragonbane Karta Receptury", 
         "DoDSkillSheet": "Dragonbane Karta Umiejętności",
         "DoDSpellSheet": "Dragonbane Karta Czaru",
         "DoDWeaponSheet": "Dragonbane Karta Broni",
@@ -112,7 +118,8 @@
             "action": "Akcja",
             "reaction": "Reakcja",
             "stretch": "Kwadrans",
-            "shift": "Kwarta"
+            "shift": "Kwarta",
+			"special": "Inny" 
         },
         "conditions": {
             "str": "Wyczerpanie",
@@ -157,10 +164,21 @@
             "applyWhenEquipped": "Zastosuj tylko gdy wyekwipowane",
             "applyWhenEquippedTooltip": "Jeżeli zaznaczone, ten efekt będzie uruchomiony tylko gdy przedmiot jest wyekwipowany",
             "new": "Nowy efekt"
-        },
-        "item": {
-            "new": "Nowy przedmiot"
-        },
+		}, 
+		"enchantments": {
+			"charge": "Naładowanie",
+			"chargeTooltip": "Posiadacz przedmiotu, kimkolwiek by nie był, może użyć zgromadzonych w nim SW jak własnych.",
+			"enchantment": "Zaklinanie",
+			"powerLevel": "Potęga",
+			"powerLevelTooltip": "Potęga rzucanego czaru.",
+			"castable": "Można rzucić czar",
+			"castableTooltip": "Jeśli zaznaczone, czar może zostać rzucony bezpośrednio z karty postaci.",
+			"free": "Darmowy",
+			"freeTooltip": "Jeśli zaznaczone, czar może być rzucony bez wydawania SW."
+		},
+		"item": {
+			"new": "Nowy przedmiot"
+		},
         "gear": {
             "weight": "Ciężar",
             "quantity": "Ilość",
@@ -223,7 +241,7 @@
             "extraSpell": "Możesz natychmiast rzucić drugi czar, ale otrzymujesz Zgrzyt"
         },
         "critChoices": {
-            "choiceLabel": "Efekty krytyczne",
+            "choiceLabel": "Wybierz efekt krytyczny",
             "choiceTitle": "Efekt krytyczny",
             "doubleWeaponDamage": "Podwójnie obrażenia broni",
             "extraAttack": "Możesz natychmiast wykonać drugi atak przeciw innemu wrogowi. Jest on akcją darmową",
@@ -232,6 +250,20 @@
         "profession": {
             "key-attribute": "Kluczowa cecha",
             "skills": "Umiejętności"
+        },
+        "recipe": {
+            "isPoison": "Trucizna",
+            "potency": "Moc",
+            "potencyPerPowerlevel": "Moc na każdy poziom Potęgi",
+            "materials": "Składniki",
+            "item": "Substancja",
+            "noMaterials": "Przeciągnij i upuść aby dodać składniki",
+            "noItem": "Przeciągnij i upuść aby dodać przedmiot",
+            "craftItem": "Wytwórz przedmiot",
+            "craftItemEnabledTooltip": "Składniki zostaną zużyte, a w przypadku sukcesu zostanie wytworzony przedmiot",
+            "craftItemDisabledTooltip": "Niedostępne. Brakuje składników albo powiązanego przedmiotu, który ma zostać wytworzony",
+            "consumedMaterials": "Zużyte składniki",
+            "craftedItem": "Wytworzony przedmiot"
         },
         "roll": {
             "dragon": "Sukces, wyrzucony został Smok!",
@@ -317,7 +349,8 @@
             "stretch": "Kwadrans",
             "shift": "Kwarta",
             "concentration": "Koncentracja",
-            "permanent": "Trwały"
+            "permanent": "Trwały",
+			"special": "Inny" 
         },
         "spellRangeTypes": {
             "personal": "Osobisty",
@@ -378,7 +411,13 @@
             "enchanted2Tooltip": "Ten sam efekt co czar Zaklęcie Oręża na potędze 2",
             "enchanted3": "Zaklęty (3)",
             "enchanted3Tooltip": "Ten sam efekt co czar Zaklęcie Oręża na potędze 3",
-            "long": "Długa",
+			"penetrating1": "Przekłuwająca (1)", 
+            "penetrating1Tooltip": "Pomija 1 punkt pancerza", 
+            "penetrating2": "Przekłuwająca (2)", 
+            "penetrating2Tooltip": "Pomija 2 punkty pancerza", 
+            "penetrating3": "Przekłuwająca (3)", 
+            "penetrating3Tooltip": "Pomija 3 punkty pancerza", 
+			"long": "Długa",
             "longTooltip": "Pozwala atakować wręcz cele odległe o 4 metry (dwa pola)",
             "mounted": "Jazda wierzchem",
             "mountedTooltip": "Wymaga rumaka bojowego",
@@ -529,6 +568,7 @@
                 "castMagicTrick": "<b>{actor}</b> rzuca czar <b>{spell}</b>.",
                 "damageDetailDamage": "Obrażenia",
                 "damageDetailArmor": "Zbroja",
+	           "penetrating": "Przekłuwająca",
                 "damageDetailMultiplier": "Mnożnik",
                 "damageDetailTotal": "Całkowite obrażenia",
                 "updateTarget": "Zmień Cel",
@@ -551,16 +591,20 @@
                 "attributeRollTitle": "Rzut na cechę",
                 "attributeRollLabel": "Wykonaj Rzut",
                 "powerLevel": "Potęga",
+				"powerSource": "Źródło SW", 
+                "powerSourceTooltip": "Siła Woli będzie wydawana z tego źródła.", 
                 "labelCancel": "Anuluj",
                 "labelOk": "Ok",
                 "chooseAction": "Wybierz akcje",
                 "useAbility": "Aktywne zdolności",
                 "useAbilityWithWP": "Zużyć <b>{wp}</b> SW na aktywowanie <b>{ability}</b>?",
-                "useAbilityWithoutWP": "Użyj <b>{ability}</b>?",
+                "useAbilityWithoutWP": "Aktywować <b>{ability}</b>?",
                 "weaponFeatures": "Właściwości broni",
                 "castMagicTrickTitle": "Rzuć magiczną sztuczkę",
                 "castMagicTrickContent": "Wydano <b>1</b> SW, aby rzucić <b>{spell}</b>?",
-                "deleteItemTitle": "Usuń {item}",
+                "castSpellTitle": "Rzuć Czar", 
+                "castSpellLabel": "Rzuć", 
+				"deleteItemTitle": "Usuń {item}",
                 "deleteItemContent": "Czy na pewno chcesz usunąć <b>{item}</b>?",
                 "trainSkillTitle": "Wyspecjalizowana umiejętność?",
                 "trainSkillContent": "<p>Zaznaczasz umiejętność <b>{skill}</b> do rozwoju, ale posiadasz mniej umiejętności wyspecjalizowanych niż dozwolona ich ilość.</p><p>Czy chcesz wybrać umiejętność <b>{skill}</b> jako jedna z wyspecjalizowanych?</p><p style=\"font-size:smaller\"><b>Uwaga:</b> Umiejętności wyspecjalizowane posiadają podwójną wartość podstawową. Zresetuj do wartości podstawowej poprzez usunięcie wartości dla umiejętności.</p>",
@@ -593,8 +637,13 @@
         "item-sheet": {
             "details": "Szczegóły",
             "description": "Opis",
-            "gmDescription": "GM Notes",
-            "effects": "Efekty"
+            "gmDescription": "Notes MG",
+            "effects": "Efekty",
+			"enchantments": "Zaklinanie", 
+            "enchantmentsTooltip": "Czary rzucone na przedmiot", 
+            "formula": "Formuła", 
+			"noEffects": "Brak efektów", 
+            "noEnchantments": "Przeciągnij i upuść czary tutaj" 
         },
         "INFO": {
             "monsterAttackUpdated": "Zaktualizowano tabele ataków potwora dla {actor}.",
@@ -640,7 +689,7 @@
             "damageTypesHint": "Włącz rodzaje obrażeń (cięte, kłute i obuchowe), bonus skuteczności zbroi i akcje powiązane z typami obrażeń.",
             "coinEncumbrance": "Monety jako Obciążenie",
             "coinEncumbranceHint": "Wlicza monety od sumy obciążenia.",
-            "coreSettingOverrides": "Nadpisanie tabel z głównego modułu",
+			"coreSettingOverrides": "Nadpisanie tabel z głównego modułu",
             "coreSettingOverridesHint": "Zastąp tabele z głównego modułu dla tego świata.",
             "magicMishapTable": "Tabela: Magiczne Tarapaty",
             "magicMishapTableHint": "Wpisz ID tabeli, która zastąpi tabele Magicznych Tarapatów.",
@@ -676,7 +725,8 @@
             "noRangedMishapTable": "Brakuje tabeli nieszczęść dla broni dystansowej.",
             "noMagicMishapTable": "Brakuje tabeli magicznych tarapatów.",
             "maxWeaponsEquipped": "Maksymalnie 3 wyposażone bronie.",
-            "noSkillsInCompendium": "The registered core module did not contain any base skills. The core module may be damaged and should be re-installed. Trying to find skills in the world instead."
+            "noSkillsInCompendium": "The registered core module did not contain any base skills. The core module may be damaged and should be re-installed. Trying to find skills in the world instead.",
+            "missingMaterialsForCrafting": "Brakuje składników aby wytworzyć przedmiot." 
         }
     }
 }
