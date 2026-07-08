@@ -191,6 +191,29 @@ export class DoDActor extends Actor {
                 }
             }
         }
+        const  changeName = data?.name ?? false
+        if(changeName){
+            const tokenName = data.name
+           
+                const dialog =  await foundry.applications.api.DialogV2.confirm({
+                    title: game.i18n.localize("DoD.ui.dialog.changeTokenName.title"),
+                     content: `<p>${game.i18n.format("DoD.ui.dialog.changeTokenName.content", { name: tokenName })}</p>`,
+                });
+           
+
+            if (dialog) {
+                const actor = this;
+                await actor.prototypeToken.update({ name: tokenName });
+                const dependedTokens = actor.getDependentTokens();
+                for (const scene of dependedTokens) {
+                    for (const token of scene[0].tokens) {
+                        if (token.actorId === actor.id) {
+                            await token.update({ name: tokenName });
+                        }
+                    }
+                }
+            }
+        }
     }
 
     _displayScrollingText(change, options = {}) {
