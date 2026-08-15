@@ -191,16 +191,19 @@
                         color: var(--dod-color-journal-info-text);
                     }
 
-                    > :is(p, div):first-of-type {
+                    > h2 + :is(p, div),
+                    > h3 + :is(p, div),
+                    > :is(p, div):first-child {
                         padding-top: 16px;
                     }
 
-                    > ::is(p, div):last-of-type {
+                    > :last-child {
                         margin-bottom: 16px;
                     }
 
                     table {
                         color: var(--dod-color-journal-info-text);
+                        width: calc(100% - 2em);
 
                         td, th {
                             padding: 0.25em 0;
@@ -232,11 +235,12 @@
                         color: var(--dod-color-journal-optional-text);
                     }
 
-                    p:first-of-type {
+                    > h2 + :is(p, div),
+                    > h3 + :is(p, div) {
                         padding-top: 20px;
                     }
 
-                    p:last-of-type {
+                    > :last-child {
                         padding-bottom: 16px;
                     }
 

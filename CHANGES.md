@@ -26,6 +26,7 @@
 - Images in journals can now be framed by adding the CSS class "frame".
 - Fix for page header being covered by embedded monster and npc cards.
 - @DisplayItem added, can be used to render any item type in journals.
+- Fix for formatting issues in optional and info boxes.
 
 ### Chat
 - Items can be posted to chat, from the item or from the owning actor.

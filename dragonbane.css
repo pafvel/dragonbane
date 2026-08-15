@@ -2035,14 +2035,17 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info p {
   color: var(--dod-color-journal-info-text);
 }
-.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info > :is(p, div):first-of-type {
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info > h2 + :is(p, div),
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info > h3 + :is(p, div),
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info > :is(p, div):first-child {
   padding-top: 16px;
 }
-.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info > ::is(p, div):last-of-type {
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info > :last-child {
   margin-bottom: 16px;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info table {
   color: var(--dod-color-journal-info-text);
+  width: calc(100% - 2em);
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info table td, .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info table th {
   padding: 0.25em 0;
@@ -2065,10 +2068,11 @@
   top: -1px;
   color: var(--dod-color-journal-optional-text);
 }
-.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional p:first-of-type {
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional > h2 + :is(p, div),
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional > h3 + :is(p, div) {
   padding-top: 20px;
 }
-.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional p:last-of-type {
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional > :last-child {
   padding-bottom: 16px;
 }
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.optional .content-link {
