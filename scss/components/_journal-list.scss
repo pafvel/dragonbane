@@ -11,9 +11,16 @@
             margin-top: 0;
         }
 
-        ul {
-
+        ul:not(ul ul) {
             list-style: none;
+
+            > li::marker {
+                content: "✦ ";
+                font-style: normal;
+            }
+        }
+
+        ul {
 
             li {
                 display: list-item;
@@ -21,11 +28,6 @@
                 p {
                     margin: 0.25rem 0;
                 }
-            }
-
-            li::marker {
-                content: "✦ ";
-                font-style: normal;
             }
 
             .description {
