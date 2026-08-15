@@ -604,18 +604,18 @@
 .system-dragonbane .journal-entry-content .list-title + ul {
   margin-top: 0;
 }
-.system-dragonbane .journal-entry-content ul {
+.system-dragonbane .journal-entry-content ul:not(ul ul) {
   list-style: none;
+}
+.system-dragonbane .journal-entry-content ul:not(ul ul) > li::marker {
+  content: "✦ ";
+  font-style: normal;
 }
 .system-dragonbane .journal-entry-content ul li {
   display: list-item;
 }
 .system-dragonbane .journal-entry-content ul li p {
   margin: 0.25rem 0;
-}
-.system-dragonbane .journal-entry-content ul li::marker {
-  content: "✦ ";
-  font-style: normal;
 }
 .system-dragonbane .journal-entry-content ul .description {
   list-style-type: "✦ ";
