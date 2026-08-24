@@ -638,7 +638,11 @@
                 "restStretchConditionsHint": "Number of conditions to heal",
                 "restNote": "Finish the rest to recover. Interrupt to spend the rest without recovering.",
                 "restOk": "Finish",
-                "restInterrupt": "Interrupt"
+                "restInterrupt": "Interrupt",
+                "changeTokenName":{
+                    "title": "Change Tokens Name",
+                    "content": "Do you want to rename all token instances and the prototype token for {name}?"
+                }
             }
         },
         "item-sheet": {
