@@ -2040,6 +2040,13 @@
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info > :is(p, div):first-child {
   padding-top: 16px;
 }
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info > img.dropcap {
+  margin-left: 0.5rem;
+  margin-top: 1.25rem;
+}
+.system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info > img.dropcap + p {
+  padding-top: 1rem;
+}
 .system-dragonbane .sheet.journal-entry .journal-entry-content blockquote.info > :last-child {
   margin-bottom: 16px;
 }

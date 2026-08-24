@@ -193,8 +193,17 @@
 
                     > h2 + :is(p, div),
                     > h3 + :is(p, div),
-                    > :is(p, div):first-child {
+                    > :is(p, div):first-child{
                         padding-top: 16px;
+                    }
+
+                    > img.dropcap {
+                        margin-left: 0.5rem;
+                        margin-top: 1.25rem;
+                    }
+
+                    > img.dropcap + p {
+                        padding-top: 1rem;
                     }
 
                     > :last-child {
