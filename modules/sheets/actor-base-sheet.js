@@ -1039,7 +1039,18 @@ async _onRender(context, options) {
         const itemUuid = dataSet.itemUuid;
         const enchantmentIndex = dataSet.enchantmentIndex;
         const item = await fromUuid(itemUuid);
-        const enchantment = item?.system.enchantments.spells[enchantmentIndex];
+        const enchantment = item.system.enchantments.spells[enchantmentIndex];
+
+        // User may cancel if the weapon is broken
+        if (item.type === "weapon" && item.system.broken) {
+            const confirmAction = await foundry.applications.api.DialogV2.confirm({
+                window:  { title: game.i18n.localize("DoD.ui.dialog.brokenWeaponTitle") },
+                content: game.i18n.localize("DoD.ui.dialog.brokenWeaponContent"),
+                yes: { label: game.i18n.localize("DoD.ui.dialog.performAction") },
+                no:  { label: game.i18n.localize("DoD.ui.dialog.cancelAction") }
+            });            
+            if (!confirmAction) return;
+        }
 
         if (event.type === "click") { // left click - use item
             const spell = await fromUuid(enchantment.uuid);
