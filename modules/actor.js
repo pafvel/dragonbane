@@ -1343,7 +1343,7 @@ export class DoDActor extends Actor {
                     let itemTemplate = systemObject;
                     item.system.constructor.cleanData(itemTemplate);
                     delete itemTemplate.quantity;
-                    return foundry.utils.objectsEqual(foundry.utils.filterObject(i.system.toObject(), itemTemplate), itemTemplate);
+                    return foundry.utils.equals(foundry.utils.filterObject(i.system.toObject(), itemTemplate), itemTemplate);
                 }
                 return null;
             });
