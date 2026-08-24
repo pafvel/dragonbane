@@ -1,15 +1,15 @@
-2026/08/15-13:00:55.253 91b0 Recovering log #683
-2026/08/15-13:00:55.258 91b0 Delete type=0 #683
-2026/08/15-13:00:55.258 91b0 Delete type=3 #682
-2026/08/15-23:38:38.305 10664 Level-0 table #687: started
-2026/08/15-23:38:38.307 10664 Level-0 table #687: 30910 bytes OK
-2026/08/15-23:38:38.308 10664 Delete type=0 #685
-2026/08/15-23:38:38.312 10664 Manual compaction at level-0 from '!adventures!vsdhUE4l5CfVXDDj' @ 72057594037927935 : 1 .. '!adventures!vsdhUE4l5CfVXDDj' @ 0 : 0; will stop at (end)
-2026/08/15-23:38:38.313 10664 Manual compaction at level-1 from '!adventures!vsdhUE4l5CfVXDDj' @ 72057594037927935 : 1 .. '!adventures!vsdhUE4l5CfVXDDj' @ 0 : 0; will stop at '!adventures!vsdhUE4l5CfVXDDj' @ 29 : 1
-2026/08/15-23:38:38.313 10664 Compacting 1@1 + 1@2 files
-2026/08/15-23:38:38.315 10664 Generated table #688@1: 1 keys, 30910 bytes
-2026/08/15-23:38:38.315 10664 Compacted 1@1 + 1@2 files => 30910 bytes
-2026/08/15-23:38:38.316 10664 compacted to: files[ 0 0 1 0 0 0 0 ]
-2026/08/15-23:38:38.316 10664 Delete type=2 #681
-2026/08/15-23:38:38.317 10664 Delete type=2 #687
-2026/08/15-23:38:38.321 10664 Manual compaction at level-1 from '!adventures!vsdhUE4l5CfVXDDj' @ 29 : 1 .. '!adventures!vsdhUE4l5CfVXDDj' @ 0 : 0; will stop at (end)
+2026/08/24-21:13:52.409 106fc Recovering log #690
+2026/08/24-21:13:52.412 106fc Delete type=0 #690
+2026/08/24-21:13:52.412 106fc Delete type=3 #689
+2026/08/24-21:16:34.751 edac Level-0 table #694: started
+2026/08/24-21:16:34.753 edac Level-0 table #694: 31264 bytes OK
+2026/08/24-21:16:34.755 edac Delete type=0 #692
+2026/08/24-21:16:34.780 edac Manual compaction at level-0 from '!adventures!vsdhUE4l5CfVXDDj' @ 72057594037927935 : 1 .. '!adventures!vsdhUE4l5CfVXDDj' @ 0 : 0; will stop at (end)
+2026/08/24-21:16:34.809 edac Manual compaction at level-1 from '!adventures!vsdhUE4l5CfVXDDj' @ 72057594037927935 : 1 .. '!adventures!vsdhUE4l5CfVXDDj' @ 0 : 0; will stop at '!adventures!vsdhUE4l5CfVXDDj' @ 30 : 1
+2026/08/24-21:16:34.809 edac Compacting 1@1 + 1@2 files
+2026/08/24-21:16:34.812 edac Generated table #695@1: 1 keys, 31264 bytes
+2026/08/24-21:16:34.812 edac Compacted 1@1 + 1@2 files => 31264 bytes
+2026/08/24-21:16:34.812 edac compacted to: files[ 0 0 1 0 0 0 0 ]
+2026/08/24-21:16:34.813 edac Delete type=2 #688
+2026/08/24-21:16:34.813 edac Delete type=2 #694
+2026/08/24-21:16:34.818 edac Manual compaction at level-1 from '!adventures!vsdhUE4l5CfVXDDj' @ 30 : 1 .. '!adventures!vsdhUE4l5CfVXDDj' @ 0 : 0; will stop at (end)

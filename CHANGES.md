@@ -1,5 +1,16 @@
 # Change Log
 
+## Version 4.1.1
+- Character sheet
+  - Fix for item disappearing from inventory if the weight field is empty. Any existing items with empty weight will now re-appear in the inventory. The weight field will still be empty so you can easily find the re-appearing items.
+  - Fix for ingredients not stacking.
+  - Fix for spells on weapons being castable even if the weapon is broken. There will now be a dialog just like when attacking with a broken weapon.
+- Journals
+  - Fixed formatting when using dropcaps inside info boxes.
+- Localization
+  - Updated PL language (by @GregorHak)
+
+
 ## Version 4.1
 
 - Magic
