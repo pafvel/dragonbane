@@ -221,7 +221,7 @@
     "injury": {
 	  "new": "Nowy uraz",
       "healingTime": "Czas leczenia",
-	  "healingTimeTooltip": "Liczba dni potrzebnych to wyleczenie urazu",
+	  "healingTimeTooltip": "Liczba dni potrzebnych do wyleczenia urazu",
       "healingTimeExpired": "<b>{injury}</b> został wyleczony.",
       "healingTimeRollFlavor": "Czas leczenia <b>{injury}</b> to <b>{days}</b> dni.",
       "rollHealingTime": "Kliknij lewym przyciskiem aby rzucić na czas leczenia",
