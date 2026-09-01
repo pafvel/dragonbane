@@ -17,6 +17,8 @@ export default class DoDRollDamageMessageData extends DoDChatMessageBaseData {
             isHealing: new fields.BooleanField({ required: true, initial: false }),
             ignoreArmor: new fields.BooleanField({ required: true, initial: false }),
             penetrating: new fields.NumberField({ required: true, initial: 0 }),
+            isRestoreWP: new fields.BooleanField({ required: true, initial: false }),
+
         });
     }
 
@@ -58,7 +60,9 @@ export default class DoDRollDamageMessageData extends DoDChatMessageBaseData {
 
         let msg = context.isHealing ?
             "DoD.roll.healing" :
-            (weaponName ? (context.ignoreArmor ? "DoD.roll.damageIgnoreArmor" : "DoD.roll.damageWeapon") : "DoD.roll.damage");
+            (context.isRestoreWP ?
+                "DoD.roll.restoreWP" :
+                (weaponName ? (context.ignoreArmor ? "DoD.roll.damageIgnoreArmor" : "DoD.roll.damageWeapon") : "DoD.roll.damage"));
 
         if (context.targetActor) {
             msg += "Target";
@@ -81,7 +85,8 @@ export default class DoDRollDamageMessageData extends DoDChatMessageBaseData {
             ignoreArmor: context.ignoreArmor,
             penetrating: context.penetrating,
             target: context.targetActor,
-            isHealing: context.isHealing
+            isHealing: context.isHealing,
+            isRestoreWP: context.isRestoreWP
         };
         const renderedTemplate = await DoD_Utility.renderTemplate(this.template, templateContext);
 
