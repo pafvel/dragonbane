@@ -9,6 +9,7 @@ import DoDRollDamageMessageData from "./data/messages/roll-damage-message.js";
 export function addChatListeners(_app, html, _data) {
 
     DoD_Utility.addHtmlEventListener(html, "click", ".inline-damage-roll", onInlineDamageRoll);
+    DoD_Utility.addHtmlEventListener(html, "click", ".inline-healing-roll", onInlineHealingRoll);
     DoD_Utility.addHtmlEventListener(html, "click", ".treasure-roll", onTreasureRoll);
     DoD_Utility.addHtmlEventListener(html, "click", "[data-action='rollWeaponDamage']", onRollWeaponDamage);
     DoD_Utility.addHtmlEventListener(html, "click", "[data-action='rollSpellDamage']", onRollSpellDamage);
@@ -400,7 +401,38 @@ export async function onTreasureRoll(event) {
 
     DoD_Utility.drawTreasureCards(count);
 }
+export async function onInlineHealingRoll(event) {
+    if (event.detail === 2) { // double-click
+        return;
+    };
+    event.stopPropagation();
+    event.preventDefault();
 
+    const element = event.target;
+    const currentTarget = event.currentTarget;
+    const elementId = currentTarget.id;
+
+    let actorId = element.dataset.actorId;
+    if(elementId.includes("Actor") && !actorId) {
+        actorId = elementId.match(/Actor-([^-]+)/)?.[1];
+    }
+
+    const formula = element.dataset.formula;
+    const actor = actorId ? game.actors.get(actorId): null;
+    const roll = new Roll(formula);
+    const target = game.user.targets.first()?.actor;
+ 
+    await roll.roll();
+     const rollDamageMessage = DoDRollDamageMessageData.fromContext({
+        actor: actor,
+        targetActor: target || actor,
+        formula: roll.formula,
+        isHealing: true,
+        damage: roll.total,
+    });
+    rollDamageMessage.toMessage(roll);
+    
+}
 async function onRollWeaponDamage(event) {
     if (event.detail === 2) { // double-click
         return;

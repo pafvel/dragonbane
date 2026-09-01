@@ -331,6 +331,7 @@ for (const sheet of ["DoDActorBaseSheet", "DoDItemBaseSheet", "JournalEntryPageS
         DoD_Utility.addHtmlEventListener(html, 'click contextmenu', '.table-roll', DoD_Utility.handleTableRoll.bind(DoD_Utility));
         DoD_Utility.addHtmlEventListener(html, "click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);
         DoD_Utility.addHtmlEventListener(html, "click", ".treasure-roll", DoDChat.onTreasureRoll);
+        DoD_Utility.addHtmlEventListener(html, "click", ".inline-healing-roll", DoDChat.onInlineHealingRoll);
     });
 }
 
@@ -526,6 +527,38 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
                 a.classList.add("broken");
                 a.innerHTML = `<i class="fas fa-unlink" style="float:none"></i> ${tableName}`;
             }
+            return a;
+        }
+    },
+    {
+        // Rollable healing
+        // Format [[/healing xDx]]
+        pattern: new RegExp(String.raw`\[\[\/healing\s([+\-]?${DICE_FORMULA})\]\]`, "gm"),
+        enricher: (match, options) => {
+            const text = game.i18n.localize("DoD.ui.chat.healingRoll", { count: match[1]});
+            const a = document.createElement("a");
+            a.classList.add("inline-healing-roll");
+            a.dataset.formula = match[1];
+            a.dataset.action = "healing";
+            if (options.actor) a.dataset.actorId = options.actor.uuid;
+            a.innerHTML = `<i class="fas fa-dice-d20" style="float:none"></i> ${text}`;
+            return a;
+        }
+    },
+    {
+        // Rollable damage
+        // Format [[/damage <formula> [<slashing|piercing|bludgeoning>]]]
+        // Formula supports multiple die types, e.g. D10+D6+2
+        pattern: new RegExp(String.raw`\[\[\/damage\s([+\-]?${DICE_FORMULA})\s?(slashing|piercing|bludgeoning)?(?:\s(.+?))?\]\]`, "gm"),
+        enricher: (match, options) => {
+            const a = document.createElement("a");
+            a.classList.add("inline-damage-roll");
+            a.dataset.damage = match[1];
+            a.dataset.damageType = DoDOptionalRuleSettings.damageTypes ? "DoD.damageTypes." + (match[2] ?? "none") : "DoD.damageTypes.none";
+            if (options.actor) a.dataset.actorId = options.actor.uuid;
+            if (match[3]) a.dataset.action = match[3];
+
+            a.innerHTML = `<i class="fas fa-dice-d20" style="float:none"></i>` + match[1] + " " + game.i18n.localize(a.dataset.damageType);
             return a;
         }
     },
