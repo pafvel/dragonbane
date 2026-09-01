@@ -53,6 +53,34 @@
                     {{/if}}
                 </button>
             {{/if}} <!-- isDamaging -->
+            {{#if isDamagingWP}}
+                <button class="chat-button magic-roll"
+                    data-action="rollSpellDamageWP"
+                    data-actor-id="{{actor.uuid}}"
+                    data-spell-id="{{spell.id}}"
+                    data-power-level="{{powerLevel}}"   
+                    data-wp-cost="{{wpCost}}"
+                    {{#if isMagicCrit }} data-is-magic-crit="{{isMagicCrit}}" {{/if}}
+                    {{#if targetActor }} data-target-id="{{targetActor.uuid}}" {{/if}}
+                    >
+                    <i class="fas fa-dice"></i>
+                    {{localize "DoD.ui.chat.rollDamageWP"}}
+                </button>
+            {{/if}} <!-- isDamagingWP -->
+            {{#if applyConditions}}
+                <button class="chat-button magic-roll"
+                    data-action="applySpellConditions"
+                    data-actor-id="{{actor.uuid}}"
+                    data-spell-id="{{spell.id}}"
+                    data-power-level="{{powerLevel}}"
+                    data-wp-cost="{{wpCost}}"
+                    {{#if isMagicCrit }} data-is-magic-crit="{{isMagicCrit}}" {{/if}}
+                    {{#if targetActor }} data-target-id="{{targetActor.uuid}}" {{/if}}
+                    >
+                    <i class="fas fa-dice"></i>
+                    {{localize "DoD.ui.chat.applyConditions"}} {{localize (concat "DoD.conditions." condition)}}
+                </button>
+            {{/if}} <!-- applyConditions -->
         {{/if}} <!-- isCritical -->
     {{/if}} <!-- spell -->
 {{else}} <!-- success -->

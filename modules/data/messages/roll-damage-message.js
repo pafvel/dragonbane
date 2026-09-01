@@ -12,6 +12,7 @@ export default class DoDRollDamageMessageData extends DoDChatMessageBaseData {
             weaponUuid: new fields.StringField({ required: false, initial: "" }),
             targetActorUuid: new fields.StringField({ required: true, initial: "" }),
             damage: new fields.NumberField({ required: true, initial: 0 }),
+            damageWP: new fields.BooleanField({ required: true, initial: false }),
             damageType: new fields.StringField({ required: true, initial: "" }),
             formula: new fields.StringField({ required: false, initial: "" }),
             isHealing: new fields.BooleanField({ required: true, initial: false }),
@@ -58,7 +59,7 @@ export default class DoDRollDamageMessageData extends DoDChatMessageBaseData {
 
         let msg = context.isHealing ?
             "DoD.roll.healing" :
-            (weaponName ? (context.ignoreArmor ? "DoD.roll.damageIgnoreArmor" : "DoD.roll.damageWeapon") : "DoD.roll.damage");
+            (weaponName ? (context.ignoreArmor ? "DoD.roll.damageIgnoreArmor" : "DoD.roll.damageWeapon") : (context.damageWP ? "DoD.roll.damageWP" : "DoD.roll.damage"));
 
         if (context.targetActor) {
             msg += "Target";

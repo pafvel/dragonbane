@@ -153,7 +153,11 @@ export default class DoDSpellTest extends DoDSkillTest  {
 
         this.postRollData.isDamaging = this.spell.isDamaging;
         this.postRollData.isHealing = this.spell.isHealing;
-
+        this.postRollData.isDamagingWP  = this.spell.isDamagingWP;
+        this.postRollData.applyConditions = this.spell.applyConditions;
+        if(this.postRollData.applyConditions) {
+            this.postRollData.condition = this.spell.system.applyConditions;
+        }
         if (this.spell.type === "recipe" && this.options.craftItem) {
             this.postRollData.craftItem = true;
             if (!this.isReroll && !this.spell.hasMaterials({ actor: this.actor, count: this.powerLevel ?? 1 })) {

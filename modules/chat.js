@@ -12,6 +12,9 @@ export function addChatListeners(_app, html, _data) {
     DoD_Utility.addHtmlEventListener(html, "click", ".treasure-roll", onTreasureRoll);
     DoD_Utility.addHtmlEventListener(html, "click", "[data-action='rollWeaponDamage']", onRollWeaponDamage);
     DoD_Utility.addHtmlEventListener(html, "click", "[data-action='rollSpellDamage']", onRollSpellDamage);
+    DoD_Utility.addHtmlEventListener(html, "click", "[data-action='applySpellConditions']", onApplySpellConditions);
+    DoD_Utility.addHtmlEventListener(html, "click", "[data-action='rollSpellDamageWP']", onRollSpellDamageWP);
+
     DoD_Utility.addHtmlEventListener(html, "click", "button.critical-roll", onCriticalDamageRoll);
     DoD_Utility.addHtmlEventListener(html, "click", "button.push-roll", onPushRoll);
     DoD_Utility.addHtmlEventListener(html, "click", ".damage-details", onExpandableClick);
@@ -484,9 +487,9 @@ async function onRollSpellDamage(event) {
 
     if (!(actor && spell?.isDamaging)) return;
 
-    const { formula, damageType } = DoD_Utility.parseDamageString(spell.system.damage);
+    const { formula } = DoD_Utility.parseDamageString(spell.system.damage);
     let damage = formula;
-
+    const damageType = spell.system.damageType;
     if (!damage) {
         DoD_Utility.WARNING("DoD.WARNING.cannotEvaluateFormula");
         return;
@@ -523,6 +526,57 @@ async function onRollSpellDamage(event) {
     }
     await inflictDamageMessage(damageData);
 }
+async function onRollSpellDamageWP(event) {
+    if (event.detail === 2) { // double-click
+        return;
+    };
+    event.stopPropagation();
+    event.preventDefault();
+
+    // get the message
+    const messageId = event.target.closest(".chat-message")?.dataset.messageId;
+    const message = game.messages.get(messageId);
+    if (!message) return;
+
+    const context = message.system.toContext();
+    const actor = context.actor;
+    const spell = context.spell;
+
+    if (!(actor && spell?.isDamagingWP)) return;
+
+    const { formula } = DoD_Utility.parseDamageString(spell.system.damageWP);
+    let damage = formula;
+
+    if (!damage) {
+        DoD_Utility.WARNING("DoD.WARNING.cannotEvaluateFormula");
+        return;
+    }    
+
+
+    const damageData = {
+        actor: actor,
+        weapon: spell,
+        damage: damage,
+        isHealing: context.isHealing,
+        doubleSpellDamage: context.criticalEffect === "doubleDamage",
+        target: context.targetActor
+    };
+
+    if (!damageData.target) {
+        const targets = Array.from(game.user.targets)
+        if (targets.length > 0) {
+            for (const target of targets) {
+                damageData.target = target.actor;
+                await inflictDamageWPMessage(damageData);
+            }
+            return;
+        }
+    }
+    await inflictDamageWPMessage(damageData);
+}
+
+async function onApplySpellConditions(event) {}
+
 
 async function onCriticalDamageRoll(event) {
     if (event.detail === 2) { // double-click
@@ -755,6 +809,60 @@ export async function inflictDamageMessage(damageData) {
     });
 
     rollDamageMessage.toMessage(roll);
+}
+
+export async function inflictDamageWPMessage(damageData) {
+ let formula = damageData.damage;
+
+    let isHealing = false;
+    if (formula[0] === "-") {
+        isHealing = true;
+        formula = formula.substring(1);
+    } else {
+        isHealing = damageData.isHealing;
+    }
+
+    // Add "1" in front of D to make sure the first roll term is a Die.
+    if (formula[0] === "d" || formula[0] === "D") {
+        formula = "1" + formula;
+    }
+
+    // Check if target have wp
+    if (damageData.actor?.isMonster && damageData.target && !isHealing) {
+        const targetToken = canvas.scene.tokens.find(t => t.actor.uuid === damageData.target.uuid);
+        if (targetToken && (targetToken.actor?.system?.willpower?.value === 0 || targetToken.actor?.system?.willpower?.value === undefined)) {
+            createChatMessage(game.i18n.format("DoD.ui.chat.targetNoWillpower", {target: targetToken.name}));
+            return;
+        }
+    }
+    
+    if (damageData.doubleSpellDamage) {
+        formula = "2*(" + formula + ")";
+    }
+    const roll = new Roll(formula);
+
+    if (damageData.doubleWeaponDamage && roll.terms.length > 0) {
+        let term = roll.terms[0];
+        if (term instanceof foundry.dice.terms.Die) {
+            term.number *= 2;
+        }
+    }
+
+    await roll.roll({});
+
+    const rollDamageMessage = DoDRollDamageMessageData.fromContext({
+        actor: damageData.actor,
+        weapon: damageData.weapon,
+        targetActor: damageData.target,
+        damage: roll.total,
+        formula: roll.formula,
+        isHealing: isHealing,
+        damageWP: true,
+    });
+    rollDamageMessage.toMessage(roll);
+
+
+
 }
 
 export async function applyDamageMessage(damageData) {

@@ -14,6 +14,9 @@ export default class DoDSpellData extends DoDItemBaseData {
             areaOfEffect: new fields.StringField({ required: true, initial: "" }),
             duration: new fields.StringField({ required: true, initial: "instant" }),
             damage: new fields.StringField({ required: true, initial: "" }),
+            damageType: new fields.StringField({ required: true, initial: "none", choices: CONFIG.DoD.damageTypes  }),
+            damageWP: new fields.StringField({ required: true, initial: "" }),
+            applyConditions: new fields.StringField({ required: true, initial: "none", choices: CONFIG.DoD.condition }),
             damagePerPowerlevel: new fields.StringField({ required: true, initial: "" }),
             memorized: new fields.BooleanField({ required: true, initial: false }),
         });

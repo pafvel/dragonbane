@@ -127,7 +127,8 @@
             "agl": "Dazed",
             "int": "Angry",
             "wil": "Scared",
-            "cha": "Disheartened"
+            "cha": "Disheartened",
+            "none": "None"
         },
         "currency": {
             "gold": "Gold",
@@ -345,7 +346,9 @@
             "rangeType": "Range",
             "rank": "Rank",
             "requirement": "Requirement",
-            "school": "School of Magic"
+            "school": "School of Magic",
+            "damagewP": "Damage WP",
+            "applyCondition": "Apply Condition"
         },
         "spellDurationTypes": {
             "instant": "Instant",

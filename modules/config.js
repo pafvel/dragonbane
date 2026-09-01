@@ -134,6 +134,15 @@ DoD.attributes = {
     "cha": "DoD.attributes.cha",
     "none": "DoD.attributes.none",
 };
+DoD.condition = {
+        str: "DoD.conditions.str",
+        con: "DoD.conditions.con",
+        agl: "DoD.conditions.agl",
+        int: "DoD.conditions.int",
+        wil: "DoD.conditions.wil",
+        cha: "DoD.conditions.cha",
+        none: "DoD.conditions.none",
+}
 
 DoD.activeEffectAttributes = [
     {
