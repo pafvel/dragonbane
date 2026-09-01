@@ -1,33 +1,50 @@
 {{#if isHealing}}
-<div class="healing-roll"
-    data-healing="{{total}}"
-    {{#if target}} data-target-id="{{target.uuid}}" {{/if}}
->
+    <div class="healing-roll"
+        data-healing="{{total}}"
+        {{#if target}} data-target-id="{{target.uuid}}" {{/if}}
+    >
 {{else}}
-<div class="damage-roll"
-    data-damage="{{total}}"
-    data-damage-type="{{damageType}}"
-    {{#if ignoreArmor}} data-ignore-armor="{{ignoreArmor}}" {{/if}}
-    {{#if penetrating}} data-penetrating="{{penetrating}}" {{/if}}
-    {{#if target}} data-target-id="{{target.uuid}}" {{/if}}
->
+    {{#if isRestoreWP}}
+        <div class="restoreWP-roll"
+            data-restoreWP="{{total}}"
+            {{#if target}} data-target-id="{{target.uuid}}" {{/if}}
+        >
+    {{else}}
+        <div class="damage-roll"
+            data-damage="{{total}}"
+            data-damage-type="{{damageType}}"
+            {{#if ignoreArmor}} data-ignore-armor="{{ignoreArmor}}" {{/if}}
+            {{#if penetrating}} data-penetrating="{{penetrating}}" {{/if}}
+            {{#if target}} data-target-id="{{target.uuid}}" {{/if}}
+        >
+    {{/if}}
 {{/if}}
 {{> "systems/dragonbane/templates/partials/roll.hbs"}}
 </div>
 
 {{#if target}}
     {{#if isHealing}}
-    <div class="flexrow permission-owner" data-actor-id="{{target.uuid}}">
-        <button class="chat-button" title="{{localize "DoD.ui.chat.healTarget"}}" data-action="healDamage">
-            <i class="fas fa-user-plus"></i>{{localize "DoD.ui.chat.healTarget"}}
-        </button>
-    </div>
+        <div class="flexrow permission-owner" data-actor-id="{{target.uuid}}">
+            <button class="chat-button" title="{{localize "DoD.ui.chat.healTarget"}}" data-action="healDamage">
+                <i class="fas fa-user-plus"></i>{{localize "DoD.ui.chat.healTarget"}}
+            </button>
+        </div>
     {{else}}
-    <div class="flexrow permission-owner" data-actor-id="{{target.uuid}}">
-        <button class="chat-button" title="{{localize "DoD.ui.chat.dealDamage"}}" data-action="dealDamage">
-            <i class="fas fa-user-minus"></i>{{localize "DoD.ui.chat.dealDamage"}}
-        </button>
-    </div>
+        {{#if isRestoreWP}}
+        <div class="flexrow permission-owner" data-actor-id="{{target.uuid}}">
+            <button class="chat-button" title="{{localize "DoD.ui.chat.restoreWPTarget"}}" data-action="restoreWPDamage">
+                <i class="fas fa-user-plus"></i>{{localize "DoD.ui.chat.restoreWPTarget"}}
+            </button>
+        </div>
+        {{else}}
+        <div class="flexrow permission-owner" data-actor-id="{{target.uuid}}">
+            <button class="chat-button" title="{{localize "DoD.ui.chat.dealDamage"}}" data-action="dealDamage">
+                <i class="fas fa-user-minus"></i>{{localize "DoD.ui.chat.dealDamage"}}
+            </button>
+        </div>
+        {{/if}}
+    {{/if}}
+{{/if}}
     <!--
     <div class="flexrow permission-owner" data-actor-id="{{target.uuid}}">
         <button class="chat-button" title="{{localize "DoD.ui.chat.dealDamage"}}" data-action="dealDamage">
@@ -44,5 +61,3 @@
         </button>
     </div>
     -->
-    {{/if}}
-{{/if}}

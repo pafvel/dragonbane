@@ -332,6 +332,7 @@ for (const sheet of ["DoDActorBaseSheet", "DoDItemBaseSheet", "JournalEntryPageS
         DoD_Utility.addHtmlEventListener(html, "click", ".inline-damage-roll", DoDChat.onInlineDamageRoll);
         DoD_Utility.addHtmlEventListener(html, "click", ".treasure-roll", DoDChat.onTreasureRoll);
         DoD_Utility.addHtmlEventListener(html, "click", ".inline-healing-roll", DoDChat.onInlineHealingRoll);
+        DoD_Utility.addHtmlEventListener(html, "click", ".inline-restoreWP-roll", DoDChat.onInlineRestoreWPRoll);
     });
 }
 
@@ -533,15 +534,32 @@ CONFIG.TextEditor.enrichers = CONFIG.TextEditor.enrichers.concat([
     {
         // Rollable healing
         // Format [[/healing xDx]]
+        // Formula supports multiple die types, e.g. D10+D6+2
         pattern: new RegExp(String.raw`\[\[\/healing\s([+\-]?${DICE_FORMULA})\]\]`, "gm"),
         enricher: (match, options) => {
-            const text = game.i18n.localize("DoD.ui.chat.healingRoll", { count: match[1]});
+            const text = game.i18n.localize("DoD.ui.chat.rollHealing");
             const a = document.createElement("a");
             a.classList.add("inline-healing-roll");
             a.dataset.formula = match[1];
             a.dataset.action = "healing";
             if (options.actor) a.dataset.actorId = options.actor.uuid;
-            a.innerHTML = `<i class="fas fa-dice-d20" style="float:none"></i> ${text}`;
+            a.innerHTML = `<i class="fas fa-dice-d20" style="float:none"></i> ${text} ${match[1]}`;
+            return a;
+        }
+    },
+        {
+        // Rollable restore WP
+        // Format [[/restoreWP xDx]]
+        // Formula supports multiple die types, e.g. D10+D6+2
+        pattern: new RegExp(String.raw`\[\[\/restoreWP\s([+\-]?${DICE_FORMULA})\]\]`, "gm"),
+        enricher: (match, options) => {
+            const text = game.i18n.localize("DoD.ui.chat.restoreWPRoll");
+            const a = document.createElement("a");
+            a.classList.add("inline-restoreWP-roll");
+            a.dataset.formula = match[1];
+            a.dataset.action = "restoreWP";
+            if (options.actor) a.dataset.actorId = options.actor.uuid;
+            a.innerHTML = `<i class="fas fa-dice-d20" style="float:none"></i> ${text} ${match[1]}`;
             return a;
         }
     },

@@ -10,6 +10,8 @@ export function addChatListeners(_app, html, _data) {
 
     DoD_Utility.addHtmlEventListener(html, "click", ".inline-damage-roll", onInlineDamageRoll);
     DoD_Utility.addHtmlEventListener(html, "click", ".inline-healing-roll", onInlineHealingRoll);
+    DoD_Utility.addHtmlEventListener(html, "click", ".inline-restoreWP-roll", onInlineRestoreWPRoll);
+
     DoD_Utility.addHtmlEventListener(html, "click", ".treasure-roll", onTreasureRoll);
     DoD_Utility.addHtmlEventListener(html, "click", "[data-action='rollWeaponDamage']", onRollWeaponDamage);
     DoD_Utility.addHtmlEventListener(html, "click", "[data-action='rollSpellDamage']", onRollSpellDamage);
@@ -25,6 +27,7 @@ export function addChatListeners(_app, html, _data) {
     DoD_Utility.addHtmlEventListener(html, "click", "[data-action='dealHalfDamage']", onDealHalfDamage);
     DoD_Utility.addHtmlEventListener(html, "click", "[data-action='dealDamageIgnoreArmor']", onDealDamageIgnoreArmor);
     DoD_Utility.addHtmlEventListener(html, "click", "[data-action='healDamage']", onHealDamage);
+    DoD_Utility.addHtmlEventListener(html, "click", "[data-action='restoreWPDamage']", onRestoreWPDamage);
 
     DoD_Utility.addHtmlEventListener(html, "pointerenter",
         "[data-action='dealDamage'], [data-action='healDamage'], [data-action='rollWeaponDamage'], [data-action='rollSpellDamage']",
@@ -57,6 +60,11 @@ function onDealDamageIgnoreArmor(event) {
 function onHealDamage(event) {
     const li = event.currentTarget.closest("li");
     healTarget(li);
+}
+
+function onRestoreWPDamage(event) {
+    const li = event.currentTarget.closest("li");
+    restoreWPDamage(li);
 }
 
 function onEnterTargetAction(event) {
@@ -135,7 +143,22 @@ function healTarget(li, _multiplier = 1, _ignoreArmor = false) {
         applyHealingMessage(healingData);
     }
 }
+function restoreWPDamage(li, _multiplier = 1, _ignoreArmor = false) {
+    const restoreWPData = {};
+    const element = li.querySelector(".restoreWP-roll") || li.querySelector(".dice-total");
 
+    restoreWPData.damage = element.dataset.restoreWP ?? Number(element.innerText);
+    restoreWPData.actor = getTarget(element);
+
+    if (!(restoreWPData.actor instanceof DoDActor)){
+        DoD_Utility.WARNING("TOKEN.WarningNoActor");
+    }
+    else if (!restoreWPData.actor.isOwner) {
+        DoD_Utility.WARNING("DoD.WARNING.noPermissionToModifyActor");
+    } else {
+        applyRestoreWPDamageMessage(restoreWPData);
+    }
+}
 export function addChatMessageContextMenuOptions(_html, options) {
 
     function isTestMessage(message) {
@@ -413,12 +436,18 @@ export async function onInlineHealingRoll(event) {
     const elementId = currentTarget.id;
 
     let actorId = element.dataset.actorId;
-    if(elementId.includes("Actor") && !actorId) {
-        actorId = elementId.match(/Actor-([^-]+)/)?.[1];
+    if(elementId.includes("Actor") && !actorId && !elementId.includes("Scene")) {
+        actorId = "Actor." + elementId.match(/Actor-([^-]+)/)?.[1];
+    }
+  if (elementId.includes("Scene") && !actorId) {
+    const match = elementId.match(
+        /Scene-([^-]+)-Token-([^-]+)-Actor-([^-]+)/
+    );
+        actorId = `Scene.${match[1]}.Token.${match[2]}.Actor.${match[3]}`;
     }
 
     const formula = element.dataset.formula;
-    const actor = actorId ? game.actors.get(actorId): null;
+    const actor = actorId ? await fromUuid(actorId): null;
     const roll = new Roll(formula);
     const target = game.user.targets.first()?.actor;
  
@@ -428,6 +457,44 @@ export async function onInlineHealingRoll(event) {
         targetActor: target || actor,
         formula: roll.formula,
         isHealing: true,
+        damage: roll.total,
+    });
+    rollDamageMessage.toMessage(roll);
+    
+}
+export async function onInlineRestoreWPRoll(event) {
+    if (event.detail === 2) { // double-click
+        return;
+    };
+    event.stopPropagation();
+    event.preventDefault();
+
+    const element = event.target;
+    const currentTarget = event.currentTarget;
+    const elementId = currentTarget.id;
+
+    let actorId = element.dataset.actorId;
+    if(elementId.includes("Actor") && !actorId && !elementId.includes("Scene")) {
+        actorId = "Actor." + elementId.match(/Actor-([^-]+)/)?.[1];
+    }
+    if (elementId.includes("Scene") && !actorId) {
+    const match = elementId.match(
+        /Scene-([^-]+)-Token-([^-]+)-Actor-([^-]+)/
+    );
+        actorId = `Scene.${match[1]}.Token.${match[2]}.Actor.${match[3]}`;
+    }
+
+    const formula = element.dataset.formula;
+    const actor = actorId ? await fromUuid(actorId): null;
+    const roll = new Roll(formula);
+    const target = game.user.targets.first()?.actor;
+ 
+    await roll.roll();
+     const rollDamageMessage = DoDRollDamageMessageData.fromContext({
+        actor: actor,
+        targetActor: target || actor,
+        formula: roll.formula,
+        isRestoreWP: true,
         damage: roll.total,
     });
     rollDamageMessage.toMessage(roll);
@@ -953,7 +1020,36 @@ export async function applyHealingMessage(damageData) {
         content: msg
     });
 }
+export async function applyRestoreWPDamageMessage(restoreWPData) {
 
+    const actor = restoreWPData.actor;
+    const damage = restoreWPData.damage;
+    const oldWP = actor.system.willPoints.value;
+    const maxWP = actor.system.willPoints.max;
+    const newWP = oldWP + damage <= maxWP ? oldWP + damage : maxWP;
+    await actor.update({["system.willPoints.value"]: newWP });
+
+    const actorName = actor.isToken ? actor.token.name : actor.name;
+    const permissionKey = DoD_Utility.getViewDamagePermission().toLowerCase();
+
+    const msg = `
+    <div class="permission-${permissionKey}" data-actor-id="${actor.uuid}">
+        ${game.i18n.format("DoD.ui.chat.restoreWPApplied", {damage: newWP - oldWP, actor: actorName})}
+        <div class="damage-details permission-observer" data-actor-id="${actor.uuid}">
+            <i class="fa-solid fa-circle-info"></i>
+            <div class="expandable" style="text-align: left; margin-left: 0.5em">
+                <b>${game.i18n.localize("DoD.ui.character-sheet.willpower")}:</b> ${oldWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>
+            </div>
+        </div>            
+    </div>
+    <div class="permission-not-${permissionKey}" data-actor-id="${actor.uuid}">
+        ${game.i18n.format("DoD.ui.chat.restoreWPApplied", {damage: "???", actor: actorName})}
+    </div>`;
+    ChatMessage.create({
+        user: game.user.id,
+        content: msg
+    });
+}
 export function hideChatPermissions(_app, html, _data) {
     if (!game.user.isGM) {
         for (const el of html.querySelectorAll(".permission-gm")) {
