@@ -96,7 +96,6 @@ export default class DoDTestMessageBaseData extends DoDChatMessageBaseData {
     async toMessage(roll) {
         const messageData = await this.createMessageData(roll);
         const msg = await roll.toMessage(messageData);
-        console.log(msg)
     }
 
     async onCritical(_message) {

@@ -609,7 +609,32 @@ export class DoDActor extends Actor {
         }
         return newValue;
     }
+    async applyWillpowerDamage(damage) {
+        const haveWP = this.system?.willPoints;
+        if(haveWP){
+            const currentWP = haveWP.value;
+            const newWP = currentWP - damage < 0 ? 0 : currentWP - damage;
+            await this.update({["system.willPoints.value"]: newWP});
+            return {currentWP: currentWP, newWP:newWP}
+        }
+        else{
+            return {currentWP: undefined, newWP:undefined};
+        }
+    }
+    async applyConditions(condition, value){
+        const haveConditions = this.system?.conditions;;
+        if(haveConditions){
+            if((!this.hasCondition(condition) && value) ||(this.hasCondition(condition) && !value)){
+            this.updateCondition(condition, value)
+            return true
+            }else{
+                return false
+            }
+        }else{
+            return false
+        }
 
+    }
     findAbility(abilityName) {
         let name = abilityName.toLowerCase();
         return this.items.find(item => item.type === "ability" && item.name.toLowerCase() === name);

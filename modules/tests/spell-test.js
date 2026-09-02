@@ -150,8 +150,9 @@ export default class DoDSpellTest extends DoDSkillTest  {
                 console.warn("Power source does not have WP or Charge", powerSource);
             }
         }
-
-        this.postRollData.isDamaging = this.spell.isDamaging;
+        
+        this.postRollData.isDamaging = (this.spell.isDamaging || this.spell.isDamagingWP || this.spell.applyConditions);
+        this.postRollData.damageHP = this.spell.isDamaging;
         this.postRollData.isHealing = this.spell.isHealing;
         this.postRollData.isDamagingWP  = this.spell.isDamagingWP;
         this.postRollData.applyConditions = this.spell.applyConditions;

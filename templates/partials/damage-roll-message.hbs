@@ -4,15 +4,26 @@
     {{#if target}} data-target-id="{{target.uuid}}" {{/if}}
 >
 {{else}}
-<div class="damage-roll"
-    data-damage="{{total}}"
-    data-damage-type="{{damageType}}"
-    {{#if ignoreArmor}} data-ignore-armor="{{ignoreArmor}}" {{/if}}
-    {{#if penetrating}} data-penetrating="{{penetrating}}" {{/if}}
-    {{#if target}} data-target-id="{{target.uuid}}" {{/if}}
->
+    {{#if (ne formula "")}}
+    <div class="damage-roll"
+        data-damage="{{total}}"
+        data-damage-type="{{damageType}}"
+        {{#if ignoreArmor}} data-ignore-armor="{{ignoreArmor}}" {{/if}}
+        {{#if penetrating}} data-penetrating="{{penetrating}}" {{/if}}
+        {{#if target}} data-target-id="{{target.uuid}}" {{/if}}
+    >
+    {{> "systems/dragonbane/templates/partials/roll.hbs"}}
+    {{/if}}
 {{/if}}
-{{> "systems/dragonbane/templates/partials/roll.hbs"}}
+{{#if damageWP}}
+<div class="damage-roll"
+    data-damageWP="{{damageWPTotal}}">
+{{> "systems/dragonbane/templates/partials/roll.hbs"
+    total=damageWPTotal
+    formula=damageWpFormula
+}}
+</div>
+{{/if}}
 </div>
 
 {{#if target}}
