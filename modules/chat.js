@@ -12,6 +12,8 @@ export function addChatListeners(_app, html, _data) {
     DoD_Utility.addHtmlEventListener(html, "click", ".treasure-roll", onTreasureRoll);
     DoD_Utility.addHtmlEventListener(html, "click", "[data-action='rollWeaponDamage']", onRollWeaponDamage);
     DoD_Utility.addHtmlEventListener(html, "click", "[data-action='rollSpellDamage']", onRollSpellDamage);
+
+
     DoD_Utility.addHtmlEventListener(html, "click", "button.critical-roll", onCriticalDamageRoll);
     DoD_Utility.addHtmlEventListener(html, "click", "button.push-roll", onPushRoll);
     DoD_Utility.addHtmlEventListener(html, "click", ".damage-details", onExpandableClick);
@@ -97,18 +99,22 @@ function getTarget(element) {
     return target;
 }
 
-function dealTargetDamage(li, multiplier = 1, ignoreArmor = false) {
+async function dealTargetDamage(li, multiplier = 1, ignoreArmor = false) {
     const damageData = {};
     const element = li.querySelector(".damage-roll") || li.querySelector(".dice-total");
-
+    const message = await game.messages.get(li.dataset.messageId);
     damageData.damage = element.dataset.damage ?? Number(element.innerText);
-    damageData.damageType = element.dataset.damageType?.substring(String("DoD.damageTypes.").length);
+    
     damageData.actor = getTarget(element);
     damageData.multiplier = multiplier;
     damageData.ignoreArmor = ignoreArmor || element.dataset.ignoreArmor;
     damageData.penetrating = Number(element.dataset.penetrating) || 0;
+    damageData.damageWP = message.system.damageWPTotal;
+    damageData.isDamageWP = message.system.damageWP;
+    damageData.condition = message.system.conditions;
+    damageData.damageType = message.system.damageType;
 
-    if (!(damageData.actor instanceof DoDActor)) {
+   if (!(damageData.actor instanceof DoDActor)) {
         DoD_Utility.WARNING("TOKEN.WarningNoActor");
     }
     else if (!damageData.actor.isOwner) {
@@ -278,13 +284,23 @@ export function addChatMessageContextMenuOptions(_html, options) {
         return false;
     }
 
-    const undoDamage = function(li) {
+    const undoDamage = async function(li) {
         const element = li.querySelector(".damage-message");
+        const message = await game.messages.get(li.dataset.messageId);
+        const totalWPDamage = message?.system?.totalWPDamage;
+        const condition = message?.system.condition;
+        const applyCondition = message?.system.applyCondition;
+        const isDamageWP = message?.system.isDamageWP;
+
         const healingData = {
             actor: DoD_Utility.getActorFromUUIDSync(element?.dataset.actorId),
-            damage: Number(element?.dataset.damage)
-        };
-        applyHealingMessage(healingData);
+            damage: Number(element?.dataset.damage),
+            totalWPDamage: totalWPDamage,
+            condition: condition,
+            applyCondition: applyCondition,
+            isDamageWP: isDamageWP
+        };     
+         applyHealingMessage(healingData);
     }
 
 
@@ -481,13 +497,13 @@ async function onRollSpellDamage(event) {
     const context = message.system.toContext();
     const actor = context.actor;
     const spell = context.spell;
+    const isDamaging = (spell.isDamaging || spell.isDamagingWP || spell.applyConditions);
+    if (!(actor && isDamaging)) return;
 
-    if (!(actor && spell?.isDamaging)) return;
-
-    const { formula, damageType } = DoD_Utility.parseDamageString(spell.system.damage);
-    let damage = formula;
-
-    if (!damage) {
+    const { formula: formula } = DoD_Utility.parseDamageString(spell.system.damage );
+    let damage = formula ?? "";
+    const damageType = spell.system.damageType;
+    if (!damage && spell.isDamaging ) {
         DoD_Utility.WARNING("DoD.WARNING.cannotEvaluateFormula");
         return;
     }
@@ -500,11 +516,19 @@ async function onRollSpellDamage(event) {
             damage += spell.system.damagePerPowerlevel;
         }
     }
+    const { formula: formulWp } = DoD_Utility.parseDamageString(spell.system.damageWP);
+    let damageWP = formulWp;
 
+    if (!damageWP && spell.isDamagingWP) {
+        DoD_Utility.WARNING("DoD.WARNING.cannotEvaluateFormula");
+        return;
+    }
     const damageData = {
         actor: actor,
         weapon: spell,
         damage: damage,
+        damageWp: damageWP,
+        conditions: spell.system.applyConditions,
         damageType: damageType,
         isHealing: context.isHealing,
         doubleSpellDamage: context.criticalEffect === "doubleDamage",
@@ -523,6 +547,8 @@ async function onRollSpellDamage(event) {
     }
     await inflictDamageMessage(damageData);
 }
+
+
 
 async function onCriticalDamageRoll(event) {
     if (event.detail === 2) { // double-click
@@ -739,6 +765,81 @@ export async function inflictDamageMessage(damageData) {
             term.number *= 2;
         }
     }
+     const rollWp = new Roll(damageData.damageWp);
+    if(damageData.damageWp) {
+       
+        await rollWp.roll({});
+        damageData.damageWP = true;
+        damageData.damageWPTotal = rollWp.total;
+        damageData.damageWpFormula = rollWp.formula;
+    }else{
+        damageData.damageWP = false;
+        damageData.damageWPTotal = 0;
+        damageData.damageWpFormula = "";
+    }
+    if(formula !== ""){
+        await roll.roll({});
+    }
+
+    const rollDamageMessage = DoDRollDamageMessageData.fromContext({
+        actor: damageData.actor,
+        weapon: damageData.weapon,
+        targetActor: damageData.target,
+        damage: roll?.total,
+        damageType: damageData.damageType,
+        formula: roll?.formula,
+        isHealing: isHealing,
+        ignoreArmor: damageData.ignoreArmor,
+        penetrating: damageData.penetrating ?? 0,
+        damageWP: damageData.damageWP,
+        damageWPTotal: damageData.damageWPTotal,
+        damageWpFormula: damageData.damageWpFormula,
+        conditions: damageData.conditions,
+    });
+    let rollToMsg;
+    if(formula !== ""){
+        rollDamageMessage.toMessage(roll);
+    }else if(damageData.damageWP){
+        rollDamageMessage.toMessage(rollWp);
+    }
+}
+
+export async function inflictDamageWPMessage(damageData) {
+ let formula = damageData.damage;
+
+    let isHealing = false;
+    if (formula[0] === "-") {
+        isHealing = true;
+        formula = formula.substring(1);
+    } else {
+        isHealing = damageData.isHealing;
+    }
+
+    // Add "1" in front of D to make sure the first roll term is a Die.
+    if (formula[0] === "d" || formula[0] === "D") {
+        formula = "1" + formula;
+    }
+
+    // Check if target have wp
+    if (damageData.actor?.isMonster && damageData.target && !isHealing) {
+        const targetToken = canvas.scene.tokens.find(t => t.actor.uuid === damageData.target.uuid);
+        if (targetToken && (targetToken.actor?.system?.willpower?.value === 0 || targetToken.actor?.system?.willpower?.value === undefined)) {
+            createChatMessage(game.i18n.format("DoD.ui.chat.targetNoWillpower", {target: targetToken.name}));
+            return;
+        }
+    }
+    
+    if (damageData.doubleSpellDamage) {
+        formula = "2*(" + formula + ")";
+    }
+    const roll = new Roll(formula);
+
+    if (damageData.doubleWeaponDamage && roll.terms.length > 0) {
+        let term = roll.terms[0];
+        if (term instanceof foundry.dice.terms.Die) {
+            term.number *= 2;
+        }
+    }
 
     await roll.roll({});
 
@@ -747,14 +848,14 @@ export async function inflictDamageMessage(damageData) {
         weapon: damageData.weapon,
         targetActor: damageData.target,
         damage: roll.total,
-        damageType: damageData.damageType,
         formula: roll.formula,
         isHealing: isHealing,
-        ignoreArmor: damageData.ignoreArmor,
-        penetrating: damageData.penetrating ?? 0
+        damageWP: true,
     });
-
     rollDamageMessage.toMessage(roll);
+
+
+
 }
 
 export async function applyDamageMessage(damageData) {
@@ -765,18 +866,59 @@ export async function applyDamageMessage(damageData) {
     const multiplier = damageData.multiplier;
     const ignoreArmor = damageData.ignoreArmor;
     const penetrating = damageData.penetrating ?? 0;
+    const isDamageWP = damageData.isDamageWP ?? false;
+    const damageWPTotal = damageData.damageWP ?? 0;
+    const conditions = damageData.condition ?? "none";
     const armorValue = ignoreArmor ? 0 : Math.max(0, actor.getArmorValue(damageType) - penetrating);
     const damageToApply = Math.max(0, Math.floor((damage - armorValue) * multiplier));
     const oldHP = actor.system.hitPoints.value;
-
-    if (damageToApply > 0) {
-        await actor.applyDamage(damageToApply);
-    }
-    const newHP = actor.system.hitPoints.value;
-    const damageTaken = oldHP - newHP;
-
     const actorName = actor.isToken ? actor.token.name : actor.name;
     const token = canvas.scene.tokens.find(t => t.actor.uuid === actor.uuid);
+    let WPdamageText = "";
+    let conditionText = "";
+    let HPDamageText = "";
+    let damageTaken = 0;
+    let currentWP = 0;
+    let newWP = 0;
+    let totalWPDamage = 0;
+    let newHP = actor.system.hitPoints.value;
+    let WPDamageDetails = "";
+    let applyCondition = false;
+    if (damageToApply > 0) {
+        await actor.applyDamage(damageToApply);
+        newHP = actor.system.hitPoints.value;
+        damageTaken = oldHP - newHP;
+        HPDamageText = game.i18n.format("DoD.ui.chat.damageApplied", {damage: damageTaken, actor: actorName});
+    }
+    if (isDamageWP && damageWPTotal > 0) {
+       const WP= await actor.applyWillpowerDamage(damageWPTotal);
+       currentWP = WP.currentWP;
+       newWP = WP.newWP;
+       if(currentWP !== undefined && newWP !== undefined){
+        if(HPDamageText !== ""){
+            WPdamageText += "<br>"
+        }
+        totalWPDamage = (currentWP - newWP);
+        WPdamageText += game.i18n.format("DoD.ui.chat.damageWPApplied", {damage: totalWPDamage, actor: actorName});
+        WPDamageDetails = `
+         <b>${game.i18n.localize("DoD.ui.chat.damageDetailDamageWP")}:</b> ${totalWPDamage}<br>
+         <b>${game.i18n.localize("DoD.ui.character-sheet.wp")}:</b> ${currentWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>`
+       }
+    }
+    if(conditions !== "none"){
+        applyCondition = await actor.applyConditions(conditions, true);
+        if(applyCondition){
+        if(HPDamageText !== "" || WPdamageText !== ""){
+            conditionText += "<br>"
+        }
+            conditionText += game.i18n.format("DoD.ui.chat.conditionApplied", {condition: game.i18n.localize("DoD.conditions." + conditions), actor: actorName});
+        }else{
+            conditionText += game.i18n.format("DoD.ui.chat.alredyHeveCondition",{condition: game.i18n.localize("DoD.conditions." + conditions), actor: actorName})
+        }
+    }
+
+
+
 
     const permissionKey = DoD_Utility.getViewDamagePermission().toLowerCase();
 
@@ -857,7 +999,10 @@ export async function applyDamageMessage(damageData) {
 
     let html = `
         <div class="damage-message permission-${permissionKey}" data-damage="${damageTaken}" data-actor-id="${actor.uuid}">
-            ${game.i18n.format("DoD.ui.chat.damageApplied", {damage: damageTaken, actor: actorName})}
+            ${HPDamageText}
+            ${WPdamageText}
+            ${conditionText}
+            <br>
             ${message}
             <div class="damage-details permission-observer" data-actor-id="${actor.uuid}">
                 <i class="fa-solid fa-circle-info"></i>
@@ -867,6 +1012,7 @@ export async function applyDamageMessage(damageData) {
                     <b>${game.i18n.localize("DoD.ui.chat.damageDetailMultiplier")}:</b> x${multiplier}<br>
                     <b>${game.i18n.localize("DoD.ui.chat.damageDetailTotal")}:</b> ${damageToApply}<br>
                     <b>${game.i18n.localize("DoD.ui.character-sheet.hp")}:</b> ${oldHP} <i class="fa-solid fa-arrow-right"></i> ${newHP}<br>
+                    ${WPDamageDetails}
                 </div>
             </div>            
         </div>
@@ -876,7 +1022,13 @@ export async function applyDamageMessage(damageData) {
         </div>`;
     ChatMessage.create({ 
         user: game.user.id,
-        content: html
+        content: html,
+        system: {
+            totalWPDamage: totalWPDamage,
+            condition: conditions,
+            applyCondition: applyCondition,
+            isDamageWP: isDamageWP
+        }
     });
 }
 
@@ -884,23 +1036,59 @@ export async function applyHealingMessage(damageData) {
 
     const actor = damageData.actor;
     const damage = damageData.damage;
+    const applyCondition = damageData?.applyCondition ?? false;
+    const totalWPDamage = damageData?.totalWPDamage ?? 0;
+    const conditions = damageData?.condition ?? "none";
+    const isDamageWP = damageData?.isDamageWP ?? false;
     const oldHP = actor.system.hitPoints.value;
     let newHP = oldHP;
 
     if (damage > 0) {
         newHP = await actor.applyDamage(-damage);
     }
-
+    let WPdamageText = "";
+    let conditionText = "";
+    let HPDamageText = "";
+    let currentWP = 0;
+    let newWP = 0; 
+    let WPDamageDetails = "";
+    let conditionHasBennApply = false;
     const actorName = actor.isToken ? actor.token.name : actor.name;
+    if (isDamageWP && totalWPDamage > 0) {
+       const WP= await actor.applyWillpowerDamage(-totalWPDamage);
+       currentWP = WP.currentWP;
+       newWP = WP.newWP;
+       if(currentWP !== undefined && newWP !== undefined){
+        if(HPDamageText !== ""){
+            WPdamageText += "<br>"
+        }
+        WPdamageText += game.i18n.format("DoD.ui.chat.restorWPApplied", {damage: totalWPDamage, actor: actorName});
+        WPDamageDetails = `
+         <b>${game.i18n.localize("DoD.ui.character-sheet.wpp")}:</b> ${currentWP} <i class="fa-solid fa-arrow-right"></i> ${newWP}<br>`
+       }
+    }
+    if(applyCondition && conditions !== "none"){
+        conditionHasBennApply = await actor.applyConditions(conditions, false);
+        if(conditionHasBennApply){
+        if(HPDamageText !== "" || WPdamageText !== ""){
+            conditionText += "<br>"
+        }
+            conditionText += game.i18n.format("DoD.ui.chat.conditionRestore", {condition: game.i18n.localize("DoD.conditions." + conditions), actor: actorName});
+        }
+    }
+    
     const permissionKey = DoD_Utility.getViewDamagePermission().toLowerCase();
 
     const msg = `
     <div class="permission-${permissionKey}" data-actor-id="${actor.uuid}">
         ${game.i18n.format("DoD.ui.chat.healingApplied", {damage: newHP - oldHP, actor: actorName})}
+        ${WPdamageText}
+        ${conditionText}
         <div class="damage-details permission-observer" data-actor-id="${actor.uuid}">
             <i class="fa-solid fa-circle-info"></i>
             <div class="expandable" style="text-align: left; margin-left: 0.5em">
                 <b>${game.i18n.localize("DoD.ui.character-sheet.hp")}:</b> ${oldHP} <i class="fa-solid fa-arrow-right"></i> ${newHP}<br>
+                ${WPDamageDetails}
             </div>
         </div>            
     </div>

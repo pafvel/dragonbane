@@ -114,6 +114,19 @@ export class DoDItem extends Item {
         }
         return false;
     }
+    get isDamagingWP() {
+        if (this.type === "spell") {
+            return this.system.damageWP?.length > 0;
+        }
+        return false;
+    }
+
+    get applyConditions() {
+        if (this.type === "spell") {
+            return this.system.applyConditions !== "none";
+        }
+        return false;
+    }
 
     get isHealing() {
         return this.isDamaging && this.system.damage[0] === "-";

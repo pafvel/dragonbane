@@ -32,6 +32,7 @@ export default class DoDSpellSheet extends DoDItemBaseSheet {
         if(!context.enableRange) {
             context.system.range = "";
         }
+        context.systemFields = this.item.system.schema.fields;
         return context;
     }
 

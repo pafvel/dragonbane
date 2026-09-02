@@ -66,16 +66,41 @@
         <table class="simple-table">
             <tr>
                 <th>{{localize "DoD.spell.damage"}}</th>
+                <th>{{localize "DoD.spell.damageType"}}</th>
                 <th>{{localize "DoD.spell.damagePerPowerlevel"}}</th>
             </tr>
             
             <tr>
                 <td>
                     <input name="system.damage" type="text" value="{{system.damage}}" pattern="{{spellDamagePattern}}"/>
+                </td>
+                <td>  
+                    {{formInput
+                        systemFields.damageType
+                        value=system.damageType
+                        localize=true
+                    }}
                 </td>    
                 <td>
                     <input name="system.damagePerPowerlevel" type="text" value="{{system.damagePerPowerlevel}}" pattern="{{dicePattern}}"/>
                 </td>    
+            </tr>
+            <tr>               
+                <th colspan="2">{{localize "DoD.spell.damagewP"}}</th>
+         
+                <th>{{localize "DoD.spell.applyCondition"}}</th>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input name="system.damageWP" type="text" value="{{system.damageWP}}" pattern="{{spellDamagePattern}}"/>
+                </td>
+                <td>
+                    {{formInput
+                        systemFields.applyConditions
+                        value=system.applyConditions
+                        localize=true
+                    }}
+                </td>
             </tr>
         </table>
     </div>

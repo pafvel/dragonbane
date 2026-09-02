@@ -127,7 +127,8 @@
             "agl": "Dazed",
             "int": "Angry",
             "wil": "Scared",
-            "cha": "Disheartened"
+            "cha": "Disheartened",
+            "none": "None"
         },
         "currency": {
             "gold": "Gold",
@@ -138,10 +139,11 @@
             "none": "Damage",
             "bludgeoning": "Bludgeoning Damage",
             "piercing": "Piercing Damage",
-            "slashing": "Slashing Damage",
+            "slashing": "Slashing Damage",  
             "bludgeoningTooltip": "Bludgeoning Damage",
             "piercingTooltip": "Piercing Damage",
-            "slashingTooltip": "Slashing Damage"
+            "slashingTooltip": "Slashing Damage",
+            "damageWP": "Will Points Damage"
         },
         "dice": {
             "d": "D",
@@ -282,10 +284,14 @@
             "weaponRoll": "<b>{action}</b> with @UUID[{uuid}] <b>{result}</b>",
             "weaponRollTarget": "<b>{action}</b> with @UUID[{uuid}] targeting <b>{target}</b> <b>{result}</b>",
             "damage": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType}</b>.",
+            "damageWP": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType}</b>",
+            "conditions": "<b>{actor}</b> inflicts <b>{conditions}</b>.",
+            "conditionsTarget": "<b>{actor}</b> inflicts <b>{conditions}</b> on <b>{target}</b>.",
             "damageWeapon": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType}</b> using <b>{weapon}</b>.",
             "damageIgnoreArmor": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType} ignoring armor</b> using <b>{weapon}</b>.",
             "damageTarget": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType}</b> on <b>{target}</b>.",
             "damageWeaponTarget": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType}</b> on <b>{target}</b> using <b>{weapon}</b>.",
+            "damageWPTarget": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType}</b> on <b>{target}</b>.",
             "damageIgnoreArmorTarget": "<b>{actor}</b> inflicts <b>{damage}</b> points <b>{damageType}</b> on <b>{target}</b> <b>ignoring armor</b> using <b>{weapon}</b>.",
             "healing": "<b>{actor}</b> heals for <b>{damage}</b> HP.",
             "healingTarget": "<b>{actor}</b> heals <b>{target}</b> for <b>{damage}</b> HP.",
@@ -345,7 +351,9 @@
             "rangeType": "Range",
             "rank": "Rank",
             "requirement": "Requirement",
-            "school": "School of Magic"
+            "school": "School of Magic",
+            "damagewP": "Damage WP",
+            "applyCondition": "Apply Condition"
         },
         "spellDurationTypes": {
             "instant": "Instant",
@@ -547,6 +555,9 @@
             },
             "chat": {
                 "damageApplied": "<b>{damage}</b> HP damage applied to <b>{actor}</b>.",
+                "damageWPApplied": "<b>{damage}</b> WP damage applied to <b>{actor}</b>",
+                "conditionApplied": "Condition <b>{condition}</b> applied to <b>{actor}</b>",
+                "alredyHeveCondition": "<b>{actor}</b> alredy have condition <b>{condition}</b>",
                 "damageAppliedDetails": "{damage} damage vs {armor} armor rating.",
                 "damageAppliedMultiplier": "x{multiplier} multiplier.",
                 "healingApplied": "<b>{actor}</b> heals <b>{damage}</b> HP.",
@@ -578,8 +589,14 @@
                 "penetrating": "Penetrating",
                 "damageDetailMultiplier": "Multiplier",
                 "damageDetailTotal": "Total damage",
+                "damageDetailDamageWP": "Total WP Damage",
                 "updateTarget": "Update Target",
-                "criticalHit": "Critical Hit"
+                "criticalHit": "Critical Hit",
+                "restorWPApplied":"<b>{actor}</r> restor <b>{damage}</b> WP",
+                "conditionRestore": "<b>{actor}</b> heals condition <b>{condition}</b>",
+                "applyConditions": "Apply Condition",
+                "rollDamageAndApplyConditions": "Roll Damage and aplly condition",
+                "rollDamageWP": "Roll WP Damage "
             },
             "dialog": {
                 "banes": "Banes",

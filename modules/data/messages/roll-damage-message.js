@@ -12,11 +12,15 @@ export default class DoDRollDamageMessageData extends DoDChatMessageBaseData {
             weaponUuid: new fields.StringField({ required: false, initial: "" }),
             targetActorUuid: new fields.StringField({ required: true, initial: "" }),
             damage: new fields.NumberField({ required: true, initial: 0 }),
+            damageWP: new fields.BooleanField({ required: true, initial: false }),
+            damageWPTotal: new fields.NumberField({ required: true, initial: 0 }),
+            damageWpFormula: new fields.StringField({ required: false, initial: "" }),
             damageType: new fields.StringField({ required: true, initial: "" }),
             formula: new fields.StringField({ required: false, initial: "" }),
             isHealing: new fields.BooleanField({ required: true, initial: false }),
             ignoreArmor: new fields.BooleanField({ required: true, initial: false }),
             penetrating: new fields.NumberField({ required: true, initial: 0 }),
+            conditions: new fields.StringField({ required: false, initial: "none" }),
         });
     }
 
@@ -55,22 +59,48 @@ export default class DoDRollDamageMessageData extends DoDChatMessageBaseData {
         const weaponName = context.weapon ? (context.weapon?.isToken ? context.weapon.token.name : context.weapon?.name) : "";
         const targetName = context.targetActor ? (context.targetActor?.isToken ? context.targetActor.token.name : context.targetActor?.name) : "";;
         const damageTotal = Math.round(this.damage);
-
+        let content = "";
         let msg = context.isHealing ?
             "DoD.roll.healing" :
             (weaponName ? (context.ignoreArmor ? "DoD.roll.damageIgnoreArmor" : "DoD.roll.damageWeapon") : "DoD.roll.damage");
-
+        if( context.damageWP){
+            msg = "DoD.roll.damageWP";
+        }
         if (context.targetActor) {
             msg += "Target";
         }
-
-        const content = game.i18n.format(msg, {
+        if( context.damageWP){
+         content = game.i18n.format(msg, {
             actor: ChatMessage.getSpeaker({ actor: context.actor }).alias,
-            damage: damageTotal,
-            damageType: game.i18n.localize(context.damageType),
+            damage: this.damageWPTotal,
+            damageType: game.i18n.localize("DoD.damageTypes.damageWP"),
             weapon: weaponName,
             target: targetName
         });
+        }
+        if(context.formula !== ""){
+            if(content !== ""){
+                content += "<br>";
+            }
+            content +=  game.i18n.format(msg, {
+            actor: ChatMessage.getSpeaker({ actor: context.actor }).alias,
+            damage: damageTotal,
+            damageType: game.i18n.localize("DoD.damageTypes." + context.damageType),
+            weapon: weaponName,
+            target: targetName
+        });
+        }
+        if(this.conditions !== "none"){
+        if(content !== ""){
+                content += "<br>";
+            }
+            content += game.i18n.format("DoD.roll.conditions", {
+                conditions: game.i18n.localize("DoD.conditions." + this.conditions),
+                actor: ChatMessage.getSpeaker({ actor: context.actor }).alias
+            });
+        }
+
+
 
         const templateContext = {
             user: game.user.id,
@@ -81,7 +111,11 @@ export default class DoDRollDamageMessageData extends DoDChatMessageBaseData {
             ignoreArmor: context.ignoreArmor,
             penetrating: context.penetrating,
             target: context.targetActor,
-            isHealing: context.isHealing
+            isHealing: context.isHealing,
+            damageWP: this.damageWP,
+            damageWPTotal: this.damageWPTotal,
+            damageWpFormula: this.damageWpFormula
+
         };
         const renderedTemplate = await DoD_Utility.renderTemplate(this.template, templateContext);
 

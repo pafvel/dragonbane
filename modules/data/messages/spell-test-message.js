@@ -9,6 +9,9 @@ export default class DoDSpellTestMessageData extends DoDSkillTestMessageData {
         const { fields } = foundry.data;
         return this.mergeSchema(super.defineSchema(), {
             isDamaging: new fields.BooleanField({ required: true, initial: false }),
+            isDamagingWP: new fields.BooleanField({ required: true, initial: false }),
+            applyConditions: new fields.BooleanField({ required: true, initial: false }),
+            condition: new fields.StringField({ required: false, initial: "" }),
             isHealing: new fields.BooleanField({ required: true, initial: false }),
             powerLevel: new fields.NumberField({ required: true, initial: 0 }),
             spellUuid: new fields.StringField({ required: true, initial: "" }),
