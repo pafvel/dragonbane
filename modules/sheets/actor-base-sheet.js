@@ -365,6 +365,14 @@ async _onRender(context, options) {
 
         html.off("change", ".inline-edit");
         html.on("change", ".inline-edit", this.#handlers.inlineEdit);
+    }else{
+        const aElements = this.element.querySelectorAll("a");
+        aElements.forEach(a =>{
+            if(a?.dataset?.action !== "tab"){
+                a.style.pointerEvents = "none";
+                a.setAttribute("aria-disabled", "true");
+            }
+        })
     }
 }
 
